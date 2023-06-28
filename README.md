@@ -113,6 +113,13 @@
 
 ![ERD](https://github.com/kimdonwoo/step2-BE-kakao-shop/assets/81402944/073fafd7-7b7f-4c2a-8658-397874bb1143)
 
+```
+설계한 테이블을 바탕으로 JPA를 사용해서 Entity 코드를 짜고 ER-Diagram을 그렸습니다.
+테이블 제약 조건은 member의 password 칼럼에 대해 20 자로 제한했습니다. 뿐만 아니라
+가격과 재고량과 관련된 칼럼에서는 모두 0 이상으로 제약조건을 주었습니다. 
+
+```
+
 
 
 </div>
