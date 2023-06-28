@@ -111,6 +111,7 @@
 
 ### 4. 테이블 설계를 하여 README에 ER-Diagram을 추가하여 제출하시오.
 
+![ERD](https://github.com/kimdonwoo/step2-BE-kakao-shop/assets/81402944/073fafd7-7b7f-4c2a-8658-397874bb1143)
 
 
 
