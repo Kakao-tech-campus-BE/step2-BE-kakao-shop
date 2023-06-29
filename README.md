@@ -35,42 +35,42 @@
 </br>
 
 ### **과제 2. 제시된 화면설계를 보고 해당 화면설계와 배포된 기존 서버의 API주소를 매칭하여 README에 내용을 작성하시오. (카카오 화면설계 시나리오가 있음)**
-![Alt text](image-1.png)
+![Alt text](image-1.png)        
 기존 서버의 API 주소를 정리해 놓은 것은 위와 같다.      
 
-![Alt text](image.png)
+![Alt text](image.png)        
 (기능 1) 회원가입       
 회원가입 버튼을 누르면 /join URL에 Post Method로 이메일, 이름, 비밀번호를 담은 요청이 날아가게 된다.        
 
-![Alt text](image-2.png)
+![Alt text](image-2.png)        
 (기능 2) 로그인     
 로그인 버튼을 누르면 /login URL에 POST Method로 이메일, 비밀번호를 담은 요청이 날아가게 된다.       
 
-![Alt text](image-3.png)
+![Alt text](image-3.png)        
 (기능 3) 로그아웃       
 로그아웃 버튼을 누르면 /logout URL에 POST Method로 Bearer 토큰을 담은 요청이 날아가게 된다(이론 상. 강사님이 필요없다 하셨는데... 코드리뷰 요청 해야겠다...)
 
-![Alt text](image-4.png)
+![Alt text](image-4.png)        
 (기능 4) 전체 상품 목록 조회        
 먼저, 전체 상품 목록 조회 버튼을 누르면 /products URL에 GET Method로 page 번호를 parameter로 가진 요청이 날아가게 된다.     
 그리고, 해당 상품을 클릭하면 /products/{id} URL에 GET Method로 요청이 간다. 이 때 pathVariable로 상품 id를 넘겨주게 된다.
 
-![Alt text](image-5.png)
+![Alt text](image-5.png)        
 (기능 5) 개별 상품 상세 조회        
 옵션을 선택하면 옵션 리스트 하단 바에 선택한 옵션과, 수량을 조절할 수 있는 칸이 나오게 된다(프론트가 구현)      
 장바구니 담기 버튼을 누르면 carts/add URL에 POST Method로 Bearer 인증 토큰헤더와 optionId, quantity 바디를 가진 요청이 날아가게 된다.       
 톡딜가로 구매하기 버튼은 구현하지 않을 예정이지만, 주문하기와 동일한 버튼이라고 생각했을 때 carts/update URL로 Bearer 인증 토큰 헤더와 optionId, quantity 바디를 가진 POST Method 요청이 날아가게 된다.
 
-![Alt text](image-6.png)
+![Alt text](image-6.png)        
 (기능 9) 장바구니 보기      
 먼저 장바구니 조회 버튼을 클릭하면 /carts URL에 GET Method로 Bearer 인증 토큰 헤더를 가진 요청이 날아가게 된다.     
 그 이후에 주문하기 버튼을 누르면 carts/update URL로 Bearer 인증 토큰 헤더와 optionId, quantity 바디를 가진 POST Method 요청이 날아가게 된다.
 
-![Alt text](image-7.png)
+![Alt text](image-7.png)        
 (기능 12) 결제      
 결제하기 버튼을 누르면, /orders/save URL에 POST Method로 Bearer 인증 토큰 헤더를 담은 요청이 날아가게 된다.
 
-![Alt text](image-8.png)
+![Alt text](image-8.png)        
 (기능 13) 주문 결과 확인        
 주문 결과 확인 버튼을 누르면, /orders/{orderId} URL에 GET Method로 Bearer 인증 토큰 헤더를 담은 요청이 날아가게 된다.       
 
