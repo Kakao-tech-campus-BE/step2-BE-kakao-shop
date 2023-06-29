@@ -48,7 +48,7 @@
 
 </br>
 
-##**4번**##
+## **4번**
 ###domain 작성![kakaoShopping drawio (1)](https://github.com/yuseonkim/step2-BE-kakao-shop/assets/81663729/9835363c-d4ec-479d-88fb-ebf0e4d19b88)
 
 
