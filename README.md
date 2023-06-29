@@ -37,7 +37,7 @@
 (기능12) 결제 : /order , 결제하기 버튼을 클릭하면, user_id를 외래키로 가지는 order 테이블에 데이터를 추가하여 주고, 해당 order_id를 외래키로 가지는 order_item 테이블에 데이터를 추가해준다. order_item 테이블은 order_id를 외래키로 가진다는 점 빼고는 모두 cart 테이블과 컬럼이 동일하다. 
 
 ```
-##**3번**##
+## **3번**
 ```
 첫번째, 전체상품목록조회에 [무료배송]에 대한 데이터를 받지 않고 있다.
 두번째, 개별상품상세조회에서 [배송비]에 대한 데이터를 받지 않고 있다.
@@ -48,12 +48,14 @@
 
 </br>
 
-##**4번**##
+## **4번**
+</br>
+
 ![kakaoShopping drawio (1)](https://github.com/yuseonkim/step2-BE-kakao-shop/assets/81663729/9835363c-d4ec-479d-88fb-ebf0e4d19b88)
 
+</br>
 
-
-##**domain 작성**##
+## **domain 작성**
 
 product 테이블
 
