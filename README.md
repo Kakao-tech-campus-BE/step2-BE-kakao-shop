@@ -24,47 +24,47 @@
 ### 2. 제시된 화면설계를 보고 해당 화면설계와 배포된 기존 서버의 API주소를 매칭
 ***
 #### 기능1 회원가입
-<img src="img.png" width="max" height="400"/>
+<img src="images/week1/API매핑/img.png" width="max" height="400"/>
 
 (Post) : http://localhost:8080/join
 
 #### 기능2 로그인
-<img src="img_3.png" width="max" height="200"/>
+<img src="images/week1/API매핑/img_3.png" width="max" height="200"/>
 
 (Post) : http://localhost:8080/login
 
 #### 기능4 전체화면 조회
-<img src="img_5.png" width="max" height="100"/>
+<img src="images/week1/API매핑/img_5.png" width="max" height="100"/>
 
 (Get) : http://localhost:8080/products
 
 #### 기능5 개별상품상세조회
-<img src="img_6.png" width="max" height="200"/>
+<img src="images/week1/API매핑/img_6.png" width="max" height="200"/>
 
 (Get) : http://localhost:8080/products/1
 
 #### 기능8 장바구니 담기
-<img src="img_9.png" width="max" height="400"/>
+<img src="images/week1/API매핑/img_9.png" width="max" height="400"/>
 
 (Post) : http://localhost:8080/carts/add
 
 #### 기능9 장바구니 보기
-<img src="img_10.png" width="max" height="100"/>
+<img src="images/week1/API매핑/img_10.png" width="max" height="100"/>
 
 (Get) : http://localhost:8080/carts
 
 #### 기능11 주문
-<img src="img_12.png" width="max" height="200"/>
+<img src="images/week1/API매핑/img_12.png" width="max" height="200"/>
 
 (Post) : http://localhost:8080/carts/update
 
 #### 기능12 결제
-<img src="img_13.png" width="max" height="300"/>
+<img src="images/week1/API매핑/img_13.png" width="max" height="300"/>
 
 (Post) : http://localhost:8080/orders/save
 
 #### 기능13 주문결과 확인
-<img src="img_15.png" width="max" height="300"/>
+<img src="images/week1/API매핑/img_15.png" width="max" height="300"/>
 
 (Get) : http://localhost:8080/orders/1
 ***
@@ -85,7 +85,7 @@
 ### 4. 테이블 설계를 하여 ER-Diagram을 추가하여 제출하시오.
 ***
 #### ER 다이어그램
-<img src="img_16.png" width="max" height="300"/>
+<img src="images/week1/ER다이어그램/img_16.png" width="max" height="300"/>
 
 ***
 
