@@ -19,7 +19,18 @@
 #### ( 화면설계서와 API 주소 매칭하기 )  
 ```
 (기능 1) 회원가입 : `/join`
-(기능 2) 
+(기능 2) 로그인 : `/login`
+(기능 3) 로그아웃 : `/logout` -> API 시나리오에 없음
+(기능 4) 전체 상품 목록 조회 : `/products`
+(기능 5) 개별 상품 상세 조회 : `/products/{product_id}`
+(기능 6) 상품 옵션 선택 : (Front-end Side)
+(기능 7) 옵션 확인 및 수량 결정 : (Front-end Side)
+(기능 8) 장바구니 담기 : `/carts/add`
+(기능 9) 장바구니 보기 : `/carts`
+(기능10) 장바구니 상품 옵션 확인 및 수량 결정 : (Front-end Side)
+(기능11) 주문 : `carts/update`
+(기능12) 결제 : `orders/save`
+(기능13) 주문 결과 확인 : `orders/{orders_id}`
 
 ```
 
