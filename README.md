@@ -29,7 +29,12 @@
 ![ho](img/상품들.png)
 
 http://localhost:3000
+-> 사용자가 서비스 홈페이지 첫화면에 접속하면, 전체 목록을 조회하는 API가 호출되어 'product-table'의 데이터들이 불러와진다
+   이 때 
+
 http://localhost:3000/product/1
+-> 
+
 http://localhost:3000/cart
 http://localhost:3000/order
 http://localhost:3000/result/1
