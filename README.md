@@ -25,7 +25,7 @@
 
 
 2. 제시된 화면설계를 보고 해당 화면설계와 배포된 기존 서버의 API주소를 매칭하여 README에 내용을 작성하시오. (카카오 화면설계 시나리오가 있음)
-![ho](./img/)
+![ho](img/상품들.png)
 http://localhost:3000
 http://localhost:3000/product/1
 http://localhost:3000/cart
