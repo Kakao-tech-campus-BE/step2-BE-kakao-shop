@@ -136,6 +136,7 @@
 - Local URL : [http://localhost:8080/orders/1](http://localhost:8080/orders/1)(주문번호)
 
 <br><br>
+
 ## 3. Response Data 확인, 부족한 데이터 추가
 
 | 기능 | URL Path | Method | Request | Response |
@@ -150,6 +151,7 @@
 | 결제하기 | /orders/save | POST |  | id<br>products<br>　productName<br>　items<br>　　id<br>　　optionName<br>　　quantity<br>　　price<br>totalPrice |
 | 주문결과확인 | /orders/# | GET |  | id<br>products<br>　productName<br>　items<br>　　id<br>　　optionName<br>　　quantity<br>　　price<br>totalPrice |
 <br>
+
 ### 응답되는 데이터를 화면과 대조하여 부족한 데이터 탐색
 
 - 배송 전체 상품 목록 조회, 개별 상품 상세 조회에 배송정보가 있으나 요구사항에 없으므로 따로 추가할 필요 없어 보인다.
@@ -167,6 +169,7 @@
     <p align="center"><img src="./images/Untitled%2014.png" height="200px" width="300px"></p>    
         
 <br><br>
+
 ## 4. ERD 그리기
 
 ![Untitled](./images/Untitled%2015.png)
