@@ -53,7 +53,9 @@
 3. 배포된 서버에 모든 API를 POSTMAN으로 요청해본 뒤 응답되는 데이터를 확인하고 부족한 데이터가 무엇인지 체크하여 README에 내용을 작성하시오.
  로그인 시 이메일 또는 비밀번호가 일치하지 않을 때, 아무 표시가 없음. -> 재시도를 요청하기 or 이메일이나 비밀번호를 다시 확인할 것을 요구해야 함.
 4. 테이블 설계를 하여 README에 ER-Diagram을 추가하여 제출하시오.
+<div>
 <img src="https://github.com/sam-mae/step2-BE-kakao-shop/blob/feat-leesangmyeong/%E1%84%87%E1%85%AE%E1%84%89%E1%85%A1%E1%86%AB%E1%84%83%E1%85%A2BE_%E1%84%8B%E1%85%B5%E1%84%89%E1%85%A1%E1%86%BC%E1%84%86%E1%85%A7%E1%86%BC_1%E1%84%8C%E1%85%AE%E1%84%8E%E1%85%A1_Diagram.png?">
+</div>
 ```
 
 </br>
