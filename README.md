@@ -34,7 +34,7 @@
 
 (기능11) 주문 : /carts/update , 수정된 최종 option_id와 option_count를 데이터로 받고 이를 통해 carts 데이터를 update 한다.
 
-(기능12) 결제 : /order , 결제하기 버튼을 클릭하면, user_id를 외래키로 가지는 order 테이블에 데이터를 추가하여 주고, 해당 order_id를 외래키로 가지는 order_item 테이블에 데이터를 추가해준다. order_item 테이블은 order_id를 외래키로 가진다는 점 빼고는 모두 cart 테이블과 컬럼이 동일하다. 
+(기능12) 결제 : /order , 결제하기 버튼을 클릭하면, user_id를 외래키로 가지는 order 테이블에 데이터를 추가하여 주고, 해당 order_id를 외래키로 가지는 order_item 테이블에 데이터를 추가해준다. order_item 테이블은 order_id를 외래키로 가진다는 점 빼고는 모두 cart 테이블과 컬럼이 동일하다. 또한 결제버튼을 클릭하면 기존의 cart 데이터는 삭제되고 모두 order_item 테이블로 옮겨진다.
 
 ```
 ## **3번**
