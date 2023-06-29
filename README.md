@@ -34,6 +34,175 @@
 
 ```
 
+
+#### ( 배포된 API들의 Response 중에서 부족한 데이터 )
+```
+- 기능 1 [POST] 회원가입 : `/join`
+
+Request Header : 아직 로그인해서 JWT를 발급받기 전
+
+Request Body :
+	{
+		"username":"{입력받은 유저명}",
+		"email":"{입력받은 이메일}",
+		"password":"{입력받은 패스워드}"
+	}
+	
+Response Body :
+
+	(회원가입 성공) {
+		"success": true,
+		"response": null,
+		"error": null
+	}
+
+	(회원가입 실패) {
+		"success" : false,
+		"response" : null,
+		"error" : {
+			(이메일 형식 오류) {
+				"message" : "이메일 형식으로 작성해주세요:email"
+			}
+			(비밀번호 형식 오류 - 표현식) {
+				"message": "영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니다.:password"
+			}
+			(이메일 중복 오류) {
+				"message": "동일한 이메일이 존재합니다 : {입력받은 이메일}"
+			}
+			(비밀번호 형식 오류 - 길이) {
+				"message": "8에서 20자 이내여야 합니다.:password"
+			},
+				"status" : 400
+		}
+	}
+```  
+<br>  
+
+```
+- 기능 2 [POST] 로그인 : `/login`
+
+Request Header : 아직 로그인해서 JWT를 발급받기 전
+
+Request Body :
+	{
+		"email":"{입력받은 이메일}",
+		"password":"{입력받은 패스워드}"
+	}
+	
+Response Body :
+
+	(로그인 성공) {
+		"success": true,
+		"response": null,
+		"error": null
+	}
+
+	(회원가입 실패) {
+		"success" : false,
+		"response" : null,
+		"error" : {
+			(이메일 형식 오류) {
+				"message" : "이메일 형식으로 작성해주세요:email",
+				"status" : 400
+			}
+			(비밀번호 형식 오류 - 표현식) {
+				"message": "영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니다.:password",
+				"status" : 400
+			}
+			(비밀번호 형식 오류 - 길이) {
+				"message": "8에서 20자 이내여야 합니다.:password",
+				"status" : 400
+			}
+			(가입되지 않은 사용자) {
+				"message": "인증되지 않았습니다",
+				"status" : 401
+			}
+		}
+	}
+ ```  
+
+<br>
+
+```
+- 기능 3 [POST] 로그아웃 : `/logout`
+
+Request Header : 쿠키의 Authorization Key에 JWT 값을 담아보냄
+
+Request Body :
+	{
+		뭘 담아보내건 같은 500 Error가 발생
+	}
+	
+Response Body :
+
+	(로그아웃 실패) {
+		"success" : false,
+		"response" : null,
+		"error" : {
+				"message": "Request method 'GET' not supported",
+        "status": 500
+			}
+	}
+
+=> GET으로 보내나 POST로 보내나 500 Error를 발생시킴
+=> 보다 정확하고 명확한 에러 처리에 대한 구현이 필요해보임.
+```
+
+<br>
+
+```
+- 기능 4 [GET] 전체 상품 목록 조회 : `/products`
+
+Request Header : 필요없음
+Request Parameter :
+	`?page={num} (default: 0)`
+	
+Response Body :
+	{
+		"success": true,
+		"response": [
+			(id 1~9까지 반복) [+num*9] {
+				"id": 1,
+				"productName": "{해당 product_id의 제품명}",
+				"description": "",
+				"image": "{해당 product_id의 이미지 URL}",
+				"price": {해당 product_id의 가격}
+			}, x 9
+		],
+		"error": null
+```
+
+<br>
+
+```
+- 기능 5 개별 상품 상세 조회 : `/products/{product_id}`
+
+Request Header : 필요없음
+Request Parameter : 없음
+	
+Response Body :
+	{
+		"success": true,
+		"response": {
+        "id": {해당 product_id},
+        "productName": "{해당 product의 제품명}",
+        "description": "",
+        "image": "{해당 product_id의 이미지 URL}",
+        "price": {해당 product_id의 가격},
+        "starCount": {해당 product_id의 rate},
+        "options": [
+          (해당 product의 option 개수만큼 반복) {
+            "id": {해당 option_id},
+            "optionName": "{해당 option_id의 옵션명}",
+            "price": {해당 product_id의 가격}
+          }, x N
+        ]
+      },
+      "error": null
+  }
+```
+
+
 <br>
 
 ---
