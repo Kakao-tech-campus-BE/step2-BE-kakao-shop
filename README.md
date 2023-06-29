@@ -188,7 +188,7 @@
 
 4. 테이블 설계를 하여 README에 ER-Diagram을 추가하여 제출하시오.
     
-    ![Untitled](https://github.com/boseungk/TIL/assets/95980754/a76122f1-758f-460d-9f99-59ced8f29813)
+    ![erd](https://github.com/boseungk/TIL/assets/95980754/9d87f131-5233-4403-918d-1275b8917a68)
     
 - **과제 수행 (코드 작성) 하면서 어려웠던 점 (선택)**
     - 처음에는 테이블 설계가 금방 끝날 줄 알았는데, 여러가지 어려움이 있었다.
