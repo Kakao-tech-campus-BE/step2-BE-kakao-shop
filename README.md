@@ -19,8 +19,8 @@
 (기능5) 개별 상품 상세 조회 : /products/{product_id}
 (기능6) 상품 옵션 선택 : /products/{product_id}, 선택을 하는 기능은 프론트에서 체크하여 장바구니에 담을때 데이터를 넘겨받는것이 좋을것 같다.
 (기능7) 옵션 확인 및 수량 결정 : (수량버튼 + 혹은 -를 누를때) /product/{product_id}/{option_id}/add 혹은 /products/{product_id}/{option_id}/remove 근데 이런식으로 한다면.. 그때마다 DB에 접근해야되서 사실 실용성이 없을 것 같다. 개수는 프론트에서 넘겨받는게 나을듯하다. 
-(기능8) 장바구니 담기 : /carts/add 프론트에서 넘겨주는 데이터를 바탕으로 cart 테이블에 데이터를 추가한다.
-(기능9) 장바구니 보기 : /carts
+(기능8) 장바구니 담기 : /carts/add 프론트에서 넘겨주는 데이터를 바탕으로 장바구니버튼을 클릭하면 cart 테이블에 데이터를 추가한다. cart 테이블의 user_id는 현재 토큰의 user_id를 담아야한다.
+(기능9) 장바구니 보기 : /carts 현재 토근의 user_id를 가지는 cart들을 조회한다.
 (기능10) 장바구니 상품 옵션 확인 및 수량 결정 :/cart , 기능7과 마찬가지로, 주문하기를 눌렀을때 수정된 최종데이터를 주문하기 버튼을 통해 넘겨주는것이 좋을 것 같다.
 (기능11) 주문 : /carts/update , 수정된 최종 option_id와 option_count를 데이터로 받고 이를 통해 carts 데이터를 update 한다.
 (기능12) 결제 : /order , 결제하기 버튼을 클릭하면, user_id를 외래키로 가지는 order 테이블에 데이터를 추가하여 주고, 해당 order_id를 외래키로 가지는 order_item 테이블에 데이터를 추가해준다. order_item 테이블은 order_id를 외래키로 가진다는 점 빼고는 모두 cart 테이블과 컬럼이 동일하다. 
@@ -37,7 +37,7 @@
 </br>
 
 ##**4번**##
-![kakaoShopping drawio (1)](https://github.com/Kakao-tech-campus-BE/Step-2.-Week-1/assets/81663729/b8edad1c-b985-4e59-b446-4a36988fc844)
+###domain 작성![kakaoShopping drawio (1)](https://github.com/yuseonkim/step2-BE-kakao-shop/assets/81663729/9835363c-d4ec-479d-88fb-ebf0e4d19b88)
 
 
 ###domain 작성
