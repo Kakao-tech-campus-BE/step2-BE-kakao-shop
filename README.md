@@ -74,6 +74,13 @@
 (기능 13) 주문 결과 확인        
 주문 결과 확인 버튼을 누르면, /orders/{orderId} URL에 GET Method로 Bearer 인증 토큰 헤더를 담은 요청이 날아가게 된다.       
 
+### **과제 4. 테이블 설계를 하여 README에 ER-Diagram을 추가하여 제출하시오.** 
+![image](https://github.com/Jun2-Lee/step2-BE-kakao-shop/assets/80378041/c36d6164-7f06-4f6d-91cf-0be25625963d)
+먼저, ERD를 그리기 전에 그린 UML 클래스 다이어그램입니다.         
+
+![image](https://github.com/Jun2-Lee/step2-BE-kakao-shop/assets/80378041/a9657eb1-f529-4b9d-bee1-3dbc709440f7)
+그 뒤, UML 클래스 다이어그램을 토대로 Intellij를 이용해 Entity를 만들고, H2 서버에 임시로 띄운 뒤 생성한 ER 다이어그램입니다.
+
 
 
 # 2주차
