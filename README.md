@@ -39,3 +39,192 @@
 ##**4번**##
 ![kakaoShopping drawio (1)](https://github.com/Kakao-tech-campus-BE/Step-2.-Week-1/assets/81663729/b8edad1c-b985-4e59-b446-4a36988fc844)
 
+
+###domain 작성
+
+product 테이블
+
+```
+public class Product extends BaseEntity{
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "product_id", nullable = false)
+    private Long id;
+
+    @Setter
+    @Column(name = "product_name", nullable = false)
+    private String name;
+    @Setter
+    @Column(nullable = true)
+    private String description;
+
+    @Setter
+    @Column(name = "product_price" ,nullable = false)
+    private int price;
+
+    @Setter
+    @Column(nullable = true)
+    private String image;
+    
+    @OneToMany(mappedBy = "product")
+    @Setter
+    @JoinColumn()
+    private List<Options> options = new ArrayList<>();
+}
+```
+User 테이블
+
+```
+@Getter
+@Entity
+public class User extends BaseEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id", nullable = false)
+    private Long id;
+
+    @Setter
+    @Column(nullable = false)
+    private String email;
+
+    @Setter
+    @Column(nullable = false)
+    private String name;
+
+    @Setter
+    @Column(nullable = false, length = 20)
+    private String passwd;
+
+    @Setter
+    @Column(nullable = false)
+    private String status;
+
+    @OneToMany(mappedBy = "user")
+    @Setter
+    private List<Cart> cart_list = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    @Setter
+    private List<OrderItem> item_list = new ArrayList<>();
+
+
+}
+```
+Option 테이블
+
+```
+@Entity
+@Getter
+public class Options {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "option_id", nullable = false)
+    private Long id;
+
+    @Setter
+    @Column(name = "option_name" , nullable = false)
+    private String name;
+
+    @Setter
+    @Column(name = "option_price" , nullable = false)
+    private int price;
+
+    @Setter
+    @Column(name = "option_count", nullable = false)
+    private int count;
+
+    @Setter
+    @ManyToOne
+    @JoinColumn(name="product_id")
+    private Product product;
+
+    @Setter
+    @OneToOne(mappedBy ="option")
+    private Cart cart;
+
+    @Setter
+    @OneToOne(mappedBy= "option")
+    private OrderItem orderItem;
+}
+```
+
+Cart 테이블
+
+```
+@Getter
+@Entity
+public class Cart extends BaseEntity{
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "cart_id", nullable = false)
+    private Long id;
+
+    @OneToOne
+    @Setter
+    @JoinColumn(name = "option_id")
+    private Options option;
+
+    @ManyToOne
+    @Setter
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @Column(nullable = false)
+    @Setter
+    private int count;
+
+
+}
+```
+Order_Item 테이블
+
+```
+@Getter
+@Entity
+public class OrderItem{
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "item_id", nullable = false)
+    private Long id;
+
+    @OneToOne
+    @Setter
+    @JoinColumn(name = "option_id")
+    private Options option;
+
+    @ManyToOne
+    @Setter
+    @JoinColumn(name="user_id")
+    private User user;
+
+    @ManyToOne
+    @Setter
+    @JoinColumn(name="order_id")
+    private Order order;
+
+}
+
+```
+
+Order 테이블
+
+```
+@Entity
+@Getter
+public class Order extends BaseEntity{
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Long id;
+
+    @OneToOne
+    @Setter
+    @JoinColumn(name="user_id")
+    private User user;
+
+    @OneToMany(mappedBy = "order")
+    @Setter
+    private List<OrderItem> item_list = new ArrayList<>();
+
+}
+```
