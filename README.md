@@ -61,16 +61,16 @@ G. 주문 결과 확인 시 주문 시간을 보여주는 기능.
 
 ### 2. 제시된 화면설계를 보고 해당 화면설계와 배포된 기존 서버의 API주소를 매칭하여 README에 내용을 작성하시오.
 ```
-(기능 1) 회원가입 - (Post) - /join, 이메일 중복 체크 - (Post) - /check
-(기능 2) 로그인 - (Post) - /login
-(기능 4) 전체 상품 목록 조회 - (Get) - /products
-(기능 5) 개별 상품 목록 조회 - (Get) - /products/{id}
-(기능 8) 장바구니 담기 - (Post) - /carts/add
-(기능 9) 장바구니 보기 - (Get) - /carts
-(기능 10) 장바구니 상품 옵션 확인 및 수량 결정 - (Post) - /carts/update
-(기능 11) 주문 - (Post) - /orders/save
+(기능 1) 회원가입 - (Post) - `/join`, 이메일 중복 체크 - (Post) - `/check`
+(기능 2) 로그인 - (Post) - `/login`
+(기능 4) 전체 상품 목록 조회 - (Get) - `/products`
+(기능 5) 개별 상품 목록 조회 - (Get) - `/products/{id}`
+(기능 8) 장바구니 담기 - (Post) - `/carts/add`
+(기능 9) 장바구니 보기 - (Get) - `/carts`
+(기능 10) 장바구니 상품 옵션 확인 및 수량 결정 - (Post) - `/carts/update`
+(기능 11) 주문 - (Post) - `/orders/save`
 (기능 12) 결제 - 다루지 않음
-(기능 13) 주문 결과 확인 - (Get) - /orders/{id}
+(기능 13) 주문 결과 확인 - (Get) - `/orders/{id}`
 
 -> 빠진 기능들은 프론트에서 처리할 예정.
 ```
