@@ -133,24 +133,28 @@ option_id (Foreign Key): 옵션 식별자
 option_table
 quantity: 상품 수량
 partial_sum_price: 수량과 옵션의 가격이 반영된 각 상품의 가격
--------------------------------------------
-(5) order_table
+order_date: 주문 일자
+total_price: 주문 총액
+------------------------------------------- cart_tabled에서 데이터가 거의 비슷하게 넘어오는데 partial_sum_price가 빠졌다(total 계산 후 필요가 없음)
+(5) order_item_table
+order_item_id (Primary Key): 주문 식별자
+product_id (Foreign Key): 상품 식별자
+product_name : 상품 이름
+option_id (Foreign Key): 옵션 식별자
+option_table
+quantity: 상품 수량
+order_date: 주문 일자
+total_price: 주문 총액
+------------------------------------------- order_table은 결제 후 그대로 order_table로 
+(6) order_table
 order_id (Primary Key): 주문 식별자
 product_id (Foreign Key): 상품 식별자
 product_name : 상품 이름
 option_id (Foreign Key): 옵션 식별자
 option_table
 quantity: 상품 수량
-partial_sum_price: 수량과 옵션의 가격이 반영된 각 상품의 가격
 order_date: 주문 일자
-total_amount: 주문 총액
--------------------------------------------
-(6) order_item_table
-order_detail_id (Primary Key): 주문 상세 식별자
-order_id (Foreign Key): 주문 식별자
-product_id (Foreign Key): 상품 식별자
-option_id (Foreign Key): 옵션 식별자
-quantity: 상품 수량
+total_price: 주문 총액
 
 </br>
 
