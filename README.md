@@ -57,27 +57,49 @@
 
 ##### 2. 제시된 화면설계를 보고 해당 화면설계와 배포된 기존 서버의 API주소를 매칭하여 README에 내용을 작성하시오.
 > (기능1) 회원 가입
+>
 > API 주소: http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/join
 >
+>
+>
 > (기능2) 로그인
+>
 > API 주소: http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/login
 >
+>
+>
 > (기능3) 전체 상품 목록 조회
+>
 > API 주소: http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/products
 >
+>
+>
 > (기능4) 개별 상품 상세 조회
+>
 > API 주소: http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/products/1
 >
+>
+>
 > (기능5) 장바구니 담기
+>
 > API 주소:http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/carts/add
 >
+>
+>
 > (기능6) 장바구니 보기
+>
 > API 주소:http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/carts
 >
+>
+>
 > (기능7) 결제
+>
 > API 주소:http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/orders/save
 >
+>
+>
 > (기능8) 주문 결과 확인
+>
 > API 주소:http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/orders/1
 
 
@@ -89,11 +111,13 @@
 > 부족한 데이터: {”freeDelivery"}
 >
 >
+>
 > [2] 개별 상품 상세 조회 (http://localhost:8080/products/1)
 >
 > 응답되는 데이터:  {"id", "productName", "description", "image", "price", "starCount", "options"}
 >
 > 부족한 데이터: 없음
+>
 >
 >
 > [3] 이메일 중복 체크 (http://localhost:8080/check)
@@ -102,11 +126,14 @@
 >
 > 부족한 데이터: 없음
 >
+>
+>
 > [4] 회원가입 (http://localhost:8080/join)
 >
 > 응답되는 데이터: {”success", "response", "error"}
 >
 > 부족한 데이터: 없음
+>
 >
 >
 > [5] 로그인 (http://localhost:8080/login)
@@ -116,11 +143,13 @@
 > 부족한 데이터: 없음
 >
 >
+>
 > [6] 장바구니 담기 (http://localhost:8080/carts/add)
 >
 > 응답되는 데이터: {"success", "response", "error"}
 >
 > 부족한 데이터: 없음
+>
 >
 >
 > [7] 장바구니 조회 (http://localhost:8080/carts)
@@ -130,6 +159,7 @@
 > 부족한 데이터: 없음
 >
 >
+>
 > [8] 주문하기 - (장바구니 수정) (http://localhost:8080/carts/update)
 >
 > 응답되는 데이터: {”success", "carts", "totalPrice", "error" }
@@ -137,11 +167,13 @@
 > 부족한 데이터: 없음
 >
 >
+>
 > [9] 결제하기 - (주문 인서트) (http://localhost:8080/orders/save)
 >
 > 응답되는 데이터: {“success", "id", "products", "totalPrice", "error" }
 >
 > 부족한 데이터: 없음
+>
 >
 >
 > [10] 주문 결과 확인 (http://localhost:8080/orders/1)
