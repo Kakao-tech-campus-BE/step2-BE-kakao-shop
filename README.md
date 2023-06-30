@@ -100,7 +100,7 @@
 
 #### 1) 회원가입 버튼 클릭 시
 
-![회원가입](https://github.com/sososo0/test/assets/94467302/13190c25-fb0d-46f2-a232-3701a443218c)
+[![회원가입 버튼](https://i.postimg.cc/SQz2KCR3/image.png)](https://postimg.cc/vDbHq1Wt)
 
 **API 주소 : http://localhost:8080/join**
 
@@ -173,7 +173,7 @@
 
 #### 2) 로그인 버튼 클릭 시 
 
-![로그인](https://github.com/sososo0/test/assets/94467302/c1ce746f-8925-4ccb-8eea-a82867a6c846)
+[![로그인 버튼](https://i.postimg.cc/XJBJp6jd/image.png)](https://postimg.cc/KkFFHVg8)
 
 **API 주소 : http://localhost:8080/login**
 
@@ -246,7 +246,7 @@
 
 #### 3) 전체 상품 조회
 
-![전체상품 조회](https://github.com/sososo0/test/assets/94467302/8849aec9-043a-44b0-ac47-a7f254da02a7)
+[![전체 상품 조회](https://i.postimg.cc/44zfM5mf/image.png)](https://postimg.cc/RqZxJw7y)
 
 **API 주소 : http://localhost:8080/products**
 
@@ -325,7 +325,7 @@
 
 #### 4) 개별 상품 상세 조회 (전체 상품 조회에서 개별 상품을 클릭했을 때)
 
-![개별상품조회](https://github.com/sososo0/test/assets/94467302/a900606f-2795-46e1-a582-6075db23d7a9)
+[![개별 상품 상세 조회](https://i.postimg.cc/WzjvjBh2/image.png)](https://postimg.cc/LYy730t7)
 
 **API 주소 : http://localhost:8080/products/{product_id}**
 
@@ -386,7 +386,7 @@
 
 #### 5) 장바구니 담기
 
-![장바구니 담기](https://github.com/sososo0/test/assets/94467302/b2cf877c-45e9-4edf-b41e-888e3cf41030)
+[![장바구니 담기](https://i.postimg.cc/CxtpdBzr/image.png)](https://postimg.cc/BjxVVv52)
 
 **API 주소 : http://localhost:8080/carts/add**
 
@@ -425,7 +425,7 @@
 
 #### 6) 장바구니 조회
 
-![장바구니 보기](https://github.com/sososo0/test/assets/94467302/6ced7d6a-4967-46eb-9472-4cd7a19fba88)
+[![장바구니 조회](https://i.postimg.cc/Tw6SWrG0/image.png)](https://postimg.cc/WD5SBqdq)
 
 **API 주소 : http://localhost:8080/carts**
 
@@ -496,7 +496,7 @@
 
 #### 7) 주문하기 버튼 눌렀을 때 (장바구니 수정)
 
-![장바구니 수정](https://github.com/sososo0/test/assets/94467302/a73f7803-2bfa-491c-bdae-4f60a06b45b6)
+[![장바구니 수정](https://i.postimg.cc/rsyPfMDt/image.png)](https://postimg.cc/TLS0w8qR)
 
 **API 주소 : http://localhost:8080/carts/update**
 
@@ -541,7 +541,7 @@
 
 #### 8) 결제하기 버튼 
 
-![결제하기](https://github.com/sososo0/test/assets/94467302/ed9b06c5-e241-4f7a-8ca7-c790c86624d0)
+[![결제하기 버튼](https://i.postimg.cc/VLVVFymd/image.png)](https://postimg.cc/ppKC269H)
 
 **API 주소 : http://localhost:8080/orders/save**
 
@@ -577,7 +577,7 @@
 
 #### 9) 주문 결과 확인 
 
-![주문결과 확인](https://github.com/sososo0/test/assets/94467302/2ed869dc-866f-48c6-95f1-994b599e2e8d)
+[![주문 결과 확인](https://i.postimg.cc/vHk0VWtn/image.png)](https://postimg.cc/Mv00kf4Z)
 
 **API 주소 : http://localhost:8080/orders/{order_id}**
 
@@ -697,7 +697,7 @@
 
 ### 4. 테이블 설계를 하여 README에 ER-Diagram을 추가하여 제출하세요.
 
-![ER-Diagram](https://github.com/sososo0/test/assets/94467302/00981601-d926-4ebc-9ff8-6db1945b1b8b)
+[![ER-Diagram.png](https://i.postimg.cc/nLbjBLWT/ER-Diagram.png)](https://postimg.cc/cvhLNd08)
 
 ### 5. pdf 과제
 
