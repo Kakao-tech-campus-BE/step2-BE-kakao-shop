@@ -1,14 +1,19 @@
-# 1주차 과제
+# step2-BE-kakao-shop
+카카오 테크 캠퍼스 2단계 카카오 쇼핑하기 백엔드 클론 프로젝트 레포지토리입니다.
 
-### 과제명
+# 1주차
 
+카카오 테크 캠퍼스 2단계 - BE - 1주차 클론 과제
+</br>
+</br>
+
+## **과제명**
 ```
 1. 요구사항분석/API요청 및 응답 시나리오 분석
 2. 요구사항 추가 반영 및 테이블 설계도
 ```
 
-### **과제 설명**
-
+## **과제 설명**
 ```
 1. 요구사항 시나리오를 보고 부족해 보이는 기능을 하나 이상 체크하여 README에 내용을 작성하시오.
 2. 제시된 화면설계를 보고 해당 화면설계와 배포된 기존 서버의 API주소를 매칭하여 README에 내용을 작성하시오. (카카오 화면설계 시나리오가 있음)
@@ -16,19 +21,36 @@
 4. 테이블 설계를 하여 README에 ER-Diagram을 추가하여 제출하시오.
 ```
 
-### 과제 상세
+</br>
 
-```
-- 부족한 기능에 대한 요구사항을 미리 예상할 수 있는가? (예를 들면 상품등록 api가 기존 요구사항에는 없는데 추후 필요하지는 않을지, 이런 부분들을 생각하였는지)
-- 요구사항에 맞는 API를 분석하고 사용자 시나리오를 설계하였는가? (예를 들어 배포된 서버와 화면 설계를 제시해줄 예정인데, 특정 버튼을 클릭했을 때 어떤 API가 호출되어야 할지를 아는지)
-- 응답되는 데이터가 프론트앤드 화면에 모두 반영될 수 있는지를 체크하였는가?(예를 들어 배송관련 비용이 있는데, 이런것들이 API에는 없는데 이런 부분을 캐치할 수 있는지)
-- 테이블 설계가 모든 API를 만족할 수 있게 나왔는가? (테이블이 효율적으로 나왔는가 보다는 해당 테이블로 요구사항을 만족할 수 있는지에 대한 여부만)
-- 테이블명이 이해하기 쉽게 만들어졌는가? (상품테이블이 product이면 이해하기 쉽지만, material이라고 하면 이해하기 어렵기 때문)
-```
+## **과제 상세 : 수강생들이 과제를 진행할 때, 유념해야할 것**
+아래 항목은 반드시 포함하여 과제 수행해주세요!
+>- 부족한 기능에 대한 요구사항을 미리 예상할 수 있는가? (예를 들면 상품등록 api가 기존 요구사항에는 없는데 추후 필요하지는 않을지, 이런 부분들을 생각하였는지) 
+>- 요구사항에 맞는 API를 분석하고 사용자 시나리오를 설계하였는가? (예를 들어 배포된 서버와 화면 설계를 제시해줄 예정인데, 특정 버튼을 클릭했을 때 어떤 API가 호출되어야 할지를 아는지)
+>- 응답되는 데이터가 프론트앤드 화면에 모두 반영될 수 있는지를 체크하였는가?(예를 들어 배송관련 비용이 있는데, 이런것들이 API에는 없는데 이런 부분을 캐치할 수 있는지)
+>- 테이블 설계가 모든 API를 만족할 수 있게 나왔는가? (테이블이 효율적으로 나왔는가 보다는 해당 테이블로 요구사항을 만족할 수 있는지에 대한 여부만)
+>- 테이블명이 이해하기 쉽게 만들어졌는가? (상품테이블이 product이면 이해하기 쉽지만, material이라고 하면 이해하기 어렵기 때문)
+
+</br>
+
+## **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
+**1. PR 제목과 내용을 아래와 같이 작성 해주세요.**
+
+>- PR 제목 : 부산대BE_라이언_1주차 과제
+
+</br>
+
+**2. PR 내용 :**
+
+>- 코드 작성하면서 어려웠던 점
+>- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
+
 
 <br>
 
-# **요구사항**
+# 1주차 과제 수행
+
+## **요구사항**
 
 <p align="center"><img src="./images/Untitled.png" height="300px" width="300px"></p>
 
@@ -39,34 +61,41 @@
 | 로그아웃 | 상품 옵션 선택 | 장바구니 상품 옵션 확인 및 수량 결정 | 주문 결과 확인 |
 |  | 옵션 확인 및 수량 결정 |  |  |
 
-<br><br>
+<br>
 
 ## 1. 부족한/추가될 수 있는 요구사항
 
 
-장바구니
+- 장바구니
 
-- 옵션 삭제
-- 상품 삭제
+    - 옵션 삭제
+    - 상품 삭제
+    - 이미 선택된 옵션을 다시 선택할 경우 옵션의 수량 증가
+    
+    <br>
 
-상품
+- 상품
 
-- 할인 정보 제공
-- 배송 정보 제공
-- 상품 등록, 수정, 삭제
-- 상품 검색, 정렬
+    - 할인 정보 제공
+    - 배송 정보 제공
+    - 상품 등록, 수정, 삭제
+    - 상품 검색, 정렬
+    
+    <br>
 
-주문/결제
+- 주문/결제
 
-- 배송지, 연락처 등의 개인정보 입력
-- 결제 시 필수 정보 기입과 약관 동의 확인
-- 주문 취소
+    - 배송지, 연락처 등의 개인정보 입력
+    - 결제 시 필수 정보 기입과 약관 동의 확인
+    - 주문 취소
 
-고객 개인 페이지 제공
+    <br>
 
-- 개인 주문 내역 조회
-- 월별 지출 금액 조회
-- 배송지 관리
+- 고객 개인 페이지 제공
+
+    - 개인 주문 내역 조회
+    - 월별 지출 금액 조회
+    - 배송지 관리
 
 
 <br><br>
@@ -154,12 +183,12 @@
 
 ### 응답되는 데이터를 화면과 대조하여 부족한 데이터 탐색
 
-- 배송 전체 상품 목록 조회, 개별 상품 상세 조회에 배송정보가 있으나 요구사항에 없으므로 따로 추가할 필요 없어 보인다.
+- 전체 상품 목록 조회, 개별 상품 상세 조회에 배송정보가 있으나 요구사항에 없으므로 따로 추가할 필요 없어 보인다.
     
 <p align="center"><img src="./images/Untitled%2011.png" height="50px" width="100px"></p>
 <p align="center"><img src="./images/Untitled%2012.png" height="95px" width="300px"></p>
 
-
+- 개별 상품 상세 조회에 description 내용은 없으므로 description 필드는 제외해도 될 것으로 보인다.
 - 결제하기에서 상품명 없이 옵션명만 있으므로 productName 제외해도 될 것으로 보인다.
     
     <p align="center"><img src="./images/Untitled%2013.png" height="300px" width="300px"></p>
@@ -170,6 +199,62 @@
         
 <br><br>
 
-## 4. ERD 그리기
+## 4. ERD
+
+- User 테이블
+    
+    
+    | Field name | Data Type | Constraint |
+    | --- | --- | --- |
+    | ID | INT | PK |
+    | username | VARCHAR(30) | NOT NULL |
+    | email | VARCHAR(50) | NOT NULL, UNIQUE |
+    | password | VARCHAR(20) | NOT NULL |
+    | created_at | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP |
+- Product
+    
+    
+    | Field name | Data Type | Constraint |
+    | --- | --- | --- |
+    | ID | INT | PK |
+    | product_name | VARCHAR(100) | NOT NULL |
+    | image | BLOB |  |
+    | price | INT | NOT NULL |
+    | created_at | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP |
+- Option
+    
+    
+    | Field name | Data Type | Constraint |
+    | --- | --- | --- |
+    | ID | INT | PK |
+    | product_id | INT | FK |
+    | option_name | VARCHAR(50) | NOT NULL |
+    | price | INT | NOT NULL |
+    | created_at | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP |
+- Cart
+    
+    
+    | Field name | Data Type | Constraint |
+    | --- | --- | --- |
+    | ID | INT | PK |
+    | option_id | INT | FK |
+    | user_id | INT | FK |
+    | quantity | INT | NOT NULL, CHECK (quantity >= 0) |
+- Order
+    
+    
+    | Field name | Data Type | Constraint |
+    | --- | --- | --- |
+    | ID | INT | PK |
+    | user_id | INT | FK |
+- Order Item
+    
+    
+    | Field name | Data Type | Constraint |
+    | --- | --- | --- |
+    | ID | INT | PK |
+    | option_id | INT | FK |
+    | order_id | INT | FK |
+    | quantity | INT | NOT NULL, CHECK (quantity >= 0) |
 
 ![Untitled](./images/Untitled%2015.png)
