@@ -180,11 +180,13 @@
     응답 데이터에 배송지와 배송비에 대한 정보도 추가되어야 한다고 생각함  
     - 정상요청 - 성공
 </details>
-- 4.테이블을 설계하여 E-R diagram 제출
+<details>
+<summary>4.테이블을 설계하여 E-R diagram 제출</summary>
     
-    테이블 제목이 초록색인 경우는 추가로 고려할 수 있는 테이블
-    
-    ![Alt text](<readme-src/E-R diagram.PNG>)
+테이블 제목이 초록색인 경우는 추가로 고려할 수 있는 테이블
+
+![Alt text](<readme-src/E-R diagram.PNG>)
+</details>
 <details>
 <summary>5. 기본 서버의 모든 API를 테스트하고 부족한 데이터를 찾고 개선점 찾기</summary>
 
