@@ -201,7 +201,7 @@
 
 ## 4. 테이블 설계, ERD
 
-- User 테이블
+- User
     
     
     | Field name | Data Type | Constraint |
