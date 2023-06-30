@@ -178,6 +178,8 @@ API 주소:http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com
 ### ERD 사진
 
 
+![ERD 이미지 파일](https://postfiles.pstatic.net/MjAyMzA2MzBfMjE2/MDAxNjg4MTE2MjcwMTA3.eXI3_yOPPPfSIUfWYDdXOGW4mxmyM2oxaDl3flOe194g.I_A03QirJaoBCEXPy3UQ0ZO9c3w8gfaOrHMkI1QrARUg.JPEG.zzzz7037/ERD.jpg?type=w773)
+
 ### 데이터베이스 모델링 테이블 설계
 
 User
