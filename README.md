@@ -45,6 +45,87 @@
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
+
+### 1. 요구사항 시나리오를 보고 부족해 보이는 기능을 하나 이상 체크하여 README에 내용을 작성하시오.
+
+### 장바구니 삭제
+
+장바구니에 물건 담으면 삭제가 안됨
+
+무조건 구매해야 함;
+
+- 프론트 화면
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6cf0cd95-0cf1-4758-bf4f-c24326523e3a/Untitled.png)
+
+- 실제 화면
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d5d4be9b-cee4-4616-bb79-4570311e3e8f/Untitled.png)
+
+- 프론트 화면
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f19a8a33-1929-482f-88db-fb8b8ae13094/Untitled.png)
+
+- 실제 카톡쇼핑 화면
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/0361af21-8521-4a87-a139-66172b2bc006/Untitled.png)
+
+상품 옵션에서 삭제
+
+장바구니 조회에서 삭제
+
+가 필요함
+
+### 장바구니에 있는 물건 다시 추가하면 추가 안됨
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a7b7ea4f-2c83-4100-a502-a028a6650c15/Untitled.png)
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4c51f6b5-9954-4c66-93e8-29044167269c/Untitled.png)
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/729bcd2c-a88e-4afb-ada4-4f1b4a04b026/Untitled.png)
+
+추가 안됨
+
+로직에서 장바구니에 있으면 quantity++
+
+### 상품 등록
+
+이거는 유저에 따라 좀 다를 거 같은데 
+
+유저에 role을 부여해서 판매자일 때만 상품 등록이 가능해야 함
+
+아니면 모든 유저가 구매, 상품 가능하게 하던가
+
+근데 클론 코딩인데, 본인 카카오톡 쇼핑하기에는 그런 거 없음
+
+admin 페이지 고려
+
+### 찜하기
+
+테이블을 하나 더 만들어서 user랑 product를 fk로 받는 게 맞나?
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d6106d21-dd44-4b9c-9a75-9ec50b4f89be/Untitled.png)
+
+→관계 테이블로 구성
+
+### 상품 리뷰
+
+댓글처럼 구현 - comment 테이블
+
+- 실제 카톡 쇼핑 화면
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/17679e95-ae4a-42b0-9336-ba0e436eb71d/Untitled.png)
+
+starcount 필요
+
+### 문의 하기
+
+게시판 - 댓글 방식으로 구현
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8b9fe4d4-8d54-4a00-8b78-a6edc8b2ef13/Untitled.png)
+
+
+
+
 # 2주차
 
 카카오 테크 캠퍼스 2단계 - BE - 2주차 클론 과제
