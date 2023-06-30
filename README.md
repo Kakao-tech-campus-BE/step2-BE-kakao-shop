@@ -45,6 +45,611 @@
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
+</br>
+
+# **1주차 과제 제출**
+
+### **1. 요구사항 시나리오를 보고 부족해 보이는 기능을 하나 이상 체크하여 README에 내용을 작성하시오.**
+
+1. (장바구니) 상품 수량 수정 시 DB 갱신
+
+    현재 장바구니 화면에서 상품의 수량을 수정한 후, 주문을 하지 않고 다른 화면으로 이동하면 해당 수정 정보가 DB에 갱신되지 않는다.
+    </br>
+    그러므로 수량을 조정하는 버튼을 클릭할 때 혹은 다른 화면으로 이동 시에 장바구니에 담긴 상품 정보를 서버로 전달해주는 API가 필요할 것으로 보인다. 
+
+2. (상세 페이지, 장바구니) 상품 삭제 기능
+
+    현재 상품 상세 페이지와 장바구니 화면에서 선택한 상품을 삭제할 수 있는 방법이 없다. 다만 이는 프론트 측에서 구현이 가능할 것으로 보인다.
+
+3. (장바구니) 같은 제품 담을 시 업데이트 기능
+
+    현재 장바구니에 담겨있는 상품(옵션)을 다시 선택하여 장바구니에 담으려고 하면 오류가 발생한다. 이를 장바구니에 담겨있는 상품의 개수에 새로 담으려는 상품의 개수가 더해지도록 기능을 수정해야 한다. 
+
+4. (메인) 상품 검색 기능
+
+    현재는 검색 기능이 없다. 이를 추가하면 사용자의 편의에 도움이 될 것으로 보인다.
+
+</br>
+
+### **2. 제시된 화면설계를 보고 해당 화면설계와 배포된 기존 서버의 API주소를 매칭하여 README에 내용을 작성하시오. (카카오 화면설계 시나리오가 있음)**
+
+| 기능 | 사용자 시나리오 | 도메인 | 메소드 |
+|------|----------------|--------|--------|
+|**로그인 및 회원가입 관련**|
+|[(기능1) 회원 가입](#기능1-회원-가입)|회원가입 버튼을 눌렀을 때 동작|/join|POST|
+|[(기능2) 로그인](#기능2-로그인)|로그인 버튼을 눌렀을 때 동작|/login|POST|
+|[(기능3) 로그아웃](#기능3-로그아웃)|로그아웃 버튼을 눌렀을 때 동작|프론트에서 구현|        |
+|[(추가기능) 이메일 중복 체크](#추가기능-이메일-중복-체크)|이메일 중복 확인 버튼을 눌렀을 때 동작|/check|POST|
+|**상품 조회 관련**|
+|[(기능4) 전체 상품 목록 조회](#기능4-전체-상품-목록-조회)|1. 로고 클릭 시</br>2. 로그인 후</br>3. base URL로 접속 시|/products|GET|
+|[(기능5) 개별 상품 상세 조회](#기능5-개별-상품-상세-조회)|개별 상품 클릭 시|/products/{productID}|GET|
+|[(기능6) 상품 옵션 선택](#기능6-상품-옵션-선택)|상세 페이지에서 옵션 클릭 시|프론트에서 구현|        |
+|[(기능7) 옵션 확인 및 수량 결정](#기능7-옵션-확인-및-수량-결정)|(기능 6)에서 선택된 옵션의 개수 조정 버튼 클릭 시|프론트에서 구현|        |
+|**장바구니, 결제 및 주문 관련**|
+|[(기능8) 장바구니 담기](#기능8-장바구니-담기)|장바구니 담기 버튼을 눌렀을 때 동작|/carts/add|POST|
+|[(기능9) 장바구니 보기](#기능9-장바구니-보기)|장바구니 이모티콘을 눌렀을 때 동작|/carts|GET|
+|[(기능10) 장바구니 상품 확인 및 수량 결정](#기능10-장바구니-상품-확인-및-수량-결정)|장바구니 내에서 수량 조절 버튼 클릭 시|프론트에만 구현되어있음 -> 백엔드에서도 구현 필요|        |
+|[(기능11) 주문](#기능11-주문)|주문하기 버튼을 눌렀을 때 동작|/carts/update|POST|
+|[(기능12) 결제](#기능12-결제)|결제하기 버튼을 눌렀을 때 동작|/orders/save|POST|
+|[(기능13) 주문 결과 확인](#기능13-주문-결과-확인)|/orders/save 동작 성공 이후 동작|/orders/{orderID}|GET|
+
+</br>
+
+### **3. 배포된 서버에 모든 API를 POSTMAN으로 요청해본 뒤 응답되는 데이터를 확인하고 부족한 데이터가 무엇인지 체크하여 README에 내용을 작성하시오.**
+
+* #### **(기능1) 회원 가입**
+
+    * **요청 데이터**
+
+        ```json
+        {
+            "username":"mata",
+            "email":"meta@nate.com",
+            "password":"meta1234!"
+
+        }
+        ```
+    * **응답 데이터**
+
+        ```json
+        {
+            "success": true,
+            "response": null,
+            "error": null
+        }
+        ```
+
+    * **에러 처리**
+        1. 이메일 양식
+            
+            ```json
+            {
+                "success" : false,
+                "response" : null,
+                "error" : {
+                    "message" : "이메일 형식으로 작성해주세요:email",
+                    "status" : 400
+                }
+            }
+            ```
+            
+        2. 비밀번호 양식
+            
+            ```json
+            {
+                "success": false,
+                "response": null,
+                "error": {
+                    "message": "영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니
+                    다.:password",
+                    "status": 400
+                }
+            }
+            ```
+            
+        3. 동일한 이메일로 가입
+            
+            ```json
+            {
+                "success": false,
+                "response": null,
+                "error": {
+                    "message": "동일한 이메일이 존재합니다 : ssar@nate.com",
+                    "status": 400
+                }
+            }
+            ```
+            
+        4. 비밀번호 길이
+
+            ```json
+            {
+                "success": false,
+                "response": null,
+                "error": {
+                    "message": "8에서 20자 이내여야 합니다.:password",
+                    "status": 400
+                }
+            }
+            ```
+---
+* #### **(기능2) 로그인**
+    * **요청 데이터**
+        
+        ```json
+        {
+            "email":"ssar@nate.com",
+            "password":"meta1234!"
+        }
+        ```
+        
+        +Response Header에 JWT 토큰 추가
+    
+    * **응답 데이터**
+        
+        ```json
+        {
+            "success": true,
+            "response": null,
+            "error": null
+        }
+        ```
+        
+    * **에러 처리**
+        1. 이메일 형식
+            
+            ```json
+            {
+                "success": false,
+                "response": null,
+                "error": {
+                    "message": "이메일 형식으로 작성해주세요:email",
+                    "status": 400
+                }
+            }
+            ```
+            
+        2. 비밀번호 형식
+            
+            ```json
+            {
+                "success": false,
+                "response": null,
+                "error": {
+                    "message": "영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니
+                    다.:password",
+                    "status": 400
+                }
+            }
+            ```
+            
+        3. 가입되지 않은 사용자
+            
+            ```json
+            {
+                "success": false,
+                "response": null,
+                "error": {
+                    "message": "인증되지 않았습니다",
+                    "status": 401
+                }
+            }
+            ```
+            
+        4. 비밀번호 길이
+            
+            ```json
+            {
+                "success": false,
+                "response": null,
+                "error": {
+                    "message": "8에서 20자 이내여야 합니다.:password",
+                    "status": 400
+                }
+            }
+            ```
+---
+* #### **(추가기능) 이메일 중복 체크**
+    * **요청 데이터**
+    
+        ```json
+        {
+            "email":"meta@nate.com"
+        }
+        ```
+    
+    * **응답 데이터**
+        
+        ```json
+        {
+            "success": true,
+            "response": null,
+            "error": null
+        }
+        ```
+        
+    * **에러 처리**
+        1. 동일한 이메일 존재
+            
+            ```json
+            {
+                "success": false,
+                "response": null,
+                "error": {
+                    "message": "동일한 이메일이 존재합니다 : ssar@nate.com",
+                    "status": 400
+                }
+            }
+            ```
+            
+        2. 이메일 형식
+            
+            ```json
+            {
+                "success": false,
+                "response": null,
+                "error": {
+                    "message": "이메일 형식으로 작성해주세요:email",
+                    "status": 400
+                }
+            }
+            ```
+---
+* #### **(기능4) 전체 상품 목록 조회** <span style="color:red">(추가 데이터 필요)</span>
+    * **파라미터**
+    
+        page = {number}
+        
+        default = 0
+    
+    * **응답 데이터**
+        
+        ```json
+        {
+            "success": true,
+            "response": [
+                {
+                    "id": 1,
+                    "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외
+                    주방용품 특가전",
+                    "description": "",
+                    "image": "/images/1.jpg",
+                    "price": 1000
+                },
+                {
+                    "id": 2,
+                    "productName": "[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율",
+                    "description": "",
+                    "image": "/images/2.jpg",
+                    "price": 2000
+                },
+                {
+                    "id": 3,
+                    "productName": "삼성전자 JBL JR310 외 어린이용/성인용 헤드셋 3종!",
+                    "description": "",
+                    "image": "/images/3.jpg",
+                    "price": 30000
+                },
+                {
+                    "id": 4,
+                    "productName": "바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종",
+                    "description": "",
+                    "image": "/images/4.jpg",
+                    "price": 4000
+                },
+                {
+                    "id": 5,
+                    "productName": "[더주] 컷팅말랑장족, 숏다리 100g/300g 외 주전부리 모음 /
+                    중독성 최고/마른안주",
+                    "description": "",
+                    "image": "/images/5.jpg",
+                    "price": 5000
+                },
+                {
+                    "id": 6,
+                    "productName": "굳지않는 앙금절편 1,050g 2팩 외 우리쌀떡 모음전",
+                    "description": "",
+                    "image": "/images/6.jpg",
+                    "price": 15900
+                },
+                {
+                    "id": 7,
+                    "productName": "eoe 이너딜리티 30포, 오렌지맛 고 식이섬유 보충제",
+                    "description": "",
+                    "image": "/images/7.jpg",
+                    "price": 26800
+                },
+                {
+                    "id": 8,
+                    "productName": "제나벨 PDRN 크림 2개. 피부보습/진정 케어",
+                    "description": "",
+                    "image": "/images/8.jpg",
+                    "price": 25900
+                },
+                {
+                    "id": 9,
+                    "productName": "플레이스테이션 VR2 호라이즌 번들. 생생한 몰입감",
+                    "description": "",
+                    "image": "/images/9.jpg",
+                    "price": 797000
+                }
+            ],
+            "error": null
+        }
+        ```
+
+    * **추가 데이터**
+        "상품을 저장해둔 데이터베이스에서 **주문이 가능한** 전체 상품 목록을 Response로 반환"이라는 요구사항을 충족하기 위해서 재고 데이터를 추가해야 한다.
+---
+* #### **(기능5) 개별 상품 상세 조회**
+    * **파라미터**
+
+        없음
+        
+    * **응답 데이터**
+        
+        ```json
+        {
+            "success": true,
+            "response": {
+                "id": 1,
+                "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용
+                품 특가전",
+                "description": "",
+                "image": "/images/1.jpg",
+                "price": 1000,
+                "starCount": 5,
+                "options": [
+                    {
+                        "id": 1,
+                        "optionName": "01. 슬라이딩 지퍼백 크리스마스에디션 4종",
+                        "price": 10000
+                    },
+                    {
+                        "id": 2,
+                        "optionName": "02. 슬라이딩 지퍼백 플라워에디션 5종",
+                        "price": 10900
+                    },
+                    {
+                        "id": 3,
+                        "optionName": "고무장갑 베이지 S(소형) 6팩",
+                        "price": 9900
+                    },
+                    {
+                        "id": 4,
+                        "optionName": "뽑아쓰는 키친타올 130매 12팩",
+                        "price": 16900
+                    },
+                    {
+                        "id": 5,
+                        "optionName": "2겹 식빵수세미 6매",
+                        "price": 8900
+                    }
+                ]
+            },
+            "error": null
+        }        ```
+---
+* #### **(기능8) 장바구니 담기**
+
+    * **요청 데이터**
+    
+        ```json
+        [
+            {
+                "optionId":1,
+                "quantity":5
+            },
+            {
+                "optionId":2,
+                "quantity":5
+            }
+        ]
+        ```
+    
+        +Response Header에 JWT 토큰 추가
+    
+    * **응답 데이터**
+        
+        ```json
+        {
+            "success": true,
+            "response": null,
+            "error": null
+        }
+        ```
+---
+* #### **(기능9) 장바구니 보기** <span style="color:red">(추가 데이터 필요)</span>
+    * **파라미터**
+    
+        없음
+        
+        +Response Header에 JWT 토큰 추가
+    
+    * **응답 데이터**
+        
+        ```json
+        {
+            "success": true,
+            "response": {
+            "products": [
+                {
+                "id": 1,
+                "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션
+                외 주방용품 특가전",
+                "carts": [
+                        {
+                            "id": 4,
+                            "option": {
+                                "id": 1,
+                                "optionName": "01. 슬라이딩 지퍼백 크리스마스에디션 4
+                                종",
+                                "price": 10000
+                            },
+                            "quantity": 5,
+                            "price": 50000
+                            },
+                            {
+                                "id": 5,
+                                "option": {
+                                "id": 2,
+                                "optionName": "02. 슬라이딩 지퍼백 플라워에디션 5종",
+                                "price": 10900
+                            },
+                            "quantity": 5,
+                            "price": 54500
+                        }
+                    ]
+                }
+            ],
+            "totalPrice": 104500
+            },
+            "error": null
+        }
+        ```
+    * **추가 데이터**
+        1. "장바구니에 담긴 상품 데이터(**이미지**, 상품명, 옵션 등)를 Response로 반환" 이라는 요구사항을 충족하기 위해서 상품의 이미지 데이터를 추가해야 한다.
+        2. 또한 현재 다른 유저로 로그인을 해도 과거 다른 유저가 장바구니에 담아놓은 정보가 사라지지 않는 오류가 발견된다.
+
+---
+* #### **(기능11) 주문** <span style="color:red">(추가 데이터 필요)</span>
+    * **요청 데이터**
+    
+        ```json
+        [
+            {
+                "cartId":4,
+                "quantity":10
+            },
+            {
+                "cartId":5,
+                "quantity":10
+            }
+        ]
+        ```
+        
+        +Response Header에 JWT 토큰 추가
+    
+    * **응답 데이터**
+        
+        ```json
+        {
+            "success": true,
+            "response": {
+            "carts": [
+                {
+                    "cartId": 4,
+                    "optionId": 1,
+                    "optionName": "01. 슬라이딩 지퍼백 크리스마스에디션 4종",
+                    "quantity": 10,
+                    "price": 100000
+                },
+                {
+                    "cartId": 5,
+                    "optionId": 2,
+                    "optionName": "02. 슬라이딩 지퍼백 플라워에디션 5종",
+                    "quantity": 10,
+                    "price": 109000
+                }
+            ],
+            "totalPrice": 209000
+            },
+            "error": null
+        }
+        ```
+    * **추가 데이터**
+
+        "옵션 데이터뿐 아니라 **해당 옵션들의 상품명**, 옵션명도 같이 반환"이라는 요구사항을 충족하기 위해서 상품의 이름 데이터가 추가되어야 한다.
+---
+* #### **(기능12) 결제**
+    * **요청 데이터**
+    
+        없음
+        
+        +Response Header에 JWT 토큰 추가
+    
+    * **응답 데이터**
+        
+        ```json
+        {
+            "success": true,
+            "response": {
+                "id": 2,
+                "products": [
+                    {
+                        "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션
+                        외 주방용품 특가전",
+                        "items": [
+                            {
+                                "id": 4,
+                                "optionName": "01. 슬라이딩 지퍼백 크리스마스에디션 4종",
+                                "quantity": 10,
+                                "price": 100000
+                            },
+                            {
+                                "id": 5,
+                                "optionName": "02. 슬라이딩 지퍼백 플라워에디션 5종",
+                                "quantity": 10,
+                                "price": 109000
+                            }
+                        ]
+                    }
+                ],
+                "totalPrice": 209000
+            },
+            "error": null
+        }
+        ```
+---
+* #### **(기능13) 주문 결과 확인**
+    * **파라미터**
+        
+        없음
+        
+        +Response Header에 JWT 토큰 추가
+    
+    * **응답 데이터**
+        
+        ```json
+        {
+            "success": true,
+            "response": {
+                    "id": 2,
+                    "products": [
+                            {
+                                "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션
+                                외 주방용품 특가전",
+                                "items": [
+                                    {
+                                        "id": 4,
+                                        "optionName": "01. 슬라이딩 지퍼백 크리스마스에디션 4종",
+                                        "quantity": 10,
+                                        "price": 100000
+                                    },
+                                    {
+                                        "id": 5,
+                                        "optionName": "02. 슬라이딩 지퍼백 플라워에디션 5종",
+                                        "quantity": 10,
+                                        "price": 109000
+                                }
+                            ]
+                        }
+                    ],
+                    "totalPrice": 209000
+                },
+            "error": null
+        }
+        ```
+</br>
+
+### **4. 테이블 설계를 하여 README에 ER-Diagram을 추가하여 제출하시오.**
+
+![ER Diagram](./img/ERD.jpg)
+
+(각 테이블 별 정보는 pdf에 첨부되어있습니다.)
+
+</br>
+
 # 2주차
 
 카카오 테크 캠퍼스 2단계 - BE - 2주차 클론 과제
