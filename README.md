@@ -150,6 +150,8 @@ http://localhost:8080/products/1 (각 숫자)
 - Request Body 
 ⇒ [ { "optionId":1, "quantity":5 }, { "optionId":2, "quantity":5 } ]
 
+---
+
 ### 03) 배포된 서버에 모든 API를 POSTMAN으로 요청해본 뒤 응답되는 데이터를 확인하고 부족한 데이터가 무엇인지 체크하여 README에 내용을 작성하시오.
  
 
