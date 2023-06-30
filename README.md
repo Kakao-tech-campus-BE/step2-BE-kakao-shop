@@ -62,7 +62,7 @@
 * (기능12) 결제
    * (FE) 배송지 변경 기능
 
-## 화면설계와 배포된 API주소 매핑
+## 2. 화면설계와 배포된 API주소 매핑
 
 ---
 ### 이메일 중복 체크
@@ -128,7 +128,7 @@ Local URL : http://localhost:8080/orders/save
 Method : Get
 Local URL : http://localhost:8080/orders/1
 
-## 배포된 서버 API Respnose의 부족한 데이터 판단하기
+## 3. 배포된 서버 API Respnose의 부족한 데이터 판단하기
 
 ---
 ### 전체 상품 목록 조회
