@@ -93,48 +93,48 @@
     
     * 회원 가입 버튼 클릭 시
     ![회원가입](https://github.com/boseungk/TIL/assets/95980754/d6b90d51-7580-4800-9694-5244455fb677)
-      * http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/join
+      * [post] http://localhost:8080/join
     
 
     * 로그인 버튼 클릭 시
     ![로그인](https://github.com/boseungk/TIL/assets/95980754/e86b71f8-2a81-4583-be1a-b0d5d681aec5)
-      * http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/login
+      * [post] http://localhost:8080/login
 
     
     * 전체 상품 조회 시
     ![전체 상품](https://github.com/boseungk/TIL/assets/95980754/58420baa-7a07-4e78-b12a-5163162fc6be)
-      * http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/products?page=1
+      * [get] http://localhost:8080/products?page=1
 
     
     * 개별 상품 / 옵션 조회 시
     ![개별 상품](https://github.com/boseungk/TIL/assets/95980754/16d690cf-55f9-47c8-88be-037147edb81f)
-      * http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/products/1
+      * [get] http://localhost:8080/products/1
   
     
     * 장바구니 담기 버튼 클릭 시 
     ![장바구니 담기](https://github.com/boseungk/TIL/assets/95980754/1142d55f-8e94-4321-aab5-d47d33fd20e4)
-      * http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/carts/add
+      * [post] http://localhost:8080/carts/add
    
    * 장바구니 조회 시
    ![장바구니 조회](https://github.com/boseungk/TIL/assets/95980754/cce205fa-1c55-4316-8672-3af26330359e)
-     * http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/carts
+     * [get] http://localhost:8080/carts
 
     * 장바구니 수량 수정 시
     ![장바구니 수정](https://github.com/boseungk/TIL/assets/95980754/cce205fa-1c55-4316-8672-3af26330359e)
-      * http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/carts/update
+      * [post] http://localhost:8080/update
 
     * 장바구니 주문하기 버튼 클릭 시
     ![장바구니 수정](https://github.com/boseungk/TIL/assets/95980754/cce205fa-1c55-4316-8672-3af26330359e)
-      * http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/carts/update
+      * [post] http://localhost:8080/update
       * request body 부분이 다름
 
     * 결제하기 버튼 클릭 시
     ![결제하기](https://github.com/boseungk/TIL/assets/95980754/ba97ee67-f544-49d9-9fb6-7766e9517064)
-      * http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/orders/save
+      * [post]  http://localhost:8080/save
 
     * 주문 조회 시
     ![주문 조회](https://github.com/boseungk/TIL/assets/95980754/314adac8-8935-4980-b2f2-1fd54bd24eba)
-      * http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/orders/1
+      * [get] http://localhost:8080/orders/1
 
 </details>
 
@@ -143,7 +143,7 @@
 <details>
 <summary>요구사항 3</summary>
 
-3. 배포된 서버에 모든 API를 POSTMAN으로 요청해본 뒤 응답되는 데이터를 확인하고 부족한 데이터가 무엇인지 체크하여 README에 내용을 작성하시오.
+1. 배포된 서버에 모든 API를 POSTMAN으로 요청해본 뒤 응답되는 데이터를 확인하고 부족한 데이터가 무엇인지 체크하여 README에 내용을 작성하시오.
 
     👉 요구사항 2과 3번을 같이 진행하면서 Postman으로 API를 전부 각각 요청해보았고, 부족한 데이터만 기입
 
@@ -242,22 +242,7 @@
 
     ```
     
-- **과제 수행 (코드 작성) 하면서 어려웠던 점 (선택)**
-    - 처음에는 테이블 설계가 금방 끝날 줄 알았는데, 여러가지 어려움이 있었다.
-    - 테이블의 데이터 타입을 선정하느라 어려움을 겪었는데, 어차피 JPA를 사용할 거라는 생각이 들어서 자바 데이터 타입으로 정했다.
-    - 테이블 간의 연관관계 매핑에서 어려움을 겪다가 다른 레퍼런스를 찾아보면서 이해하게 되었다.
-    - 처음에는 화면 설계도를 보면서 테이블을 설계하다가 이해가 안되는 부분이 생겨서 API를 보면서 다시 테이블을 설계했다.
-        - 예를 들어서 화면 설계도만 보고 Cart 테이블을 그대로 Order하면 될 거 같다고 생각했다가 API를 보고 item 테이블로 구성되어 있는 것을 보고 다시 테이블을 설계하게 되었다.
-      
-- 실습 멘토님 Q&A
-  - 실제 개발할 때 어떤 것을 보면서 테이블을 설계하는지 궁금합니다.
-    - 기능 정의 → 테이블 설계 → API
-    - 어떤 식으로 데이터를 주고 받기 위해서는 어떤 데이터를 가지고 있는지가 중요하기 때문에 보통 테이블 설계를 먼저 진행
-  - 프론트엔드와도 테이블 설계 시 얘기를 하나요?
-    - 보통 DBA나 팀내의 백엔드끼리만 얘기하고 프론트와는 잘 이야기하지 않는다
-  - 신입 개발자가 SQL을 어느정도까지 알고 쿼리를 작성할 수 있어야 하나요?
-    - 확실하게 이 정도다! 라고는 말할 수 없지만 현재 프로젝트에서 JPA를 사용하지만 안 사용하는 기업들도 매우 많기 때문에 우리 프로젝트 내에서 사용하는 쿼리문들은 다 알아야 함!
-    - DBA는 대게 백엔드 개발자가 짠 쿼리를 검사하지 직접 짜는 것은 드물다.
+
 </details>
 
 </br>
