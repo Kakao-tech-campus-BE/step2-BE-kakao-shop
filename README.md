@@ -56,7 +56,8 @@
 
 - 프론트 화면
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6cf0cd95-0cf1-4758-bf4f-c24326523e3a/Untitled.png)
+![image](https://github.com/gkswn/step2-BE-kakao-shop/assets/85356161/273d426c-8d12-448f-aca4-5638c4ffa05a)
+
 - 실제 화면
 
 ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d5d4be9b-cee4-4616-bb79-4570311e3e8f/Untitled.png)
