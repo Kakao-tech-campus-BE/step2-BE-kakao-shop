@@ -123,33 +123,33 @@
 </br>
 
 ### ER-Diagram
-![users](https://ibb.co/f1n3xQc)
+<img src="https://i.ibb.co/MSxB2Xn/user-table.png" alt="user-table">
 
 users 테이블
 
-![products](https://ibb.co/54gKM7T)
+<img src="https://i.ibb.co/2YNxdjX/product-table.png" alt="product-table">
 
 products 테이블
 
-![options](https://ibb.co/HhcY9WJ)
+<img src="https://i.ibb.co/PD24V7S/option-table.png" alt="option-table">
 
 options 테이블
 
-![carts](https://ibb.co/tmPjM5M)
+<img src="https://i.ibb.co/983K9j9/cart-table.png" alt="cart-table">
 
 carts 테이블
 
-![orders](https://ibb.co/M56r7Rq)
+<img src="https://i.ibb.co/8Kdy7Xh/order-table.png" alt="order-table">
 
 orders 테이블
 
-![items](https://ibb.co/L02zgfV)
+<img src="https://i.ibb.co/9pC94jQ/item-table.png" alt="item-table">
 
 items 테이블
 
 </br>
 
-![ER-Diagram](https://ibb.co/hRbJXG0)
+<img src="https://i.ibb.co/N65d10R/ERDiagram.png" alt="ERDiagram">
 
 테이블 관계도
 
