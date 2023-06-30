@@ -146,9 +146,440 @@ Bearer ey…Asg(원래 길이는 더 길다. 256바이트였나.. 나름 보안�
 → 필요한 테이블 : Cart(장바구니)
 
 → Cart 테이블에 **optionId, quantity** 속성을 추가한다.
+
+### 에러 처리
+
+개별 상품을 클릭 해 개별 상품 상세 조회 페이지로 이동한다고 생각해보자.  아래 URL에 GET 요청을 보낼 것이다.
+
+Local URL : http://localhost:8080/products/1
+
+당연히 해당 URL에 POST 요청을 보내면 405 에러가 나와야 한다. 하지만 그렇지 않다.
+
+```json
+{
+    "success": false,
+    "response": null,
+    "error": {
+        "message": "Request method 'POST' not supported",
+        "status": 500
+    }
+}
+```
+
+아까와 똑같은 포맷의 에러가 발생한다. 여전히 405로 고치고 싶다.
+
+그리고 장바구니 담기를 통해 POST 요청하는 것을 생각해보자. 토큰 정보가 유효하지 않다면 어떻게 될까?(토큰 정보를 유효하지 않도록 값을 수정했다.)
+
+```json
+{
+    "success": false,
+    "response": null,
+    "error": {
+        "message": "인증되지 않았습니다",
+        "status": 401
+    }
+}
+```
+
+401 에러 코드가 발생한다. 이는 적절한 에러를 대입한 것으로 보인다.
+([https://ko.wikipedia.org/wiki/HTTP_상태_코드#:~:text=401(권한 없음)%3A 이 요청은 인증이 필요하다. 서버는 로그인이 필요한 페이지에 대해 이 요청을 제공할 수 있다. 상태 코드 이름이 권한 없음(Unauthorized)으로 되어 있지만 실제 뜻은 인증 안됨(Unauthenticated)에 더 가깝다.[2]](https://ko.wikipedia.org/wiki/HTTP_%EC%83%81%ED%83%9C_%EC%BD%94%EB%93%9C#:~:text=401(%EA%B6%8C%ED%95%9C%20%EC%97%86%EC%9D%8C)%3A%20%EC%9D%B4%20%EC%9A%94%EC%B2%AD%EC%9D%80%20%EC%9D%B8%EC%A6%9D%EC%9D%B4%20%ED%95%84%EC%9A%94%ED%95%98%EB%8B%A4.%20%EC%84%9C%EB%B2%84%EB%8A%94%20%EB%A1%9C%EA%B7%B8%EC%9D%B8%EC%9D%B4%20%ED%95%84%EC%9A%94%ED%95%9C%20%ED%8E%98%EC%9D%B4%EC%A7%80%EC%97%90%20%EB%8C%80%ED%95%B4%20%EC%9D%B4%20%EC%9A%94%EC%B2%AD%EC%9D%84%20%EC%A0%9C%EA%B3%B5%ED%95%A0%20%EC%88%98%20%EC%9E%88%EB%8B%A4.%20%EC%83%81%ED%83%9C%20%EC%BD%94%EB%93%9C%20%EC%9D%B4%EB%A6%84%EC%9D%B4%20%EA%B6%8C%ED%95%9C%20%EC%97%86%EC%9D%8C(Unauthorized)%EC%9C%BC%EB%A1%9C%20%EB%90%98%EC%96%B4%20%EC%9E%88%EC%A7%80%EB%A7%8C%20%EC%8B%A4%EC%A0%9C%20%EB%9C%BB%EC%9D%80%20%EC%9D%B8%EC%A6%9D%20%EC%95%88%EB%90%A8(Unauthenticated)%EC%97%90%20%EB%8D%94%20%EA%B0%80%EA%B9%9D%EB%8B%A4.%5B2%5D))
+
+다음에는 GET 요청으로 상품 정보와 JWT 정보를 담아서 보내봤다. 500 에러가 뜨지만, 405로 고치고 싶다.
+
+GET 요청으로 상품 정보만 비워서 보내봤다. 역시나 500 에러가 뜬다.
+
+다음으로 JWT까지 비워서 보내봤다. 401 에러가 뜬다. 이는 적절하다.
+
+```json
+{
+    "success": false,
+    "response": null,
+    "error": {
+        "message": "인증되지 않았습니다",
+        "status": 401
+    }
+}
+```
+
+존재하지 않는 옵션의 상품을 장바구니에 담기도 해봤다.
+
+```json
+[
+  {
+	  "optionId":55,  //존재하지 않는 옵션
+    "quantity":5
+  }
+]
+```
+
+```json
+{
+    "success": false,
+    "response": null,
+    "error": {
+        "message": "해당 옵션을 찾을 수 없습니다 : 55",
+        "status": 404
+    }
+}
+```
+
+서버측에서 클라이언트측이 요청한 페이지를 찾을 수 없다는 것이다. 당연히 존재하지 않는 옵션에 대한 POST 요청을 했으므로 404 에러 처리는 적절하다.
+당연히 존재하지 않는 옵션에 대한 POST 요청을 했으므로 404 에러 처리는 적절하다.
+
+### 동일한 상품 장바구니 담기에 대한 고찰
+
+동일한 상품 아이디를 가진 상품을 장바구니 담기를 시도해봤다.
+
+```json
+{
+    "success": false,
+    "response": null,
+    "error": {
+        "message": "장바구니 담기 중에 오류가 발생했습니다 : could not execute statement; SQL [n/a]; constraint [\"PUBLIC.UK_CART_OPTION_USER_INDEX_4 ON PUBLIC.CART_TB(USER_ID NULLS FIRST, OPTION_ID NULLS FIRST) VALUES ( /* key:5 */ 1, 4)\"; SQL statement:\ninsert into cart_tb (id, option_id, price, quantity, user_id) values (default, ?, ?, ?, ?) [23505-214]]; nested exception is org.hibernate.exception.ConstraintViolationException: could not execute statement",
+        "status": 500
+    }
+}
+```
+
+이미 장바구니에 같은 상품이 존재해서 발생하는 오류이다.
+
+([https://ko.wikipedia.org/wiki/HTTP_상태_코드#:~:text=500(내부 서버 오류)%3A 서버에 오류가 발생하여 요청을 수행할 수 없다](https://ko.wikipedia.org/wiki/HTTP_%EC%83%81%ED%83%9C_%EC%BD%94%EB%93%9C#:~:text=500(%EB%82%B4%EB%B6%80%20%EC%84%9C%EB%B2%84%20%EC%98%A4%EB%A5%98)%3A%20%EC%84%9C%EB%B2%84%EC%97%90%20%EC%98%A4%EB%A5%98%EA%B0%80%20%EB%B0%9C%EC%83%9D%ED%95%98%EC%97%AC%20%EC%9A%94%EC%B2%AD%EC%9D%84%20%EC%88%98%ED%96%89%ED%95%A0%20%EC%88%98%20%EC%97%86%EB%8B%A4).)
+
+보통적인 생각으로 같은 상품을 장바구니에 담기하면 그 상품의 개수가 증가해야할 것이다. 하지만 위 에러는 동일한 상품 추가에 대한 에러가 발생하는데 이는 같은 상품 담기를 하게 되면 상품 개수 증가가 될 수 있도록 수정해야한다.
+
 </div>
 </details>
 
+
+<details>
+<summary>(3) 회원가입</summary>
+<div>
+### HTTP 메서드 선정
+
+클라이언트측에서 사용자가 가입을 위해 작성한 정보를 서버측으로 전송한다.
+
+HTTP Method : POST
+
+Local URL : http://local:8080/join
+
+### JSON 응답 및 시나리오 분석
+
+- JSON 응답
+    
+    사용자가 원하는 정보를 입력 후 회원가입 버튼을 클릭
+    
+    ```json
+    {
+      "username":"MinseokGo",
+      "email":"rhalstjr1999@naver.com",
+      "password":"@@alstjr12"
+    }
+    ```
+    
+    ```json
+    {
+        "success": true,
+        "response": null,
+        "error": null
+    }  //회원가입 완료
+    ```
+    
+
+### 에러 처리
+중복된 이메일로 가입 시도 시 JSON 응답
+
+```json
+{
+    "success": false,
+    "response": null,
+    "error": {
+        "message": "동일한 이메일이 존재합니다 : rhalstjr1999@naver.com",
+        "status": 400
+    }
+}
+```
+
+400 에러 처리보다는 409 에러 처리가 더 적합해 보인다.
+
+([https://mangoday.tistory.com/137#:~:text=409는 Conflict. "이 응답은 요청이 현재 서버의 상태와 충돌될 때 보냅니다"](https://mangoday.tistory.com/137#:~:text=409%EB%8A%94%20Conflict.%20%22%EC%9D%B4%20%EC%9D%91%EB%8B%B5%EC%9D%80%20%EC%9A%94%EC%B2%AD%EC%9D%B4%20%ED%98%84%EC%9E%AC%20%EC%84%9C%EB%B2%84%EC%9D%98%20%EC%83%81%ED%83%9C%EC%99%80%20%EC%B6%A9%EB%8F%8C%EB%90%A0%20%EB%95%8C%20%EB%B3%B4%EB%83%85%EB%8B%88%EB%8B%A4%22))
+
+([https://deveric.tistory.com/62#:~:text=409 Conflict는 리소스의 충돌을 의미하는 상태코드입니다. ID 중복이라는 것은 결국 ID라는 PK 자원을 점유한 것에 대한 충돌이기 때문에 이 상태코드가 가장 적합하다고 생각하여 409 상태코드를 반영하기로 했습니다](https://deveric.tistory.com/62#:~:text=409%20Conflict%EB%8A%94%20%EB%A6%AC%EC%86%8C%EC%8A%A4%EC%9D%98%20%EC%B6%A9%EB%8F%8C%EC%9D%84%20%EC%9D%98%EB%AF%B8%ED%95%98%EB%8A%94%20%EC%83%81%ED%83%9C%EC%BD%94%EB%93%9C%EC%9E%85%EB%8B%88%EB%8B%A4.%20ID%20%EC%A4%91%EB%B3%B5%EC%9D%B4%EB%9D%BC%EB%8A%94%20%EA%B2%83%EC%9D%80%20%EA%B2%B0%EA%B5%AD%20ID%EB%9D%BC%EB%8A%94%20PK%20%EC%9E%90%EC%9B%90%EC%9D%84%20%EC%A0%90%EC%9C%A0%ED%95%9C%20%EA%B2%83%EC%97%90%20%EB%8C%80%ED%95%9C%20%EC%B6%A9%EB%8F%8C%EC%9D%B4%EA%B8%B0%20%EB%95%8C%EB%AC%B8%EC%97%90%20%EC%9D%B4%20%EC%83%81%ED%83%9C%EC%BD%94%EB%93%9C%EA%B0%80%20%EA%B0%80%EC%9E%A5%20%EC%A0%81%ED%95%A9%ED%95%98%EB%8B%A4%EA%B3%A0%20%EC%83%9D%EA%B0%81%ED%95%98%EC%97%AC%20409%20%EC%83%81%ED%83%9C%EC%BD%94%EB%93%9C%EB%A5%BC%20%EB%B0%98%EC%98%81%ED%95%98%EA%B8%B0%EB%A1%9C%20%ED%96%88%EC%8A%B5%EB%8B%88%EB%8B%A4).)
+
+그리고 POST 요청 대신 GET 요청을 해보았다.
+
+```json
+{
+    "success": false,
+    "response": null,
+    "error": {
+        "message": "Request method 'GET' not supported",
+        "status": 500
+    }
+}
+```
+
+서버측의 에러인 500 상태 코드 대신 클라이언트측의 잘못된 HTTP 메서드 요청인 405 상태 코드가 적합해보인다.
+
+이메일 형식이 아닌 형식을 POST 해보았다.
+
+(예를들면 
+
+rhalstjr1999naver.com
+
+rhalstjr1999@naver
+
+@naver.com
+
+a@.com형식의 입력)
+
+```json
+{
+    "success": false,
+    "response": null,
+    "error": {
+        "message": "이메일 형식으로 작성해주세요:email",
+        "status": 400
+    }
+}
+```
+
+해당 에러 처리는 적절해보인다. 서버측에서 지정한 구문을 충족하지 않은 경우 400 에러를 처리할 수 있다.
+
+([https://jaeseongdev.github.io/development/2021/04/22/REST_API에서의_HTTP_상태코드_상태메시지.md/#:~:text=서에서 지정한 구문을 충족시키지 않은 경우](https://jaeseongdev.github.io/development/2021/04/22/REST_API%EC%97%90%EC%84%9C%EC%9D%98_HTTP_%EC%83%81%ED%83%9C%EC%BD%94%EB%93%9C_%EC%83%81%ED%83%9C%EB%A9%94%EC%8B%9C%EC%A7%80.md/#:~:text=%EC%84%9C%EC%97%90%EC%84%9C%20%EC%A7%80%EC%A0%95%ED%95%9C%20%EA%B5%AC%EB%AC%B8%EC%9D%84%20%EC%B6%A9%EC%A1%B1%EC%8B%9C%ED%82%A4%EC%A7%80%20%EC%95%8A%EC%9D%80%20%EA%B2%BD%EC%9A%B0))
+
+또한 비밀번호에 영문, 숫자, 특수문자가 포함되어야 하는데 포함하지 않은 경우, 비밀번호 길이를 8~20자를 충족하지 않은 경우들은 서버측에서 지정한 구문을 충족시키지 못했기 때문에 400 에러 처리 해야한다.
+
+```json
+//특수문자 제외. 영문, 숫자 제외 시 동일
+{
+    "success": false,
+    "response": null,
+    "error": {
+        "message": "영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니다.:password",
+        "status": 400
+    }
+}
+
+//비밀번호 길이 충족하지 않은 경우
+{
+    "success": false,
+    "response": null,
+    "error": {
+        "message": "8에서 20자 이내여야 합니다.:password",
+        "status": 400
+    }
+}
+```
+</div>
+</details>
+
+<details>
+<summary>(4) 로그인</summary>
+<div>
+### HTTP 메서드 선정
+
+로그인 시 사용자가 회원가입 때 작성한 이메일, 비밀번호로 로그인한다. 이때 해당 정보들을 서버측에 POST하여 해당 회원이 존재하는 검사를 받아야한다. 이때 JWT를 로그인 시, 회원에게 발급한다.
+
+HTTP Method : POST
+
+Local URL : http://localhost:8080/login
+
+### JSON 응답 및 시나리오 분석
+
+- JSON 응답
+    
+    회원가입 시 입력한 대로 POST 요청 시,
+    
+    ```json
+    {
+        "success": true,
+        "response": null,
+        "error": null
+    }
+    ```
+    
+    로그인 성공 JSON이 리턴되며 HTTP header 안에는 JWT가 발급되어 전송된다.
+    
+    ```json
+    Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJyaGFsc3RqcjE5OTlAbmF2ZXIuY29tIiwicm9sZSI6IlJPTEVfVVNFUiIsImlkIjozLCJleHAiOjE2ODgxMTgyOTF9.8WXi3ZtNxjo5l-jAZiBFKv0wqoNSjyWfREix-HCZi61LlLQuL9VYE3q5L4Vf0KUqjw08v6BAtiVv5k1b3bg-Qg
+    ```
+    
+
+### 에러 처리
+
+로그인 실패의 예는 다음과 같을 것이다.
+
+1. 아이디를 잘못 입력하고 비밀번호는 맞을 경우
+2. 아이디와 비밀번호 모두 잘못 입력할 경우
+3. 아이디는 맞지만 비밀번호가 일치하지 않을 경우
+
+이렇게 3가지가 존재할 것이다. 아이디와 비밀번호 형식을 지키지 않고 입력하지 않은 경우는 고려하지 않으려고 한다. 이유는 다음과 같다.
+
+> 악의적인 의도로 로그인 시도하려는 사용자에게 로그인에 대한 일말의 여지도 주지 않을 것이다. 만약 악의적인 의도를 가진 사용자에게 아이디가 틀렸다, 비밀번호가 틀렸다, 형식이 맞지 않다 라는 여지를 주게 되면 그 사용자에게 정보를 주는 것이나 다름 없다고 생각한다.
+> 
+
+결론적으로 위에서 제시한 로그인 실패의 경우는 모두 인증되지 않은 사용자로 간주하고 401에러 처리를 하는 것이 적당해 보인다.
+
+```json
+{
+    "success": false,
+    "response": null,
+    "error": {
+        "message": "인증되지 않았습니다",
+        "status": 401
+    }
+}
+```
+
+여기서 주목할 점은 에러 메세지 뒤에 어느 부분이 문제가 되었는지에 대해 정보를 주지 않았다. 회원가입 시에는 이메일 형식이 안맞는지, 패스워드 형식이 안맞는지에 대한 정보를 주었는데 로그인 시에는 그렇지 않다. 그렇다면 여러 에러 경우를 고려할 필요 없이 하나의 에러 처리로 끝내자.
+</div>
+</details>
+
+<details>
+<summary>(5) 장바구니 조회 및 주문하기(장바구니 업데이트)</summary>
+<div>
+### HTTP 메서드 선정
+
+1. 장바구니 조회 시 상품 옵션과 개수를 선택해 담기한 상품들이 보여야할 것이다. 이는 클라이언트측이 서버측에 장바구니에 담긴 데이터를 요청해야한다. 결국 GET 요청을 해야한다.
+    
+    HTTP Method : GET
+    
+    Local URL : http://localhost:8080/carts
+    
+2. 장바구니에서 증감 버튼 클릭 시 클라이언트측은 장바구니 수정 정보를 서버측에 POST 요청을 통해 알려야한다. 서버측은 변경된 개수를 DB에 업데이트 하고 변경된 totalPrice를 반환해야할 것이다.
+    
+    HTTP Method : POST
+    
+    Local URL : http://localhost:8080/carts/update
+
+   1. JWT(HTTP header에 담아서)와 carts/add 를 통해 장바구니에 상품을 담고 carts 조회를 해보았다.
+    - JSON 응답
+        
+        ```json
+        {
+            "success": true,
+            "response": {
+                "products": [
+                    {
+                        "id": 1,
+                        "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전",
+                        "carts": [
+                            {
+                                "id": 1,
+                                "option": {
+                                    "id": 1,
+                                    "optionName": "01. 슬라이딩 지퍼백 크리스마스에디션 4종",
+                                    "price": 10000
+                                },
+                                "quantity": 5,
+                                "price": 50000
+                            },
+                            {
+                                "id": 2,
+                                "option": {
+                                    "id": 2,
+                                    "optionName": "02. 슬라이딩 지퍼백 플라워에디션 5종",
+                                    "price": 10900
+                                },
+                                "quantity": 5,
+                                "price": 54500
+                            }
+                        ]
+                    }
+                ],
+                "totalPrice": 104500
+            },
+            "error": null
+        }
+        ```
+        
+        장바구니 담기한 상품들의 정보와 totalPrice를 계산해서 리턴해준다. totalPrice를 서버측 서비스단에서 연산 후 리턴하는 것으로 보인다.
+        
+2. 버튼 증감 클릭 시 JWT와 변경된 carts의 id와 개수를 서버측에 전송한 결과는 아래와 같다.
+    - JSON 응답
+        
+        ```json
+        {
+            "success": true,
+            "response": {
+                "carts": [
+                    {
+                        "cartId": 1,
+                        "optionId": 1,
+                        "optionName": "01. 슬라이딩 지퍼백 크리스마스에디션 4종",
+                        "quantity": 10,
+                        "price": 100000
+                    },
+                    {
+                        "cartId": 2,
+                        "optionId": 2,
+                        "optionName": "02. 슬라이딩 지퍼백 플라워에디션 5종",
+                        "quantity": 10,
+                        "price": 109000
+                    }
+                ],
+                "totalPrice": 209000
+            },
+            "error": null
+        }
+        ```
+        
+    
+    예상대로 장바구니에 담긴 상품의 개수를 변경해서 POST 요청을 보내니 변경된 totalPrice를 계산해서 리턴해준다.
+   
+### 에러 처리
+
+JWT 정보가 유효하지 않은 경우를 고려해보았다.
+
+```json
+{
+    "success": false,
+    "response": null,
+    "error": {
+        "message": "인증되지 않았습니다",
+        "status": 401
+    }
+}
+```
+
+토큰이 유효하지 않으니 인증도 유효하지 않다. 해당 에러 처리는 적절해보인다.
+
+(마찬가지로 POST 요청 시 405 상태 코드 리턴이 적절해보인다.)
+
+장바구니에 없는 상품의 개수를 업데이트 해달라고 POST 요청을 보내보았다. JSON 응답 결과는 이렇다.
+
+```json
+{
+    "success": false,
+    "response": null,
+    "error": {
+        "message": "장바구니에 없는 상품은 주문할 수 없습니다 : 23",
+        "status": 400
+    }
+}
+```
+
+당연히 서버측에서 지정해놓은 구문을 충족하지 못했으니 400 상태 코드 리턴이 맞다.
+</div>
+</details>
+
+<details>
+<summary>()</summary>
+<div>
+</div>
+</details>
+
+<details>
+<summary>()</summary>
+<div>
+</div>
+</details>
+
+<details>
+<summary>()</summary>
+<div>
+</div>
+</details>
 5. 배포된 서버에 모든 API를 POSTMAN으로 요청해본 뒤 응답되는 데이터를 확인하고 부족한 데이터가 무엇인지 체크하여 README에 내용을 작성하시오.
 6. 테이블 설계를 하여 README에 ER-Diagram을 추가하여 제출하시오.
 
