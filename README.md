@@ -419,7 +419,7 @@ Local URL : http://localhost:8080/orders/save
 ```sql
 create table user
 (
-    user_id      INT         NOT NULL,
+    user_id      INT AUTO_INCREMENT NOT NULL,
     user_name    CHAR(20)    NOT NULL,
     email        VARCHAR(20) NOT NULL,
     password     VARCHAR(20) NOT NULL,
@@ -432,7 +432,7 @@ create table user
 
 create table product
 (
-    product_id   INT       NOT NULL,
+    product_id   INT AUTO_INCREMENT NOT NULL,
     product_name CHAR(50)  NOT NULL,
     image        JSON,
     price        INT,
@@ -442,7 +442,7 @@ create table product
 
 create table product_option
 (
-    option_id   INT      NOT NULL,
+    option_id   INT AUTO_INCREMENT NOT NULL,
     product_id  INT      NOT NULL,
     option_name CHAR(20) NOT NULL,
     price       INT      NOT NULL,
@@ -452,7 +452,7 @@ create table product_option
 
 create table cart
 (
-    cart_id   int NOT NULL,
+    cart_id   int AUTO_INCREMENT NOT NULL,
     user_id   int NOT NULL,
     option_id int NOT NULL,
     quantity  int NOT NULL,
@@ -465,7 +465,7 @@ create table cart
 
 create table orders
 (
-    order_id     int       NOT NULL,
+    order_id     int AUTO_INCREMENT NOT NULL,
     user_id      int       NOT NULL,
     order_date   int       NOT NULL,
     is_cancel    boolean   NOT NULL,
@@ -475,7 +475,7 @@ create table orders
 
 create table order_item
 (
-    order_item_id int         NOT NULL,
+    order_item_id int AUTO_INCREMENT NOT NULL,
     order_id      int         NOT NULL,
     product_id    int         NOT NULL,
     option_name   VARCHAR(30) NOT NULL,
@@ -507,8 +507,8 @@ create table order_item
     - 저는 여기서 이미지 테이블은 단지 이미지 여러 개를 저장하는 용도로 생각했습니다.
     - 따라서 원자성을 지키지 않고 한 칼럼에 이미지 여러 개를 저장할 것이다.
     - 그럼 상품 이미지 타입은 뭘로 정해야 할까?
-      - JSON vs TEXT 
-        - JSON : 특정 필드만 변경가능, TEXT : 일부분만 변경하려고 해도 통째로 업데이트 해야한다. 
+        - JSON vs TEXT
+            - JSON : 특정 필드만 변경가능, TEXT : 일부분만 변경하려고 해도 통째로 업데이트 해야한다.
 - 옵션명
 - 옵션 가격
 - 잔여량
@@ -531,7 +531,7 @@ create table order_item
 - 취소 유무
     - 주문 테이블은 로그성 테이블이라고 생각한다.
     - 즉, 사용자가 해당 주문을 취소했어도 delete하지 않고 남겨놓아야 한다고 생각함
-~~- 총 주문 가격~~
+      ~~- 총 주문 가격~~
     - 기존에는 각 주문 아이템의 가격이 변경되지 않을 것이기 때문에 총 주문 수량을 별도의 테이블에 저장하려고 했다.
     - 그러나 주문 후 취소를 하게 된다면, 주문 아이템 뿐만 아니라 주문 테이블까지 데이터를 변경해주어야 한다.
     - 이 부분은 데이터 일관성이 중요하다고 생각하여 별도의 필드로 빼지 않는 것으로 결정
@@ -542,15 +542,15 @@ create table order_item
 - 주문 번호(FK)
 - ~~옵션 번호(FK)~~
 - 옵션 번호
-  - FK로 연결하지 않는다.
+    - FK로 연결하지 않는다.
 - 옵션 이름
-  - 사용자가 주문을 한 시점의 옵션 이름을 기억하고 싶음
+    - 사용자가 주문을 한 시점의 옵션 이름을 기억하고 싶음
 - 옵션 가격
-  - 사용자가 주문을 한 시점의 가격을 기억하고 싶음
-  - 주문 번호(FK)만으로도 주문 가격을 가지고 올 수 있지만 주문 가격이 update되면 사용자가 주문을 한 시점의 가격을 알지 못하기 때문에 따로 주문 가격 필드를 저장함
+    - 사용자가 주문을 한 시점의 가격을 기억하고 싶음
+    - 주문 번호(FK)만으로도 주문 가격을 가지고 올 수 있지만 주문 가격이 update되면 사용자가 주문을 한 시점의 가격을 알지 못하기 때문에 따로 주문 가격 필드를 저장함
 - 주문 수량
 - 주문 가격
-   
+
 **2. PR 내용 :**
 
 > - 코드 작성하면서 어려웠던 점
