@@ -58,8 +58,7 @@
     
     method : POST
     
-    ![Untitled](https://github.com/flowersun99/how-to-cool_instagram_crawling_version/assets/102143406/67133311-77cb-4453-8e88-8d845d607c16)
-    
+    ![Untitled](https://github.com/flowersun99/bakjoon/blob/master/kaka/Untitled.png)
     - 로그인
     
     API주소 : ‘/login’
