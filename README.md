@@ -62,8 +62,6 @@
   - 상품 수정 api
   - 상품 삭제 api
 
-  </br>
-
 - **회원**
 
   - 회원 등급 데이터 -> Grade 객체
@@ -71,28 +69,20 @@
   - 회원 정보 수정 api
   - 회원 탈퇴 api
 
-  </br>
-
 - **회원가입 & 로그인**
 
   - 소셜 로그인 api
   - 회원 정보 유효성 검사
 
-  </br>
-
 - **로그아웃**
 
   - 로그아웃 api
-
-  </br>
 
 - **전체 상품 목록 조회**
 
   - 상품 검색 api
   - 조회 기준 선택
   - 정렬 기준 선택
-
-  </br>
 
 - **개별 상품 상세 조회**
 
@@ -103,37 +93,25 @@
   - 상품 찜하기 관련 api -> Likes 객체
   - 리뷰 관련 api -> Review 객체
 
-  </br>
-
 - **장바구니 담기**
 
   - 장바구니에 이미 추가된 옵션을 장바구니 담기를 할 경우, 수량 업데이트 api
-
-  </br>
 
 - **장바구니 보기**
 
   - 장바구니 상품 삭제 api
 
-  </br>
-
 - **장바구니 상품 옵션 확인 및 수량 결정**
 
   - 옵션 변경 시 데이터베이스에 저장하는 api
-
-  </br>
 
 - **주문**
 
   - 장바구니 상품 중 구매할 상품을 선택하는 api
 
-  </br>
-
 - **결제**
   - 할인 관련 api -> DiscountPolicy 객체
   - 배송지 정보 입력 시 데이터베이스에 저장하는 api
-
-</br>
 
 ## **Assignment 2**
 
@@ -180,8 +158,6 @@
 
     </details>
 
-  </br>
-
 - 실패1 - 이메일 형식 오류
     <details>
     <summary>Request Body</summary>
@@ -206,7 +182,6 @@
       }
 
     </details>
-  </br>
 
 - 실패2 - 비밀번호 형식 오류
     <details>
@@ -233,8 +208,6 @@
 
     </details>
 
-  </br>
-
 - 실패3 - 동일한 이메일 존재
     <details>
     <summary>Request Body</summary>
@@ -260,8 +233,6 @@
 
     </details>
 
-  </br>
-
 - 실패4 - 비밀번호 길이 오류
     <details>
     <summary>Request Body</summary>
@@ -286,7 +257,6 @@
       }
       
     </details>
-  </br>
 
 **[기능] 이메일 중복 체크**
 
@@ -319,7 +289,6 @@
       }
       
     </details>
-  </br>
 
 - 실패1 - 동일한 이메일 존재
     <details>
@@ -343,7 +312,6 @@
       }
       
     </details>
-  </br>
 
 - 실패2 - 이메일 형식 오류
     <details>
@@ -367,7 +335,6 @@
       }
       
     </details>
-  </br>
 
 **[기능 2] 로그인**
 
@@ -409,8 +376,6 @@
     </details>
   - Response Header - jwt 토큰
 
-</br>
-
 - 실패1 - 이메일 형식 오류
     <details>
     <summary>Request Body</summary>
@@ -434,7 +399,6 @@
       }
 
     </details>
-  </br>
 
 - 실패2 - 비밀번호 형식 오류
     <details>
@@ -459,7 +423,6 @@
       }
 
     </details>
-  </br>
 
 - 실패3 - 비밀번호 길이 오류
     <details>
@@ -484,7 +447,6 @@
       }
 
     </details>
-  </br>
 
 - 실패4 - 사용자 없음
     <details>
