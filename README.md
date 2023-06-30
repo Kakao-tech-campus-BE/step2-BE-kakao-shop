@@ -770,7 +770,7 @@
 ### ER-Diagram
 
 ```
-USER                         
+USER_tb                         
 -PK (INT)                    PRODUCT
 -username (VARCHAR(20))      -PK (INT)
 -email (VARCHAR(30))         -productname (VARCHAR(50))
@@ -778,13 +778,13 @@ USER
 -createAt (DATETIME)         -price (INT)
 -roles (VARCHAR(10))         -createAt (DATETIME)
 
-OPTION                       CART
+OPTION_tb                    CART
 -PK (INT)                    -PK (INT)
 -optionname (VARCHAH(50))    -USER FK (INT)
 -price (INT)                 -OPTION FK (INT)
 -PRODUCT FK (INT)            -quantity (INT)
  
-ORDER                         ORDER ITEM
+ORDER_tb                      ORDER ITEM
 -PK (INT)                     -PK (INT)
 -USER FK (INT)                -ORDER FK (INT)
 -createAt (DATETIME)          -option price (INT)
