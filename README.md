@@ -188,7 +188,59 @@
 
 4. 테이블 설계를 하여 README에 ER-Diagram을 추가하여 제출하시오.
     
-    ![erd](https://github.com/boseungk/TIL/assets/95980754/9d87f131-5233-4403-918d-1275b8917a68)
+    ![erd](https://github.com/boseungk/TIL/assets/95980754/35a2a042-2554-4fdb-9579-0bb515a48394)
+
+    ```sql
+    Create Table product (
+    productId int auto_increment primary key not null,
+    productName varchar(255) not null,
+    picture	varchar(255) not null,
+    price int	NOT NULL,
+    date	Date	NOT NULL,
+    description	varchar(255)	NOT NULL
+    );
+
+    Create Table productOption(
+    productOptionId int auto_increment primary key not null,
+    productOptionName varchar(255) not null,
+    price int not null,
+    productId int auto_increment not null,
+    foreign key (productId) references product(productId)
+    );
+
+    Create Table user(
+    userId int auto_increment primary key not null,
+    userName varchar(10) not null,
+    email varchar(255) not null,
+    password varchar(255)
+    );
+
+    Create Table cart(
+    cartId int auto_increment primary key not null,
+    optionNum int not null,
+    userId int not null,
+    productOptionId int not null,
+    foreign key(userId) references user(userId),
+    foreign key(productOptionId) references productOption(productOptionId)
+    );
+
+    Create Table orderItem(
+    orderItem int auto_increment primary key not null,
+    quantity int not null,
+    price int not null,
+    ordersId int not null,
+    productOptionId int not null,
+    foreign key(ordersId) references orders(ordersId),
+    foreign key(productOptionId) references productOption(productOptionId)
+    );
+
+    Create Table orders(
+    ordersId int auto_increment primary key not null,
+    userId int not null,
+    foreign key(userId) references user(userId)
+    );
+
+    ```
     
 - **과제 수행 (코드 작성) 하면서 어려웠던 점 (선택)**
     - 처음에는 테이블 설계가 금방 끝날 줄 알았는데, 여러가지 어려움이 있었다.
@@ -196,7 +248,16 @@
     - 테이블 간의 연관관계 매핑에서 어려움을 겪다가 다른 레퍼런스를 찾아보면서 이해하게 되었다.
     - 처음에는 화면 설계도를 보면서 테이블을 설계하다가 이해가 안되는 부분이 생겨서 API를 보면서 다시 테이블을 설계했다.
         - 예를 들어서 화면 설계도만 보고 Cart 테이블을 그대로 Order하면 될 거 같다고 생각했다가 API를 보고 item 테이블로 구성되어 있는 것을 보고 다시 테이블을 설계하게 되었다.
-        - 이 과정을 진행하면서 실제 개발할 때 어떤 것을 보면서 테이블을 설계하는지 궁금해졌다.
+      
+- 실습 멘토님 Q&A
+  - 실제 개발할 때 어떤 것을 보면서 테이블을 설계하는지 궁금합니다.
+    - 기능 정의 → 테이블 설계 → API
+    - 어떤 식으로 데이터를 주고 받기 위해서는 어떤 데이터를 가지고 있는지가 중요하기 때문에 보통 테이블 설계를 먼저 진행
+  - 프론트엔드와도 테이블 설계 시 얘기를 하나요?
+    - 보통 DBA나 팀내의 백엔드끼리만 얘기하고 프론트와는 잘 이야기하지 않는다
+  - 신입 개발자가 SQL을 어느정도까지 알고 쿼리를 작성할 수 있어야 하나요?
+    - 확실하게 이 정도다! 라고는 말할 수 없지만 현재 프로젝트에서 JPA를 사용하지만 안 사용하는 기업들도 매우 많기 때문에 우리 프로젝트 내에서 사용하는 쿼리문들은 다 알아야 함!
+    - DBA는 대게 백엔드 개발자가 짠 쿼리를 검사하지 직접 짜는 것은 드물다.
 </details>
 
 </br>
