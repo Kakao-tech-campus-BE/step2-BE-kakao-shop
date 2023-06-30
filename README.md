@@ -313,7 +313,7 @@
 
 **배포된 서버에 모든 API를 POSTMAN으로 요청해본 뒤 응답되는 데이터를 확인하고 부족한 데이터가 무엇인지 체크하여 README에 내용을 작성하시오.**
 
-![post man capture](./assets/postman.png)
+![post man capture](./docs/assets/postman.png)
 
 - `POST` /carts/update에서 상품 이름의 정보가 존재하지 않는다.
     - 아래는 `POST` /carts/update의 예시 response body이다.  
@@ -351,7 +351,7 @@
 
 **테이블 설계를 하여 README에 ER-Diagram을 추가하여 제출하시오.**
 
-![kakaoshop db](./assets/kakaoshop_db.png)
+![kakaoshop db](./docs/assets/kakaoshop_db.png)
 
 - 상품 테이블에 상품 가격이 필요할까??
     - 상품은 1개 이상의 옵션을 가지고 있고 실제 판매되는 것은 옵션이다.
@@ -359,3 +359,7 @@
     - 이는 데이터의 중복으로 오류로 인해 서로 다른 값을 가지게 되는 경우가 발생할 수 있다.
     - 따라서 가격 정보를 상품 테이블에서 삭제한 후, 옵션 테이블에 `priority` 속성을 부여했다.
     - 상품은 우선순위를 바탕으로 옵션들 중 대표 옵션을 찾을 수 있고 대표 옵션의 가격을 상품의 가격으로 제공된다.
+
+## 추가 - pdf 과제
+
+[`docs/1주차 - 테이블 설계하기 (문제 풀이 - 부산대BE_안혜준)`](https://github.com/jagaldol/step2-BE-kakao-shop/blob/feat-anhyejun/docs/1주차-테이블_설계하기.pdf)로 pdf 첨부 하였습니다.
