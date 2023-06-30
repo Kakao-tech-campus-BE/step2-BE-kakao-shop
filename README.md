@@ -45,6 +45,858 @@
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
+# 6/30(금) 1주차 과제 최종
+
+## 1. 부족한 요구사항
+
+### 1. 회원가입
+
+이메일 중복체크
+
+비밀번호 유효성 검사
+
+### 2. 로그인
+
+없음
+
+### 3. 로그아웃
+
+없음
+
+### 4. 전체 상품 목록 조회
+
+톡별가 마감일
+
+공유하기
+
+하트(찜)
+
+톡딜가, 기존가격
+
+### 5. 상품 조회
+
+별점
+
+상품 설명 이미지
+
+### 6. 상품 선택
+
+배송 방법
+
+### 7. 장바구니
+
+없음
+
+### 8. 장바구니 조회
+
+장바구니 상품 삭제
+
+## 2. 화면설계와 API주소 매칭
+
+### (기능1) 회원 가입
+
+<img src = "./img/1.png">
+
+- 성공
+
+| Method | Local URL |
+| --- | --- |
+| POST | http://localhost:8080/join |
+
+```json
+// Request
+{
+	"username" : "meta",
+	"email":"meta@nate.com",
+  "password":"meta1234!"
+}
+```
+
+```json
+// Response
+{
+    "success": true,
+    "response": null,
+    "error": null
+}
+```
+
+- 실패1
+
+| Method | Local URL |
+| --- | --- |
+| POST | http://localhost:8080/join |
+
+```json
+// Request
+{
+  "username":"mata",
+  "email":"metanate.com",
+  "password":"meta1234!"
+}
+```
+
+```json
+// Response
+{
+  "success" : false,
+  "response" : null,
+  "error" : {
+		"message" : "이메일 형식으로 작성해주세요:email",
+	  "status" : 400
+  }
+}
+```
+
+- 실패2
+
+| Method | Local URL |
+| --- | --- |
+| POST | http://localhost:8080/join |
+
+```json
+// Request
+{
+  "username":"mata",
+  "email":"meta@nate.com",
+  "password":"meta1234"
+}
+```
+
+```json
+// Response
+{
+  "success": false,
+  "response": null,
+  "error": {
+		"message": "영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니 다.:password",
+    "status": 400
+  }
+}
+```
+
+- 실패3
+
+| Method | Local URL |
+| --- | --- |
+| POST | http://localhost:8080/join |
+
+```json
+// Request
+{
+  "username":"mata",
+  "email":"ssar@nate.com",
+  "password":"meta1234!"
+}
+```
+
+```json
+// Response
+{
+  "success": false,
+  "response": null,
+  "error": {
+		"message": "동일한 이메일이 존재합니다 : ssar@nate.com",
+    "status": 400
+  }
+}
+```
+
+- 실패4
+
+| Method | Local URL |
+| --- | --- |
+| POST | http://localhost:8080/join |
+
+```json
+// Request
+{
+  "username":"mata",
+  "email":"mate@nate.com",
+  "password":"meta12!"
+}
+```
+
+```json
+// Response
+{
+  "success": false,
+  "response": null,
+  "error": {
+		"message": "8에서 20자 이내여야 합니다.:password",
+    "status": 400
+  }
+}
+```
+
+### (기능2) 로그인
+
+<img src = "./img/2.png">
+
+- 성공
+
+| Method | Local URL |
+| --- | --- |
+| POST | http://localhost:8080/login |
+
+```json
+// Request
+{
+  "email":"ssar@nate.com",
+  "password":"meta1234!"
+}
+```
+
+- Response Header
+
+| Authorization | Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9eyJzdWIiOiJzc2FyQG5hdGUuY29tIiwicm9sZSI6IlJPTEVfVVNFUiIsImlkIjoxLCJleHAiOjE2ODcwNTM5MzV9fXlD0NZQXYYfPHV8rokRJM86nhS869LZ1KIGi7_qvPOcVbXgvyZLKvnlLxomIiS3YFnQRLzXAJ2G41yI_AmGg |
+| --- | --- |
+
+```json
+// Response
+{
+  "success": true,
+  "response": null,
+  "error": null
+}
+```
+
+- 실패1
+
+| Method | Local URL |
+| --- | --- |
+| POST | http://localhost:8080/login |
+
+```json
+// Request
+{
+  "email":"ssarnate.com",
+  "password":"meta1234!"
+}
+```
+
+```json
+// Response
+{
+  "success": false,
+  "response": null,
+  "error": {
+		"message": "이메일 형식으로 작성해주세요:email",
+    "status": 400
+  }
+}
+```
+
+- 실패2
+
+| Method | Local URL |
+| --- | --- |
+| POST | http://localhost:8080/login |
+
+```json
+// Request
+{
+  "email":"ssar@nate.com",
+  "password":"meta1234"
+}
+```
+
+```json
+// Response
+{
+  "success": false,
+  "response": null,
+  "error": {
+		"message": "영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니 다.:password",
+    "status": 400
+  }
+}
+```
+
+- 실패3
+
+| Method | Local URL |
+| --- | --- |
+| POST | http://localhost:8080/login |
+
+```json
+// Request
+{
+  "email":"ssar@nate.com",
+  "password":"meta12!"
+}
+```
+
+```json
+// Response
+{
+  "success": false,
+  "response": null,
+  "error": {
+		"message": "8에서 20자 이내여야 합니다.:password",
+    "status": 400
+  }
+}
+```
+
+- 실패4
+
+| Method | Local URL |
+| --- | --- |
+| POST | http://localhost:8080/login |
+
+```json
+// Request
+{
+  "email":"ssar1@nate.com",
+  "password":"meta1234!"
+}
+```
+
+```json
+// Response
+{
+  "success": false,
+  "response": null,
+  "error": {
+		"message": "인증되지 않았습니다",
+    "status": 401
+  }
+}
+```
+
+### (기능3) 로그아웃
+
+<img src = "./img/3.png">
+
+(API문서에 없음)
+
+### (기능4) 전체 상품 목록 조회
+
+<img src = "./img/4.png">
+
+- 성공1
+
+| Method | Local URL | Param | Param default value |
+| --- | --- | --- | --- |
+| GET | http://localhost:8080/products | page={number} | 0 |
+
+```json
+// Response
+{
+  "success": true,
+  "response": [
+    {
+      "id": 1,
+      "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 주방용품 특가전",
+      "description": "",
+      "image": "/images/1.jpg",
+      "price": 1000
+    },
+    {
+      "id": 2,
+      "productName": "[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율",
+      "description": "",
+      "image": "/images/2.jpg",
+      "price": 2000
+    },
+    {
+      "id": 3,
+      "productName": "삼성전자 JBL JR310 외 어린이용/성인용 헤드셋 3종!",
+      "description": "",
+      "image": "/images/3.jpg",
+      "price": 30000
+    },
+    {
+      "id": 5,
+      "productName": "[더주] 컷팅말랑장족, 숏다리 100g/300g 외 주전부리 모음 / 중독성 최고/마른안주",
+      "description": "",
+      "image": "/images/5.jpg",
+      "price": 5000
+    },
+    {
+      "id": 4,
+      "productName": "바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종",
+      "description": "",
+      "image": "/images/4.jpg",
+      "price": 4000
+      "id": 6,
+      "productName": "굳지않는 앙금절편 1,050g 2팩 외 우리쌀떡 모음전",
+      "description": "",
+      "image": "/images/6.jpg",
+      "price": 15900
+      "id": 7,
+      "productName": "eoe 이너딜리티 30포, 오렌지맛 고 식이섬유 보충제",
+      "description": "",
+      "image": "/images/7.jpg",
+      "price": 26800
+      "id": 8,
+      "productName": "제나벨 PDRN 크림 2개. 피부보습/진정 케어",
+      "description": "",
+      "image": "/images/8.jpg",
+      "price": 25900
+      "id": 9,
+      "productName": "플레이스테이션 VR2 호라이즌 번들. 생생한 몰입감",
+      "description": "",
+      "image": "/images/9.jpg",
+      "price": 797000
+    }
+  ],
+  "error": null
+}
+```
+
+- 성공2 - Param사용
+
+| Method | Local URL | Param | Param default value |
+| --- | --- | --- | --- |
+| GET | http://localhost:8080/products | page=0 | 0 |
+
+```json
+{
+  "success": true,
+  "response": [
+    {
+      "id": 1,
+      "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품특가전",
+      "description": "",
+      "image": "/images/1.jpg",
+      "price": 1000
+    },
+    {
+      "id": 2,
+      "productName": "[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율",
+      "description": "",
+      "image": "/images/2.jpg",
+      "price": 2000
+    },
+    {
+      "id": 3,
+      "productName": "삼성전자 JBL JR310 외 어린이용/성인용 헤드셋 3종!",
+      "description": "",
+      "image": "/images/3.jpg",
+      "price": 30000
+    },
+    {
+      "id": 4,
+      "productName": "바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종",
+      "description": "",
+      "image": "/images/4.jpg",
+      "price": 4000
+    },
+    {
+      "id": 5,
+      "productName": "[더주] 컷팅말랑장족, 숏다리 100g/300g 외 주전부리 모음 /중독성최고/마른안주",
+      "description": "",
+      "image": "/images/5.jpg",
+      "price": 5000
+    },
+    {
+      "id": 6,
+      "productName": "굳지않는 앙금절편 1,050g 2팩 외 우리쌀떡 모음전",
+      "description": "",
+      "image": "/images/6.jpg",
+      "price": 15900
+    },
+    {
+      "id": 7,
+      "productName": "eoe 이너딜리티 30포, 오렌지맛 고 식이섬유 보충제",
+      "description": "",
+      "image": "/images/7.jpg",
+      "price": 26800
+    },
+    {
+      "id": 8,
+      "productName": "제나벨 PDRN 크림 2개. 피부보습/진정 케어",
+      "description": "",
+      "image": "/images/8.jpg",
+      "price": 25900
+    },
+    {
+      "id": 9,
+      "productName": "플레이스테이션 VR2 호라이즌 번들. 생생한 몰입감",
+      "description": "",
+      "image": "/images/9.jpg",
+      "price": 797000
+    }
+  ],
+  "error": null
+}
+```
+
+### (기능5) 개별 상품 조회
+
+<img src = "./img/5.png">
+
+- 성공
+
+| Method | Local URL |
+| --- | --- |
+| GET | http://localhost:8080/products/1 |
+
+```json
+// Response
+{
+  "success": true,
+  "response": {
+    "id": 1,
+    "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전",
+    "description": "",
+    "image": "/images/1.jpg",
+    "price": 1000,
+    "starCount": 5,
+    "options": [
+      {
+        "id": 1,
+        "optionName": "01. 슬라이딩 지퍼백 크리스마스에디션 4종",
+        "price": 10000
+      },
+      {
+        "id": 2,
+        "optionName": "02. 슬라이딩 지퍼백 플라워에디션 5종",
+        "price": 10900
+      },
+      {
+        "id": 3,
+        "optionName": "고무장갑 베이지 S(소형) 6팩",
+        "price": 9900
+      },
+      {
+        "id": 4,
+        "optionName": "뽑아쓰는 키친타올 130매 12팩",
+        "price": 16900
+      },
+      {
+        "id": 5,
+        "optionName": "2겹 식빵수세미 6매",
+        "price": 8900
+      }
+    ]
+  },
+  "error": null
+}
+```
+
+### (기능6) 상품 옵션 선택
+
+<img src = "./img/6.png">
+
+(상품옵션 선택은 URL이 없음.)
+
+### (기능7) 옵션 확인 및 수량 결정
+
+<img src = "./img/7.png">
+
+(옵션 확인 및 수량 결정은 URL이 없음)
+
+### (기능8) 장바구니 담기
+
+<img src = "./img/8.png">
+
+- 성공
+
+| Method | Local URL |
+| --- | --- |
+| POST | http://localhost:8080/carts/add |
+- Request Header
+
+| Authorization | Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9eyJzdWIiOiJzc2FyQG5hdGUuY29tIiwicm9sZSI6IlJPTEVfVVNFUiIsImlkIjoxLCJleHAiOjE2ODcwNTM5MzV9fXlD0NZQXYYfPHV8rokRJM86nhS869LZ1KIGi7_qvPOcVbXgvyZLKvnlLxomIiS3YFnQRLzXAJ2G41yI_AmGg |
+| --- | --- |
+
+```json
+// Request
+[
+{
+"optionId":1,
+"quantity":5
+},
+{
+"optionId":2,
+"quantity":5
+}
+]
+```
+
+```json
+// Response
+{
+	"success": true,
+	"response": null,
+	"error": null
+}
+```
+
+### (기능9) 장바구니 조회
+
+<img src = "./img/9.png">
+
+- 성공
+
+| Method | Local URL |
+| --- | --- |
+| GET | http://localhost:8080/carts |
+- Request Header
+
+| Authorization | Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9eyJzdWIiOiJzc2FyQG5hdGUuY29tIiwicm9sZSI6IlJPTEVfVVNFUiIsImlkIjoxLCJleHAiOjE2ODcwNTM5MzV9fXlD0NZQXYYfPHV8rokRJM86nhS869LZ1KIGi7_qvPOcVbXgvyZLKvnlLxomIiS3YFnQRLzXAJ2G41yI_AmGg |
+| --- | --- |
+
+```json
+{
+  "success": true,
+  "response": {
+    "products": [
+      {
+        "id": 1,
+        "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션외주방용품특가전",
+        "carts": [
+          {
+            "id": 4,
+            "option": {
+              "id": 1,
+              "optionName": "01. 슬라이딩 지퍼백 크리스마스에디션 4종",
+              "price": 10000
+            },
+            "quantity": 5,
+            "price": 50000
+          },
+          {
+            "id": 5,
+            "option": {
+              "id": 2,
+              "optionName": "02. 슬라이딩 지퍼백 플라워에디션 5종",
+              "price": 10900
+            },
+            "quantity": 5,
+            "price": 54500
+          }
+        ]
+      }
+    ],
+    "totalPrice": 104500
+  },
+  "error": null
+}
+```
+
+### (기능10,11) 장바구니 상품 옵션 확인 및 수량 결정
+
+<img src = "./img/10.png">
+
+- 성공
+
+| Method | Local URL |
+| --- | --- |
+| POST | http://localhost:8080/carts/update |
+- Request Header
+
+| Authorization | Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9eyJzdWIiOiJzc2FyQG5hdGUuY29tIiwicm9sZSI6IlJPTEVfVVNFUiIsImlkIjoxLCJleHAiOjE2ODcwNTM5MzV9fXlD0NZQXYYfPHV8rokRJM86nhS869LZ1KIGi7_qvPOcVbXgvyZLKvnlLxomIiS3YFnQRLzXAJ2G41yI_AmGg |
+| --- | --- |
+
+```json
+// Request
+[
+	{
+		"cartId":4,
+		"quantity":10
+	},
+	{
+		"cartId":5,
+		"quantity":10
+	}
+]
+```
+
+```json
+// Response
+{
+  "success": true,
+  "response": {
+    "carts": [
+      {
+        "cartId": 4,
+        "optionId": 1,
+        "optionName": "01. 슬라이딩 지퍼백 크리스마스에디션 4종",
+        "quantity": 10,
+        "price": 100000
+      },
+      {
+        "cartId": 5,
+        "optionId": 2,
+        "optionName": "02. 슬라이딩 지퍼백 플라워에디션 5종",
+        "quantity": 10,
+        "price": 109000
+      }
+    ],
+    "totalPrice": 209000
+  },
+  "error": null
+}
+```
+
+### (기능12) 결제하기
+
+<img src = "./img/11.png">
+
+- 성공
+
+| Method | Local URL |
+| --- | --- |
+| POST | http://localhost:8080/orders/save |
+- Request Header
+
+| Authorization | Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9eyJzdWIiOiJzc2FyQG5hdGUuY29tIiwicm9sZSI6IlJPTEVfVVNFUiIsImlkIjoxLCJleHAiOjE2ODcwNTM5MzV9fXlD0NZQXYYfPHV8rokRJM86nhS869LZ1KIGi7_qvPOcVbXgvyZLKvnlLxomIiS3YFnQRLzXAJ2G41yI_AmGg |
+| --- | --- |
+
+```json
+// Response
+{
+  "success": true,
+  "response": {
+    "id": 2,
+    "products": [
+      {
+        "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션외 주방용품 특가전",
+        "items": [
+          {
+            "id": 4,
+            "optionName": "01. 슬라이딩 지퍼백 크리스마스에디션 4종",
+            "quantity": 10,
+            "price": 100000
+          },
+          {
+            "id": 5,
+            "optionName": "02. 슬라이딩 지퍼백 플라워에디션 5종",
+            "quantity": 10,
+            "price": 109000
+          }
+        ]
+      }
+    ],
+    "totalPrice": 209000
+  },
+  "error": null
+}
+```
+
+### (기능13) 주문 결과 확인
+
+<img src = "./img/12.png">
+
+- 성공
+
+| Method | Local URL |
+| --- | --- |
+| GET | http://localhost:8080/orders/1 |
+- Request Header
+
+| Authorization | Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9eyJzdWIiOiJzc2FyQG5hdGUuY29tIiwicm9sZSI6IlJPTEVfVVNFUiIsImlkIjoxLCJleHAiOjE2ODcwNTM5MzV9fXlD0NZQXYYfPHV8rokRJM86nhS869LZ1KIGi7_qvPOcVbXgvyZLKvnlLxomIiS3YFnQRLzXAJ2G41yI_AmGg |
+| --- | --- |
+
+```json
+// Response
+{
+  "success": true,
+  "response": {
+    "id": 2,
+    "products": [
+      {
+        "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션외 주방용품 특가전",
+        "items": [
+          {
+            "id": 4,
+            "optionName": "01. 슬라이딩 지퍼백 크리스마스에디션 4종",
+            "quantity": 10,
+            "price": 100000
+          },
+          {
+            "id": 5,
+            "optionName": "02. 슬라이딩 지퍼백 플라워에디션 5종",
+            "quantity": 10,
+            "price": 109000
+          }
+        ]
+      }
+    ],
+    "totalPrice": 209000
+  },
+  "error": null
+}
+```
+
+## 3. 모든 API POSTMAN 요청 결과 & 부족한 데이터
+
+### 1. 전체 상품 목록 조회
+
+<img src = "./img/13.png">
+
+부족한 데이터 : 무료/유료 배송유무, 
+
+### 1-2. Param을 사용하여 전체 상품 목록 조회
+
+<img src = "./img/14.png">
+
+### 2. 개별 상품 상세 조회
+
+<img src = "./img/15.png">
+
+부족한 데이터 : 유료/무료 배송 유무
+
+### 3. 이메일 중복 체크
+
+<img src = "./img/16.png">
+
+(화면설계상 없었지만, API 문서에는 존재함.)
+
+### 4. 회원가입
+
+<img src = "./img/17.png">
+
+### 5. 로그인
+
+<img src = "./img/18.png">
+
+### 6. 장바구니 담기
+
+<img src = "./img/19.png">
+
+### 7. 장바구니 조회
+
+<img src = "./img/20.png">
+
+### 8. 주문하기 - (장바구니 수정)
+
+<img src = "./img/21.png">
+
+### 9. 결재하기 - (주문 인서트)
+
+<img src = "./img/22.png">
+
+부족한 데이터 : 화면에 상품명이 출력되지 않음
+
+### 10. 주문 결과 확인
+
+<img src = "./img/23.png">
+
+부족한 데이터 : 옵션을 몇 개 샀는지 프론트에 출력되지 않음. 옵션의 가격이 출력되지 않음.
+
+## 4. ERD
+
+<img src = "./img/erd.png">
+
+### 릴레이션 스키마(변경 후)
+
+회원(회원ID, 이메일, 비밀번호, 이름, 회원Role)s
+
+상품(상품ID, 상품명, 상품이미지, 상품가격, 등록일)
+
+옵션(옵션ID, 상품ID<FK>, 옵션명, 옵션가격, 재고)
+
+장바구니(장바구니ID, 회원ID<FK>, 옵션ID<FK>, 옵션개수)
+
+주문(주문ID, 회원ID, 주문일)
+
+주문아이템(주문아이템ID, 주문ID<FK>, 옵션ID<FK>, 주문수량, 주문금액)
+
 # 2주차
 
 카카오 테크 캠퍼스 2단계 - BE - 2주차 클론 과제
