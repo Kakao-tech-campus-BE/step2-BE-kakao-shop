@@ -1037,3 +1037,51 @@
   - 장바구니에 담은 옵션에 x버튼을 클릭하면, 장바구니아이디에 해당하는 장바구니아이템이 삭제되는 기능
 
 ![Untitled](images/Untitled%2014.png)
+
+```SQL
+CREATE TABLE `Product` (
+	`id`	INT	PRIMARY KEY,
+	`date`	DATETIME	NOT NULL,
+	`productName`	VARCHAR(100)	NOT NULL,
+	`price`	INT	NOT NULL,
+	`image`	VARCHAR(500)	NOT NULL
+);
+
+CREATE TABLE `Option` (
+	`id`	INT	PRIMARY KEY,
+	`date`	DATETIME	NOT NULL,
+	`optionName`	VARCHAR(100)	NOT NULL,
+	`price`	INT	NOT NULL,
+	FOREIGN KEY (productId) REFERENCES `Product` (`id`)
+);
+
+CREATE TABLE `User` (
+	`id`	INT	PRIMARY KEY,
+	`date`	DATETIME	NOT NULL,
+	`email`	VARCHAR(100)	NOT NULL,
+	`username`	VARCHAR(50)	NOT NULL,
+	`password`	VARCHAR(256)	NOT NULL,
+);
+
+CREATE TABLE `Cart` (
+	`id`	INT	PRIMARY KEY,
+	`date`	DATETIME	NOT NULL,
+	`quantity`	INT	NOT NULL,
+	FOREIGN KEY (optionId) REFERENCES `Option` (`id`),
+	FOREIGN KEY (userId) REFERENCES `User` (`id`)
+);
+
+CREATE TABLE `Item` (
+	`id`	INT	PRIMARY KEY,
+	`date`	DATETIME	NOT NULL,
+	`quantity`	INT	NOT NULL,
+	FOREIGN KEY (optionId) REFERENCES `Option` (`id`),
+	FOREIGN KEY (orderId) REFERENCES `Order` (`id`)
+);
+
+CREATE TABLE `Order` (
+	`id`	INT	PRIMARY KEY,
+	`date`	DATETIME	NOT NULL,
+	FOREIGN KEY (userId) REFERENCES `User` (`id`)
+);
+```
