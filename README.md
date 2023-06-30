@@ -56,7 +56,7 @@
 
 - 프론트 화면
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6cf0cd95-0cf1-4758-bf4f-c24326523e3a/Untitled.png)
+https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6cf0cd95-0cf1-4758-bf4f-c24326523e3a/Untitled.png
 
 - 실제 화면
 
@@ -121,6 +121,7 @@ starcount 필요
 ### 문의 하기
 
 게시판 - 댓글 방식으로 구현
+
 ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8b9fe4d4-8d54-4a00-8b78-a6edc8b2ef13/Untitled.png)
 
 
