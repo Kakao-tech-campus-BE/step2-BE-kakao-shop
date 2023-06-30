@@ -43,17 +43,17 @@
  H. 장바구니 조회
   - /carts
  I. 장바구니 상품 옵션 확인 및 수량 결정
-  - /carts/update
- J. 주문하기
   - /carts
+ J. 주문하기
+  - /carts/update
  K. 결제하기
   - /orders/save
  L. 주문 결과 확인
   - /orders/{id}
 3. 배포된 서버에 모든 API를 POSTMAN으로 요청해본 뒤 응답되는 데이터를 확인하고 부족한 데이터가 무엇인지 체크하여 README에 내용을 작성하시오.
- 로그인 시 이메일 또는 비밀번호가 일치하지 않을 때, 아무 표시가 없음. -> 재시도를 요청하기 or 이메일이나 비밀번호를 다시 확인할 것을 요구해야 함.
+  - 장바구니 담기 시, 기존에 담겨있던 옵션과 같은 옵션을 또 담기를 하려고 하면, 500에러 발생, 담으려는 옵션과 동일한 옵션이 장바구니에 있으면 수량을 늘려줄 필요가 있다.
 4. 테이블 설계를 하여 README에 ER-Diagram을 추가하여 제출하시오.
-<img width="600" alt="image" src="https://github.com/sam-mae/git-test/assets/62278128/efd8d45c-3496-4eb7-9931-47c2f47af55f">
+<img src="https://drive.google.com/file/d/1TuYbglp5WjX5RNr1b9M-s9wwbBIK2WuK/view?usp=sharing">
 ```
 
 </br>
