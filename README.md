@@ -453,6 +453,81 @@
 
 <img src="week1_image/erd.png" width="400" height="400">
 
+##### 테이블 설계
+
+```mysql
+CREATE TABLE `user_tb` (
+                           `id` INT AUTO_INCREMENT PRIMARY KEY,
+                           `userName` VARCHAR(15) NOT NULL,
+                           `nickname` VARCHAR(15) NOT NULL UNIQUE,
+                           `email` VARCHAR(30) NOT NULL UNIQUE,
+                           `password` VARCHAR(20) NOT NULL,
+                           CONSTRAINT `chk_password_length` CHECK (LENGTH(`password`) >= 8 AND LENGTH(`password`) <= 20)
+);
+
+CREATE TABLE `product_tb` (
+                              `id` INT AUTO_INCREMENT PRIMARY KEY,
+                              `productName` VARCHAR(100) NOT NULL,
+                              `description` VARCHAR(255) DEFAULT ' ',
+                              `image` VARCHAR(100) NOT NULL,
+                              `price` INT NOT NULL,
+                              `starCount` INT DEFAULT 0,
+                              `optionId` INT NOT NULL,
+                              CHECK (`price` >= 0)
+);
+
+CREATE TABLE `option_tb` (
+                             `id` INT AUTO_INCREMENT PRIMARY KEY,
+                             `productId` INT NOT NULL,
+                             `optionName` VARCHAR(100) NOT NULL,
+                             `price` INT NOT NULL,
+                             CHECK (`price` >= 0)
+);
+
+CREATE TABLE `cart_tb` (
+                           `id` INT AUTO_INCREMENT PRIMARY KEY,
+                           `userId` INT NOT NULL,
+                           `optionId` INT NOT NULL,
+                           `quantity` INT NOT NULL,
+                           `price` INT NOT NULL,
+                           UNIQUE (userId, optionId),
+                           CHECK (`quantity` >= 1),
+		                   CHECK (`price` >= 0)
+);
+
+CREATE TABLE `order_tb` (
+                            `id` INT AUTO_INCREMENT PRIMARY KEY,
+                            `userId` INT NOT NULL,
+                            `price` INT NOT NULL,
+                            CHECK (`price` >= 0)
+);
+
+CREATE TABLE `order_item_tb` (
+                                 `id` INT AUTO_INCREMENT PRIMARY KEY,
+                                 `orderId` INT NOT NULL,
+                                 `optionId` INT NOT NULL,
+                                 `quantity` INT NOT NULL,
+                                 `price` INT NOT NULL,
+                                 CHECK (`quantity` >= 1),
+                                 CHECK (`price` >= 0)
+);
+
+ALTER TABLE `product_tb` ADD CONSTRAINT `product_option_id` FOREIGN KEY (`optionId`) REFERENCES `option_tb`(`id`);
+ALTER TABLE `option_tb` ADD CONSTRAINT `option_product_id` FOREIGN KEY (`productId`) REFERENCES `product_tb` (`id`);
+ALTER TABLE `cart_tb` ADD CONSTRAINT `cart_user_id` FOREIGN KEY (`userId`) REFERENCES `user_tb` (`id`);
+ALTER TABLE `cart_tb` ADD CONSTRAINT `cart_option_id` FOREIGN KEY (`optionId`) REFERENCES `option_tb` (`id`);
+ALTER TABLE `order_tb` ADD CONSTRAINT `order_user_id` FOREIGN KEY (`userId`) REFERENCES `user_tb` (`id`);
+ALTER TABLE `order_item_tb` ADD CONSTRAINT `oi_order_id` FOREIGN KEY (`orderId`) REFERENCES `order_tb` (`id`);
+ALTER TABLE `order_item_tb` ADD CONSTRAINT `oi_option_id` FOREIGN KEY (`optionId`) REFERENCES `option_tb` (`id`);
+
+CREATE INDEX `idx_option_product_id` ON `option_tb` (`productId`);
+CREATE INDEX `idx_cart_user_id` ON `cart_tb` (`userId`);
+CREATE INDEX `idx_cart_option_id` ON `cart_tb` (`optionId`);
+CREATE INDEX `idx_order_user_id` ON `order_tb` (`userId`);
+CREATE INDEX `idx_oi_order_id` ON `order_item_tb` (`orderId`);
+CREATE INDEX `idx_oi_option_id` ON `order_item_tb` (`optionId`);
+```
+
 
 # 2주차
 
