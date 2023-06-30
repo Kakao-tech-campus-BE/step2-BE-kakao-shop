@@ -45,6 +45,140 @@
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
+</br>
+
+
+## 1. 요구사항 시나리오에서 부족해 보이는 기능
+```
+(기능2) 로그인
+
+- 부족해 보이는 기능 : 아이디 기억하기 및 정보 기억하기
+
+<기능 상세 설명>
+ 아이디 기억하기 또는 로그인 유지하기 박스를  체크하면 cookie를 생성하고 같은 사용자가 다시 접속할 경우 쿠키를 확인해 자동 로그인해준다.
+
+<인터페이스 요구사항>
+입력 : 아이디 기억하기(또는 정보 기억하기) 버튼 클릭 
+```
+```
+(기능10) 장바구니 상품 옵션 확인 및 수량 결정
+
+- 부족해 보이는 기능 : 상품 삭제 기능
+
+<기능 상세 설명>
+ 상품 삭제 버튼을 누르면 장바구니에서 해당 상품을 삭제하고 데이터베이스를 update를 한다.
+ 
+<인터페이스 요구사항>
+입력 : 삭제 버튼으로 상품 삭제
+출력 : 삭제하겠습니까? 팝업 문구와 옵션 삭제 및 합계 금액 변경
+```
+</br>
+
+## 2. 화면설계와 기존 서버의 API주소의 매칭
+```
+(기능1 - 회원가입)  POST - localhost:8080/join
+(기능2 - 로그인)    POST - localhost:8080/login
+(기능3 - 로그아웃) POST - localhost:8080/logout
+(기능4 - 전체 상품 목록 조회) GET - localhost:8080/products
+(기능5 - 개별 상품 상세 조회) GET - localhost:8080/products/{product_id}
+(기능6 - 상품 옵션 선택) optionId를 통해
+(기능7 - 옵션 확인 및 수량 결정) optionId와 quantity를 통해
+(기능8 - 장바구니 담기) POST - localhost:8080/carts/add
+(기능9 - 장바구니 보기) GET - localhost:8080/carts
+(기능10 - 장바구니 상품 옵션 확인 및 수량 결정) cartID와 quantity를 통해
+(기능11 - 주문) POST - localhost:8080/carts/update
+(기능12 - 결제) POST - localhost:8080/orders/save
+(기능13 - 주문 결과 확인) GET - localhost:8080/orders/{order_id}
+```
+
+</br>
+
+## 3. API요청 후 응답데이터 확인 및 부족해보이는 기능 체크
+
+```
+- 주문하기  localhost:8080/carts/update 의 response body에 배송관련 금액이 포함되어 있지 않다.
+
+- 장바구니에 동일한 상품을 담는 경우 갯수가 추가되지 않고 새로운 상품이 추가되는 형식으로 나타난다.
+ 
+- 주문 결과 확인 api를 보냈을 때 주문 완료 시간이 포함되면 편리할 거 같다.
+```
+
+</br>
+
+## 4. ER-Diagram
+
+<img src = "https://drive.google.com/uc?export=view&id=1aBVtKiymuyLBzqxhKidTyUGll2YCMbsx" />
+
+
+<details>
+<summary>tables</summary>
+<div markdown="1">
+
+```
+Table User {
+  id integer [primary key]
+  username varchar 
+  email varchar
+  password varchar
+  date TIMESTAMP
+}
+```
+
+```
+Table Product {
+  id integer [primary key]
+  productname varchar
+  image file
+  price int
+  date TIMESTAMP
+}
+```
+
+```
+Table Option {
+  id integer [primary key]
+  product_id integer
+  optionname varchar
+  price TIMESTAMP
+  date varchar
+}
+```
+
+```
+Table Cart {
+  id integer [primary key]
+  user_id integer 
+  option_id integer
+  option_num integer
+  
+}
+```
+
+```
+Table Order {
+  id integer [primary key]
+  user_id integer
+  product_id integer
+  total_price integer
+}
+```
+
+```
+Ref: User.id - Cart.user_id
+Ref: Option.id - Cart.option_id
+Ref: Order.user_id > User.id
+Ref: Order.product_id < Product.id
+Ref: Option.product_id - Product.id
+```
+
+
+</div>
+</details>
+
+</br>
+
+
+
 # 2주차
 
 카카오 테크 캠퍼스 2단계 - BE - 2주차 클론 과제
