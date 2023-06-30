@@ -45,6 +45,22 @@
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
+
+## **과제 수행 내용**
+
+1. 요구사항 시나리오를 보고 부족해 보이는 기능을 하나 이상 체크하여 README에 내용을 작성하시오.
+    
+    [https://www.notion.so/w0nni/SHOP-API-4d049c8138ab449782d155e4151962ff?pvs=4#c6967b003b394735bf8390430e7c1649](https://www.notion.so/SHOP-API-4d049c8138ab449782d155e4151962ff?pvs=21)
+    
+2. 제시된 화면설계를 보고 해당 화면설계와 배포된 기존 서버의 API주소를 매칭하여 README에 내용을 작성하시오
+3. 배포된 서버에 모든 API를 POSTMAN으로 요청해본 뒤 응답되는 데이터를 확인하고 부족한 데이터가 무엇인지 체크하여 README에 내용을 작성하시오. (2,3번 같이 진행)
+[https://www.notion.so/w0nni/SHOP-API-4d049c8138ab449782d155e4151962ff?pvs=4#475484d8123149878de526b9cf35220b](https://www.notion.so/SHOP-API-4d049c8138ab449782d155e4151962ff?pvs=21)
+4. 테이블 설계를 하여 README에 ER-Diagram을 추가하여 제출하시오.
+    
+    [https://www.notion.so/w0nni/SHOP-API-4d049c8138ab449782d155e4151962ff?pvs=4#399478aac18944ff99aadfd4a87957f0](https://www.notion.so/SHOP-API-4d049c8138ab449782d155e4151962ff?pvs=21)
+5. PDF 과제
+    
+    [https://www.notion.so/w0nni/SHOP-API-4d049c8138ab449782d155e4151962ff?pvs=4#6c2f502a92d743a689b47f89e2402855](https://www.notion.so/SHOP-API-4d049c8138ab449782d155e4151962ff?pvs=21)
 # 2주차
 
 카카오 테크 캠퍼스 2단계 - BE - 2주차 클론 과제
