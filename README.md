@@ -18,14 +18,15 @@
 
 클라이언트측에서 서버측으로 전송하는 데이터가 없다. 그러므로 HTTP GET 요청을 한다.
 
-HTTP Method : GET
-Local URL : http://localhost:8080/products
+HTTP Method : GET </br>
+Local URL : http://localhost:8080/products </br>
 
 ### JSON 응답 및 시나리오 분석
 
-- JSON 응답
-    
-    ```json
+<details>
+<summary>JSON 응답</summary>
+<div>
+```json
     {
         "success": true,
         "response": [
@@ -96,6 +97,10 @@ Local URL : http://localhost:8080/products
         "error": null
     }
     ```
+</div>
+</details>
+    
+   
     
 
 JSON 응답을 살펴보면 Response Body에 id, productName, description, image, price를 배열 형식으로 담아서 응답하고 있다. 화면을 살펴보면 상품 이름, 가격, 이미지는 화면상에 명시하여 필요하지만, 설명(description)은 그렇지 않아 설명 속성의 필요성은 보이지 않는다.
