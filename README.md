@@ -33,6 +33,7 @@
 </br>
 
 ### **과제 2**
+![api](https://github.com/chaee813/git-practice/assets/82564901/bd25148e-e9be-4efe-a48d-b9decde5fba7)
 
 </br>
 
