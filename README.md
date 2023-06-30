@@ -130,6 +130,47 @@ https://www.notion.so/3-66b83cbebf1d4d9387bd99021e2a27fa?pvs=4
 
 ## 4. ER-Diagram
 https://www.notion.so/4-241d83d0283f4cbf8b9a1bcfa7722013?pvs=4
+
+  <p><img src="./images/2.png"></img></p>
+
+## 5. PDF파일 채우기
+CREATE TABLE product (
+pk product_id,
+productName,   image,
+price,   날짜
+);
+CREATE TABLE user (
+pk user_id,
+username,   email,
+password,   날짜
+);
+CREATE TABLE options (
+pk options_id,
+optionName,   price,
+`` 날짜,
+fk user_id
+);
+CREATE TABLE cart (
+pk cart-id,
+fk options_id,
+`` quantity,
+fk user_id
+);
+CREATE TABLE order (
+pk order_id,
+fk cart-id,
+fk options_id,
+`` quantity,
+fk user_id
+);
+CREATE TABLE item (
+pk item_id,
+quantity,   price,
+`` optionName,
+fk order_id,
+fk user_id
+);
+
 </br>
 
 ## **과제 상세 : 수강생들이 과제를 진행할 때, 유념해야할 것**
