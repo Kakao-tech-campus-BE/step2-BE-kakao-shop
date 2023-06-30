@@ -33,6 +33,127 @@
 
 </br>
 
+## **과제 수행**
+### 추가 요구 사항
+- 장바구니에 동일한 제품을 추가할 시, 기존 수량에 추가 수량만큼 더한 수량 저장 기능
+- 장바구니 조회 시 수량이 1 미만으로 내려가면 장바구니에 담겨있던 상품 삭제 기능
+- 판매 상품 추가 기능
+    - 판매자 등록 기능도 추가해야 한다.
+    - 상품 삭제 기능도 추가
+- 회원 정보 상세 페이지
+    - 본인의 정보 수정 기능
+    - 배송지 추가
+- 관심 상품 등록 기능
+- 상품 검색 기능
+    - 판매자 검색 기능도 가능
+</br>
+
+### 화면 설계 분석
+1. 회원 가입 페이지
+    회원 가입을 하기 위해서는 이메일, 이름, 비밀번호를 입력해야 한다.
+    
+    이메일을 입력할 시, `/check`가 POST 되며 이메일의 형식과 중복 여부를 확인한다.
+
+    비밀번호는 영문, 숫자, 특수 문자를 모두 포함해야 하며 공백이 없이 8~20자 사이여야 한다.
+
+    회원 가입 버튼을 누르면 `/join`을 POST하여 이메일, 이름, 비밀번호를 넘기고 다시 한 번 `/check`를 통해 이메일 형식과 중복 여부를 확인한다.
+
+    이때 두 유형의 에러가 발생할 수 있다.
+    - 이메일
+        - 이메일 형식 에러
+        - 이메일 중복 에러
+    - 비밀번호
+        - 문자 제한 에러
+        - 길이 제한 에러
+
+2. 로그인 페이지
+    로그인을 하기 위해서는 이메일과 비밀번호를 입력해야 한다.
+
+    로그인 버튼을 누르면 `/login`을 POST하여 이메일, 비밀번호를 넘긴다.
+
+    로그인에 성공하면 JWT Token을 반환한다.
+
+    이때 세 유형의 에러가 발생할 수 있다.
+    - 이메일
+        - 이메일 형식 에러
+    - 비밀번호
+        - 문자 제한 에러
+        - 길이 제한 에러
+    - 인증
+        -인증 실패 에러
+
+3. 로그아웃 버튼
+    로그인 상태를 종료한다.
+
+4. 전체 상품 목록 조회 페이지
+    `/products`는 GET을 통해 등록되어 있는 상품들의 이름, 가격, 사진을 반환한다.
+
+    page 파라미터를 가지며 필수는 아니다.
+
+5. 개별 상품 상세 조회 페이지
+    `/pruducts/{product_id}`는 GET을 통해 선택한 상품의 사진, 이름, 옵션의 이름, 옵션의 가격을 반환한다.
+
+    옵션을 선택하고 수량을 결정한 후 장바구니 담기 버튼을 누르면 `/carts/add`를 POST하여 옵션 번호와 수량이 전달된다.
+
+6. 장바구니 조회 페이지
+    `/carts`는 GET을 통해 장바구니에 담은 물품들을 보여준다.
+
+    JWT token을 헤더로 가지며 상품의 번호, 이름과 옵션의 번호, 이름, 가격, 수량, 옵션 별 총 가격과 장바구니 번호, 총 금액을 반환한다.
+
+    주문하기 버튼을 누르면 옵션 번호와 옵션 수량 버튼으로 변경된 수량을 가진 `/carts/update`를 POST하여 넘겨 주고 결제 페이지로 넘어간다.
+
+7. 결제 페이지
+    장바구니 조회 페이지에서 보여준 상품의 이름, 옵션의 이름, 수량, 옵션 별 총 가격, 총 금액을 보여준다.
+
+    결제하기 버튼을 누르면 `/orders/save`를 POST로 JWT token을 헤더로 보내며 결제 번호, 상품 이름과 옵션의 번호, 이름, 수량, 옵션 별 총 가격, 총 금액을 반환한다.
+
+    성공적으로 결제가 되면 주문 테이블에 해당 상품들의 정보를 저장한 후 장바구니 테이블에서 해당 상품들의 정보를 삭제한다.
+
+8. 주문 결과 페이지
+    JWT token을 헤더로 `/orders/{order_id}`를 POST로 요청하면 주문 번호, 제품 이름과 옵션의 번호, 이름, 수량, 옵션 별 총 가격, 총 금액을 반환한다.
+
+</br>
+
+### 부족한 데이터
+**장바구니 담기**
+`/carts/add` 시에 옵션 번호만 전달이 된다.
+
+옵션 테이블은 상품 번호와 옵션 번호의 복합 주 키를 가지고 있으므로 상품 번호도 추가로 넘겨줘야 한다.
+
+</br>
+
+### ER-Diagram
+![users](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1befdd4f-cf58-48cf-baa0-5859fcb07980/Untitled.png)
+
+users 테이블
+
+![products](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c17cec6c-a641-4d80-af8c-ad062fa4120d/Untitled.png)
+
+products 테이블
+
+![options](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9f669d78-cb65-4eb7-8096-72089ce63aba/Untitled.png)
+
+options 테이블
+
+![carts](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b203691b-1a05-4670-a0eb-10abe3fc7819/Untitled.png)
+
+carts 테이블
+
+![orders](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/58e8b144-2b20-4f1d-99fd-98107d4f7b98/Untitled.png)
+
+orders 테이블
+
+![order items](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/5785d9cb-e8a2-4db8-9890-70f189671328/Untitled.png)
+
+order items 테이블
+
+</br>
+
+![ER-Diagram](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7f4ec9e6-5b23-4f4d-ae2e-3397345dda83/Untitled.png)
+
+테이블 관계도
+
+
 ## **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
 **1. PR 제목과 내용을 아래와 같이 작성 해주세요.**
 
