@@ -193,7 +193,7 @@
     ```sql
     Create Table product (
     productId int auto_increment primary key not null,
-    productName varchar(255) not null,
+    productName varchar(20) not null,
     picture	varchar(255) not null,
     price int	NOT NULL,
     date	Date	NOT NULL,
@@ -202,7 +202,7 @@
 
     Create Table productOption(
     productOptionId int auto_increment primary key not null,
-    productOptionName varchar(255) not null,
+    productOptionName varchar(20) not null,
     price int not null,
     productId int auto_increment not null,
     foreign key (productId) references product(productId)
@@ -211,8 +211,8 @@
     Create Table user(
     userId int auto_increment primary key not null,
     userName varchar(10) not null,
-    email varchar(255) not null,
-    password varchar(255)
+    email varchar(20) not null,
+    password varchar(20)
     );
 
     Create Table cart(
