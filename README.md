@@ -41,7 +41,7 @@
 </br>
 
 **2. PR 내용 :**
-    ## 1. 요구사항 시나리오를 보고 부족해 보이는 기능 하나 이상 체크하여 [README](http://README.MD)에 내용 생성
+## 1. 요구사항 시나리오를 보고 부족해 보이는 기능 하나 이상 체크하여 [README](http://README.MD)에 내용 생성
     
 ### 추가하면 좋을 기능들
 
@@ -147,8 +147,16 @@ API 주소 : /orders/{주문 번호}
 
 ![Untitled 12](https://github.com/flowersun99/how-to-cool_instagram_crawling_version/assets/102143406/6e39bc5f-696b-4a4d-8578-4f2fb1ac2606)
     
+## 3. 배포된 서버에 모든 API를 POSTMAN으로 요청해본 뒤 응답되는 데이터를 확인하고 부족한 데이터가 무엇인지 체크하여 README에 내용을 작성하시오.
+![a](https://github.com/flowersun99/bakjoon/blob/master/kaka/a.png)
+아직 실력이 부족해서 그런가 부족한 데이터가 무엇인지 잘... 모르겟다
 
+## 4. 테이블 설계를 하여 README에 ER-Diagram을 추가하여 제출하시오.
+![db]([https://github.com/flowersun99/bakjoon/blob/master/kaka/a.png](https://github.com/flowersun99/bakjoon/blob/master/kaka/db.png))
 >- 코드 작성하면서 어려웠던 점
+코드 작성을 하면서 이번에 처음으로 백엔드 프로젝트를 하였는데 다들 너무 잘하는 것 같아서 불안하네요..
+데이터 베이스를 처음 다루다 보니 거기서 시간을 많이 잡아먹었습니다.
+
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
 # 2주차
