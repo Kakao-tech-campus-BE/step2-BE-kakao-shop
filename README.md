@@ -21,6 +21,19 @@
 4. 테이블 설계를 하여 README에 ER-Diagram을 추가하여 제출하시오.
 ```
 
+## 1. 요구사항 시나리오, 부족해 보이는 기능
+https://www.notion.so/1-f2de66e9545146d394bb63ce14eb2f32?pvs=4
+
+## 2. 서버의 API주소와 화면 매칭
+https://www.notion.so/2-API-33d2bf34051549619f07d2f6be482f76?pvs=4
+
+## 3. 부족한 데이터
+https://www.notion.so/3-66b83cbebf1d4d9387bd99021e2a27fa?pvs=4
+
+감이 잘안와서 있으면 좋을거 같은 데이터들을 적어보았습니다.
+
+## 4. ER-Diagram
+https://www.notion.so/4-241d83d0283f4cbf8b9a1bcfa7722013?pvs=4
 </br>
 
 ## **과제 상세 : 수강생들이 과제를 진행할 때, 유념해야할 것**
