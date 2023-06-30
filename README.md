@@ -152,7 +152,7 @@ API 주소 : /orders/{주문 번호}
 아직 실력이 부족해서 그런가 부족한 데이터가 무엇인지 잘... 모르겟다
 
 ## 4. 테이블 설계를 하여 README에 ER-Diagram을 추가하여 제출하시오.
-![db]([https://github.com/flowersun99/bakjoon/blob/master/kaka/a.png](https://github.com/flowersun99/bakjoon/blob/master/kaka/db.png))
+![db](https://github.com/flowersun99/bakjoon/blob/master/kaka/db.png)
 >- 코드 작성하면서 어려웠던 점
 코드 작성을 하면서 이번에 처음으로 백엔드 프로젝트를 하였는데 다들 너무 잘하는 것 같아서 불안하네요..
 데이터 베이스를 처음 다루다 보니 거기서 시간을 많이 잡아먹었습니다.
