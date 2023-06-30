@@ -142,15 +142,13 @@ CREATE TABLE user_tb
     UNIQUE (email)
 );
 
-CREATE TABLE item_tb
+CREATE TABLE product_tb
 (
-    id        INTEGER PRIMARY KEY AUTOINCREMENT,
-    price     INTEGER NOT NULL,
-    quantity  INTEGER NOT NULL,
-    option_id INTEGER,
-    order_id  INTEGER,
-    CONSTRAINT option_id_fk FOREIGN KEY (option_id) REFERENCES option_tb,
-    CONSTRAINT order_id_fk FOREIGN KEY (order_id) REFERENCES order_tb
+    id           INTEGER PRIMARY KEY AUTOINCREMENT,
+    description  TEXT    NOT NULL,
+    image        TEXT    NOT NULL,
+    price        INTEGER NOT NULL,
+    product_name TEXT    NOT NULL
 );
 
 CREATE TABLE option_tb
@@ -174,20 +172,22 @@ CREATE TABLE cart_tb
     UNIQUE (user_id, option_id)
 );
 
-CREATE TABLE product_tb
-(
-    id           INTEGER PRIMARY KEY AUTOINCREMENT,
-    description  TEXT    NOT NULL,
-    image        TEXT    NOT NULL,
-    price        INTEGER NOT NULL,
-    product_name TEXT    NOT NULL
-);
-
 CREATE TABLE order_tb
 (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER,
     CONSTRAINT user_id_fk FOREIGN KEY (user_id) REFERENCES user_tb
+);
+
+CREATE TABLE item_tb
+(
+    id        INTEGER PRIMARY KEY AUTOINCREMENT,
+    price     INTEGER NOT NULL,
+    quantity  INTEGER NOT NULL,
+    option_id INTEGER,
+    order_id  INTEGER,
+    CONSTRAINT option_id_fk FOREIGN KEY (option_id) REFERENCES option_tb,
+    CONSTRAINT order_id_fk FOREIGN KEY (order_id) REFERENCES order_tb
 );
 
 CREATE INDEX cart_user_id_idx on cart_tb (user_id);
@@ -198,8 +198,12 @@ CREATE INDEX option_product_id_idx on option_tb (product_id);
 CREATE INDEX order_user_id_idx on order_tb (user_id);
 ```
 
+<br/>
+<br/>
+<br/>
+
 ## ER 다이어그램
 
-![ER Diagram](https://github.com/SeokjunMoon/step2-BE-kakao-shop/blob/feat-moonseokjun/데이터베이스_ER_다이어그램.png)
+![ER Diagram](https://github.com/SeokjunMoon/step2-BE-kakao-shop/blob/feat-moonseokjun/week1/데이터베이스_ER_다이어그램.png)
 
 </br>
