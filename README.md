@@ -66,7 +66,7 @@
 
 - **회원**
 
-  - 회원 등급 데이터
+  - 회원 등급 데이터 -> Grade 객체
   - 회원 역할(구매자, 판매자) 데이터
   - 회원 정보 수정 api
   - 회원 탈퇴 api
@@ -89,7 +89,8 @@
 - **전체 상품 목록 조회**
 
   - 상품 검색 api
-  - 조회 기준 선택하기
+  - 조회 기준 선택
+  - 정렬 기준 선택
 
   </br>
 
@@ -99,8 +100,8 @@
   - 등록되지 않은 상품 조회 막기
   - 재고 내역 데이터
   - 별점 데이터
-  - 상품 찜하기 관련 api
-  - 리뷰 관련 api
+  - 상품 찜하기 관련 api -> Likes 객체
+  - 리뷰 관련 api -> Review 객체
 
   </br>
 
@@ -129,7 +130,7 @@
   </br>
 
 - **결제**
-  - 할인 관련 api
+  - 할인 관련 api -> DiscountPolicy 객체
   - 배송지 정보 입력 시 데이터베이스에 저장하는 api
 
 </br>
@@ -1272,48 +1273,48 @@
 - user_tb
   ```sql
   CREATE TABLE `user_tb` (
-  	`id`		INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  	`username`	VARCHAR(100)	NOT NULL,
-  	`email`		VARCHAR(100)	NOT NULL,
-  	`password`	VARCHAR(100)	NOT NULL,
-  	`created_at`	TIMESTAMP	NOT NULL,
-  	`modified_at`	TIMESTAMP	NULL
+  	`id`		    INTEGER		    NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  	`username`	    VARCHAR(100)	NOT NULL,
+  	`email`		    VARCHAR(100)	NOT NULL,
+  	`password`	    VARCHAR(100)	NOT NULL,
+  	`created_at`	TIMESTAMP	    NOT NULL,
+  	`updated_at`	TIMESTAMP	    NULL
   );
   ```
 - product_tb
   ```sql
   CREATE TABLE `product_tb` (
-  	`id`		INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  	`product_name`	VARCHAR(100)	NOT NULL,
-  	`product_price`	INTEGER		NOT NULL,
-  	`description`	VARCHAR(1000)	NOT NULL,
-  	`image`		VARCHAR(500)	NOT NULL,
-  	`created_at`	TIMESTAMP	NOT NULL,
-  	`modified_at`	TIMESTAMP	NULL
+  	`id`		      INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  	`product_name`	  VARCHAR(100)	NOT NULL,
+  	`product_price`	  INTEGER		NOT NULL,
+  	`description`	  VARCHAR(1000)	NOT NULL,
+  	`image`		      VARCHAR(500)	NOT NULL,
+  	`created_at`	  TIMESTAMP	    NOT NULL,
+  	`updated_at`	  TIMESTAMP	    NULL
   );
   ```
 - option_tb
   ```sql
   CREATE TABLE `option_tb` (
-  	`id`		INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  	`option_name`	VARCHAR(100)	NOT NULL,
-  	`option_price`	INTEGER		NOT NULL,
-  	`created_at`	TIMESTAMP	NOT NULL,
-  	`modified_at`	TIMESTAMP	NULL,
-  	`product_id`	INTEGER		NOT NULL,
+  	`id`		      INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  	`option_name`	  VARCHAR(100)	NOT NULL,
+  	`option_price`	  INTEGER		NOT NULL,
+  	`created_at`	  TIMESTAMP	    NOT NULL,
+  	`updated_at`	  TIMESTAMP	    NULL,
+  	`product_id`	  INTEGER		NOT NULL,
   	CONSTRAINT product_id_fk FOREIGN KEY(product_id) REFERENCES product_tb(id)
   );
   ```
 - cart_tb
   ```sql
   CREATE TABLE `cart_tb` (
-  	`id`		INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  	`id`		    INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
   	`quantity`		INTEGER		NOT NULL,
   	`cart_price`	INTEGER		NOT NULL,
   	`created_at`	TIMESTAMP	NOT NULL,
-  	`modified_at`	TIMESTAMP	NULL,
+  	`updated_at`	TIMESTAMP	NULL,
   	`user_id`		INTEGER		NOT NULL,
-  	`option_id`	INTEGER		NOT NULL,
+  	`option_id`	    INTEGER		NOT NULL,
   	CONSTRAINT user_id_fk FOREIGN KEY(user_id) REFERENCES user_tb(id),
   	CONSTRAINT option_id_fk FOREIGN KEY(option_id) REFERENCES option_tb(id),
   	UNIQUE (user_id, option_id)
@@ -1322,9 +1323,10 @@
 - order_tb
   ```sql
   CREATE TABLE `order_tb` (
-  	`id`		INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  	`id`		    INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
   	`created_at`	TIMESTAMP	NOT NULL,
-  	`modified_at`	TIMESTAMP	NOT NULL,
+  	`updated_at`	TIMESTAMP	NULL,
+  	`order_price`	INTEGER	    NOT NULL,
   	`user_id`		INTEGER		NOT NULL,
   	CONSTRAINT user_id_fk2 FOREIGN KEY(user_id) REFERENCES user_tb(id)
   );
@@ -1333,100 +1335,17 @@
 
   ```sql
   CREATE TABLE `item_tb` (
-  	`id`		INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  	`id`		    INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
   	`item_price`	INTEGER		NOT NULL,
   	`quantity`		INTEGER		NOT NULL,
   	`created_at`	TIMESTAMP	NOT NULL,
-  	`modified_at`	TIMESTAMP	NOT NULL,
+  	`updated_at`	TIMESTAMP	NULL,
   	`order_id`		INTEGER		NOT NULL,
-  	`option_id`	INTEGER		NOT NULL,
+  	`option_id`	    INTEGER		NOT NULL,
   	CONSTRAINT order_id_fk FOREIGN KEY(order_id) REFERENCES order_tb(id),
   	CONSTRAINT option_id_fk2 FOREIGN KEY(option_id) REFERENCES option_tb(id)
   );
   ```
-
-<details>
-<summary>테이블 전체 생성 테스트</summary>
-
-```sql
-alter table option_tb drop constraint product_id_fk;
-alter table cart_tb drop constraint user_id_fk;
-alter table cart_tb drop constraint option_id_fk;
-alter table order_tb drop constraint user_id_fk2;
-alter table item_tb drop constraint order_id_fk;
-alter table item_tb drop constraint option_id_fk2;
-
-DROP TABLE IF EXISTS `user_tb`;
-DROP TABLE IF EXISTS `product_tb`;
-DROP TABLE IF EXISTS `option_tb`;
-DROP TABLE IF EXISTS `cart_tb`;
-DROP TABLE IF EXISTS `order_tb`;
-DROP TABLE IF EXISTS `item_tb`;
-
-CREATE TABLE `user_tb` (
-	`id`		INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	`username`	VARCHAR(100)	NOT NULL,
-	`email`		VARCHAR(100)	NOT NULL,
-	`password`	VARCHAR(100)	NOT NULL,
-	`created_at`	TIMESTAMP	NOT NULL,
-	`modified_at`	TIMESTAMP	NULL
-);
-
-CREATE TABLE `product_tb` (
-	`id`		INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	`product_name`	VARCHAR(100)	NOT NULL,
-	`product_price`	INTEGER		NOT NULL,
-	`description`	VARCHAR(1000)	NOT NULL,
-	`image`		VARCHAR(500)	NOT NULL,
-	`created_at`	TIMESTAMP	NOT NULL,
-	`modified_at`	TIMESTAMP	NULL
-);
-
-CREATE TABLE `option_tb` (
-	`id`		INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	`option_name`	VARCHAR(100)	NOT NULL,
-	`option_price`	INTEGER		NOT NULL,
-	`created_at`	TIMESTAMP	NOT NULL,
-	`modified_at`	TIMESTAMP	NULL,
-	`product_id`	INTEGER		NOT NULL,
-	CONSTRAINT product_id_fk FOREIGN KEY(product_id) REFERENCES product_tb(id)
-);
-
-CREATE TABLE `cart_tb` (
-	`id`		INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	`quantity`		INTEGER		NOT NULL,
-	`cart_price`	INTEGER		NOT NULL,
-	`created_at`	TIMESTAMP	NOT NULL,
-	`modified_at`	TIMESTAMP	NULL,
-	`user_id`		INTEGER		NOT NULL,
-	`option_id`	INTEGER		NOT NULL,
-	CONSTRAINT user_id_fk FOREIGN KEY(user_id) REFERENCES user_tb(id),
-	CONSTRAINT option_id_fk FOREIGN KEY(option_id) REFERENCES option_tb(id),
-	UNIQUE (user_id, option_id)
-);
-
-CREATE TABLE `order_tb` (
-	`id`		INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	`created_at`	TIMESTAMP	NOT NULL,
-	`modified_at`	TIMESTAMP	NOT NULL,
-	`user_id`		INTEGER		NOT NULL,
-	CONSTRAINT user_id_fk2 FOREIGN KEY(user_id) REFERENCES user_tb(id)
-);
-
-CREATE TABLE `item_tb` (
-	`id`		INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	`item_price`	INTEGER		NOT NULL,
-	`quantity`		INTEGER		NOT NULL,
-	`created_at`	TIMESTAMP	NOT NULL,
-	`modified_at`	TIMESTAMP	NOT NULL,
-	`order_id`		INTEGER		NOT NULL,
-	`option_id`	INTEGER		NOT NULL,
-	CONSTRAINT order_id_fk FOREIGN KEY(order_id) REFERENCES order_tb(id),
-	CONSTRAINT option_id_fk2 FOREIGN KEY(option_id) REFERENCES option_tb(id)
-);
-```
-
-</details>
 
 </br>
 
