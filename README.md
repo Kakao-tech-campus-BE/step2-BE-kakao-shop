@@ -23,6 +23,7 @@
 
 ## 1. 요구사항 시나리오, 부족해 보이는 기능
 https://www.notion.so/1-f2de66e9545146d394bb63ce14eb2f32?pvs=4
+<p><img src=""C:\Users\user\Desktop\1. 1주차 자료\images\1.png""></img></p>
 
 ## 2. 서버의 API주소와 화면 매칭
 https://www.notion.so/2-API-33d2bf34051549619f07d2f6be482f76?pvs=4
