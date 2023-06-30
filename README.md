@@ -239,7 +239,7 @@
     | ID | INT | PK |
     | option_id | INT | FK |
     | user_id | INT | FK |
-    | quantity | INT | NOT NULL, CHECK (quantity >= 0) |
+    | quantity | INT | NOT NULL, CHECK (quantity > 0) |
 - Order
     
     
@@ -255,7 +255,7 @@
     | ID | INT | PK |
     | option_id | INT | FK |
     | order_id | INT | FK |
-    | quantity | INT | NOT NULL, CHECK (quantity >= 0) |
+    | quantity | INT | NOT NULL, CHECK (quantity > 0) |
 
 ![Untitled](./images/Untitled%2015.png)
 
