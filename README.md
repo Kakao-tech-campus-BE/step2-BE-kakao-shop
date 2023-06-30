@@ -91,14 +91,25 @@ Token은 만료기간이 따로 설정되어 있기에(payload의 exp) 서버에
 Method : Get
 Local URL : http://localhost:8080/products
 
+* 무료배송 여부
+* 특딜가 여부
+* 무한 스크롤
+
 ### 개별 상품 상세 조회
 Method : Get
 Local URL : http://localhost:8080/products
+
+* 특딜가 여부
+* 배송비 여부
 
 ### 장바구니 담기
 Method : Post
 Local URL : http://localhost:8080/carts/add
 - [ ] restful api 규칙 추가하기 add부분 물어보기
+
+* 배송지 등록 API
+* 배송지 조회 API
+* 해당 상품 배송지 확정 API
 
 ### 장바구니 보기
 Method : Get
