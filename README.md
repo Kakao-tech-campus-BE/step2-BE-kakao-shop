@@ -48,7 +48,7 @@
 
 ### 4. 테이블 설계를 하여 README에 ER-Diagram을 추가하여 제출하시오.
 - 생성 및 수정, 삭제 시간에 대한 정보 추가 예정
-[ER-Diagram](https://github.com/cheong0522/step2-BE-kakao-shop/blob/feat-leecheongeun/erd.png)
+- [ER-Diagram](https://github.com/cheong0522/step2-BE-kakao-shop/blob/feat-leecheongeun/erd.png)
 
 </br>
 
