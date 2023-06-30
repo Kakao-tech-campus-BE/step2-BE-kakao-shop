@@ -102,6 +102,56 @@
 | date              |    | price             |
 +-------------------+    +-------------------+
 
+5. pdf 데이터 테이블 채우기 과제
+------------------------------------------
+(1) member_table
+member_id (Primary Key): 회원 식별자
+username: 회원 이름
+email: 회원 이메일
+password: 회원 비밀번호
+-------------------------------------------
+(2) product_table
+product_id (Primary Key): 상품 식별자
+product_name: 상품 이름
+image : 상품 이미지
+product_price: 상품 가격
+description: 상품 설명
+starCount : 별점
+option_id (Foreign Key): 옵션 식별자
+option_table // 각 상품은 고유의 option_table을 가진다. 
+-------------------------------------------
+(3) option_table
+option_id (Primary Key): 옵션 식별자
+option_name: 옵션 이름
+option_price: 옵션 가격
+-------------------------------------------
+(4) cart_table
+cart_id (Primary Key): 장바구니 식별자
+product_id (Foreign Key): 상품 식별자
+product_name : 상품 이름
+option_id (Foreign Key): 옵션 식별자
+option_table
+quantity: 상품 수량
+partial_sum_price: 수량과 옵션의 가격이 반영된 각 상품의 가격
+-------------------------------------------
+(5) order_table
+order_id (Primary Key): 주문 식별자
+product_id (Foreign Key): 상품 식별자
+product_name : 상품 이름
+option_id (Foreign Key): 옵션 식별자
+option_table
+quantity: 상품 수량
+partial_sum_price: 수량과 옵션의 가격이 반영된 각 상품의 가격
+order_date: 주문 일자
+total_amount: 주문 총액
+-------------------------------------------
+(6) order_item_table
+order_detail_id (Primary Key): 주문 상세 식별자
+order_id (Foreign Key): 주문 식별자
+product_id (Foreign Key): 상품 식별자
+option_id (Foreign Key): 옵션 식별자
+quantity: 상품 수량
+
 </br>
 
 ## **과제 상세 : 수강생들이 과제를 진행할 때, 유념해야할 것**
