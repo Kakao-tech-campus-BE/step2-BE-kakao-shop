@@ -90,9 +90,9 @@
 ---
 ## 5. 테이블 설계하기
 ### User
-```SQL
+```sql
 CREATE TABLE User (
-	user_id INT NOT NULL AUTO_INCREMENT,
+    user_id INT NOT NULL AUTO_INCREMENT,
     email VARCHAR(255) NOT NULL,
     username VARCHAR(25) NOT NULL,
     password VARCHAR(20) NOT NULL CHECK (LENGTH(password) >= 8),
@@ -102,7 +102,7 @@ CREATE TABLE User (
 );
 ```
 ### Product
-```SQL
+```sql
 CREATE TABLE Product (
 	product_id INT NOT NULL AUTO_INCREMENT,
     product_name VARCHAR(255) NOT NULL,
@@ -115,7 +115,7 @@ CREATE TABLE Product (
 );
 ```
 ### Option
-```SQL
+```sql
 CREATE TABLE Option (
 	option_id INT NOT NULL AUTO_INCREMENT,
     product_id INT NOT NULL,
@@ -126,7 +126,7 @@ CREATE TABLE Option (
 );
 ```
 ### Cart
-```SQL
+```sql
 CREATE TABLE Cart (
 	cart_id INT NOT NULL AUTO_INCREMENT,
     user_id INT NOT NULL,
@@ -138,7 +138,7 @@ CREATE TABLE Cart (
 );
 ```
 ### Order
-```SQL
+```sql
 CREATE TABLE Order (
 	order_id INT NOT NULL AUTO_INCREMENT,
     user_id INT NOT NULL,
@@ -147,7 +147,7 @@ CREATE TABLE Order (
 );
 ```
 ### Item
-```SQL
+```sql
 CREATE TABLE Item (
 	item_id INT NOT NULL AUTO_INCREMENT,
     order_id INT NOT NULL,
