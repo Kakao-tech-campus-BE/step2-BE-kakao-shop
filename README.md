@@ -99,6 +99,110 @@
 
 - 본 테이블들로 주어진 명세서 내의 API구현이 가능하다.
 
+### [pdf] 테이블 설계
+
+#### ERD
+
+#### Entity 코드
+
+UserEntity
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
+    private String username;
+
+ProductEntity
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(nullable = false, length = 1000)
+    private String description;
+
+    private String image;
+
+    @Column(nullable = false)
+    private Integer price;
+
+    @Column(name = "product_name", nullable = false)
+    private String productName;
+
+OrderEntity
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
+
+OptionEntity
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(name = "option_name", nullable = false)
+    private String optionName;
+
+    @Column(nullable = false)
+    private Integer price;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private ProductEntity product;
+
+CartEntity
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(nullable = false)
+    private Integer price;
+
+    @Column(nullable = false)
+    private Integer quantity;
+
+    @ManyToOne
+    @JoinColumn(name = "option_id")
+    private OptionEntity option;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
+
+CartItemEntity
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(nullable = false)
+    private Integer price;
+
+    @Column(nullable = false)
+    private Integer quantity;
+
+    @ManyToOne
+    @JoinColumn(name = "option_id")
+    private OptionEntity option;
+
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private OrderEntity order;
+
 </br>
 
 ## **과제 상세 : 수강생들이 과제를 진행할 때, 유념해야할 것**
