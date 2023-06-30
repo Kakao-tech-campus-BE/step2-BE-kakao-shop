@@ -83,15 +83,23 @@
 
 ##### 3. 배포된 서버에 모든 API를 POSTMAN으로 요청해본 뒤 응답되는 데이터를 확인하고 부족한 데이터가 무엇인지 체크하여 README에 내용을 작성하시오.
 > [1] 전체 상품 목록 조회 (http://localhost:8080/products)
+
 > 응답되는 데이터: {“id", "productName", "description", "image", "price"}
+
 > 부족한 데이터: {”freeDelivery"}
 >
 > [2] 개별 상품 상세 조회 (http://localhost:8080/products/1)
+
+
 > 응답되는 데이터:  {"id", "productName", "description", "image", "price", "starCount", "options"}
+
+
 > 부족한 데이터: 없음
 >
 > [3] 이메일 중복 체크 (http://localhost:8080/check)
+>
 > 응답되는 데이터: {“success", "response", "error"}
+>
 > 부족한 데이터: 없음
 >
 > [4] 회원가입 (http://localhost:8080/join)
