@@ -28,24 +28,6 @@ Local URL : http://localhost:8080/products </br>
 JSON 응답을 살펴보면 Response Body에 id, productName, description, image, price를 배열 형식으로 담아서 응답하고 있다. 화면을 살펴보면 상품 이름, 가격, 이미지는 화면상에 명시하여 필요하지만, 설명(description)은 그렇지 않아 설명 속성의 필요성은 보이지 않는다. </br>
 
 → 필요한 테이블 : Product(상품) </br>
-</div>
-</details>
-
-<details>
-<summary>(1) 전체 상품 목록 조회</summary>
-<div>
-   
-### HTTP 메서드 선정
-
-클라이언트측에서 서버측으로 전송하는 데이터가 없다. 그러므로 HTTP GET 요청을 한다.
-
-HTTP Method : GET </br>
-Local URL : http://localhost:8080/products </br>
-
-### JSON 응답 및 시나리오 분석
-JSON 응답을 살펴보면 Response Body에 id, productName, description, image, price를 배열 형식으로 담아서 응답하고 있다. 화면을 살펴보면 상품 이름, 가격, 이미지는 화면상에 명시하여 필요하지만, 설명(description)은 그렇지 않아 설명 속성의 필요성은 보이지 않는다. </br>
-
-→ 필요한 테이블 : Product(상품) </br>
 
 ### 에러 처리
 
@@ -85,6 +67,85 @@ Param이 page=0일 때는 디폴트 전체 상품 목록 조회 페이지와 같
 게시물 10번부터 조회되는 것을 알 수 있다. 이로써 게시물은 한 페이지당 최대 개수를 지정하여 SELECT해야할 것 같다.
 
 (1단계 때 배운 limit과 offset을 이용해 구현하면 될 거 같다.)
+</div>
+</details>
+
+<details>
+<summary>(2) 개별 상품 상세 조회</summary>
+<div>
+
+### HTTP 메서드 선정
+
+개별 상품 상세 조회 페이지는 클라이언트측 요청의 종류가 두 가지가 있다.
+
+1. 전체 상품 목록 조회 페이지에서 개별 상품을 클릭하면 이 페이지로 이동하게 되는데, 이때 이 페이지는 서버측에 따로 보내는 데이터 없이 개별 상품에 대한 데이터를 요청할 것이다. 
+    
+    → HTTP GET 요청을 한다.
+    
+    HTTP Method : GET
+    Local URL : http://localhost:8080/products/1(1은 개별 상품의 id)
+    
+2. 회원이 상품의 옵션과 개수를 선택하여 장바구니 담기 버튼을 클릭하면 클라이언트측은 장바구니에 담겨진 데이터를 서버측에 전송하게 되고 서버측은 이를 DB에 저장한다.
+    
+    → HTTP POST 요청을 한다.
+    
+    HTTP Method : POST
+    Local URL : http://localhost:8080/carts/add
+
+### JSON 응답 및 시나리오 분석
+SON 응답을 살펴보면 상품의 id, productName, image, price와(descriptions과 startCount는 무시한다.) 옵션 id, optionName, optionPrice를 응답한다. 상품의 기본 가격(price)와 옵션 가격(optionPrice)는 헷갈리지 않게 구분한다.
+
+→ 필요한 테이블 : Product(상품), Option(옵션)
+
+→ 옵션 테이블에 **id, optionName, optionPrice**를 추가한다.
+
+(위에서 언급한 것을 고려해보면, 서버측 JSON 응답에는 totalPrice에 대한 응답이 없으므로 클라이언트측에서 데이터를 만들어내는 것 같다.)
+
+2. 클라이언트측에서 장바구니 담기 버튼을 통해 POST 요청을 보냄
+    
+    이때 클라이언트측 POST 요청에는 장바구니에 담겨질 상품의 정보뿐만 아니라 회원에 대한 JWT(JSON WEB TOKEN) 정보도 포함돼야한다. 이유는 정말 간단하다. 이 회원이 누군지 알아야 그 회원의 장바구니에 상품을 담을 수 있기 때문이다. 
+    
+    (참고로 클라이언트측에서 Authorization이라는 변수명으로 HTTP header에 담아서 보낼 것이다. 서버측은 이를 파싱해서 해당 회원을 찾아내야 한다.)
+    
+    ~~(회원 A의 장바구니 목록을 회원 B에게 담을 수는 없다..)~~
+    
+    서버측에 로그인 정보를 담아 로그인한다.
+   그럼 서버측에서 JWT 정보를 보내는데, 아래와 같다.
+
+Bearer ey…Asg(원래 길이는 더 길다. 256바이트였나.. 나름 보안상(?)의 이유로 축약함)
+
+이것을 이용해서 회원에 대한 인가를 할 것이다.
+
+클라이언트측에서 해당 JWT 정보를 HTTP header에 담고 서버측에 장바구니에 담겨진 데이터를 아래의 형식으로 전달하면
+
+```json
+[
+  {
+    "optionId":1,
+    "quantity":5
+  },
+  {
+    "optionId":2,
+    "quantity":5
+  }
+]
+```
+
+아래의 형식처럼 응답이 온다.
+
+```json
+{
+    "success": true,
+    "response": null,
+    "error": null
+}
+```
+
+서버측에서는 옵션 아이디와, 개수를 장바구니(Cart)에 저장할 것이다.
+
+→ 필요한 테이블 : Cart(장바구니)
+
+→ Cart 테이블에 **optionId, quantity** 속성을 추가한다.
 </div>
 </details>
 
