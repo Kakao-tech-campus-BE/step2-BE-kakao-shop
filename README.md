@@ -254,6 +254,7 @@ GET 요청으로 상품 정보만 비워서 보내봤다. 역시나 500 에러�
 <details>
 <summary>(3) 회원가입</summary>
 <div>
+	
 ### HTTP 메서드 선정
 
 클라이언트측에서 사용자가 가입을 위해 작성한 정보를 서버측으로 전송한다.
@@ -376,6 +377,7 @@ a@.com형식의 입력)
 <details>
 <summary>(4) 로그인</summary>
 <div>
+	
 ### HTTP 메서드 선정
 
 로그인 시 사용자가 회원가입 때 작성한 이메일, 비밀번호로 로그인한다. 이때 해당 정보들을 서버측에 POST하여 해당 회원이 존재하는 검사를 받아야한다. 이때 JWT를 로그인 시, 회원에게 발급한다.
@@ -438,6 +440,7 @@ Local URL : http://localhost:8080/login
 <details>
 <summary>(5) 장바구니 조회 및 주문하기(장바구니 업데이트)</summary>
 <div>
+	
 ### HTTP 메서드 선정
 
 1. 장바구니 조회 시 상품 옵션과 개수를 선택해 담기한 상품들이 보여야할 것이다. 이는 클라이언트측이 서버측에 장바구니에 담긴 데이터를 요청해야한다. 결국 GET 요청을 해야한다.
@@ -564,13 +567,157 @@ JWT 정보가 유효하지 않은 경우를 고려해보았다.
 </details>
 
 <details>
-<summary>()</summary>
+<summary>(6) 결제하기</summary>
+	
+### HTTP 메서드 선정
+
+HTTP Method : POST
+
+Local URL : http://localhost:8080/orders/save
+
+### JSON 응답 및 시나리오 분석
+
+orders/save에 아무런 body도 작성하지 않고 POST 요청을 날렸다. 물론 장바구니는 비어있지 않다.
+
+- JSON 응답
+    
+    ```json
+    {
+        "success": true,
+        "response": {
+            "id": 3,
+            "products": [
+                {
+                    "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전",
+                    "items": [
+                        {
+                            "id": 5,
+                            "optionName": "01. 슬라이딩 지퍼백 크리스마스에디션 4종",
+                            "quantity": 5,
+                            "price": 50000
+                        },
+                        {
+                            "id": 6,
+                            "optionName": "02. 슬라이딩 지퍼백 플라워에디션 5종",
+                            "quantity": 11,
+                            "price": 119900
+                        }
+                    ]
+                }
+            ],
+            "totalPrice": 169900
+        },
+        "error": null
+    }
+    ```
+    
+    이후 똑같은 요청을 보냈다.
+    
+    ```json
+    {
+        "success": false,
+        "response": null,
+        "error": {
+            "message": "장바구니에 아무 내역도 존재하지 않습니다",
+            "status": 404
+        }
+    }
+    ```
+    
+    장바구니가 비어있다는 말이다. 내가 장바구니에 넣은 상품들이 결제창으로 넘어왔고 orders/save를 통해 주문서에도 저장된다. body를 비워서 보냈는데 어떻게 서버는 저장했는가를 살펴보면 내 짐작은 이렇다.
+    
+    1. 토큰 정보를 통해 유저 식별
+    2. 그 유저의 장바구니에 있는 상품들을 DTO를 통해 리턴
+    3. 서버 내부에서는 장바구니에 있는 상품들을 주문서(정확히는 주문 아이템)로 옮기고, 장바구니를 비움
+
+### 에러 처리
+
+```json
+{
+    "success": false,
+    "response": null,
+    "error": {
+        "message": "Failed to convert value of type 'java.lang.String' to required type 'int'; nested exception is java.lang.NumberFormatException: For input string: \"save\"",
+        "status": 500
+    }
+}
+```
+
+GET 메서드로 orders/save를 보내니 주문 컨트롤러 내부에 있는 orders/{int}인 메서드가 존재하므로 NumberFormatException이 발생한다. 이 예외는 숫자가 아닌 문자열을 숫자로 변경하려고 할 때 발생한다.
 <div>
 </div>
 </details>
 
 <details>
-<summary>()</summary>
+<summary>(7) 주문 결과 처리</summary>
+
+ ### HTTP 메서드 선정
+
+주문 확인 페이지는 이미 주문이 완료된 주문 정보를 불러오는 페이지이다. 즉 서버측에 주문서에 대한 정보를 요청한다.
+
+HTTP Method : GET
+
+Local URL : http://localhost:8080/orders/1
+
+여기서 orders/1의 1은 주문 번호이다.
+
+### JSON 응답 및 시나리오 분석
+
+주문 번호 1의 주문 정보를 불러오도록 orders/1을 GET 요청했다.
+
+- JSON 응답
+    
+    ```json
+    {
+        "success": true,
+        "response": {
+            "id": 1,
+            "products": [
+                {
+                    "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전",
+                    "items": [
+                        {
+                            "id": 1,
+                            "optionName": "01. 슬라이딩 지퍼백 크리스마스에디션 4종",
+                            "quantity": 5,
+                            "price": 50000
+                        },
+                        {
+                            "id": 2,
+                            "optionName": "02. 슬라이딩 지퍼백 플라워에디션 5종",
+                            "quantity": 5,
+                            "price": 54500
+                        }
+                    ]
+                }
+            ],
+            "totalPrice": 104500
+        },
+        "error": null
+    }
+    ```
+    
+    주문 정보 안에는 주문 번호와 상품 이름, 그리고 주문 아이템 테이블의 아이디 등의 데이터가 들어있다. 주문 하나를 주문 아이템 여러개로 분할하는 것은 정말 당연하다. 부분 취소할 수 있으니.. 역시나 해당 응답에서도 totalPrice는 서버측에서 계산후 리턴해준다.
+    
+
+### 에러 처리
+
+POST 요청 시, 500 상태 코드를 반환한다. 405로 수정하자.
+
+다음으로 존재하지 않은 주문 번호를 요청했다. orders/1444
+
+```json
+{
+    "success": false,
+    "response": null,
+    "error": {
+        "message": "해당 주문을 찾을 수 없습니다 : 1444",
+        "status": 404
+    }
+}
+```
+
+서버측은 1444라는 주문 번호를 가진 주문서를 리턴할 수도 찾을 수도 없다. 그러므로 404 에러는 적절하다.
 <div>
 </div>
 </details>
