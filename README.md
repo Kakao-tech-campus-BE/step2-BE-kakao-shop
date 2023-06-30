@@ -236,7 +236,8 @@ CREATE TABLE `user_tb` (
     `password` VARCHAR(256) NOT NULL,
     `email` VARCHAR(256) NOT NULL UNIQUE,
     `created_at` DATETIME NOT NULL,
-    `updated_at` DATETIME NOT NULL);
+    `updated_at` DATETIME NOT NULL,
+    PRIMARY KEY (`id`));
 ```
 
 Product
@@ -247,19 +248,21 @@ CREATE TABLE `product_tb` (
     `image` VARCHAR(1000) NOT NULL,
     `price` int(11) NOT NULL,
     `created_at` DATETIME NOT NULL,
-    `updated_at` DATETIME NOT NULL);
+    `updated_at` DATETIME NOT NULL,
+    PRIMARY KEY (`id`));
 ```
 
 Option
 ```
 CREATE TABLE `option_tb` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR NOT NULL(100),
+    `name` VARCHAR(100) NOT NULL,
+    `product_id` int(11) NOT NULL,
     `price` int(11) NOT NULL,
-    `product_id`, NOT NULL,
     `created_at` DATETIME NOT NULL,
     `updated_at` DATETIME NOT NULL,
-    FOREIGN KEY (`product_id`) REFERENCE `product_tb`(`id`));
+    FOREIGN KEY (`product_id`) REFERENCES `product_tb`(`id`),
+    PRIMARY KEY (`id`));
 ```
 
 Cart
@@ -272,9 +275,10 @@ CREATE TABLE `cart_tb` (
     `price` int(11) NOT NULL,
     `created_at` DATETIME NOT NULL,
     `updated_at` DATETIME NOT NULL,
+    PRIMARY KEY (`id`),
     UNIQUE KEY `cart_user_option` (`user_id`, `option_id`),
-    FOREIGN KEY (`user_id`) REFERENCE `user_tb`(`id`),
-    FOREIGN KEY (`option_id`) REFERENCE `option_tb`(`id`));
+    FOREIGN KEY (`user_id`) REFERENCES `user_tb`(`id`),
+    FOREIGN KEY (`option_id`) REFERENCES `option_tb`(`id`));
 ```
 
 Order
@@ -284,7 +288,8 @@ CREATE TABLE `order_tb` (
     `user_id` int(11) NOT NULL,
     `created_at` DATETIME NOT NULL,
     `updated_at` DATETIME NOT NULL,
-    FOREIGN KEY (`user_id`) REFERENCE `user_tb`(`id`));
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`user_id`) REFERENCES `user_tb`(`id`));
 ```
 
 Order_item
@@ -297,9 +302,10 @@ CREATE TABLE `order_item_tb` (
     `quantity` int(11) NOT NULL,
     `created_at` DATETIME NOT NULL,
     `updated_at` DATETIME NOT NULL,
+    PRIMARY KEY (`id`),
     UNIQUE KEY `order_item_order_option` (`order_id`, `option_id`),
-    FOREIGN KEY (`order_id`) REFERENCE `order_tb`(`id`),
-    FOREIGN KEY (`option_id`) REFERENCE `option_tb`(`id`));
+    FOREIGN KEY (`order_id`) REFERENCES `order_tb`(`id`),
+    FOREIGN KEY (`option_id`) REFERENCES `option_tb`(`id`));
 ```
 </details>
 
