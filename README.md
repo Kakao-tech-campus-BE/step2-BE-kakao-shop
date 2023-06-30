@@ -62,7 +62,62 @@
 * (기능12) 결제
    * (FE) 배송지 변경 기능
 
-    
+## 화면설계와 배포된 API주소 매핑
+
+---
+### 이메일 중복 체크
+Method : Post
+Local URL : http://localhost:8080/check
+
+서버 API는 있지만 화면 설계는 없음
+
+### 회원 가입
+Method : Post
+Local URL : http://localhost:8080/join
+
+### 로그인
+Method : Post
+Local URL : http://localhost:8080/login
+
+### 로그아웃
+현재 인증/인가 작업이 Access Token으로 되어있는데
+Token은 만료기간이 따로 설정되어 있기에(payload의 exp) 서버에서 로그아웃을 관리할 수는 없다.
+
+따라서 해당 서버 단에서 로그아웃을 위한 API는 필요없다고 판단
+
+다만 이건 프론트에서 localstorage에 저장되어 있는 토큰을 지우면 로그아웃이 기능이 구현될 것이라고 생각함
+
+### 전체 상품 목록 조회
+Method : Get
+Local URL : http://localhost:8080/products
+
+### 개별 상품 상세 조회
+Method : Get
+Local URL : http://localhost:8080/products
+
+### 장바구니 담기
+Method : Post
+Local URL : http://localhost:8080/carts/add
+- [ ] restful api 규칙 추가하기 add부분 물어보기
+
+### 장바구니 보기
+Method : Get
+Local URL : http://localhost:8080/carts
+
+### 장바구니 수정
+Method : Post
+Local URL : http://localhost:8080/carts/update
+
+### 결제하기
+Method : Post
+Local URL : http://localhost:8080/orders/save
+-[ ] 이 부분도 마찬가지로 restful api 관련해서 여쭤보기
+
+### 주문 결과 확인
+Method : Get
+Local URL : http://localhost:8080/orders/1
+
+
 **2. PR 내용 :**
 
 >- 코드 작성하면서 어려웠던 점
