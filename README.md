@@ -87,6 +87,84 @@
 #### ER 다이어그램
 <img src="images/week1/ER다이어그램/er_diagram.png" width="max" height="300"/>
 
+
+#### Table 설계
+~~~
+CREATE TABLE `USER` (
+`id`	int	NOT NULL,
+`username`	String	NULL,
+`email`	String	NULL,
+`password`	String	NULL,
+`role`	String	NULL,
+`date`	DateTime	NULL
+);
+
+CREATE TABLE `PRODUCT` (
+`id`	int	NOT NULL,
+`product_name`	String	NULL,
+`product_image`	String	NULL,
+`product_price`	int	NULL,
+`star_rate`	double	NULL,
+`date`	DateTime	NULL
+);
+
+CREATE TABLE `OPTION` (
+`id`	int	NOT NULL,
+`product_id`	VARCHAR(255)	NOT NULL,
+`option_name`	String	NULL,
+`option_price`	int	NULL,
+`option_stock`	int	NULL,
+`date`	DateTime	NULL
+);
+
+CREATE TABLE `ORDER` (
+`Key`	int	NOT NULL,
+`user_id`	VARCHAR(255)	NOT NULL,
+`Field`	DateTime	NULL
+);
+
+CREATE TABLE `CART` (
+`Key`	int	NOT NULL,
+`user_id`	VARCHAR(255)	NOT NULL,
+`option_id`	VARCHAR(255)	NOT NULL,
+`option_number`	int	NULL,
+`date`	DateTime	NULL
+);
+
+CREATE TABLE `ORDERITEM` (
+`Key`	int	NOT NULL,
+`order_id`	VARCHAR(255)	NOT NULL,
+`option_id`	VARCHAR(255)	NOT NULL,
+`option_number`	int	NULL,
+`date`	DateTime	NULL
+);
+
+ALTER TABLE `USER` ADD CONSTRAINT `PK_USER` PRIMARY KEY (
+`id`
+);
+
+ALTER TABLE `PRODUCT` ADD CONSTRAINT `PK_PRODUCT` PRIMARY KEY (
+`id`
+);
+
+ALTER TABLE `OPTION` ADD CONSTRAINT `PK_OPTION` PRIMARY KEY (
+`id`
+);
+
+ALTER TABLE `ORDER` ADD CONSTRAINT `PK_ORDER` PRIMARY KEY (
+`Key`
+);
+
+ALTER TABLE `CART` ADD CONSTRAINT `PK_CART` PRIMARY KEY (
+`Key`
+);
+
+ALTER TABLE `ORDERITEM` ADD CONSTRAINT `PK_ORDERITEM` PRIMARY KEY (
+`Key`
+);
+~~~
+
+
 ***
 
 ## **과제 상세 : 수강생들이 과제를 진행할 때, 유념해야할 것**
