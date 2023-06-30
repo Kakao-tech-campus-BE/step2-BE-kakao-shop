@@ -56,7 +56,7 @@
 
 - 프론트 화면
 
-https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6cf0cd95-0cf1-4758-bf4f-c24326523e3a/Untitled.png
+![Untitled]https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6cf0cd95-0cf1-4758-bf4f-c24326523e3a/Untitled.png
 
 - 실제 화면
 
