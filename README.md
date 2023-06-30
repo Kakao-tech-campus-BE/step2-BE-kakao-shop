@@ -224,6 +224,84 @@
 - 5.10 주문 결과 확인 (/orders/1)
     - 미구현
 </details>
+<details>
+<summary>6. 테이블 설계</summary>
+
+# 화면 설계 상에서 요구되는 정보만을 다룰 수 있도록 반영
+User
+```
+CREATE TABLE `user_tb` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `username` VARCHAR(30) NOT NULL UNIQUE,
+    `password` VARCHAR(256) NOT NULL,
+    `email` VARCHAR(256) NOT NULL UNIQUE,
+    `created_at` DATETIME NOT NULL,
+    `updated_at` DATETIME NOT NULL);
+```
+
+Product
+```
+CREATE TABLE `product_tb` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(100) NOT NULL,
+    `image` VARCHAR(1000) NOT NULL,
+    `price` int(11) NOT NULL,
+    `created_at` DATETIME NOT NULL,
+    `updated_at` DATETIME NOT NULL);
+```
+
+Option
+```
+CREATE TABLE `option_tb` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR NOT NULL(100),
+    `price` int(11) NOT NULL,
+    `product_id`, NOT NULL,
+    `created_at` DATETIME NOT NULL,
+    `updated_at` DATETIME NOT NULL,
+    FOREIGN KEY (`product_id`) REFERENCE `product_tb`(`id`));
+```
+
+Cart
+```
+CREATE TABLE `cart_tb` (   
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `user_id` int(11) NOT NULL,
+    `option_id` int(11) NOT NULL,
+    `quantity` int(11) NOT NULL,
+    `price` int(11) NOT NULL,
+    `created_at` DATETIME NOT NULL,
+    `updated_at` DATETIME NOT NULL,
+    UNIQUE KEY `cart_user_option` (`user_id`, `option_id`),
+    FOREIGN KEY (`user_id`) REFERENCE `user_tb`(`id`),
+    FOREIGN KEY (`option_id`) REFERENCE `option_tb`(`id`));
+```
+
+Order
+```
+CREATE TABLE `order_tb` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `user_id` int(11) NOT NULL,
+    `created_at` DATETIME NOT NULL,
+    `updated_at` DATETIME NOT NULL,
+    FOREIGN KEY (`user_id`) REFERENCE `user_tb`(`id`));
+```
+
+Order_item
+```
+CREATE TABLE `order_item_tb` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `order_id` int(11) NOT NULL,
+    `option_id` int(11) NOT NULL,
+    `price` int(11) NOT NULL,
+    `quantity` int(11) NOT NULL,
+    `created_at` DATETIME NOT NULL,
+    `updated_at` DATETIME NOT NULL,
+    UNIQUE KEY `order_item_order_option` (`order_id`, `option_id`),
+    FOREIGN KEY (`order_id`) REFERENCE `order_tb`(`id`),
+    FOREIGN KEY (`option_id`) REFERENCE `option_tb`(`id`));
+```
+</details>
 
 # 2주차
 
