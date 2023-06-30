@@ -85,7 +85,7 @@
 ### 4. 테이블 설계를 하여 ER-Diagram을 추가하여 제출하시오.
 ***
 #### ER 다이어그램
-<img src="images/week1/ER다이어그램/img_16.png" width="max" height="300"/>
+<img src="images/week1/ER다이어그램/er_diagram.png" width="max" height="300"/>
 
 ***
 
