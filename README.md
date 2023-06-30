@@ -521,7 +521,7 @@ Week1_ERD.png 파일에 첨부
 
 ---
 ```
-END
+Week1_END
 ```
 ---
 
