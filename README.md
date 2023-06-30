@@ -963,7 +963,8 @@
 
 ## PDF 과제
 ### User 테이블
-```CREATE TABLE user (
+```
+CREATE TABLE user (
   id BIGINT NOT NULL,
   email VARCHAR(255) NOT NULL UNIQUE DEFAULT NULL,
   userName VARCHAR(20) NOT NULL,
@@ -976,7 +977,8 @@
   ``` 
 
 ### Product 테이블
-```CREATE TABLE product (
+```
+CREATE TABLE product (
   productID BIGINT UNIQUE NOT NULL,
   productName VARCHAR(255) NOT NULL,
   image TEXT NULL DEFAULT NULL,
@@ -990,7 +992,8 @@
   ```
   
 ### Option 테이블
-```CREATE TABLE option (
+```
+CREATE TABLE option (
   optionID BIGINT NOT NULL UNIQUE,
   productID BIGINT NOT NULL,
   optionName VARCHAR(255) NOT NULL,
@@ -1005,7 +1008,8 @@
     REFERENCES product (productID))
 ```
 ### Cart 테이블
-```CREATE TABLE cart (
+```
+CREATE TABLE cart (
   cart_id BIGINT NOT NULL UNIQUE,
   userID BIGINT NOT NULL,
   optionID BIGINT NOT NULL,
@@ -1022,7 +1026,8 @@
     REFERENCES user (id))
 ```
 ### Order 테이블
-```CREATE TABLE order (
+```
+CREATE TABLE order (
   orderID BIGINT NOT NULL UNIQUE,
   userID BIGINT NOT NULL,
   address VARCHAR(255) NOT NULL,
@@ -1035,7 +1040,8 @@
     REFERENCES user (id))
 ```
 ### Item 테이블
-```CREATE TABLE orderdetail (
+```
+CREATE TABLE orderdetail (
   orderDetailID BIGINT NOT NULL UNIQUE,
   orderID BIGINT NOT NULL,
   optionID BIGINT NOT NULL,
