@@ -117,6 +117,261 @@ Local URL : http://localhost:8080/orders/save
 Method : Get
 Local URL : http://localhost:8080/orders/1
 
+## 배포된 서버 API Respnose의 부족한 데이터 판단하기
+
+---
+### 전체 상품 목록 조회
+Method : Get
+Local URL : http://localhost:8080/products
+
+[추가할 응답사항]
+
+* 배송비
+    * 무료배송여부
+* 특딜가 여부
+* 페이징 처리로 인해 지금까지 반환한 상품 및 요청한 페이지 개수
+
+```json
+{
+    "success": true,
+    "response": [
+        {
+            "id": 1,
+            "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전",
+            "description": "",
+            "image": "/images/1.jpg",
+            "price": 1000
+        },
+        {
+            "id": 2,
+            "productName": "[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율",
+            "description": "",
+            "image": "/images/2.jpg",
+            "price": 2000
+        },
+        {
+            "id": 3,
+            "productName": "삼성전자 JBL JR310 외 어린이용/성인용 헤드셋 3종!",
+            "description": "",
+            "image": "/images/3.jpg",
+            "price": 30000
+        },
+        {
+            "id": 4,
+            "productName": "바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종",
+            "description": "",
+            "image": "/images/4.jpg",
+            "price": 4000
+        },
+        {
+            "id": 5,
+            "productName": "[더주] 컷팅말랑장족, 숏다리 100g/300g 외 주전부리 모음 /중독성 최고/마른안주",
+            "description": "",
+            "image": "/images/5.jpg",
+            "price": 5000
+        },
+        {
+            "id": 6,
+            "productName": "굳지않는 앙금절편 1,050g 2팩 외 우리쌀떡 모음전",
+            "description": "",
+            "image": "/images/6.jpg",
+            "price": 15900
+        },
+        {
+            "id": 7,
+            "productName": "eoe 이너딜리티 30포, 오렌지맛 고 식이섬유 보충제",
+            "description": "",
+            "image": "/images/7.jpg",
+            "price": 26800
+        },
+        {
+            "id": 8,
+            "productName": "제나벨 PDRN 크림 2개. 피부보습/진정 케어",
+            "description": "",
+            "image": "/images/8.jpg",
+            "price": 25900
+        },
+        {
+            "id": 9,
+            "productName": "플레이스테이션 VR2 호라이즌 번들. 생생한 몰입감",
+            "description": "",
+            "image": "/images/9.jpg",
+            "price": 797000
+        }
+    ],
+    "error": null
+}
+```
+
+### 개별 상품 상세 조회
+Method : Get
+Local URL : http://localhost:8080/products
+
+[부족한 데이터]
+
+* 특딜가 적용 여부
+* 베송비
+```json        
+{
+    "success": true,
+    "response": {
+        "id": 1,
+        "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전",
+        "description": "",
+        "image": "/images/1.jpg",
+        "price": 1000,
+        "starCount": 5,
+        "options": [
+            {
+                "id": 1,
+                "optionName": "01. 슬라이딩 지퍼백 크리스마스에디션 4종",
+                "price": 10000
+            },
+            {
+                "id": 2,
+                "optionName": "02. 슬라이딩 지퍼백 플라워에디션 5종",
+                "price": 10900
+            },
+            {
+                "id": 3,
+                "optionName": "고무장갑 베이지 S(소형) 6팩",
+                "price": 9900
+            },
+            {
+                "id": 4,
+                "optionName": "뽑아쓰는 키친타올 130매 12팩",
+                "price": 16900
+            },
+            {
+                "id": 5,
+                "optionName": "2겹 식빵수세미 6매",
+                "price": 8900
+            }
+        ]
+    },
+    "error": null
+}
+```
+### 장바구니 담기
+Method : Post
+Local URL : http://localhost:8080/carts/add
+
+[부족한 request data]
+
+사용자가 해당 상품을 조회했을 때의 가격과 <u>사용자가 상품을 장바구니에 넣는 시점의 가격이 달라질 수 있다</u>
+
+따라서 사용자가 장바구니에 넣기를 request할 때 사용자가 알고있는 각 옵션의 가격을 같이 넘겨주고
+
+만약 사용자가 알고있는 옵션의 가격과 저장되어 있는 옵션의 가격이 다를 때 경고 응답을 보내줄 수 있도록 하면 좋을 것 같다.
+```json
+[
+{
+    "quantity":5
+  },
+  {
+    "optionId":2,
+    "quantity":5
+} ]
+```
+
+### 장바구니 보기
+Method : Get
+Local URL : http://localhost:8080/carts
+
+[부족한 데이터]
+
+* 각 상품마다 배송비
+* 장바구니에 담은 모든 상품을 구매할 시 전체 배송비
+
+```json
+{
+    "success": true,
+    "response": {
+        "products": [
+            {
+                "id": 1,
+                "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전",
+                "carts": [
+                    {
+                        "id": 1,
+                        "option": {
+                            "id": 1,
+                            "optionName": "01. 슬라이딩 지퍼백 크리스마스에디션 4종",
+                            "price": 10000
+                        },
+                        "quantity": 3,
+                        "price": 30000
+                    },
+                    {
+                        "id": 2,
+                        "option": {
+                            "id": 2,
+                            "optionName": "02. 슬라이딩 지퍼백 플라워에디션 5종",
+                            "price": 10900
+                        },
+                        "quantity": 4,
+                        "price": 43600
+                    }
+                ]
+            }
+        ],
+        "totalPrice": 73600
+    },
+    "error": null
+}
+```
+
+### 장바구니 수정
+Method : Post
+Local URL : http://localhost:8080/carts/update
+
+[부족한 request data]
+
+사용자가 해당 상품을 조회했을 때의 가격과 <u>사용자가 상품을 장바구니에서 상품의 개수를 변경하는 시점의 가격이 달라질 수 있다</u>
+
+따라서 사용자가 장바구니 수정을 request할 때 사용자가 알고있는 각 옵션의 가격을 같이 넘겨주고
+
+만약 사용자가 알고있는 옵션의 가격과 저장되어 있는 옵션의 가격이 다를 때 경고 응답을 보내줄 수 있도록 하면 좋을 것 같다.
+
+추가적으로 배송비에도 적용할 수 있을 것 같다.
+```json
+[
+  {
+    "cartId":4,
+    "quantity":10
+  },
+  {
+    "cartId":5,
+    "quantity":10
+  }
+]
+```
+
+### 결제하기
+Method : Post
+Local URL : http://localhost:8080/orders/save
+
+[부족한 request 데이터]
+
+여기는 정말로 "결제"와 관련이 있기에 사용자가 알고 있는 상품의 가격과 실제 상품의 가격이 차이가 있는지 확인해야 한다고 생각한다.
+
+사용자는 1000원으로 알고 결제를 하려고 했지만, 그 사이에 상품의 가격이 변경되어서 10000원이 된다면 사용자는 예상치 못한 큰 금액을 결제하게 되는 것이기 때문이다.
+
+따라서 request할 때 사용자가 알고 있는 각 옵션의 가격는 필연적으로 보내야 한다고 생각한다.
+
++) 배송비에도 적용
+
+현재는 장바구니에 있는 모든 상품을 구매한다.
+
+하지만, 장바구니에 있는 특정 상품만 구매하고 싶을 수도 있다.
+
+따라서 request로 사용자가 구매를 원하는 장바구니_id도 전달받아야 한다고 생각한다.
+
+[에러 response]
+사용자가 상품을 결제하려고 한 순간에는 상품이 존재했을 수도 있지만, 진짜 결제를 시도하는 순간 재고가 존재하지 않을 수도 있다.
+
+따라서 재고 부족으로 인한 상품 결제 실패 응답 또한 존재해야 한다.
+(특정 상품의 특정 옵션이 재고가 부족하다)
 
 **2. PR 내용 :**
 
