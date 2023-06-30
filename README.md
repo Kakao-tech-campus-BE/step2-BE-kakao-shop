@@ -15,7 +15,8 @@
 
 <details>
 <summary>(1) 전체 상품 목록 조회</summary>
-   <div>
+<div>
+   
 ### HTTP 메서드 선정
 
 클라이언트측에서 서버측으로 전송하는 데이터가 없다. 그러므로 HTTP GET 요청을 한다.
@@ -29,7 +30,63 @@ JSON 응답을 살펴보면 Response Body에 id, productName, description, image
 → 필요한 테이블 : Product(상품) </br>
 </div>
 </details>
+
+<details>
+<summary>(1) 전체 상품 목록 조회</summary>
+<div>
    
+### HTTP 메서드 선정
+
+클라이언트측에서 서버측으로 전송하는 데이터가 없다. 그러므로 HTTP GET 요청을 한다.
+
+HTTP Method : GET </br>
+Local URL : http://localhost:8080/products </br>
+
+### JSON 응답 및 시나리오 분석
+JSON 응답을 살펴보면 Response Body에 id, productName, description, image, price를 배열 형식으로 담아서 응답하고 있다. 화면을 살펴보면 상품 이름, 가격, 이미지는 화면상에 명시하여 필요하지만, 설명(description)은 그렇지 않아 설명 속성의 필요성은 보이지 않는다. </br>
+
+→ 필요한 테이블 : Product(상품) </br>
+
+### 에러 처리
+
+HTTP POST 메서드 이용 시,
+
+```java
+{
+    "success": false,
+    "response": null,
+    "error": {
+        "message": "Request method 'POST' not supported",
+        "status": 500
+    }
+}
+```
+
+status 500, 즉 서버측의 잘못된 응답을 나타내는 에러를 의미한다.
+
+하지만 나는 클라이언트측에서 GET이 아닌 POST 메서드를 사용하였는데 왜 500인지?
+
+**내 생각에는 HTTP error 405가 맞는 에러인 거 같다.**
+
+> **HTTP 405 에러란?**
+”HTTP 405 오류는 **웹 서버에서 요청된 URL에 대해 HTTP 메서드를 허용하지 않을 때 발생합니다.”**
+> 
+
+([https://ko.wikipedia.org/wiki/HTTP_상태_코드#:~:text=405(허용되지 않는 메소드)%3A 요청에 지정된 방법을 사용할 수 없다. 예를 들어 POST 방식으로 요청을 받는 서버에 GET 요청을 보내는 경우%2C 또는 읽기 전용 리소스에 PUT 요청을 보내는 경우에 이 코드를 제공한다](https://ko.wikipedia.org/wiki/HTTP_%EC%83%81%ED%83%9C_%EC%BD%94%EB%93%9C#:~:text=405(%ED%97%88%EC%9A%A9%EB%90%98%EC%A7%80%20%EC%95%8A%EB%8A%94%20%EB%A9%94%EC%86%8C%EB%93%9C)%3A%20%EC%9A%94%EC%B2%AD%EC%97%90%20%EC%A7%80%EC%A0%95%EB%90%9C%20%EB%B0%A9%EB%B2%95%EC%9D%84%20%EC%82%AC%EC%9A%A9%ED%95%A0%20%EC%88%98%20%EC%97%86%EB%8B%A4.%20%EC%98%88%EB%A5%BC%20%EB%93%A4%EC%96%B4%20POST%20%EB%B0%A9%EC%8B%9D%EC%9C%BC%EB%A1%9C%20%EC%9A%94%EC%B2%AD%EC%9D%84%20%EB%B0%9B%EB%8A%94%20%EC%84%9C%EB%B2%84%EC%97%90%20GET%20%EC%9A%94%EC%B2%AD%EC%9D%84%20%EB%B3%B4%EB%82%B4%EB%8A%94%20%EA%B2%BD%EC%9A%B0%2C%20%EB%98%90%EB%8A%94%20%EC%9D%BD%EA%B8%B0%20%EC%A0%84%EC%9A%A9%20%EB%A6%AC%EC%86%8C%EC%8A%A4%EC%97%90%20PUT%20%EC%9A%94%EC%B2%AD%EC%9D%84%20%EB%B3%B4%EB%82%B4%EB%8A%94%20%EA%B2%BD%EC%9A%B0%EC%97%90%20%EC%9D%B4%20%EC%BD%94%EB%93%9C%EB%A5%BC%20%EC%A0%9C%EA%B3%B5%ED%95%9C%EB%8B%A4).)
+
+### Param을 사용하여 페이지 조회
+
+기존 로컬 URL에 Param으로 page=0과 page=1을 줘보자.
+
+Local URL : http://localhost:8080/products?page=0 or 1
+
+Param이 page=0일 때는 디폴트 전체 상품 목록 조회 페이지와 같다. 하지만 page=1일 때는 다르다.
+
+게시물 10번부터 조회되는 것을 알 수 있다. 이로써 게시물은 한 페이지당 최대 개수를 지정하여 SELECT해야할 것 같다.
+
+(1단계 때 배운 limit과 offset을 이용해 구현하면 될 거 같다.)
+</div>
+</details>
 
 5. 배포된 서버에 모든 API를 POSTMAN으로 요청해본 뒤 응답되는 데이터를 확인하고 부족한 데이터가 무엇인지 체크하여 README에 내용을 작성하시오.
 6. 테이블 설계를 하여 README에 ER-Diagram을 추가하여 제출하시오.
