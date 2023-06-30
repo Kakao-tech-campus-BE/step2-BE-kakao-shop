@@ -45,6 +45,61 @@
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
+</br>
+</br>
+
+## 1주차 답안 
+
+</br>
+
+#### 1. 요구사항 시나리오를 보고 부족해 보이는 기능을 하나 이상 체크하여 내용을 작성하시오.
+
+```
+비밀번호 찾기 기능 : 사용자가 비밀번호를 잊어 로그인이 불가한 경우에 대비해 가입 시 사용한 이메일 주소를 통해 비밀번호를 재설정 할 수 있는 기능이 필요함.
+
+기본 배송지 설정 기능 : 현재 주문하기 페이지에서 더미로만 존재하는 기본 배송지 설정 기능은 사용자의 입장에서 필요성을 느낄 수 있는 기능 중 하나이기 때문에 구현할 필요성이 있다고 생각함.
+
+상품 리뷰 등록 기능 : 쇼핑몰에서 사용자가 상품에 대한 리뷰를 등록하는 것은 필수적인 요소 중 하나이기 때문에 필요하다고 생각함.
+```
+
+</br>
+
+#### 2. 제시된 화면설계를 보고 해당 화면설계와 배포된 기존 서버의 API주소를 매칭하여 내용을 작성하시오.
+- {BASE_URL}/login : 로그인
+<a href="https://ibb.co/XS8v4Q3"><img src="https://i.ibb.co/MM63hvG/login.png" alt="login" border="0" /></a>
+- {BASE_URL}/join : 회원가입
+<a href="https://ibb.co/q15jVzM"><img src="https://i.ibb.co/DKpWTND/join.png" alt="join" border="0" /></a>
+- {BASE_URL}/check : 이메일 중복 확인
+<a href="https://ibb.co/4Zf9fYn"><img src="https://i.ibb.co/BVPdPr5/check.png" alt="check" border="0" /></a>
+- {BASE_URL}/products : 전체 상품 목록 조회
+<a href="https://ibb.co/BqDJKfg"><img src="https://i.ibb.co/NZhqnFL/products-all.png" alt="products-all" border="0" /></a>
+- {BASE_URL}/products/{NUMBER} : 개별 상품 상세 조회
+<a href="https://ibb.co/XYxkb56"><img src="https://i.ibb.co/MBk5s1K/products.png" alt="products" border="0" /></a>
+- {BASE_URL}/carts : 장바구니 조회
+<a href="https://ibb.co/3zk7FZW"><img src="https://i.ibb.co/wsYRQmC/carts.png" alt="carts" border="0" /></a>
+- {BASE_URL}/carts/add : 장바구니 담기
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/Thc1ttg/carts-add.png" alt="carts-add" border="0" /></a>
+- {BASE_URL}/carts/update : 주문하기(장바구니 수정)
+<a href="https://ibb.co/pn50yQ0"><img src="https://i.ibb.co/vDRwYhw/carts-update.png" alt="carts-update" border="0" /></a>
+- {BASE_URL}/orders/save : 결재하기
+<a href="https://ibb.co/QfSydk8"><img src="https://i.ibb.co/Xb0c8Dy/orders-save.png" alt="orders-save" border="0" /></a>
+
+</br>
+
+#### 3. 배포된 서버에 모든 API를 POSTMAN으로 요청해본 뒤 응답되는 데이터를 확인하고 부족한 데이터가 무엇인지 체크하여 README에 내용을 작성하시오.
+
+```
+현재 주문하기 페이지에 존재하는 기본 배송지 항목은 서버에서 API로 전달해준 데이터를 띄우는 것이 아니라 프론트에서 임의로 설정한 더미 데이터를 표시해주고 있음.
+따라서 주문하기 페이지에 대한 요구사항을 충족하기 위해선 기본 배송지 관련 데이터가 필요하다고 생각함.
+```
+
+</br>
+
+#### 4. 테이블 설계를 하여 README에 ER-Diagram을 추가하여 제출하시오.
+<a href="https://ibb.co/93KdjbN"><img src="https://i.ibb.co/mFZP79G/ERD.png" alt="ERD" border="0"></a><br />
+
+</br>
+
 # 2주차
 
 카카오 테크 캠퍼스 2단계 - BE - 2주차 클론 과제
