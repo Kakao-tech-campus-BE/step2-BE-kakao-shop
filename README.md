@@ -199,8 +199,8 @@
     ```
     
 - **주문**
-    - 주문하기 버튼을 누르면 장바구니에 담긴 상품들이 order_item 테이블로 저장되고 order 테이블이 하나 생성된다
-    - 다음과 같은 주문 상품 정보를 보여준다
+    - 주문하기 버튼을 누르면 장바구니에 담긴 상품들이 프론트 단에서 결제 페이지의 주문 상품 정보로 띄어준다
+    - 결제하기 버튼을 클릭하면 상품이 order_item 테이블로 삽입되고 order 테이블의 레코드가 생성된다
         
         <img width="632" alt="화면 캡처 2023-06-29 204902" src="https://github.com/ki-met-hoon/go-home-app/assets/101192772/dd3bb591-1ba2-4a01-ba8c-7e6012cf91f2">
         
@@ -216,7 +216,8 @@
     ```
     
 - **주문 결과 확인**
-    - 결제하기 버튼을 클릭하면 주문 확인 페이지로 이동하고 서버가 order 테이블을 전달한다
+    - 결제 완료 후 주문 상품의 결과를 확인하기 위해 order 테이블에서 해당 record를 가져온다
+    - order_item은 결제가 완료된 상품이 담긴 테이블
         
         <img width="394" alt="Untitled 8" src="https://github.com/ki-met-hoon/go-home-app/assets/101192772/57130ff9-8b56-4962-ad37-357df44e7fa4">
         
