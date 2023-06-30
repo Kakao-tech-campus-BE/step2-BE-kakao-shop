@@ -83,18 +83,18 @@
 
 ##### 3. 배포된 서버에 모든 API를 POSTMAN으로 요청해본 뒤 응답되는 데이터를 확인하고 부족한 데이터가 무엇인지 체크하여 README에 내용을 작성하시오.
 > [1] 전체 상품 목록 조회 (http://localhost:8080/products)
-
+>
 > 응답되는 데이터: {“id", "productName", "description", "image", "price"}
-
+>
 > 부족한 데이터: {”freeDelivery"}
 >
+>
 > [2] 개별 상품 상세 조회 (http://localhost:8080/products/1)
-
-
+>
 > 응답되는 데이터:  {"id", "productName", "description", "image", "price", "starCount", "options"}
-
-
+>
 > 부족한 데이터: 없음
+>
 >
 > [3] 이메일 중복 체크 (http://localhost:8080/check)
 >
@@ -103,31 +103,51 @@
 > 부족한 데이터: 없음
 >
 > [4] 회원가입 (http://localhost:8080/join)
+>
 > 응답되는 데이터: {”success", "response", "error"}
+>
 > 부족한 데이터: 없음
+>
 >
 > [5] 로그인 (http://localhost:8080/login)
+>
 > 응답되는 데이터: {“success", "response", "error"}
+>
 > 부족한 데이터: 없음
+>
 >
 > [6] 장바구니 담기 (http://localhost:8080/carts/add)
+>
 > 응답되는 데이터: {"success", "response", "error"}
+>
 > 부족한 데이터: 없음
+>
 >
 > [7] 장바구니 조회 (http://localhost:8080/carts)
+>
 > 응답되는 데이터: {"success", "products", totalPrice", "error" }
+>
 > 부족한 데이터: 없음
+>
 >
 > [8] 주문하기 - (장바구니 수정) (http://localhost:8080/carts/update)
+>
 > 응답되는 데이터: {”success", "carts", "totalPrice", "error" }
+>
 > 부족한 데이터: 없음
+>
 >
 > [9] 결제하기 - (주문 인서트) (http://localhost:8080/orders/save)
+>
 > 응답되는 데이터: {“success", "id", "products", "totalPrice", "error" }
+>
 > 부족한 데이터: 없음
 >
+>
 > [10] 주문 결과 확인 (http://localhost:8080/orders/1)
+>
 > 응답되는 데이터: {”success", "id", "products", "totalPrice", "error" }
+>
 > 부족한 데이터: 없음
 
 ### ERD 사진
