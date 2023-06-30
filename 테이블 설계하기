@@ -1,0 +1,48 @@
+User테이블
+CREATE TABLE User(
+    user_ID INT NOT NULL,
+    user_Name VARCHAR(255) NOT NULL,
+    user_email VARVHAR(255) NOT NULL,
+    user_password VARCHAR(255) NOT NULL,
+    PRIMARY KEY(user_ID)
+);
+
+Product테이블
+CREATE TABLE Product{
+    product_ID VARCHAR(255) NOT NULL,
+    product_Name VARCHAR(255) NOT NULL,
+    product_Image VARCHAR(255) NOT NULL,
+    product_Price INT NOT NULL,
+    product_RegistrationDate DATE NOT NULL,
+    PRIMARY KEY(product_ID),
+    FOREIGN KEY(option_ID) REFERENCE option(option_ID)
+);
+
+Option테이블
+CREATE TABLE Option(
+    option_ID INT NOT NULL,
+    option_Name VARCHAR(255) NOT NULL,
+    option__Price INT NOT NULL,
+    PRIMARY KEY(option_ID)
+);
+
+Cart테이블
+CREATE TABLE Cart(
+    cart_ID INT NOT NULL,
+    PRIMARY KEY(cart_ID),
+    FOREIGN KEY(user_ID) REFERENCE User(user_ID),
+    FOREIGN KEY(option_ID) REFERENCE Option(option_ID)
+);
+
+Order테이블
+CREATE TABLE Order(
+    order_ID VARVHAR(255) NOT NULL,
+    PRIMARY KEY(order_ID),
+    FOREIGN KEY(product_ID) REFERENCE Product(product_ID),
+    FOREIGN KEY(option_ID) REFERENCE Option(option_ID)
+);
+
+
+    
+
+  
