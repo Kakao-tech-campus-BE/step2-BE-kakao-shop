@@ -511,6 +511,15 @@ Response Body :
  
 <br>
 
+#### ( ERD 테이블 설계 )
+```
+Week1_ERD.png 파일에 첨부
+```
+
+---
+```
+END
+```
 ---
 
 <br>
