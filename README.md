@@ -697,7 +697,7 @@
 
 ### 4. 테이블 설계를 하여 README에 ER-Diagram을 추가하여 제출하세요.
 
-[![ER-Diagram.png](https://i.postimg.cc/nLbjBLWT/ER-Diagram.png)](https://postimg.cc/cvhLNd08)
+[![ER-Diagram.png](https://i.postimg.cc/FzdNTydS/ER-Diagram.png)](https://postimg.cc/XBbRJygN)
 
 ### 5. pdf 과제
 
