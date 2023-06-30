@@ -37,6 +37,15 @@
 
 </br>
 
+
+### **과제 3**
+
+</br>
+
+### **과제 4**
+![kakaoshop-clone](https://github.com/chaee813/git-practice/assets/82564901/d6ae62a1-2978-4796-9efc-a4fb6af3affa)
+
+
 </br>
 
 ## **과제 상세 : 수강생들이 과제를 진행할 때, 유념해야할 것**
