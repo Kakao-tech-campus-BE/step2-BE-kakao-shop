@@ -57,10 +57,10 @@
 
 - **관리자 페이지 제공하기**
 
-  - 주문 현황 조회 기능
-  - 상품 등록 기능
-  - 상품 수정 기능
-  - 상품 삭제 기능
+  - 주문 현황 조회 api
+  - 상품 등록 api
+  - 상품 수정 api
+  - 상품 삭제 api
 
   </br>
 
@@ -68,71 +68,73 @@
 
   - 회원 등급 데이터
   - 회원 역할(구매자, 판매자) 데이터
-  - 회원 정보 수정 기능
-  - 회원 탈퇴 기능
+  - 회원 정보 수정 api
+  - 회원 탈퇴 api
 
   </br>
 
 - **회원가입 & 로그인**
 
-  - 소셜 로그인 기능
+  - 소셜 로그인 api
   - 회원 정보 유효성 검사
 
   </br>
 
 - **로그아웃**
 
-  - 로그아웃 api 추가
+  - 로그아웃 api
 
   </br>
 
 - **전체 상품 목록 조회**
 
-  - 상품 검색 기능
+  - 상품 검색 api
   - 조회 기준 선택하기
 
   </br>
 
 - **개별 상품 상세 조회**
 
+  - 바로 구매하기 api
+  - 등록되지 않은 상품 조회 막기
   - 재고 내역 데이터
   - 별점 데이터
-  - 상품 찜하기 기능
-  - 리뷰 기능
+  - 상품 찜하기 관련 api
+  - 리뷰 관련 api
 
   </br>
 
 - **장바구니 담기**
 
-  - 장바구니에 이미 추가된 옵션을 장바구니 담기를 할 경우, 수량 업데이트 기능
+  - 장바구니에 이미 추가된 옵션을 장바구니 담기를 할 경우, 수량 업데이트 api
 
   </br>
 
 - **장바구니 보기**
 
-  - 장바구니 상품 삭제 기능
+  - 장바구니 상품 삭제 api
 
   </br>
 
 - **장바구니 상품 옵션 확인 및 수량 결정**
 
-  - 옵션 변경 시 데이터베이스에 저장하기
+  - 옵션 변경 시 데이터베이스에 저장하는 api
 
   </br>
 
 - **주문**
 
-  - 장바구니 상품 중 구매할 상품을 선택하는 기능
+  - 장바구니 상품 중 구매할 상품을 선택하는 api
 
   </br>
 
 - **결제**
-  - 할인 적용하기
-  - 배송지 정보 입력 시 데이터베이스에 저장하기
+  - 할인 관련 api
+  - 배송지 정보 입력 시 데이터베이스에 저장하는 api
 
 </br>
 
-## Assignment 2
+## **Assignment 2**
 
 </br>
 
@@ -143,6 +145,7 @@
 ![Image](https://drive.google.com/uc?id=1Ct39QyJYDmroIdk4KVlMLVSmECJAnJ-Z)
 
 - 사용자 시나리오
+
   - 성공 시나리오
     - 회원가입 페이지에 들어와서 회원 정보(이메일, 이름, 비밀번호, 비밀번호 확인)를 모두 특정 규칙에 맞게 입력하고 회원가입 버튼을 누른다
   - 실패 시나리오
@@ -151,195 +154,219 @@
     - 3 : 회원가입 페이지에 들어와서 등록된 회원의 이메일을 입력하고 회원가입 버튼을 누른다
     - 4 : 회원가입 페이지에 들어와서 회원 정보 중 비밀번호 길이 규칙(8~20자)에 어긋나게 입력하고 회원가입 버튼을 누른다
     - 5 : 회원가입 페이지에 들어와서 회원 정보 중 하나라도 입력하지 않고 회원가입 버튼을 누른다
+
 - Method : POST
 - URL : /join
 - 정상 응답
+    <details>
+    <summary>Request Body</summary>
 
-  - Request Body
+      {
+        "username":"mata",
+        "email":"meta@nate.com",
+        "password":"meta1234!"
+      }
 
-    ```java
-    {
-      "username":"mata",
-      "email":"meta@nate.com",
-      "password":"meta1234!"
-    }
-    ```
+    </details>
+    <details>
+    <summary>Response Body</summary>
 
-  - Response Body
+      {
+          "success": true,
+          "response": null,
+          "error": null
+      }
 
-    ```java
-    {
-        "success": true,
-        "response": null,
-        "error": null
-    }
-    ```
+    </details>
+
+  </br>
 
 - 실패1 - 이메일 형식 오류
+    <details>
+    <summary>Request Body</summary>
+      
+      {
+          "username":"mata",
+          "email":"metanate.com",
+          "password":"meta1234!"
+      }  
+       
+    </details>
+    <details>
+    <summary>Response Body</summary>
 
-  - Request Body
+      {
+          "success": false,
+          "response": null,
+          "error": {
+              "message": "이메일 형식으로 작성해주세요:email",
+              "status": 400
+          }
+      }
 
-    ```java
-    {
-        "username":"mata",
-        "email":"metanate.com",
-        "password":"meta1234!"
-    }
-    ```
-
-  - Response Body
-
-    ```java
-    {
-        "success": false,
-        "response": null,
-        "error": {
-            "message": "이메일 형식으로 작성해주세요:email",
-            "status": 400
-        }
-    }
-    ```
+    </details>
+  </br>
 
 - 실패2 - 비밀번호 형식 오류
+    <details>
+    <summary>Request Body</summary>
 
-  - Request Body
+      {
+          "username":"mata",
+          "email":"meta@nate.com",
+          "password":"meta1234"
+      }
 
-    ```java
-    {
-        "username":"mata",
-        "email":"meta@nate.com",
-        "password":"meta1234"
-    }
-    ```
+    </details>
+    <details>
+    <summary>Response Body</summary>
 
-  - Response Body
+      {
+          "success": false,
+          "response": null,
+          "error": {
+              "message": "영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니다.:password",
+              "status": 400
+          }
+      }
 
-    ```java
-    {
-        "success": false,
-        "response": null,
-        "error": {
-            "message": "영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니다.:password",
-            "status": 400
-        }
-    }
-    ```
+    </details>
+
+  </br>
 
 - 실패3 - 동일한 이메일 존재
+    <details>
+    <summary>Request Body</summary>
 
-  - Request Body
-
-    ```java
-    {
-        "username":"mata",
-        "email":"ssar@nate.com",
-        "password":"meta1234!"
-    }
-    ```
-
-  - Response Body
-
-    ```java
-    {
-        "success": false,
-        "response": null,
-        "error": {
-            "message": "동일한 이메일이 존재합니다 : ssar@nate.com",
-            "status": 400
+        {
+            "username":"mata",
+            "email":"ssar@nate.com",
+            "password":"meta1234!"
         }
-    }
-    ```
+
+    </details>
+    <details>
+    <summary>Response Body</summary>
+
+        {
+            "success": false,
+            "response": null,
+            "error": {
+                "message": "동일한 이메일이 존재합니다 : ssar@nate.com",
+                "status": 400
+            }
+        }
+
+    </details>
+
+  </br>
 
 - 실패4 - 비밀번호 길이 오류
+    <details>
+    <summary>Request Body</summary>
 
-  - Request Body
+      {
+          "username":"mata",
+          "email":"meta@nate.com",
+          "password":"meta12!"
+      }
 
-    ```java
-    {
-        "username":"mata",
-        "email":"meta@nate.com",
-        "password":"meta12!"
-    }
-    ```
-
-  - Response Body
-
-    ```java
-    {
-        "success": false,
-        "response": null,
-        "error": {
-            "message": "8에서 20자 이내여야 합니다.:password",
-            "status": 400
-        }
-    }
-    ```
-
-</br>
+    </details>
+    <details>
+    <summary>Response Body</summary>
+      
+      {
+          "success": false,
+          "response": null,
+          "error": {
+              "message": "8에서 20자 이내여야 합니다.:password",
+              "status": 400
+          }
+      }
+      
+    </details>
+  </br>
 
 **[기능] 이메일 중복 체크**
 
 - 사용자 시나리오
+
   - 성공 시나리오
     - 회원가입 페이지에서 이메일을 특정 규칙에 맞게 입력하고 이메일 중복 확인 버튼을 누른다
   - 실패 시나리오
     - 1 : 회원가입 페이지에서 등록된 이메일을 입력하고 이메일 중복 확인 버튼을 누른다
     - 2 : 회원가입 페이지에서 이메일 규칙에 어긋나게 입력하고 로그인 버튼을 누른다
+
 - Method : POST
 - URL : /check
 - 정상 응답
-  - Request Body
-    ```java
-    {
-        "email":"ssar1@nate.com"
-    }
-    ```
-  - Response Body
-    ```java
-    {
-        "success": true,
-        "response": null,
-        "error": null
-    }
-    ```
-- 실패1 - 동일한 이메일 존재
-  - Request Body
-    ```java
-    {
-        "email":"ssar@nate.com"
-    }
-    ```
-  - Response Body
-    ```java
-    {
-        "success": false,
-        "response": null,
-        "error": {
-            "message": "동일한 이메일이 존재합니다 : ssar@nate.com",
-            "status": 400
-        }
-    }
-    ```
-- 실패2 - 이메일 형식 오류
-  - Request Body
-    ```java
-    {
-        "email":"ssarnate.com"
-    }
-    ```
-  - Response Body
-    ```java
-    {
-        "success": false,
-        "response": null,
-        "error": {
-            "message": "이메일 형식으로 작성해주세요:email",
-            "status": 400
-        }
-    }
-    ```
+    <details>
+    <summary>Request Body</summary>
 
-</br>
+      {
+          "email":"ssar1@nate.com"
+      }
+
+    </details>
+    <details>
+    <summary>Response Body</summary>
+      
+      {
+          "success": true,
+          "response": null,
+          "error": null
+      }
+      
+    </details>
+  </br>
+
+- 실패1 - 동일한 이메일 존재
+    <details>
+    <summary>Request Body</summary>
+
+      {
+          "email":"ssar@nate.com"
+      }
+
+    </details>
+    <details>
+    <summary>Response Body</summary>
+      
+      {
+          "success": false,
+          "response": null,
+          "error": {
+              "message": "동일한 이메일이 존재합니다 : ssar@nate.com",
+              "status": 400
+          }
+      }
+      
+    </details>
+  </br>
+
+- 실패2 - 이메일 형식 오류
+    <details>
+    <summary>Request Body</summary>
+
+      {
+          "email":"ssarnate.com"
+      }
+
+    </details>
+    <details>
+    <summary>Response Body</summary>
+      
+      {
+          "success": false,
+          "response": null,
+          "error": {
+              "message": "이메일 형식으로 작성해주세요:email",
+              "status": 400
+          }
+      }
+      
+    </details>
+  </br>
 
 **[기능 2] 로그인**
 
@@ -348,6 +375,7 @@
 ![Image](https://drive.google.com/uc?id=1ab-7TpJ9_v0l4jn5_xDCrTmIYPcpCS6n)
 
 - 사용자 시나리오
+
   - 성공 시나리오
     - 로그인 페이지에 들어와서 이메일, 비밀번호를 특정 규칙에 맞게 입력하고 로그인 버튼을 누른다
   - 실패 시나리오
@@ -355,101 +383,131 @@
     - 2 : 로그인 페이지에 들어와서 회원 정보 중 비밀번호 규칙에 어긋나게 입력하고 로그인 버튼을 누른다
     - 3 : 로그인 페이지에 들어와서 회원 정보 중 비밀번호 길이 규칙(8~20자)에 어긋나게 입력하고 로그인 버튼을 누른다
     - 4 : 로그인 페이지에 들어와서 등록되지 않은 이메일을 입력하고 로그인 버튼을 누른다
+
 - Method : POST
 - URL : /login
 - 정상 응답
-  - Request Body
-    ```java
-    {
-    		"email":"ssar@nate.com",
-    		"password":"meta1234!"
-    }
-    ```
-  - Response Body
-    ```java
-    {
+    <details>
+    <summary>Request Body</summary>
+
+      {
+        "email":"ssar@nate.com",
+        "password":"meta1234!"
+      }
+
+    </details>
+    <details>
+    <summary>Response Body</summary>
+
+      {
         "success": true,
         "response": null,
         "error": null
-    }
-    ```
+      }
+
+    </details>
   - Response Header - jwt 토큰
+
+</br>
+
 - 실패1 - 이메일 형식 오류
-  - Request Body
-    ```java
-    {
-    		"email":"ssarnate.com",
-    		"password":"meta1234!"
-    }
-    ```
-  - Response Body
-    ```java
-    {
+    <details>
+    <summary>Request Body</summary>
+
+      {
+        "email":"ssarnate.com",
+        "password":"meta1234!"
+      }
+
+    </details>
+    <details>
+    <summary>Response Body</summary>
+
+      {
         "success": false,
         "response": null,
         "error": {
-            "message": "이메일 형식으로 작성해주세요:email",
-            "status": 400
+          "message": "이메일 형식으로 작성해주세요:email",
+          "status": 400
         }
-    }
-    ```
+      }
+
+    </details>
+  </br>
+
 - 실패2 - 비밀번호 형식 오류
-  - Request Body
-    ```java
-    {
-    		"email":"ssar@nate.com",
-    		"password":"meta1234"
-    }
-    ```
-  - Response Body
-    ```java
-    {
+    <details>
+    <summary>Request Body</summary>
+
+      {
+        "email":"ssar@nate.com",
+        "password":"meta1234"
+      }
+
+    </details>
+    <details>
+    <summary>Response Body</summary>
+
+      {
         "success": false,
         "response": null,
         "error": {
-            "message": "영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니다.:password",
-            "status": 400
+          "message": "영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니다.:password",
+          "status": 400
         }
-    }
-    ```
+      }
+
+    </details>
+  </br>
+
 - 실패3 - 비밀번호 길이 오류
-  - Request Body
-    ```java
-    {
-    		"email":"ssar@nate.com",
-    		"password":"meta12!"
-    }
-    ```
-  - Response Body
-    ```java
-    {
+    <details>
+    <summary>Request Body</summary>
+
+      {
+        "email":"ssar@nate.com",
+        "password":"meta12!"
+      }
+
+    </details>
+    <details>
+    <summary>Response Body</summary>
+
+      {
         "success": false,
         "response": null,
         "error": {
-            "message": "8에서 20자 이내여야 합니다.:password",
-            "status": 400
+          "message": "8에서 20자 이내여야 합니다.:password",
+          "status": 400
         }
-    }
-    ```
+      }
+
+    </details>
+  </br>
+
 - 실패4 - 사용자 없음
-  - Request Body
-    ```java
-    {
-    		"email":"ssar1@nate.com",
-    		"password":"meta1234!"
-    }
-    ```
-  - Response Body
-    ```java
-    {
+    <details>
+    <summary>Request Body</summary>
+
+      {
+        "email":"ssar1@nate.com",
+        "password":"meta1234!"
+      }
+
+    </details>
+    <details>
+    <summary>Response Body</summary>
+
+      {
         "success": false,
         "response": null,
         "error": {
-            "message": "인증되지 않았습니다",
-            "status": 401
+          "message": "인증되지 않았습니다",
+          "status": 400
         }
-    }
-    ```
+      }
+
+    </details>
 
 </br>
 
@@ -459,9 +517,9 @@
 
 ![Image](https://drive.google.com/uc?id=194hYwBLFXFPhy4bX5tFOQFokOBBabziA)
 
+- 프론트엔드 구현
 - 사용자 시나리오
   - 로그아웃 버튼을 누른다
-- 프론트앤드 구현 -> API로 만들면 좋을 것 같다
 
 </br>
 
@@ -477,10 +535,13 @@
 - Method : GET
 - URL : /products
 - 정상 응답1 - 파라미터 없음
+
   - URL : http://localhost:8080/products
-  - Response Body
-    ```java
-    {
+    <details>
+    <summary>Response Body</summary>
+      
+      ```
+      {
         "success": true,
         "response": [
             {
@@ -548,134 +609,67 @@
             }
         ],
         "error": null
-    }
-    ```
+      }
+      ```
+
+    </details>
+
 - 정상 응답2 - 파라미터 있음
-  - URL : http://localhost:8080/products?page=0
-  - Response Body
-    ```java
-    {
-        "success": true,
-        "response": [
-            {
-                "id": 1,
-                "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전",
-                "description": "",
-                "image": "/images/1.jpg",
-                "price": 1000
-            },
-            {
-                "id": 2,
-                "productName": "[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율",
-                "description": "",
-                "image": "/images/2.jpg",
-                "price": 2000
-            },
-            {
-                "id": 3,
-                "productName": "삼성전자 JBL JR310 외 어린이용/성인용 헤드셋 3종!",
-                "description": "",
-                "image": "/images/3.jpg",
-                "price": 30000
-            },
-            {
-                "id": 4,
-                "productName": "바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종",
-                "description": "",
-                "image": "/images/4.jpg",
-                "price": 4000
-            },
-            {
-                "id": 5,
-                "productName": "[더주] 컷팅말랑장족, 숏다리 100g/300g 외 주전부리 모음 /중독성 최고/마른안주",
-                "description": "",
-                "image": "/images/5.jpg",
-                "price": 5000
-            },
-            {
-                "id": 6,
-                "productName": "굳지않는 앙금절편 1,050g 2팩 외 우리쌀떡 모음전",
-                "description": "",
-                "image": "/images/6.jpg",
-                "price": 15900
-            },
-            {
-                "id": 7,
-                "productName": "eoe 이너딜리티 30포, 오렌지맛 고 식이섬유 보충제",
-                "description": "",
-                "image": "/images/7.jpg",
-                "price": 26800
-            },
-            {
-                "id": 8,
-                "productName": "제나벨 PDRN 크림 2개. 피부보습/진정 케어",
-                "description": "",
-                "image": "/images/8.jpg",
-                "price": 25900
-            },
-            {
-                "id": 9,
-                "productName": "플레이스테이션 VR2 호라이즌 번들. 생생한 몰입감",
-                "description": "",
-                "image": "/images/9.jpg",
-                "price": 797000
-            }
-        ],
-        "error": null
-    }
-    ```
   - URL : http://localhost:8080/products?page=1
-  - Response Body
-    ```java
-    {
-        "success": true,
-        "response": [
-            {
-                "id": 10,
-                "productName": "통영 홍 가리비 2kg, 2세트 구매시 1kg 추가증정",
-                "description": "",
-                "image": "/images/10.jpg",
-                "price": 8900
-            },
-            {
-                "id": 11,
-                "productName": "아삭한 궁채 장아찌 1kg 외 인기 반찬 모음전",
-                "description": "",
-                "image": "/images/11.jpg",
-                "price": 6900
-            },
-            {
-                "id": 12,
-                "productName": "깨끗한나라 순수소프트 30롤 2팩. 무형광, 도톰 3겹",
-                "description": "",
-                "image": "/images/12.jpg",
-                "price": 28900
-            },
-            {
-                "id": 13,
-                "productName": "생활공작소 초미세모 칫솔 12입 2개+가글 증정",
-                "description": "",
-                "image": "/images/13.jpg",
-                "price": 9900
-            },
-            {
-                "id": 14,
-                "productName": "경북 영천 샤인머스켓 가정용 1kg 2수 내외",
-                "description": "",
-                "image": "/images/14.jpg",
-                "price": 9900
-            },
-            {
-                "id": 15,
-                "productName": "[LIVE][5%쿠폰] 홈카페 Y3.3 캡슐머신 베이직 세트",
-                "description": "",
-                "image": "/images/15.jpg",
-                "price": 148000
-            }
-        ],
-        "error": null
-    }
-    ```
+    <details>
+    <summary>Response Body</summary>
+      
+      ```
+      {
+          "success": true,
+          "response": [
+              {
+                  "id": 10,
+                  "productName": "통영 홍 가리비 2kg, 2세트 구매시 1kg 추가증정",
+                  "description": "",
+                  "image": "/images/10.jpg",
+                  "price": 8900
+              },
+              {
+                  "id": 11,
+                  "productName": "아삭한 궁채 장아찌 1kg 외 인기 반찬 모음전",
+                  "description": "",
+                  "image": "/images/11.jpg",
+                  "price": 6900
+              },
+              {
+                  "id": 12,
+                  "productName": "깨끗한나라 순수소프트 30롤 2팩. 무형광, 도톰 3겹",
+                  "description": "",
+                  "image": "/images/12.jpg",
+                  "price": 28900
+              },
+              {
+                  "id": 13,
+                  "productName": "생활공작소 초미세모 칫솔 12입 2개+가글 증정",
+                  "description": "",
+                  "image": "/images/13.jpg",
+                  "price": 9900
+              },
+              {
+                  "id": 14,
+                  "productName": "경북 영천 샤인머스켓 가정용 1kg 2수 내외",
+                  "description": "",
+                  "image": "/images/14.jpg",
+                  "price": 9900
+              },
+              {
+                  "id": 15,
+                  "productName": "[LIVE][5%쿠폰] 홈카페 Y3.3 캡슐머신 베이직 세트",
+                  "description": "",
+                  "image": "/images/15.jpg",
+                  "price": 148000
+              }
+          ],
+          "error": null
+      }
+      ```
+    </details>
 
 </br>
 
@@ -692,48 +686,52 @@
 - URL : /products/{product_id}
 - 정상 응답
   - URL : http://localhost:8080/products/1
-  - Response Body
-    ```java
-    {
-        "success": true,
-        "response": {
-            "id": 1,
-            "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전",
-            "description": "",
-            "image": "/images/1.jpg",
-            "price": 1000,
-            "starCount": 5,
-            "options": [
-                {
-                    "id": 1,
-                    "optionName": "01. 슬라이딩 지퍼백 크리스마스에디션 4종",
-                    "price": 10000
-                },
-                {
-                    "id": 2,
-                    "optionName": "02. 슬라이딩 지퍼백 플라워에디션 5종",
-                    "price": 10900
-                },
-                {
-                    "id": 3,
-                    "optionName": "고무장갑 베이지 S(소형) 6팩",
-                    "price": 9900
-                },
-                {
-                    "id": 4,
-                    "optionName": "뽑아쓰는 키친타올 130매 12팩",
-                    "price": 16900
-                },
-                {
-                    "id": 5,
-                    "optionName": "2겹 식빵수세미 6매",
-                    "price": 8900
-                }
-            ]
-        },
-        "error": null
-    }
-    ```
+    <details>
+    <summary>Response Body</summary>
+      
+      ```
+      {
+          "success": true,
+          "response": {
+              "id": 1,
+              "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전",
+              "description": "",
+              "image": "/images/1.jpg",
+              "price": 1000,
+              "starCount": 5,
+              "options": [
+                  {
+                      "id": 1,
+                      "optionName": "01. 슬라이딩 지퍼백 크리스마스에디션 4종",
+                      "price": 10000
+                  },
+                  {
+                      "id": 2,
+                      "optionName": "02. 슬라이딩 지퍼백 플라워에디션 5종",
+                      "price": 10900
+                  },
+                  {
+                      "id": 3,
+                      "optionName": "고무장갑 베이지 S(소형) 6팩",
+                      "price": 9900
+                  },
+                  {
+                      "id": 4,
+                      "optionName": "뽑아쓰는 키친타올 130매 12팩",
+                      "price": 16900
+                  },
+                  {
+                      "id": 5,
+                      "optionName": "2겹 식빵수세미 6매",
+                      "price": 8900
+                  }
+              ]
+          },
+          "error": null
+      }
+      ```
+      
+    </details>
 
 </br>
 
@@ -743,9 +741,9 @@
 
 ![Image](https://drive.google.com/uc?id=148hkBch61Q3G3DY91uYpL6PapZsiPVwo)
 
+- 프론트엔드 구현
 - 사용자 시나리오
   - 옵션을 선택한다
-- 프론트앤드 구현
 
 </br>
 
@@ -755,9 +753,9 @@
 
 ![Image](https://drive.google.com/uc?id=1aSYNhJupApld2Cji80qqPwvqvDCKAvrO)
 
+- 프론트엔드 구현
 - 사용자 시나리오
   - 선택한 옵션의 수량을 + 버튼을 이용해서 증가시킨다
-- 프론트앤드 구현
 
 </br>
 
@@ -773,27 +771,35 @@
 - URL : /carts/add
 - Request Header - jwt 토큰
 - 정상 응답
-  - Request Body
-    ```java
-    [
-        {
-            "optionId":4,
-            "quantity":5
-        },
-        {
-            "optionId":5,
-            "quantity":5
-        }
-    ]
-    ```
-  - Response Body
-    ```java
-    {
-        "success": true,
-        "response": null,
-        "error": null
-    }
-    ```
+  <details>
+  <summary>Request Body</summary>
+
+  ```
+  [
+      {
+          "optionId":4,
+          "quantity":5
+      },
+      {
+          "optionId":5,
+          "quantity":5
+      }
+  ]
+  ```
+
+  </details>
+  <details>
+  <summary>Response Body</summary>
+
+  ```
+  {
+      "success": true,
+      "response": null,
+      "error": null
+  }
+  ```
+
+  </details>
 
 </br>
 
@@ -809,8 +815,10 @@
 - Method : GET
 - URL : /carts
 - Request Header - jwt 토큰
-- 정상 응답 - Response Body
-  ````java
+- 정상 응답
+    <details>
+    <summary>Response Body</summary>
+
       {
           "success": true,
           "response": {
@@ -872,8 +880,8 @@
           },
           "error": null
       }
-      ```
-  ````
+
+  </details>
 
 </br>
 
@@ -893,63 +901,69 @@
 - URL : /carts/update
 - Request Header - jwt 토큰
 - 정상 응답
-  - Request Body
-    ```java
-    [
-        {
-            "cartId":8,
-            "quantity":10
-        },
-        {
-            "cartId":10,
-            "quantity":10
-        }
-    ]
-    ```
-  - Response Body
-    ```java
-    {
-        "success": true,
-        "response": {
-            "carts": [
-                {
-                    "cartId": 8,
-                    "optionId": 3,
-                    "optionName": "고무장갑 베이지 S(소형) 6팩",
-                    "quantity": 10,
-                    "price": 99000
-                },
-                {
-                    "cartId": 9,
-                    "optionId": 6,
-                    "optionName": "22년산 햇단밤 700g(한정판매)",
-                    "quantity": 5,
-                    "price": 49500
-                },
-                {
-                    "cartId": 10,
-                    "optionId": 4,
-                    "optionName": "뽑아쓰는 키친타올 130매 12팩",
-                    "quantity": 10,
-                    "price": 169000
-                },
-                {
-                    "cartId": 11,
-                    "optionId": 5,
-                    "optionName": "2겹 식빵수세미 6매",
-                    "quantity": 5,
-                    "price": 44500
-                }
-            ],
-            "totalPrice": 466500
-        },
-        "error": null
-    }
-    ```
+    <details>
+    <summary>Request Body</summary>
+
+      [
+          {
+              "cartId":8,
+              "quantity":10
+          },
+          {
+              "cartId":10,
+              "quantity":10
+          }
+      ]
+
+    </details>
+    <details>
+    <summary>Response Body</summary>
+
+      {
+          "success": true,
+          "response": {
+              "carts": [
+                  {
+                      "cartId": 8,
+                      "optionId": 3,
+                      "optionName": "고무장갑 베이지 S(소형) 6팩",
+                      "quantity": 10,
+                      "price": 99000
+                  },
+                  {
+                      "cartId": 9,
+                      "optionId": 6,
+                      "optionName": "22년산 햇단밤 700g(한정판매)",
+                      "quantity": 5,
+                      "price": 49500
+                  },
+                  {
+                      "cartId": 10,
+                      "optionId": 4,
+                      "optionName": "뽑아쓰는 키친타올 130매 12팩",
+                      "quantity": 10,
+                      "price": 169000
+                  },
+                  {
+                      "cartId": 11,
+                      "optionId": 5,
+                      "optionName": "2겹 식빵수세미 6매",
+                      "quantity": 5,
+                      "price": 44500
+                  }
+              ],
+              "totalPrice": 466500
+          },
+          "error": null
+      }
+
+    </details>
+
 - 실패1 - 장바구니에 없는 상품 업데이트
-  - Request Body
-    ```java
-    [
+    <details>
+    <summary>Request Body</summary>
+
+      [
         {
             "cartId":12,
             "quantity":10
@@ -958,23 +972,28 @@
             "cartId":13,
             "quantity":10
         }
-    ]
-    ```
-  - Response Body
-    ```java
-    {
+      ]
+
+    </details>
+    <details>
+    <summary>Response Body</summary>
+
+      {
         "success": false,
         "response": null,
         "error": {
             "message": "장바구니에 없는 상품은 주문할 수 없습니다 : 12",
             "status": 400
         }
-    }
-    ```
+      }
+
+    </details>
+
 - 실패2 - 수량 -1로 업데이트
-  - Request Body
-    ```java
-    [
+    <details>
+    <summary>Request Body</summary>
+
+      [
         {
             "cartId":10,
             "quantity":-1
@@ -983,19 +1002,22 @@
             "cartId":13,
             "quantity":10
         }
-    ]
-    ```
-  - Response Body
-    ```java
-    {
+      ]
+
+    </details>
+    <details>
+    <summary>Response Body</summary>
+
+      {
         "success": false,
         "response": null,
         "error": {
             "message": "장바구니에 없는 상품은 주문할 수 없습니다 : 13",
             "status": 400
         }
-    }
-    ```
+      }
+
+    </details>
 
 </br>
 
@@ -1011,10 +1033,10 @@
 - URL : /carts/update
 - Request Header - jwt 토큰
 - 정상 응답
-
-  - Request Body
-    ```java
-    [
+    <details>
+    <summary>Request Body</summary>
+      
+      [
         {
             "cartId":8,
             "quantity":10
@@ -1023,49 +1045,52 @@
             "cartId":10,
             "quantity":10
         }
-    ]
-    ```
-  - Response Body
+      ]
 
-    ```java
-    {
+    </details>
+
+    <details>
+    <summary>Response Body</summary>
+
+      {
         "success": true,
         "response": {
-        "carts": [
-            {
-                "cartId": 8,
-                "optionId": 3,
-                "optionName": "고무장갑 베이지 S(소형) 6팩",
-                "quantity": 10,
-                "price": 99000
-            },
-            {
-                "cartId": 9,
-                "optionId": 6,
-                "optionName": "22년산 햇단밤 700g(한정판매)",
-                "quantity": 5,
-                "price": 49500
-            },
-            {
-                "cartId": 10,
-                "optionId": 4,
-                "optionName": "뽑아쓰는 키친타올 130매 12팩",
-                "quantity": 10,
-                "price": 169000
-            },
-            {
-                "cartId": 11,
-                "optionId": 5,
-                "optionName": "2겹 식빵수세미 6매",
-                "quantity": 5,
-                "price": 44500
-            }
-        ],
-        "totalPrice": 466500
-      },
-      "error": null
-    }
-    ```
+          "carts": [
+              {
+                  "cartId": 8,
+                  "optionId": 3,
+                  "optionName": "고무장갑 베이지 S(소형) 6팩",
+                  "quantity": 10,
+                  "price": 99000
+              },
+              {
+                  "cartId": 9,
+                  "optionId": 6,
+                  "optionName": "22년산 햇단밤 700g(한정판매)",
+                  "quantity": 5,
+                  "price": 49500
+              },
+              {
+                  "cartId": 10,
+                  "optionId": 4,
+                  "optionName": "뽑아쓰는 키친타올 130매 12팩",
+                  "quantity": 10,
+                  "price": 169000
+              },
+              {
+                  "cartId": 11,
+                  "optionId": 5,
+                  "optionName": "2겹 식빵수세미 6매",
+                  "quantity": 5,
+                  "price": 44500
+              }
+          ],
+          "totalPrice": 466500
+        },
+        "error": null
+      }
+
+    </details>
 
   </br>
 
@@ -1081,9 +1106,10 @@
 - URL : /orders/save
 - Request Header - jwt 토큰
 - 정상 응답
-  - Response Body
-    ```java
-    {
+    <details>
+    <summary>Response Body</summary>
+
+      {
         "success": true,
         "response": {
             "id": 1,
@@ -1126,8 +1152,9 @@
             "totalPrice": 466500
         },
         "error": null
-    }
-    ```
+      }
+
+    </details>
 
 </br>
 
@@ -1146,75 +1173,97 @@
 - URL : /orders/{order_id}
 - Request Header - jwt 토큰
 - 정상 응답
+
   - URL : http://localhost:8080/orders/1
-  - Response Body
-    ```java
+
+    <details>
+    <summary>Response Body</summary>
+
+    ```
     {
-        "success": true,
-        "response": {
-            "id": 1,
-            "products": [
-                {
-                    "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전",
-                    "items": [
-                        {
-                            "id": 3,
-                            "optionName": "고무장갑 베이지 S(소형) 6팩",
-                            "quantity": 10,
-                            "price": 99000
-                        },
-                        {
-                            "id": 5,
-                            "optionName": "뽑아쓰는 키친타올 130매 12팩",
-                            "quantity": 10,
-                            "price": 169000
-                        },
-                        {
-                            "id": 6,
-                            "optionName": "2겹 식빵수세미 6매",
-                            "quantity": 5,
-                            "price": 44500
-                        }
-                    ]
-                },
-                {
-                    "productName": "[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율",
-                    "items": [
-                        {
-                            "id": 4,
-                            "optionName": "22년산 햇단밤 700g(한정판매)",
-                            "quantity": 5,
-                            "price": 49500
-                        }
-                    ]
-                }
-            ],
-            "totalPrice": 466500
-        },
-        "error": null
+      "success": true,
+      "response": {
+          "id": 1,
+          "products": [
+              {
+                  "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전",
+                  "items": [
+                      {
+                          "id": 3,
+                          "optionName": "고무장갑 베이지 S(소형) 6팩",
+                          "quantity": 10,
+                          "price": 99000
+                      },
+                      {
+                          "id": 5,
+                          "optionName": "뽑아쓰는 키친타올 130매 12팩",
+                          "quantity": 10,
+                          "price": 169000
+                      },
+                      {
+                          "id": 6,
+                          "optionName": "2겹 식빵수세미 6매",
+                          "quantity": 5,
+                          "price": 44500
+                      }
+                  ]
+              },
+              {
+                  "productName": "[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율",
+                  "items": [
+                      {
+                          "id": 4,
+                          "optionName": "22년산 햇단밤 700g(한정판매)",
+                          "quantity": 5,
+                          "price": 49500
+                      }
+                  ]
+              }
+          ],
+          "totalPrice": 466500
+      },
+      "error": null
     }
     ```
+
+    </details>
+
 - 실패 응답
+
   - URL : http://localhost:8080/orders/2
-  - Response Body
-    ```java
+    <details>
+    <summary>Response Body</summary>
+
+    ```
     {
-        "success": false,
-        "response": null,
-        "error": {
-            "message": "해당 주문을 찾을 수 없습니다 : 2",
-            "status": 404
-        }
+      "success": false,
+      "response": null,
+      "error": {
+          "message": "해당 주문을 찾을 수 없습니다 : 2",
+          "status": 404
+      }
     }
     ```
 
-</br>
-
-## Assignment 3
+    </details>
 
 </br>
 
-## Assignment 4
+## **Assignment 3**
+
+</br>
+
+모든 API를 POSTMAN으로 요청하고 응답 데이터를 확인하는 과정은 [Assignment 2](#assignment-2)를 참고합니다.
+
+- 상세 상품 조회
+  - 배송비 데이터 전달하기(무료배송 또는 금액)
+- 주문
+  - 주문상품 정보에 들어갈 제품명 전달하기
+  - 배송지 정보에 들어갈 회원 정보(이름, 전화번호, 주소) 전달하기
+
+</br>
+
+## **Assignment 4**
 
 </br>
 
@@ -1281,6 +1330,7 @@
   );
   ```
 - item_tb
+
   ```sql
   CREATE TABLE `item_tb` (
   	`id`		INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -1294,84 +1344,89 @@
   	CONSTRAINT option_id_fk2 FOREIGN KEY(option_id) REFERENCES option_tb(id)
   );
   ```
-- 테이블 전체 생성 테스트
-  ```sql
-  alter table option_tb drop constraint product_id_fk;
-  alter table cart_tb drop constraint user_id_fk;
-  alter table cart_tb drop constraint option_id_fk;
-  alter table order_tb drop constraint user_id_fk2;
-  alter table item_tb drop constraint order_id_fk;
-  alter table item_tb drop constraint option_id_fk2;
 
-  DROP TABLE IF EXISTS `user_tb`;
-  DROP TABLE IF EXISTS `product_tb`;
-  DROP TABLE IF EXISTS `option_tb`;
-  DROP TABLE IF EXISTS `cart_tb`;
-  DROP TABLE IF EXISTS `order_tb`;
-  DROP TABLE IF EXISTS `item_tb`;
+<details>
+<summary>테이블 전체 생성 테스트</summary>
 
-  CREATE TABLE `user_tb` (
-  	`id`		INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  	`username`	VARCHAR(100)	NOT NULL,
-  	`email`		VARCHAR(100)	NOT NULL,
-  	`password`	VARCHAR(100)	NOT NULL,
-  	`created_at`	TIMESTAMP	NOT NULL,
-  	`modified_at`	TIMESTAMP	NULL
-  );
+```sql
+alter table option_tb drop constraint product_id_fk;
+alter table cart_tb drop constraint user_id_fk;
+alter table cart_tb drop constraint option_id_fk;
+alter table order_tb drop constraint user_id_fk2;
+alter table item_tb drop constraint order_id_fk;
+alter table item_tb drop constraint option_id_fk2;
 
-  CREATE TABLE `product_tb` (
-  	`id`		INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  	`product_name`	VARCHAR(100)	NOT NULL,
-  	`product_price`	INTEGER		NOT NULL,
-  	`description`	VARCHAR(1000)	NOT NULL,
-  	`image`		VARCHAR(500)	NOT NULL,
-  	`created_at`	TIMESTAMP	NOT NULL,
-  	`modified_at`	TIMESTAMP	NULL
-  );
+DROP TABLE IF EXISTS `user_tb`;
+DROP TABLE IF EXISTS `product_tb`;
+DROP TABLE IF EXISTS `option_tb`;
+DROP TABLE IF EXISTS `cart_tb`;
+DROP TABLE IF EXISTS `order_tb`;
+DROP TABLE IF EXISTS `item_tb`;
 
-  CREATE TABLE `option_tb` (
-  	`id`		INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  	`option_name`	VARCHAR(100)	NOT NULL,
-  	`option_price`	INTEGER		NOT NULL,
-  	`created_at`	TIMESTAMP	NOT NULL,
-  	`modified_at`	TIMESTAMP	NULL,
-  	`product_id`	INTEGER		NOT NULL,
-  	CONSTRAINT product_id_fk FOREIGN KEY(product_id) REFERENCES product_tb(id)
-  );
+CREATE TABLE `user_tb` (
+	`id`		INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`username`	VARCHAR(100)	NOT NULL,
+	`email`		VARCHAR(100)	NOT NULL,
+	`password`	VARCHAR(100)	NOT NULL,
+	`created_at`	TIMESTAMP	NOT NULL,
+	`modified_at`	TIMESTAMP	NULL
+);
 
-  CREATE TABLE `cart_tb` (
-  	`id`		INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  	`quantity`		INTEGER		NOT NULL,
-  	`cart_price`	INTEGER		NOT NULL,
-  	`created_at`	TIMESTAMP	NOT NULL,
-  	`modified_at`	TIMESTAMP	NULL,
-  	`user_id`		INTEGER		NOT NULL,
-  	`option_id`	INTEGER		NOT NULL,
-  	CONSTRAINT user_id_fk FOREIGN KEY(user_id) REFERENCES user_tb(id),
-  	CONSTRAINT option_id_fk FOREIGN KEY(option_id) REFERENCES option_tb(id),
-  	UNIQUE (user_id, option_id)
-  );
+CREATE TABLE `product_tb` (
+	`id`		INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`product_name`	VARCHAR(100)	NOT NULL,
+	`product_price`	INTEGER		NOT NULL,
+	`description`	VARCHAR(1000)	NOT NULL,
+	`image`		VARCHAR(500)	NOT NULL,
+	`created_at`	TIMESTAMP	NOT NULL,
+	`modified_at`	TIMESTAMP	NULL
+);
 
-  CREATE TABLE `order_tb` (
-  	`id`		INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  	`created_at`	TIMESTAMP	NOT NULL,
-  	`modified_at`	TIMESTAMP	NOT NULL,
-  	`user_id`		INTEGER		NOT NULL,
-  	CONSTRAINT user_id_fk2 FOREIGN KEY(user_id) REFERENCES user_tb(id)
-  );
+CREATE TABLE `option_tb` (
+	`id`		INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`option_name`	VARCHAR(100)	NOT NULL,
+	`option_price`	INTEGER		NOT NULL,
+	`created_at`	TIMESTAMP	NOT NULL,
+	`modified_at`	TIMESTAMP	NULL,
+	`product_id`	INTEGER		NOT NULL,
+	CONSTRAINT product_id_fk FOREIGN KEY(product_id) REFERENCES product_tb(id)
+);
 
-  CREATE TABLE `item_tb` (
-  	`id`		INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  	`item_price`	INTEGER		NOT NULL,
-  	`quantity`		INTEGER		NOT NULL,
-  	`created_at`	TIMESTAMP	NOT NULL,
-  	`modified_at`	TIMESTAMP	NOT NULL,
-  	`order_id`		INTEGER		NOT NULL,
-  	`option_id`	INTEGER		NOT NULL,
-  	CONSTRAINT order_id_fk FOREIGN KEY(order_id) REFERENCES order_tb(id),
-  	CONSTRAINT option_id_fk2 FOREIGN KEY(option_id) REFERENCES option_tb(id)
-  );
-  ```
+CREATE TABLE `cart_tb` (
+	`id`		INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`quantity`		INTEGER		NOT NULL,
+	`cart_price`	INTEGER		NOT NULL,
+	`created_at`	TIMESTAMP	NOT NULL,
+	`modified_at`	TIMESTAMP	NULL,
+	`user_id`		INTEGER		NOT NULL,
+	`option_id`	INTEGER		NOT NULL,
+	CONSTRAINT user_id_fk FOREIGN KEY(user_id) REFERENCES user_tb(id),
+	CONSTRAINT option_id_fk FOREIGN KEY(option_id) REFERENCES option_tb(id),
+	UNIQUE (user_id, option_id)
+);
+
+CREATE TABLE `order_tb` (
+	`id`		INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`created_at`	TIMESTAMP	NOT NULL,
+	`modified_at`	TIMESTAMP	NOT NULL,
+	`user_id`		INTEGER		NOT NULL,
+	CONSTRAINT user_id_fk2 FOREIGN KEY(user_id) REFERENCES user_tb(id)
+);
+
+CREATE TABLE `item_tb` (
+	`id`		INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`item_price`	INTEGER		NOT NULL,
+	`quantity`		INTEGER		NOT NULL,
+	`created_at`	TIMESTAMP	NOT NULL,
+	`modified_at`	TIMESTAMP	NOT NULL,
+	`order_id`		INTEGER		NOT NULL,
+	`option_id`	INTEGER		NOT NULL,
+	CONSTRAINT order_id_fk FOREIGN KEY(order_id) REFERENCES order_tb(id),
+	CONSTRAINT option_id_fk2 FOREIGN KEY(option_id) REFERENCES option_tb(id)
+);
+```
+
+</details>
 
 </br>
 
