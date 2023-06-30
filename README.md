@@ -335,7 +335,10 @@ Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzc2FyQG5hdGUuY29tIiwicm9s
 
 ### **과제 4. 테이블 설계를 하여 README에 ER-Diagram을 추가하여 제출하시오.** 
 ![Alt text](images/image-9.png)
-먼저, ERD를 그리기 전에 그린 UML 클래스 다이어그램입니다.         
+먼저, ERD를 그리기 전에 그린 UML 클래스 다이어그램입니다. 
+
+![Alt text](images/image-11.png)        
+두 가지 UML 중에 고민했는데, 공지사항을 보기 전에 진행을 하여 일단 클래스가 6개만 있는 위의 UML로 진행을 하였습니다.
 
 ![Alt text](images/image-10.png)
 그 뒤, UML 클래스 다이어그램을 토대로 Intellij를 이용해 Entity를 만들고, H2 서버에 임시로 띄운 뒤 생성한 ER 다이어그램입니다.
