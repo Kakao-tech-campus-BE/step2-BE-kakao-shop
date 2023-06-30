@@ -123,33 +123,33 @@
 </br>
 
 ### ER-Diagram
-![users](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1befdd4f-cf58-48cf-baa0-5859fcb07980/Untitled.png)
+![users](https://ibb.co/f1n3xQc)
 
 users 테이블
 
-![products](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c17cec6c-a641-4d80-af8c-ad062fa4120d/Untitled.png)
+![products](https://ibb.co/54gKM7T)
 
 products 테이블
 
-![options](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9f669d78-cb65-4eb7-8096-72089ce63aba/Untitled.png)
+![options](https://ibb.co/HhcY9WJ)
 
 options 테이블
 
-![carts](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b203691b-1a05-4670-a0eb-10abe3fc7819/Untitled.png)
+![carts](https://ibb.co/tmPjM5M)
 
 carts 테이블
 
-![orders](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/58e8b144-2b20-4f1d-99fd-98107d4f7b98/Untitled.png)
+![orders](https://ibb.co/M56r7Rq)
 
 orders 테이블
 
-![order items](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/5785d9cb-e8a2-4db8-9890-70f189671328/Untitled.png)
+![items](https://ibb.co/L02zgfV)
 
-order items 테이블
+items 테이블
 
 </br>
 
-![ER-Diagram](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7f4ec9e6-5b23-4f4d-ae2e-3397345dda83/Untitled.png)
+![ER-Diagram](https://ibb.co/hRbJXG0)
 
 테이블 관계도
 

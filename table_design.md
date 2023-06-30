@@ -62,7 +62,7 @@ CREATE TABLE Orders (
 
 ## Item 테이블
 ```
-CREATE TABLE Order_items (
+CREATE TABLE Items (
 	order_id	INTEGER	NOT NULL,
 	option_id	INTEGER	NOT NULL,
 	product_id	INTEGER	NOT NULL,
