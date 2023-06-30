@@ -104,7 +104,7 @@ CREATE TABLE User (
 ### Product
 ```sql
 CREATE TABLE Product (
-	product_id INT NOT NULL AUTO_INCREMENT,
+    product_id INT NOT NULL AUTO_INCREMENT,
     product_name VARCHAR(255) NOT NULL,
     image VARCHAR(1000) NOT NULL,
     description TEXT,
@@ -117,45 +117,45 @@ CREATE TABLE Product (
 ### Option
 ```sql
 CREATE TABLE Option (
-	option_id INT NOT NULL AUTO_INCREMENT,
+    option_id INT NOT NULL AUTO_INCREMENT,
     product_id INT NOT NULL,
     option_name VARCHAR(255) NOT NULL,
     option_price INT NOT NULL,
     PRIMARY KEY (option_id),
-	FOREIGN KEY (product_id) REFERENCES Product (product_id)
+    FOREIGN KEY (product_id) REFERENCES Product (product_id)
 );
 ```
 ### Cart
 ```sql
 CREATE TABLE Cart (
-	cart_id INT NOT NULL AUTO_INCREMENT,
+    cart_id INT NOT NULL AUTO_INCREMENT,
     user_id INT NOT NULL,
     option_id INT NOT NULL,
     quantity INT UNSIGNED NOT NULL,
     PRIMARY KEY (cart_id),
-	FOREIGN KEY (user_id) REFERENCES User (user_id),
+    FOREIGN KEY (user_id) REFERENCES User (user_id),
     FOREIGN KEY (option_id) REFERENCES Option (option_id)
 );
 ```
 ### Order
 ```sql
 CREATE TABLE Order (
-	order_id INT NOT NULL AUTO_INCREMENT,
+    order_id INT NOT NULL AUTO_INCREMENT,
     user_id INT NOT NULL,
     PRIMARY KEY (order_id),
-	FOREIGN KEY (user_id) REFERENCES User (user_id),
+    FOREIGN KEY (user_id) REFERENCES User (user_id),
 );
 ```
 ### Item
 ```sql
 CREATE TABLE Item (
-	item_id INT NOT NULL AUTO_INCREMENT,
+    item_id INT NOT NULL AUTO_INCREMENT,
     order_id INT NOT NULL,
     option_id INT NOT NULL,
     quantity INT UNSIGNED NOT NULL,
     total_price INT UNSIGNED NOT NULL,
     PRIMARY KEY (item_id),
-	FOREIGN KEY (order_id) REFERENCES Order (order_id),
+    FOREIGN KEY (order_id) REFERENCES Order (order_id),
     FOREIGN KEY (option_id) REFERENCES Option (option_id)
 );
 ```
