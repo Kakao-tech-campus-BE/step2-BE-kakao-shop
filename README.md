@@ -39,9 +39,6 @@
 - 회원 정보 수정 기능  
 회원 정보(비밀번호, 이메일 등)를 수정할 수 있는 기능이 필요하다.
 
-- 특정 조건의 상품 조회  
-음식, 화장품 등 카테고리 별 상품 조회 또는 검색 기능이 필요하다.
-
 - 장바구니 삭제 기능  
 장바구니에 담은 상품을 삭제할 수 있는 기능이 필요하다.
 
@@ -61,10 +58,11 @@
 | 로그아웃 | 로그아웃 버튼 클릭 | front에서 처리 | - |
 | 전체 상품 목록 조회 | 로그인 후 또는 쇼핑하기 로고 클릭 | /products | GET |
 | 개별 상품 상세 조회 | 전체 상품 목록 중 특정 상품 클릭 | /products/{productID} | GET |
-| 상품 옵션 선택 및 수량 결정 | 상품 옵션 리스트에서 원하는 옵션 클릭 후 수량 결정 |  |  |
+| 상품 옵션 선택 및 수량 결정 | 상품 옵션 리스트에서 원하는 옵션 클릭 후 수량 결정 | front에서 처리 | - |
 | 장바구니 담기 | 장바구니 담기 버튼 클릭 | /carts/add | POST |
 | 장바구니 조회 | 상단의 장바구니 아이콘 클릭 | /carts | GET |
-| 장바구니 수정 및 주문 | +/- 버튼으로 상품 옵션의 수량 수정 뒤 주문하기 버튼 클릭 | /carts/update | POST |
+| 장바구니 수정 | +/- 버튼으로 상품 옵션의 수량 수정 | front에서 처리 | - |
+| 장바구니 주문 | 주문하기 버튼 클릭 | /carts/update | POST |
 | 결제 | 전체 동의 후 결제하기 버튼 클릭 | /orders/save | POST |
 | 주문 결과 확인 | 결제 후 구매 완료 페이지 | /orders/{ordersID} | GET |
 
@@ -82,7 +80,77 @@
 
 **4. 테이블 설계를 하여 README에 ER-Diagram을 추가하여 제출하시오.**
 
+![ER-diagram](./shpping-diagram.png)
 
+- User
+```
+CREATE TABLE User (
+    userID INT PRIMARY KEY AUTO_INCREMENT,
+    userName VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    createDate TIMESTAMP DEFAULT NOT NULL CURRENT_TIMESTAMP,
+    updateDate TIMESTAMP DEFAULT NOT NULL CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+);
+```
+- Product
+```
+CREATE TABLE Product (
+    productID INT PRIMARY KEY AUTO_INCREMENT,
+    productName VARCHAR(255) NOT NULL,
+    price INT NOT NULL,
+    image VARCHAR(255),
+    description TEXT,
+    createDate TIMESTAMP DEFAULT NOT NULL CURRENT_TIMESTAMP,
+    updateDate TIMESTAMP DEFAULT NOT NULL CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+```
+- Option
+```
+CREATE TABLE Option (
+    optionID INT PRIMARY KEY AUTO_INCREMENT,
+    productID INT,
+    optionName VARCHAR(255) NOT NULL,
+    price INT NOT NULL,
+    createDate TIMESTAMP DEFAULT NOT NULL CURRENT_TIMESTAMP,
+    updateDate TIMESTAMP DEFAULT NOT NULL CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (productID) REFERENCES Product(productID)
+);
+```
+- Cart
+```
+CREATE TABLE Cart (
+  cartID INT PRIMARY KEY AUTO_INCREMENT,
+  userID INT NOT NULL,
+  optionID INT NOT NULL,
+  optionQuantity INT NOT NULL,
+  createDate TIMESTAMP DEFAULT NOT NULL CURRENT_TIMESTAMP,
+  updateDate TIMESTAMP DEFAULT NOT NULL CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (userID) REFERENCES User(userID),
+  FOREIGN KEY (optionID) REFERENCES Option(optionID)
+);
+```
+- Order
+```
+CREATE TABLE `Order` (
+  orderID INT PRIMARY KEY AUTO_INCREMENT,
+  userID INT,
+  createDate TIMESTAMP DEFAULT NOT NULL CURRENT_TIMESTAMP,
+  FOREIGN KEY (userID) REFERENCES User(userID),
+);
+```
+- Order Item
+```
+CREATE TABLE OrderItem (
+  itemID INT PRIMARY KEY AUTO_INCREMENT,
+  optionID INT NOT NULL,
+  orderId INT NOT NULL,
+  quantity INT NOT NULL,
+  createDate TIMESTAMP DEFAULT NOT NULL CURRENT_TIMESTAMP,
+  FOREIGN KEY (orderID) REFERENCES `Order`(orderID),
+  FOREIGN KEY (optionID) REFERENCES Option(optionID)
+);
+```
 
 </br>
 </br>
