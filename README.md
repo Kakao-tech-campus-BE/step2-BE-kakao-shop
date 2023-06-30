@@ -12,8 +12,10 @@
    - 옵션 선택할 때나 장바구니에서 상품을 조회할 때나 상품 삭제가 구현이 안되어있음
    - 회원들은 정말 이 상품이 구매해도 괜찮은 상품인가? 를 중점으로 상품을 구매할 것인데 상품에 대한 설명이나 리뷰가 없음
 3. 제시된 화면설계를 보고 해당 화면설계와 배포된 기존 서버의 API주소를 매칭하여 README에 내용을 작성하시오. (카카오 화면설계 시나리오가 있음)
-   ## (1) 전체 상품 목록 조회
 
+<details>
+<summary>(1) 전체 상품 목록 조회</summary>
+   <div>
 ### HTTP 메서드 선정
 
 클라이언트측에서 서버측으로 전송하는 데이터가 없다. 그러므로 HTTP GET 요청을 한다.
@@ -22,90 +24,13 @@ HTTP Method : GET </br>
 Local URL : http://localhost:8080/products </br>
 
 ### JSON 응답 및 시나리오 분석
+JSON 응답을 살펴보면 Response Body에 id, productName, description, image, price를 배열 형식으로 담아서 응답하고 있다. 화면을 살펴보면 상품 이름, 가격, 이미지는 화면상에 명시하여 필요하지만, 설명(description)은 그렇지 않아 설명 속성의 필요성은 보이지 않는다. </br>
 
-<details>
-<summary>JSON 응답</summary>
-<div>
-```json
-    {
-        "success": true,
-        "response": [
-            {
-                "id": 1,
-                "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전",
-                "description": "",
-                "image": "/images/1.jpg",
-                "price": 1000
-            },
-            {
-                "id": 2,
-                "productName": "[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율",
-                "description": "",
-                "image": "/images/2.jpg",
-                "price": 2000
-            },
-            {
-                "id": 3,
-                "productName": "삼성전자 JBL JR310 외 어린이용/성인용 헤드셋 3종!",
-                "description": "",
-                "image": "/images/3.jpg",
-                "price": 30000
-            },
-            {
-                "id": 4,
-                "productName": "바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종",
-                "description": "",
-                "image": "/images/4.jpg",
-                "price": 4000
-            },
-            {
-                "id": 5,
-                "productName": "[더주] 컷팅말랑장족, 숏다리 100g/300g 외 주전부리 모음 /중독성 최고/마른안주",
-                "description": "",
-                "image": "/images/5.jpg",
-                "price": 5000
-            },
-            {
-                "id": 6,
-                "productName": "굳지않는 앙금절편 1,050g 2팩 외 우리쌀떡 모음전",
-                "description": "",
-                "image": "/images/6.jpg",
-                "price": 15900
-            },
-            {
-                "id": 7,
-                "productName": "eoe 이너딜리티 30포, 오렌지맛 고 식이섬유 보충제",
-                "description": "",
-                "image": "/images/7.jpg",
-                "price": 26800
-            },
-            {
-                "id": 8,
-                "productName": "제나벨 PDRN 크림 2개. 피부보습/진정 케어",
-                "description": "",
-                "image": "/images/8.jpg",
-                "price": 25900
-            },
-            {
-                "id": 9,
-                "productName": "플레이스테이션 VR2 호라이즌 번들. 생생한 몰입감",
-                "description": "",
-                "image": "/images/9.jpg",
-                "price": 797000
-            }
-        ],
-        "error": null
-    }
-    ```
+→ 필요한 테이블 : Product(상품) </br>
 </div>
 </details>
-    
    
-    
 
-JSON 응답을 살펴보면 Response Body에 id, productName, description, image, price를 배열 형식으로 담아서 응답하고 있다. 화면을 살펴보면 상품 이름, 가격, 이미지는 화면상에 명시하여 필요하지만, 설명(description)은 그렇지 않아 설명 속성의 필요성은 보이지 않는다.
-
-→ 필요한 테이블 : Product(상품)
 5. 배포된 서버에 모든 API를 POSTMAN으로 요청해본 뒤 응답되는 데이터를 확인하고 부족한 데이터가 무엇인지 체크하여 README에 내용을 작성하시오.
 6. 테이블 설계를 하여 README에 ER-Diagram을 추가하여 제출하시오.
 
