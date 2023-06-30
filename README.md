@@ -101,7 +101,10 @@
     - 상품의 이미지
     앞서 말한 바와 같이 이미지가 있으면 구입한 상품을 더 알아보기 쉬울 것 같다.
 
-### 4. 테이블 설계를 하여 README에 ER-Diagram을 추가하여 제출하시오.
+### 4. 테이블 설계를 하여 README에 ER-Diagram을 추가하여 제출하시오
+User, Order, Item, Cart, Option, Product 테이블을 설계하고 각 테이블 간의 관계를 지정 해주었다.
+
+<img width="407" alt="스크린샷 2023-06-30 오후 2 07 06" src="https://github.com/enchantee00/step2-BE-kakao-shop/assets/62553866/4f39739c-9a34-4613-a942-779a2bdeeb13">
 
 </br>
 
