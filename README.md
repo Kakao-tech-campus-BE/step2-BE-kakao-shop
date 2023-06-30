@@ -45,6 +45,415 @@
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
+
+
+# 과제
+
+### 기능 추가
+
+- **회원 가입 파트**
+   1. 회원 가입 시 사용자 유형 구분
+      1. 소비자
+      2. 판매자
+         1. 상품 등록
+         2. 브랜드 등록
+      3. 관리자
+
+
+- **상품 목록 파트**
+   1. 카테고리 추가
+
+
+- **개별 상품 파트**
+   1. 개별 상품 상세 조회 페이지에서 바로 주문하기 기능 추가
+   2. 리뷰
+   3. 찜하기
+   4. 문의하기
+
+
+- **장바구니 파트**
+   1. 장바구니 내 상품 취소 기능 추가
+   2. 해당 상품 다른 옵션 선택 기능 추가
+
+
+- **주문 정보 파트**
+   1. 구매 내역 확인
+   2. 주문 상태 - 상품 준비, 배송 준비, 배송 중 등
+
+
+- **추가 고려할 만한 기능**
+  1. 배송 관련
+  2. 할인, 프로모션, 이벤트 관련
+  3. 고객센터
+  4. 마이 페이지
+     1. 회원 상세 정보 추가 → 회원 가입 시 상세 정보를 기입하는 회원 가입과 필수 정보만 기입하는 간편 가입 구분
+
+### 화면 설계 및 API 주소 매핑
+
+**회원 가입**
+
+<img src="week1_image/join.png" width="400" height="200">
+
+- 로그인 페이지 내 회원 가입 버튼 클릭 시
+    - Local URL : localhost:8080/join
+    - METHOD : POST
+
+
+- Request Body
+```json
+{
+  "username":"mata",
+  "email":"meta@nate.com",
+  "password":"meta1234!"
+}
+```
+- Response Body
+```json
+{
+  "success": true,
+  "response": null,
+  "error": null
+}
+```
+<br>
+
+**로그인**
+
+<img src="week1_image/login.png" width="400" height="200">
+
+- 메인 페이지 내 로그인 버튼 클릭 시
+    - Local URL : localhost:8080/login
+    - METHOD : POST
+
+
+- Request Body
+```json
+{
+  "email" : "ssar@nate.com",
+  "password" : "meta1234!"
+}
+```
+- Response Body
+```json
+{
+  "success": true,
+  "response": null,
+  "error": null
+}
+```
+<br>
+
+**전체 상품 목록 조회**
+
+<img src="week1_image/products.png" width="400" height="400">
+
+- 로그인 후 메인 페이지
+    - Local URL : localhost:8080/products
+    - METHOD : GET
+
+
+- Response Body
+```json
+{
+  "success": true,
+  "response": [
+    {
+      "id": 1,
+      "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전",
+      "description": "",
+      "image": "/images/1.jpg",
+      "price": 1000
+    },
+    {
+      "id": 2,
+      "productName": "[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율",
+      "description": "",
+      "image": "/images/2.jpg",
+      "price": 2000
+    },
+    {
+      "id": 3,
+      "productName": "삼성전자 JBL JR310 외 어린이용/성인용 헤드셋 3종!",
+      "description": "",
+      "image": "/images/3.jpg",
+      "price": 30000
+    },
+    {
+      "id": 4,
+      "productName": "바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종",
+      "description": "",
+      "image": "/images/4.jpg",
+      "price": 4000
+    },
+    {
+      "id": 5,
+      "productName": "[더주] 컷팅말랑장족, 숏다리 100g/300g 외 주전부리 모음 /중독성 최고/마른안주",
+      "description": "",
+      "image": "/images/5.jpg",
+      "price": 5000
+    },
+    {
+      "id": 6,
+      "productName": "굳지않는 앙금절편 1,050g 2팩 외 우리쌀떡 모음전",
+      "description": "",
+      "image": "/images/6.jpg",
+      "price": 15900
+    },
+    {
+      "id": 7,
+      "productName": "eoe 이너딜리티 30포, 오렌지맛 고 식이섬유 보충제",
+      "description": "",
+      "image": "/images/7.jpg",
+      "price": 26800
+    },
+    {
+      "id": 8,
+      "productName": "제나벨 PDRN 크림 2개. 피부보습/진정 케어",
+      "description": "",
+      "image": "/images/8.jpg",
+      "price": 25900
+    },
+    {
+      "id": 9,
+      "productName": "플레이스테이션 VR2 호라이즌 번들. 생생한 몰입감",
+      "description": "",
+      "image": "/images/9.jpg",
+      "price": 797000
+    }
+  ],
+  "error": null
+}
+```
+<br>
+
+**개별 상품 목록 조회**
+
+<img src="week1_image/product.png" width="400" height="200">
+
+- 전체 상품 목록 조회에서 특정 상품 클릭 시
+    - Local URL : localhost:3000/products/{productId}
+    - METHOD : GET
+
+
+- Response Body
+```json
+{
+    "success": true,
+    "response": {
+        "id": 2,
+        "productName": "[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율",
+        "description": "",
+        "image": "/images/2.jpg",
+        "price": 2000,
+        "starCount": 5,
+        "options": [
+            {
+                "id": 6,
+                "optionName": "22년산 햇단밤 700g(한정판매)",
+                "price": 9900
+            },
+            {
+                "id": 7,
+                "optionName": "22년산 햇단밤 1kg(한정판매)",
+                "price": 14500
+            },
+            {
+                "id": 8,
+                "optionName": "밤깎기+다회용 구이판 세트",
+                "price": 5500
+            }
+        ]
+    },
+    "error": null
+}
+```
+<br>
+
+**장바구니 담기**
+
+<img src="week1_image/option.png" width="400" height="400">
+
+- 개별 상품 상세 조회 페이지 내 옵션 선택 후 하단의 장바구니 버튼 클릭 시
+    - Local URL : localhost:8080/carts/add
+    - METHOD : POST
+
+
+- Request Body
+```json
+[
+  {
+    "optionId":6,
+    "quantity":2
+  },
+  {
+    "optionId":7,
+    "quantity":1
+  }
+]
+```
+- Response Body
+```json
+{
+  "success": true,
+  "response": null,
+  "error": null
+}
+```
+<br>
+
+**장바구니 조회**
+
+<img src="week1_image/cart.png" width="400" height="200">
+
+- 네비게이션 바 오른쪽 상단의 장바구니 버튼 클릭 시
+    - Local URL : localhost:8080/carts
+    - METHOD : GET
+
+
+- Response Body
+```json
+{
+  "success": true,
+  "response": {
+    "products": [
+      {
+        "id": 2,
+        "productName": "[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율",
+        "carts": [
+          {
+            "id": 1,
+            "option": {
+              "id": 6,
+              "optionName": "22년산 햇단밤 700g(한정판매)",
+              "price": 9900
+            },
+            "quantity": 2,
+            "price": 19800
+          },
+          {
+            "id": 2,
+            "option": {
+              "id": 7,
+              "optionName": "22년산 햇단밤 1kg(한정판매)",
+              "price": 14500
+            },
+            "quantity": 1,
+            "price": 14500
+          }
+        ]
+      }
+    ],
+    "totalPrice": 34300
+  },
+  "error": null
+}
+```
+<br>
+
+**주문하기**
+
+<img src="week1_image/order.png" width="400" height="400">
+
+- 장바구니 페이지 내 주문하기 버튼 클릭 시
+    - Local URL : localhost:8080/carts/update
+    - METHOD : POST
+
+
+- Request Body
+```json
+[
+  {
+    "cartId" : 1,
+    "quantity" : 1
+  }
+]
+```
+- Response Body
+```json
+{
+  "success": true,
+  "response": {
+    "carts": [
+      {
+        "cartId": 1,
+        "optionId": 6,
+        "optionName": "22년산 햇단밤 700g(한정판매)",
+        "quantity": 2,
+        "price": 19800
+      },
+      {
+        "cartId": 2,
+        "optionId": 7,
+        "optionName": "22년산 햇단밤 1kg(한정판매)",
+        "quantity": 1,
+        "price": 14500
+      }
+    ],
+    "totalPrice": 34300
+  },
+  "error": null
+}
+```
+<br>
+
+**주문 결과 확인**
+
+<img src="week1_image/result.png" width="400" height="400">
+
+- 주문 페이지 내 결제하기 버튼 클릭 시
+    - Local URL : localhost:8080/orders/{order_id}
+    - METHOD : GET
+
+
+- Response Body
+```json
+{
+  "success": true,
+  "response": {
+    "id" : 1,
+    "products": [
+      {
+        "productName": "[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율",
+        "items": [
+          {
+            "id": 6,
+            "optionName": "22년산 햇단밤 700g(한정판매)",
+            "quantity": 2,
+            "price": 19800
+          },
+          {
+            "id": 7,
+            "optionName": "22년산 햇단밤 1kg(한정판매)",
+            "quantity": 1,
+            "price": 14500
+          }
+        ]
+      }
+    ],
+    "totalPrice": 34300
+  },
+  "error": null
+}
+```
+<br>
+
+##### 부족한 데이터
+- **개별 물품 상세 조회 관련**
+  1. 배송 관련 API
+  2. 바로 구매하기 API
+
+
+- **장바구니 관련**
+  1. 상품을 구매한 소비자의 ID
+  2. 장바구니 담기 취소 API
+  3. 선택 구매하기 API
+
+
+### ER-Diagram
+
+<img src="week1_image/erd.png" width="400" height="400">
+
+
 # 2주차
 
 카카오 테크 캠퍼스 2단계 - BE - 2주차 클론 과제
