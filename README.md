@@ -5,7 +5,7 @@
 
 ## 카카오 테크 캠퍼스 2단계 - BE - 1주차 클론 과제
 
-
+[pdf 과제물](./assets/%EB%B6%80%EC%82%B0%EB%8C%80_BE_%EA%B9%80%ED%83%9C%ED%98%B8_1%EC%A3%BC%EC%B0%A8_%ED%85%8C%EC%9D%B4%EB%B8%94_%EC%84%A4%EA%B3%84%ED%95%98%EA%B8%B0.pdf) 
 <details>
 <summary>과제 설명</summary>
 
