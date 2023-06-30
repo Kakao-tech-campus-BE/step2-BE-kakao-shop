@@ -43,116 +43,110 @@
 **2. PR 내용 :**
     ## 1. 요구사항 시나리오를 보고 부족해 보이는 기능 하나 이상 체크하여 [README](http://README.MD)에 내용 생성
     
-    ### 추가하면 좋을 기능들
+### 추가하면 좋을 기능들
+
+- (회원가입) 아이디 중복 검사
+- (회원가입) 이미 아이디가 존재하는지 여부 파악
+- (로그인) 자동 로그인
+- (주문) 쿠폰 사용여부
+
+## 2. 제시된 화면설계를 보고 해당 화면설계와 배포된 기존 서버의 API주소를 매칭하여 README에 내용을 작성하시오.
+
+- 회원가입
+
+API 주소 : ‘/join’
+
+method : POST
+
+![Untitled](https://github.com/flowersun99/bakjoon/blob/master/kaka/Untitled.png)
+- 로그인
+
+API주소 : ‘/login’
+
+method : POST
+
+![Untitled 1](https://github.com/flowersun99/how-to-cool_instagram_crawling_version/assets/102143406/9fa5a2e8-2adb-49a8-a554-90d79b6e4ea6)
+
+- 로그아웃
+
+따로 양식이 없음..
+
+![Untitled 2](https://github.com/flowersun99/how-to-cool_instagram_crawling_version/assets/102143406/e6b0b146-f089-4d83-8013-7d6d4a7b9652)
+
+- 전체 상품 목록 조회
+
+API 주소 : /prodcuts
+
+method : GET
+
+param : page={number}, default = 0
+
+![Untitled 3](https://github.com/flowersun99/how-to-cool_instagram_crawling_version/assets/102143406/a56b66f7-71bb-4934-802d-8ceee1ffaf8f)
+
+- 개별 상품 상세 조회
+
+API 주소 : /products/{상품 ID}
+
+method : GET 
+
+![Untitled 4](https://github.com/flowersun99/how-to-cool_instagram_crawling_version/assets/102143406/f117cf5b-b881-471f-ac7b-f728f4140e62)
+
+- 상품 옵션 선택
+
+따로 정리된 것이 없음..
+
+![Untitled 5](https://github.com/flowersun99/how-to-cool_instagram_crawling_version/assets/102143406/9be91ea2-a97b-4b57-b77d-b62d3cc42fac)
+
+- 옵션 확인 및 수량 결정
+
+따로 정리된 것이 없음…
+
+![Untitled 6](https://github.com/flowersun99/how-to-cool_instagram_crawling_version/assets/102143406/de47faad-4d6f-4ff9-a486-64a3e35de985)
+
+- 장바구니 담기
+
+API 주소 : /carts/add
+
+method : POST 
+
+![Untitled 7](https://github.com/flowersun99/how-to-cool_instagram_crawling_version/assets/102143406/1569d784-cc5e-4fd0-b7af-18c58df453fe)
+
+- 장바구니 보기
+
+API 주소 : /carts 
+
+method : GET 
+
+![Untitled 8](https://github.com/flowersun99/how-to-cool_instagram_crawling_version/assets/102143406/646f9682-c36c-4b5e-85e5-c76cb4a6af71)
+
+- 장바구니 상품 옵션 확인 및 수량 결정
+
+API 주소 : /carts 
+
+method : GET 
+
+![Untitled 9](https://github.com/flowersun99/how-to-cool_instagram_crawling_version/assets/102143406/08ffb723-cd5c-4b68-a46c-f68dd4c8cf16)
+
+- 주문
+
+API 주소 : /orders/save
+
+method : POST 
+
+![Untitled 10](https://github.com/flowersun99/how-to-cool_instagram_crawling_version/assets/102143406/941788ec-7f06-4a07-87f0-270bb39f0268)
+
+- 결제
+
+따로 있는 정보가 없음…
+
+![Untitled 11](https://github.com/flowersun99/how-to-cool_instagram_crawling_version/assets/102143406/781c40ee-b91e-4d18-82cb-4afcb1965eb6)
+
+- 주문 결과 확인
+
+API 주소 : /orders/{주문 번호} 
+
+![Untitled 12](https://github.com/flowersun99/how-to-cool_instagram_crawling_version/assets/102143406/6e39bc5f-696b-4a4d-8578-4f2fb1ac2606)
     
-    - (회원가입) 아이디 중복 검사
-    - (회원가입) 이미 아이디가 존재하는지 여부 파악
-    - (로그인) 자동 로그인
-    - (주문) 쿠폰 사용여부
-    
-    ## 2. 제시된 화면설계를 보고 해당 화면설계와 배포된 기존 서버의 API주소를 매칭하여 README에 내용을 작성하시오.
-    
-    - 회원가입
-    
-    API 주소 : ‘/join’
-    
-    method : POST
-    
-    ![Untitled](https://github.com/flowersun99/bakjoon/blob/master/kaka/Untitled.png)
-    - 로그인
-    
-    API주소 : ‘/login’
-    
-    method : POST
-    
-    ![Untitled 1](https://github.com/flowersun99/how-to-cool_instagram_crawling_version/assets/102143406/9fa5a2e8-2adb-49a8-a554-90d79b6e4ea6)
-    
-    - 로그아웃
-    
-    따로 양식이 없음..
-    
-    ![Untitled 2](https://github.com/flowersun99/how-to-cool_instagram_crawling_version/assets/102143406/e6b0b146-f089-4d83-8013-7d6d4a7b9652)
-    
-    - 전체 상품 목록 조회
-    
-    API 주소 : /prodcuts
-    
-    method : GET
-    
-    param : page={number}, default = 0
-    
-    ![Untitled 3](https://github.com/flowersun99/how-to-cool_instagram_crawling_version/assets/102143406/a56b66f7-71bb-4934-802d-8ceee1ffaf8f)
-    
-    - 개별 상품 상세 조회
-    
-    API 주소 : /products/{상품 ID}
-    
-    method : GET 
-    
-    ![Untitled 4](https://github.com/flowersun99/how-to-cool_instagram_crawling_version/assets/102143406/f117cf5b-b881-471f-ac7b-f728f4140e62)
-    
-    - 상품 옵션 선택
-    
-    따로 정리된 것이 없음..
-    
-    ![Untitled 5](https://github.com/flowersun99/how-to-cool_instagram_crawling_version/assets/102143406/9be91ea2-a97b-4b57-b77d-b62d3cc42fac)
-    
-    - 옵션 확인 및 수량 결정
-    
-    따로 정리된 것이 없음…
-    
-    ![Untitled 6](https://github.com/flowersun99/how-to-cool_instagram_crawling_version/assets/102143406/de47faad-4d6f-4ff9-a486-64a3e35de985)
-    
-    - 장바구니 담기
-    
-    API 주소 : /carts/add
-    
-    method : POST 
-    
-    ![Untitled 7](https://github.com/flowersun99/how-to-cool_instagram_crawling_version/assets/102143406/1569d784-cc5e-4fd0-b7af-18c58df453fe)
-    
-    - 장바구니 보기
-    
-    API 주소 : /carts 
-    
-    method : GET 
-    
-    ![Untitled 8](https://github.com/flowersun99/how-to-cool_instagram_crawling_version/assets/102143406/646f9682-c36c-4b5e-85e5-c76cb4a6af71)
-    
-    - 장바구니 상품 옵션 확인 및 수량 결정
-    
-    API 주소 : /carts 
-    
-    method : GET 
-    
-    ![Untitled 9](https://github.com/flowersun99/how-to-cool_instagram_crawling_version/assets/102143406/08ffb723-cd5c-4b68-a46c-f68dd4c8cf16)
-    
-    - 주문
-    
-    API 주소 : /orders/save
-    
-    method : POST 
-    
-    ![Untitled 10](https://github.com/flowersun99/how-to-cool_instagram_crawling_version/assets/102143406/941788ec-7f06-4a07-87f0-270bb39f0268)
-    
-    - 결제
-    
-    따로 있는 정보가 없음…
-    
-    ![Untitled 11](https://github.com/flowersun99/how-to-cool_instagram_crawling_version/assets/102143406/781c40ee-b91e-4d18-82cb-4afcb1965eb6)
-    
-    - 주문 결과 확인
-    
-    API 주소 : /orders/{주문 번호} 
-    
-    ![Untitled 12](https://github.com/flowersun99/how-to-cool_instagram_crawling_version/assets/102143406/6e39bc5f-696b-4a4d-8578-4f2fb1ac2606)
-    
-    1. 요구사항 시나리오를 보고 부족해 보이는 기능을 하나 이상 체크하여 README에 내용을 작성하시오.
-    2. 제시된 화면설계를 보고 해당 화면설계와 배포된 기존 서버의 API주소를 매칭하여 README에 내용을 작성하시오. (카카오 화면설계 시나리오가 있음)
-    3. 배포된 서버에 모든 API를 POSTMAN으로 요청해본 뒤 응답되는 데이터를 확인하고 부족한 데이터가 무엇인지 체크하여 README에 내용을 작성하시오.
-    4. 요구사항 시나리오를 보고 부족해 보이는 기능을 하나 이상 체크하여 README에 내용을 작성하시오.
-    5. 제시된 화면설계를 보고 해당 화면설계와 배포된 기존 서버의 API주소를 매칭하여 README에 내용을 작성하시오. (카카오 화면설계 시나리오가 있음)
-    6. 배포된 서버에 모든 API를 POSTMAN으로 요청해본 뒤 응답되는 데이터를 확인하고 부족한 데이터가 무엇인지 체크하여 README에 내용을 작성하시오.
 
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
