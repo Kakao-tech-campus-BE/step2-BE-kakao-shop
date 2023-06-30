@@ -1218,6 +1218,165 @@
 
 </br>
 
+![Image](https://drive.google.com/uc?id=1nP-TXrLBTo9nR9HdtX1xLCuWAs1bOkJI)
+
+- user_tb
+  ```sql
+  CREATE TABLE `user_tb` (
+  	`id`		INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  	`username`	VARCHAR(100)	NOT NULL,
+  	`email`		VARCHAR(100)	NOT NULL,
+  	`password`	VARCHAR(100)	NOT NULL,
+  	`created_at`	TIMESTAMP	NOT NULL,
+  	`modified_at`	TIMESTAMP	NULL
+  );
+  ```
+- product_tb
+  ```sql
+  CREATE TABLE `product_tb` (
+  	`id`		INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  	`product_name`	VARCHAR(100)	NOT NULL,
+  	`product_price`	INTEGER		NOT NULL,
+  	`description`	VARCHAR(1000)	NOT NULL,
+  	`image`		VARCHAR(500)	NOT NULL,
+  	`created_at`	TIMESTAMP	NOT NULL,
+  	`modified_at`	TIMESTAMP	NULL
+  );
+  ```
+- option_tb
+  ```sql
+  CREATE TABLE `option_tb` (
+  	`id`		INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  	`option_name`	VARCHAR(100)	NOT NULL,
+  	`option_price`	INTEGER		NOT NULL,
+  	`created_at`	TIMESTAMP	NOT NULL,
+  	`modified_at`	TIMESTAMP	NULL,
+  	`product_id`	INTEGER		NOT NULL,
+  	CONSTRAINT product_id_fk FOREIGN KEY(product_id) REFERENCES product_tb(id)
+  );
+  ```
+- cart_tb
+  ```sql
+  CREATE TABLE `cart_tb` (
+  	`id`		INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  	`quantity`		INTEGER		NOT NULL,
+  	`cart_price`	INTEGER		NOT NULL,
+  	`created_at`	TIMESTAMP	NOT NULL,
+  	`modified_at`	TIMESTAMP	NULL,
+  	`user_id`		INTEGER		NOT NULL,
+  	`option_id`	INTEGER		NOT NULL,
+  	CONSTRAINT user_id_fk FOREIGN KEY(user_id) REFERENCES user_tb(id),
+  	CONSTRAINT option_id_fk FOREIGN KEY(option_id) REFERENCES option_tb(id),
+  	UNIQUE (user_id, option_id)
+  );
+  ```
+- order_tb
+  ```sql
+  CREATE TABLE `order_tb` (
+  	`id`		INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  	`created_at`	TIMESTAMP	NOT NULL,
+  	`modified_at`	TIMESTAMP	NOT NULL,
+  	`user_id`		INTEGER		NOT NULL,
+  	CONSTRAINT user_id_fk2 FOREIGN KEY(user_id) REFERENCES user_tb(id)
+  );
+  ```
+- item_tb
+  ```sql
+  CREATE TABLE `item_tb` (
+  	`id`		INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  	`item_price`	INTEGER		NOT NULL,
+  	`quantity`		INTEGER		NOT NULL,
+  	`created_at`	TIMESTAMP	NOT NULL,
+  	`modified_at`	TIMESTAMP	NOT NULL,
+  	`order_id`		INTEGER		NOT NULL,
+  	`option_id`	INTEGER		NOT NULL,
+  	CONSTRAINT order_id_fk FOREIGN KEY(order_id) REFERENCES order_tb(id),
+  	CONSTRAINT option_id_fk2 FOREIGN KEY(option_id) REFERENCES option_tb(id)
+  );
+  ```
+- 테이블 전체 생성 테스트
+  ```sql
+  alter table option_tb drop constraint product_id_fk;
+  alter table cart_tb drop constraint user_id_fk;
+  alter table cart_tb drop constraint option_id_fk;
+  alter table order_tb drop constraint user_id_fk2;
+  alter table item_tb drop constraint order_id_fk;
+  alter table item_tb drop constraint option_id_fk2;
+
+  DROP TABLE IF EXISTS `user_tb`;
+  DROP TABLE IF EXISTS `product_tb`;
+  DROP TABLE IF EXISTS `option_tb`;
+  DROP TABLE IF EXISTS `cart_tb`;
+  DROP TABLE IF EXISTS `order_tb`;
+  DROP TABLE IF EXISTS `item_tb`;
+
+  CREATE TABLE `user_tb` (
+  	`id`		INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  	`username`	VARCHAR(100)	NOT NULL,
+  	`email`		VARCHAR(100)	NOT NULL,
+  	`password`	VARCHAR(100)	NOT NULL,
+  	`created_at`	TIMESTAMP	NOT NULL,
+  	`modified_at`	TIMESTAMP	NULL
+  );
+
+  CREATE TABLE `product_tb` (
+  	`id`		INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  	`product_name`	VARCHAR(100)	NOT NULL,
+  	`product_price`	INTEGER		NOT NULL,
+  	`description`	VARCHAR(1000)	NOT NULL,
+  	`image`		VARCHAR(500)	NOT NULL,
+  	`created_at`	TIMESTAMP	NOT NULL,
+  	`modified_at`	TIMESTAMP	NULL
+  );
+
+  CREATE TABLE `option_tb` (
+  	`id`		INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  	`option_name`	VARCHAR(100)	NOT NULL,
+  	`option_price`	INTEGER		NOT NULL,
+  	`created_at`	TIMESTAMP	NOT NULL,
+  	`modified_at`	TIMESTAMP	NULL,
+  	`product_id`	INTEGER		NOT NULL,
+  	CONSTRAINT product_id_fk FOREIGN KEY(product_id) REFERENCES product_tb(id)
+  );
+
+  CREATE TABLE `cart_tb` (
+  	`id`		INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  	`quantity`		INTEGER		NOT NULL,
+  	`cart_price`	INTEGER		NOT NULL,
+  	`created_at`	TIMESTAMP	NOT NULL,
+  	`modified_at`	TIMESTAMP	NULL,
+  	`user_id`		INTEGER		NOT NULL,
+  	`option_id`	INTEGER		NOT NULL,
+  	CONSTRAINT user_id_fk FOREIGN KEY(user_id) REFERENCES user_tb(id),
+  	CONSTRAINT option_id_fk FOREIGN KEY(option_id) REFERENCES option_tb(id),
+  	UNIQUE (user_id, option_id)
+  );
+
+  CREATE TABLE `order_tb` (
+  	`id`		INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  	`created_at`	TIMESTAMP	NOT NULL,
+  	`modified_at`	TIMESTAMP	NOT NULL,
+  	`user_id`		INTEGER		NOT NULL,
+  	CONSTRAINT user_id_fk2 FOREIGN KEY(user_id) REFERENCES user_tb(id)
+  );
+
+  CREATE TABLE `item_tb` (
+  	`id`		INTEGER		NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  	`item_price`	INTEGER		NOT NULL,
+  	`quantity`		INTEGER		NOT NULL,
+  	`created_at`	TIMESTAMP	NOT NULL,
+  	`modified_at`	TIMESTAMP	NOT NULL,
+  	`order_id`		INTEGER		NOT NULL,
+  	`option_id`	INTEGER		NOT NULL,
+  	CONSTRAINT order_id_fk FOREIGN KEY(order_id) REFERENCES order_tb(id),
+  	CONSTRAINT option_id_fk2 FOREIGN KEY(option_id) REFERENCES option_tb(id)
+  );
+  ```
+
+</br>
+
+</br>
+
 # 2주차
 
 카카오 테크 캠퍼스 2단계 - BE - 2주차 클론 과제
