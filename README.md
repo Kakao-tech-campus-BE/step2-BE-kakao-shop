@@ -94,13 +94,79 @@
 
 
 4. 테이블 설계를 하여 README에 ER-Diagram을 추가하여 제출하시오.
-+-------------------+    +-------------------+
-|      Order        |    |      Product      |
-+-------------------+    +-------------------+
-| id (PK)           |    | id (PK)           |
-| user_id (FK)      |    | name              |
-| date              |    | price             |
-+-------------------+    +-------------------+
++-------------------+       +---------------------+
+|   member_table    |       |    product_table    |
++-------------------+       +---------------------+
+| member_id (PK)    |       | product_id (PK)     |
+| username          |       | product_name        |
+| email             |       | image               |
+| password          |       | product_price       |
++-------------------+       | description         |
+                            | starCount           |
+                            +---------------------+
+                                    |
+                                    |
+                                    |
+                                    |
+                                    |
+                              +--------------+
+                              | option_table |
+                              +--------------+
+                              | option_id (PK)|
+                              | option_name   |
+                              | option_price  |
+                              +--------------+
+                                    |
+                                    |
+                                    |
+                                    |
+                                    |
+                            +--------------+
+                            |  cart_table  |
+                            +--------------+
+                            | cart_id (PK) |
+                            | member_id (FK)|
+                            | product_id (FK)|
+                            | option_id (FK)|
+                            | quantity     |
+                            | partial_sum_price|
+                            | order_date   |
+                            | total_price  |
+                            +--------------+
+                                    |
+                                    |
+                                    |
+                                    |
+                                    |
+                            +-----------------+
+                            | order_item_table|
+                            +-----------------+
+                            | order_item_id (PK)|
+                            | cart_id (FK)  |
+                            | product_id (FK)|
+                            | option_id (FK)|
+                            | quantity     |
+                            | order_date   |
+                            | total_price  |
+                            +-----------------+
+                                    |
+                                    |
+                                    |
+                                    |
+                                    |
+                            +---------------+
+                            |   order_table |
+                            +---------------+
+                            | order_id (PK)|
+                            | member_id (FK)|
+                            | product_id (FK)|
+                            | option_id (FK)|
+                            | quantity     |
+                            | order_date   |
+                            | total_price  |
+                            +---------------+
+
+
 
 5. pdf 데이터 테이블 채우기 과제
 ------------------------------------------
