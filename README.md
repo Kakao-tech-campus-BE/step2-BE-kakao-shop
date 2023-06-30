@@ -143,10 +143,9 @@ Response Body :
         "status": 500
 			}
 	}
-
-=> GET으로 보내나 POST로 보내나 500 Error를 발생시킴
-=> 보다 정확하고 명확한 에러 처리에 대한 구현이 필요해보임.
 ```
+=> GET으로 보내나 POST로 보내나 500 Error를 발생시키는 버그가 있음  
+=> 보다 정확하고 명확한 에러 처리에 대한 구현이 필요해보임  
 
 <br>
 
@@ -178,10 +177,10 @@ Response Body :
 		"error": null
 	}
 
-=> 요청 가능한 페이지를 넘겨도 오류가 발생하지 않는다
-=> 페이지네이션을 구현하려면 Front-end와 요청한 페이지 넘버를 서로 확인할 필요성도 있어보인다
-
 ```
+
+=> 요청 가능한 페이지를 넘겨도 오류가 발생하지 않는다  
+=> 페이지네이션을 구현하려면 Front-end와 요청한 페이지 넘버를 서로 확인할 필요성도 있어보인다  
 
 <br>
 
@@ -221,8 +220,10 @@ Response Body :
 		}
 	}
 
-```  
+```
+
 <br>  
+
 ```
 - 기능 8 [POST] 장바구니 담기 : `/carts/add`
 Request Header : 쿠키의 Authorization Key에 JWT 값을 담아보냄
@@ -269,8 +270,10 @@ Response Body :
 		}
 	}
 
-```  
+```
+
 <br>  
+
 ```
 - 기능 9 [POST] 장바구니 보기 : `/carts`
 
@@ -314,8 +317,10 @@ Response Body :
 		}
 	}
 
-```  
+```
+
 <br>  
+
 ```
 - 기능11 [POST] 주문 : `carts/update`
 
@@ -365,8 +370,10 @@ Response Body :
 		}
 	}
 
-```  
+```
+
 <br>  
+
 ```
 - 기능12 [POST] 결제 : `orders/save`
 
@@ -414,7 +421,8 @@ Response Body :
 		}
 	}
 
-```  
+```
+
 <br>
 
 ```
@@ -463,7 +471,8 @@ Response Body :
 		}
 	}
 
-```  
+```
+
 <br>
 
 ```
