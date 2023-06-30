@@ -515,6 +515,9 @@ Response Body :
 ```
 Week1_ERD.png 파일에 첨부
 ```
+![Week1_ERD](https://github.com/Rizingblare/step2-BE-kakao-shop/assets/77480122/f389dd2a-bfe8-4b57-a7cc-bb465696bbd0)
+
+<br>
 
 ---
 ```
