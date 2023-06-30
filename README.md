@@ -18,19 +18,19 @@
 <br>  
 #### ( 화면설계서와 API 주소 매칭하기 )  
 ```
-(기능 1) 회원가입 : `/join`
-(기능 2) 로그인 : `/login`
-(기능 3) 로그아웃 : `/logout` -> API 시나리오에 없음
-(기능 4) 전체 상품 목록 조회 : `/products`
-(기능 5) 개별 상품 상세 조회 : `/products/{product_id}`
+(기능 1) [POST] 회원가입 : `/join`
+(기능 2) [POST] 로그인 : `/login`
+(기능 3) [POST] 로그아웃 : `/logout` -> API 시나리오에 없음
+(기능 4) [GET] 전체 상품 목록 조회 : `/products`
+(기능 5) [GET] 개별 상품 상세 조회 : `/products/{product_id}`
 (기능 6) 상품 옵션 선택 : (Front-end Side)
 (기능 7) 옵션 확인 및 수량 결정 : (Front-end Side)
-(기능 8) 장바구니 담기 : `/carts/add`
-(기능 9) 장바구니 보기 : `/carts`
+(기능 8) [POST] 장바구니 담기 : `/carts/add`
+(기능 9) [POST] 장바구니 보기 : `/carts`
 (기능10) 장바구니 상품 옵션 확인 및 수량 결정 : (Front-end Side)
-(기능11) 주문 : `carts/update`
-(기능12) 결제 : `orders/save`
-(기능13) 주문 결과 확인 : `orders/{orders_id}`
+(기능11) [POST] 주문 : `carts/update`
+(기능12) [POST] 결제 : `orders/save`
+(기능13) [GET] 주문 결과 확인 : `orders/{orders_id}`
 
 ```
 
@@ -158,7 +158,7 @@ Request Parameter :
 	`?page={num} (default: 0)`
 	
 Response Body :
-	{
+	(조회 성공) {
 		"success": true,
 		"response": [
 			(id 1~9까지 반복) [+num*9] {
@@ -170,12 +170,25 @@ Response Body :
 			}, x 9
 		],
 		"error": null
+	}
+
+	(메소드 오류) {
+	    "success": false,
+	    "response": null,
+	    "error": {
+	        "message": "Request method 'POST' not supported",
+	        "status": 500
+	    }
+	}
+
+=> 페이지네이션을 구현하려면 Front-end와 요청한 페이지 넘버를 서로 확인할 필요성도 있어보인다
+
 ```
 
 <br>
 
 ```
-- 기능 5 개별 상품 상세 조회 : `/products/{product_id}`
+- 기능 5 [GET] 개별 상품 상세 조회 : `/products/{product_id}`
 
 Request Header : 필요없음
 Request Parameter : 없음
@@ -184,24 +197,43 @@ Response Body :
 	{
 		"success": true,
 		"response": {
-        "id": {해당 product_id},
-        "productName": "{해당 product의 제품명}",
-        "description": "",
-        "image": "{해당 product_id의 이미지 URL}",
-        "price": {해당 product_id의 가격},
-        "starCount": {해당 product_id의 rate},
-        "options": [
-          (해당 product의 option 개수만큼 반복) {
-            "id": {해당 option_id},
-            "optionName": "{해당 option_id의 옵션명}",
-            "price": {해당 product_id의 가격}
-          }, x N
-        ]
-      },
-      "error": null
-  }
+		        "id": {해당 product_id},
+		        "productName": "{해당 product의 제품명}",
+		        "description": "",
+		        "image": "{해당 product_id의 이미지 URL}",
+		        "price": {해당 product_id의 가격},
+		        "starCount": {해당 product_id의 rate},
+		        "options": [
+				(해당 product의 option 개수만큼 반복) {
+					"id": {해당 option_id},
+					"optionName": "{해당 option_id의 옵션명}",
+					"price": {해당 product_id의 가격}
+				}, [x N]
+		        ]
+		},
+		"error": null
+	  }
+```  
+<br>  
 ```
+- 기능 8 [POST] 장바구니 담기 : `/carts/add`
+Request Header : 쿠키의 Authorization Key에 JWT 값을 담아보냄
+Request Body :
+	[
+		(client가 선택한 option의 개수만큼 반복) {
+			"optionId": {선택한 option의 id},
+			"quantity": {선택한 option의 개수}
+		}, [x N]
+	]
+	
+Response Body :
+	(장바구니 담기 성공) {
+		"success": true,
+		"response": null,
+		"error": null
+	}
 
+```  
 
 <br>
 
