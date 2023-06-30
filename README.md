@@ -57,57 +57,61 @@
 
 
 아래는 요구사항 시나리오에는 없지만 필요하다고 생각되는 api
-6. 찜하기
+1. 찜하기
    - 상품찜: 해당상품의 하트버튼을 클릭시 해당 상품이 데이터베이스에 저장됨
    - 스토어찜: 해당스토어의 하트버튼을 클릭시 해당 스토어가 데이터베이스에 저장됨
 
-7. 유저 구분
+2. 유저 구분
    - 상품판매자와 구매자를 구분해야 한다.
    - 상품판매자의 경우 상품, 옵션을 추가, 수정, 삭제하는 기능이 필요하다.
 
-8. 환불
+3. 환불
    - 환불기능이 있어야 한다.
 
-9. 유저
+4. 유저
    - 회원등급
    - 상태: 휴면, 탈퇴등
    - 쇼핑포인트
    - 환불머니
    - 판매자, 관리자, 소비자 role구분
 
-10. 공지사항
+5. 공지사항
    - 작성
    - 조회: 제목, 내용, 작성날짜
 
-11. 리뷰
+6. 리뷰
    - 작성
    - 수정
    - 조회: 작성자, 구매옵션, 사진, 리뷰내용, 도움돼요수, 작성일, 별점, 배송만족글, 작성시각
 
-12. 문의
+7. 문의
    - 작성
    - 수정
    - 조회: 작성자, 제목, 글내용, 작성시각,비밀글 여부, 답변여부
 
-13. 배송
+8. 배송
    - 배송상태
 
-14. 스토어
+9. 스토어
    - 상품을 판매하는 스토어 정보를 제공해야한다.
 
-15. 장바구니의 일부품목만 구매하거나 삭제가능해야 한다.
+10. 장바구니의 일부품목만 구매하거나 삭제가능해야 한다.
 
-16. 검색기능
+11. 검색기능
    - 상품검색기능이 추가되어야 한다.
 
-17. 배송과 관련된 기능이 필요하다.
+12. 배송과 관련된 기능이 필요하다.
 
-18. 유저의 편의성을 위해 소셜간편가입 기능이 필요하다.
+13. 유저의 편의성을 위해 소셜간편가입 기능이 필요하다.
 
-19. 장바구니가 담기가 아닌 바로구매 기능이 필요하다.
+14. 장바구니가 담기가 아닌 바로구매 기능이 필요하다.
 
-20. 배송주소정보관련 기능
+15. 배송주소정보관련 기능
    -배송지정보를 저장하고 불러올 수 있는 기능이 필요하다
+
+16. 결제관련 기능
+	 -무통장
+	 -카드
 
 ```
 2. 제시된 화면설계를 보고 해당 화면설계와 배포된 기존 서버의 API주소를 매칭하여 README에 내용을 작성하시오. (카카오 화면설계 시나리오가 있음)
@@ -224,7 +228,7 @@
 유저 관련 api
 -프로필
 -등급
--상태: 휴먼, 타로티
+-상태: 휴먼, 탈퇴 등
 -쇼핑포인트
 -환불머니
 -역할: 판매자,구매자,관리자
@@ -257,23 +261,616 @@
 -배송지 저장,수정
 -배송지 조회
 
+결제관련 api
+-무통장
+-카드
+
 ```
 ## 과제2. 요구사항 추가 반영 및 테이블 설계도
 4. 테이블 설계를 하여 README에 ER-Diagram을 추가하여 제출하시오.
+
+![ERD](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fd3SBK5%2FbtslZDYv5ue%2FHXYYKJpghwL5cuc6uWMhAk%2Fimg.png)
+
+PDF과제
 ```
+유저
+- id(PK)
+- 이메일
+- 이름
+- 비밀번호
+- 역할
+- 회원등급
+- 상태: 휴먼 탈퇴 등
+- 쇼핑포인트
+- 환불머니
+- 생성 시각
+- 수정 시각
+
+CREATE TABLE IF NOT EXISTS `mydb`.`user_tb` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `email` VARCHAR(100) NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
+  `role` VARCHAR(45) NOT NULL DEFAULT 'normal',
+  `created_at` TIMESTAMP NOT NULL,
+  `updated_at` TIMESTAMP NOT NULL,
+  `username` VARCHAR(45) NOT NULL,
+  `status` VARCHAR(45) NOT NULL DEFAULT 'normal',
+  `level` VARCHAR(45) NOT NULL DEFAULT 'normal',
+  `shopping_point` INT(13) NOT NULL DEFAULT 0,
+  `refund_money` INT(13) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`))
+
+
+
+
+상품
+- id(PK)
+- 상품명
+- 상세정보
+- 상품 가격(옵션 최저가)
+- 상태
+- 배송비
+- 카테고리
+- 스토어id(FK,N:1)
+- 생성 시각
+- 수정 시각
+
+CREATE TABLE IF NOT EXISTS `mydb`.`product_tb` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `product_name` VARCHAR(100) NOT NULL,
+  `description` VARCHAR(1000) NULL,
+  `image` VARCHAR(500) NULL,
+  `price` INT NULL,
+  `created_at` TIMESTAMP NOT NULL,
+  `updated_at` TIMESTAMP NOT NULL,
+  `category` VARCHAR(45) NOT NULL,
+  `status` VARCHAR(45) NOT NULL,
+  `store_tb_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_product_tb_store_tb1_idx` (`store_tb_id` ASC) VISIBLE,
+  CONSTRAINT `fk_product_tb_store_tb1`
+    FOREIGN KEY (`store_tb_id`)
+    REFERENCES `mydb`.`store_tb` (`id`)
+    )
+
+
+
+
+옵션
+- id(PK)
+- 옵션명
+- 가격
+- 재고수
+- 상품id(FK, N:1)
+- 생성 시각
+- 수정 시각
+
+CREATE TABLE IF NOT EXISTS `mydb`.`option_tb` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `option_name` VARCHAR(100) NOT NULL,
+  `price` INT NOT NULL,
+  `quantity` INT NOT NULL,
+  `product_tb_id` INT NOT NULL,
+  `cart_tb_id` INT NOT NULL,
+  `created_at` TIMESTAMP NOT NULL,
+  `updated_at` TIMESTAMP NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_option_tb_product_tb_idx` (`product_tb_id` ASC) VISIBLE,
+  INDEX `fk_option_tb_cart_tb1_idx` (`cart_tb_id` ASC) VISIBLE,
+  CONSTRAINT `fk_option_tb_product_tb`
+    FOREIGN KEY (`product_tb_id`)
+    REFERENCES `mydb`.`product_tb` (`id`)
+    ,
+  CONSTRAINT `fk_option_tb_cart_tb1`
+    FOREIGN KEY (`cart_tb_id`)
+    REFERENCES `mydb`.`cart_tb` (`id`)
+   )
+
+
+
+장바구니
+- id(PK)
+- 수량
+- 가격
+- 옵션id(FK ,1:N)
+- 유저id(FK, 1:1)
+- 생성 시각
+- 수정 시각
+
+CREATE TABLE IF NOT EXISTS `mydb`.`cart_tb` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `quantity` INT NOT NULL,
+  `price` INT NOT NULL,
+  `created_at` TIMESTAMP NOT NULL,
+  `updated_at` TIMESTAMP NOT NULL,
+  `user_tb_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_cart_tb_user_tb1_idx` (`user_tb_id` ASC) VISIBLE,
+  CONSTRAINT `fk_cart_tb_user_tb1`
+    FOREIGN KEY (`user_tb_id`)
+    REFERENCES `mydb`.`user_tb` (`id`)
+)
+
+
+
+
+
+주문
+- id
+- 유저id(FK, N:1)
+- 생성 시각
+- 수정 시각
+
+CREATE TABLE IF NOT EXISTS `mydb`.`order_tb` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `user_tb_id` INT NOT NULL,
+  `created_at` TIMESTAMP NOT NULL,
+  `updated_at` TIMESTAMP NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_order_tb_user_tb1_idx` (`user_tb_id` ASC) VISIBLE,
+  CONSTRAINT `fk_order_tb_user_tb1`
+    FOREIGN KEY (`user_tb_id`)
+    REFERENCES `mydb`.`user_tb` (`id`)
+   )
+
+
+
+
+
+주문 아이템
+- id
+- 주문 수량
+- 가격
+- 옵션id(FK, 1:1)
+- 주문id(FK, N:1)
+- 생성 시각
+- 수정 시각
+
+CREATE TABLE IF NOT EXISTS `mydb`.`item_tb` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `quantity` INT NOT NULL,
+  `price` VARCHAR(13) NOT NULL,
+  `option_tb_id` INT NOT NULL,
+  `created_at` TIMESTAMP NOT NULL,
+  `updated_at` TIMESTAMP NOT NULL,
+  `order_tb_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_item_tb_option_tb1_idx` (`option_tb_id` ASC) VISIBLE,
+  INDEX `fk_item_tb_order_tb1_idx` (`order_tb_id` ASC) VISIBLE,
+  CONSTRAINT `fk_item_tb_option_tb1`
+    FOREIGN KEY (`option_tb_id`)
+    REFERENCES `mydb`.`option_tb` (`id`)
+    ,
+  CONSTRAINT `fk_item_tb_order_tb1`
+    FOREIGN KEY (`order_tb_id`)
+    REFERENCES `mydb`.`order_tb` (`id`)
+    )
+
+
+
+
+
+
+유저 이미지
+- id
+- 이미지 주소
+- 생성 시각
+- 수정 시각
+- 유저id(FK, N:1)
+
+CREATE TABLE IF NOT EXISTS `mydb`.`user_image_tb` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `image` VARCHAR(500) NOT NULL,
+  `created_at` TIMESTAMP NOT NULL,
+  `updated_at` TIMESTAMP NOT NULL,
+  `user_tb_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_user_image_tb_user_tb1_idx` (`user_tb_id` ASC) VISIBLE,
+  CONSTRAINT `fk_user_image_tb_user_tb1`
+    FOREIGN KEY (`user_tb_id`)
+    REFERENCES `mydb`.`user_tb` (`id`)
+    )
+
+
+
+
+
+
+
+상품이미지
+- id
+- 이미지 주소
+- 생성 시각
+- 수정 시각
+- 상품id(FK, N:1)
+
+CREATE TABLE IF NOT EXISTS `mydb`.`product_image_tb` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `image` VARCHAR(500) NOT NULL,
+  `created_at` TIMESTAMP NOT NULL,
+  `updated_at` TIMESTAMP NOT NULL,
+  `product_tb_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_product_image_tb_product_tb1_idx` (`product_tb_id` ASC) VISIBLE,
+  CONSTRAINT `fk_product_image_tb_product_tb1`
+    FOREIGN KEY (`product_tb_id`)
+    REFERENCES `mydb`.`product_tb` (`id`)
+    )
+
+
+스토어이미지
+- id
+- 이미지 주소
+- 생성 시각
+- 수정 시각
+- 스토어id(FK, N:1)
+
+CREATE TABLE IF NOT EXISTS `mydb`.`store_image_tb` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `image` VARCHAR(500) NOT NULL,
+  `created_at` TIMESTAMP NOT NULL,
+  `updated_at` TIMESTAMP NOT NULL,
+  `store_tb_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_store_image_tb_store_tb1_idx` (`store_tb_id` ASC) VISIBLE,
+  CONSTRAINT `fk_store_image_tb_store_tb1`
+    FOREIGN KEY (`store_tb_id`)
+    REFERENCES `mydb`.`store_tb` (`id`)
+    )
+
+
+
+
+
+
+리뷰이미지
+- id
+- 이미지 주소
+- 생성 시각
+- 수정 시각
+- 리뷰id(FK, N:1)
+
+CREATE TABLE IF NOT EXISTS `mydb`.`review_image_tb` (
+  `id` INT NOT NULL,
+  `image` VARCHAR(500) NOT NULL,
+  `creatd_at` TIMESTAMP NOT NULL,
+  `updated_at` TIMESTAMP NOT NULL,
+  `review_tb_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_review_image_tb_review_tb1_idx` (`review_tb_id` ASC) VISIBLE,
+  CONSTRAINT `fk_review_image_tb_review_tb1`
+    FOREIGN KEY (`review_tb_id`)
+    REFERENCES `mydb`.`review_tb` (`id`)
+    )
+
+
+
+
+
+
+문의이미지
+- id
+- 이미지 주소
+- 생성 시각
+- 수정 시각
+- 문의id(FK, N:1)
+
+CREATE TABLE IF NOT EXISTS `mydb`.`inquiry_image_tb` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `image` VARCHAR(500) NOT NULL,
+  `created_at` TIMESTAMP NOT NULL,
+  `updated_at` TIMESTAMP NOT NULL,
+  `inquiry_tb_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_inquiry_image_tb_inquiry_tb1_idx` (`inquiry_tb_id` ASC) VISIBLE,
+  CONSTRAINT `fk_inquiry_image_tb_inquiry_tb1`
+    FOREIGN KEY (`inquiry_tb_id`)
+    REFERENCES `mydb`.`inquiry_tb` (`id`)
+    )
+
+
+
+
+
+
+스토어
+- id
+- 스토어 이름
+- 스토어 설명
+- 상호명
+- 대표자
+- 대표전화
+- 대표메일
+- 사업자등록번호
+- 통신판매업번호
+- 사업장 소재지
+- 생성 시각
+- 수정 시각
+
+CREATE TABLE IF NOT EXISTS `mydb`.`store_tb` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `store_name` VARCHAR(100) NOT NULL,
+  `business_name` VARCHAR(100) NULL,
+  `description` VARCHAR(8000) NULL,
+  `representative` VARCHAR(50) NULL,
+  `representative_number` VARCHAR(50) NULL,
+  `representative_email` VARCHAR(100) NULL,
+  `company_registration_number` VARCHAR(100) NULL,
+  `mail_order_sales_registration_number` VARCHAR(100) NULL,
+  `address` VARCHAR(200) NULL,
+  `created_at` TIMESTAMP NOT NULL,
+  `updated_at` TIMESTAMP NOT NULL,
+  PRIMARY KEY (`id`))
+
+
+상품 찜(wish)
+- id
+- 유저id(FK, N:1)
+- 상품id(FK, 1:N)
+- 생성 시각
+- 수정 시각
+
+CREATE TABLE IF NOT EXISTS `mydb`.`product_wish_tb` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `created_at` TIMESTAMP NOT NULL,
+  `updated_at` TIMESTAMP NOT NULL,
+  `user_tb_id` INT NOT NULL,
+  `product_tb_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_wish_tb_user_tb1_idx` (`user_tb_id` ASC) VISIBLE,
+  INDEX `fk_wish_tb_product_tb1_idx` (`product_tb_id` ASC) VISIBLE,
+  CONSTRAINT `fk_wish_tb_user_tb1`
+    FOREIGN KEY (`user_tb_id`)
+    REFERENCES `mydb`.`user_tb` (`id`)
+    ,
+  CONSTRAINT `fk_wish_tb_product_tb1`
+    FOREIGN KEY (`product_tb_id`)
+    REFERENCES `mydb`.`product_tb` (`id`)
+   )
+
+
+
+
+
+
+스토어 찜
+- id
+- 유저id(FK, N:1)
+- 스토어id(FK, 1:N)
+- 생성 시각
+- 수정 시각
+
+CREATE TABLE IF NOT EXISTS `mydb`.`store_wish_tb` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `created_at` TIMESTAMP NOT NULL,
+  `updated_at` TIMESTAMP NOT NULL,
+  `user_tb_id` INT NOT NULL,
+  `store_tb_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_wish_tb_user_tb1_idx` (`user_tb_id` ASC) VISIBLE,
+  INDEX `fk_wish_tb_store_tb1_idx` (`store_tb_id` ASC) VISIBLE,
+  CONSTRAINT `fk_wish_tb_user_tb10`
+    FOREIGN KEY (`user_tb_id`)
+    REFERENCES `mydb`.`user_tb` (`id`)
+    ,
+  CONSTRAINT `fk_wish_tb_store_tb10`
+    FOREIGN KEY (`store_tb_id`)
+    REFERENCES `mydb`.`store_tb` (`id`)
+    )
+
+
+
+
+
+
+
+
+리뷰
+- id
+- 유저id(FK,N:1)
+- 상품id(FK , N:1)
+- 제목
+- 글내용
+- 비밀글 여부
+- 별점
+- 생성 시각
+- 수정 시각
+
+CREATE TABLE IF NOT EXISTS `mydb`.`review_tb` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(50) NOT NULL,
+  `content` VARCHAR(8000) NOT NULL,
+  `star` INT NOT NULL,
+  `private` TINYINT NOT NULL DEFAULT 0,
+  `created_at` TIMESTAMP NOT NULL,
+  `updated_at` TIMESTAMP NOT NULL,
+  `product_tb_id` INT NOT NULL,
+  `user_tb_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_review_tb_product_tb1_idx` (`product_tb_id` ASC) VISIBLE,
+  INDEX `fk_review_tb_user_tb1_idx` (`user_tb_id` ASC) VISIBLE,
+  CONSTRAINT `fk_review_tb_product_tb1`
+    FOREIGN KEY (`product_tb_id`)
+    REFERENCES `mydb`.`product_tb` (`id`)
+    ,
+  CONSTRAINT `fk_review_tb_user_tb1`
+    FOREIGN KEY (`user_tb_id`)
+    REFERENCES `mydb`.`user_tb` (`id`)
+    )
+
+
+
+
+
+
+도움돼요
+- id
+- 유저id(FK, 1:N)
+- 리뷰id(FK, 1:N)
+- 생성 시각
+- 수정 시각
+
+CREATE TABLE IF NOT EXISTS `mydb`.`helpful_tb` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `created_at` TIMESTAMP NOT NULL,
+  `updated_at` TIMESTAMP NOT NULL,
+  `user_tb_id` INT NOT NULL,
+  `review_tb_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_helpful_tb_user_tb1_idx` (`user_tb_id` ASC) VISIBLE,
+  INDEX `fk_helpful_tb_review_tb1_idx` (`review_tb_id` ASC) VISIBLE,
+  CONSTRAINT `fk_helpful_tb_user_tb1`
+    FOREIGN KEY (`user_tb_id`)
+    REFERENCES `mydb`.`user_tb` (`id`)
+   ,
+  CONSTRAINT `fk_helpful_tb_review_tb1`
+    FOREIGN KEY (`review_tb_id`)
+    REFERENCES `mydb`.`review_tb` (`id`)
+    )
+
+
+
+
+
+
+문의 
+- id
+- 유저id(FK,
+- 상품id(FK,
+- 문의유형(상품, 배송, 반품, 취소 및 환불, 교환, 기타)
+- 문의내용(한글 3000자)
+- 비밀글 설정여부
+- 프로필 공개여부
+- 생성 시각
+- 수정 시각
+
+CREATE TABLE IF NOT EXISTS `mydb`.`inquiry_tb` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `category` VARCHAR(80) NOT NULL,
+  `content` VARCHAR(8000) NOT NULL,
+  `content_private` TINYINT NOT NULL DEFAULT 0,
+  `profile_private` TINYINT NOT NULL DEFAULT 0,
+  `created_at` TIMESTAMP NOT NULL,
+  `updated_at` TIMESTAMP NOT NULL,
+  PRIMARY KEY (`id`))
+
+
+
+
+
+
+
+
+댓글(답변)
+- id
+- 유저id(FK,N:1)
+- 스토어id(FK, N:1)
+- 내용
+- 생성 시각
+- 수정 시각
+
+CREATE TABLE IF NOT EXISTS `mydb`.`comment_tb` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `content` VARCHAR(8000) NOT NULL,
+  `created_at` TIMESTAMP NOT NULL,
+  `updated_at` TIMESTAMP NOT NULL,
+  `inquiry_tb_id` INT NOT NULL,
+  `user_tb_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_comment_tb_inquiry_tb1_idx` (`inquiry_tb_id` ASC) VISIBLE,
+  INDEX `fk_comment_tb_user_tb1_idx` (`user_tb_id` ASC) VISIBLE,
+  CONSTRAINT `fk_comment_tb_inquiry_tb1`
+    FOREIGN KEY (`inquiry_tb_id`)
+    REFERENCES `mydb`.`inquiry_tb` (`id`)
+    ,
+  CONSTRAINT `fk_comment_tb_user_tb1`
+    FOREIGN KEY (`user_tb_id`)
+    REFERENCES `mydb`.`user_tb` (`id`)
+    )
+
+
+
+
+
+
+
+배송지 정보
+- id
+- 이름
+- 연락처
+- 배송지주소
+- 배송시 요청사항
+- 유저id(FK, N:1)
+- 주문id(FK, 1:1)
+- 생성 시각
+- 수정 시각
+
+CREATE TABLE IF NOT EXISTS `mydb`.`address_tb` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NOT NULL,
+  `phone_number` VARCHAR(45) NOT NULL,
+  `zipcode` VARCHAR(20) NOT NULL,
+  `address` VARCHAR(80) NOT NULL,
+  `address_detail` VARCHAR(80) NOT NULL,
+  `shipping_request` VARCHAR(45) NULL,
+  `default_address` TINYINT NOT NULL DEFAULT 0,
+  `created_at` TIMESTAMP NULL,
+  `updated_at` TIMESTAMP NULL,
+  `order_tb_id` INT NOT NULL,
+  `user_tb_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_address_tb_order_tb1_idx` (`order_tb_id` ASC) VISIBLE,
+  INDEX `fk_address_tb_user_tb1_idx` (`user_tb_id` ASC) VISIBLE,
+  CONSTRAINT `fk_address_tb_order_tb1`
+    FOREIGN KEY (`order_tb_id`)
+    REFERENCES `mydb`.`order_tb` (`id`)
+    ,
+  CONSTRAINT `fk_address_tb_user_tb1`
+    FOREIGN KEY (`user_tb_id`)
+    REFERENCES `mydb`.`user_tb` (`id`)
+    )
+
+
+
+
+
+
+
+공지사항
+- id
+- 유저id(FK, N:1)
+- 제목
+- 내용
+- 생성 시각
+- 수정 시각
+
+CREATE TABLE IF NOT EXISTS `mydb`.`announcement_tb` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(80) NOT NULL,
+  `content` VARCHAR(8000) NOT NULL,
+  `created_at` TIMESTAMP NOT NULL,
+  `updated_at` TIMESTAMP NOT NULL,
+  `user_tb_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_announcement_tb_user_tb1_idx` (`user_tb_id` ASC) VISIBLE,
+  CONSTRAINT `fk_announcement_tb_user_tb1`
+    FOREIGN KEY (`user_tb_id`)
+    REFERENCES `mydb`.`user_tb` (`id`)
+    )
 
 ```
+
 
 </br>
 
 ## **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
 **1. PR 제목과 내용을 아래와 같이 작성 해주세요.**
 
->- PR 제목 : 부산대BE_라이언_1주차 과제
+>- PR 제목 : 부산대BE_김윤재_1주차 과제
 
 </br>
 
 **2. PR 내용 :**
 
->- 코드 작성하면서 어려웠던 점
+>- 추가하는 
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
