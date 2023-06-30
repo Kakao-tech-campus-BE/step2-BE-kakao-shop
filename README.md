@@ -136,6 +136,1080 @@
 
 </br>
 
+**[기능 1] 회원가입**
+
+</br>
+
+![Image](https://drive.google.com/uc?id=1Ct39QyJYDmroIdk4KVlMLVSmECJAnJ-Z)
+
+- 사용자 시나리오
+  - 성공 시나리오
+    - 회원가입 페이지에 들어와서 회원 정보(이메일, 이름, 비밀번호, 비밀번호 확인)를 모두 특정 규칙에 맞게 입력하고 회원가입 버튼을 누른다
+  - 실패 시나리오
+    - 1 : 회원가입 페이지에 들어와서 회원 정보 중 이메일 규칙에 어긋나게 입력하고 회원가입 버튼을 누른다
+    - 2 : 회원가입 페이지에 들어와서 회원 정보 중 비밀번호 규칙에 어긋나게 입력하고 회원가입 버튼을 누른다
+    - 3 : 회원가입 페이지에 들어와서 등록된 회원의 이메일을 입력하고 회원가입 버튼을 누른다
+    - 4 : 회원가입 페이지에 들어와서 회원 정보 중 비밀번호 길이 규칙(8~20자)에 어긋나게 입력하고 회원가입 버튼을 누른다
+    - 5 : 회원가입 페이지에 들어와서 회원 정보 중 하나라도 입력하지 않고 회원가입 버튼을 누른다
+- Method : POST
+- URL : /join
+- 정상 응답
+
+  - Request Body
+
+    ```java
+    {
+      "username":"mata",
+      "email":"meta@nate.com",
+      "password":"meta1234!"
+    }
+    ```
+
+  - Response Body
+
+    ```java
+    {
+        "success": true,
+        "response": null,
+        "error": null
+    }
+    ```
+
+- 실패1 - 이메일 형식 오류
+
+  - Request Body
+
+    ```java
+    {
+        "username":"mata",
+        "email":"metanate.com",
+        "password":"meta1234!"
+    }
+    ```
+
+  - Response Body
+
+    ```java
+    {
+        "success": false,
+        "response": null,
+        "error": {
+            "message": "이메일 형식으로 작성해주세요:email",
+            "status": 400
+        }
+    }
+    ```
+
+- 실패2 - 비밀번호 형식 오류
+
+  - Request Body
+
+    ```java
+    {
+        "username":"mata",
+        "email":"meta@nate.com",
+        "password":"meta1234"
+    }
+    ```
+
+  - Response Body
+
+    ```java
+    {
+        "success": false,
+        "response": null,
+        "error": {
+            "message": "영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니다.:password",
+            "status": 400
+        }
+    }
+    ```
+
+- 실패3 - 동일한 이메일 존재
+
+  - Request Body
+
+    ```java
+    {
+        "username":"mata",
+        "email":"ssar@nate.com",
+        "password":"meta1234!"
+    }
+    ```
+
+  - Response Body
+
+    ```java
+    {
+        "success": false,
+        "response": null,
+        "error": {
+            "message": "동일한 이메일이 존재합니다 : ssar@nate.com",
+            "status": 400
+        }
+    }
+    ```
+
+- 실패4 - 비밀번호 길이 오류
+
+  - Request Body
+
+    ```java
+    {
+        "username":"mata",
+        "email":"meta@nate.com",
+        "password":"meta12!"
+    }
+    ```
+
+  - Response Body
+
+    ```java
+    {
+        "success": false,
+        "response": null,
+        "error": {
+            "message": "8에서 20자 이내여야 합니다.:password",
+            "status": 400
+        }
+    }
+    ```
+
+</br>
+
+**[기능] 이메일 중복 체크**
+
+- 사용자 시나리오
+  - 성공 시나리오
+    - 회원가입 페이지에서 이메일을 특정 규칙에 맞게 입력하고 이메일 중복 확인 버튼을 누른다
+  - 실패 시나리오
+    - 1 : 회원가입 페이지에서 등록된 이메일을 입력하고 이메일 중복 확인 버튼을 누른다
+    - 2 : 회원가입 페이지에서 이메일 규칙에 어긋나게 입력하고 로그인 버튼을 누른다
+- Method : POST
+- URL : /check
+- 정상 응답
+  - Request Body
+    ```java
+    {
+        "email":"ssar1@nate.com"
+    }
+    ```
+  - Response Body
+    ```java
+    {
+        "success": true,
+        "response": null,
+        "error": null
+    }
+    ```
+- 실패1 - 동일한 이메일 존재
+  - Request Body
+    ```java
+    {
+        "email":"ssar@nate.com"
+    }
+    ```
+  - Response Body
+    ```java
+    {
+        "success": false,
+        "response": null,
+        "error": {
+            "message": "동일한 이메일이 존재합니다 : ssar@nate.com",
+            "status": 400
+        }
+    }
+    ```
+- 실패2 - 이메일 형식 오류
+  - Request Body
+    ```java
+    {
+        "email":"ssarnate.com"
+    }
+    ```
+  - Response Body
+    ```java
+    {
+        "success": false,
+        "response": null,
+        "error": {
+            "message": "이메일 형식으로 작성해주세요:email",
+            "status": 400
+        }
+    }
+    ```
+
+</br>
+
+**[기능 2] 로그인**
+
+</br>
+
+![Image](https://drive.google.com/uc?id=1ab-7TpJ9_v0l4jn5_xDCrTmIYPcpCS6n)
+
+- 사용자 시나리오
+  - 성공 시나리오
+    - 로그인 페이지에 들어와서 이메일, 비밀번호를 특정 규칙에 맞게 입력하고 로그인 버튼을 누른다
+  - 실패 시나리오
+    - 1 : 로그인 페이지에 들어와서 회원 정보 중 이메일 규칙에 어긋나게 입력하고 로그인 버튼을 누른다
+    - 2 : 로그인 페이지에 들어와서 회원 정보 중 비밀번호 규칙에 어긋나게 입력하고 로그인 버튼을 누른다
+    - 3 : 로그인 페이지에 들어와서 회원 정보 중 비밀번호 길이 규칙(8~20자)에 어긋나게 입력하고 로그인 버튼을 누른다
+    - 4 : 로그인 페이지에 들어와서 등록되지 않은 이메일을 입력하고 로그인 버튼을 누른다
+- Method : POST
+- URL : /login
+- 정상 응답
+  - Request Body
+    ```java
+    {
+    		"email":"ssar@nate.com",
+    		"password":"meta1234!"
+    }
+    ```
+  - Response Body
+    ```java
+    {
+        "success": true,
+        "response": null,
+        "error": null
+    }
+    ```
+  - Response Header - jwt 토큰
+- 실패1 - 이메일 형식 오류
+  - Request Body
+    ```java
+    {
+    		"email":"ssarnate.com",
+    		"password":"meta1234!"
+    }
+    ```
+  - Response Body
+    ```java
+    {
+        "success": false,
+        "response": null,
+        "error": {
+            "message": "이메일 형식으로 작성해주세요:email",
+            "status": 400
+        }
+    }
+    ```
+- 실패2 - 비밀번호 형식 오류
+  - Request Body
+    ```java
+    {
+    		"email":"ssar@nate.com",
+    		"password":"meta1234"
+    }
+    ```
+  - Response Body
+    ```java
+    {
+        "success": false,
+        "response": null,
+        "error": {
+            "message": "영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니다.:password",
+            "status": 400
+        }
+    }
+    ```
+- 실패3 - 비밀번호 길이 오류
+  - Request Body
+    ```java
+    {
+    		"email":"ssar@nate.com",
+    		"password":"meta12!"
+    }
+    ```
+  - Response Body
+    ```java
+    {
+        "success": false,
+        "response": null,
+        "error": {
+            "message": "8에서 20자 이내여야 합니다.:password",
+            "status": 400
+        }
+    }
+    ```
+- 실패4 - 사용자 없음
+  - Request Body
+    ```java
+    {
+    		"email":"ssar1@nate.com",
+    		"password":"meta1234!"
+    }
+    ```
+  - Response Body
+    ```java
+    {
+        "success": false,
+        "response": null,
+        "error": {
+            "message": "인증되지 않았습니다",
+            "status": 401
+        }
+    }
+    ```
+
+</br>
+
+**[기능 3] 로그아웃**
+
+</br>
+
+![Image](https://drive.google.com/uc?id=194hYwBLFXFPhy4bX5tFOQFokOBBabziA)
+
+- 사용자 시나리오
+  - 로그아웃 버튼을 누른다
+- 프론트앤드 구현 -> API로 만들면 좋을 것 같다
+
+</br>
+
+**[기능 4] 전체 상품 목록 조회**
+
+</br>
+
+![Image](https://drive.google.com/uc?id=1vcTusQ0bCu_QHOwgO8ghqmpzTiDimT69)
+
+- 사용자 시나리오
+  - 1 : 로그인을 하면 홈 화면에서 전체 상품 목록 조회 화면이 보인다
+  - 2 : url로 전체 상품 목록 조회 화면에 들어간다
+- Method : GET
+- URL : /products
+- 정상 응답1 - 파라미터 없음
+  - URL : http://localhost:8080/products
+  - Response Body
+    ```java
+    {
+        "success": true,
+        "response": [
+            {
+                "id": 1,
+                "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전",
+                "description": "",
+                "image": "/images/1.jpg",
+                "price": 1000
+            },
+            {
+                "id": 2,
+                "productName": "[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율",
+                "description": "",
+                "image": "/images/2.jpg",
+                "price": 2000
+            },
+            {
+                "id": 3,
+                "productName": "삼성전자 JBL JR310 외 어린이용/성인용 헤드셋 3종!",
+                "description": "",
+                "image": "/images/3.jpg",
+                "price": 30000
+            },
+            {
+                "id": 4,
+                "productName": "바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종",
+                "description": "",
+                "image": "/images/4.jpg",
+                "price": 4000
+            },
+            {
+                "id": 5,
+                "productName": "[더주] 컷팅말랑장족, 숏다리 100g/300g 외 주전부리 모음 /중독성 최고/마른안주",
+                "description": "",
+                "image": "/images/5.jpg",
+                "price": 5000
+            },
+            {
+                "id": 6,
+                "productName": "굳지않는 앙금절편 1,050g 2팩 외 우리쌀떡 모음전",
+                "description": "",
+                "image": "/images/6.jpg",
+                "price": 15900
+            },
+            {
+                "id": 7,
+                "productName": "eoe 이너딜리티 30포, 오렌지맛 고 식이섬유 보충제",
+                "description": "",
+                "image": "/images/7.jpg",
+                "price": 26800
+            },
+            {
+                "id": 8,
+                "productName": "제나벨 PDRN 크림 2개. 피부보습/진정 케어",
+                "description": "",
+                "image": "/images/8.jpg",
+                "price": 25900
+            },
+            {
+                "id": 9,
+                "productName": "플레이스테이션 VR2 호라이즌 번들. 생생한 몰입감",
+                "description": "",
+                "image": "/images/9.jpg",
+                "price": 797000
+            }
+        ],
+        "error": null
+    }
+    ```
+- 정상 응답2 - 파라미터 있음
+  - URL : http://localhost:8080/products?page=0
+  - Response Body
+    ```java
+    {
+        "success": true,
+        "response": [
+            {
+                "id": 1,
+                "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전",
+                "description": "",
+                "image": "/images/1.jpg",
+                "price": 1000
+            },
+            {
+                "id": 2,
+                "productName": "[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율",
+                "description": "",
+                "image": "/images/2.jpg",
+                "price": 2000
+            },
+            {
+                "id": 3,
+                "productName": "삼성전자 JBL JR310 외 어린이용/성인용 헤드셋 3종!",
+                "description": "",
+                "image": "/images/3.jpg",
+                "price": 30000
+            },
+            {
+                "id": 4,
+                "productName": "바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종",
+                "description": "",
+                "image": "/images/4.jpg",
+                "price": 4000
+            },
+            {
+                "id": 5,
+                "productName": "[더주] 컷팅말랑장족, 숏다리 100g/300g 외 주전부리 모음 /중독성 최고/마른안주",
+                "description": "",
+                "image": "/images/5.jpg",
+                "price": 5000
+            },
+            {
+                "id": 6,
+                "productName": "굳지않는 앙금절편 1,050g 2팩 외 우리쌀떡 모음전",
+                "description": "",
+                "image": "/images/6.jpg",
+                "price": 15900
+            },
+            {
+                "id": 7,
+                "productName": "eoe 이너딜리티 30포, 오렌지맛 고 식이섬유 보충제",
+                "description": "",
+                "image": "/images/7.jpg",
+                "price": 26800
+            },
+            {
+                "id": 8,
+                "productName": "제나벨 PDRN 크림 2개. 피부보습/진정 케어",
+                "description": "",
+                "image": "/images/8.jpg",
+                "price": 25900
+            },
+            {
+                "id": 9,
+                "productName": "플레이스테이션 VR2 호라이즌 번들. 생생한 몰입감",
+                "description": "",
+                "image": "/images/9.jpg",
+                "price": 797000
+            }
+        ],
+        "error": null
+    }
+    ```
+  - URL : http://localhost:8080/products?page=1
+  - Response Body
+    ```java
+    {
+        "success": true,
+        "response": [
+            {
+                "id": 10,
+                "productName": "통영 홍 가리비 2kg, 2세트 구매시 1kg 추가증정",
+                "description": "",
+                "image": "/images/10.jpg",
+                "price": 8900
+            },
+            {
+                "id": 11,
+                "productName": "아삭한 궁채 장아찌 1kg 외 인기 반찬 모음전",
+                "description": "",
+                "image": "/images/11.jpg",
+                "price": 6900
+            },
+            {
+                "id": 12,
+                "productName": "깨끗한나라 순수소프트 30롤 2팩. 무형광, 도톰 3겹",
+                "description": "",
+                "image": "/images/12.jpg",
+                "price": 28900
+            },
+            {
+                "id": 13,
+                "productName": "생활공작소 초미세모 칫솔 12입 2개+가글 증정",
+                "description": "",
+                "image": "/images/13.jpg",
+                "price": 9900
+            },
+            {
+                "id": 14,
+                "productName": "경북 영천 샤인머스켓 가정용 1kg 2수 내외",
+                "description": "",
+                "image": "/images/14.jpg",
+                "price": 9900
+            },
+            {
+                "id": 15,
+                "productName": "[LIVE][5%쿠폰] 홈카페 Y3.3 캡슐머신 베이직 세트",
+                "description": "",
+                "image": "/images/15.jpg",
+                "price": 148000
+            }
+        ],
+        "error": null
+    }
+    ```
+
+</br>
+
+**[기능 5] 개별 상품 상세 조회**
+
+</br>
+
+![Image](https://drive.google.com/uc?id=1LJEZ1fbyCj-2NwEDLQ1V9zrJStgYDrbY)
+
+- 사용자 시나리오
+  - 1 : 전체 상품 목록 조회 페이지에서 개별 상품을 클릭하면 개별 상품 상세 조회 페이지에 들어온다
+  - 2 : url로 개별 상품 상세 조회 화면에 들어간다
+- Method : GET
+- URL : /products/{product_id}
+- 정상 응답
+  - URL : http://localhost:8080/products/1
+  - Response Body
+    ```java
+    {
+        "success": true,
+        "response": {
+            "id": 1,
+            "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전",
+            "description": "",
+            "image": "/images/1.jpg",
+            "price": 1000,
+            "starCount": 5,
+            "options": [
+                {
+                    "id": 1,
+                    "optionName": "01. 슬라이딩 지퍼백 크리스마스에디션 4종",
+                    "price": 10000
+                },
+                {
+                    "id": 2,
+                    "optionName": "02. 슬라이딩 지퍼백 플라워에디션 5종",
+                    "price": 10900
+                },
+                {
+                    "id": 3,
+                    "optionName": "고무장갑 베이지 S(소형) 6팩",
+                    "price": 9900
+                },
+                {
+                    "id": 4,
+                    "optionName": "뽑아쓰는 키친타올 130매 12팩",
+                    "price": 16900
+                },
+                {
+                    "id": 5,
+                    "optionName": "2겹 식빵수세미 6매",
+                    "price": 8900
+                }
+            ]
+        },
+        "error": null
+    }
+    ```
+
+</br>
+
+**[기능 6] 상품 옵션 선택**
+
+</br>
+
+![Image](https://drive.google.com/uc?id=148hkBch61Q3G3DY91uYpL6PapZsiPVwo)
+
+- 사용자 시나리오
+  - 옵션을 선택한다
+- 프론트앤드 구현
+
+</br>
+
+**[기능 7] 옵션 확인 및 수량 결정**
+
+</br>
+
+![Image](https://drive.google.com/uc?id=1aSYNhJupApld2Cji80qqPwvqvDCKAvrO)
+
+- 사용자 시나리오
+  - 선택한 옵션의 수량을 + 버튼을 이용해서 증가시킨다
+- 프론트앤드 구현
+
+</br>
+
+**[기능 8] 장바구니 담기**
+
+</br>
+
+![Image](https://drive.google.com/uc?id=1ZOl9bXjL1HAIp8dcFMVpfFP0Jgvi8uMW)
+
+- 사용자 시나리오
+  - 사용자가 옵션 4를 5개, 옵션 5를 5개 추가하고 장바구니 담기 버튼을 누른다
+- Method : POST
+- URL : /carts/add
+- Request Header - jwt 토큰
+- 정상 응답
+  - Request Body
+    ```java
+    [
+        {
+            "optionId":4,
+            "quantity":5
+        },
+        {
+            "optionId":5,
+            "quantity":5
+        }
+    ]
+    ```
+  - Response Body
+    ```java
+    {
+        "success": true,
+        "response": null,
+        "error": null
+    }
+    ```
+
+</br>
+
+**[기능 9] 장바구니 보기**
+
+</br>
+
+![Image](https://drive.google.com/uc?id=1K5L-LDd_IVPojXF5K98kWf2SRKHTiuDA)
+
+- 사용자 시나리오
+  - 1 : 장바구니 아이콘을 클릭하면 장바구니 보기 화면이 나온다
+  - 2 : url로 장바구니 화면에 들어간다
+- Method : GET
+- URL : /carts
+- Request Header - jwt 토큰
+- 정상 응답 - Response Body
+  ````java
+      {
+          "success": true,
+          "response": {
+              "products": [
+                  {
+                      "id": 1,
+                      "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전",
+                      "carts": [
+                          {
+                              "id": 8,
+                              "option": {
+                                  "id": 3,
+                                  "optionName": "고무장갑 베이지 S(소형) 6팩",
+                                  "price": 9900
+                              },
+                              "quantity": 5,
+                              "price": 49500
+                          },
+                          {
+                              "id": 10,
+                              "option": {
+                                  "id": 4,
+                                  "optionName": "뽑아쓰는 키친타올 130매 12팩",
+                                  "price": 16900
+                              },
+                              "quantity": 5,
+                              "price": 84500
+                          },
+                          {
+                              "id": 11,
+                              "option": {
+                                  "id": 5,
+                                  "optionName": "2겹 식빵수세미 6매",
+                                  "price": 8900
+                              },
+                              "quantity": 5,
+                              "price": 44500
+                          }
+                      ]
+                  },
+                  {
+                      "id": 2,
+                      "productName": "[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율",
+                      "carts": [
+                          {
+                              "id": 9,
+                              "option": {
+                                  "id": 6,
+                                  "optionName": "22년산 햇단밤 700g(한정판매)",
+                                  "price": 9900
+                              },
+                              "quantity": 5,
+                              "price": 49500
+                          }
+                      ]
+                  }
+              ],
+              "totalPrice": 332500
+          },
+          "error": null
+      }
+      ```
+  ````
+
+</br>
+
+**[기능 10] 장바구니 상품 옵션 확인 및 수량 결정**
+
+</br>
+
+![Image](https://drive.google.com/uc?id=17KEEdiEoLtzqi_lRgdKJIezJ1nBR5R1N)
+
+- 사용자 시나리오
+  - 성공 시나리오
+    - 옵션 수량을 5에서 10로 변경한다
+  - 실패 시나리오
+    - 1 : 장바구니에 없는 상품을 url을 통해 상품 수량 업데이트를 요청한다
+    - 2 : 장바구니에 있는 상품 수량을 url을 통해 -1로 업데이트를 요청한다
+- Method : GET
+- URL : /carts/update
+- Request Header - jwt 토큰
+- 정상 응답
+  - Request Body
+    ```java
+    [
+        {
+            "cartId":8,
+            "quantity":10
+        },
+        {
+            "cartId":10,
+            "quantity":10
+        }
+    ]
+    ```
+  - Response Body
+    ```java
+    {
+        "success": true,
+        "response": {
+            "carts": [
+                {
+                    "cartId": 8,
+                    "optionId": 3,
+                    "optionName": "고무장갑 베이지 S(소형) 6팩",
+                    "quantity": 10,
+                    "price": 99000
+                },
+                {
+                    "cartId": 9,
+                    "optionId": 6,
+                    "optionName": "22년산 햇단밤 700g(한정판매)",
+                    "quantity": 5,
+                    "price": 49500
+                },
+                {
+                    "cartId": 10,
+                    "optionId": 4,
+                    "optionName": "뽑아쓰는 키친타올 130매 12팩",
+                    "quantity": 10,
+                    "price": 169000
+                },
+                {
+                    "cartId": 11,
+                    "optionId": 5,
+                    "optionName": "2겹 식빵수세미 6매",
+                    "quantity": 5,
+                    "price": 44500
+                }
+            ],
+            "totalPrice": 466500
+        },
+        "error": null
+    }
+    ```
+- 실패1 - 장바구니에 없는 상품 업데이트
+  - Request Body
+    ```java
+    [
+        {
+            "cartId":12,
+            "quantity":10
+        },
+        {
+            "cartId":13,
+            "quantity":10
+        }
+    ]
+    ```
+  - Response Body
+    ```java
+    {
+        "success": false,
+        "response": null,
+        "error": {
+            "message": "장바구니에 없는 상품은 주문할 수 없습니다 : 12",
+            "status": 400
+        }
+    }
+    ```
+- 실패2 - 수량 -1로 업데이트
+  - Request Body
+    ```java
+    [
+        {
+            "cartId":10,
+            "quantity":-1
+        },
+        {
+            "cartId":13,
+            "quantity":10
+        }
+    ]
+    ```
+  - Response Body
+    ```java
+    {
+        "success": false,
+        "response": null,
+        "error": {
+            "message": "장바구니에 없는 상품은 주문할 수 없습니다 : 13",
+            "status": 400
+        }
+    }
+    ```
+
+</br>
+
+**[기능 11] 주문**
+
+</br>
+
+![Image](https://drive.google.com/uc?id=1gAXtd2QHMGWh-h2OnqI5FaFCSVQiHmYl)
+
+- 사용자 시나리오
+  - 장바구니 보기 화면에서 주문하기 버튼을 누른다
+- Method : Post
+- URL : /carts/update
+- Request Header - jwt 토큰
+- 정상 응답
+
+  - Request Body
+    ```java
+    [
+        {
+            "cartId":8,
+            "quantity":10
+        },
+        {
+            "cartId":10,
+            "quantity":10
+        }
+    ]
+    ```
+  - Response Body
+
+    ```java
+    {
+        "success": true,
+        "response": {
+        "carts": [
+            {
+                "cartId": 8,
+                "optionId": 3,
+                "optionName": "고무장갑 베이지 S(소형) 6팩",
+                "quantity": 10,
+                "price": 99000
+            },
+            {
+                "cartId": 9,
+                "optionId": 6,
+                "optionName": "22년산 햇단밤 700g(한정판매)",
+                "quantity": 5,
+                "price": 49500
+            },
+            {
+                "cartId": 10,
+                "optionId": 4,
+                "optionName": "뽑아쓰는 키친타올 130매 12팩",
+                "quantity": 10,
+                "price": 169000
+            },
+            {
+                "cartId": 11,
+                "optionId": 5,
+                "optionName": "2겹 식빵수세미 6매",
+                "quantity": 5,
+                "price": 44500
+            }
+        ],
+        "totalPrice": 466500
+      },
+      "error": null
+    }
+    ```
+
+  </br>
+
+**[기능 12] 결제**
+
+</br>
+
+![Image](https://drive.google.com/uc?id=1fYz6Zd1A1e9Y2a9JpFGcr8CZ0OG5Vqx_)
+
+- 사용자 시나리오
+  - 주문하기 화면에서 전체 동의 버튼을 누른 후 결제하기 버튼을 누른다
+- Method : POST
+- URL : /orders/save
+- Request Header - jwt 토큰
+- 정상 응답
+  - Response Body
+    ```java
+    {
+        "success": true,
+        "response": {
+            "id": 1,
+            "products": [
+                {
+                    "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전",
+                    "items": [
+                        {
+                            "id": 3,
+                            "optionName": "고무장갑 베이지 S(소형) 6팩",
+                            "quantity": 10,
+                            "price": 99000
+                        },
+                        {
+                            "id": 5,
+                            "optionName": "뽑아쓰는 키친타올 130매 12팩",
+                            "quantity": 10,
+                            "price": 169000
+                        },
+                        {
+                            "id": 6,
+                            "optionName": "2겹 식빵수세미 6매",
+                            "quantity": 5,
+                            "price": 44500
+                        }
+                    ]
+                },
+                {
+                    "productName": "[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율",
+                    "items": [
+                        {
+                            "id": 4,
+                            "optionName": "22년산 햇단밤 700g(한정판매)",
+                            "quantity": 5,
+                            "price": 49500
+                        }
+                    ]
+                }
+            ],
+            "totalPrice": 466500
+        },
+        "error": null
+    }
+    ```
+
+</br>
+
+**[기능 13] 주문 결과 확인**
+
+</br>
+
+![Image](https://drive.google.com/uc?id=1l7a4ebJCznUyQFC-AcYoDsd7y9-euyu2)
+
+- 사용자 시나리오
+  - 성공 시나리오
+    - 결제하기 버튼을 누르면 주문 결과 확인 화면이 나온다
+  - 실패 시나리오
+    - 주문 내역에 없는 주문을 url을 통해 주문 결과 화면을 요청한다
+- Method : GET
+- URL : /orders/{order_id}
+- Request Header - jwt 토큰
+- 정상 응답
+  - URL : http://localhost:8080/orders/1
+  - Response Body
+    ```java
+    {
+        "success": true,
+        "response": {
+            "id": 1,
+            "products": [
+                {
+                    "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전",
+                    "items": [
+                        {
+                            "id": 3,
+                            "optionName": "고무장갑 베이지 S(소형) 6팩",
+                            "quantity": 10,
+                            "price": 99000
+                        },
+                        {
+                            "id": 5,
+                            "optionName": "뽑아쓰는 키친타올 130매 12팩",
+                            "quantity": 10,
+                            "price": 169000
+                        },
+                        {
+                            "id": 6,
+                            "optionName": "2겹 식빵수세미 6매",
+                            "quantity": 5,
+                            "price": 44500
+                        }
+                    ]
+                },
+                {
+                    "productName": "[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율",
+                    "items": [
+                        {
+                            "id": 4,
+                            "optionName": "22년산 햇단밤 700g(한정판매)",
+                            "quantity": 5,
+                            "price": 49500
+                        }
+                    ]
+                }
+            ],
+            "totalPrice": 466500
+        },
+        "error": null
+    }
+    ```
+- 실패 응답
+  - URL : http://localhost:8080/orders/2
+  - Response Body
+    ```java
+    {
+        "success": false,
+        "response": null,
+        "error": {
+            "message": "해당 주문을 찾을 수 없습니다 : 2",
+            "status": 404
+        }
+    }
+    ```
+
+</br>
+
 ## Assignment 3
 
 </br>
