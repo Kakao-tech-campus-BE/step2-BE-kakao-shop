@@ -119,7 +119,7 @@
     - 의문점 4 : Header에서 status code를 확인할 수 있음에도 Response Body에 status를 넣는 이유는 프론트가 파싱하기 편함이 목적인데, 반대로 생각해보면 백엔드의 리소스도 사용되는 데 어떤 방식이 맞는 것인 지 잘 모르겠다.(팀 by 팀 아닐까...??)
 4. ER-Diagram 작성 - 주어진 API만 가지고 작성하였습니다.
 
-<img src="/Users/hwangdaeseon/Project/kakao_2/kakao_hw/step2-BE-kakao-shop/image/erd.png">
+<img src="./image/erd.png">
 
 - Member와 Order는 1:N관계이며 식별관계이다.
 - Member와 Cart는 1:1관계이며 식별관계이다.
@@ -127,7 +127,7 @@
 - Order와 Option은 N:N관계이며, 비식별관계이다. JPA를 이용할 것이기 때문에 위와 같이 중간테이블을 만들어주었습니다.
 - OrderItem에서는 price라는 필드를 가져야합니다. 왜냐하면, 추후에 할인 등을 적용할 수 있기 때문입니다.
 
-<img src="/Users/hwangdaeseon/Project/kakao_2/kakao_hw/step2-BE-kakao-shop/image/erd2.png">
+<img src="./image/erd2.png">
 
 - 위와 같이 Cart와 Order를 매핑시켜도 괜찮지 않을까?? 
 - 괜찮지 않다. 왜냐하면, 주문이 끝난 후 Cart를 삭제해야하는 데 이때 Order테이블의 정합성이 깨진다.
