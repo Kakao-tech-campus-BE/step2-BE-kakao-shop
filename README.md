@@ -61,18 +61,16 @@
 
 - 실제 화면
 
-![image](https://github.com/gkswn/step2-BE-kakao-shop/assets/85356161/4492aebc-b79c-4044-abe6-1f620148bc64)
+![image](./image/task1/task1-1/task1-1-2.png)
 
 
 - 프론트 화면
 
-![image](https://github.com/gkswn/step2-BE-kakao-shop/assets/85356161/0a018163-5d70-4b4c-b00e-8db45d221589)
-
+![image](./image/task1/task1-1/task1-1-3.png)
 
 - 실제 카톡쇼핑 화면
 
-![image](https://github.com/gkswn/step2-BE-kakao-shop/assets/85356161/3fdb3978-bbd3-44d5-85c1-7f3de626e52f)
-
+![image](./image/task1/task1-1/task1-1-4.png)
 
 상품 옵션에서 삭제
 
@@ -82,12 +80,11 @@
 
 ### 장바구니에 있는 물건 다시 추가하면 추가 안됨
 
-![image](https://github.com/gkswn/step2-BE-kakao-shop/assets/85356161/58d6e52b-4f9d-474f-936b-9e89c794111f)
+![image](./image/task1/task1-1/task1-1-5.png)
 
-![image](https://github.com/gkswn/step2-BE-kakao-shop/assets/85356161/c6a838b3-a608-4746-be26-23b7e643fcd9)
+![image](./image/task1/task1-1/task1-1-6.png)
 
-![image](https://github.com/gkswn/step2-BE-kakao-shop/assets/85356161/100b52be-61fa-4da2-a1b5-fea5d79b059e)
-
+![image](./image/task1/task1-1/task1-1-7.png)
 추가 안됨
 
 로직에서 장바구니에 있으면 quantity++
@@ -108,7 +105,7 @@ admin 페이지 고려
 
 테이블을 하나 더 만들어서 user랑 product를 fk로 받는 게 맞나?
 
-![image](https://github.com/gkswn/step2-BE-kakao-shop/assets/85356161/ec214ca6-fa8a-460b-b5cb-63da4ed66b2d)
+![image](./image/task1/task1-1/task1-1-8.png)
 
 →관계 테이블로 구성
 
@@ -118,7 +115,7 @@ admin 페이지 고려
 
 - 실제 카톡 쇼핑 화면
 
-![image](https://github.com/gkswn/step2-BE-kakao-shop/assets/85356161/b01754a5-c672-4639-9407-0fbd0eb08607)
+![image](./image/task1/task1-1/task1-1-9.png)
 
 starcount 필요
 
@@ -126,15 +123,14 @@ starcount 필요
 
 게시판 - 댓글 방식으로 구현
 
-![image](https://github.com/gkswn/step2-BE-kakao-shop/assets/85356161/241f9dc7-a9f9-449c-8f7d-73a7692cc27e)
-
+![image](./image/task1/task1-1/task1-1-10.png)
 
 
 ### 2. 제시된 화면설계를 보고 해당 화면설계와 배포된 기존 서버의 API주소를 매칭하여 README에 내용을 작성하시오. (카카오 화면설계 시나리오가 있음)
 
 ## 1. 전체 상품 목록 조회
 
-![image](https://github.com/gkswn/step2-BE-kakao-shop/assets/85356161/e79bbb5b-6fd5-4217-8f5e-a5537ca259e2)
+![image](./image/task1/task1-2/task1-2-1.png)
 
 - method : Get
 - Local URL : localhost:8080/products
@@ -143,11 +139,11 @@ starcount 필요
 
 상품 클릭 시 이동
 
-![image](https://github.com/gkswn/step2-BE-kakao-shop/assets/85356161/9a718829-3943-4c32-88bd-403e5c71ac4f)
+![image](./image/task1/task1-2/task1-2-2.png)
 
 ## 3. 회원가입
 
-![image](https://github.com/gkswn/step2-BE-kakao-shop/assets/85356161/4f1685f5-8224-40cc-bf05-bbdbc0b5bb47)
+![image](./image/task1/task1-2/task1-2-3.png)
 
 이메일 형식 aaa@aaa.com 입력 후 중복 확인
 
@@ -157,21 +153,21 @@ starcount 필요
 
 ## 4. 로그인
 
-![image](https://github.com/gkswn/step2-BE-kakao-shop/assets/85356161/11b6fb87-684d-4db4-b142-27cb7e8a3a39)
+![image](./image/task1/task1-2/task1-2-4.png)
 
 회원가입 한 내용으로 로그인 로그인 버튼 클릭 시 jwt 헤더로 반환, 로그인 완료
 
 ## 5. 옵션 선택
 
-![image](https://github.com/gkswn/step2-BE-kakao-shop/assets/85356161/95c8d518-502a-4518-8e35-b8665fb26457)
+![image](./image/task1/task1-2/task1-2-5.png)
 
 옵션 선택 시 선택한 상품으로 나옴
 
-![image](https://github.com/gkswn/step2-BE-kakao-shop/assets/85356161/c936ba97-f4e3-49ad-a1ea-4cd953f70b89)
+![image](./image/task1/task1-2/task1-2-6.png)
 
 +버튼 클릭하면 개수 증가, 총 주문금액 증가
 
-![image](https://github.com/gkswn/step2-BE-kakao-shop/assets/85356161/2c024ed8-a626-4180-beb3-96cdb02ecbbc)
+![image](./image/task1/task1-2/task1-2-7.png)
 
 장바구니 버튼 클릭 시 장바구니로 이동,
 
@@ -179,33 +175,33 @@ starcount 필요
 
 ## 6. 장바구니
 
-![image](https://github.com/gkswn/step2-BE-kakao-shop/assets/85356161/5666e326-af3f-422f-949a-46751b54d11c)
+![image](./image/task1/task1-2/task1-2-8.png)
 
 우측 상단의 카트 모양 클릭 시 장바구니로 이동
 
-![image](https://github.com/gkswn/step2-BE-kakao-shop/assets/85356161/539a294c-4665-468f-9e06-4cc88743ba48)
+![image](./image/task1/task1-2/task1-2-9.png)
 
 주문하기 클릭 시 주문 화면으로 이동
 
-![image](https://github.com/gkswn/step2-BE-kakao-shop/assets/85356161/b81816a3-0ba3-4c8d-9c7d-c13638a59cb8)
+![image](./image/task1/task1-2/task1-2-10.png)
 
 배송 정보도 구축 되어야 할 듯
 
-![image](https://github.com/gkswn/step2-BE-kakao-shop/assets/85356161/2a3fad67-3c1d-4210-8bed-7cd98537d7ae)
+![image](./image/task1/task1-2/task1-2-11.png)
 
 주문 정보와 주문 금액, 동의 체크를 하고 결제하기를 클릭하면 결제화면으로 이동
 
-![image](https://github.com/gkswn/step2-BE-kakao-shop/assets/85356161/6090c575-f808-405a-a594-3270dd89290f)
+![image](./image/task1/task1-2/task1-2-12.png)
 
 구매 화면, 쇼핑 계속하기를 클릭하면 products 화면으로 이동
 
 ## 7. 로그아웃
 
-![image](https://github.com/gkswn/step2-BE-kakao-shop/assets/85356161/24d69d65-b688-4b47-a077-08d79244c4ac)
+![image](./image/task1/task1-2/task1-2-13.png)
 
 로그아웃을 클릭하면 로그아웃되고, 로그인 화면으로 이동
 
-![image](https://github.com/gkswn/step2-BE-kakao-shop/assets/85356161/6500b1ca-0f76-482b-8a39-2bb5403c8b6b)
+![image](./image/task1/task1-2/task1-2-14.png)
 
 ### 3. 배포된 서버에 모든 API를 POSTMAN으로 요청해본 뒤 응답되는 데이터를 확인하고 부족한 데이터가 무엇인지 체크하여 README에 내용을 작성하시오.
 
@@ -745,7 +741,7 @@ order_item_id 로 구분
 
 유저 - 주문 = 1-N
 
-![image](https://github.com/gkswn/step2-BE-kakao-shop/assets/85356161/c61533a4-f878-4201-94ae-2ea5befe0fb6)
+![image](./image/task1/task1-4/task1-4-1.png)
 
 ### 추가 기능 고려한 테이블
 
@@ -794,7 +790,7 @@ order_item_id 로 구분
 
 유저 - 리뷰 = 1-1
 
-![image](https://github.com/gkswn/step2-BE-kakao-shop/assets/85356161/7e5e7ef4-0cab-4ea7-8ee0-c99a23663d57)
+![image](./image/task1/task1-4/task1-4-2.png)
 
 
 
