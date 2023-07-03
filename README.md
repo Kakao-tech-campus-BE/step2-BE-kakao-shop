@@ -741,7 +741,7 @@ order_item_id 로 구분
 
 유저 - 주문 = 1-N
 
-![image](./image/task1/task1-4/task1-4-1.png)
+![image](./image/task1/task-1-4/task-1-4-1.png)
 
 ### 추가 기능 고려한 테이블
 
@@ -790,7 +790,7 @@ order_item_id 로 구분
 
 유저 - 리뷰 = 1-1
 
-![image](./image/task1/task1-4/task1-4-2.png)
+![image](./image/task1/task-1-4/task-1-4-2.png)
 
 
 
