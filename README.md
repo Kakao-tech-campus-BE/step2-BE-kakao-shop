@@ -1,3 +1,64 @@
+<h3>1. 요구사항 시나리오를 보고 부족해 보이는 기능을 하나 이상 체크하여 README에 내용을 작성하시오.</h3>
+1. 상품 등록 : request로 제품명, 제품사진, 제품가격, 날짜 등을 받아와 데이터베이스의 Product 테이블에 새로운 상품 데이터를 추가한다.<br>
+2. 상품 검색 : 검색할 상품 이름을 request로 전달받아 해당 문자열이 포함된 상품 목록을 Response로 반환한다. <br>
+3. 개별 상품 구매 : 개별 상품 상세 조회 화면에서 상품, 옵션, 수량 등을 request로 받아오면 데이터베이스에 OrderItem과 Order 테이블에 주문 정보를 저장한다.<br>
+4. 회원가입시 이메일 중복체크 : 회원가입시 이메일 중복체크를 통해 USER 테이블에 request로 받아온 email 주소가 중복되는지 확인한다.<br>
+5. 상품 정렬(가격순, 톡별가 마감일 순, 하트(찜) 순)<br>
+6. 상품 SNS에 공유하기<br>
+7. 상품 별점<br>
+8. 배송 방법 선택<br>
+9. 장바구니 상품 삭제<br>
+
+<h3>2. 제시된 화면설계를 보고 해당 화면설계와 배포된 기존 서버의 API주소를 매칭하여 README에 내용을 작성하시오. (카카오 화면설계 시나리오가 있음)</h3>
+(1) 전체 상품 목록 조회<br><br>
+<img width="600" alt="스크린샷 2023-06-29 오전 10 33 15" src="https://github.com/rnjsgo/step2-BE-kakao-shop/assets/102651155/56c471e1-6e40-4e88-a102-8411d7caa102">
+<img width="600" alt="스크린샷 2023-06-29 오전 10 34 27" src="https://github.com/rnjsgo/step2-BE-kakao-shop/assets/102651155/19690280-cf6d-4929-bf84-d23f4e8f5ea0"> <br>
+(2) 개별 상품 상세 조회<br><br>
+<img width="600" alt="스크린샷 2023-06-29 오전 10 42 23" src="https://github.com/rnjsgo/step2-BE-kakao-shop/assets/102651155/56a07dc4-32e0-4bb7-bfe7-5b574312abbd">
+<img width="600" alt="스크린샷 2023-06-29 오전 10 43 27" src="https://github.com/rnjsgo/step2-BE-kakao-shop/assets/102651155/ff6bbb57-4ae6-46a9-a777-4dbf602b7adf"><br>
+(3) 이메일 중복 체크<br><br>
+<img width="600" alt="스크린샷 2023-06-29 오전 10 44 44" src="https://github.com/rnjsgo/step2-BE-kakao-shop/assets/102651155/6475a8d1-edbb-4814-857d-5574e42969a8">
+<br>
+(4) 회원가입<br><br>
+<img width="600" alt="스크린샷 2023-06-29 오전 10 45 07" src="https://github.com/rnjsgo/step2-BE-kakao-shop/assets/102651155/96a36d47-5b79-448c-bae4-ab4b38a0fe64">
+<img width="600" alt="스크린샷 2023-06-29 오전 11 15 09" src="https://github.com/rnjsgo/step2-BE-kakao-shop/assets/102651155/f43839fe-7755-4bb3-b44e-621d5db46d82"><br>
+(5) 로그인<br><br>
+<img width="600" alt="스크린샷 2023-06-29 오전 11 15 47" src="https://github.com/rnjsgo/step2-BE-kakao-shop/assets/102651155/aebded9d-5969-4ccf-8021-a52fd01aa29a">
+<img width="600" alt="스크린샷 2023-06-29 오전 11 16 23" src="https://github.com/rnjsgo/step2-BE-kakao-shop/assets/102651155/728e2a9c-e19c-474d-9ce1-02008316fb4f">
+<br>
+(6) 장바구니 담기<br><br>
+<img width="600" alt="스크린샷 2023-06-29 오전 11 18 41" src="https://github.com/rnjsgo/step2-BE-kakao-shop/assets/102651155/623a7b59-3d64-4957-bb67-693648325929">
+<img width="600" alt="스크린샷 2023-06-29 오전 11 19 58" src="https://github.com/rnjsgo/step2-BE-kakao-shop/assets/102651155/1a51e74a-e1e5-4a9b-a426-89e1b6415e16"><br>
+(7) 장바구니 조회<br><br>
+<img width="600" alt="스크린샷 2023-06-29 오전 11 20 42" src="https://github.com/rnjsgo/step2-BE-kakao-shop/assets/102651155/39882a0f-63c7-4e1f-aaca-a3d70be6f03d">
+<img width="600" alt="스크린샷 2023-06-29 오전 11 21 32" src="https://github.com/rnjsgo/step2-BE-kakao-shop/assets/102651155/6805fd82-4d5e-49b9-8541-1dfbc25f3122"><br>
+(8) 주문하기(장바구니 수정)<br><br>
+<img width="600" alt="스크린샷 2023-06-29 오전 11 22 17" src="https://github.com/rnjsgo/step2-BE-kakao-shop/assets/102651155/2473ce48-fde4-412d-9f2b-804831a570f5">
+<img width="600" alt="스크린샷 2023-06-29 오전 11 28 46" src="https://github.com/rnjsgo/step2-BE-kakao-shop/assets/102651155/76fa0c37-2deb-4fc8-a939-879456aca27b"><br>
+(9) 결제하기<br><br>
+<img width="600" alt="스크린샷 2023-06-29 오전 11 29 17" src="https://github.com/rnjsgo/step2-BE-kakao-shop/assets/102651155/d3698be3-5e1b-4bd0-977d-4d1e0c5a6eeb">
+<img width="600" alt="스크린샷 2023-06-29 오전 11 30 19" src="https://github.com/rnjsgo/step2-BE-kakao-shop/assets/102651155/08fe4a68-68a3-45a4-80a4-60f78f222ea3"><br>
+(10) 주문 결과 확인<br><br>
+<img width="732" alt="스크린샷 2023-06-29 오전 11 31 28" src="https://github.com/rnjsgo/step2-BE-kakao-shop/assets/102651155/f6a5ba72-83fb-46d0-900b-6ce362cd11a7">
+<img width="711" alt="스크린샷 2023-06-29 오전 11 31 56" src="https://github.com/rnjsgo/step2-BE-kakao-shop/assets/102651155/71fd8300-6692-4eaa-bc80-11ada5ec28a1"><br>
+
+
+<h3>3. 배포된 서버에 모든 API를 POSTMAN으로 요청해본 뒤 응답되는 데이터를 확인하고 부족한 데이터가 무엇인지 체크하여 README에 내용을 작성하시오.</h3>
+<p>(1)전제 상품 목록 조회</p>
+<img width="590" alt="스크린샷 2023-06-28 오후 2 52 36" src="https://github.com/rnjsgo/step2-BE-kakao-shop/assets/102651155/631bb83e-eb57-4cfd-bc6c-850c500107b8">
+<br>
+-> response에 무료배송 여부 데이터를 추가하여 화면에 나타낼 수 있다.<br>
+<p>(2)개별 상품 상세 조회</p>
+<img width="576" alt="스크린샷 2023-06-28 오후 2 57 34" src="https://github.com/rnjsgo/step2-BE-kakao-shop/assets/102651155/9f8f6102-9c9d-4077-b117-7160cf388153"><br>
+-> 전체 상품 조회와 마찬가지로 무료배송 여부와 별점 정보를 추가할 수 있다.
+<br>
+<h4>4. 테이블 설계를 하여 README에 ER-Diagram을 추가하여 제출하시오.</h4>
+
+
+<img width="697" alt="스크린샷 2023-06-28 오후 1 19 48" src="https://github.com/rnjsgo/step2-BE-kakao-shop/assets/102651155/a87499c1-98dd-4a89-a007-ba24525c27fc">
+
+
+
 # step2-BE-kakao-shop
 카카오 테크 캠퍼스 2단계 카카오 쇼핑하기 백엔드 클론 프로젝트 레포지토리입니다.
 
