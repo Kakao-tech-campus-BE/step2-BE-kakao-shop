@@ -130,7 +130,7 @@ starcount 필요
 
 ## 1. 전체 상품 목록 조회
 
-![image](./image/task1/task1-2/task1-2-1.png)
+![image](./image/task1/task1-2/task-1-2-1.png)
 
 - method : Get
 - Local URL : localhost:8080/products
@@ -139,11 +139,11 @@ starcount 필요
 
 상품 클릭 시 이동
 
-![image](./image/task1/task1-2/task1-2-2.png)
+![image](./image/task1/task1-2/task-1-2-2.png)
 
 ## 3. 회원가입
 
-![image](./image/task1/task1-2/task1-2-3.png)
+![image](./image/task1/task1-2/task-1-2-3.png)
 
 이메일 형식 aaa@aaa.com 입력 후 중복 확인
 
@@ -153,21 +153,21 @@ starcount 필요
 
 ## 4. 로그인
 
-![image](./image/task1/task1-2/task1-2-4.png)
+![image](./image/task1/task1-2/task-1-2-4.png)
 
 회원가입 한 내용으로 로그인 로그인 버튼 클릭 시 jwt 헤더로 반환, 로그인 완료
 
 ## 5. 옵션 선택
 
-![image](./image/task1/task1-2/task1-2-5.png)
+![image](./image/task1/task1-2/task-1-2-5.png)
 
 옵션 선택 시 선택한 상품으로 나옴
 
-![image](./image/task1/task1-2/task1-2-6.png)
+![image](./image/task1/task1-2/task-1-2-6.png)
 
 +버튼 클릭하면 개수 증가, 총 주문금액 증가
 
-![image](./image/task1/task1-2/task1-2-7.png)
+![image](./image/task1/task1-2/task-1-2-7.png)
 
 장바구니 버튼 클릭 시 장바구니로 이동,
 
@@ -175,33 +175,33 @@ starcount 필요
 
 ## 6. 장바구니
 
-![image](./image/task1/task1-2/task1-2-8.png)
+![image](./image/task1/task1-2/task-1-2-8.png)
 
 우측 상단의 카트 모양 클릭 시 장바구니로 이동
 
-![image](./image/task1/task1-2/task1-2-9.png)
+![image](./image/task1/task1-2/task-1-2-9.png)
 
 주문하기 클릭 시 주문 화면으로 이동
 
-![image](./image/task1/task1-2/task1-2-10.png)
+![image](./image/task1/task1-2/task-1-2-10.png)
 
 배송 정보도 구축 되어야 할 듯
 
-![image](./image/task1/task1-2/task1-2-11.png)
+![image](./image/task1/task1-2/task-1-2-11.png)
 
 주문 정보와 주문 금액, 동의 체크를 하고 결제하기를 클릭하면 결제화면으로 이동
 
-![image](./image/task1/task1-2/task1-2-12.png)
+![image](./image/task1/task1-2/task-1-2-12.png)
 
 구매 화면, 쇼핑 계속하기를 클릭하면 products 화면으로 이동
 
 ## 7. 로그아웃
 
-![image](./image/task1/task1-2/task1-2-13.png)
+![image](./image/task1/task1-2/task-1-2-13.png)
 
 로그아웃을 클릭하면 로그아웃되고, 로그인 화면으로 이동
 
-![image](./image/task1/task1-2/task1-2-14.png)
+![image](./image/task1/task1-2/task-1-2-14.png)
 
 ### 3. 배포된 서버에 모든 API를 POSTMAN으로 요청해본 뒤 응답되는 데이터를 확인하고 부족한 데이터가 무엇인지 체크하여 README에 내용을 작성하시오.
 
