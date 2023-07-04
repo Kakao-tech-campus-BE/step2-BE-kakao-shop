@@ -1,13 +1,13 @@
 package com.example.kakaoshop.cart;
 
 import com.example.kakaoshop._core.utils.ApiUtils;
+import com.example.kakaoshop.cart.request.CartRequest;
 import com.example.kakaoshop.cart.response.CartItemDTO;
 import com.example.kakaoshop.cart.response.CartRespFindAllDTO;
 import com.example.kakaoshop.cart.response.ProductOptionDTO;
 import com.example.kakaoshop.cart.response.ProductDTO;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,5 +60,16 @@ public class CartRestController {
         CartRespFindAllDTO responseDTO = new CartRespFindAllDTO(productDTOList, 104500);
 
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
+    }
+
+    @PostMapping("/carts/add")
+    public ResponseEntity<?> AddToCart(@RequestBody List<CartRequest.AddDTO> addDTOs) {
+        System.out.println("POST /carts/add 로 요청 받은 값");
+        for (CartRequest.AddDTO addDTO : addDTOs) {
+            System.out.println("optionId(quantity): " + addDTO.getOptionId() +
+                    "(" + addDTO.getQuantity() + ")");
+        }
+
+        return ResponseEntity.ok(ApiUtils.success(null));
     }
 }
