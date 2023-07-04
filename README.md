@@ -21,6 +21,156 @@
 4. 테이블 설계를 하여 README에 ER-Diagram을 추가하여 제출하시오.
 ```
 
+## 1. 요구사항 시나리오, 부족해 보이는 기능
+https://www.notion.so/1-f2de66e9545146d394bb63ce14eb2f32?pvs=4
+<p><img src="./images/1.png"></img></p>
+
+|회원|상품|장바구니|주문/결제|
+|--|--|--|--|
+|회원가입|전체상품 목록 조회|담기|주문|
+|로그인|개별 상품 상세 조회|보기|결제|
+|로그아웃|상품 옵션 선택| 상품 옵션 확인 및 수량 결정|주문 결과 확인|
+| |옵션 확인 및 수량 결정| | |
+
+
+<부족해 보이는 기능>
+- 제품
+  
+    할인
+    
+    제품 등록, 수정, 삭제
+    
+    제품 검색
+    
+    제품 정렬 ( 인기순, 가격순 등)
+    
+- 장바구니
+    
+    제품 삭제
+    
+- 주문/결제
+    
+    개인정보 입력 ( 배송지, 연락처, 배송 요구사항 등)
+    
+    주문 취소
+    
+    취소 사유
+    
+- 주문 결과 확인
+    
+    배송 현황
+    
+    개인 주문 내역 조회
+
+## 2. 서버의 API주소와 화면 매칭
+https://www.notion.so/2-API-33d2bf34051549619f07d2f6be482f76?pvs=4
+1. 전체 상품 목록 조회
+   <p><img src="./images/Untitled.png"></img></p>
+- Local URL : http://localhost:8080/products
+- 페이지로 전체 상품 목록 조회
+    - Local URL : http://localhost:8080/products?page=0 (페이지 번호)
+      
+2. 개별 상품 상세 조회
+ <p><img src="./images/Untitled (1).png"></img></p>
+ - Local URL : http://localhost:8080/products/1 (제품 ID)
+
+
+3. 회원가입
+<p><img src="./images/Untitled (2).png"></img></p>
+- Local URL : http://localhost:8080/join
+
+4. 로그인
+ <p><img src="./images/Untitled (3).png"></img></p>
+- Local URL : http://localhost:8080/login
+
+5. 장바구니 담기
+<p><img src="./images/Untitled (4).png"></img></p>
+- Local URL : http://localhost:8080/carts/add
+
+6. 장바구니 조회
+   <p><img src="./images/Untitled (5).png"></img></p>
+- Local URL : http://localhost:8080/carts
+
+7. 장바구니 수정
+    <p><img src="./images/Untitled (6).png"></img></p>
+    - Local URL : http://localhost:8080/carts/update
+
+8. 결제하기
+   <p><img src="./images/Untitled (7).png"></img></p>
+- Local URL : http://localhost:8080/orders/save
+    
+9. 주문결과 확인
+       <p><img src="./images/Untitled (8).png"></img></p>
+- Local URL : http://localhost:8080/orders/1(주문번호)
+     
+
+## 3. 부족한 데이터
+https://www.notion.so/3-66b83cbebf1d4d9387bd99021e2a27fa?pvs=4
+
+1. 회원가입
+    1. 전화번호 → 전화번호 인증
+    2. 주소
+    3. 닉네임
+2. 제품
+    - 현재 재고 수
+    - 할인율
+3. 옵션
+    - 옵션별 재고 수
+    - 할인율
+4. 장바구니
+5. 결제
+    1. 쿠폰 사용
+    2. 배송지 입력
+    3. 배송시 요청 사항
+6. 주문조회
+    1. 배송현황
+    2. 반품/환불 하기 → 반품 사유
+
+감이 잘안와서 있으면 좋을거 같은 데이터들을 적어보았습니다.
+
+## 4. ER-Diagram
+https://www.notion.so/4-241d83d0283f4cbf8b9a1bcfa7722013?pvs=4
+
+  <p><img src="./images/2.png"></img></p>
+
+## 5. PDF파일 채우기
+CREATE TABLE product (
+pk product_id,
+productName,   image,
+price,   날짜
+);
+CREATE TABLE user (
+pk user_id,
+username,   email,
+password,   날짜
+);
+CREATE TABLE options (
+pk options_id,
+optionName,   price,
+`` 날짜,
+fk user_id
+);
+CREATE TABLE cart (
+pk cart-id,
+fk options_id,
+`` quantity,
+fk user_id
+);
+CREATE TABLE order (
+pk order_id,
+fk cart-id,
+fk options_id,
+`` quantity,
+fk user_id
+);
+CREATE TABLE item (
+pk item_id,
+quantity,   price,
+`` optionName,
+fk order_id,
+fk user_id
+);
+
 </br>
 
 ## **과제 상세 : 수강생들이 과제를 진행할 때, 유념해야할 것**
