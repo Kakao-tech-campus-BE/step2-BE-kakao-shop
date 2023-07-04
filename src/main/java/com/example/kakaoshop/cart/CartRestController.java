@@ -2,10 +2,7 @@ package com.example.kakaoshop.cart;
 
 import com.example.kakaoshop._core.utils.ApiUtils;
 import com.example.kakaoshop.cart.request.CartRequest;
-import com.example.kakaoshop.cart.response.CartItemDTO;
-import com.example.kakaoshop.cart.response.CartRespFindAllDTO;
-import com.example.kakaoshop.cart.response.ProductOptionDTO;
-import com.example.kakaoshop.cart.response.ProductDTO;
+import com.example.kakaoshop.cart.response.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -68,8 +65,43 @@ public class CartRestController {
         for (CartRequest.AddDTO addDTO : addDTOs) {
             System.out.println("optionId(quantity): " + addDTO.getOptionId() +
                     "(" + addDTO.getQuantity() + ")");
+            // TODO: addDTO를 바탕으로 cart_tb 에 INSERT 필요
         }
 
         return ResponseEntity.ok(ApiUtils.success(null));
+    }
+
+    @PostMapping("/carts/update")
+    public ResponseEntity<?> UpdateCart(@RequestBody List<CartRequest.updateDTO> updateDTOs) {
+
+        List<CartItemInfoDTO> carts = new ArrayList<>();
+
+        carts.add(CartItemInfoDTO.builder()
+                .cartId(4L)
+                .optionId(1L)
+                .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
+                .quantity(10)
+                .price(100000)
+                .build());
+
+        carts.add(CartItemInfoDTO.builder()
+                .cartId(5L)
+                .optionId(2L)
+                .optionName("02. 슬라이딩 지퍼백 플라워에디션 5종")
+                .quantity(10)
+                .price(109000)
+                .build());
+
+        System.out.println("POST /carts/update 로 요청 받은 값");
+
+        for (CartRequest.updateDTO updateDTO : updateDTOs) {
+            System.out.println("cartId(quantity): " + updateDTO.getCartId() +
+                    "(" + updateDTO.getQuantity() + ")");
+            // TODO: updateDTO 를 바탕으로 cart_tb 에 UPDATE 필요
+        }
+
+        CartResUpdateDTO responseDTO = new CartResUpdateDTO(carts, 209000);
+
+        return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
 }
