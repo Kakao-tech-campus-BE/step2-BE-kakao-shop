@@ -273,7 +273,7 @@ CREATE INDEX order_user_id_idx on order_tb (user_id);
 
 ## ER 다이어그램
 
-![ER Diagram](https://github.com/SeokjunMoon/kakao_shopping/blob/main/도메인%20분석/데이터베이스_ER_다이어그램.png)
+![ER Diagram](https://github.com/SeokjunMoon/step2-BE-kakao-shop/blob/feat-moonseokjun/데이터베이스_ER_다이어그램.png)
 
 </br>
 </br>
