@@ -7,13 +7,13 @@ import lombok.Setter;
 @Getter @Setter
 public class CartItemDTO {
 
-    private int id;
+    private Long id;
     private ProductOptionDTO option;
     private int quantity;
     private int price;
 
     @Builder
-    public CartItemDTO(int id, ProductOptionDTO option, int quantity, int price) {
+    public CartItemDTO(Long id, ProductOptionDTO option, int quantity, int price) {
         this.id = id;
         this.option = option;
         this.quantity = quantity;

@@ -9,7 +9,7 @@ import java.util.List;
 @Getter @Setter
 public class ProductRespFindByIdDTO {
 
-    private int id;
+    private Long id;
     private String productName;
     private String description;
     private String image;
@@ -18,7 +18,7 @@ public class ProductRespFindByIdDTO {
     private List<ProductOptionDTO> options;
 
     @Builder
-    public ProductRespFindByIdDTO(int id, String productName, String description, String image, int price, int starCount, List<ProductOptionDTO> options) {
+    public ProductRespFindByIdDTO(Long id, String productName, String description, String image, int price, int starCount, List<ProductOptionDTO> options) {
         this.id = id;
         this.productName = productName;
         this.description = description;

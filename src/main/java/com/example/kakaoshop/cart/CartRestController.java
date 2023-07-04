@@ -19,24 +19,24 @@ public class CartRestController {
 
         // 카트 아이템 리스트에 담기
         CartItemDTO cartItemDTO1 = CartItemDTO.builder()
-                .id(4)
+                .id(4L)
                 .quantity(5)
                 .price(50000)
                 .build();
         cartItemDTO1.setOption(ProductOptionDTO.builder()
-                                .id(1)
+                                .id(1L)
                                 .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
                                 .price(10000)
                                 .build());
         cartItemDTOList.add(cartItemDTO1);
 
         CartItemDTO cartItemDTO2 = CartItemDTO.builder()
-                .id(5)
+                .id(5L)
                 .quantity(5)
                 .price(54500)
                 .build();
         cartItemDTO2.setOption(ProductOptionDTO.builder()
-                                .id(1)
+                                .id(1L)
                                 .optionName("02. 슬라이딩 지퍼백 크리스마스에디션 5종")
                                 .price(10900)
                                 .build());
@@ -48,7 +48,7 @@ public class CartRestController {
         // productDTO 리스트에 담기
         productDTOList.add(
                 ProductDTO.builder()
-                        .id(1)
+                        .id(1L)
                         .productName("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전")
                         .cartItems(cartItemDTOList)
                         .build()
