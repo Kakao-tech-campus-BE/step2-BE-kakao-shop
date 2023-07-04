@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/step2-BE-kakao-shop.iml" filepath="$PROJECT_DIR$/.idea/step2-BE-kakao-shop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kakaoshop.iml" filepath="$PROJECT_DIR$/.idea/modules/kakaoshop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kakaoshop.main.iml" filepath="$PROJECT_DIR$/.idea/modules/kakaoshop.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kakaoshop.test.iml" filepath="$PROJECT_DIR$/.idea/modules/kakaoshop.test.iml" />
     </modules>
   </component>
 </project>
