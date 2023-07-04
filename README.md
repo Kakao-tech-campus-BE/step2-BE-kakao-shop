@@ -14,12 +14,564 @@
 ```
 
 ## **과제 설명**
+
+# 과제 조건1
 ```
 1. 요구사항 시나리오를 보고 부족해 보이는 기능을 하나 이상 체크하여 README에 내용을 작성하시오.
-2. 제시된 화면설계를 보고 해당 화면설계와 배포된 기존 서버의 API주소를 매칭하여 README에 내용을 작성하시오. (카카오 화면설계 시나리오가 있음)
+```
+
+- <h3>로그인 기능
+
+POSTMAN 요청 테스트 결과 액세스 토큰만 반환해주는거 같은데, 리프레쉬 토큰을 도입안한다면 액세스 토큰의 만료기간이 지난다면 
+다시 로그인 해야되는 번거로움이 있지 않을지 궁금합니다! <br><br>
+=> jwt token 온거에 exp 보니까 로그인한 기준으로 이틀 후 까지던데, 엑세스 토큰치고 너무 유효기간이 길지 않은지 궁금합니다!
+
+- <h3>상품 옵션 선택 + 옵션 확인 및 수량 결정
+
+상품 옵션을 선택후에 재선택하면, "이미 선택한 옵션입니다" 가아니라 처음에 선택했을때 강조를 해주고, 재선택하면 강조가 풀리면서 취소가 가능해야 될거 같습니다!
+
+- <h3> 장바구니 상품 옵션 확인 및 수량 결정
+
+장바구니에서 상품과 옵션들리스트가 보이는 화면에서도, 개별 취소 기능이 추가되면 좋겠고,
+장바구니 비우기 라는 기능도 추가 되면 좋겠습니다.
+
+
+# 과제 조건 2
+```
+2. 제시된 화면설계를 보고 해당 화면설계와 배포된 기존 서버의 API주소를 매칭하여 README에 내용을 작성하시오.
+ (카카오 화면설계 시나리오가 있음)
+ ```
+- <h3> 회원 가입
+Method : Post    <br>
+Endpoint : /join    <br>
+Action : 회원 가입 버튼을 누를떄  <br><br>
+Request Body    <br>
+```Json
+{
+  "username": "mata",
+  "email": "meta@nate.com",
+  "password": "meta1234!"
+}
+```
+Response Body    <br>
+- 성공 시 (status code : 200)
+```Json
+{
+  "success": true,
+  "response": null,
+  "error": null
+}
+```
+- 실패 시 (status code : 400)
+1. 이메일의 형식을 지키지 않은 경우
+2. 동일한 이메일로 이미 회원이 존재할 경우
+3. 비밀번호가 8~20자 이내가 아닐 경우
+4. 비밀번호가 영문, 숫자, 특수문자가 포함되어야하고 공백이 포함되어있지 않을 경우
+```Json
+{
+  "success": false,
+  "response": null,
+  "error": {
+    "message": "에러종류에 따른 에러메세지 나타남",
+    "status": 400
+  }
+}
+```
+
+- <h3> 로그인
+Method : Post    <br>
+Endpoint : /login    <br> 
+Action : 로그인 버튼을 누를때  <br><br>
+Request Body    <br>
+```Json
+{
+  "email":"ssar@nate.com",
+  "password":"meta1234!"
+}
+```
+Response Header    <br>
+- 성공 시 (status code : 200)
+```
+Bearer
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzc2FyQG5hdGUuY29tIiwicm9sZSI6Il
+JPTEVfVVNFUiIsImlkIjoxLCJleHAiOjE2ODcwNTM5MzV9.fXlD0NZQXYYfPHV8rokRJTM86nhS869L
+Z1KIGi7_qvPOcVbXgvyZLKvnlLxomIiS3YFnQRLzXAJ2G41yI_AmGg
+```
+
+Response Body    <br>
+- 성공 시 (status code : 200)
+```Json
+{
+  "success": true,
+  "response": null,
+  "error": null
+}
+```
+- 실패 시 (status code : 400)
+1. 이메일의 형식을 지키지 않은 경우
+2. 비밀번호가 영문, 숫자, 특수문자가 포함되어야하고 공백이 포함되어있지 않을 경우
+3. 비밀번호가 8~20자 이내가 아닐 경우
+4. 이메일이나 비밀번호가 틀렸을 경우
+
+```Json
+{
+  "success": false,
+  "response": null,
+  "error": {
+    "message": "에러종류에 따른 에러메세지 나타남",
+    "status": 400
+  }
+}
+```
+- <h3> 이메일 중복 체크
+Method : Post    <br>
+Endpoint : /check    <br> 
+Action : 로그인 창에서 이메일이 갱신 될떄마다? <br><br>
+Request Body    <br>
+```Json
+{
+  "email":"meta@nate.com"
+}
+```
+Response Body    <br>
+- 성공 시 (status code : 200)
+```Json
+{
+  "success": true,
+  "response": null,
+  "error": null
+}
+```
+- 실패 시 (status code : 400)
+1. 동일한 이메일이 이미 존재할 경우
+2. 이메일 형식으로 작성하지 않은 경우
+```Json
+{
+  "success": false,
+  "response": null,
+  "error": {
+    "message": "에러종류에 따른 에러메세지 나타남",
+    "status": 400
+  }
+}
+```
+
+
+- <h3> 전체 상품 목록 조회
+Method : Get    <br>
+Endpoint : /products    <br>
+Param : page={number} (디폴트 값은 0이다.)  <br>
+page를 통해 페이징 기능 제공  <br>
+Action : 메인 화면에 접근할 경우 <br><br>
+Response Body    <br>
+- 성공 시 (status code : 200)
+```Json
+{
+"success": true,
+"response": [
+{
+"id": 1,
+"productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전",
+"description": "",
+"image": "/images/1.jpg",
+"price": 1000
+},
+{
+"id": 2,
+"productName": "[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율",
+"description": "",
+"image": "/images/2.jpg",
+"price": 2000
+},
+                            .
+                            .
+                            .
+
+{
+"id": 9,
+"productName": "플레이스테이션 VR2 호라이즌 번들. 생생한 몰입감",
+"description": "",
+"image": "/images/9.jpg",
+"price": 797000
+}
+],
+"error": null
+}
+```
+
+
+- <h3> 개별 상품 목록 조회
+Method : Get    <br>
+Endpoint : /products/{id}    <br>
+Action : 제품 하나를 선택해서 제품 상세 페이지에 접근할 경우 <br><br>
+Response Body    <br>
+- 성공 시 (status code : 200)
+```Json
+{
+  "success": true,
+  "response": {
+    "id": 1,
+    "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전",
+    "description": "",
+    "image": "/images/1.jpg",
+    "price": 1000,
+    "starCount": 5,
+    "options": [
+      {
+        "id": 1,
+        "optionName": "01. 슬라이딩 지퍼백 크리스마스에디션 4종",
+        "price": 10000
+      },
+      {
+        "id": 2,
+        "optionName": "02. 슬라이딩 지퍼백 플라워에디션 5종",
+        "price": 10900
+      },
+      {
+        "id": 3,
+        "optionName": "고무장갑 베이지 S(소형) 6팩",
+        "price": 9900
+      },
+      {
+        "id": 4,
+        "optionName": "뽑아쓰는 키친타올 130매 12팩",
+        "price": 16900
+      },
+      {
+        "id": 5,
+        "optionName": "2겹 식빵수세미 6매",
+        "price": 8900
+      }
+    ]
+  },
+  "error": null
+}
+
+```
+
+- <h3> 장바구니 담기
+Method : Post    <br>
+Endpoint : /carts/add    <br>
+Action : 장바구니 담기 아이콘 버튼을 클릭할 경우 <br><br>
+
+Request Header    <br>
+```Text
+Bearer
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzc2FyQG5hdGUuY29tIiwicm9sZSI6Il
+JPTEVfVVNFUiIsImlkIjoxLCJleHAiOjE2ODcwNTM5MzV9.fXlD0NZQXYYfPHV8rokRJTM86nhS869L
+Z1KIGi7_qvPOcVbXgvyZLKvnlLxomIiS3YFnQRLzXAJ2G41yI_AmGg
+```
+
+Request Body    <br>
+```Json
+[
+{
+"optionId":1,
+"quantity":5
+},
+{
+"optionId":2,
+"quantity":5
+}
+]
+```
+
+Response Body    <br>
+- 성공 시 (status code : 200)
+```Json
+{
+  "success": true,
+  "response": null,
+  "error": null
+}
+```
+
+- <h3> 장바구니 조회
+Method : Get    <br>
+Endpoint : /carts    <br>
+Action : 우측 상단에 장바구니 아이콘을 클릭할 경우 <br><br>
+Request Header    <br>
+```Text
+Bearer
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzc2FyQG5hdGUuY29tIiwicm9sZSI6Il
+JPTEVfVVNFUiIsImlkIjoxLCJleHAiOjE2ODcwNTM5MzV9.fXlD0NZQXYYfPHV8rokRJTM86nhS869L
+Z1KIGi7_qvPOcVbXgvyZLKvnlLxomIiS3YFnQRLzXAJ2G41yI_AmGg
+```
+Response Body    <br>
+- 성공 시 (status code : 200)
+```Json
+{
+  "success": true,
+  "response": {
+    "products": [
+      {
+        "id": 1,
+        "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션외 주방용품 특가전",
+        "carts": [
+          {
+            "id": 4,
+            "option": {
+              "id": 1,
+              "optionName": "01. 슬라이딩 지퍼백 크리스마스에디션 4종",
+              "price": 10000
+            },
+            "quantity": 5,
+            "price": 50000
+          }
+        ]
+      }
+    ],
+    "totalPrice": 104500
+  },
+  "error": null
+}
+
+```
+- <h3> 장바구니 수정(주문하기)
+Method : Post    <br>
+Endpoint : /carts/update    <br>
+Action : 주문하기 버튼을 클릭할 경우 <br><br>
+Request Header    <br>
+```Text
+Bearer
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzc2FyQG5hdGUuY29tIiwicm9sZSI6Il
+JPTEVfVVNFUiIsImlkIjoxLCJleHAiOjE2ODcwNTM5MzV9.fXlD0NZQXYYfPHV8rokRJTM86nhS869L
+Z1KIGi7_qvPOcVbXgvyZLKvnlLxomIiS3YFnQRLzXAJ2G41yI_AmGg
+```
+Request Body    <br>
+```Json
+[
+  {
+    "cartId":4,
+    "quantity":10
+  },
+  {
+    "cartId":5,
+    "quantity":10
+  }
+]
+```
+Response Body    <br>
+- 성공 시 (status code : 200)
+```Json
+{
+"success": true,
+"response": {
+"carts": [
+{
+"cartId": 4,
+"optionId": 1,
+"optionName": "01. 슬라이딩 지퍼백 크리스마스에디션 4종",
+"quantity": 10,
+"price": 100000
+},
+{
+"cartId": 5,
+"optionId": 2,
+"optionName": "02. 슬라이딩 지퍼백 플라워에디션 5종",
+"quantity": 10,
+"price": 109000
+}
+],
+"totalPrice": 209000
+},
+"error": null
+}
+```
+- <h3> 결제하기
+Method : Post    <br>
+Endpoint : /orders/save    <br>
+Action : 결제하기 버튼을 클릭할 경우 <br><br>
+Request Header    <br>
+```Text
+Bearer
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzc2FyQG5hdGUuY29tIiwicm9sZSI6Il
+JPTEVfVVNFUiIsImlkIjoxLCJleHAiOjE2ODcwNTM5MzV9.fXlD0NZQXYYfPHV8rokRJTM86nhS869L
+Z1KIGi7_qvPOcVbXgvyZLKvnlLxomIiS3YFnQRLzXAJ2G41yI_AmGg
+```
+
+Response Body    <br>
+- 성공 시 (status code : 200)
+```Json
+{
+  "success": true,
+  "response": {
+    "id": 2,
+    "products": [
+      {
+        "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션외 주방용품 특가전",
+        "items": [
+          {
+            "id": 4,
+            "optionName": "01. 슬라이딩 지퍼백 크리스마스에디션 4종",
+            "quantity": 10,
+            "price": 100000
+          },
+          {
+            "id": 5,
+            "optionName": "02. 슬라이딩 지퍼백 플라워에디션 5종",
+            "quantity": 10,
+            "price": 109000
+          }
+        ]
+      }
+    ],
+    "totalPrice": 209000
+  },
+  "error": null
+}
+
+```
+# 과제 조건 3
+```
 3. 배포된 서버에 모든 API를 POSTMAN으로 요청해본 뒤 응답되는 데이터를 확인하고 부족한 데이터가 무엇인지 체크하여 README에 내용을 작성하시오.
+```
+### 1. 고객이 결제한 모든 주문리스트를 가져오는 api 가 있으면 좋겠습니다 <br><br>
+예를 들어
+- <h3> 주문 목록 조회
+Method : Get    <br>
+Endpoint : /orders    <br>
+Action : 주문내역이 있다고 가정하고, 주문내역 버튼을 클릭할 경우 <br><br>
+Request Header    <br>
+```Text
+Bearer
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzc2FyQG5hdGUuY29tIiwicm9sZSI6Il
+JPTEVfVVNFUiIsImlkIjoxLCJleHAiOjE2ODcwNTM5MzV9.fXlD0NZQXYYfPHV8rokRJTM86nhS869L
+Z1KIGi7_qvPOcVbXgvyZLKvnlLxomIiS3YFnQRLzXAJ2G41yI_AmGg
+```
+
+Response Body    <br>
+- 성공 시 (status code : 200)
+```Json
+{
+  "success": true,
+  "response": [
+    {
+      "id": 1,
+      "products": [
+        {
+          "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션외 주방용품 특가전",
+          "items": [
+            {
+              "id": 4,
+              "optionName": "01. 슬라이딩 지퍼백 크리스마스에디션 4종",
+              "quantity": 10,
+              "price": 100000
+            },
+            {
+              "id": 5,
+              "optionName": "02. 슬라이딩 지퍼백 플라워에디션 5종",
+              "quantity": 10,
+              "price": 109000
+            }
+          ]
+        }
+      ],
+      "totalPrice": 209000
+    },
+    {
+    "id": 2,
+    "products": [
+      {
+        "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션외 주방용품 특가전",
+        "items": [
+          {
+            "id": 4,
+            "optionName": "01. 슬라이딩 지퍼백 크리스마스에디션 4종",
+            "quantity": 10,
+            "price": 100000
+          },
+          {
+            "id": 5,
+            "optionName": "02. 슬라이딩 지퍼백 플라워에디션 5종",
+            "quantity": 10,
+            "price": 109000
+          }
+        ]
+      }
+    ],
+    "totalPrice": 209000
+  },
+    {
+      "id": 3,
+      "products": [
+        {
+          "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션외 주방용품 특가전",
+          "items": [
+            {
+              "id": 4,
+              "optionName": "01. 슬라이딩 지퍼백 크리스마스에디션 4종",
+              "quantity": 10,
+              "price": 100000
+            },
+            {
+              "id": 5,
+              "optionName": "02. 슬라이딩 지퍼백 플라워에디션 5종",
+              "quantity": 10,
+              "price": 109000
+            }
+          ]
+        }
+      ],
+      "totalPrice": 209000
+     }
+    ],
+  "error": null
+ }
+```
+
+이렇게 해당 고객이 주문한 모든 주문 내역을 볼 수 있는 API가 나중에 필요하지 않을까? 
+생각이 됩니다.
+
+### 2.장바구니를 id로 조회해서 삭제하는 API가 필요해 보입니다.
+
+- 장바구니 개별 삭제
+
+Method : Post
+
+Endpoint : /carts/delete/{id}
+
+Action : 현재 삭제 액션 구현 되어있지 않음
+
+Request Header
+
+```
+Bearer
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzc2FyQG5hdGUuY29tIiwicm9sZSI6Il
+JPTEVfVVNFUiIsImlkIjoxLCJleHAiOjE2ODcwNTM5MzV9.fXlD0NZQXYYfPHV8rokRJTM86nhS869L
+Z1KIGi7_qvPOcVbXgvyZLKvnlLxomIiS3YFnQRLzXAJ2G41yI_AmGg
+
+```
+
+Response Body
+
+- 성공 시 (status code : 200)
+
+```json
+{ 
+  "success": true,
+  "response": {
+                "id": 34,
+                "option": {
+                            "id": 1,
+                            "optionName": "01. 슬라이딩 지퍼백 크리스마스에디션 4종",
+                            "price": 10000
+                          },
+                  "quantity": 5,
+                  "price": 50000
+              },
+  "error": null
+}
+```
+
+# 과제 조건 4
+
+```
 4. 테이블 설계를 하여 README에 ER-Diagram을 추가하여 제출하시오.
 ```
+
+## erd 최종본 png 참조
+
 
 </br>
 
