@@ -22,7 +22,7 @@ public class ProductOption {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -35,7 +35,7 @@ public class ProductOption {
 
 
     @Builder
-    public ProductOption(int id, Product product, String optionName, int price) {
+    public ProductOption(Long id, Product product, String optionName, int price) {
         this.id = id;
         this.product = product;
         this.optionName = optionName;
