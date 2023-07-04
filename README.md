@@ -45,6 +45,190 @@
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
+## 1주차 클론 과제
+##### 1. 요구사항 시나리오를 보고 부족해 보이는 기능을 하나 이상 체크하여 README에 내용을 작성하시오.
+
+> -> 상품 등록
+> -> 아이디 비밀번호 찾기
+> -> 상품 검색
+> -> 별점 기능
+> ==> 이는 미리 예상이 가능합니다. 일반적으로 쇼핑몰 홈페이지를 이용할 때 사용하는 기능들이 현재 요구사항 시나리오에 있는지 비교하면서 예상할 수 있습니다.
+
+
+##### 2. 제시된 화면설계를 보고 해당 화면설계와 배포된 기존 서버의 API주소를 매칭하여 README에 내용을 작성하시오.
+> (기능1) 회원 가입
+>
+> API 주소: http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/join
+>
+>
+>
+> (기능2) 로그인
+>
+> API 주소: http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/login
+>
+>
+>
+> (기능3) 전체 상품 목록 조회
+>
+> API 주소: http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/products
+>
+>
+>
+> (기능4) 개별 상품 상세 조회
+>
+> API 주소: http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/products/1
+>
+>
+>
+> (기능5) 장바구니 담기
+>
+> API 주소:http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/carts/add
+>
+>
+>
+> (기능6) 장바구니 보기
+>
+> API 주소:http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/carts
+>
+>
+>
+> (기능7) 결제
+>
+> API 주소:http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/orders/save
+>
+>
+>
+> (기능8) 주문 결과 확인
+>
+> API 주소:http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/orders/1
+
+
+##### 3. 배포된 서버에 모든 API를 POSTMAN으로 요청해본 뒤 응답되는 데이터를 확인하고 부족한 데이터가 무엇인지 체크하여 README에 내용을 작성하시오.
+> [1] 전체 상품 목록 조회 (http://localhost:8080/products)
+>
+> 응답되는 데이터: {“id", "productName", "description", "image", "price"}
+>
+> 부족한 데이터: {”freeDelivery"}
+>
+>
+>
+> [2] 개별 상품 상세 조회 (http://localhost:8080/products/1)
+>
+> 응답되는 데이터:  {"id", "productName", "description", "image", "price", "starCount", "options"}
+>
+> 부족한 데이터: 없음
+>
+>
+>
+> [3] 이메일 중복 체크 (http://localhost:8080/check)
+>
+> 응답되는 데이터: {“success", "response", "error"}
+>
+> 부족한 데이터: 없음
+>
+>
+>
+> [4] 회원가입 (http://localhost:8080/join)
+>
+> 응답되는 데이터: {”success", "response", "error"}
+>
+> 부족한 데이터: 없음
+>
+>
+>
+> [5] 로그인 (http://localhost:8080/login)
+>
+> 응답되는 데이터: {“success", "response", "error"}
+>
+> 부족한 데이터: 없음
+>
+>
+>
+> [6] 장바구니 담기 (http://localhost:8080/carts/add)
+>
+> 응답되는 데이터: {"success", "response", "error"}
+>
+> 부족한 데이터: 없음
+>
+>
+>
+> [7] 장바구니 조회 (http://localhost:8080/carts)
+>
+> 응답되는 데이터: {"success", "products", totalPrice", "error" }
+>
+> 부족한 데이터: 없음
+>
+>
+>
+> [8] 주문하기 - (장바구니 수정) (http://localhost:8080/carts/update)
+>
+> 응답되는 데이터: {”success", "carts", "totalPrice", "error" }
+>
+> 부족한 데이터: 없음
+>
+>
+>
+> [9] 결제하기 - (주문 인서트) (http://localhost:8080/orders/save)
+>
+> 응답되는 데이터: {“success", "id", "products", "totalPrice", "error" }
+>
+> 부족한 데이터: 없음
+>
+>
+>
+> [10] 주문 결과 확인 (http://localhost:8080/orders/1)
+>
+> 응답되는 데이터: {”success", "id", "products", "totalPrice", "error" }
+>
+> 부족한 데이터: 없음
+
+### ERD 사진
+
+
+> ![ERD 이미지 파일](https://postfiles.pstatic.net/MjAyMzA2MzBfMjE2/MDAxNjg4MTE2MjcwMTA3.eXI3_yOPPPfSIUfWYDdXOGW4mxmyM2oxaDl3flOe194g.I_A03QirJaoBCEXPy3UQ0ZO9c3w8gfaOrHMkI1QrARUg.JPEG.zzzz7037/ERD.jpg?type=w773)
+
+### 데이터베이스 모델링 테이블 설계
+
+> #### User
+>
+>- id int(100) [pk]
+>- username varchar(50) 
+>- email varchar(50)
+>- password varchar(50)
+>- createDate date
+>
+> #### product
+>- id int(100) [pk]
+>- product_name varchar(100)
+>- description  varchar(1000)
+>- image varchar(1000)
+>- price int(10)
+>- createDate date
+>
+> #### option
+>- id int(100) [pk]
+>- product_id [fk]
+>- option_name varchar(100)
+>- price int(10)
+>
+> #### cart
+>- id int(10) [pk]
+>- user_id int(100) [fk]
+>- option_id int(100) [fk]
+>- quantity int(100)
+>- price int(10)
+>
+> #### order
+>- id int(10) [pk]
+>- userId int(10) [pk] [fk]
+>
+> #### item
+>- id int(10) [pk]
+>- option_id int(10) [fk]
+>- quantity int(10)
+>- price int(10)
+>- order_id int(10) [fk]
+
 # 2주차
 
 카카오 테크 캠퍼스 2단계 - BE - 2주차 클론 과제
