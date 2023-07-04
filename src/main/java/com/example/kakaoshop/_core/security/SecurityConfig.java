@@ -32,7 +32,7 @@ public class SecurityConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-    public class CustomSecurityFilterManager extends AbstractHttpConfigurer<CustomSecurityFilterManager, HttpSecurity> {
+    public static class CustomSecurityFilterManager extends AbstractHttpConfigurer<CustomSecurityFilterManager, HttpSecurity> {
         @Override
         public void configure(HttpSecurity builder) throws Exception {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
@@ -65,15 +65,15 @@ public class SecurityConfig {
         http.apply(new CustomSecurityFilterManager());
 
         // 8. 인증 실패 처리
-        http.exceptionHandling().authenticationEntryPoint((request, response, authException) -> {
-            log.warn("인증되지 않은 사용자가 자원에 접근하려 합니다 : "+authException.getMessage());
-        });
+        http.exceptionHandling().authenticationEntryPoint((request, response, authException) ->
+            log.warn("인증되지 않은 사용자가 자원에 접근하려 합니다 : "+authException.getMessage())
+        );
 
 
         // 9. 권한 실패 처리
-        http.exceptionHandling().accessDeniedHandler((request, response, accessDeniedException) -> {
-            log.warn("권한이 없는 사용자가 자원에 접근하려 합니다 : "+accessDeniedException.getMessage());
-        });
+        http.exceptionHandling().accessDeniedHandler((request, response, accessDeniedException) ->
+            log.warn("권한이 없는 사용자가 자원에 접근하려 합니다 : "+accessDeniedException.getMessage())
+        );
 
 
         // 10. 인증, 권한 필터 설정

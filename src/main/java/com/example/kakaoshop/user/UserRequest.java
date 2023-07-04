@@ -2,6 +2,7 @@ package com.example.kakaoshop.user;
 
 import lombok.*;
 
+// TODO: email 형식 검사
 public class UserRequest {
 
     private UserRequest() {}
@@ -23,7 +24,6 @@ public class UserRequest {
 
     @Getter @Setter // TODO: 생성자를 사용하지 않는 이유 ?
     public static class EmailDuplicateCheckDTO {
-        // TODO: email 형식 검사
         private String email;
     }
 }

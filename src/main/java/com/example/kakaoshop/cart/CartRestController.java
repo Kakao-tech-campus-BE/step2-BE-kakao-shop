@@ -7,6 +7,7 @@ import com.example.kakaoshop.cart.response.ProductOptionDTO;
 import com.example.kakaoshop.cart.response.ProductDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.List;
 @RestController
 public class CartRestController {
 
+    // 장바구니 조회
     @GetMapping("/carts")
     public ResponseEntity<?> findAll() {
         // 카트 아이템 리스트 만들기
@@ -60,5 +62,11 @@ public class CartRestController {
         CartRespFindAllDTO responseDTO = new CartRespFindAllDTO(productDTOList, 104500);
 
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
+    }
+
+    // 장바구니 담기
+    @PostMapping("/carts/{product-id}")
+    public ResponseEntity<?> addCartItem() {
+        return ResponseEntity.ok(ApiUtils.success(null));
     }
 }
