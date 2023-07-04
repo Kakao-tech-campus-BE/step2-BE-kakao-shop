@@ -4,6 +4,7 @@ import com.example.kakaoshop._core.security.CustomUserDetails;
 import com.example.kakaoshop._core.security.JWTProvider;
 import com.example.kakaoshop._core.utils.ApiUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -11,31 +12,58 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/user") // TODO: user -> account 도메인 이름 변경 고려.
 public class UserRestController {
     private final UserJPARepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
-    @PostMapping("/join")
-    public ResponseEntity<?> join(@RequestBody UserRequest.JoinDTO joinDTO) {
-        User user = User.builder()
-                .email(joinDTO.getEmail())
-                .password(passwordEncoder.encode(joinDTO.getPassword()))
-                .username(joinDTO.getUsername())
-                .roles("ROLE_USER")
-                .build();
+    // 이메일 중복 검사
+    @PostMapping("/email-duplicate-check")
+    public ResponseEntity<?> checkEmailDuplicate(@RequestBody UserRequest.EmailDuplicateCheckDTO checkEmailDuplicateDTO) {
+        List<String> mockEmailList = Arrays.asList(
+          "ssar@nate.com",
+          "abcd@gmail.com"
+        );
 
-        userRepository.save(user);
+        if(mockEmailList.contains(checkEmailDuplicateDTO.getEmail()))
+            return ResponseEntity.badRequest().body(
+              ApiUtils.error("동일한 이메일이 존재합니다 : " + checkEmailDuplicateDTO.getEmail(), HttpStatus.BAD_REQUEST)
+            );
+
+        return ResponseEntity.ok(ApiUtils.success(null));
+
+
+        // TODO: service level 에서 exception throw-handle 고려.
+        // boolean isEmailDuplicate = userRepository.existsByEmail(checkEmailDuplicateDTO.getEmail());
+        // return ResponseEntity.ok(ApiUtils.success(Collections.singletonMap("isEmailDuplicate", isEmailDuplicate)));
+    }
+
+    // 회원가입
+    @PostMapping("/sign-up") // join -> signUp 이름 변경.
+    public ResponseEntity<?> signUp(@RequestBody UserRequest.SignUpDTO signUpDTO) {
+        userRepository.save(
+          User.builder()
+            .email(signUpDTO.getEmail())
+            .password(passwordEncoder.encode(signUpDTO.getPassword()))
+            .username(signUpDTO.getUsername())
+            .roles("ROLE_USER")
+            .build()
+        );
 
         return ResponseEntity.ok("ok");
     }
 
+    // 로그인
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserRequest.LoginDTO loginDTO) {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
