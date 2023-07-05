@@ -15,10 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user") // TODO: user -> account 도메인 이름 변경 고려.
@@ -42,6 +38,7 @@ public class UserRestController {
     // 회원가입
     @PostMapping("/sign-up")
     public ResponseEntity<?> signUp(@RequestBody UserRequest.SignUpDTO signUpDTO) {
+        // TODO: email 중복체크
         userRepository.save(
           User.builder()
             .email(signUpDTO.getEmail())

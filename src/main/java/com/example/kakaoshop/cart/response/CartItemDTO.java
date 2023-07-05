@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter @Setter
 public class CartItemDTO {
 
-    private int id;
+    private int id; // mock auto increment PK
     private ProductOptionDTO option;
     private int quantity;
     private int price;

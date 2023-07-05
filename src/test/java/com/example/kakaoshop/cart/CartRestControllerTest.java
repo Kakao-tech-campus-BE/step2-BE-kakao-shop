@@ -14,14 +14,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-public class CartRestControllerTest {
+class CartRestControllerTest {
     @Autowired
     private MockMvc mvc;
 
     @Test
     @WithMockUser
     // 전체 상품 목록 조회
-    public void findAll_test() throws Exception {
+    void findAll_test() throws Exception {
+        // TODO: 로직 수정으로 cart insert 가 먼저 이루어져야 함.
 
         // when
         ResultActions resultActions = mvc.perform(

@@ -31,6 +31,7 @@ public class ProductOption {
 
     @Column(length = 100, nullable = false)
     private String optionName;
+
     private int price;
 
 
