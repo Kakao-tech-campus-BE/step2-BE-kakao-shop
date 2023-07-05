@@ -61,4 +61,12 @@ public class CartRestController {
 
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
+
+    /*
+        추가되어야 할 API:
+        - 장바구니 담기
+        /carts/add
+        - 주문(장바구니 수정)
+        /carts/update
+    */
 }

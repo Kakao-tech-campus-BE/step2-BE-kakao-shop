@@ -4,6 +4,7 @@ import com.example.kakaoshop._core.security.CustomUserDetails;
 import com.example.kakaoshop._core.security.JWTProvider;
 import com.example.kakaoshop._core.utils.ApiUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -33,8 +36,16 @@ public class UserRestController {
 
         userRepository.save(user);
 
-        return ResponseEntity.ok("ok");
+        // Create a new response object with the required format
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("response", null);
+        response.put("error", null);
+
+        // Return the response object as JSON
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserRequest.LoginDTO loginDTO) {
