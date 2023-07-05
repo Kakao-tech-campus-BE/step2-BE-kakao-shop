@@ -1,4 +1,51 @@
 package com.example.kakaoshop.order;
 
+import com.example.kakaoshop._core.utils.ApiUtils;
+import com.example.kakaoshop.order.response.OrderItemDTO;
+import com.example.kakaoshop.order.response.OrderResFindByIdDTO;
+import com.example.kakaoshop.order.response.ProductDTO;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@RestController
 public class OrderRestController {
+
+    @GetMapping("/orders/{id}")
+    public ResponseEntity<?> findById(@PathVariable Long id) {
+
+        List<ProductDTO> productDTOs = new ArrayList<>();
+
+        List<OrderItemDTO> orderItemDTOs = new ArrayList<>();
+        orderItemDTOs.add(OrderItemDTO.builder()
+                .id(4L)
+                .optionName("01. 슬라이딩 지퍼백 크리스마스에디션")
+                .quantity(10)
+                .price(100000)
+                .build());
+        orderItemDTOs.add(OrderItemDTO.builder()
+                .id(5L)
+                .optionName("02. 슬라이딩 지퍼백 플라워에디션 5종")
+                .quantity(10)
+                .price(109000)
+                .build());
+
+        productDTOs.add(ProductDTO.builder()
+                .productName("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션")
+                .items(orderItemDTOs)
+                .build());
+
+        OrderResFindByIdDTO responseDTO = OrderResFindByIdDTO.builder()
+                .id(id)
+                .products(productDTOs)
+                .totalPrice(209000)
+                .build();
+
+        return ResponseEntity.ok(ApiUtils.success(responseDTO));
+    }
+
 }
