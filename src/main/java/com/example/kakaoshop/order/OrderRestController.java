@@ -1,5 +1,3 @@
 package com.example.kakaoshop.order;
 
-public class OrderRestController {
-
-}
+public class OrderRestController {}
