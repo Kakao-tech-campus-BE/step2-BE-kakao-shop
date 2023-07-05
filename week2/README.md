@@ -518,8 +518,7 @@ CREATE TABLE `Order_Item` (
 
 # 2주차
 
-카카오 테크 캠퍼스 2단계 - BE - 2주차 클론 과제
-</br>
+> 카카오 테크 캠퍼스 2단계 - BE - 2주차 클론 과제
 </br>
 
 ## **과제명**
@@ -542,6 +541,267 @@ CREATE TABLE `Order_Item` (
 >- 가짜 데이터를 설계하여 Mock API를 잘 구현하였는가? (예를 들어 DB연결없이 컨트롤러만 만들어서 배포된 서버의 응답과 동일한 형태로 데이터가 응답되는지 여부)
 </br>
 
+### Mock API Controller 구현
+- `/join`
+    ```java
+    @PostMapping("/join")
+    public ResponseEntity<?> join(@RequestBody UserRequest.JoinDTO joinDTO) {
+        User user = User.builder()
+                .email(joinDTO.getEmail())
+                .password(passwordEncoder.encode(joinDTO.getPassword()))
+                .username(joinDTO.getUsername())
+                .roles("ROLE_USER")
+                .build();
+
+        userRepository.save(user);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("response", null);
+        response.put("error", null);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    ```
+    - 올바른 **Response Body** 를 반환하도록 구현하였다.
+
+- `/login`
+    ```java
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody UserRequest.LoginDTO loginDTO) {
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
+                = new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword());
+        Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+        CustomUserDetails myUserDetails = (CustomUserDetails) authentication.getPrincipal();
+        String jwt = JWTProvider.create(myUserDetails.getUser());
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("response", null);
+        response.put("error", null);
+
+        return ResponseEntity.ok().header(JWTProvider.HEADER, jwt).body(response);
+    }
+    ```
+    - 올바른 **Response Body**를 반환하면서 jwt토큰을 반환하도록 구현했다.
+
+- `/carts/add`
+    ```java
+    @PostMapping("/carts/add")
+    public ResponseEntity<?> addItem() {
+        /*
+            현재 API문서 상에서는 optionId, quantity를 Request Body로 전달한다.
+            ProductOtpionDTO 에서 option의 id를 받아온다.
+            CartitemDTO에서 option의 quantity를 받아온다.
+        */
+
+        // Request Body return
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("response", null);
+        response.put("error", null);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    ```
+    - 올바른 **Response Body**를 반환하도록 구현했다.
+    - business logic 은 구현하지 않았다.
+
+- `/carts/update`
+    ```java
+    @GetMapping("/carts/update")
+    public ResponseEntity<?> updateItem() {
+        // carts항목의 더미 데이터 생성
+        List<CartUpdateItemDTO> carts = new ArrayList<>();
+        CartUpdateItemDTO cartUpdateItemDTO01 = CartUpdateItemDTO.builder()
+                .quantity(10)
+                .price(100000)
+                .cartId(4)
+                .optionId(1)
+                .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
+                .build();
+        CartUpdateItemDTO cartUpdateItemDTO02 = CartUpdateItemDTO.builder()
+                .quantity(10)
+                .price(100000)
+                .cartId(5)
+                .optionId(2)
+                .optionName("02. 슬라이딩 지퍼백 플라워에디션 5종")
+                .build();
+        carts.add(cartUpdateItemDTO01);
+        carts.add(cartUpdateItemDTO02);
+
+        // Response Body 생성
+        CartUpdateDTO responseDTO = CartUpdateDTO.builder()
+                .carts(carts)
+                .build();
+
+        // Response Body 반환
+        return ResponseEntity.ok(ApiUtils.success(responseDTO));
+    }
+    ```
+    - 더미 데이터를 이용하는 Mock API를 구현했다.
+    - API문서의 출력과 동일한 **Response Body**를 구현하기 위해 `CartUpdateDTO.java`, `CartUpdateItemDTO.java`를 생성했다.
+    - 해당 DTO를 이용하여 API문서와 동일한 형태의 json파일을 출력한다.
+        > 적절한 클래스 이름이 맞는지 확신이 서지 않습니다...
+    - `CartUpdateDTO.java`
+        ```java
+        @Getter @Setter
+        public class CartUpdateDTO {
+            private List<CartUpdateItemDTO> carts;
+            private int totalPrice;
+
+            @Builder
+            public CartUpdateDTO(List<CartUpdateItemDTO> carts, int totalPrice) {
+                this.carts = carts;
+                this.totalPrice = totalPrice;
+            }
+        }
+        ```
+    - `CartUpdateItemDTO.java`
+        ```java
+        @Getter @Setter
+        public class CartUpdateItemDTO {
+            private int quantity;
+            private int price;
+            private int cartId;
+            private int optionId;
+            private String optionName;
+
+            @Builder
+            public CartUpdateItemDTO(int quantity, int price, int cartId, int optionId, String optionName) {
+                this.quantity = quantity;
+                this.price = price;
+                this.cartId = cartId;
+                this.optionId = optionId;
+                this.optionName = optionName;
+            }
+        }
+        ```
+
+- `orders/save`
+    ```java
+    @PostMapping("/orders/save")
+    public ResponseEntity<?> makeOrder() {
+        List<OrderItem> items = new ArrayList<>();
+        OrderItem orderItem01 = OrderItem.builder()
+                .id(4)
+                .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
+                .quantity(10)
+                .price(100000)
+                .build();
+        OrderItem orderItem02 = OrderItem.builder()
+                .id(5)
+                .optionName("02. 슬라이딩 지퍼백 플라워에디션 5종")
+                .quantity(10)
+                .price(109000)
+                .build();
+        items.add(orderItem01);
+        items.add(orderItem02);
+
+        List<OrderProducts> products = new ArrayList<>();
+        OrderProducts orderProducts01 = OrderProducts.builder()
+                .productName("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션")
+                .items(items)
+                .build();
+        products.add(orderProducts01);
+
+        OrderResponseDTO response = new OrderResponseDTO(2, products, 209000);
+        return ResponseEntity.ok(ApiUtils.success(response));
+    }
+    ```
+    - 더미 데이터를 이용하는 Mock API를 구현했다.
+    - API문서의 출력과 동일한 **Response Body**를 구현하기 위해 `OrderItem.java`, `OrderProduct.java`, `OrderResponseDTO.java`를 생성했다.
+    - 위의 클래스들을 이용하여 API문서와 동일한 형태의 json파일을 출력한다.
+    - `OrderItem.java`
+        ```java
+        @Getter @Setter
+        public class OrderItem {
+            private int id;
+            private String optionName;
+            private int quantity;
+            private int price;
+
+            @Builder
+            public OrderItem(int id, String optionName, int quantity, int price) {
+                this.id = id;
+                this. optionName = optionName;
+                this. quantity = quantity;
+                this.price = price;
+            }
+        }
+        ```
+
+    - `OrderProducts.java`
+        ```java
+        @Getter @Setter
+        public class OrderProducts {
+            private String productName;
+            private List<OrderItem> items;
+
+            @Builder
+            public OrderProducts(String productName, List<OrderItem> items) {
+                this.productName = productName;
+                this.items = items;
+            }
+        }
+
+        ```
+    - `OrderResponseDTO.java`
+        ```java
+        @Getter @Setter
+        public class OrderResponseDTO {
+            private int id;
+            private List<OrderProducts> products;
+            private int totalPrice;
+
+            @Builder
+            public OrderResponseDTO(int id, List<OrderProducts> products, int totalPrice) {
+                this.id = id;
+                this.products = products;
+                this.totalPrice = totalPrice;
+            }
+        }
+        ```
+- `orders/{id}`
+    ```java
+    @GetMapping("/orders/{id}")
+    public ResponseEntity<?> findById(@PathVariable int id) {
+        OrderResponseDTO response = null;
+
+        if(id == 2){
+            List<OrderItem> items = new ArrayList<>();
+            OrderItem orderItem01 = OrderItem.builder()
+                    .id(4)
+                    .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
+                    .quantity(10)
+                    .price(100000)
+                    .build();
+            OrderItem orderItem02 = OrderItem.builder()
+                    .id(5)
+                    .optionName("02. 슬라이딩 지퍼백 플라워에디션 5종")
+                    .quantity(10)
+                    .price(109000)
+                    .build();
+            items.add(orderItem01);
+            items.add(orderItem02);
+
+            List<OrderProducts> products = new ArrayList<>();
+            OrderProducts orderProducts01 = OrderProducts.builder()
+                    .productName("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션")
+                    .items(items)
+                    .build();
+            products.add(orderProducts01);
+
+            response = new OrderResponseDTO(2, products, 209000);
+        }else {
+            return ResponseEntity.badRequest().body(ApiUtils.error("해당 주문을 찾을 수 없습니다 : " + id, HttpStatus.BAD_REQUEST));
+        }
+        return ResponseEntity.ok(ApiUtils.success(response));
+    }
+    ```
+    - API 문서의 예시를 반환하도록 더미 데이터를 구현하였다.
+    - 더미 데이터의 id가 2이므로 `/orders/2`를 입력해야 예시를 출력한다. 이외의 경우 "해당 주문을 찾을 수 없습니다."라는 메시지를 API문서의 출력과 같이 반환한다.
+    - `/orders/save`에서 출력한 것과 동일한 **Response Body**를 출력해야 하므로 `OrderItem.java`, `OrderProduct.java`, `OrderResponseDTO.java`를 사용한다.
 ## **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
 **1. PR 제목과 내용을 아래와 같이 작성 해주세요.**
 
