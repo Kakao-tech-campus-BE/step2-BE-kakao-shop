@@ -1,8 +1,8 @@
 package com.example.kakaoshop.cart;
 
 import com.example.kakaoshop._core.utils.ApiUtils;
-import com.example.kakaoshop.cart.request.CartAddDTO;
-import com.example.kakaoshop.cart.request.CartUpdateDTO;
+import com.example.kakaoshop.cart.request.CartAddReqDTO;
+import com.example.kakaoshop.cart.request.CartUpdateReqDTO;
 import com.example.kakaoshop.cart.response.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -61,34 +61,34 @@ public class CartRestController {
     }
 
     @PostMapping("/carts/add")
-    public ResponseEntity<?> addCarts(@RequestBody List<CartAddDTO> cartAddDTOList) {
+    public ResponseEntity<?> addCarts(@RequestBody List<CartAddReqDTO> cartAddReqDTOList) {
         //member 찾기
         return ResponseEntity.ok("ok");
     }
 
     @PutMapping("/carts/update")
-    public ResponseEntity<?> updateCarts(@RequestBody List<CartUpdateDTO> cartUpdateDTOList) {
+    public ResponseEntity<?> updateCarts(@RequestBody List<CartUpdateReqDTO> cartUpdateReqDTOList) {
         //member 찾기
-        List<CartUpdateResDTO> cartUpdateResDTOList = new ArrayList<>();
-        CartUpdateResDTO cartUpdateResDTO1 = CartUpdateResDTO.builder()
+        List<CartUpdateDTO> cartUpdateDTOList = new ArrayList<>();
+        CartUpdateDTO cartUpdateDTO1 = CartUpdateDTO.builder()
                 .cartId(4)
                 .optionId(1)
                 .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
                 .quantity(10)
                 .price(100000)
                 .build();
-        cartUpdateResDTOList.add(cartUpdateResDTO1);
-        CartUpdateResDTO cartUpdateResDTO2 = CartUpdateResDTO.builder()
+        cartUpdateDTOList.add(cartUpdateDTO1);
+        CartUpdateDTO cartUpdateDTO2 = CartUpdateDTO.builder()
                 .cartId(5)
                 .optionId(2)
                 .optionName("02. 슬라이딩 지퍼백 플라워에디션 5종")
                 .quantity(10)
                 .price(109000)
                 .build();
-        cartUpdateResDTOList.add(cartUpdateResDTO2);
+        cartUpdateDTOList.add(cartUpdateDTO2);
 
-        CartDTO responseDTO = CartDTO.builder()
-                .carts(cartUpdateResDTOList)
+        CartUpdateResDTO responseDTO = CartUpdateResDTO.builder()
+                .carts(cartUpdateDTOList)
                 .totalPrice(209000)
                 .build();
 

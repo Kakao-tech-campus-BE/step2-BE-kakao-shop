@@ -1,25 +1,20 @@
 package com.example.kakaoshop.cart.response;
 
-import com.example.kakaoshop.cart.request.CartUpdateDTO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class CartUpdateResDTO {
-    private int cartId;
-    private int optionId;
-    private String optionName;
-    private int quantity;
-    private int price;
+    private List<CartUpdateDTO> carts;
+    private int totalPrice;
 
     @Builder
-    public CartUpdateResDTO(int cartId, int optionId, String optionName, int quantity, int price){
-        this.cartId = cartId;
-        this.optionId = optionId;
-        this.optionName = optionName;
-        this.quantity = quantity;
-        this.price = price;
+    public CartUpdateResDTO(List<CartUpdateDTO> carts, int totalPrice){
+        this.carts = carts;
+        this.totalPrice = totalPrice;
     }
 }
