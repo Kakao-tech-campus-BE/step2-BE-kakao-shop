@@ -1,0 +1,18 @@
+name: ci
+
+on: push
+
+jobs:
+  format:
+    if: github.repository == 'fienestar-assignment/step2-BE-kakao-shop'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+      - name: Google Java Format
+        uses: axel-op/googlejavaformat-action@v3.6.0
+        with:
+          args: "--skip-sorting-imports --replace"
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          commitMessage: "format"
