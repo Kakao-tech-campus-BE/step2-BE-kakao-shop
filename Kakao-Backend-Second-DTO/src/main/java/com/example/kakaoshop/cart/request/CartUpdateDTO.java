@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CartAddDTO {
+public class CartUpdateDTO {
     private int optionId;
     private int quantity;
 }
