@@ -38,7 +38,7 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
             int id = decodedJWT.getClaim("id").asInt();
             String roles = decodedJWT.getClaim("role").asString();
 
-            User user = User.builder().id(id).roles(roles).build();
+            User user = User.builder().id(id).roles(roles).build(); // Controller 에서 받아오는 객체
             CustomUserDetails myUserDetails = new CustomUserDetails(user);
             Authentication authentication =
                     new UsernamePasswordAuthenticationToken(

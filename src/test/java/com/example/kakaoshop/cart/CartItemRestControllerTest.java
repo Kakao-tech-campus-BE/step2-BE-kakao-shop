@@ -22,7 +22,7 @@ class CartItemRestControllerTest {
     @WithMockUser
     // 전체 상품 목록 조회
     void findAll_test() throws Exception {
-        // TODO: 로직 수정으로 cart insert 가 먼저 이루어져야 함.
+        // TODO: 로직 수정으로 cart insert 가 먼저 이루어져야 함
 
         // when
         ResultActions resultActions = mvc.perform(

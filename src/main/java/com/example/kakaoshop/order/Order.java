@@ -13,6 +13,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
+@Table(name = "order_tb")
 public class Order {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY) // TODO: auto-increment PK vs UUID 고민, 주문번호를 사람이 이해하기 쉬운 형태로 만들 필요가 있을수도 있겠다.

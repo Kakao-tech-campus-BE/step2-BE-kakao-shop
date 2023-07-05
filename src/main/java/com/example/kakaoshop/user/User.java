@@ -25,6 +25,7 @@ public class User {
 
     @Column(length = 30)
     private String roles; // role은 한 개 이상
+    // , 로 구분되는 일종의 csv 형식으로 저장하겠다는 의미로 보이는데 ...
 
     @Builder
     public User(int id, String email, String password, String username, String roles) {

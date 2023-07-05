@@ -31,9 +31,8 @@ public class JWTProvider {
 
     public static DecodedJWT verify(String jwt) throws SignatureVerificationException, TokenExpiredException {
         jwt = jwt.replace(JWTProvider.TOKEN_PREFIX, "");
-        DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC512(SECRET))
+        return JWT.require(Algorithm.HMAC512(SECRET))
                 .build().verify(jwt);
-        return decodedJWT;
     }
 
 }

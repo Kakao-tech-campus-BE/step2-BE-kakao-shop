@@ -18,7 +18,8 @@ public class CartMockRepository {
     cartItemDTOList.clear();
   }
 
-  public List<CartItemDTO> findAllByUserId() {
+  public List<CartItemDTO> findAllByUserId(int userId) {
+    // return mock data
     return cartItemDTOList;
   }
 
