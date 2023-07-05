@@ -36,13 +36,11 @@ public class UserRestController {
 
         userRepository.save(user);
 
-        // Create a new response object with the required format
         Map<String, Object> response = new HashMap<>();
         response.put("success", true);
         response.put("response", null);
         response.put("error", null);
 
-        // Return the response object as JSON
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -55,6 +53,11 @@ public class UserRestController {
         CustomUserDetails myUserDetails = (CustomUserDetails) authentication.getPrincipal();
         String jwt = JWTProvider.create(myUserDetails.getUser());
 
-        return ResponseEntity.ok().header(JWTProvider.HEADER, jwt).body("ok");
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("response", null);
+        response.put("error", null);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
