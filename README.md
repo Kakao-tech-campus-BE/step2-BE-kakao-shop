@@ -4,8 +4,8 @@
 # 1주차
 
 카카오 테크 캠퍼스 2단계 - BE - 1주차 클론 과제
-</br>
-</br>
+<br/>
+<br/>
 
 ## **과제명**
 ```
@@ -21,7 +21,7 @@
 4. 테이블 설계를 하여 README에 ER-Diagram을 추가하여 제출하시오.
 ```
 
-</br>
+<br/>
 
 ## **과제 상세 : 수강생들이 과제를 진행할 때, 유념해야할 것**
 아래 항목은 반드시 포함하여 과제 수행해주세요!
@@ -31,28 +31,28 @@
 >- 테이블 설계가 모든 API를 만족할 수 있게 나왔는가? (테이블이 효율적으로 나왔는가 보다는 해당 테이블로 요구사항을 만족할 수 있는지에 대한 여부만)
 >- 테이블명이 이해하기 쉽게 만들어졌는가? (상품테이블이 product이면 이해하기 쉽지만, material이라고 하면 이해하기 어렵기 때문)
 
-</br>
+<br/>
 
 ## **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
 **1. PR 제목과 내용을 아래와 같이 작성 해주세요.**
 
 >- PR 제목 : 부산대BE_라이언_1주차 과제
 
-</br>
+<br/>
 
 **2. PR 내용 :**
 
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
-</br>
+<br/>
 
 ## **1. 요구사항 분석 / API 요청 및 응답 시나리오 분석**
-</br>
+<br/>
 
 ### <span style="color:skyblue"> 1) **요구사항 시나리오를 보고 부족해 보이는 기능**을 하나 이상 체크하여 README에 내용을 작성하시오.</span>
 
-</br>
+<br/>
 
 ### 회원 가입
 - 이메일(아이디) 중복 체크 기능
@@ -72,23 +72,23 @@
 ### 주문 결과 확인
 - 구매한 상품의 옵션, 수량, 금액 모두를 보여주는 기능
 
-</br>
+<br/>
 
 > 개발 범위에 벗어나지만 필요한 기능 
 ### 마이페이지 
 - 비밀번호 수정 기능
 - 주문 내역 조회 기능
 
-</br>
+<br/>
 
 ### <span style="color:skyblue"> **2)** 제시된 화면설계를 보고 <U>**해당 화면설계와 배포된 기존 서버의 API 주소를 매칭**</U>하여 README에 내용을 작성하시오. (카카오 화면설계 시나리오가 있음)</span> 
 ### <span style="color:skyblue"> **3)** 배포된 서버에 모든 API를 POSTMAN으로 요청해본 뒤 응답되는 데이터를 확인하고 <U>**부족한 데이터가 무엇인지 체크**</U>하여 README에 내용을 작성하시오.</span>
  
-</br>
+<br/>
 
 <img src="img/1.png">
 
-</br>
+<br/>
 
 ### **1. 쇼핑하기(Home page) : 전체 상품 목록 조회**
 * GET
@@ -173,7 +173,7 @@ page={number}
 ```
 > description은 사용하지 않으므로 삭제하는 것이 좋다.
 
-</br>
+<br/>
 
 ### **2. 상품 선택 : 개별 상품 상세 조회**
 * GET
@@ -223,7 +223,7 @@ http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/products/:
 }
 ```
 
-</br>
+<br/>
 
 ### **3. 장바구니 조회**
 * GET
@@ -343,7 +343,7 @@ Z1KIGi7_qvPOcVbXgvyZLKvnlLxomIiS3YFnQRLzXAJ2G41yI_AmGg
 ```
 > 장바구니는 선택된 option과 담은 수량(quantity), 가격(price)을 포함한다.
 
-</br>
+<br/>
 
 
 ---
@@ -359,12 +359,19 @@ Z1KIGi7_qvPOcVbXgvyZLKvnlLxomIiS3YFnQRLzXAJ2G41yI_AmGg
 http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/login
 ```
 
-* request body
+* Request Body
 ```json
 {
   "email":"ssar@nate.com",
   "password":"meta1234!"
 }
+```
+* Response Header
+```bash
+Bearer
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzc2FyQG5hdGUuY29tIiwicm9sZSI6Il
+JPTEVfVVNFUiIsImlkIjoxLCJleHAiOjE2ODcwNTM5MzV9.fXlD0NZQXYYfPHV8rokRJTM86nhS869L
+Z1KIGi7_qvPOcVbXgvyZLKvnlLxomIiS3YFnQRLzXAJ2G41yI_AmGg
 ```
 * Response Body
 ```json
@@ -374,8 +381,9 @@ http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/login
     "error": null
 }
 ```
+>JWT 토큰 인증 방식을 사용하므로 로그인 후 Bearer 토큰을 얻는다.
 
-</br>
+<br/>
 
 ---
 <br/>
@@ -389,7 +397,7 @@ http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/login
 ```bash
 http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/check
 ```
-* request body
+* Request Body
 ```json
 {
   "email":"meta@nate.com"
@@ -404,7 +412,7 @@ http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/check
 }
 ```
 
-</br>
+<br/>
 
 
 ### **2. 회원가입**
@@ -429,7 +437,7 @@ http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/join
 }
 ```
 
-</br>
+<br/>
 
 ---
 <br/>
@@ -474,7 +482,7 @@ Z1KIGi7_qvPOcVbXgvyZLKvnlLxomIiS3YFnQRLzXAJ2G41yI_AmGg
 ```
 > `존재하는 옵션 Id`로 요청하면 오류가 난다. 장바구니(cart)에 이미 같은 옵션이 담겼기 때문이다.<br/>하지만 고객이 상품A를 장바구니에 담은 후 다른 상품들을 둘러보다가, 다시 상품A를 담을 경우 그만큼 수량이 더해져서 장바구니가 갱신되면 좋을 것 같다. <br/>이를 위해 <U>**이미 존재하는 옵션 Id일 경우 서버에서 장바구니 수정(/update)을 호출**</U>하면 좋을 것 같다.
 
-</br>
+<br/>
 
 ---
 <br/>
@@ -501,11 +509,11 @@ Z1KIGi7_qvPOcVbXgvyZLKvnlLxomIiS3YFnQRLzXAJ2G41yI_AmGg
 ```json
 [
     {
-        "cartId":47,
+        "cartId":4,
         "quantity":10
     },
     {
-        "cartId":48,
+        "cartId":5,
         "quantity":10
     } 
 ]
@@ -552,7 +560,7 @@ Z1KIGi7_qvPOcVbXgvyZLKvnlLxomIiS3YFnQRLzXAJ2G41yI_AmGg
 ```
 > JSON 응답에 상품 이름을 포함하는 것이 좋다. 상품명 밑에 옵션 등이 표시되기 때문이다.
 
-</br>
+<br/>
 
 ---
 <br/>
@@ -624,7 +632,7 @@ Z1KIGi7_qvPOcVbXgvyZLKvnlLxomIiS3YFnQRLzXAJ2G41yI_AmGg
 > 온라인 쇼핑몰이라면, 요청을 보낼 때 배송지와 배송 요청사항, 배송비 정보를 함께 보내야 한다.
 > <br/> 하지만 요구사항에 없으므로 포함하지 않는다.
 
-</br>
+<br/>
 
 ### **2. 주문 결과 확인 (결제 후)**
 * GET
@@ -680,16 +688,16 @@ Z1KIGi7_qvPOcVbXgvyZLKvnlLxomIiS3YFnQRLzXAJ2G41yI_AmGg
 }
 ```
 
-</br>
+<br/>
 
 ### <span style="color:skyblue">**4) 테이블 설계**를 하여 README에 **ER-Diagram**을 추가하여 제출하시오.</span>
 
-</br>
+<br/>
 
 ### **1. 데이터베이스 설계**
 화면 설계와 응답 데이터를 보며 테이블과 필드, 제약조건을 생각해보았다.
 
-</br>
+<br/>
 
 ## **user**
 ```sql
@@ -705,13 +713,13 @@ CREATE TABLE user (
 
 > email은 로그인 아이디로 사용되어 유저마다 고유해야하므로 UNIQUE 제약조건을 두었다. 
 
-> 프로젝트의 db에 많은 양의 데이터가 들어가지 않으므로, </br>
+> 프로젝트의 db에 많은 양의 데이터가 들어가지 않으므로, <br/>
 > id의 타입은 BIGINT가 아닌 INT를 사용했다.
 
-> INT로 선언하면 INT(11)로 선언하는 것과 같다. </br> 
+> INT로 선언하면 INT(11)로 선언하는 것과 같다. <br/> 
 > INT는 10자리이지만 음수까지 표현하기 위해 11자리가 default이다.
 
-</br>
+<br/>
 
 ## **product**
 ```sql
@@ -725,10 +733,10 @@ CREATE TABLE product (
 );
 ```
 
-> 이미지 경로를 저장하므로 VARCHAR 타입을 선택했다. </br> 
+> 이미지 경로를 저장하므로 VARCHAR 타입을 선택했다. <br/> 
 > 만약 이미지 자체(바이너리 데이터)를 저장하려면 BLOB 타입을 사용해야 한다. 
 
-</br>
+<br/>
 
 ## **option**
 ```sql
@@ -741,17 +749,17 @@ CREATE TABLE option (
     FOREIGN KEY (product_id) REFERENCES product(id)
 );
 ```
-> **제품과 옵션 테이블을 따로 생성하는 이유**</br>
-> 제품 하나에 여러개의 옵션이 존재하고(1:N), 옵션이 새로 추가 또는 삭제될 수 있기 때문이다. </br>
+> **제품과 옵션 테이블을 따로 생성하는 이유**<br/>
+> 제품 하나에 여러개의 옵션이 존재하고(1:N), 옵션이 새로 추가 또는 삭제될 수 있기 때문이다. <br/>
 > 또한 나중에 옵션 안의 속성들이 변경될 수 있다.
 
 <br/>
 
-> **외래키(FK) 사용 이유** </br>
-> 해당 상품 조회시 옵션도 함께 조회해야하므로 조인(join) 연산이 수행된다. </br>
-> 이때 참조 무결성을 위해서 FK를 사용하였다.  </br>
+> **외래키(FK) 사용 이유** <br/>
+> 해당 상품 조회시 옵션도 함께 조회해야하므로 조인(join) 연산이 수행된다. <br/>
+> 이때 참조 무결성을 위해서 FK를 사용하였다.  <br/>
 > 
-</br>
+<br/>
 
 ## **cart**
 ```sql
@@ -766,11 +774,11 @@ CREATE TABLE cart (
     FOREIGN KEY (option_id) REFERENCES option(id),
 );
 ```
->  사용자는 장바구니에 {옵션, 옵션 개수}를 함께 담는다. </br>
+>  사용자는 장바구니에 {옵션, 옵션 개수}를 함께 담는다. <br/>
 
 >  장바구니 조회 기능은 유저 id로 cart 테이블을 조회함으로써 구현된다.
 
-</br>
+<br/>
 
 ### <span style="color:pink">**주문상품(item) 테이블**과 **주문(order) 테이블**이 필요한 이유</span>
 **주문 과정**
@@ -778,33 +786,34 @@ CREATE TABLE cart (
 2. 담은 장바구니(cart)들이 주문 상품(item)들로 이동한다.
 3. 주문(order)이 생성된다.
 4. 장바구니가 비워진다.
-</br>
+<br/>
 
 **테이블 설명**
-> **주문 상품(item) 테이블**  </br>
+> **주문 상품(item) 테이블**  <br/>
 > 옵션마다 생긴 장바구니(cart)들이 주문되어 <U>실제 주문 상품들</U>이 된다.  
 > 장바구니와 구조가 거의 같다.(상품 옵션, 옵션 개수 + 주문 번호)
 
-> **주문(order) 테이블** </br>
-> <U>유저의 주문을 기록</U>하고, <U>빈 장바구니로 갱신</U>하기 위해 필요하다.  </br>
-> 주문 id와 유저 id로 구성되어있다. </br>
+> **주문(order) 테이블** <br/>
+> <U>유저의 주문을 기록</U>하고, <U>빈 장바구니로 갱신</U>하기 위해 필요하다.  <br/>
+> 주문 id와 유저 id로 구성되어있다. <br/>
 > 주문 후, 주문 테이블의 <U>유저 id</U>를 찾아서 해당 유저가 담았던 장바구니(cart)들을 비운다.
 
-</br>
+<br/>
 
-현재 요구사항에는 구매할 장바구니를 선택하는 기능은 없고, 담은 장바구니 모두를 주문하도록 설계되어있다. </br>
+✳️ 현재 요구사항에는 구매할 장바구니를 선택하는 기능은 없고, 담은 장바구니 모두를 주문하도록 설계되어있다. <br/>
 * 만약 <U>장바구니(cart)들을 선택하여 주문</U>할 수 있다면,
   1. 주문된 장바구니들만 장바구니 테이블에서 제거하거나,
-  2. 결제한 주문 상품들(item)의 옵션 번호를 조회하여 장바구니에서 그 옵션번호를 가진 장바구니를 삭제하여 </br>
+  2. 결제한 주문 상품들(item)의 옵션 번호를 조회하여 장바구니에서 그 옵션번호를 가진 장바구니를 삭제하여 <br/>
 장바구니 비우기를 구현할 수 있다.
 
-</br>
+<br/>
 
 ### <span style="color:orange">**유저**와 **주문(order) 테이블**, **주문상품(item) 테이블**의 관계</span>
-> 유저와 주문(order)은 **1:N 관계**이고, 주문과 주문 상품(item)도 **1:N 관계**이다. </br>
-> 즉 주문들은 유저로 묶일 수 있고, 주문 상품들은 주문으로 묶일 수 있다. </br>
+> 유저와 주문(order)은 **1:N 관계**이고, 주문과 주문 상품(item)도 **1:N 관계**이다. <br/>
+> 즉 주문들은 유저로 묶일 수 있고, 주문 상품들은 주문으로 묶일 수 있다. <br/>
 > 주문 table은 유저 id를 가지면 되고, 주문 상품 table은 주문 id를 가지면 된다.
-</br>
+
+<br/>
 
 ## **order**
 ```sql
@@ -815,9 +824,9 @@ CREATE TABLE order (
     FOREIGN KEY (user_id) REFERENCES user(id),
 );
 ```
-> 유저의 주문을 기록하고, 장바구니를 비울 때 사용하는 테이블이다. </br>
+> 유저의 주문을 기록하고, 장바구니를 비울 때 사용하는 테이블이다. <br/>
 
-</br>
+<br/>
 
 ## **item**
 ```sql
@@ -836,7 +845,7 @@ CREATE TABLE item (
 
 > 장바구니와 거의 구조가 같다. 
 
-</br>
+<br/>
 
 ### **2. 연관관계 파악 및 ER 다이어그램 작성**
 <br/>
@@ -849,48 +858,50 @@ CREATE TABLE item (
 1:N 관계
 > 유저는 여러 장바구니 {선택 옵션, 옵션 개수}들을 가지고 있다.
 
-</br>
+<br/>
 
 ### **Product - Option**
 1:N 관계
 > 상품은 여러 개의 옵션을 가지고 있다.
 
-</br>
+<br/>
 
 ### **Cart - Option**
 1:1 관계
 > 유저의 장바구니 하나는 하나의 옵션을 가지고 있다.
 
-</br>
+<br/>
 
 ### **User - Order**
 1:N 관계
 > 한명의 유저는 여러 번의 주문을 할 수 있다.
 
-</br>
+<br/>
 
 ### **Order - Item**
 1:N 관계
 > 주문 하나는 여러개의 결제 상품을 가질 수 있다.
 
-</br>
+<br/>
 
 ### **Option - Item**
 1:N 관계
-> 하나의 옵션은 여러개의 결제 상품을 가질 수 있다. </br>
+> 하나의 옵션은 여러개의 결제 상품을 가질 수 있다. <br/>
 
-ex1) 유저가 옵션을 재주문했을때 한 옵션에 대해 결제 상품 여러개를 가질 수 있다.</br>
+ex1) 유저가 옵션을 재주문했을때 한 옵션에 대해 결제 상품 여러개를 가질 수 있다.<br/>
 ex2) 여러명의 유저가 같은 옵션을 구매했을때 한 옵션에 대한 결제상품은 여러개이다.
 
-</br>
+<br/>
 
-</br>
+* * * 
+
+<br/>
 
 # 2주차
 
 카카오 테크 캠퍼스 2단계 - BE - 2주차 클론 과제
-</br>
-</br>
+<br/>
+<br/>
 
 ## **과제명**
 ```
@@ -904,31 +915,262 @@ ex2) 여러명의 유저가 같은 옵션을 구매했을때 한 옵션에 대�
 2. 가짜 데이터를 설계하여 응답하는 스프링부트 컨트롤러를 작성하고 소스코드를 업로드하시오.
 ```
 
-</br>
+<br/>
 
 ## **과제 상세 : 수강생들이 과제를 진행할 때, 유념해야할 것**
 아래 항목은 반드시 포함하여 과제 수행해주세요!
 >- 전체 API 주소 설계가 RestAPI 맞게 설계되었는가? (예를 들어 배포된 서버는 POST와 GET으로만 구현되었는데, 학생들은 PUT과 DELETE도 배울 예정이라 이부분이 반영되었고, 주소가 RestAPI에 맞게 설계되었는지)
 >- 가짜 데이터를 설계하여 Mock API를 잘 구현하였는가? (예를 들어 DB연결없이 컨트롤러만 만들어서 배포된 서버의 응답과 동일한 형태로 데이터가 응답되는지 여부)
-</br>
+
+<br/>
 
 ## **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
 **1. PR 제목과 내용을 아래와 같이 작성 해주세요.**
 
 >- PR 제목 : 부산대BE_라이언_2주차 과제
 
-</br>
+<br/>
 
 **2. PR 내용 :**
 
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
+<br/>
+<br/>
+
+## <span style="color:7DE5ED">**1. 전체 API 주소 설계**</span>
+API주소를 설계하여 README에 내용을 작성하시오.
+
+> 작성된 API를 **Restful한 API**로 변경하기
+
+<br/>
+
+**Restful한 API**란?
+```typescript
+- REST API의 설계 의도를 명확하게 지킨 API
+- URI만 보더라도 리소스를 명확하게 인식할 수 있는 API
+- 각 리소스 기능을 HTTP 메서드를 이용하여 일관되게 정의한 API
+```
+<br/>
+
+**HTTP 메서드**
+```typescript
+GET : 조회
+POST : 생성
+PUT : 수정
+DELETE : 삭제
+```
+<br/>
+
+## <span style="color:#068FFF">**상품(product)**</span>
+<br/>
+
+### **1. 전체 상품 목록 조회**
+* GET
+```bash
+http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/products
+```
+<br/>
+
+### **2. 개별 상품 상세 조회**
+* GET
+```bash
+http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/products/:id
+```
+<br/>
+
+## <span style="color:#068FFF">**장바구니(cart)**</span>
+<br/>
+
+### **1. 장바구니 조회 (전체 조회)**
+* GET
+```bash
+http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/carts
+```
+* Request Header
+```bash
+Bearer
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzc2FyQG5hdGUuY29tIiwicm9sZSI6Il
+JPTEVfVVNFUiIsImlkIjoxLCJleHAiOjE2ODcwNTM5MzV9.fXlD0NZQXYYfPHV8rokRJTM86nhS869L
+Z1KIGi7_qvPOcVbXgvyZLKvnlLxomIiS3YFnQRLzXAJ2G41yI_AmGg
+```
+<br/>
+
+### **2. 장바구니 담기 (저장)**
+* POST
+```bash
+http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/carts
+```
+* Request Header
+```bash
+Bearer
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzc2FyQG5hdGUuY29tIiwicm9sZSI6Il
+JPTEVfVVNFUiIsImlkIjoxLCJleHAiOjE2ODcwNTM5MzV9.fXlD0NZQXYYfPHV8rokRJTM86nhS869L
+Z1KIGi7_qvPOcVbXgvyZLKvnlLxomIiS3YFnQRLzXAJ2G41yI_AmGg
+```
+
+* Request Body
+```json
+[
+    {
+        "optionId":1,
+        "quantity":5
+    },
+    {
+        "optionId":2,
+        "quantity":5
+    } 
+]
+```
+<br/>
+
+> **POST** /carts/add ➡️ **POST** /carts <br/>
+> - URI에 행위에 대한 동사표현이 들어가면 안된다.
+> - 객체명은 복수명사를 사용한다. 
+
+<br/>
+
+### **3. 주문하기 (장바구니 수정)**
+* PUT
+```bash
+http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/carts
+```
+* Request Header
+```bash
+Bearer
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzc2FyQG5hdGUuY29tIiwicm9sZSI6Il
+JPTEVfVVNFUiIsImlkIjoxLCJleHAiOjE2ODcwNTM5MzV9.fXlD0NZQXYYfPHV8rokRJTM86nhS869L
+Z1KIGi7_qvPOcVbXgvyZLKvnlLxomIiS3YFnQRLzXAJ2G41yI_AmGg
+```
+
+* Request Body
+```json
+[
+    {
+        "cartId":4,
+        "quantity":10
+    },
+    {
+        "cartId":5,
+        "quantity":10
+    } 
+]
+```
+<br/>
+
+> **POST** /carts/update ➡️ **PUT** /carts <br/>
+> - 동사로 표현되는 행위들은 HTTP 메서드를 이용하여 정의한다.
+
+<br/>
+
+## <span style="color:#068FFF">**주문(order)**</span>
+<br/>
+
+### **1. 주문 결과 확인**
+* GET
+```bash
+http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/orders/:id
+```
+* Request Header
+```bash
+Bearer
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzc2FyQG5hdGUuY29tIiwicm9sZSI6Il
+JPTEVfVVNFUiIsImlkIjoxLCJleHAiOjE2ODcwNTM5MzV9.fXlD0NZQXYYfPHV8rokRJTM86nhS869L
+Z1KIGi7_qvPOcVbXgvyZLKvnlLxomIiS3YFnQRLzXAJ2G41yI_AmGg
+```
+<br/>
+
+### **2. 결제하기 (주문 저장)**
+* POST
+```bash
+http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/orders
+```
+<br/>
+
+> **POST** /orders/save ➡️ **POST** /orders <br/>
+> - URI에 행위에 대한 동사표현이 들어가면 안된다.
+
+<br/>
+
+## <span style="color:#068FFF">**유저(user)**</span>
+자원보다는 행위에 가까운 API들로 구성
+
+<br/>
+
+### **1. 로그인**
+* POST
+```bash
+http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/auth
+```
+* request body
+```json
+{
+  "email":"ssar@nate.com",
+  "password":"meta1234!"
+}
+```
+<br/>
+
+> **POST** /login ➡️ **POST** /auth
+> - URI에 행위에 대한 동사표현이 들어가면 안된다.
+
+<br/>
+
+### **2. 회원가입**
+* POST
+```bash
+http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/users
+```
+* Request Body
+```json
+{
+  "username":"meta",
+  "email":"meta@nate.com",
+  "password":"meta1234!"
+}
+```
+<br/>
+
+> **POST** /join ➡️ **POST** /users
+> - URI에 행위에 대한 동사표현이 들어가면 안된다.
+
+<br/>
+
+### **3. 이메일 중복 확인**
+* POST
+```bash
+http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/check-email
+```
+<br/>
+
+> **POST** /check ➡️ **POST** /check-email
+> - 회원가입과 이메일 중복 확인 기능은 연관되어있으므로 함께 설계하려고 했으나, <br/>
+> restful api에서 / 으로 표현하는 계층관계는 **리소스 포함관계**를 뜻하므로 맞지 않아 분리하였다.
+> - check뒤 email을 붙여 **이메일**에 대한 중복확인 의도를 명확하게 전달했다.
+
+<br/>
+<br/>
+
+## <span style="color:7DE5ED">**2. Mock API Controller 구현**</span>
+가짜 데이터를 설계하여 응답하는 스프링부트 컨트롤러를 작성하고 소스코드를 업로드하시오.
+<br/>
+
+
+
+
+
+<br/>
+
+
+-----------------------------------------------------
+<br/>
+
 # 3주차
 
 카카오 테크 캠퍼스 2단계 - BE - 3주차 클론 과제
-</br>
-</br>
+<br/>
+<br/>
 
 ## **과제명**
 ```
@@ -941,7 +1183,7 @@ ex2) 여러명의 유저가 같은 옵션을 구매했을때 한 옵션에 대�
 2. 쿼리를 테스트하면서 가장 좋은 쿼리를 작성해보시오.
 ```
 
-</br>
+<br/>
 
 ## **과제 상세 : 수강생들이 과제를 진행할 때, 유념해야할 것**
 아래 항목은 반드시 포함하여 과제 수행해주세요!
@@ -949,14 +1191,14 @@ ex2) 여러명의 유저가 같은 옵션을 구매했을때 한 옵션에 대�
 >- 테스트 메서드끼리 유기적으로 연결되지 않았는가? (테스트는 격리성이 필요하다)
 >- Persistene Context를 clear하여서 테스트가 구현되었는가? (더미데이터를 JPA를 이용해서 insert 할 예정인데, 레포지토리 테스트시에 영속화된 데이터 때문에 쿼리를 제대로 보지 못할 수 있기 때문에)
 >- 테스트 코드의 쿼리 관련된 메서드가 너무 많은 select를 유발하지 않는지? (적절한 한방쿼리, 효율적인 in query, N+1 문제 등이 해결된 쿼리)
-</br>
+<br/>
 
 ## **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
 **1. PR 제목과 내용을 아래와 같이 작성 해주세요.**
 
 >- PR 제목 : 부산대BE_라이언_3주차 과제
 
-</br>
+<br/>
 
 **2. PR 내용 :**
 
@@ -966,8 +1208,8 @@ ex2) 여러명의 유저가 같은 옵션을 구매했을때 한 옵션에 대�
 # 4주차
 
 카카오 테크 캠퍼스 2단계 - BE - 4주차 클론 과제
-</br>
-</br>
+<br/>
+<br/>
 
 ## **과제명**
 ```
@@ -980,7 +1222,7 @@ ex2) 여러명의 유저가 같은 옵션을 구매했을때 한 옵션에 대�
 2. stub을 구현하시오.
 ```
 
-</br>
+<br/>
 
 ## **과제 상세 : 수강생들이 과제를 진행할 때, 유념해야할 것**
 아래 항목은 반드시 포함하여 과제 수행해주세요!
@@ -988,14 +1230,14 @@ ex2) 여러명의 유저가 같은 옵션을 구매했을때 한 옵션에 대�
 >- Mockito를 이용하여 stub을 구현하였는가?
 >- 인증이 필요한 컨트롤러를 테스트할 수 있는가?
 >- 200 ok만 체크한 것은 아닌가? (해당 컨트롤러에서 제일 필요한 데이터에 대한 테스트가 구현되었는가?)
-</br>
+<br/>
 
 ## **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
 **1. PR 제목과 내용을 아래와 같이 작성 해주세요.**
 
 >- PR 제목 : 부산대BE_라이언_4주차 과제 
 
-</br>
+<br/>
 
 **2. PR 내용 :**
 
@@ -1005,8 +1247,8 @@ ex2) 여러명의 유저가 같은 옵션을 구매했을때 한 옵션에 대�
 # 5주차
 
 카카오 테크 캠퍼스 2단계 - BE - 5주차 클론 과제
-</br>
-</br>
+<br/>
+<br/>
 
 ## **과제명**
 ```
@@ -1019,20 +1261,20 @@ ex2) 여러명의 유저가 같은 옵션을 구매했을때 한 옵션에 대�
 2. 어떤 문제가 발생할 수 있을지 모든 시나리오를 생각해본 뒤, 실패에 대한 모든 테스트를 구현하시오.
 ```
 
-</br>
+<br/>
 
 ## **과제 상세 : 수강생들이 과제를 진행할 때, 유념해야할 것**
 아래 항목은 반드시 포함하여 과제 수행해주세요!
 >- 실패 단위 테스트가 구현되었는가?
 >- 모든 예외에 대한 실패 테스트가 구현되었는가?
-</br>
+<br/>
 
 ## **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
 **1. PR 제목과 내용을 아래와 같이 작성 해주세요.**
 
 >- PR 제목 : 부산대BE_라이언_5주차 과제
 
-</br>
+<br/>
 
 **2. PR 내용 :**
 
@@ -1042,8 +1284,8 @@ ex2) 여러명의 유저가 같은 옵션을 구매했을때 한 옵션에 대�
 # 6주차
 
 카카오 테크 캠퍼스 2단계 - BE - 6주차 클론 과제
-</br>
-</br>
+<br/>
+<br/>
 
 ## **과제명**
 ```
@@ -1059,7 +1301,7 @@ ex2) 여러명의 유저가 같은 옵션을 구매했을때 한 옵션에 대�
 5. 배포한 뒤 서비스 장애가 일어날 수 있으니, 해당 장애에 대처할 수 있게 로그를 작성하시오. (로그는 DB에 넣어도 되고, 외부 라이브러리를 사용해도 되고, 파일로 남겨도 된다 - 단 장애 발생시 확인을 할 수 있어야 한다)
 ```
 
-</br>
+<br/>
 
 ## **과제 상세 : 수강생들이 과제를 진행할 때, 유념해야할 것**
 아래 항목은 반드시 포함하여 과제 수행해주세요!
@@ -1067,14 +1309,14 @@ ex2) 여러명의 유저가 같은 옵션을 구매했을때 한 옵션에 대�
 >- API문서가 구현되었는가?
 >- 배포가 정상적으로 되었는가?
 >- 서비스에 문제가 발생했을 때, 로그를 통해 문제를 확인할 수 있는가?
-</br>
+<br/>
 
 ## **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
 **1. PR 제목과 내용을 아래와 같이 작성 해주세요.**
 
 >- PR 제목 : 부산대BE_라이언_6주차 과제
 
-</br>
+<br/>
 
 **2. PR 내용 :**
 
