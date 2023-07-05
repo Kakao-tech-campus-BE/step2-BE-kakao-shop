@@ -6,11 +6,11 @@ import lombok.Setter;
 
 import java.util.List;
 
-@Getter @Setter
+@Getter
 public class ProductDTO {
-    private int id;
-    private String productName;
-    private List<CartItemDTO> cartItems;
+    final private int id;
+    final private String productName;
+    final private List<CartItemDTO> cartItems;
 
     @Builder
     public ProductDTO(int id, String productName, List<CartItemDTO> cartItems) {

@@ -4,14 +4,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
 public class ProductRespFindAllDTO {
-
-    private int id;
-    private String productName;
-    private String description;
-    private String image;
-    private int price;
+    final private int id;
+    final private String productName;
+    final private String description;
+    final private String image;
+    final private int price;
 
     @Builder
     public ProductRespFindAllDTO(int id, String productName, String description, String image, int price) {

@@ -4,12 +4,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
 public class ProductOptionDTO {
-
-    private int id;
-    private String optionName;
-    private int price;
+    final private int id;
+    final private String optionName;
+    final private int price;
 
     @Builder
     public ProductOptionDTO(int id, String optionName, int price) {

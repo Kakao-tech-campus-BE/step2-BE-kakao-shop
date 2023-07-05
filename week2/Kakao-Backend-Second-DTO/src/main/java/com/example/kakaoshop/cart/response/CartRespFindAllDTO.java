@@ -6,10 +6,10 @@ import lombok.Setter;
 
 import java.util.List;
 
-@Getter @Setter
+@Getter
 public class CartRespFindAllDTO {
-    private List<ProductDTO> products;
-    private int totalPrice;
+    final private List<ProductDTO> products;
+    final private int totalPrice;
 
     @Builder
     public CartRespFindAllDTO(List<ProductDTO> products, int totalPrice) {
