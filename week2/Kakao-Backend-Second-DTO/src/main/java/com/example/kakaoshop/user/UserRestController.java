@@ -58,6 +58,7 @@ public class UserRestController {
         response.put("response", null);
         response.put("error", null);
 
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return ResponseEntity.ok().header(JWTProvider.HEADER, jwt).body(response);
     }
+
 }
