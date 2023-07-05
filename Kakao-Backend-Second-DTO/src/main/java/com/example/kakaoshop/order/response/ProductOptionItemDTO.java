@@ -10,11 +10,11 @@ import java.util.List;
 @Setter
 public class ProductOptionItemDTO {
     private String productName;
-    private List<OrderItemDTO> orderItemDTOList;
+    private List<OrderItemDTO> items;
 
     @Builder
-    public ProductOptionItemDTO(String productName, List<OrderItemDTO> orderItemDTOList){
+    public ProductOptionItemDTO(String productName, List<OrderItemDTO> items){
         this.productName = productName;
-        this.orderItemDTOList = orderItemDTOList;
+        this.items = items;
     }
 }
