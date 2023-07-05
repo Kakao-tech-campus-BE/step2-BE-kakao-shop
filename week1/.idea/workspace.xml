@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9affb9f1-6e23-43a3-9db7-ea8a47f26f9e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../.classpath" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gradle/8.0/checksums/checksums.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gradle/8.0/dependencies-accessors/dependencies-accessors.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gradle/8.0/dependencies-accessors/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gradle/8.0/executionHistory/executionHistory.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gradle/8.0/executionHistory/executionHistory.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gradle/8.0/fileChanges/last-build.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gradle/8.0/fileHashes/fileHashes.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gradle/8.0/fileHashes/fileHashes.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gradle/8.0/fileHashes/resourceHashesCache.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gradle/8.0/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gradle/buildOutputCleanup/cache.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gradle/file-system.probe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gradle/vcs-1/gc.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.project" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.settings/.jsdtscope" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.settings/org.eclipse.buildship.core.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.settings/org.eclipse.jdt.apt.core.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.settings/org.eclipse.jdt.core.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.settings/org.eclipse.wst.jsdt.ui.superType.container" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.settings/org.eclipse.wst.jsdt.ui.superType.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.vscode/settings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backup-data-v2/api-pdf.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backup-data-v2/data.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backup-data-v2/schema.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backup-data-v2/카카오테크캠퍼스_API 명세서_초안.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backup-data-v2/카카오톡 쇼핑하기_화면설계서.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../bin/main/application-local.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../bin/main/application-test.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../bin/main/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../bin/main/db/teardown.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../bin/main/static/docs/api-docs.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build/resources/main/application-local.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build/resources/main/application-test.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build/resources/main/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build/resources/main/db/teardown.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build/resources/main/static/docs/api-docs.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../images/1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../images/10.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../images/11.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../images/12.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../images/13.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../images/14.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../images/15.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../images/2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../images/3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../images/4.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../images/5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../images/6.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../images/7.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../images/8.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../images/9.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../readme-src/E-R diagram.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../readme-src/기능1.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../readme-src/기능10.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../readme-src/기능11.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../readme-src/기능12.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../readme-src/기능13.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../readme-src/기능2.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../readme-src/기능3.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../readme-src/기능4.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../readme-src/기능5.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../readme-src/기능6.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../readme-src/기능8.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../readme-src/기능9.PNG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/docs/asciidoc/api-docs.adoc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/example/kakao/KakaoApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/example/kakao/_core/config/WebMvcConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/example/kakao/_core/errors/GeneralExceptionHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/example/kakao/_core/errors/GeneralValidationHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/example/kakao/_core/errors/exception/Exception400.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/example/kakao/_core/errors/exception/Exception401.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/example/kakao/_core/errors/exception/Exception403.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/example/kakao/_core/errors/exception/Exception404.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/example/kakao/_core/errors/exception/Exception500.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/example/kakao/_core/security/CustomUserDetails.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/example/kakao/_core/security/CustomUserDetailsService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/example/kakao/_core/security/JwtAuthenticationFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/example/kakao/_core/security/JwtTokenProvider.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/example/kakao/_core/security/SecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/example/kakao/_core/utils/ApiUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/example/kakao/_core/utils/FilterResponseUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/example/kakao/user/StringArrayConverter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/example/kakao/user/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/example/kakao/user/UserJPARepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/example/kakao/user/UserRequest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/example/kakao/user/UserRestController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/java/com/example/kakao/user/UserService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/resources/application-local.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/resources/application-test.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/resources/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/resources/db/teardown.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main/resources/static/docs/api-docs.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/test/java/com/example/kakao/integration/MyRestDoc.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/test/java/com/example/kakao/integration/UserRestControllerTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/test/java/com/example/kakao/unkown/BeanUtilsTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/test/java/com/example/kakao/unkown/StringArrayConverterTest.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="JUnit5 Test Class" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2RrQWV67MW343SW2c817ZHzNbYP" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "last_opened_file_path": "D:/KakaoTechCampus/step2-BE-kakao-shop/week2/Kakao-Backend-Second-DTO",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "spring.configuration.checksum": "3fcb6ad08501ea2e40c61ba5f4596338",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.example.kakao.option" />
+      <recent name="com.example.kakao.product" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.KakaoApplication">
+    <configuration name="OptionJPARepositoryTest.saveProductandOption" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.example.kakao.option.OptionJPARepositoryTest.saveProductandOption&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <ForceTestExec>true</ForceTestExec>
+      <method v="2" />
+    </configuration>
+    <configuration name="OptionJPARepositoryTest.test" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.example.kakao.option.OptionJPARepositoryTest.test&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <ForceTestExec>true</ForceTestExec>
+      <method v="2" />
+    </configuration>
+    <configuration name="ProductJPARepositoryTest.test" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.example.kakao.product.ProductJPARepositoryTest.test&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <ForceTestExec>true</ForceTestExec>
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="step2-BE-kakao-shop" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="step2-BE-kakao-shop" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="KakaoApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="kakao.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.kakao.KakaoApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.OptionJPARepositoryTest.saveProductandOption" />
+        <item itemvalue="Gradle.OptionJPARepositoryTest.test" />
+        <item itemvalue="Gradle.ProductJPARepositoryTest.test" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9affb9f1-6e23-43a3-9db7-ea8a47f26f9e" name="Changes" comment="" />
+      <created>1688005758673</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1688005758673</updated>
+      <workItem from="1688005760250" duration="2197000" />
+      <workItem from="1688086704079" duration="2583000" />
+      <workItem from="1688142305138" duration="4496000" />
+      <workItem from="1688201480933" duration="9938000" />
+      <workItem from="1688229216144" duration="599000" />
+      <workItem from="1688269101725" duration="2732000" />
+      <workItem from="1688282018820" duration="9140000" />
+      <workItem from="1688313547462" duration="4626000" />
+      <workItem from="1688347069089" duration="618000" />
+      <workItem from="1688522807917" duration="315000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

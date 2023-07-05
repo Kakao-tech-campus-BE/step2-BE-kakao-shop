@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.kakao.option.OptionJPARepositoryTest" tests="1" skipped="0" failures="1" errors="0" timestamp="2023-07-02T17:24:17" hostname="DESKTOP-TKM6DDQ" time="0.605">
+  <properties/>
+  <testcase name="saveProductandOption()" classname="com.example.kakao.option.OptionJPARepositoryTest" time="0.605">
+    <failure message="org.hibernate.LazyInitializationException: could not initialize proxy [com.example.kakao.product.Product#1] - no Session" type="org.hibernate.LazyInitializationException">org.hibernate.LazyInitializationException: could not initialize proxy [com.example.kakao.product.Product#1] - no Session
+	at app//org.hibernate.proxy.AbstractLazyInitializer.initialize(AbstractLazyInitializer.java:176)
+	at app//org.hibernate.proxy.AbstractLazyInitializer.getImplementation(AbstractLazyInitializer.java:322)
+	at app//org.hibernate.proxy.pojo.bytebuddy.ByteBuddyInterceptor.intercept(ByteBuddyInterceptor.java:45)
+	at app//org.hibernate.proxy.ProxyConfiguration$InterceptorDispatcher.intercept(ProxyConfiguration.java:95)
+	at app//com.example.kakao.product.Product$HibernateProxy$N1IjRGZ0.toString(Unknown Source)
+	at java.base@11/java.lang.String.valueOf(String.java:2951)
+	at java.base@11/java.io.PrintStream.print(PrintStream.java:759)
+	at org.gradle.internal.io.LinePerThreadBufferingOutputStream.println(LinePerThreadBufferingOutputStream.java:230)
+	at app//com.example.kakao.option.OptionJPARepositoryTest.lambda$saveProductandOption$0(OptionJPARepositoryTest.java:53)
+	at java.base@11/java.util.ArrayList.forEach(ArrayList.java:1540)
+	at app//com.example.kakao.option.OptionJPARepositoryTest.saveProductandOption(OptionJPARepositoryTest.java:53)
+	at java.base@11/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base@11/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base@11/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base@11/java.lang.reflect.Method.invoke(Method.java:566)
+	at app//org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:725)
+	at app//org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60)
+	at app//org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131)
+	at app//org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:149)
+	at app//org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:140)
+	at app//org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:84)
+	at app//org.junit.jupiter.engine.execution.ExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(ExecutableInvoker.java:115)
+	at app//org.junit.jupiter.engine.execution.ExecutableInvoker.lambda$invoke$0(ExecutableInvoker.java:105)
+	at app//org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106)
+	at app//org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64)
+	at app//org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45)
+	at app//org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37)
+	at app//org.junit.jupiter.engine.execution.ExecutableInvoker.invoke(ExecutableInvoker.java:104)
+	at app//org.junit.jupiter.engine.execution.ExecutableInvoker.invoke(ExecutableInvoker.java:98)
+	at app//org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:214)
+	at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at app//org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:210)
+	at app//org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:135)
+	at app//org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:66)
+	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:151)
+	at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at app//org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base@11/java.util.ArrayList.forEach(ArrayList.java:1540)
+	at app//org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at app//org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at java.base@11/java.util.ArrayList.forEach(ArrayList.java:1540)
+	at app//org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155)
+	at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141)
+	at app//org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139)
+	at app//org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138)
+	at app//org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95)
+	at app//org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at app//org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at app//org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+	at app//org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:107)
+	at app//org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:88)
+	at app//org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:54)
+	at app//org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:67)
+	at app//org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:52)
+	at app//org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114)
+	at app//org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:86)
+	at app//org.junit.platform.launcher.core.DefaultLauncherSession$DelegatingLauncher.execute(DefaultLauncherSession.java:86)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.processAllTestClasses(JUnitPlatformTestClassProcessor.java:110)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.access$000(JUnitPlatformTestClassProcessor.java:90)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor.stop(JUnitPlatformTestClassProcessor.java:85)
+	at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.stop(SuiteTestClassProcessor.java:62)
+	at java.base@11/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base@11/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base@11/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base@11/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:36)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:24)
+	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:33)
+	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:94)
+	at com.sun.proxy.$Proxy2.stop(Unknown Source)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker$3.run(TestWorker.java:193)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.executeAndMaintainThreadName(TestWorker.java:129)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:100)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:60)
+	at org.gradle.process.internal.worker.child.ActionExecutionWorker.execute(ActionExecutionWorker.java:56)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:113)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:65)
+	at app//worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
+	at app//worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
+</failure>
+  </testcase>
+  <system-out><![CDATA[02:24:09.792 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
+02:24:09.808 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
+02:24:09.862 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [com.example.kakao.option.OptionJPARepositoryTest] from class [org.springframework.boot.test.context.SpringBootTestContextBootstrapper]
+02:24:09.881 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.example.kakao.option.OptionJPARepositoryTest], using SpringBootContextLoader
+02:24:09.888 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.example.kakao.option.OptionJPARepositoryTest]: class path resource [com/example/kakao/option/OptionJPARepositoryTest-context.xml] does not exist
+02:24:09.888 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.example.kakao.option.OptionJPARepositoryTest]: class path resource [com/example/kakao/option/OptionJPARepositoryTestContext.groovy] does not exist
+02:24:09.889 [Test worker] INFO org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [com.example.kakao.option.OptionJPARepositoryTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+02:24:09.890 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.example.kakao.option.OptionJPARepositoryTest]: OptionJPARepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+02:24:09.946 [Test worker] DEBUG org.springframework.test.context.support.ActiveProfilesUtils - Could not find an 'annotation declaring class' for annotation type [org.springframework.test.context.ActiveProfiles] and class [com.example.kakao.option.OptionJPARepositoryTest]
+02:24:10.029 [Test worker] DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider - Identified candidate component class: file [D:\KakaoTechCampus\step2-BE-kakao-shop\build\classes\java\main\com\example\kakao\KakaoApplication.class]
+02:24:10.031 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.example.kakao.KakaoApplication for test class com.example.kakao.option.OptionJPARepositoryTest
+02:24:10.165 [Test worker] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - @TestExecutionListeners is not present for class [com.example.kakao.option.OptionJPARepositoryTest]: using defaults.
+02:24:10.166 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener, org.springframework.security.test.context.support.ReactorContextTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+02:24:10.194 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@5d332969, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@7cc9ce8, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@2e27d72f, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@c0b41d6, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@4837595f, org.springframework.test.context.support.DirtiesContextTestExecutionListener@2bffa76d, org.springframework.test.context.transaction.TransactionalTestExecutionListener@3b718392, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@6d2260db, org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener@1f2d2181, org.springframework.test.context.event.EventPublishingTestExecutionListener@49bf29c6, org.springframework.security.test.context.support.ReactorContextTestExecutionListener@7ee55e70, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@3fcdcf, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@7668d560, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@46292372, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@126be319, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@6c44052e, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@5c371e13]
+02:24:10.198 [Test worker] DEBUG org.springframework.test.context.support.AbstractDirtiesContextTestExecutionListener - Before test class: context [DefaultTestContext@5a6d5a8f testClass = OptionJPARepositoryTest, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@4a67318f testClass = OptionJPARepositoryTest, locations = '{}', classes = '{class com.example.kakao.KakaoApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@556d0826, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@6111ba37, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@60f7cc1d, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@207ea13, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@a8c1f44, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@3224a577], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -> true]], class annotated with @DirtiesContext [false] with mode [null].
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+?[32m :: Spring Boot :: ?[39m              ?[2m (v2.7.6)?[0;39m
+
+?[2m2023-07-03 02:24:10.705?[0;39m ?[32m INFO?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mc.e.k.option.OptionJPARepositoryTest    ?[0;39m ?[2m:?[0;39m Starting OptionJPARepositoryTest using Java 11 on DESKTOP-TKM6DDQ with PID 416 (started by leejaehun in D:\KakaoTechCampus\step2-BE-kakao-shop)
+?[2m2023-07-03 02:24:10.706?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mc.e.k.option.OptionJPARepositoryTest    ?[0;39m ?[2m:?[0;39m Running with Spring Boot v2.7.6, Spring v5.3.24
+?[2m2023-07-03 02:24:10.707?[0;39m ?[32m INFO?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mc.e.k.option.OptionJPARepositoryTest    ?[0;39m ?[2m:?[0;39m The following 1 profile is active: "local"
+?[2m2023-07-03 02:24:11.743?[0;39m ?[32m INFO?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36m.s.d.r.c.RepositoryConfigurationDelegate?[0;39m ?[2m:?[0;39m Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+?[2m2023-07-03 02:24:11.843?[0;39m ?[32m INFO?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36m.s.d.r.c.RepositoryConfigurationDelegate?[0;39m ?[2m:?[0;39m Finished Spring Data repository scanning in 86 ms. Found 3 JPA repository interfaces.
+?[2m2023-07-03 02:24:12.825?[0;39m ?[32m INFO?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.hibernate.jpa.internal.util.LogHelper ?[0;39m ?[2m:?[0;39m HHH000204: Processing PersistenceUnitInfo [name: default]
+?[2m2023-07-03 02:24:12.914?[0;39m ?[32m INFO?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.Version                   ?[0;39m ?[2m:?[0;39m HHH000412: Hibernate ORM core version 5.6.14.Final
+?[2m2023-07-03 02:24:13.204?[0;39m ?[32m INFO?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.hibernate.annotations.common.Version  ?[0;39m ?[2m:?[0;39m HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+?[2m2023-07-03 02:24:13.243?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration boolean -> org.hibernate.type.BooleanType@315b4202
+?[2m2023-07-03 02:24:13.244?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration boolean -> org.hibernate.type.BooleanType@315b4202
+?[2m2023-07-03 02:24:13.244?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration java.lang.Boolean -> org.hibernate.type.BooleanType@315b4202
+?[2m2023-07-03 02:24:13.246?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration numeric_boolean -> org.hibernate.type.NumericBooleanType@171aa66
+?[2m2023-07-03 02:24:13.247?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration true_false -> org.hibernate.type.TrueFalseType@25470477
+?[2m2023-07-03 02:24:13.248?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration yes_no -> org.hibernate.type.YesNoType@30dd00b6
+?[2m2023-07-03 02:24:13.250?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration byte -> org.hibernate.type.ByteType@4a9869a8
+?[2m2023-07-03 02:24:13.250?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration byte -> org.hibernate.type.ByteType@4a9869a8
+?[2m2023-07-03 02:24:13.250?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration java.lang.Byte -> org.hibernate.type.ByteType@4a9869a8
+?[2m2023-07-03 02:24:13.252?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration character -> org.hibernate.type.CharacterType@4ced17f3
+?[2m2023-07-03 02:24:13.252?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration char -> org.hibernate.type.CharacterType@4ced17f3
+?[2m2023-07-03 02:24:13.252?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration java.lang.Character -> org.hibernate.type.CharacterType@4ced17f3
+?[2m2023-07-03 02:24:13.255?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration short -> org.hibernate.type.ShortType@7c4d1c7b
+?[2m2023-07-03 02:24:13.255?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration short -> org.hibernate.type.ShortType@7c4d1c7b
+?[2m2023-07-03 02:24:13.256?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration java.lang.Short -> org.hibernate.type.ShortType@7c4d1c7b
+?[2m2023-07-03 02:24:13.258?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration integer -> org.hibernate.type.IntegerType@1da75dde
+?[2m2023-07-03 02:24:13.258?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration int -> org.hibernate.type.IntegerType@1da75dde
+?[2m2023-07-03 02:24:13.258?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration java.lang.Integer -> org.hibernate.type.IntegerType@1da75dde
+?[2m2023-07-03 02:24:13.260?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration long -> org.hibernate.type.LongType@790654d5
+?[2m2023-07-03 02:24:13.260?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration long -> org.hibernate.type.LongType@790654d5
+?[2m2023-07-03 02:24:13.260?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration java.lang.Long -> org.hibernate.type.LongType@790654d5
+?[2m2023-07-03 02:24:13.262?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration float -> org.hibernate.type.FloatType@176333ee
+?[2m2023-07-03 02:24:13.262?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration float -> org.hibernate.type.FloatType@176333ee
+?[2m2023-07-03 02:24:13.262?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration java.lang.Float -> org.hibernate.type.FloatType@176333ee
+?[2m2023-07-03 02:24:13.264?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration double -> org.hibernate.type.DoubleType@41ece227
+?[2m2023-07-03 02:24:13.264?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration double -> org.hibernate.type.DoubleType@41ece227
+?[2m2023-07-03 02:24:13.264?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration java.lang.Double -> org.hibernate.type.DoubleType@41ece227
+?[2m2023-07-03 02:24:13.266?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration big_decimal -> org.hibernate.type.BigDecimalType@3a5b7d7e
+?[2m2023-07-03 02:24:13.266?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration java.math.BigDecimal -> org.hibernate.type.BigDecimalType@3a5b7d7e
+?[2m2023-07-03 02:24:13.268?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration big_integer -> org.hibernate.type.BigIntegerType@1f39269d
+?[2m2023-07-03 02:24:13.269?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration java.math.BigInteger -> org.hibernate.type.BigIntegerType@1f39269d
+?[2m2023-07-03 02:24:13.271?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration string -> org.hibernate.type.StringType@27d98bef
+?[2m2023-07-03 02:24:13.272?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration java.lang.String -> org.hibernate.type.StringType@27d98bef
+?[2m2023-07-03 02:24:13.273?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration nstring -> org.hibernate.type.StringNVarcharType@2c0798bd
+?[2m2023-07-03 02:24:13.275?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration ncharacter -> org.hibernate.type.CharacterNCharType@774f2992
+?[2m2023-07-03 02:24:13.276?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration url -> org.hibernate.type.UrlType@5896cb9c
+?[2m2023-07-03 02:24:13.277?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration java.net.URL -> org.hibernate.type.UrlType@5896cb9c
+?[2m2023-07-03 02:24:13.278?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration Duration -> org.hibernate.type.DurationType@4a2e1e52
+?[2m2023-07-03 02:24:13.278?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration java.time.Duration -> org.hibernate.type.DurationType@4a2e1e52
+?[2m2023-07-03 02:24:13.280?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration Instant -> org.hibernate.type.InstantType@6f986501
+?[2m2023-07-03 02:24:13.281?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration java.time.Instant -> org.hibernate.type.InstantType@6f986501
+?[2m2023-07-03 02:24:13.282?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration LocalDateTime -> org.hibernate.type.LocalDateTimeType@2d6a0766
+?[2m2023-07-03 02:24:13.282?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration java.time.LocalDateTime -> org.hibernate.type.LocalDateTimeType@2d6a0766
+?[2m2023-07-03 02:24:13.284?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration LocalDate -> org.hibernate.type.LocalDateType@6d8b7ea9
+?[2m2023-07-03 02:24:13.284?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration java.time.LocalDate -> org.hibernate.type.LocalDateType@6d8b7ea9
+?[2m2023-07-03 02:24:13.285?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration LocalTime -> org.hibernate.type.LocalTimeType@278fe428
+?[2m2023-07-03 02:24:13.285?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration java.time.LocalTime -> org.hibernate.type.LocalTimeType@278fe428
+?[2m2023-07-03 02:24:13.287?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration OffsetDateTime -> org.hibernate.type.OffsetDateTimeType@1186374c
+?[2m2023-07-03 02:24:13.288?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration java.time.OffsetDateTime -> org.hibernate.type.OffsetDateTimeType@1186374c
+?[2m2023-07-03 02:24:13.291?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration OffsetTime -> org.hibernate.type.OffsetTimeType@731db93f
+?[2m2023-07-03 02:24:13.291?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration java.time.OffsetTime -> org.hibernate.type.OffsetTimeType@731db93f
+?[2m2023-07-03 02:24:13.294?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration ZonedDateTime -> org.hibernate.type.ZonedDateTimeType@22686ddb
+?[2m2023-07-03 02:24:13.294?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration java.time.ZonedDateTime -> org.hibernate.type.ZonedDateTimeType@22686ddb
+?[2m2023-07-03 02:24:13.296?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration date -> org.hibernate.type.DateType@395a573c
+?[2m2023-07-03 02:24:13.296?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration java.sql.Date -> org.hibernate.type.DateType@395a573c
+?[2m2023-07-03 02:24:13.298?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration time -> org.hibernate.type.TimeType@7dd45c93
+?[2m2023-07-03 02:24:13.298?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration java.sql.Time -> org.hibernate.type.TimeType@7dd45c93
+?[2m2023-07-03 02:24:13.300?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration timestamp -> org.hibernate.type.TimestampType@3688baab
+?[2m2023-07-03 02:24:13.300?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration java.sql.Timestamp -> org.hibernate.type.TimestampType@3688baab
+?[2m2023-07-03 02:24:13.300?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration java.util.Date -> org.hibernate.type.TimestampType@3688baab
+?[2m2023-07-03 02:24:13.303?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration dbtimestamp -> org.hibernate.type.DbTimestampType@2b395581
+?[2m2023-07-03 02:24:13.306?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration calendar -> org.hibernate.type.CalendarType@5ef2cbe6
+?[2m2023-07-03 02:24:13.307?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration java.util.Calendar -> org.hibernate.type.CalendarType@5ef2cbe6
+?[2m2023-07-03 02:24:13.307?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration java.util.GregorianCalendar -> org.hibernate.type.CalendarType@5ef2cbe6
+?[2m2023-07-03 02:24:13.309?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration calendar_date -> org.hibernate.type.CalendarDateType@ec5f944
+?[2m2023-07-03 02:24:13.310?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration calendar_time -> org.hibernate.type.CalendarTimeType@2f1f9515
+?[2m2023-07-03 02:24:13.311?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration locale -> org.hibernate.type.LocaleType@5b3518e1
+?[2m2023-07-03 02:24:13.311?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration java.util.Locale -> org.hibernate.type.LocaleType@5b3518e1
+?[2m2023-07-03 02:24:13.312?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration currency -> org.hibernate.type.CurrencyType@75ed7512
+?[2m2023-07-03 02:24:13.313?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration java.util.Currency -> org.hibernate.type.CurrencyType@75ed7512
+?[2m2023-07-03 02:24:13.314?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration timezone -> org.hibernate.type.TimeZoneType@7ab33ca8
+?[2m2023-07-03 02:24:13.314?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration java.util.TimeZone -> org.hibernate.type.TimeZoneType@7ab33ca8
+?[2m2023-07-03 02:24:13.315?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration class -> org.hibernate.type.ClassType@709d86a2
+?[2m2023-07-03 02:24:13.315?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration java.lang.Class -> org.hibernate.type.ClassType@709d86a2
+?[2m2023-07-03 02:24:13.316?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration uuid-binary -> org.hibernate.type.UUIDBinaryType@3e8b8f0
+?[2m2023-07-03 02:24:13.316?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration java.util.UUID -> org.hibernate.type.UUIDBinaryType@3e8b8f0
+?[2m2023-07-03 02:24:13.316?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration uuid-char -> org.hibernate.type.UUIDCharType@c318864
+?[2m2023-07-03 02:24:13.318?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration binary -> org.hibernate.type.BinaryType@241fc278
+?[2m2023-07-03 02:24:13.318?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration byte[] -> org.hibernate.type.BinaryType@241fc278
+?[2m2023-07-03 02:24:13.318?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration [B -> org.hibernate.type.BinaryType@241fc278
+?[2m2023-07-03 02:24:13.319?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration wrapper-binary -> org.hibernate.type.WrapperBinaryType@77e9dca8
+?[2m2023-07-03 02:24:13.320?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration Byte[] -> org.hibernate.type.WrapperBinaryType@77e9dca8
+?[2m2023-07-03 02:24:13.320?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration [Ljava.lang.Byte; -> org.hibernate.type.WrapperBinaryType@77e9dca8
+?[2m2023-07-03 02:24:13.323?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration row_version -> org.hibernate.type.RowVersionType@7cd1ec54
+?[2m2023-07-03 02:24:13.324?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration image -> org.hibernate.type.ImageType@78128dd0
+?[2m2023-07-03 02:24:13.325?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration characters -> org.hibernate.type.CharArrayType@e881e46
+?[2m2023-07-03 02:24:13.326?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration char[] -> org.hibernate.type.CharArrayType@e881e46
+?[2m2023-07-03 02:24:13.326?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration [C -> org.hibernate.type.CharArrayType@e881e46
+?[2m2023-07-03 02:24:13.327?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration wrapper-characters -> org.hibernate.type.CharacterArrayType@34549979
+?[2m2023-07-03 02:24:13.328?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration [Ljava.lang.Character; -> org.hibernate.type.CharacterArrayType@34549979
+?[2m2023-07-03 02:24:13.328?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration Character[] -> org.hibernate.type.CharacterArrayType@34549979
+?[2m2023-07-03 02:24:13.328?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration text -> org.hibernate.type.TextType@6dece1f9
+?[2m2023-07-03 02:24:13.329?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration ntext -> org.hibernate.type.NTextType@5c5c7cc4
+?[2m2023-07-03 02:24:13.331?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration blob -> org.hibernate.type.BlobType@502c2278
+?[2m2023-07-03 02:24:13.331?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration java.sql.Blob -> org.hibernate.type.BlobType@502c2278
+?[2m2023-07-03 02:24:13.336?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration materialized_blob -> org.hibernate.type.MaterializedBlobType@577f9dfd
+?[2m2023-07-03 02:24:13.339?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration clob -> org.hibernate.type.ClobType@30c01c37
+?[2m2023-07-03 02:24:13.340?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration java.sql.Clob -> org.hibernate.type.ClobType@30c01c37
+?[2m2023-07-03 02:24:13.341?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration nclob -> org.hibernate.type.NClobType@5d27b4c1
+?[2m2023-07-03 02:24:13.341?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration java.sql.NClob -> org.hibernate.type.NClobType@5d27b4c1
+?[2m2023-07-03 02:24:13.342?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration materialized_clob -> org.hibernate.type.MaterializedClobType@21f50d2c
+?[2m2023-07-03 02:24:13.343?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration materialized_nclob -> org.hibernate.type.MaterializedNClobType@2e1add6f
+?[2m2023-07-03 02:24:13.344?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration serializable -> org.hibernate.type.SerializableType@e3ed455
+?[2m2023-07-03 02:24:13.347?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration object -> org.hibernate.type.ObjectType@4c65d8e3
+?[2m2023-07-03 02:24:13.347?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration java.lang.Object -> org.hibernate.type.ObjectType@4c65d8e3
+?[2m2023-07-03 02:24:13.348?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration imm_date -> org.hibernate.type.AdaptedImmutableType@b5de9ac
+?[2m2023-07-03 02:24:13.348?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration imm_time -> org.hibernate.type.AdaptedImmutableType@4ecd8ab1
+?[2m2023-07-03 02:24:13.349?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration imm_timestamp -> org.hibernate.type.AdaptedImmutableType@57bdceaa
+?[2m2023-07-03 02:24:13.349?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration imm_dbtimestamp -> org.hibernate.type.AdaptedImmutableType@52909a97
+?[2m2023-07-03 02:24:13.349?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration imm_calendar -> org.hibernate.type.AdaptedImmutableType@36e409e0
+?[2m2023-07-03 02:24:13.349?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration imm_calendar_date -> org.hibernate.type.AdaptedImmutableType@145e958f
+?[2m2023-07-03 02:24:13.349?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration imm_binary -> org.hibernate.type.AdaptedImmutableType@2d2fc130
+?[2m2023-07-03 02:24:13.349?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.BasicTypeRegistry    ?[0;39m ?[2m:?[0;39m Adding type registration imm_serializable -> org.hibernate.type.AdaptedImmutableType@7bbdb220
+?[2m2023-07-03 02:24:13.415?[0;39m ?[32m INFO?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mcom.zaxxer.hikari.HikariDataSource      ?[0;39m ?[2m:?[0;39m HikariPool-1 - Starting...
+?[2m2023-07-03 02:24:13.733?[0;39m ?[32m INFO?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mcom.zaxxer.hikari.HikariDataSource      ?[0;39m ?[2m:?[0;39m HikariPool-1 - Start completed.
+?[2m2023-07-03 02:24:13.789?[0;39m ?[32m INFO?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.dialect.Dialect           ?[0;39m ?[2m:?[0;39m HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+?[2m2023-07-03 02:24:13.845?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.spi.TypeConfiguration$Scope    ?[0;39m ?[2m:?[0;39m Scoping TypeConfiguration [org.hibernate.type.spi.TypeConfiguration@a1cb94] to MetadataBuildingContext [org.hibernate.boot.internal.MetadataBuildingContextRootImpl@46d148bd]
+?[2m2023-07-03 02:24:14.034?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.t.d.j.s.JavaTypeDescriptorRegistry  ?[0;39m ?[2m:?[0;39m Could not find matching scoped JavaTypeDescriptor for requested Java class [com.example.kakao.user.StringArrayConverter]; falling back to static registry
+?[2m2023-07-03 02:24:14.037?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.t.d.j.s.JavaTypeDescriptorRegistry  ?[0;39m ?[2m:?[0;39m Could not find matching scoped JavaTypeDescriptor for requested Java class [java.util.List]; falling back to static registry
+?[2m2023-07-03 02:24:14.038?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.t.d.java.JavaTypeDescriptorRegistry ?[0;39m ?[2m:?[0;39m Could not find matching JavaTypeDescriptor for requested Java class [java.util.List]; using fallback.  This means Hibernate does not know how to perform certain basic operations in relation to this Java type.
+?[2m2023-07-03 02:24:14.039?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.t.d.j.s.JavaTypeDescriptorRegistry  ?[0;39m ?[2m:?[0;39m Could not find matching scoped JavaTypeDescriptor for requested Java class [java.lang.String]; falling back to static registry
+?[2m2023-07-03 02:24:14.043?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.t.d.c.AttributeConverterTypeAdapter ?[0;39m ?[2m:?[0;39m Created AttributeConverterTypeAdapter -> converted::com.example.kakao.user.StringArrayConverter
+?[2m2023-07-03 02:24:14.263?[0;39m ?[32mDEBUG?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.spi.TypeConfiguration$Scope    ?[0;39m ?[2m:?[0;39m Scoping TypeConfiguration [org.hibernate.type.spi.TypeConfiguration@a1cb94] to SessionFactoryImpl [org.hibernate.internal.SessionFactoryImpl@681b42d3]
+Hibernate: 
+    
+    drop table if exists cart_tb CASCADE 
+Hibernate: 
+    
+    drop table if exists option_tb CASCADE 
+Hibernate: 
+    
+    drop table if exists order_item_tb CASCADE 
+Hibernate: 
+    
+    drop table if exists order_tb CASCADE 
+Hibernate: 
+    
+    drop table if exists product_tb CASCADE 
+Hibernate: 
+    
+    drop table if exists user_tb CASCADE 
+Hibernate: 
+    
+    create table cart_tb (
+       id integer generated by default as identity,
+        price integer not null,
+        quantity integer not null,
+        option_id integer not null,
+        user_id integer,
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table option_tb (
+       id integer generated by default as identity,
+        name varchar(100) not null,
+        price integer not null,
+        product_id integer,
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table order_item_tb (
+       id integer generated by default as identity,
+        price integer not null,
+        quantity integer not null,
+        option_id integer not null,
+        order_id integer not null,
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table order_tb (
+       id integer generated by default as identity,
+        user_id integer not null,
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table product_tb (
+       id integer generated by default as identity,
+        image varchar(1000) not null,
+        name varchar(100) not null,
+        price integer not null,
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table user_tb (
+       id integer generated by default as identity,
+        email varchar(100) not null,
+        password varchar(256) not null,
+        roles varchar(30),
+        username varchar(45) not null,
+        primary key (id)
+    )
+Hibernate: 
+    
+    alter table user_tb 
+       add constraint UK_2dlfg6wvnxboknkp9d1h75icb unique (email)
+Hibernate: 
+    
+    alter table cart_tb 
+       add constraint FKjv34r03v7eauvpfhwsci0deyp 
+       foreign key (option_id) 
+       references option_tb
+Hibernate: 
+    
+    alter table cart_tb 
+       add constraint FKi00yw2m90df70t3igqyjbbf91 
+       foreign key (user_id) 
+       references user_tb
+Hibernate: 
+    
+    alter table option_tb 
+       add constraint FK6j02px4ow9xxw0o3rc59buyew 
+       foreign key (product_id) 
+       references product_tb
+Hibernate: 
+    
+    alter table order_item_tb 
+       add constraint FKhpirm5y01nv6nmremh362vbhq 
+       foreign key (option_id) 
+       references option_tb
+Hibernate: 
+    
+    alter table order_item_tb 
+       add constraint FK9olaq53vi7eudwfvpvv3w7eey 
+       foreign key (order_id) 
+       references order_tb
+Hibernate: 
+    
+    alter table order_tb 
+       add constraint FK9wkv8x8yfgaaquhn4vquq4aps 
+       foreign key (user_id) 
+       references user_tb
+?[2m2023-07-03 02:24:14.788?[0;39m ?[32m INFO?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.e.t.j.p.i.JtaPlatformInitiator      ?[0;39m ?[2m:?[0;39m HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+?[2m2023-07-03 02:24:14.797?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.spi.TypeConfiguration$Scope    ?[0;39m ?[2m:?[0;39m Handling #sessionFactoryCreated from [org.hibernate.internal.SessionFactoryImpl@681b42d3] for TypeConfiguration
+?[2m2023-07-03 02:24:14.799?[0;39m ?[32m INFO?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mj.LocalContainerEntityManagerFactoryBean?[0;39m ?[2m:?[0;39m Initialized JPA EntityManagerFactory for persistence unit 'default'
+?[2m2023-07-03 02:24:15.887?[0;39m ?[32m INFO?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.s.s.web.DefaultSecurityFilterChain    ?[0;39m ?[2m:?[0;39m Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@178c4480, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5746609e, org.springframework.security.web.context.SecurityContextPersistenceFilter@4f836d9, org.springframework.security.web.header.HeaderWriterFilter@43414b88, org.springframework.web.filter.CorsFilter@40da1644, org.springframework.security.web.authentication.logout.LogoutFilter@5f7c1de0, com.example.kakao._core.security.JwtAuthenticationFilter@5980e29f, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@89ff043, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4d145177, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2cdd156b, org.springframework.security.web.session.SessionManagementFilter@24fb8317, org.springframework.security.web.access.ExceptionTranslationFilter@ce8b59e, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@5f8a29ca]
+?[2m2023-07-03 02:24:16.737?[0;39m ?[32m INFO?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.s.b.a.h2.H2ConsoleAutoConfiguration   ?[0;39m ?[2m:?[0;39m H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:test'
+?[2m2023-07-03 02:24:17.384?[0;39m ?[32m INFO?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mc.e.k.option.OptionJPARepositoryTest    ?[0;39m ?[2m:?[0;39m Started OptionJPARepositoryTest in 7.138 seconds (JVM running for 8.931)
+Hibernate: 
+    insert 
+    into
+        product_tb
+        (id, image, name, price) 
+    values
+        (default, ?, ?, ?)
+?[2m2023-07-03 02:24:17.654?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicBinder     ?[0;39m ?[2m:?[0;39m binding parameter [1] as [VARCHAR] - [1.png]
+?[2m2023-07-03 02:24:17.654?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicBinder     ?[0;39m ?[2m:?[0;39m binding parameter [2] as [VARCHAR] - [제품 A]
+?[2m2023-07-03 02:24:17.655?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicBinder     ?[0;39m ?[2m:?[0;39m binding parameter [3] as [INTEGER] - [1000]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+?[2m2023-07-03 02:24:17.706?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicBinder     ?[0;39m ?[2m:?[0;39m binding parameter [1] as [VARCHAR] - [옵션 A]
+?[2m2023-07-03 02:24:17.706?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicBinder     ?[0;39m ?[2m:?[0;39m binding parameter [2] as [INTEGER] - [1000]
+?[2m2023-07-03 02:24:17.706?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicBinder     ?[0;39m ?[2m:?[0;39m binding parameter [3] as [INTEGER] - [1]
+postOption
+save product
+get product
+set price
+save product
+Hibernate: 
+    select
+        product0_.id as id1_4_0_,
+        product0_.image as image2_4_0_,
+        product0_.name as name3_4_0_,
+        product0_.price as price4_4_0_ 
+    from
+        product_tb product0_ 
+    where
+        product0_.id=?
+?[2m2023-07-03 02:24:17.737?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicBinder     ?[0;39m ?[2m:?[0;39m binding parameter [1] as [INTEGER] - [1]
+?[2m2023-07-03 02:24:17.744?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicExtractor  ?[0;39m ?[2m:?[0;39m extracted value ([image2_4_0_] : [VARCHAR]) - [1.png]
+?[2m2023-07-03 02:24:17.745?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicExtractor  ?[0;39m ?[2m:?[0;39m extracted value ([name3_4_0_] : [VARCHAR]) - [제품 A]
+?[2m2023-07-03 02:24:17.746?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicExtractor  ?[0;39m ?[2m:?[0;39m extracted value ([price4_4_0_] : [INTEGER]) - [1000]
+?[2m2023-07-03 02:24:17.751?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36morg.hibernate.type.CollectionType       ?[0;39m ?[2m:?[0;39m Created collection wrapper: [com.example.kakao.product.Product.options#1]
+Hibernate: 
+    select
+        options0_.product_id as product_4_1_0_,
+        options0_.id as id1_1_0_,
+        options0_.id as id1_1_1_,
+        options0_.name as name2_1_1_,
+        options0_.price as price3_1_1_,
+        options0_.product_id as product_4_1_1_ 
+    from
+        option_tb options0_ 
+    where
+        options0_.product_id=?
+?[2m2023-07-03 02:24:17.755?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicBinder     ?[0;39m ?[2m:?[0;39m binding parameter [1] as [INTEGER] - [1]
+?[2m2023-07-03 02:24:17.765?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicExtractor  ?[0;39m ?[2m:?[0;39m extracted value ([id1_1_1_] : [INTEGER]) - [1]
+?[2m2023-07-03 02:24:17.765?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicExtractor  ?[0;39m ?[2m:?[0;39m extracted value ([name2_1_1_] : [VARCHAR]) - [옵션 A]
+?[2m2023-07-03 02:24:17.765?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicExtractor  ?[0;39m ?[2m:?[0;39m extracted value ([price3_1_1_] : [INTEGER]) - [1000]
+?[2m2023-07-03 02:24:17.765?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicExtractor  ?[0;39m ?[2m:?[0;39m extracted value ([product_4_1_1_] : [INTEGER]) - [1]
+?[2m2023-07-03 02:24:17.766?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicExtractor  ?[0;39m ?[2m:?[0;39m extracted value ([product_4_1_0_] : [INTEGER]) - [1]
+?[2m2023-07-03 02:24:17.767?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicExtractor  ?[0;39m ?[2m:?[0;39m extracted value ([id1_1_0_] : [INTEGER]) - [1]
+end of post
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+?[2m2023-07-03 02:24:17.769?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicBinder     ?[0;39m ?[2m:?[0;39m binding parameter [1] as [VARCHAR] - [옵션 B]
+?[2m2023-07-03 02:24:17.769?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicBinder     ?[0;39m ?[2m:?[0;39m binding parameter [2] as [INTEGER] - [100]
+?[2m2023-07-03 02:24:17.769?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicBinder     ?[0;39m ?[2m:?[0;39m binding parameter [3] as [INTEGER] - [1]
+postOption
+save product
+get product
+set price
+save product
+end of post
+Hibernate: 
+    update
+        product_tb 
+    set
+        image=?,
+        name=?,
+        price=? 
+    where
+        id=?
+?[2m2023-07-03 02:24:17.787?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicBinder     ?[0;39m ?[2m:?[0;39m binding parameter [1] as [VARCHAR] - [1.png]
+?[2m2023-07-03 02:24:17.787?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicBinder     ?[0;39m ?[2m:?[0;39m binding parameter [2] as [VARCHAR] - [제품 A]
+?[2m2023-07-03 02:24:17.787?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicBinder     ?[0;39m ?[2m:?[0;39m binding parameter [3] as [INTEGER] - [100]
+?[2m2023-07-03 02:24:17.787?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicBinder     ?[0;39m ?[2m:?[0;39m binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    select
+        option0_.id as id1_1_,
+        option0_.name as name2_1_,
+        option0_.price as price3_1_,
+        option0_.product_id as product_4_1_ 
+    from
+        option_tb option0_
+?[2m2023-07-03 02:24:17.963?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicExtractor  ?[0;39m ?[2m:?[0;39m extracted value ([id1_1_] : [INTEGER]) - [1]
+?[2m2023-07-03 02:24:17.964?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicExtractor  ?[0;39m ?[2m:?[0;39m extracted value ([name2_1_] : [VARCHAR]) - [옵션 A]
+?[2m2023-07-03 02:24:17.964?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicExtractor  ?[0;39m ?[2m:?[0;39m extracted value ([price3_1_] : [INTEGER]) - [1000]
+?[2m2023-07-03 02:24:17.965?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicExtractor  ?[0;39m ?[2m:?[0;39m extracted value ([product_4_1_] : [INTEGER]) - [1]
+?[2m2023-07-03 02:24:17.965?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicExtractor  ?[0;39m ?[2m:?[0;39m extracted value ([id1_1_] : [INTEGER]) - [2]
+?[2m2023-07-03 02:24:17.965?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicExtractor  ?[0;39m ?[2m:?[0;39m extracted value ([name2_1_] : [VARCHAR]) - [옵션 B]
+?[2m2023-07-03 02:24:17.966?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicExtractor  ?[0;39m ?[2m:?[0;39m extracted value ([price3_1_] : [INTEGER]) - [100]
+?[2m2023-07-03 02:24:17.967?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicExtractor  ?[0;39m ?[2m:?[0;39m extracted value ([product_4_1_] : [INTEGER]) - [1]
+Option(id=1, name=옵션 A, price=1000)
+Option(id=2, name=옵션 B, price=100)
+Hibernate: 
+    select
+        option0_.id as id1_1_,
+        option0_.name as name2_1_,
+        option0_.price as price3_1_,
+        option0_.product_id as product_4_1_ 
+    from
+        option_tb option0_
+?[2m2023-07-03 02:24:17.997?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicExtractor  ?[0;39m ?[2m:?[0;39m extracted value ([id1_1_] : [INTEGER]) - [1]
+?[2m2023-07-03 02:24:17.997?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicExtractor  ?[0;39m ?[2m:?[0;39m extracted value ([name2_1_] : [VARCHAR]) - [옵션 A]
+?[2m2023-07-03 02:24:17.998?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicExtractor  ?[0;39m ?[2m:?[0;39m extracted value ([price3_1_] : [INTEGER]) - [1000]
+?[2m2023-07-03 02:24:17.998?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicExtractor  ?[0;39m ?[2m:?[0;39m extracted value ([product_4_1_] : [INTEGER]) - [1]
+?[2m2023-07-03 02:24:17.999?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicExtractor  ?[0;39m ?[2m:?[0;39m extracted value ([id1_1_] : [INTEGER]) - [2]
+?[2m2023-07-03 02:24:17.999?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicExtractor  ?[0;39m ?[2m:?[0;39m extracted value ([name2_1_] : [VARCHAR]) - [옵션 B]
+?[2m2023-07-03 02:24:17.999?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicExtractor  ?[0;39m ?[2m:?[0;39m extracted value ([price3_1_] : [INTEGER]) - [100]
+?[2m2023-07-03 02:24:18.000?[0;39m ?[32mTRACE?[0;39m ?[35m416?[0;39m ?[2m---?[0;39m ?[2m[    Test worker]?[0;39m ?[36mo.h.type.descriptor.sql.BasicExtractor  ?[0;39m ?[2m:?[0;39m extracted value ([product_4_1_] : [INTEGER]) - [1]
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
