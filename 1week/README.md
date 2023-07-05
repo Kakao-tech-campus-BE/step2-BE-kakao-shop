@@ -89,7 +89,7 @@
 - Method: POST
 - URL: http://localhost:8080/carts/add
 
-### (기능 9) 장바구니 보기
+### (기능 9) 장바구니 조회
 - 로그인이 필요하며 장바구니 보기 페이지에서 해당 API를 호출하여 현재 유저의 장바구니에 담긴 데이터를 받아온다.
 - Method: GET
 - URL: http://localhost:8080/carts
