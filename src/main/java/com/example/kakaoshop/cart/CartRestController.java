@@ -5,6 +5,7 @@ import com.example.kakaoshop.cart.response.CartItemDTO;
 import com.example.kakaoshop.cart.response.CartRespFindAllDTO;
 import com.example.kakaoshop.cart.response.ProductOptionDTO;
 import com.example.kakaoshop.cart.response.ProductDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,22 +13,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class CartRestController {
 
-    // Mock DB Data
-    // CartItem(ProductOption + Quantity) List 가 실제 DB에 저장되고,
-    // 조회 시 Product 를 Join 해서 JSON 형식으로 반환해주는 방식.
-    private List<CartItemDTO> cartItemDTOList = new ArrayList<>();
-
-    // cart 비운다.
-    public void clearMockCartData() {
-        cartItemDTOList.clear();
-    }
+    private final CartMockRepository cartRepository;
 
 
     // 장바구니 조회
     @GetMapping("/carts")
     public ResponseEntity<?> findAll() {
+        List<CartItemDTO> cartItemDTOList = cartRepository.findAllByUserId();
 
         // productDTO 리스트 만들기
         List<ProductDTO> productDTOList = new ArrayList<>();
@@ -43,6 +38,7 @@ public class CartRestController {
 
         CartRespFindAllDTO responseDTO = new CartRespFindAllDTO(productDTOList, 104500);
 
+
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
 
@@ -50,9 +46,10 @@ public class CartRestController {
     @PostMapping("/carts")
     public ResponseEntity<?> addCartItem(@RequestParam("product-option-id") int productOptionId,
                                          @RequestParam("quantity") int quantity) {
-
         // Mock Insert
-        // 상품 가격 확인 등 ..
+        // TODO: 상품 가격 확인 등 ..
+
+        List<CartItemDTO> cartItemDTOList = cartRepository.findAllByUserId();
 
         if(!cartItemDTOList.isEmpty()) cartItemDTOList.clear();
 
@@ -81,6 +78,7 @@ public class CartRestController {
           .build());
         cartItemDTOList.add(cartItemDTO2);
 
+        cartRepository.save(cartItemDTOList);
 
         return ResponseEntity.ok(ApiUtils.success(null));
     }
@@ -105,9 +103,12 @@ public class CartRestController {
     // 장바구니 옵션 1개 삭제
     @DeleteMapping("/carts/{cart-item-id}")
     public ResponseEntity<?> deleteCartItem(@PathVariable("cart-item-id") int cartItemId) {
+        List<CartItemDTO> cartItemDTOList = cartRepository.findAllByUserId();
 
         // Mock Delete
         cartItemDTOList.removeIf(cartItemDTO -> cartItemDTO.getId() == cartItemId);
+
+        cartRepository.save(cartItemDTOList);
 
         return ResponseEntity.ok(ApiUtils.success(null));
     }
@@ -117,7 +118,7 @@ public class CartRestController {
     public ResponseEntity<?> deleteCart(@RequestParam("cart-item-id") int cartItemId) {
 
         // Mock Delete
-        cartItemDTOList.clear();
+        cartRepository.clearMockCartData();
 
         return ResponseEntity.ok(ApiUtils.success(null));
     }

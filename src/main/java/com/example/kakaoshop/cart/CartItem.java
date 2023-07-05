@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Cart {
+public class CartItem {
 
   @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
@@ -20,7 +20,7 @@ public class Cart {
   @JoinColumn(name = "user_id")
   private User user;
 
-  @OneToOne
+  @ManyToOne
   @JoinColumn(name = "product_option_id")
   private ProductOption productOption;
 
@@ -29,7 +29,7 @@ public class Cart {
   private int price;
 
   @Builder
-  public Cart(User user, ProductOption productOption, int quantity, int price) {
+  public CartItem(User user, ProductOption productOption, int quantity, int price) {
     this.user = user;
     this.productOption = productOption;
     this.quantity = quantity;

@@ -24,7 +24,7 @@ public class UserRestController {
     private final AuthenticationManager authenticationManager;
 
     // 이메일 중복 검사
-    @PostMapping("/email-duplicate-check")
+    @PostMapping("/email-duplicate-check") // TODO: 이메일 존재여부를 확인하는 것이므로, GET 이 맞는것같음. URL 이름도 변경..
     public ResponseEntity<?> checkEmailDuplicate(@RequestBody UserRequest.EmailDuplicateCheckDTO checkEmailDuplicateDTO) {
         // TODO: service level 에서 exception throw-handle 고려.
         if( userRepository.existsByEmail(checkEmailDuplicateDTO.getEmail()) ) {
