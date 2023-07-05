@@ -85,6 +85,69 @@
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
+<details>
+<summary>과제 수행</summary>
+</br>
+
+**전체 API 주소 설계**
+
+-> API주소를 설계하여 README에 내용을 작성하시오.
+
+-> 전체 API 주소 설계가 RestAPI 맞게 설계되었는가? (예를 들어 배포된 서버는 POST와 GET으로만 구현되었는데, 학생들은 PUT과 DELETE도 배울 예정이라 이부분이 반영되었고, 주소가 RestAPI에 맞게 설계되었는지)
+
+* 회원 가입 버튼 클릭 시
+![회원가입](https://github.com/boseungk/TIL/assets/95980754/d6b90d51-7580-4800-9694-5244455fb677)
+  * [post] http://localhost:8080/join
+
+
+* 로그인 버튼 클릭 시
+![로그인](https://github.com/boseungk/TIL/assets/95980754/e86b71f8-2a81-4583-be1a-b0d5d681aec5)
+  * [post] http://localhost:8080/login
+
+
+* 전체 상품 조회 시
+![전체 상품](https://github.com/boseungk/TIL/assets/95980754/58420baa-7a07-4e78-b12a-5163162fc6be)
+  * [get] http://localhost:8080/products?page=1
+
+
+* 개별 상품 / 옵션 조회 시
+![개별 상품](https://github.com/boseungk/TIL/assets/95980754/16d690cf-55f9-47c8-88be-037147edb81f)
+  * [get] http://localhost:8080/products/1
+
+
+* 장바구니 담기 버튼 클릭 시 
+![장바구니 담기](https://github.com/boseungk/TIL/assets/95980754/1142d55f-8e94-4321-aab5-d47d33fd20e4)
+  * [post] http://localhost:8080/carts
+
+* 장바구니 조회 시
+![장바구니 조회](https://github.com/boseungk/TIL/assets/95980754/cce205fa-1c55-4316-8672-3af26330359e)
+  * [get] http://localhost:8080/carts
+
+* 장바구니 수량 수정 시
+![장바구니 수정](https://github.com/boseungk/TIL/assets/95980754/cce205fa-1c55-4316-8672-3af26330359e)
+  * [put] http://localhost:8080/carts
+
+* 장바구니 수량 삭제 시
+![장바구니 삭제](https://github.com/boseungk/TIL/assets/95980754/cce205fa-1c55-4316-8672-3af26330359e)
+  * [delete] http://localhost:8080/carts
+  * 요구사항에는 없지만 delete가 필요해 보임
+
+* 장바구니 주문하기 버튼 클릭 시
+![장바구니 주문](https://github.com/boseungk/TIL/assets/95980754/cce205fa-1c55-4316-8672-3af26330359e)
+  * [post] http://localhost:8080/orderSheets
+  * 최종 주문 이전 단계로 주문 확인 단계가 필요할 것 같아서 네이버 주문 단계 참고하여 orderSheets로 결정
+
+* 결제하기 버튼 클릭 시
+![결제하기](https://github.com/boseungk/TIL/assets/95980754/ba97ee67-f544-49d9-9fb6-7766e9517064)
+  * [post]  http://localhost:8080/orders
+
+* 주문 조회 시
+![주문 조회](https://github.com/boseungk/TIL/assets/95980754/314adac8-8935-4980-b2f2-1fd54bd24eba)
+  * [get] http://localhost:8080/orders/1
+
+</details>
+</br>
+
 # 3주차
 
 카카오 테크 캠퍼스 2단계 - BE - 3주차 클론 과제
