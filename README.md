@@ -134,7 +134,7 @@
 
 * 장바구니 주문하기 버튼 클릭 시
 ![장바구니 주문](https://github.com/boseungk/TIL/assets/95980754/cce205fa-1c55-4316-8672-3af26330359e)
-  * [post] http://localhost:8080/orderSheets
+  * [post] http://localhost:8080/orders/orderSheets
   * 최종 주문 이전 단계로 주문 확인 단계가 필요할 것 같아서 네이버 주문 단계 참고하여 orderSheets로 결정
 
 * 결제하기 버튼 클릭 시
