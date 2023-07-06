@@ -3,7 +3,7 @@ package com.example.kakaoshop._core.security;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.example.kakaoshop.user.User;
+import com.example.kakaoshop.domain.account.Account;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -38,8 +38,8 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
             int id = decodedJWT.getClaim("id").asInt();
             String roles = decodedJWT.getClaim("role").asString();
 
-            User user = User.builder().id(id).roles(roles).build(); // Controller 에서 받아오는 객체
-            CustomUserDetails myUserDetails = new CustomUserDetails(user);
+            Account account = Account.builder().id(id).roles(roles).build(); // Controller 에서 받아오는 객체
+            CustomUserDetails myUserDetails = new CustomUserDetails(account);
             Authentication authentication =
                     new UsernamePasswordAuthenticationToken(
                             myUserDetails,

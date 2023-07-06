@@ -5,7 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.example.kakaoshop.user.User;
+import com.example.kakaoshop.domain.account.Account;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -19,12 +19,12 @@ public class JWTProvider {
     public static final String HEADER = "Authorization";
     public static final String SECRET = "MySecretKey";
 
-    public static String create(User user) {
+    public static String create(Account account) {
         String jwt = JWT.create()
-                .withSubject(user.getEmail())
+                .withSubject(account.getEmail())
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXP))
-                .withClaim("id", user.getId())
-                .withClaim("role", user.getRoles())
+                .withClaim("id", account.getId())
+                .withClaim("role", account.getRoles())
                 .sign(Algorithm.HMAC512(SECRET));
         return TOKEN_PREFIX + jwt;
     }
@@ -34,5 +34,4 @@ public class JWTProvider {
         return JWT.require(Algorithm.HMAC512(SECRET))
                 .build().verify(jwt);
     }
-
 }

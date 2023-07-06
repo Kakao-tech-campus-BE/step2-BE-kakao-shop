@@ -1,6 +1,6 @@
 package com.example.kakaoshop._core.security;
 
-import com.example.kakaoshop.user.User;
+import com.example.kakaoshop.domain.account.Account;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,21 +15,21 @@ import java.util.stream.Collectors;
 @Getter
 public class CustomUserDetails implements UserDetails {
 
-    private final User user;
+    private final Account account;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.stream(user.getRoles().split(",")).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+        return Arrays.stream(account.getRoles().split(",")).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return account.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return account.getUsername();
     }
 
     @Override
@@ -53,6 +53,6 @@ public class CustomUserDetails implements UserDetails {
     }
 
     public int getId() {
-        return user.getId();
+        return account.getId();
     }
 }

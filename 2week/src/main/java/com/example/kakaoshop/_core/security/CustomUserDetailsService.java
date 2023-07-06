@@ -1,7 +1,7 @@
 package com.example.kakaoshop._core.security;
 
-import com.example.kakaoshop.user.User;
-import com.example.kakaoshop.user.UserJPARepository;
+import com.example.kakaoshop.domain.account.Account;
+import com.example.kakaoshop.domain.account.AccountJPARepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,19 +15,19 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Slf4j
 public class CustomUserDetailsService implements UserDetailsService {
-    private final UserJPARepository userRepository;
+    private final AccountJPARepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        Optional<User> userOP = userRepository.findByEmail(email);
+        Optional<Account> userOP = userRepository.findByEmail(email);
 
         if (userOP.isEmpty()) {
             log.warn("로그인에 실패하였습니다.");
             return null;
         } else {
-            User userPS = userOP.get();
-            return new CustomUserDetails(userPS);
+            Account accountPS = userOP.get();
+            return new CustomUserDetails(accountPS);
         }
     }
 }

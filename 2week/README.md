@@ -154,7 +154,7 @@
     - Customer 가 아닌 고객의 계정도 관리할 필요가 있다면, Account 로 이름을 바꾸고 계정 역할 필드를 추가하고, 1:1 관계로 Customer, Seller 등으로 분할하는것에 대해서 생각...
 
 
-    CREATE TABLE `user` (  
+    CREATE TABLE `account` (  
       `id` int NOT NULL AUTO_INCREMENT,  
       `name` varchar(255),  
       `email` varchar(255) NOT NULL,  
@@ -220,7 +220,7 @@
       KEY (`user_id`),  
       KEY (`option_id`),  
       CONSTRAINT FOREIGN KEY (`option_id`) REFERENCES `product_option` (`id`),  
-      CONSTRAINT FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)  
+      CONSTRAINT FOREIGN KEY (`user_id`) REFERENCES `account` (`id`)  
     )  
 
 
@@ -235,7 +235,7 @@
 
       PRIMARY KEY (`id`),
       KEY (`user_id`),
-      CONSTRAINT FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+      CONSTRAINT FOREIGN KEY (`user_id`) REFERENCES `account` (`id`)
     )
 
 
