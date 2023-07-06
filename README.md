@@ -150,6 +150,52 @@ User, Order, Item, Cart, Option, Product 테이블을 설계하고 각 테이블
 
 </br>
 
+## **과제**
+### 1. API주소를 설계하여 README에 내용을 작성하시오.
+```
+- 전체 상품 목록 조회
+    - GET
+    - http://localhost:8080/products
+
+- 개별 상품 상세 조회
+    - GET
+    - http://localhost:8080/products/{products_id}
+
+- 장바구니 담기
+    - POST
+    - http://localhost:8080/carts
+
+- 장바구니 조회
+    - GET
+    - http://localhost:8080/carts
+
+- 주문하기 & 장바구니 수정
+    - PUT
+    - http://localhost:8080/carts
+
+- 결제하기
+    - POST
+    - http://localhost:8080/orders
+
+- 주문 결과 확인
+    - GET
+    - http://localhost:8080/orders/{order_id}
+
+- 이메일 중복 체크
+    - POST
+    - http://localhost:8080/email-check
+
+- 회원가입
+    - POST
+    - http://localhost:8080/join
+
+- 로그인
+    - POST
+    - http://localhost:8080/login
+
+```
+
+
 ## **과제 상세 : 수강생들이 과제를 진행할 때, 유념해야할 것**
 아래 항목은 반드시 포함하여 과제 수행해주세요!
 >- 전체 API 주소 설계가 RestAPI 맞게 설계되었는가? (예를 들어 배포된 서버는 POST와 GET으로만 구현되었는데, 학생들은 PUT과 DELETE도 배울 예정이라 이부분이 반영되었고, 주소가 RestAPI에 맞게 설계되었는지)
