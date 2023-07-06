@@ -6,7 +6,6 @@ import lombok.Setter;
 
 @Getter @Setter
 public class ProductRespFindAllDTO {
-
     private int id;
     private String productName;
     private String description;

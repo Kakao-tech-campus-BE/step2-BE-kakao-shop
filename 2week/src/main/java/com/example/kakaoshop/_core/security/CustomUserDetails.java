@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Getter
 public class CustomUserDetails implements UserDetails {
-
     private final User user;
 
     @Override

@@ -14,7 +14,6 @@ import java.util.List;
 
 @RestController
 public class CartRestController {
-
     @GetMapping("/carts")
     public ResponseEntity<?> findAll() {
         // 카트 아이템 리스트 만들기
@@ -27,10 +26,10 @@ public class CartRestController {
                 .price(50000)
                 .build();
         cartItemDTO1.setOption(ProductOptionDTO.builder()
-                                .id(1)
-                                .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
-                                .price(10000)
-                                .build());
+                .id(1)
+                .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
+                .price(10000)
+                .build());
         cartItemDTOList.add(cartItemDTO1);
 
         CartItemDTO cartItemDTO2 = CartItemDTO.builder()
@@ -39,10 +38,10 @@ public class CartRestController {
                 .price(54500)
                 .build();
         cartItemDTO2.setOption(ProductOptionDTO.builder()
-                                .id(1)
-                                .optionName("02. 슬라이딩 지퍼백 크리스마스에디션 5종")
-                                .price(10900)
-                                .build());
+                .id(1)
+                .optionName("02. 슬라이딩 지퍼백 크리스마스에디션 5종")
+                .price(10900)
+                .build());
         cartItemDTOList.add(cartItemDTO2);
 
         // productDTO 리스트 만들기

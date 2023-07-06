@@ -19,7 +19,6 @@ import java.io.IOException;
 
 @Slf4j
 public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
-
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
     }

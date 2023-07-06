@@ -8,7 +8,6 @@ import java.util.List;
 
 @Getter @Setter
 public class ProductRespFindByIdDTO {
-
     private int id;
     private String productName;
     private String description;

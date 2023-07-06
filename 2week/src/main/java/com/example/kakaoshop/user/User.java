@@ -12,14 +12,16 @@ import javax.persistence.*;
 @Entity
 @Table(name="user_tb")
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @Column(length = 100, nullable = false, unique = true)
     private String email; // 인증시 필요한 필드
+
     @Column(length = 256, nullable = false)
     private String password;
+
     @Column(length = 45, nullable = false)
     private String username;
 
