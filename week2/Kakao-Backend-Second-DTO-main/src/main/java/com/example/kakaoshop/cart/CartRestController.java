@@ -1,6 +1,7 @@
 package com.example.kakaoshop.cart;
 
 import com.example.kakaoshop._core.utils.ApiUtils;
+import com.example.kakaoshop.cart.request.CartReqAddDTO;
 import com.example.kakaoshop.cart.request.CartReqUpdateDTO;
 import com.example.kakaoshop.cart.response.CartItemDTO;
 import com.example.kakaoshop.cart.response.CartRespFindAllDTO;
@@ -17,6 +18,11 @@ import java.util.List;
 
 @RestController
 public class CartRestController {
+
+    @PostMapping("/carts/add")
+    public ResponseEntity<?> add(@RequestBody List<CartReqAddDTO> cartReqAddDTOList){
+        return ResponseEntity.ok("ok");
+    }
 
     @PostMapping("/carts/update")
     public ResponseEntity<?> update(@RequestBody List<CartReqUpdateDTO> cartReqUpdateDTOList){
