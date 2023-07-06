@@ -2,11 +2,9 @@ package com.example.kakaoshop.cart.response;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
-@Getter @Setter
+@Getter
 public class CartItemDTO {
-
     private int id;
     private ProductOptionDTO option;
     private int quantity;
