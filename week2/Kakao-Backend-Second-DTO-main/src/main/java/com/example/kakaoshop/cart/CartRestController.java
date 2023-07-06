@@ -3,10 +3,7 @@ package com.example.kakaoshop.cart;
 import com.example.kakaoshop._core.utils.ApiUtils;
 import com.example.kakaoshop.cart.request.CartReqAddDTO;
 import com.example.kakaoshop.cart.request.CartReqUpdateDTO;
-import com.example.kakaoshop.cart.response.CartItemDTO;
-import com.example.kakaoshop.cart.response.CartRespFindAllDTO;
-import com.example.kakaoshop.cart.response.ProductOptionDTO;
-import com.example.kakaoshop.cart.response.ProductDTO;
+import com.example.kakaoshop.cart.response.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +23,30 @@ public class CartRestController {
 
     @PostMapping("/carts/update")
     public ResponseEntity<?> update(@RequestBody List<CartReqUpdateDTO> cartReqUpdateDTOList){
-        return ResponseEntity.ok("ok");
+
+        List<CartUpdateItemDTO> cartUpdateItemList = new ArrayList<>();
+        cartUpdateItemList.add(
+                CartUpdateItemDTO.builder()
+                        .cartId(4)
+                        .optionId(1)
+                        .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
+                        .quantity(10)
+                        .price(100000)
+                        .build()
+        );
+        cartUpdateItemList.add(
+                CartUpdateItemDTO.builder()
+                        .cartId(5)
+                        .optionId(2)
+                        .optionName("02. 슬라이딩 지퍼백 플라워에디션 5종")
+                        .quantity(10)
+                        .price(109000)
+                        .build()
+        );
+
+        CartRespUpdateDTO responseDTO = new CartRespUpdateDTO(cartUpdateItemList, 209000);
+
+        return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
 
     @GetMapping("/carts")
