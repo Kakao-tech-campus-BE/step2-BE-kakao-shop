@@ -1,12 +1,11 @@
 package com.example.kakaoshop.cart;
 
 import com.example.kakaoshop._core.utils.ApiUtils;
-import com.example.kakaoshop.cart.response.CartItemDTO;
-import com.example.kakaoshop.cart.response.CartRespFindAllDTO;
-import com.example.kakaoshop.cart.response.ProductOptionDTO;
-import com.example.kakaoshop.cart.response.ProductDTO;
+import com.example.kakaoshop.cart.response.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -58,6 +57,43 @@ public class CartRestController {
         );
 
         CartRespFindAllDTO responseDTO = new CartRespFindAllDTO(productDTOList, 104500);
+
+        return ResponseEntity.ok(ApiUtils.success(responseDTO));
+    }
+
+    @PostMapping("/carts/add")
+    public ResponseEntity<?> add(@RequestBody CartRequest.CartAddDTO[] cartAddDTO){
+        return ResponseEntity.ok(ApiUtils.success(null));
+    }
+
+    @PostMapping("/carts/update")
+    public ResponseEntity<?> update(@RequestBody CartRequest.CartAddDTO[] cartUpdateDTOS){
+
+        List<CartUpdateItemDTO> cartUpdateItemDTOList = new ArrayList<>();
+
+        CartUpdateItemDTO cartUpdateItemDTO1 = CartUpdateItemDTO.builder()
+                .cartId(4)
+                .optionId(1)
+                .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
+                .quantity(10)
+                .price(100000)
+                .build();
+
+        //1번 항목 담기
+        cartUpdateItemDTOList.add(cartUpdateItemDTO1);
+
+        CartUpdateItemDTO cartUpdateItemDTO2 = CartUpdateItemDTO.builder()
+                .cartId(5)
+                .optionId(2)
+                .optionName("02. 슬라이딩 지퍼백 플라워에디션 5종")
+                .quantity(10)
+                .price(109000)
+                .build();
+
+        //2번 항목 담기
+        cartUpdateItemDTOList.add(cartUpdateItemDTO2);
+
+        CartRespUpdateDTO responseDTO = new CartRespUpdateDTO(cartUpdateItemDTOList, 209000);
 
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }

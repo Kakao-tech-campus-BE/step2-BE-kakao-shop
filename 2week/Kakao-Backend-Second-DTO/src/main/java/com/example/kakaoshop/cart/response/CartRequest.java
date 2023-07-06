@@ -1,2 +1,15 @@
-package com.example.kakaoshop.cart.response;public class CartRequest {
+package com.example.kakaoshop.cart.response;
+
+import lombok.Getter;
+import lombok.Setter;
+
+public class CartRequest {
+
+    @Getter
+    @Setter
+    public static class CartAddDTO{
+        private int optionId;
+        private int quantity;
+    }
+
 }
