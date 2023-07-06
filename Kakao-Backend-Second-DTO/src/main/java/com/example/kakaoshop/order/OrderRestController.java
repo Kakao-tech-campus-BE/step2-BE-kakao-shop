@@ -93,7 +93,8 @@ public class OrderRestController {
 
             return ResponseEntity.ok(ApiUtils.success(responseDTO));
         }
-        else return ResponseEntity.badRequest().body(ApiUtils.error("해당 주문을 찾을 수 없습니다." + id, HttpStatus.BAD_REQUEST));
+        else return ResponseEntity.badRequest()
+                .body(ApiUtils.error("해당 주문을 찾을 수 없습니다." + id, HttpStatus.BAD_REQUEST));
 
     }
 

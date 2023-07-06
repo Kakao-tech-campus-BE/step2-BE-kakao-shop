@@ -357,6 +357,18 @@ Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzc2FyQG5hdGUuY29tIiwicm9s
 2. Mock API Controller 구현
 ```
 
+### **과제 1. 전체 API 주소 설계**      
+![Alt text](images/week2-image.png)     
+Put과 Delete를 포함한 API 명세입니다. Delete는 삭제하는 기능이 없어 사용하지 않았습니다.
+
+</br>
+
+### **과제 2. Mock API Controller 구현**        
+```
+
+```
+
+
 ## **과제 설명**
 ```
 1. API주소를 설계하여 README에 내용을 작성하시오.
