@@ -28,16 +28,17 @@
 
 (기능8) 장바구니 담기 : /carts/add 프론트에서 넘겨주는 데이터를 바탕으로 장바구니버튼을 클릭하면 cart 테이블에 데이터를 추가한다. cart 테이블의 user_id는 현재 토큰의 user_id를 담아야한다.
 (기능 8-2) API문서에는 언급되어 있지 않지만, /carts/delete api를 통하여 장바구니항목을 삭제하는 기능을 추가하여야한다.
+
 (기능9) 장바구니 보기 : /carts 현재 토근의 user_id를 가지는 cart들을 조회한다.
 
 (기능10) 장바구니 상품 옵션 확인 및 수량 결정 :/cart , 기능7과 마찬가지로, 주문하기를 눌렀을때 수정된 최종데이터를 주문하기 버튼을 통해 넘겨주는것이 좋을 것 같다.
 
 (기능11) 주문 : /carts/update , 수정된 최종 option_id와 option_count를 데이터로 받고 이를 통해 carts 데이터를 update 한다.
 
-(기능12) 결제 : /order , 결제하기 버튼을 클릭하면, user_id를 외래키로 가지는 order 테이블에 데이터를 추가하여 주고, 해당 order_id를 외래키로 가지는 order_item 테이블에 데이터를 추가해준다. order_item 테이블은 order_id를 외래키로 가진다는 점 빼고는 모두 cart 테이블과 컬럼이 동일하다. 또한 결제버튼을 클릭하면 기존의 cart 데이터는 삭제되고 모두 order_item 테이블로 옮겨진다.
+(기능12) 결제 : /order , 결제하기 버튼을 클릭하면,해당 user_id를 외래키로 가지는 order 테이블에 데이터를 추가하여 주고, 해당 order_id를 외래키로 가지는 order_item 테이블에 데이터를 추가해준다. order_item 테이블은 order_id를 외래키로 가진다는 점 빼고는 모두 cart 테이블과 컬럼이 동일하다. 
 
-```
-## **3번**
+``
+##**3번**##
 ```
 첫번째, 전체상품목록조회에 [무료배송]에 대한 데이터를 받지 않고 있다.
 두번째, 개별상품상세조회에서 [배송비]에 대한 데이터를 받지 않고 있다.
@@ -48,14 +49,11 @@
 
 </br>
 
-## **4번**
-</br>
+##**4번**##
+###domain 작성![kakaoShopping drawio (1)](https://github.com/yuseonkim/step2-BE-kakao-shop/assets/81663729/9835363c-d4ec-479d-88fb-ebf0e4d19b88)
 
-![kakaoShopping drawio (1)](https://github.com/yuseonkim/step2-BE-kakao-shop/assets/81663729/9835363c-d4ec-479d-88fb-ebf0e4d19b88)
 
-</br>
-
-## **domain 작성**
+###domain 작성
 
 product 테이블
 
@@ -243,3 +241,26 @@ public class Order extends BaseEntity{
 
 }
 ```
+
+
+# Step-2.-Week-2 #
+
+API문서와는 별개로 RESTful한 API를 설계해보았다.
+
+|CRUD|HTTP verbs|ROUTE|
+|-|-|-|
+|전체상품목록조회|GET|/products|
+|개별상품상세조회|GET|/products/{id}|
+|장바구니담기|POST|/cart/items|
+|장바구니목록|GET|/cart/items|
+|주문하기|POST|/orders|
+|주문조회|GET|/orders/{id}|
+
+User 도메인은 설계하지않아도 된다고 하여 설계해보지 않았으나.. 예전부터 login과 register(join)을 RESTful하게 설계하려면 어떤
+URI의.. 이름을 줘야하나 고민 중이다. 
+
+
+
+
+
+
