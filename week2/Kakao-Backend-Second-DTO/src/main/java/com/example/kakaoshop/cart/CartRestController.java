@@ -61,4 +61,8 @@ public class CartRestController {
 
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
+    @PostMapping("/carts/add")
+    public ResponseEntity<?> add(){
+        return ResponseEntity.ok(ApiUtils.success(null));
+    }
 }
