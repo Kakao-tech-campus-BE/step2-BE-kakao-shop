@@ -76,11 +76,11 @@ public class OrderRestController {
 
             List<ProductDTO> productDTOList = new ArrayList<>();
 
-            ProductDTO productDTO1 = ProductDTO.builder()
+            ProductDTO productDTO_1 = ProductDTO.builder()
                     .productName("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전")
                     .items(orderItemDTOList)
                     .build();
-            productDTOList.add(productDTO1);
+            productDTOList.add(productDTO_1);
 
             responseDTO = new OrderRespFindByIdDTO(id, productDTOList, 209000);
 

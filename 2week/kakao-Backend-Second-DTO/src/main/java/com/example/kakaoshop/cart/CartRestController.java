@@ -23,29 +23,29 @@ public class CartRestController {
         List<CartItemDTO> cartItemDTOList = new ArrayList<>();
 
         // 카트 아이템 리스트에 담기
-        CartItemDTO cartItemDTO1 = CartItemDTO.builder()
+        CartItemDTO cartItemDTO_1 = CartItemDTO.builder()
                 .id(4)
                 .quantity(5)
                 .price(50000)
                 .build();
-        cartItemDTO1.setOption(ProductOptionDTO.builder()
+        cartItemDTO_1.setOption(ProductOptionDTO.builder()
                 .id(1)
                 .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
                 .price(10000)
                 .build());
-        cartItemDTOList.add(cartItemDTO1);
+        cartItemDTOList.add(cartItemDTO_1);
 
-        CartItemDTO cartItemDTO2 = CartItemDTO.builder()
+        CartItemDTO cartItemDTO_2 = CartItemDTO.builder()
                 .id(5)
                 .quantity(5)
                 .price(54500)
                 .build();
-        cartItemDTO2.setOption(ProductOptionDTO.builder()
+        cartItemDTO_2.setOption(ProductOptionDTO.builder()
                 .id(1)
                 .optionName("02. 슬라이딩 지퍼백 크리스마스에디션 5종")
                 .price(10900)
                 .build());
-        cartItemDTOList.add(cartItemDTO2);
+        cartItemDTOList.add(cartItemDTO_2);
 
         // productDTO 리스트 만들기
         List<ProductDTO> productDTOList = new ArrayList<>();
