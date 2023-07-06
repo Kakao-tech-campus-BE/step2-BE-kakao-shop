@@ -726,7 +726,7 @@ table product_tb{
 
 **Option 테이블**
 ```
-table option_tb{
+table product_option_tb{
     id          INTEGER(11) PRIMARY KEY AUTOINCREMENT,
     product_id  INTEGER(11),
     option_name VARCHAR(100)    NOT NULL,
