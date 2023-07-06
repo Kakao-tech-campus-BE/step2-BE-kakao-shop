@@ -169,13 +169,16 @@
 
 카카오 테크 캠퍼스 2단계 - BE - 2주차 클론 과제
 
-### **과제명**
+<details>
+    <summary><h3>과제설명<h3></summary>
+
+#### **과제명**
 ```
 1. 전체 API 주소 설계
 2. Mock API Controller 구현
 ```
 
-### **과제 설명**
+#### **과제 설명**
 ```
 1. API주소를 설계하여 README에 내용을 작성하시오.
 2. 가짜 데이터를 설계하여 응답하는 스프링부트 컨트롤러를 작성하고 소스코드를 업로드하시오.
@@ -183,13 +186,13 @@
 
 </br>
 
-### **과제 상세 : 수강생들이 과제를 진행할 때, 유념해야할 것**
+#### **과제 상세 : 수강생들이 과제를 진행할 때, 유념해야할 것**
 아래 항목은 반드시 포함하여 과제 수행해주세요!
 >- 전체 API 주소 설계가 RestAPI 맞게 설계되었는가? (예를 들어 배포된 서버는 POST와 GET으로만 구현되었는데, 학생들은 PUT과 DELETE도 배울 예정이라 이부분이 반영되었고, 주소가 RestAPI에 맞게 설계되었는지)
 >- 가짜 데이터를 설계하여 Mock API를 잘 구현하였는가? (예를 들어 DB연결없이 컨트롤러만 만들어서 배포된 서버의 응답과 동일한 형태로 데이터가 응답되는지 여부)
 </br>
 
-### **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
+#### **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
 **1. PR 제목과 내용을 아래와 같이 작성 해주세요.**
 
 >- PR 제목 : 부산대BE_라이언_2주차 과제
@@ -200,6 +203,64 @@
 
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
+
+</details>
+
+### 1. API주소를 설계하여 README에 내용을 작성하시오.
+
+현재 API는 총 9개로 다음과 같습니다.
+
+* POST /login
+* POST /join
+* GET /products
+* GET /products/{id}
+* GET /carts
+* POST /carts/add
+* POST /carts/update
+* POST /orders/save
+* GET /orders/{id}
+
+이 중 RestAPI 설계 상 옳지 않은 API 주소는 3개입니다.
+
+* POST /carts/add
+* POST /carts/update
+* POST /orders/save
+
+이는 전통적인 GET과 POST만 사용하는 url 방식으로, 현재는 GET/POST/PUT/DELETE의 메서드를 사용해 url에 동사(행위)를 적지 않는 Rest형식이 권장되고 있습니다.
+
+따라서 위의 3개를 아래와 같이 바꿔볼 수 있습니다.
+
+* POST /carts
+* PUT /carts
+* POST /orders
+
+이렇게 하면 행위는 메서드 타입으로 알 수 있으며, url은 명사만을 가지게 되어 보다 직관적인 url이 되게 됩니다.
+
+따라서 최종 API 주소 설계는 다음과 같습니다.
+
+```
+POST /login
+POST /join
+GET /products
+GET /products/{id}
+GET /carts
+POST /carts
+PUT /carts
+POST /orders
+GET /orders/{id}
+```
+
+
+### 2. 가짜 데이터를 설계하여 응답하는 스프링부트 컨트롤러를 작성하고 소스코드를 업로드하시오.
+
+주어진 소스코드를 바탕으로 API 문서엔 존재하지만 API가 만들어져있지 않은 부분을 구현하였습니다.
+
+* POST /carts/add
+* POST /carts/update
+* POST /orders/save
+* GET /orders/{id}
+
+위의 총 4개의 API가 존재하지않았고, 각각에 대한 requestDTO와 responseDTO를 제작하였습니다.
 
 </details>
 
