@@ -1,6 +1,5 @@
 package com.example.kakaoshop.order.response;
 
-import com.example.kakaoshop.cart.response.ProductOptionDTO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
