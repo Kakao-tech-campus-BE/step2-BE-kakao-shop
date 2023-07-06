@@ -35,7 +35,7 @@ public class UserRestController {
 
         userRepository.save(user);
 
-        return ResponseEntity.ok("ok");
+        return ResponseEntity.ok().body(ApiUtils.success(null));
     }
 
     @PostMapping("/login")
@@ -46,6 +46,6 @@ public class UserRestController {
         CustomUserDetails myUserDetails = (CustomUserDetails) authentication.getPrincipal();
         String jwt = JWTProvider.create(myUserDetails.getUser());
 
-        return ResponseEntity.ok().header(JWTProvider.HEADER, jwt).body("ok");
+        return ResponseEntity.ok().header(JWTProvider.HEADER, jwt).body(ApiUtils.success(null));
     }
 }
