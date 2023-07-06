@@ -40,10 +40,151 @@
 
 </br>
 
-**2. PR 내용 :**
+****2. PR 내용 :**
 
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
+
+전남대BE_황대선 과제
+---
+
+### 요구사항 분석/API 요청 및 응답 시나리오 분석
+
+1. 부족해 보이는 기능
+
+   - 배송 관련 기능(주문화면에서 배송 지역을 바꿀 수 있도록 해야 한다.)   
+   - 특딜가로 구매하기 기능   
+   - 관리자가 상품을 등록하는 기능   
+   - 별점 매기기 기능   
+   - 할인 관련 기능
+   - 장바구니에 있는 것들을 삭제하거나 장바구니에 다른 상품을 추가할 수 있는 버튼이 주문하는 화면에 있어야한다.
+
+2. 화면 설계와 API 주소 매칭
+   - 회원가입 페이지에 이메일 중복확인 버튼(화면 설계서에 없는 것) - http://localhost:8080/check   
+   - 회원가입 버튼 - http://localhost:8080/join   
+   - 로그인 버튼 - http://localhost:8080/login   
+   - 로그아웃 버튼 - http://localhost:8080/logout (배포된 API에 없는 것)   
+   - 전체 상품 목록 조회 -  http://localhost:8080/products
+     - 상품 데이터는 15개 존재한다. http://localhost:8080/products?page=1
+     - 한 페이지에 9개씩 보여준다. http://localhost:8080/products?page=0
+     - param의 default 값은 0으로 설정되어 있다.
+   - 전체 상품 목록에서 특정 상품 카드 클릭 - 개별 상품 상세 조회 http://localhost:8080/products/{id}    
+   - 개별 상품 상세 페이지에서 장바구니 담기 버튼 - http://localhost:8080/carts/add   
+   - 장바구니 버튼 - http://localhost:8080/carts    
+   - 주문하기 버튼 -  http://localhost:8080/carts/update   
+   - 결제하기 버튼 - http://localhost:8080/orders/save   
+   - 결제한 후, 주문 결과 확인 페이지 - http://localhost:8080/orders/{id}
+
+3. POSTMAN 실습 후 API 중 응답되는 데이터가 부족한 것을 찾고 보충   
+   - 로그인      - AccessToken을 디코딩해본 결과 유효기간이 2일로 설정된 것을 알 수 있었습니다. 따라서, AccessToken의 유효기간을 30분 전후로 설정하고, 쿠키에 RefreshToken 또한 담아 클라이언트에게 전달하여야 한다.   
+   - 전체 상품 목록 조회 - 특딜가 여부와 무료 배송인지 아닌지의 여부 관련 데이터
+   - 개별 상품 상제 조회 - 특딜가 관련 데이터와 배송 관련 데이터
+   - 결제하기 버튼 - http://localhost:8080/orders/save     
+     - 현재 응답 : HTTP Status : 200, HTTP Body에 아래와 같이 데이터를 보여주고 있다.        
+         ``` json
+         {"success": true,
+            "response": {
+                "id": 1,
+                "products": [
+                    {
+                    "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전",
+                    "items": [
+                            {
+                                "id": 1,
+                                "optionName": "01. 슬라이딩 지퍼백 크리스마스에디션 4종",
+                                "quantity": 5,
+                                "price": 50000
+                            },
+                            {
+                                "id": 2,
+                                "optionName": "02. 슬라이딩 지퍼백 플라워에디션 5종",
+                                "quantity": 5,
+                                "price": 54500
+                            }
+                         ]
+                    }
+                ],
+                "totalPrice": 104500
+                },
+            "error": null
+            }
+         ```
+         
+     - 의문점 1 : 왜 주문 결과 확인 페이지에서 필요한 데이터를 미리 줬을까     
+     - 의문점 2 : redirect를 사용하지 않은 이유가 무엇일까       
+       - 만약, 사용했다면 응답코드는 301이 되어야하고, 응답 데이터 또한 id값만 있으면 된다.     
+     - 의문점 3 : 주문 결과 확인 페이지에서 필요한 데이터를 미리 받았기 때문에, 주문 결과 확인 페이지에서 굳이 http://localhost:8080/orders/1 과 같은 요청을 해야하는 걸까
+       - http://localhost:8080/products 의 응답 데이터에 무료 배송인지 아닌 지 알려주는 데이터와 특별가인지 아닌지 알려주는 데이터가 없다.
+       -  http://localhost:8080/products/{id} 에도 응답 데이터에 무료 배송 여부 데이터와 특딜가 여부 데이터가 없다.
+    - 의문점 4 : Header에서 status code를 확인할 수 있음에도 Response Body에 status를 넣는 이유는 프론트가 파싱하기 편함이 목적인데, 반대로 생각해보면 백엔드의 리소스도 사용되는 데 어떤 방식이 맞는 것인 지 잘 모르겠다.(팀 by 팀 아닐까...??)
+4. ER-Diagram 작성 - 주어진 API만 가지고 작성하였습니다.
+
+<img src="./image/erd.png">
+
+- Member와 Order는 1:N관계이며 식별관계이다.
+- Member와 Cart는 1:1관계이며 식별관계이다.
+- Item과 Option은 1:N관계이며 식별관계이다.  => Item에 무조건 Option이 1개 이상 있는 것이라고 생각했습니다. 아이템 자기자신이 첫 번째 옵션이 되기 때문입니다.
+- Order와 Option은 N:N관계이며, 비식별관계이다. JPA를 이용할 것이기 때문에 위와 같이 중간테이블을 만들어주었습니다.
+- OrderItem에서는 price라는 필드를 가져야합니다. 왜냐하면, 추후에 할인 등을 적용할 수 있기 때문입니다.
+
+<img src="./image/erd2.png">
+
+- 위와 같이 Cart와 Order를 매핑시켜도 괜찮지 않을까?? 
+- 괜찮지 않다. 왜냐하면, 주문이 끝난 후 Cart를 삭제해야하는 데 이때 Order테이블의 정합성이 깨진다.
+
+### 강사님 과제
+
+PK가 있어야하는 이유
+
+- 중복된 값을 허용하지 않기 때문에 무결성을 유지 할 수 있다.
+- PK를 기준으로 행을 검색하거나 조인할 때 데이터베이스의 성능이 향상됩니다.
+- 다른 테이블과의 관계를 설정할 때 PK를 사용하여 FK를 참조할 수 있습니다.
+- 애플리케이션에서 특정 Row를 참조할 때 PK를 사용하여 빠르게 찾을 수 있습니다.
+
+
+</br>
+<b>Member 테이블</b>
+
+- id => PK이고 Auto Increment이다.
+- email => unique 키 설정 : 인덱스가 생성되어 이메일을 통해 행을 빠르게 검색할 수 있다.
+- password
+- username
+- roles => 관라자와 일반 사용자를 나눌 필요가 있다. 기본적으로 일반 유저가 되게끔 구현한다. -> NULL
+
+
+</br>
+<b>Item 테이블</b>
+
+- id : NOT NULL , Auto Increment
+- name
+- description
+- originalFileName -> 사용자의 파일의 이름
+- saveFileName -> 서버에 저장할 사용자의 파일 이름 : 사용자의 파일 이름 + UUID 사용, 사용자의 파일 이름은 중복될 수도 있다.
+- price
+
+</br>
+<b>Option 테이블</b>
+
+- id : NOT NULL, Auto Increment
+- item_id : NOT NULL, FK  
+- name
+- price
+
+</br>
+<b>Cart 테이블</b>
+
+- id : NOT NULL, Auto Increment
+- member_id : NOT NULL , FK
+- option_id : NOT NULL, FK
+- quantity
+- price
+
+
+</br>
+<b>Order 테이블</b>
+
+- id : NOT NULL, Auto Increment
+- member_id : NOT NULL , FK
 
 # 2주차
 
