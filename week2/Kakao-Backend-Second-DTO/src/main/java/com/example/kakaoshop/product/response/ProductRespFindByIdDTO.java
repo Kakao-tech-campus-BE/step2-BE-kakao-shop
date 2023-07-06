@@ -2,13 +2,11 @@ package com.example.kakaoshop.product.response;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.List;
 
-@Getter @Setter
+@Getter
 public class ProductRespFindByIdDTO {
-
     private int id;
     private String productName;
     private String description;
