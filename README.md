@@ -173,3 +173,178 @@ JSON 응답입니다.
     "error": null
 }
 ```
+
+### 결제하기
+해당 API의 요구 ResponseBody는 아래와 같습니다.
+```json
+{
+    "success": true,
+    "response": {
+        "id": 1,
+        "products": [
+            {
+                "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전",
+                "items": [
+                    {
+                        "id": 1,
+                        "optionName": "01. 슬라이딩 지퍼백 크리스마스에디션 4종",
+                        "quantity": 10,
+                        "price": 100000
+                    },
+                    {
+                        "id": 2,
+                        "optionName": "02. 슬라이딩 지퍼백 플라워에디션 5종",
+                        "quantity": 10,
+                        "price": 109000
+                    }
+                ]
+            }
+        ],
+        "totalPrice": 209000
+    },
+    "error": null
+}
+```
+1. 주문 아이템은 옵션 ID로 구분되어 상품에 저장되었습니다. -> 주문 아이템 관련 DTO 1개 -(1)
+2. 상품은 상품 이름을 기준으로 주문서에 저장되었습니다. -> 상품 관련 DTO 1개 -(2)
+3. 주문서는 주문 ID로 구분됩니다. -> 주문 저장을 위한 DTO 1개 -(3)
+<br>
+저장 순서는 아래와 같습니다.
+<br> 주문 아이템 -> 상품 -> 주문서
+<br> 총 3개의 DTO가 필요할 것으로 생각됩니다.
+<br>
+(1) 주문 아이템 관련 DTO : OrderItemDTO
+```java
+import lombok.Builder;
+import lombok.Getter;
+
+@Getter
+public class OrderItemDTO {
+    private int id;
+    private String optionName;
+    private int quantity;
+    private int price;
+
+    @Builder
+    public OrderItemDTO(int id, String optionName, int quantity, int price) {
+        this.id = id;
+        this.optionName = optionName;
+        this.quantity = quantity;
+        this.price = price;
+    }
+}
+```
+(2) 상품 관련 DTO : OrderProductDTO
+```java
+import lombok.Builder;
+import lombok.Getter;
+import java.util.List;
+
+@Getter
+public class OrderProductDTO {
+    private String productName;
+    private List<OrderItemDTO> items;
+
+    @Builder
+    public  OrderProductDTO(String productName, List<OrderItemDTO> items) {
+        this.productName = productName;
+        this.items = items;
+    }
+}
+```
+하나의 상품에 여러개의 옵션이 담기기 때문에 주문 아이템을 List 자료형으로 저장합니다.
+<br> (3) 주문 저장을 위한 DTO - OrderRespSaveDTO
+```java
+import lombok.Builder;
+import lombok.Getter;
+import java.util.List;
+
+@Getter
+public class OrderRespSaveDTO {
+    private int id;
+    private List<OrderProductDTO> products;
+    private int totalPrice;
+
+    @Builder
+    public OrderRespSaveDTO(int id, List<OrderProductDTO> products, int totalPrice) {
+        this.id = id;
+        this.products = products;
+        this.totalPrice = totalPrice;
+    }
+}
+```
+과제에서 요구하는 JSON 응답은 1개의 상품이었지만, 하나의 주문에는 여러 상품이 들어갈 수 있습니다.
+<br> (JSON 응답을 살펴보면 product는 리스트([]) 자료형으로 응답하고 있습니다.) <br>
+<br> 더미 데이터를 작성하여 Controller 구현하였습니다.
+```java
+@RequestMapping(value = "/orders")
+public class OrderRestController {
+    @PostMapping("/save")
+    public ResponseEntity<?> orderSave() {
+        List<OrderItemDTO> itemDTOs = new ArrayList<>();
+
+        OrderItemDTO orderItemDTO1 = OrderItemDTO.builder()
+                .id(1)
+                .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
+                .quantity(10)
+                .price(100000)
+                .build();
+        itemDTOs.add(orderItemDTO1);
+
+        OrderItemDTO orderItemDTO2 = OrderItemDTO.builder()
+                .id(2)
+                .optionName("02. 슬라이딩 지퍼백 플라워에디션 5종")
+                .quantity(10)
+                .price(109000)
+                .build();
+        itemDTOs.add(orderItemDTO2);
+        
+        List<OrderProductDTO> productDTOs = new ArrayList<>();
+
+        //주문 아이템 리스트를 상품에 담습니다.
+        OrderProductDTO orderProductDTO = OrderProductDTO.builder()
+                .productName("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전")
+                .items(itemDTOs)
+                .build();
+        //상품 리스트에 상품을 담습니다.
+        productDTOs.add(orderProductDTO);
+        
+        OrderRespSaveDTO responseDTO = OrderRespSaveDTO.builder()
+                .id(1)
+                .products(productDTOs)
+                .totalPrice(209000)
+                .build();
+
+        return ResponseEntity.ok(ApiUtils.success(responseDTO));
+    }
+```
+JSON 응답입니다.
+```json
+{
+    "success": true,
+    "response": {
+        "id": 1,
+        "products": [
+            {
+                "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전",
+                "items": [
+                    {
+                        "id": 1,
+                        "optionName": "01. 슬라이딩 지퍼백 크리스마스에디션 4종",
+                        "quantity": 10,
+                        "price": 100000
+                    },
+                    {
+                        "id": 2,
+                        "optionName": "02. 슬라이딩 지퍼백 플라워에디션 5종",
+                        "quantity": 10,
+                        "price": 109000
+                    }
+                ]
+            }
+        ],
+        "totalPrice": 209000
+    },
+    "error": null
+}
+```
