@@ -3,8 +3,7 @@
 
 # 1주차
 
-카카오 테크 캠퍼스 2단계 - BE - 1주차 클론 과제
-</br>
+### 카카오 테크 캠퍼스 2단계 - BE - 1주차 클론 과제
 </br>
 
 ## **과제명**
@@ -13,15 +12,151 @@
 2. 요구사항 추가 반영 및 테이블 설계도
 ```
 
-## **과제 설명**
-```
-1. 요구사항 시나리오를 보고 부족해 보이는 기능을 하나 이상 체크하여 README에 내용을 작성하시오.
-2. 제시된 화면설계를 보고 해당 화면설계와 배포된 기존 서버의 API주소를 매칭하여 README에 내용을 작성하시오. (카카오 화면설계 시나리오가 있음)
-3. 배포된 서버에 모든 API를 POSTMAN으로 요청해본 뒤 응답되는 데이터를 확인하고 부족한 데이터가 무엇인지 체크하여 README에 내용을 작성하시오.
-4. 테이블 설계를 하여 README에 ER-Diagram을 추가하여 제출하시오.
-```
+### 1. 요구사항 시나리오를 보고 부족해 보이는 기능을 하나 이상 체크
+***
+- 상품 등록
+- 개별 구매하기(상품 상세설명창에서 바로 구매할 수 있는 기능)
+- 상품 검색
+- 카테고리 별로 상품 조회하기
+- 장바구니 삭제
+***
 
-</br>
+### 2. 제시된 화면설계를 보고 해당 화면설계와 배포된 기존 서버의 API주소를 매칭
+***
+#### 기능1 회원가입
+
+(Post) : http://localhost:8080/join
+
+#### 기능2 로그인
+
+(Post) : http://localhost:8080/login
+
+#### 기능4 전체화면 조회
+
+(Get) : http://localhost:8080/products
+
+#### 기능5 개별상품상세조회
+
+(Get) : http://localhost:8080/products/1
+
+#### 기능8 장바구니 담기
+
+(Post) : http://localhost:8080/carts/add
+
+#### 기능9 장바구니 보기
+
+(Get) : http://localhost:8080/carts
+
+#### 기능11 주문
+
+(Post) : http://localhost:8080/carts/update
+
+#### 기능12 결제
+
+(Post) : http://localhost:8080/orders/save
+
+#### 기능13 주문결과 확인
+
+(Get) : http://localhost:8080/orders/1
+***
+
+### 3. 배포된 서버에 모든 API를 POSTMAN으로 요청해본 뒤 응답되는 데이터를 확인하고 부족한 데이터가 무엇인지 체크
+***
+
+#### 이메일 중복체크
+- response에 중복되지 않다는 메세지 추가
+
+#### 주문하기, 주문결과 확인
+- response의 id가 무엇을 의미하는지 헷갈릴 수 있음
+- 전체 response를 order로 묶음
+- items명을 orderItem 으로 변경
+- orderItem 테이블 필요
+***
+
+### 4. 테이블 설계를 하여 ER-Diagram을 추가하여 제출하시오.
+***
+#### ER 다이어그램
+
+![image](https://github.com/PHS00/step2-BE-kakao-shop/assets/88030920/0b539152-5397-4266-9e5f-e6765701be39)
+
+#### Table 설계
+~~~
+CREATE TABLE `USER` (
+`id`	int	NOT NULL,
+`username`	String	NULL,
+`email`	String	NULL,
+`password`	String	NULL,
+`role`	String	NULL,
+`date`	DateTime	NULL
+);
+
+CREATE TABLE `PRODUCT` (
+`id`	int	NOT NULL,
+`product_name`	String	NULL,
+`product_image`	String	NULL,
+`product_price`	int	NULL,
+`star_rate`	double	NULL,
+`date`	DateTime	NULL
+);
+
+CREATE TABLE `OPTION` (
+`id`	int	NOT NULL,
+`product_id`	VARCHAR(255)	NOT NULL,
+`option_name`	String	NULL,
+`option_price`	int	NULL,
+`option_stock`	int	NULL,
+`date`	DateTime	NULL
+);
+
+CREATE TABLE `ORDER` (
+`Key`	int	NOT NULL,
+`user_id`	VARCHAR(255)	NOT NULL,
+`Field`	DateTime	NULL
+);
+
+CREATE TABLE `CART` (
+`Key`	int	NOT NULL,
+`user_id`	VARCHAR(255)	NOT NULL,
+`option_id`	VARCHAR(255)	NOT NULL,
+`option_number`	int	NULL,
+`date`	DateTime	NULL
+);
+
+CREATE TABLE `ORDERITEM` (
+`Key`	int	NOT NULL,
+`order_id`	VARCHAR(255)	NOT NULL,
+`option_id`	VARCHAR(255)	NOT NULL,
+`option_number`	int	NULL,
+`date`	DateTime	NULL
+);
+
+ALTER TABLE `USER` ADD CONSTRAINT `PK_USER` PRIMARY KEY (
+`id`
+);
+
+ALTER TABLE `PRODUCT` ADD CONSTRAINT `PK_PRODUCT` PRIMARY KEY (
+`id`
+);
+
+ALTER TABLE `OPTION` ADD CONSTRAINT `PK_OPTION` PRIMARY KEY (
+`id`
+);
+
+ALTER TABLE `ORDER` ADD CONSTRAINT `PK_ORDER` PRIMARY KEY (
+`Key`
+);
+
+ALTER TABLE `CART` ADD CONSTRAINT `PK_CART` PRIMARY KEY (
+`Key`
+);
+
+ALTER TABLE `ORDERITEM` ADD CONSTRAINT `PK_ORDERITEM` PRIMARY KEY (
+`Key`
+);
+~~~
+
+
+***
 
 ## **과제 상세 : 수강생들이 과제를 진행할 때, 유념해야할 것**
 아래 항목은 반드시 포함하여 과제 수행해주세요!
