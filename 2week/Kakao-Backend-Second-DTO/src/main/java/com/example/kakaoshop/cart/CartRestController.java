@@ -63,10 +63,9 @@ public class CartRestController {
     }
 
     @PostMapping("/carts")
-    public ResponseEntity<?> addCartList(@RequestBody List<ModifyCartItemDTO> modifyCartItemDTO){
+    public ResponseEntity<?> addCartList(@RequestBody List<ProductOptionDTO> productOptionDTO){
         /*
-            modifyCartItemDTO에서 필요한 속성 꺼내서 변경하는 로직
-
+            서비스 로직
             ...
          */
         return ResponseEntity.ok(ApiUtils.success(null));
