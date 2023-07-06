@@ -13,8 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("/carts")
 public class CartRestController {
-    @PostMapping("/carts/update")
+    @PostMapping("/update")
     public ResponseEntity<?> updateOption(@RequestBody List<CartUpdateDTO> updateDTOList) {
         List<UpdatedItemDTO> updatedItemDTOList = new ArrayList<>();
         updatedItemDTOList.add(
@@ -42,12 +43,12 @@ public class CartRestController {
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
 
-    @PostMapping("/carts/add")
+    @PostMapping("/add")
     public ResponseEntity<?> addOption(@RequestBody List<CartAddDTO> addDTOList) {
         return ResponseEntity.ok(ApiUtils.success(null));
     }
 
-    @GetMapping("/carts")
+    @GetMapping("")
     public ResponseEntity<?> findAll() {
         // 카트 아이템 리스트 만들기
         List<CartItemDTO> cartItemDTOList = new ArrayList<>();
