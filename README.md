@@ -53,7 +53,8 @@
 
 </br>
 
-## **Assignment 1**
+<details>
+<summary>Assignment 1</summary>
 
 - **관리자 페이지 제공하기**
 
@@ -113,7 +114,10 @@
   - 할인 관련 api -> DiscountPolicy 객체
   - 배송지 정보 입력 시 데이터베이스에 저장하는 api
 
-## **Assignment 2**
+</details>
+
+<details>
+<summary>Assignment 2</summary>
 
 </br>
 
@@ -1212,7 +1216,10 @@
 
 </br>
 
-## **Assignment 3**
+</details>
+
+<details>
+<summary>Assignment 3</summary>
 
 </br>
 
@@ -1226,7 +1233,10 @@
 
 </br>
 
-## **Assignment 4**
+</details>
+
+<details>
+<summary>Assignment 4</summary>
 
 </br>
 
@@ -1311,6 +1321,9 @@
 
 </br>
 
+</details>
+
+</br>
 </br>
 
 # 2주차
@@ -1355,6 +1368,121 @@
 
 > - 코드 작성하면서 어려웠던 점
 > - 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
+
+</br>
+
+## **Assignment 1**
+
+</br>
+
+- [API Reference](https://app.gitbook.com/s/o1E7yDwyPFukxZ8B4jd3/introduction/kakao-shop-documentation)는 RESTAPI로 설계된 API 문서입니다.
+
+</br>
+
+## **Assignment 2**
+
+</br>
+
+### **[3] 이메일 중복 체크**
+
+</br>
+
+- UserRequest에서 CheckDTO를 생성합니다.
+- CheckDTO를 사용해서 이메일 중복 체크 시 @RequestBody를 통해 request 데이터를 받아옵니다.
+- UserRestController에서 checkEmail()를 생성합니다.
+- 이메일 중복 체크 로직은 구현되지 않았지만 ok를 반환합니다.
+
+</br>
+
+### **[6] 장바구니 담기**
+
+</br>
+
+- cart 패키지에 request 패키지를 생성합니다.
+- request 패키지에 optionId, quantity를 가지는 CartReqAddDTO를 생성합니다. 이때, 기본 생성자가 없어서 JSON을 클래스의 인스턴스로 deserialize할 수 없기 때문에 @NoArgsConstructor를 붙입니다.
+- CartReqAddDTO를 사용해서 장바구니 담기 시 @RequestBody를 통해 requset 데이터를 받아옵니다.
+- CartRestController에서 add()를 생성합니다.
+- 장바구니 담기 로직은 구현되지 않았지만 ok를 반환합니다.
+
+</br>
+
+### **[8] 장바구니 수정**
+
+</br>
+
+- cartId, quantity를 가지는 CartReqUpdateDTO를 생성합니다.
+- CartReqUpdateDTO를 사용해서 장바구니 수정 시 @RequestBody를 통해 request 데이터를 받아옵니다.
+- CartRestController에서 update()를 생성합니다.
+- 장바구니 수정 로직은 구현되지 않았지만 더미 데이터를 반환합니다.
+- 더미 데이터는 carts, totalPrice를 가지는 CartRespUpdateDTO를 통해 생성됩니다.
+- CartRespUpdateDTO의 carts는 CartUpdateItemDTO 리스트입니다.
+
+</br>
+
+### **[9] 주문 인서트**
+
+</br>
+
+- OrderRestController에서 insertOrder()를 생성합니다.
+- 주문 인서트 로직은 아직 구현되지 않았지만 더미 데이터를 반환합니다.
+- 더미 데이터는 id, products, totalPrice를 가지는 OrderRespInsertDTO를 통해 생성됩니다.
+- OrderRespInsertDTO의 products는 OrderProductItemDTO 리스트이고 OrderProductItemDTO는 productName, items를 가집니다.
+- OrderProductItemDTO의 items는 id, optionName, quantity, price를 가지는 OrderItemDTO 리스트입니다.
+
+</br>
+
+### **[10] 주문 결과 확인**
+
+</br>
+
+- OrderRestController에서 findOrderResult()를 생성합니다.
+- 주문 결과 확인 로직은 아직 구현되지 않았지만 더미 데이터를 반환합니다.
+- 더미 데이터는 id, products, totalPrice를 가지는 OrderRespUpdateDTO를 통해 생성됩니다.
+- OrderRespInsertDTO의 products는 OrderProductItemDTO 리스트이고 OrderProductItemDTO는 productName, items를 가집니다.
+- OrderProductItemDTO의 items는 id, optionName, quantity, price를 가지는 OrderItemDTO 리스트입니다.
+
+</br>
+
+### **ProductRestController 구현**
+
+</br>
+
+- 기존 : findAll(), findById()
+- 로그 남기기
+- given-when-then
+
+</br>
+
+### **CartRestController 구현**
+
+</br>
+
+- 기존 : findAll()
+- 추가 : add(), update()
+- request 데이터 넣기
+- 로그 남기기
+- given-when-then
+
+</br>
+
+### **OrderRestController 구현**
+
+</br>
+
+- 추가 : insertOrder(), findOrderResult()
+- 로그 남기기
+- given-when-then
+
+</br>
+
+### **Entity 구현**
+
+</br>
+
+- User, Product, ProductOption, Cart, Order, OrderItem
+
+</br>
+</br>
 
 # 3주차
 
