@@ -1,12 +1,13 @@
 package com.example.kakaoshop.cart;
 
 import com.example.kakaoshop._core.utils.ApiUtils;
-import com.example.kakaoshop.cart.response.CartItemDTO;
-import com.example.kakaoshop.cart.response.CartRespFindAllDTO;
-import com.example.kakaoshop.cart.response.ProductOptionDTO;
-import com.example.kakaoshop.cart.response.ProductDTO;
+import com.example.kakaoshop.cart.request.CartAddDTO;
+import com.example.kakaoshop.cart.request.CartUpdateDTO;
+import com.example.kakaoshop.cart.response.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -14,6 +15,11 @@ import java.util.List;
 
 @RestController
 public class CartRestController {
+    @PostMapping("/carts/add")
+    public ResponseEntity<?> addToCart(@RequestBody List<CartAddDTO> cartItemAddDTOList) {
+
+        return ResponseEntity.ok(ApiUtils.success(true));
+    }
 
     @GetMapping("/carts")
     public ResponseEntity<?> findAll() {
@@ -59,6 +65,30 @@ public class CartRestController {
 
         CartRespFindAllDTO responseDTO = new CartRespFindAllDTO(productDTOList, 104500);
 
+        return ResponseEntity.ok(ApiUtils.success(responseDTO));
+    }
+    @PostMapping("/carts/update")
+    public ResponseEntity<?> updateCart(@RequestBody List<CartUpdateDTO> cartItemUpdateDTOList){
+    List<UpdatedItemDTO> updatedItemDTOList=new ArrayList<>();
+        UpdatedItemDTO updatedItemDTO1= UpdatedItemDTO.builder()
+                .cartId(4)
+                .optionId(1)
+                .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
+                .quantity(10)
+                .price(100000)
+                .build();
+        updatedItemDTOList.add(updatedItemDTO1);
+
+        UpdatedItemDTO updatedItemDTO2= UpdatedItemDTO.builder()
+                .cartId(5)
+                .optionId(2)
+                .optionName("02. 슬라이딩 지퍼백 플라워에디션 5종")
+                .quantity(10)
+                .price(109000)
+                .build();
+        updatedItemDTOList.add(updatedItemDTO2);
+
+        CartRespUpdateDTO responseDTO = new CartRespUpdateDTO(updatedItemDTOList,209000);
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
 }
