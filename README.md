@@ -301,6 +301,8 @@ CREATE TABLE IF NOT EXISTS \`kakao_shop\`.\`order_item\` (
 > - 가짜 데이터를 설계하여 Mock API를 잘 구현하였는가? (예를 들어 DB연결없이 컨트롤러만 만들어서 배포된 서버의 응답과 동일한 형태로 데이터가 응답되는지 여부)
 >   </br>
 
+---
+
 ### **전체 API 주소 설계**
 
 #### **API 주소를 설계하여 README에 내용을 작성하시오.**
@@ -320,6 +322,8 @@ CREATE TABLE IF NOT EXISTS \`kakao_shop\`.\`order_item\` (
 |   |   |   |
 | **결제하기 (주문 인서트)** |  /orders/save | POST |
 | **주문 결과 확인** |  /orders/{id} | GET |
+
+---
 
 # 3주차
 
