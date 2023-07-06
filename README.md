@@ -212,8 +212,9 @@ JSON 응답입니다.
 저장 순서는 아래와 같습니다.
 <br> 주문 아이템 -> 상품 -> 주문서
 <br> 총 3개의 DTO가 필요할 것으로 생각됩니다.
+<br> (1) 주문 아이템 관련 DTO - OrderItemDTO
 <br>
-(1) 주문 아이템 관련 DTO : OrderItemDTO
+
 ```java
 import lombok.Builder;
 import lombok.Getter;
@@ -235,6 +236,8 @@ public class OrderItemDTO {
 }
 ```
 (2) 상품 관련 DTO : OrderProductDTO
+<br>
+
 ```java
 import lombok.Builder;
 import lombok.Getter;
@@ -254,6 +257,8 @@ public class OrderProductDTO {
 ```
 하나의 상품에 여러개의 옵션이 담기기 때문에 주문 아이템을 List 자료형으로 저장합니다.
 <br> (3) 주문 저장을 위한 DTO - OrderRespSaveDTO
+<br>
+
 ```java
 import lombok.Builder;
 import lombok.Getter;
