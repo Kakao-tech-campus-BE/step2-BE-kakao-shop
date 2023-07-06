@@ -1,4 +1,4 @@
-package com.example.kakaoshop.product;
+성package com.example.kakaoshop.product;
 
 import com.example.kakaoshop._core.utils.ApiUtils;
 import com.example.kakaoshop.product.response.ProductOptionDTO;
@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import java.util.List;
 public class ProductRestController {
 
     @GetMapping("/products")
-    public ResponseEntity<?> findAll() {
+    public ResponseEntity<?> findAll(@RequestParam(defaultValue = "0") int page) {
         List<ProductRespFindAllDTO> responseDTO = new ArrayList<>();
 
         // 상품 하나씩 집어넣기
