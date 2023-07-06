@@ -573,7 +573,36 @@
 
     * **요청 데이터**
     
-        없음
+        ```json
+        {
+            "success": true,
+            "response": {
+                "id": 2,
+                "products": [
+                    {
+                        "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션
+                        외 주방용품 특가전",
+                        "items": [
+                            {
+                                "id": 4,
+                                "optionName": "01. 슬라이딩 지퍼백 크리스마스에디션 4종",
+                                "quantity": 10,
+                                "price": 100000
+                            },
+                            {
+                            "id": 5,
+                            "optionName": "02. 슬라이딩 지퍼백 플라워에디션 5종",
+                            "quantity": 10,
+                            "price": 109000
+                            }
+                        ]
+                    }
+                ],
+                "totalPrice": 209000
+            },
+            "error": null
+        }
+        ```
         
         +Response Header에 JWT 토큰 추가
     
