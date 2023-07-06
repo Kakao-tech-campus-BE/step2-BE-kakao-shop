@@ -630,7 +630,7 @@ Z1KIGi7_qvPOcVbXgvyZLKvnlLxomIiS3YFnQRLzXAJ2G41yI_AmGg
 }
 ```
 > 온라인 쇼핑몰이라면, 요청을 보낼 때 배송지와 배송 요청사항, 배송비 정보를 함께 보내야 한다.
-> <br/> 하지만 요구사항에 없으므로 포함하지 않는다.
+> <br/> 요구사항에 존재하지 않아도 필요하므로 설계시 포함하였다.
 
 <br/>
 
@@ -697,6 +697,15 @@ Z1KIGi7_qvPOcVbXgvyZLKvnlLxomIiS3YFnQRLzXAJ2G41yI_AmGg
 ### **1. 데이터베이스 설계**
 화면 설계와 응답 데이터를 보며 테이블과 필드, 제약조건을 생각해보았다.
 
+</br>
+
+### **위 설계에서 외래키를 사용하는 이유(인덱스 사용X)** 
+> 외래키로 **무결성을 보장**하기 위함과 **인덱스를 적절히 사용하고 최적화하는 것이 어렵기** 때문이다.
+
+> 강의에서도 배우는 입장이므로 외래키 사용을 추천하셨다.
+
+> 실무에서는 <U>**외래키로 인한 제약사항이 존재**</U>하므로 **인덱스를 주로 이용**한다.
+
 <br/>
 
 ## **user**
@@ -747,6 +756,7 @@ CREATE TABLE option (
     price INT(11) NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (product_id) REFERENCES product(id)
+    ON DELETE CASCADE
 );
 ```
 > **제품과 옵션 테이블을 따로 생성하는 이유**<br/>
@@ -758,7 +768,11 @@ CREATE TABLE option (
 > **외래키(FK) 사용 이유** <br/>
 > 해당 상품 조회시 옵션도 함께 조회해야하므로 조인(join) 연산이 수행된다. <br/>
 > 이때 참조 무결성을 위해서 FK를 사용하였다.  <br/>
-> 
+
+**제약조건**
+> 외래키로 참조하는 product_id는 변경되는 값이 아니므로, **ON UPDATE** 제약조건은 설정하지 않았다. <br/>
+> 상품이 삭제될 경우 옵션도 함께 삭제되도록 **ON DELETE CASCADE** 옵션을 사용했다. 
+
 <br/>
 
 ## **cart**
@@ -770,13 +784,20 @@ CREATE TABLE cart (
     quantity INT(11) NOT NULL,
     price INT(11) NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (user_id) REFERENCES user(id),
-    FOREIGN KEY (option_id) REFERENCES option(id),
+    FOREIGN KEY (user_id) REFERENCES user(id)
+    ON DELETE CASCADE,
+    FOREIGN KEY (option_id) REFERENCES option(id)
+    ON DELETE CASCADE
 );
 ```
 >  사용자는 장바구니에 {옵션, 옵션 개수}를 함께 담는다. <br/>
 
->  장바구니 조회 기능은 유저 id로 cart 테이블을 조회함으로써 구현된다.
+>  장바구니 조회 기능은 유저 id로 cart 테이블을 조회함으로써 구현된다. <br/>
+
+**제약조건**
+> 유저 id와 option id는 변경되지않으므로 **ON DELETE** 제약조건만 **CASCADE**로 설정했다.
+
+
 
 <br/>
 
@@ -820,11 +841,22 @@ CREATE TABLE cart (
 CREATE TABLE order (
     id INT(11) NOT NULL AUTO_INCREMENT,
     user_id INT(11) NOT NULL,
+    delivery_id INT(11) NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (user_id) REFERENCES user(id),
+    FOREIGN KEY (user_id) REFERENCES user(id)
+    ON DELETE SET NULL,
+    FOREIGN KEY (delivery_id) REFERENCES delivery(id)
+    ON UPDATE CASCADE
 );
 ```
 > 유저의 주문을 기록하고, 장바구니를 비울 때 사용하는 테이블이다. <br/>
+
+**제약조건**
+> 유저가 탈퇴하더라도 **판매자에게 주문 정보가 필요**할 수 있다.<br/> 그러므로 **ON DELETE SET NULL**을 사용하여 탈퇴시 유저 id의 값만 NULL이 되도록 했다.
+> <br/> 이를 통해 <U>**데이터 유실을 방지**</U>할 수 있다.
+
+> 배달정보가 수정될때 갱신되도록 **ON UPDATE CASCADE**를 사용했다. <br/>
+> 주문이 존재할때 배달 정보가 먼저 삭제될 경우는 없으므로 **ON DELETE**는 옵션을 설정하지 않았다.
 
 <br/>
 
@@ -837,16 +869,45 @@ CREATE TABLE item (
     quantity INT(11) NOT NULL,
     price INT(11) NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (order_id) REFERENCES order(id),
-    FOREIGN KEY (option_id) REFERENCES option(id),
+    FOREIGN KEY (order_id) REFERENCES order(id)
+    ON DELETE CASCADE,
+    FOREIGN KEY (option_id) REFERENCES option(id)
+    ON DELETE SET NULL,
 );
 ```
 > 결제 버튼을 누르면, 담은 장바구니(cart)들을 가져와 주문 상품(item) 테이블에 저장한다.
 
 > 장바구니와 거의 구조가 같다. 
 
+**제약조건**
+> 주문(order) 자체가 삭제될 경우, item도 함께 삭제되도록 **ON DELETE CASCADE**를 사용했다.
+
+> 상품 옵션이 삭제되더라도 주문 데이터를 유지하기 위해 **ON DELETE SET NULL**을 사용했다.
+
 <br/>
 
+## **delivery**
+```sql
+CREATE TABLE delivery (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    postal_code INT(11) NOT NULL,
+    address varchar(300) NOT NULL,
+    instruction varchar(500) NOT NULL,
+    fee int(11) NOT NULL
+    PRIMARY KEY (id)
+);
+```
+우편번호, 주소, 주문 요청사항, 배달비로 구성되며,
+배달정보에 매칭되는 유저 id와 주문 id를 외래키로 참조한다. 
+
+> 요구사항에 없더라도 구현에 필요한 테이블이므로 추가로 작성했다.
+
+유저 id를 외래키로 참조하지 않은 이유 <br/>
+> 주문시 주문 table에서 배송 table을 참조하는데, 이때 <U>**주문 table이 유저 id를 이미 참조**</U>하고 있기 때문이다. <br/>
+> 또한 해당 **유저의 배달 정보는 주문마다 바뀌므로** 굳이 유저 id를 참조할 필요가 없다.
+
+> 유저가 탈퇴하면 배달정보도 함께 삭제되도록 **ON DELETE CASCADE**를 사용했다.
+ 
 ### **2. 연관관계 파악 및 ER 다이어그램 작성**
 <br/>
 
@@ -892,6 +953,16 @@ ex1) 유저가 옵션을 재주문했을때 한 옵션에 대해 결제 상품 �
 ex2) 여러명의 유저가 같은 옵션을 구매했을때 한 옵션에 대한 결제상품은 여러개이다.
 
 <br/>
+
+### **Order - Delivery**
+1:1 관계
+> 주문 하나는 하나의 배송정보를 가질 수 있다.
+
+> 주문시 배송지를 **하나로 고정하는 것 (주문 N:배송지 1) 이 아니라**, <br/>
+> <U>**주문마다 배송지를 바꿀 수 있도록(주문 1:배송지 1) 구현**</U>하는게 비지니스적으로 좋을 것 같기 때문이다. <br/>
+
+<br/>
+
 
 * * * 
 

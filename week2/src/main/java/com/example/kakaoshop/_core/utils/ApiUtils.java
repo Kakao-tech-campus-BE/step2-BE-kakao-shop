@@ -23,6 +23,6 @@ public class ApiUtils {
     @Getter @Setter @AllArgsConstructor
     public static class ApiError {
         private final String message;
-        private final int status;
+        private final int status; //상태 코드
     }
 }
