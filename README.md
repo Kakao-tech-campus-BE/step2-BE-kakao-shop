@@ -813,6 +813,160 @@ table order_result_tb{
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
+# 2주차 과제
+
+### 1. API주소를 설계하여 README에 내용을 작성하시오.
+
+**회원가입**
+
+POST /auth/join
+
+
+**로그인**
+
+POST /auth/login
+
+
+**로그아웃**
+
+POST /auth/logout
+
+
+**이메일 중복 체크** 
+
+POST /users/check-email
+
+
+**전체 상품 목록 조회**
+
+GET /products 
+
+Param : page={number}, default = 0
+
+
+**개별 상품 상세 조회** 
+
+GET /products/:product_id
+
+
+**상품 생성**
+
+POST /products
+
+
+**상품 수정**
+
+PUT /products/:product_id
+
+
+**상품 삭제**
+
+DELETE /products/:product_id
+
+
+**장바구니 상품 추가** 
+
+POST /carts
+
+
+**장바구니 상품 제거**
+
+DELETE /carts/:option_id
+
+
+**장바구니 조회**
+
+GET /carts
+
+
+**주문하기 - (장바구니 수정)**
+
+PUT /carts
+
+
+**주문 생성**
+
+POST /orders
+
+
+**주문 수정**
+
+PUT /orders/:order_id
+
+
+**주문 삭제**
+
+DELETE /orders/:order_id
+
+
+**모든 주문 결과 확인** 
+
+GET /orders 
+
+
+**특정 주문 결과 확인** 
+
+GET /orders/:order_id
+
+### 2. 가짜 데이터를 설계하여 응답하는 스프링부트 컨트롤러를 작성하고 소스코드를 업로드하시오.
+
+1번에서 설계한 API를 적용시켜 보고 싶어 요구되는 구현 사항들 중에서 기존의 API 주소에서 몇 가지의 API주소를 변경하였습니다. 
+
+**1) 장바구니 담기**
+
+**POST /carts**
+
+Request Header
+```
+Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzc2FyQG5hdGUuY29tIiwicm9sZSI6IlJPTEVfVVNFUiIsImlkIjoxLCJleHAiOjE2ODg3NjE5ODd9.0P1vHynSMibxU845FpKF5eNUtt-IN3-dtLzk7EVcogX0Tw-bomSUTK1a5zwLw5bfA8frkLVsAq1S-TVomFQtHw
+```
+
+Request body
+```
+[
+    {
+        "optionId":1,
+        "quantity":5
+    },
+    {
+        "optionId":2,
+        "quantity":5
+    }
+]
+```
+
+**2) 장바구니 수정**
+
+**PUT /carts**
+
+Request Header
+```
+Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzc2FyQG5hdGUuY29tIiwicm9sZSI6IlJPTEVfVVNFUiIsImlkIjoxLCJleHAiOjE2ODg3NjE5ODd9.0P1vHynSMibxU845FpKF5eNUtt-IN3-dtLzk7EVcogX0Tw-bomSUTK1a5zwLw5bfA8frkLVsAq1S-TVomFQtHw
+```
+
+Request body
+```
+[
+    {
+        "cartId":4,
+        "quantity":10
+    },
+    {
+        "cartId":5,
+        "quantity":10
+    }
+]
+```
+
+**3) 결제하기 - (주문 생성하기)**
+
+**POST /orders**
+
+Request Header
+```
+Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzc2FyQG5hdGUuY29tIiwicm9sZSI6IlJPTEVfVVNFUiIsImlkIjoxLCJleHAiOjE2ODg3NjE5ODd9.0P1vHynSMibxU845FpKF5eNUtt-IN3-dtLzk7EVcogX0Tw-bomSUTK1a5zwLw5bfA8frkLVsAq1S-TVomFQtHw
+```
+
 # 3주차
 
 카카오 테크 캠퍼스 2단계 - BE - 3주차 클론 과제
