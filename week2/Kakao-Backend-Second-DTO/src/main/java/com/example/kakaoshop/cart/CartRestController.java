@@ -62,12 +62,12 @@ public class CartRestController {
     }
 
     @PostMapping("/carts/add")
-    public ResponseEntity<?> addCart(@RequestBody InsertCartCommand insertCartCommand) {
-        return ResponseEntity.ok(ApiUtils.success(null));
+    public ResponseEntity<?> addCart(@RequestBody List<InsertCartRequest> commands) {
+        return ResponseEntity.ok().body(ApiUtils.success(null));
     }
 
     @PostMapping("/carts/update")
-    public ResponseEntity<?> updateCart(@RequestBody UpdateCartCommand updateCartCommand) {
+    public ResponseEntity<?> updateCart(@RequestBody List<UpdateCartRequest> commands) {
         List<UpdatedCartItemDTO> updatedCartItemDTOList = new ArrayList<>();
         updatedCartItemDTOList.add(UpdatedCartItemDTO.builder()
                 .cartId(4)
@@ -89,6 +89,6 @@ public class CartRestController {
                 .totalPrice(209000)
                 .build();
 
-        return ResponseEntity.ok(ApiUtils.success(updatedCartDTO));
+        return ResponseEntity.ok().body(ApiUtils.success(updatedCartDTO));
     }
 }

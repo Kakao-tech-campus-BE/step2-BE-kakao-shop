@@ -6,12 +6,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class InsertCartCommand {
-    final private int optionId;
-    final private int quantity;
+public class InsertCartRequest {
+    private int optionId;
+    private int quantity;
 
     @Builder
-    public InsertCartCommand(int optionId, int quantity) {
+    public InsertCartRequest(int optionId, int quantity) {
         this.optionId = optionId;
         this.quantity = quantity;
     }
