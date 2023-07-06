@@ -9,9 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 
@@ -22,7 +20,9 @@ public class UserRestController {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
-    @PostMapping("/join")
+
+
+    @PostMapping("/users")
     public ResponseEntity<?> join(@RequestBody UserRequest.JoinDTO joinDTO) {
         User user = User.builder()
                 .email(joinDTO.getEmail())
@@ -33,7 +33,7 @@ public class UserRestController {
 
         userRepository.save(user);
 
-        return ResponseEntity.ok("ok");
+        return ResponseEntity.ok(ApiUtils.success(null));
     }
 
     @PostMapping("/login")
@@ -44,6 +44,14 @@ public class UserRestController {
         CustomUserDetails myUserDetails = (CustomUserDetails) authentication.getPrincipal();
         String jwt = JWTProvider.create(myUserDetails.getUser());
 
-        return ResponseEntity.ok().header(JWTProvider.HEADER, jwt).body("ok");
+        return ResponseEntity.ok().header(JWTProvider.HEADER, jwt).body(ApiUtils.success(null));
+    }
+
+
+    //이메일 중복체크
+    @GetMapping("/email/check/{email}")
+    public ResponseEntity<?> check(@PathVariable String email) {
+        //todo
+        return ResponseEntity.ok(ApiUtils.success(null));
     }
 }
