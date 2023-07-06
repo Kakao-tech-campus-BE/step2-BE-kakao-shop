@@ -1,10 +1,12 @@
 package com.example.kakaoshop.order;
 
 import com.example.kakaoshop._core.utils.ApiUtils;
-import com.example.kakaoshop.order.response.OrderDTO;
 import com.example.kakaoshop.order.response.OrderNotFoundException;
+import com.example.kakaoshop.order.response.OrderRespFindByIdDTO;
+import com.example.kakaoshop.order.response.OrderRespSaveDTO;
 import com.example.kakaoshop.order.response.ProductDTO;
 import com.example.kakaoshop.order.response.ProductItemDTO;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class OrderRestController {
-  private OrderDTO getMockOrderDTO() {
+  private <OrderRespDTO> OrderRespDTO getMockOrderDTO(Class<OrderRespDTO> cls)
+      throws NoSuchMethodException, InvocationTargetException, InstantiationException,
+          IllegalAccessException {
     final List<ProductItemDTO> cartItemDTOList = new ArrayList<>();
     cartItemDTOList.add(
         ProductItemDTO.builder()
@@ -40,17 +44,23 @@ public class OrderRestController {
             .build();
 
     final var totalPrice = cartItemDTOList.stream().mapToInt(ProductItemDTO::getPrice).sum();
-    return new OrderDTO(1, List.of(productDTO), totalPrice);
+    return cls.getConstructor(int.class, List.class, int.class)
+        .newInstance(1, List.of(productDTO), totalPrice);
   }
 
   @PostMapping("/orders/save")
-  public ResponseEntity<?> save() {
-    return ResponseEntity.ok(ApiUtils.success(getMockOrderDTO()));
+  public ResponseEntity<?> save()
+      throws InvocationTargetException, NoSuchMethodException, InstantiationException,
+          IllegalAccessException {
+    return ResponseEntity.ok(ApiUtils.success(getMockOrderDTO(OrderRespSaveDTO.class)));
   }
 
   @GetMapping("/orders/{id}")
-  public ResponseEntity<?> get(@PathVariable int id) throws OrderNotFoundException {
-    if (id == 1) return ResponseEntity.ok(ApiUtils.success(getMockOrderDTO()));
+  public ResponseEntity<?> findById(@PathVariable int id)
+      throws OrderNotFoundException, InvocationTargetException, NoSuchMethodException,
+          InstantiationException, IllegalAccessException {
+    if (id == 1)
+      return ResponseEntity.ok(ApiUtils.success(getMockOrderDTO(OrderRespFindByIdDTO.class)));
     throw new OrderNotFoundException();
   }
 }
