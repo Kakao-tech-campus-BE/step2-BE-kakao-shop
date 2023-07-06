@@ -115,4 +115,13 @@ public class CartRestController {
 
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
+
+    @DeleteMapping("/carts")
+    public ResponseEntity<?> deleteCartList(@RequestBody List<ProductOptionDTO> productOptionDTO){
+        /*
+            서비스 로직
+            ...
+         */
+        return ResponseEntity.ok(ApiUtils.success(null));
+    }
 }
