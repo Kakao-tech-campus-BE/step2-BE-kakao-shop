@@ -1,0 +1,42 @@
+plugins { // Gradle 빌드 스크립트에서 플러그인을 설정하는 부분
+	id 'java' // 자바 프로젝트
+	id 'org.springframework.boot' version '2.7.12' // 스프링부트 프로젝트 2.7.12 버전
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE' // 스프링 부트와 관련된 종속성 관리
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT' // 빌드될 때 프로젝트명 뒤에 붙을 버전명
+
+java {
+	sourceCompatibility = '11' // 자바 11 버전
+}
+
+configurations {
+	compileOnly { // 컴파일 단계에서만 필요한 종속성을 구성
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories { // 해당 프로젝트를 구성하는 의존된 라이브러리를 받아오는 서버
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-aop' // 관점 지향 프로그래밍 (AOP)을 사용하기 위한 기능을 제공
+	implementation 'org.springframework.boot:spring-boot-starter-validation' // 입력 데이터의 유효성을 검사하기 위한 기능을 제공
+	implementation 'org.springframework.boot:spring-boot-starter-web' // 스프링 부트 웹 애플리케이션 개발을 위한 필수 의존성을 제공
+	compileOnly 'org.projectlombok:lombok' // 자바 개발자 편의성 기능 제공
+	developmentOnly 'org.springframework.boot:spring-boot-devtools' // 개발 환경에서 애플리케이션 개발 및 디버깅 편의정 제공
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test' // 테스트를 작성하기 위한 기능을 제공
+	runtimeOnly 'com.h2database:h2' // H2 데이터베이스를 사용하기 위한 의존성을 제공
+	runtimeOnly 'com.mysql:mysql-connector-j' // 배포시 사용할 MySQL 의존성
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // JPA (Java Persistence API)를 제공
+	implementation 'org.springframework.boot:spring-boot-starter-security' // 스프링 시큐리티 제공
+	implementation group: 'com.auth0', name: 'java-jwt', version: '4.3.0'
+	testImplementation 'org.springframework.security:spring-security-test' // 테스트시 시큐리티 관련 편의 기능 제공
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
