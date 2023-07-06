@@ -45,6 +45,178 @@
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
+
+## 1주차 과제 내용
+### 1. 요구사항 시나리오를 보고 부족해 보이는 기능을 하나 이상 체크하여 README에 내용을 작성하시오.
+```
+A. 회원가입 시 판매자와 구매자(소비자)를 구분 하는 기능과 이에 따른 판매자용 상품 등록 기능 필요
+B. 상품 검색 기능 필요
+C. 개별 상품 상세 조회 시 품절 여부 등 상태를 나타내는 기능 필요. (수량은 이미 무한으로 가정하였음)
+D. 장바구니에 담지 않고 ‘바로 구매’할 수 있는 기능 필요.
+E. 장바구니 삭제 기능 추가 필요.
+F. 결제하기에서 기본배송지 정보와 전화번호 데이터를 들고 올 수 있는 기능
+G. 주문 결과 확인 시 주문 시간을 보여주는 기능.
+```
+
+
+### 2. 제시된 화면설계를 보고 해당 화면설계와 배포된 기존 서버의 API주소를 매칭하여 README에 내용을 작성하시오.
+```
+(기능 1) 회원가입 - (Post) - /join, 이메일 중복 체크 - (Post) - /check
+(기능 2) 로그인 - (Post) - /login
+(기능 4) 전체 상품 목록 조회 - (Get) - /products
+(기능 5) 개별 상품 목록 조회 - (Get) - /products/{id}
+(기능 8) 장바구니 담기 - (Post) - /carts/add
+(기능 9) 장바구니 보기 - (Get) - /carts
+(기능 10) 장바구니 상품 옵션 확인 및 수량 결정 - (Post) - /carts/update
+(기능 11) 주문 - (Post) - /orders/save
+(기능 12) 결제 - 다루지 않음
+(기능 13) 주문 결과 확인 - (Get) - /orders/{id}
+
+-> 빠진 기능들은 프론트에서 처리할 예정.
+```
+
+
+### 3. 배포된 서버에 모든 API를 POSTMAN으로 요청해본 뒤 응답되는 데이터를 확인하고 부족한 데이터가 무엇인지 체크하여 README에 내용을 작성하시오.
+```
+A. 전체 상품 목록 조회api에 배송비 관련 데이터가 없다.
+B. 주문하기 api에 배송비 데이터가 추가되어야 한다.
+C. 주문 결과 확인 api에 주문 완료 시간이 추가되면 좋다.
+```
+
+
+### 4. 테이블 설계를 하여 README에 ER-Diagram을 추가하여 제출하시오.
+
+
+<img width="901" alt="ERDiagram_jimin" src="https://github.com/Kakao-tech-campus-BE/step2-BE-kakao-shop/assets/107912763/d44e4f85-e0ec-4ff4-b04a-5a12d5212586">
+
+
+- **user**
+```
+CREATE TABLE IF NOT EXISTS `mydb`.`user` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `created_at` DATETIME NOT NULL,
+  `updated_at` DATETIME NOT NULL,
+  `username` VARCHAR(100) NOT NULL,
+  `email` VARCHAR(100) NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
+  `phone_number` VARCHAR(50) NULL,
+  `address` VARCHAR(45) NULL,
+  `type` ENUM('Seller', 'Buyer') NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
+  UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE)
+ENGINE = InnoDB
+```
+
+
+- **product**
+```
+CREATE TABLE IF NOT EXISTS `mydb`.`product` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `created_at` DATETIME NOT NULL,
+  `updated_at` DATETIME NOT NULL,
+  `product_name` VARCHAR(100) NOT NULL,
+  `image_url` VARCHAR(255) NOT NULL,
+  `description` VARCHAR(255) NULL,
+  `price` INT NOT NULL,
+  `status` ENUM('Sold_out', 'Available') NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE)
+ENGINE = InnoDB
+```
+
+
+- **option**
+```
+CREATE TABLE IF NOT EXISTS `mydb`.`option` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `created_at` DATETIME NOT NULL,
+  `updated_at` DATETIME NOT NULL,
+  `option_name` VARCHAR(255) NOT NULL,
+  `price` INT NOT NULL,
+  `product_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  INDEX `product_id_idx` (`product_id` ASC) VISIBLE,
+  CONSTRAINT `product_id`
+    FOREIGN KEY (`product_id`)
+    REFERENCES `mydb`.`product` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+```
+
+
+- **cart**
+```
+CREATE TABLE IF NOT EXISTS `mydb`.`cart` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `created_at` DATETIME NOT NULL,
+  `updated_at` DATETIME NOT NULL,
+  `quantity` INT NOT NULL,
+  `user_id` INT NOT NULL,
+  `option_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  INDEX `user_id_idx` (`user_id` ASC) VISIBLE,
+  INDEX `option_id_idx` (`option_id` ASC) VISIBLE,
+  CONSTRAINT `user_id`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `mydb`.`user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `option_id`
+    FOREIGN KEY (`option_id`)
+    REFERENCES `mydb`.`option` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+```
+
+
+- **order**
+```
+CREATE TABLE IF NOT EXISTS `mydb`.`order` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `created_at` DATETIME NOT NULL,
+  `user_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  INDEX `user_id_idx` (`user_id` ASC) VISIBLE,
+  CONSTRAINT `user_id`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `mydb`.`user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+```
+
+- **order_item**
+```
+CREATE TABLE IF NOT EXISTS `mydb`.`order_item` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `quantity` INT NOT NULL,
+  `option_id` INT NOT NULL,
+  `order_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+  INDEX `option_id_idx` (`option_id` ASC) VISIBLE,
+  INDEX `order_id_idx` (`order_id` ASC) VISIBLE,
+  CONSTRAINT `option_id`
+    FOREIGN KEY (`option_id`)
+    REFERENCES `mydb`.`option` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `order_id`
+    FOREIGN KEY (`order_id`)
+    REFERENCES `mydb`.`order` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+```
+
+
 # 2주차
 
 카카오 테크 캠퍼스 2단계 - BE - 2주차 클론 과제
