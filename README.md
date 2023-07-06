@@ -128,6 +128,28 @@ erDiagram
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
+## 과제
+|API|설명|
+|:--|:--|
+|`POST /email-validation`|이메일 중복 체크|
+|`POST /signup`|회원가입|
+|`POST /login`|로그인|
+|||
+|`GET /goods`|전체 상품 목록 조회|
+|`GET /goods/:id`|개별 상품 상세 조회|
+|`POST /goods`|빈 상품 생성|
+|`POST /goods/:id/attach`|상품 이미지 등록|
+|`PUT /goods/:id`|상품 수정|
+|`DELETE /goods/:id`|상품 삭제|
+|||
+|`GET /carts`|장바구니 조회|
+|`PATCH /carts`|장바구니 수정|
+|||
+|`GET /orders`|주문 목록 조회|
+|`GET /orders/:id`|주문 정보 확인|
+|`POST /orders`|주문 생성|
+|`PATCH /orders/:id`|주문 취소/환불/수취 확인|
+
 # 3주차
 
 카카오 테크 캠퍼스 2단계 - BE - 3주차 클론 과제
