@@ -39,7 +39,7 @@
 ```
 내용이 길어져서 Week1_#3.pdf 파일로 분리
 ```
-(링크를 걸어보려고 했지만 잘 작동하지 않음 ㅠㅠ) [Week1_#3.pdf](Week1_#3.pdf)  
+(링크를 걸어보려고 했지만 잘 작동하지 않음 ㅠㅠ) [Week1_#3.pdf](/week1/Week1_#3.pdf)  
  
 <br>
 
@@ -47,7 +47,7 @@
 ```
 Week1_ERD.png 파일에 첨부
 ```
-(링크) [Week1_ERD.png](Week1_ERD.png)  
+(링크) [Week1_ERD.png](/week1/Week1_ERD.png)  
 ![Week1_ERD](https://github.com/Rizingblare/step2-BE-kakao-shop/assets/77480122/f389dd2a-bfe8-4b57-a7cc-bb465696bbd0)
 
 
