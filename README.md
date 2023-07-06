@@ -45,6 +45,501 @@
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
+</br>
+
+## **1번 과제**
+
+### 1. 회원가입
+```
+> 회원가입 데이터 검증
+```
+</br>
+
+### 2. 전체 상품 목록 조회
+```
+> 카테고리 별 조회
+> 톡별가 마감일
+> 공유하기
+> 찜하기
+```
+</br>
+
+### 3. 개별 상품 조회
+```
+> 별점 및 리뷰
+> 톡딜가로 바로 구매
+```
+</br>
+
+
+### 4. 장바구니 조회
+```
+> 장바구니 상품 삭제
+```
+</br>
+
+### 5. 주문
+```
+> 장바구니 내 선택 구매
+> 배송 방법 선택
+> 배송지 입력
+```
+</br>
+
+### 6. 검색
+```
+> 상품 검색
+```
+</br>
+
+### 7. 판매자 권한
+```
+> 업체 상품 등록
+```
+</br>
+</br>
+
+## **2번 과제**
+```
+회원가입 버튼 -> 
+[Post] http://localhost:8080/check
+[Post] http://localhost:8080/join
+```
+
+```
+로그인 버튼 -> 
+[Post] http://localhost:8080/login
+```
+
+```
+로그아웃 -> 
+클라이언트 토큰 이용
+```
+
+```
+전체 상품 조회 -> 
+[Get] http://localhost:8080/products
+```
+
+```
+개별 상품 조회 ->  
+[Get] http://localhost:8080/products/[product_id]
+```
+
+```
+장바구니 담기 -> 
+[Post] http://localhost:8080/carts/add
+```
+
+```
+장바구니 조회 -> 
+[Get] http://localhost:8080/carts
+```
+
+```
+주문하기 버튼 -> 
+[Post] http://localhost:8080/carts/update
+```
+
+```
+결제하기 버튼 -> 
+[Post] http://localhost:8080/orders/save
+```
+
+```
+주문 결과확인 -> 
+[Get] http://localhost:8080/orders/[item_id]
+```
+</br>
+</br>
+
+## **3번 과제**
+```
+> 만약 리뷰 엔티티를 만든다면 [GET]http://localhost:8080/products/1 (개별 상품 조회) 시에 별점 데이터를 넘겨주는 것이 좋을 것 같다. 
+```
+</br>
+
+```
+> [Post] http://localhost:8080/login (로그인) 시에 사용자 권한을 의미하는 role을 Response로 넘겨주어서 구매자, 판매자, 관리자마다 다른 유저 경험을 겪게 하는 것이 좋을 것 같다.
+```
+</br>
+
+```
+> [POST] http://localhost:8080/carts/update (장바구니 업데이트 및 주문) 시에 Response로 옵션 가격 * 담은 수량 결과값을 연산하여 넘겨주어 카트 당 가격을 프론트에서 바로 사용할 수 있게 하는 편이 좋을 것 같다.
+```
+</br>
+
+```
+> 만약 주문하기 이전에 배송지에 대한 정보를 받고 그에 대한 정보를 [POST] http://localhost:8080/carts/update 시에 반영하여 연산해 totalPrice에 추가하면 좋을 것 같다.
+```
+</br>
+</br>
+
+## **4번 과제**
+```
+CREATE TABLE `User` (
+	`id`	int	NOT NULL,
+	`email`	varchar(100)	NOT NULL,
+	`password`	varchar(256)	NOT NULL,
+	`userName`	varchar(45)	NOT NULL,
+	`userDate`	datetime	NOT NULL,
+	`roles`	list	NULL
+);
+
+CREATE TABLE `Product` (
+	`id`	int	NOT NULL,
+	`productName`	varchar(256)	NOT NULL,
+	`image`	varchar(256)	NULL,
+	`productPrice`	int	NOT NULL,
+	`productDate`	datetime	NOT NULL
+);
+
+CREATE TABLE `Option` (
+	`id`	int	NOT NULL,
+	`productId`	int	NOT NULL,
+	`optionName`	varchar(256)	NOT NULL,
+	`optionPrice`	int	NOT NULL,
+	`optionDate`	datetime	NOT NULL
+);
+
+CREATE TABLE `Order` (
+	`id`	int	NOT NULL,
+	`userId`	int	NOT NULL,
+	`totalPrice`	int	NOT NULL,
+	`orderDate`	datetime	NOT NULL
+);
+
+CREATE TABLE `Cart` (
+	`id`	int	NOT NULL,
+	`productId`	int	NOT NULL,
+	`userId`	int	NOT NULL,
+	`cartQuantity`	int	NOT NULL,
+	`cartPrice`	int	NOT NULL,
+	`cartDate`	datetime	NOT NULL
+);
+
+CREATE TABLE `Item` (
+	`id`	int	NOT NULL,
+	`orderId`	int	NOT NULL,
+	`optionId`	int	NOT NULL,
+	`itemQuantity`	int	NOT NULL,
+	`itemPrice`	int	NOT NULL
+);
+
+ALTER TABLE `User` ADD CONSTRAINT `PK_USER` PRIMARY KEY (
+	`id`
+);
+
+ALTER TABLE `Product` ADD CONSTRAINT `PK_PRODUCT` PRIMARY KEY (
+	`id`
+);
+
+ALTER TABLE `Option` ADD CONSTRAINT `PK_OPTION` PRIMARY KEY (
+	`id`
+);
+
+ALTER TABLE `Order` ADD CONSTRAINT `PK_ORDER` PRIMARY KEY (
+	`id`
+);
+
+ALTER TABLE `Cart` ADD CONSTRAINT `PK_CART` PRIMARY KEY (
+	`id`
+);
+
+ALTER TABLE `Item` ADD CONSTRAINT `PK_ITEM` PRIMARY KEY (
+	`id`
+);
+
+
+```
+    이미지 링크 : https://ibb.co/6WMK0Cz
+
+</br>
+</br>
+
+## **작성한 엔티티 코드**
+```
+package com.example.kakao.user;
+
+import lombok.*;
+
+import javax.persistence.*;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity
+@Table(name="user_tb")
+public class User{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @Column(length = 100, nullable = false, unique = true)
+    private String email; // 인증시 필요한 필드
+    @Column(length = 256, nullable = false)
+    private String password;
+    @Column(length = 45, nullable = false)
+    private String username;
+    @Column(nullable = false)
+    private LocalDateTime date;
+    
+    @Column(length = 30)
+    @Convert(converter = StringArrayConverter.class)
+    private List<String> roles = new ArrayList<>(); // role은 한 개 이상
+
+    @Builder
+    public User(int id, String email, String password, String username, LocalDateTime date, List<String> roles) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.username = username;
+        this.date = date;
+        this.roles = roles;
+    }
+}
+
+```
+
+</br>
+
+```
+package com.example.kakao.product;
+
+import lombok.*;
+import javax.persistence.*;
+
+import java.time.LocalDateTime;
+
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity
+@Table(name="product_tb")
+public class Product{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    
+    @Column(length = 256, nullable = false)
+    private String productName;
+    
+    @Column(length = 256)
+    private String image;
+    
+    @Column(nullable = false)
+    private int price;
+    
+    @Column(name = "date", nullable = false)
+    private LocalDateTime date;
+
+    @Builder
+    public Product(int id, String productName, String image, int price, LocalDateTime date) {
+        this.id = id;
+        this.productName = productName;
+        this.image = image;
+        this.price = price;
+        this.date = date;
+    }
+}
+
+```
+
+</br>
+
+```
+package com.example.kakao.cart;
+
+import lombok.*;
+import javax.persistence.*;
+
+import com.example.kakao.option.Option;
+import com.example.kakao.user.User;
+
+import java.time.LocalDateTime;
+
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity
+@Table(name="cart_tb")
+public class Cart {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "option_id")
+    private Option option;
+
+    @Column(nullable = false)
+    private int quantity;
+
+    @Column(nullable = false)
+    private int price;
+
+    @Column(name = "date", nullable = false)
+    private LocalDateTime date;
+
+    @Builder
+    public Cart(int id, User user, Option option, int quantity, int price, LocalDateTime date) {
+        this.id = id;
+        this.user = user;
+        this.option = option;
+        this.quantity = quantity;
+        this.price = price;
+        this.date = date;
+    }
+}
+
+```
+
+</br>
+
+```
+package com.example.kakao.order;
+
+import lombok.*;
+
+import javax.persistence.*;
+
+import com.example.kakao.user.User;
+
+import java.time.LocalDateTime;
+
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity
+@Table(name="order_tb")
+public class Order{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(nullable = false)
+    private int totalPrice;
+
+    @Column(nullable = false)
+    private LocalDateTime date;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @Builder
+    public Order(int id, int totalPrice, LocalDateTime date, User user) {
+        this.id = id;
+        this.totalPrice = totalPrice;
+        this.date = date;
+        this.user = user;
+    }
+}
+
+```
+
+</br>
+
+```
+package com.example.kakao.item;
+
+import lombok.*;
+
+import javax.persistence.*;
+
+import com.example.kakao.option.Option;
+import com.example.kakao.order.Order;
+
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity
+@Table(name="item_tb")
+public class Item{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(nullable = false)
+    private int quantity;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id")
+    private Order order;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "option_id")
+    private Option option;
+
+    @Builder
+    public Item(int id, int quantity, Order order, Option option) {
+        this.id = id;
+        this.quantity = quantity;
+        this.order = order;
+        this.option = option;
+    }
+}
+
+```
+
+</br>
+
+```
+package com.example.kakao.option;
+
+import lombok.*;
+import javax.persistence.*;
+
+import com.example.kakao.product.Product;
+
+import java.time.LocalDateTime;
+
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity
+@Table(name="option_tb")
+public class Option {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(length = 256, nullable = false)
+    private String optionName;
+
+    @Column(nullable = false)
+    private int price;
+
+    @Column(name = "date", nullable = false)
+    private LocalDateTime date;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
+    private Product product;
+
+    @Builder
+    public Option(int id, String optionName, int price, LocalDateTime date, Product product) {
+        this.id = id;
+        this.optionName = optionName;
+        this.price = price;
+        this.date = date;
+        this.product = product;
+    }
+}
+
+```
+
+
+
+</br>
+
 # 2주차
 
 카카오 테크 캠퍼스 2단계 - BE - 2주차 클론 과제
