@@ -3,12 +3,16 @@ package com.example.kakaoshop.cart;
 import com.example.kakaoshop._core.utils.ApiUtils;
 import com.example.kakaoshop.cart.response.CartItemDTO;
 import com.example.kakaoshop.cart.response.CartRespFindAllDTO;
+import com.example.kakaoshop.cart.response.CartRespUpdateDTO;
 import com.example.kakaoshop.cart.response.ProductDTO;
 import com.example.kakaoshop.cart.response.ProductOptionDTO;
+import com.example.kakaoshop.cart.response.UpdatedCartItemDTO;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -51,6 +55,34 @@ public class CartRestController {
 
     CartRespFindAllDTO responseDTO = new CartRespFindAllDTO(productDTOList, 104500);
 
+    return ResponseEntity.ok(ApiUtils.success(responseDTO));
+  }
+
+  @PostMapping("/carts/add")
+  public ResponseEntity<?> addCarts(@RequestBody CartRequest.AddDTO addDTO) {
+    return ResponseEntity.ok(ApiUtils.success(null));
+  }
+
+  @PostMapping("/carts/update")
+  public ResponseEntity<?> updateCarts(@RequestBody CartRequest.UpdateDTO updateDTO) {
+    List<UpdatedCartItemDTO> updatedCartItemDTOList = new ArrayList<>();
+    updatedCartItemDTOList.add(
+        UpdatedCartItemDTO.builder()
+            .cartId(1)
+            .optionId(1)
+            .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
+            .quantity(3)
+            .price(30000)
+            .build());
+    updatedCartItemDTOList.add(
+        UpdatedCartItemDTO.builder()
+            .cartId(2)
+            .optionId(2)
+            .optionName("02. 슬라이딩 지퍼백 플라워에디션 5종")
+            .quantity(5)
+            .price(54500)
+            .build());
+    CartRespUpdateDTO responseDTO = new CartRespUpdateDTO(updatedCartItemDTOList, 84500);
     return ResponseEntity.ok(ApiUtils.success(responseDTO));
   }
 }
