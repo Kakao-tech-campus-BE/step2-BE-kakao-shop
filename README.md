@@ -285,7 +285,7 @@
 ```
 ## 과제2. 요구사항 추가 반영 및 테이블 설계도
 4. 테이블 설계를 하여 README에 ER-Diagram을 추가하여 제출하시오.
-![ERD basic](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcEx4Xp%2FbtsmFfnLkBK%2FThIxiguou0oNB1NIWH5g1k%2Fimg.png)
+![ERD basic](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FKkcwo%2FbtsmzZ03JFO%2FpscrsMEL8RkO4Z6XH3StL1%2Fimg.png)
 
 ![ERD](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fd3SBK5%2FbtslZDYv5ue%2FHXYYKJpghwL5cuc6uWMhAk%2Fimg.png)
 
