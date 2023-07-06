@@ -5,13 +5,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class CartUpdateDTO {
-    private int cartId;
+public class CartAddReqDTO {
+    private int optionId;
     private int quantity;
 
     @Builder
-    public CartUpdateDTO(int optionId, int quantity){
-        this.cartId = cartId;
+    public CartAddReqDTO(int optionId, int quantity){
+        this.optionId = optionId;
         this.quantity = quantity;
     }
 }
