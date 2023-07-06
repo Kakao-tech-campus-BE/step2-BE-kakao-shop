@@ -482,7 +482,7 @@
 
 ### ER-Diagram
 
-<img src="week1_image/erd.png" width="400" height="400"></img>
+<img src="week1/week1_image/erd.png" width="400" height="400" alt="ER-Diagram"></img>
 
 #### Table Design
 
