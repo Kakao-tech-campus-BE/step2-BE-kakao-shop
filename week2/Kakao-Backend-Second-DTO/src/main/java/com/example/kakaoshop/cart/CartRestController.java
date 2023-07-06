@@ -1,12 +1,11 @@
 package com.example.kakaoshop.cart;
 
 import com.example.kakaoshop._core.utils.ApiUtils;
-import com.example.kakaoshop.cart.response.CartItemDTO;
-import com.example.kakaoshop.cart.response.CartRespFindAllDTO;
-import com.example.kakaoshop.cart.response.ProductOptionDTO;
-import com.example.kakaoshop.cart.response.ProductDTO;
+import com.example.kakaoshop.cart.response.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -60,5 +59,36 @@ public class CartRestController {
         CartRespFindAllDTO responseDTO = new CartRespFindAllDTO(productDTOList, 104500);
 
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
+    }
+
+    @PostMapping("/carts/add")
+    public ResponseEntity<?> addCart(@RequestBody InsertCartCommand insertCartCommand) {
+        return ResponseEntity.ok(ApiUtils.success(null));
+    }
+
+    @PostMapping("/carts/update")
+    public ResponseEntity<?> updateCart(@RequestBody UpdateCartCommand updateCartCommand) {
+        List<UpdatedCartItemDTO> updatedCartItemDTOList = new ArrayList<>();
+        updatedCartItemDTOList.add(UpdatedCartItemDTO.builder()
+                .cartId(4)
+                .optionId(1)
+                .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
+                .quantity(10)
+                .price(100000)
+                .build());
+        updatedCartItemDTOList.add(UpdatedCartItemDTO.builder()
+                .cartId(5)
+                .optionId(2)
+                .optionName("02. 슬라이딩 지퍼백 플라워에디션 5종")
+                .quantity(10)
+                .price(109000)
+                .build());
+
+        UpdatedCartDTO updatedCartDTO = UpdatedCartDTO.builder()
+                .carts(updatedCartItemDTOList)
+                .totalPrice(209000)
+                .build();
+
+        return ResponseEntity.ok(ApiUtils.success(updatedCartDTO));
     }
 }
