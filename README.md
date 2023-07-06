@@ -221,6 +221,7 @@ option_table
 quantity: 상품 수량
 order_date: 주문 일자
 total_price: 주문 총액
+```
 
 </br>
 
