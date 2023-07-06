@@ -1,12 +1,11 @@
 package com.example.kakaoshop.cart;
 
 import com.example.kakaoshop._core.utils.ApiUtils;
-import com.example.kakaoshop.cart.response.CartItemDTO;
-import com.example.kakaoshop.cart.response.CartRespFindAllDTO;
-import com.example.kakaoshop.cart.response.ProductOptionDTO;
-import com.example.kakaoshop.cart.response.ProductDTO;
+import com.example.kakaoshop.cart.response.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -60,5 +59,25 @@ public class CartRestController {
         CartRespFindAllDTO responseDTO = new CartRespFindAllDTO(productDTOList, 104500);
 
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
+    }
+
+    // 장바구니 담기
+    @PostMapping("/carts")
+    public static ResponseEntity<?> createCart() {
+        List<CartReqAddDTO> cartAddDTOList = new ArrayList<>();
+
+        cartAddDTOList.add(
+                CartReqAddDTO.builder()
+                        .optionId(1)
+                        .quantity(5)
+                        .build());
+
+        cartAddDTOList.add(
+                CartReqAddDTO.builder()
+                        .optionId(2)
+                        .quantity(5)
+                        .build());
+
+        return ResponseEntity.status(HttpStatus.OK).body(ApiUtils.success(cartAddDTOList));
     }
 }
