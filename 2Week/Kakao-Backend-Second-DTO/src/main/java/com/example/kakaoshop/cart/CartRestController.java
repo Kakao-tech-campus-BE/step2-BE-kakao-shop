@@ -64,25 +64,25 @@ public class CartRestController {
         return ResponseEntity.ok(ApiUtils.success(null));
     }
 
-    @PostMapping("/carts/update")
+    @PatchMapping("/carts/update")
     public ResponseEntity<?> updateCarts(@RequestBody List<CartRequest.UpdateDTO> updateDTO){
         List<CartUpdateDTO> cartUpdateDTOList = new ArrayList<>();
 
         CartUpdateDTO cartUpdateDTO1 = CartUpdateDTO.builder()
-                .cartId(4)
+                .cartId(updateDTO.get(0).getCartId())
                 .optionId(1)
                 .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
-                .quantity(10)
+                .quantity(updateDTO.get(0).getQuantity())
                 .price(10000)
                 .build();
 
         cartUpdateDTOList.add(cartUpdateDTO1);
 
         CartUpdateDTO cartUpdateDTO2 = CartUpdateDTO.builder()
-                .cartId(5)
+                .cartId(updateDTO.get(1).getCartId())
                 .optionId(2)
                 .optionName("02. 슬라이딩 지퍼백 플라워에디션 5종")
-                .quantity(10)
+                .quantity(updateDTO.get(1).getQuantity())
                 .price(109000)
                 .build();
 
