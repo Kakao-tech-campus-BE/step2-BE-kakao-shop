@@ -16,6 +16,8 @@ import java.util.List;
 @RestController
 public class ProductRestController {
 
+
+//todo 페이징 처리해야함
     @GetMapping("/products")
     public ResponseEntity<?> findAll() {
         List<ProductRespFindAllDTO> responseDTO = new ArrayList<>();
