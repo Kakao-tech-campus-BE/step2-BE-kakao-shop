@@ -55,7 +55,7 @@ public class OrderRestController {
 
         OrderRespFindByIdDTO responseDTO = null;
 
-        if(id == 2) {
+        if(id == 1) {
             List<OrderItemDTO> orderItemDTOList = new ArrayList<>();
 
             OrderItemDTO orderItemDTO_1 = OrderItemDTO.builder()
