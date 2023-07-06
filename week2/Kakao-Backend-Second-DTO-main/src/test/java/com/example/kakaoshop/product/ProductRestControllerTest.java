@@ -1,34 +1,37 @@
 package com.example.kakaoshop.product;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
+@Slf4j
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-public class ProductRestControllerTest {
+class ProductRestControllerTest {
+
     @Autowired
     private MockMvc mvc;
 
     @Test
-    // 전체 상품 목록 조회
-    public void findAll_test() throws Exception {
+    void findAll() throws Exception {
 
-        // when
+        //when
         ResultActions resultActions = mvc.perform(
                 get("/products")
         );
 
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
-        System.out.println("테스트 : " + responseBody);
+        log.info("Product Test findAll(): " + responseBody);
 
-        // verify
+        //then
         resultActions.andExpect(jsonPath("$.success").value("true"));
         resultActions.andExpect(jsonPath("$.response[0].id").value(1));
         resultActions.andExpect(jsonPath("$.response[0].productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"));
@@ -43,20 +46,20 @@ public class ProductRestControllerTest {
     }
 
     @Test
-// 개별 상품 상세 조회
-    public void findById_test() throws Exception {
+    void findById() throws Exception {
+
         // given
         int id = 1;
 
-        // when
+        //when
         ResultActions resultActions = mvc.perform(
                 get("/products/" + id)
         );
 
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
-        System.out.println("테스트 : " + responseBody);
+        log.info("Product Test findById(): " + responseBody);
 
-        // verify
+        //then
         resultActions.andExpect(jsonPath("$.success").value("true"));
         resultActions.andExpect(jsonPath("$.response.id").value(1));
         resultActions.andExpect(jsonPath("$.response.productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"));

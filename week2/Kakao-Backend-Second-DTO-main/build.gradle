@@ -35,6 +35,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security' // 스프링 시큐리티 제공
 	implementation group: 'com.auth0', name: 'java-jwt', version: '4.3.0'
 	testImplementation 'org.springframework.security:spring-security-test' // 테스트시 시큐리티 관련 편의 기능 제공
+
+	testCompileOnly 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
 }
 
 tasks.named('test') {

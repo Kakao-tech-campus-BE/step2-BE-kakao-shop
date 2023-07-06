@@ -46,13 +46,14 @@ public class OrderRestController {
                         .build()
         );
 
-        OrderRespInsertDTO responseDTO = new OrderRespInsertDTO(2, productItemList, 209000);
+        OrderRespInsertDTO responseDTO = new OrderRespInsertDTO(1, productItemList, 209000);
 
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
 
     @GetMapping("/orders/{id}")
     public ResponseEntity<?> findOrderResult(@PathVariable int id){
+
         List<OrderItemDTO> orderItemList = new ArrayList<>();
         orderItemList.add(
                 OrderItemDTO.builder()
@@ -79,7 +80,7 @@ public class OrderRestController {
                         .build()
         );
 
-        OrderRespFindResultDTO responseDTO = new OrderRespFindResultDTO(2, productItemList, 209000);
+        OrderRespFindResultDTO responseDTO = new OrderRespFindResultDTO(1, productItemList, 209000);
 
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
