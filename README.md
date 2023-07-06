@@ -353,3 +353,15 @@ JSON 응답입니다.
     "error": null
 }
 ```
+### 주문 확인
+해당 API는 결제하기와 같은 ResponseBody를 요구합니다.
+<br> 중복을 피하기 위해 별도의 DTO를 작성하지 않았습니다.
+<br> 주문 번호로 주문을 조회하기 위해 @PathVariable 애노테이션을 작성하였습니다.
+
+```java
+@GetMapping("/{id}")
+public ResponseEntity<?> orderFindById(@PathVariable int id) {
+...
+}
+```
+(내부 더미 데이터 작성과 응답 로직은 결제하기와 중복되어 작성 생략하겠습니다.)
