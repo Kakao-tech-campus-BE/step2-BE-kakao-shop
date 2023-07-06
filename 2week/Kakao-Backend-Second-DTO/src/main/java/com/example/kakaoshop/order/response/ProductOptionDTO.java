@@ -1,4 +1,4 @@
-package com.example.kakaoshop.order.item;
+package com.example.kakaoshop.order.response;
 
 import lombok.Builder;
 import lombok.Getter;
