@@ -1,6 +1,9 @@
 # step2-BE-kakao-shop
 카카오 테크 캠퍼스 2단계 카카오 쇼핑하기 백엔드 클론 프로젝트 레포지토리입니다.
 
+<details>
+<summary>1주차 과제 설명</summary>
+
 # 1주차
 
 카카오 테크 캠퍼스 2단계 - BE - 1주차 클론 과제
@@ -45,6 +48,169 @@
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
+</details>
+
+<details>
+<summary>1주차 과제 수행</summary>
+
+## 1. 부족해 보이는 기능 체크
+
+### 부족해보이는 기능
+1. 회원가입 시 이메일 인증 기능
+2. 로그인 시 비밀번호 찾기 기능
+3. 상품 판매자 기능
+   - 상품 등록
+   - 상품 수정
+   - 상품 삭제
+4. 구매자가 상품을 장바구니에 담지 않고, 바로 구매하기 기능
+   - 현재는 장바구니에 담아야만 물품 구매가 가능하다
+5. 장바구니 아이템 삭제 기능
+6. 장바구니의 특정 아이템만 구매 기능
+7. 이벤트 진행으로 인한 가격 세일 (원가, 세일가에 대한 표시)
+
+## 2. 화면설계와 API주소 매칭
+
+![](img/week1/1-signup.png)  
+- 회원가입 버튼: `POST /signup`
+- 이메일 중복 확인 버튼: `POST /check`
+<br>
+<br>
+
+![](img/week1/1-login.png)  
+- 로그인 버튼: `POST /login`
+- 회원가입 버튼: `GET /signup`
+<br>
+<br>
+
+![](img/week1/1-nav.png)
+- 쇼핑하기 버튼: `GET /products`
+- 장바구니 버튼: `GET /carts`
+- 로그아웃 버튼: `POST /logout`
+<br>
+<br>
+
+![](img/week1/1-main.png)  
+- 메인 페이지: `GET /products`
+- 상품의 이미지나 설명 클릭: `GET /products/{productId}`
+<br>
+<br>
+
+![](img/week1/1-detail.png)  
+- 상세 페이지 표시: `GET /products/{productId}`
+- 장바구니 담기: `POST /carts/add`
+<br>
+<br>
+
+![](img/week1/1-cart.png)  
+- 장바구니 보기: `GET /carts`
+- 주문하기 버튼: `POST /carts/update`
+<br>
+<br>
+
+![](img/week1/1-order.png)  
+- 주문상품 정보 보기: `GET /items`
+- 결제하기 버튼 클릭: `POST /orders/save`
+<br>
+<br>
+
+![](img/week1/1-order-complete.png)  
+- 주문 결과 확인: `GET /orders/{orderId}`
+- 쇼핑 계속하기: `GET /products`
+<br>
+<br>
+
+
+## 3. API를 POSTMAN으로 요청해본 뒤 부족한 데이터가 무엇인지 체크
+
+- 이미 장바구니에 존재하는 물품을 또 다시 한번 장바구니에 담으려고 하면, 오류 발생
+
+```json
+{
+    "success": false,
+    "response": null,
+    "error": {
+        "message": "장바구니 담기 중에 오류가 발생했습니다 : could not execute statement; SQL [n/a]; constraint [\"PUBLIC.UK_CART_OPTION_USER_INDEX_4 ON PUBLIC.CART_TB(USER_ID NULLS FIRST, OPTION_ID NULLS FIRST) VALUES ( /* key:1 */ 1, 1)\"; SQL statement:\ninsert into cart_tb (id, option_id, price, quantity, user_id) values (default, ?, ?, ?, ?) [23505-214]]; nested exception is org.hibernate.exception.ConstraintViolationException: could not execute statement",
+        "status": 500
+    }
+}
+```
+
+## 4. 테이블 설계를 하여 README에 ER-Diagram을 추가하여 제출하시오.
+
+![](img/week1/1-ERD.png)
+
+
+## 5. PDF 과제 (테이블 설계)
+
+### User Table
+
+| Column Name | Data Type    | Nullable | Key | Comment     |
+|-------------|--------------|----------|-----|-------------|
+| id          | bigint       | NOT NULL | PK  | 고유 ID     |
+| username    | varchar(20)  | NOT NULL |     | 사용자 이름 |
+| email       | varchar(100) | NOT NULL |     | 이메일      |
+| password    | varchar(256) | NOT NULL |     | 패스워드    |
+| join_date   | datetime     | NOT NULL |     | 가입일      |
+| role        | varchar(20)  | NOT NULL |     | 권한        |
+
+### Product Table
+
+| Column Name | Data Type    | Nullable | Key | Comment       |
+|------------|--------------|----------|-----|---------------|
+| id         | bigint       | NOT NULL | PK  | 고유 ID       |
+| name       | varchar(100) | NOT NULL |     | 제품명        |
+| description| varchar(1000) | NOT NULL |    | 제품 설명     | 
+| image      | varchar(200) | NOT NULL |     | 제품 사진     |
+| price      | int          | NOT NULL |     | 제품 가격     |
+| create_date | datetime     | NOT NULL |     | 제품 생성날짜 |
+| update_date | datetime     | NOT NULL |     | 제품 수정날짜 |
+
+### Option Table
+
+| Column Name | Data Type    | Nullable | Key | Comment       |
+|-------------|--------------|----------|-----|---------------|
+| id          | bigint       | NOT NULL | PK  | 고유 ID       |
+| product_id  | bigint       | NOT NULL | FK  | 제품 ID       |
+| name        | varchar(100) | NOT NULL |     | 옵션명        |
+| price       | int          | NOT NULL |     | 옵션 가격     |
+| create_date | datetime     | NOT NULL |     | 옵션 생성날짜 |
+| update_date | datetime     | NOT NULL |     | 옵션 수정날짜 |
+
+### Cart Table
+
+| Column Name | Data Type | Nullable | Key | Comment   |
+|-------------|-----------|----------|-----|-----------|
+| id          | bigint    | NOT NULL | PK  | 고유 ID   |
+| user_id     | bigint    | NOT NULL | FK  | 유저 ID   |
+| option_id   | bigint    | NOT NULL | FK  | 옵션 ID   |
+| quantity    | int       | NOT NULL |     | 옵션 수량 |
+
+### Order Table
+
+| Column Name | Data Type | Nullable | Key | Comment    |
+|-------------|-----------|----------|-----|------------|
+| id          | bigint    | NOT NULL | PK  | 고유 ID    |
+| user_id     | bigint    | NOT NULL | FK  | 유저 ID    |
+| order_date  | datetime  | NOT NULL |     | 주문 날짜  |
+
+### Item Table (order_item)
+
+| Column Name | Data Type | Nullable | Key | Comment  |
+|-------------|-----------|----------|-----|----------|
+| id          | bigint    | NOT NULL | PK  | 고유 ID    |
+| order_id    | bigint    | NOT NULL | FK  | 주문 ID    |
+| option_id   | bigint    | NOT NULL | FK  | 옵션 ID    |
+ | price      | int       | NOT NULL |      | 주문 옵션 가격 |
+| quantity    | int       | NOT NULL |     | 주문 옵션 수량 |
+
+
+</details>
+
+<br>
+
+<details>
+<summary>2주차 과제 설명</summary>
+
 # 2주차
 
 카카오 테크 캠퍼스 2단계 - BE - 2주차 클론 과제
@@ -82,6 +248,18 @@
 
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
+
+</details>
+
+<details>
+<summary>2주차 과제 수행</summary>
+
+</details>
+
+</br>
+
+<details>
+<summary>3주차 과제 설명</summary>
 
 # 3주차
 
@@ -122,6 +300,18 @@
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
+</details>
+
+<details>
+<summary>3주차 과제 수행</summary>
+
+</details>
+
+</br>
+
+<details>
+<summary>4주차 과제 설명</summary>
+
 # 4주차
 
 카카오 테크 캠퍼스 2단계 - BE - 4주차 클론 과제
@@ -161,6 +351,18 @@
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
+</details>
+
+<details>
+<summary>4주차 과제 수행</summary>
+
+</details>
+
+</br>
+
+<details>
+<summary>5주차 과제 설명</summary>
+
 # 5주차
 
 카카오 테크 캠퍼스 2단계 - BE - 5주차 클론 과제
@@ -197,6 +399,18 @@
 
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
+
+</details>
+
+<details>
+<summary>5주차 과제 수행</summary>
+
+</details>
+
+</br>
+
+<details>
+<summary>6주차 과제 설명</summary>
 
 # 6주차
 
@@ -239,3 +453,10 @@
 
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
+
+</details>
+
+<details>
+<summary>6주차 과제 수행</summary>
+
+</details>
