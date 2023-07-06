@@ -1373,8 +1373,6 @@
 
 ## **Assignment 1**
 
-</br>
-
 - [API Reference](https://app.gitbook.com/s/o1E7yDwyPFukxZ8B4jd3/introduction/kakao-shop-documentation)는 RESTAPI로 설계된 API 문서입니다.
 
 </br>
@@ -1385,8 +1383,6 @@
 
 ### **[3] 이메일 중복 체크**
 
-</br>
-
 - UserRequest에서 CheckDTO를 생성합니다.
 - CheckDTO를 사용해서 이메일 중복 체크 시 @RequestBody를 통해 request 데이터를 받아옵니다.
 - UserRestController에서 checkEmail()를 생성합니다.
@@ -1395,8 +1391,6 @@
 </br>
 
 ### **[6] 장바구니 담기**
-
-</br>
 
 - cart 패키지에 request 패키지를 생성합니다.
 - request 패키지에 optionId, quantity를 가지는 CartReqAddDTO를 생성합니다. 이때, 기본 생성자가 없어서 JSON을 클래스의 인스턴스로 deserialize할 수 없기 때문에 @NoArgsConstructor를 붙입니다.
@@ -1407,8 +1401,6 @@
 </br>
 
 ### **[8] 장바구니 수정**
-
-</br>
 
 - cartId, quantity를 가지는 CartReqUpdateDTO를 생성합니다.
 - CartReqUpdateDTO를 사용해서 장바구니 수정 시 @RequestBody를 통해 request 데이터를 받아옵니다.
@@ -1421,8 +1413,6 @@
 
 ### **[9] 주문 인서트**
 
-</br>
-
 - OrderRestController에서 insertOrder()를 생성합니다.
 - 주문 인서트 로직은 아직 구현되지 않았지만 더미 데이터를 반환합니다.
 - 더미 데이터는 id, products, totalPrice를 가지는 OrderRespInsertDTO를 통해 생성됩니다.
@@ -1432,8 +1422,6 @@
 </br>
 
 ### **[10] 주문 결과 확인**
-
-</br>
 
 - OrderRestController에서 findOrderResult()를 생성합니다.
 - 주문 결과 확인 로직은 아직 구현되지 않았지만 더미 데이터를 반환합니다.
@@ -1445,8 +1433,6 @@
 
 ### **ProductRestController 구현**
 
-</br>
-
 - 기존 : findAll(), findById()
 - 로그 남기기
 - given-when-then
@@ -1454,8 +1440,6 @@
 </br>
 
 ### **CartRestController 구현**
-
-</br>
 
 - 기존 : findAll()
 - 추가 : add(), update()
@@ -1467,8 +1451,6 @@
 
 ### **OrderRestController 구현**
 
-</br>
-
 - 추가 : insertOrder(), findOrderResult()
 - 로그 남기기
 - given-when-then
@@ -1476,8 +1458,6 @@
 </br>
 
 ### **Entity 구현**
-
-</br>
 
 - User, Product, ProductOption, Cart, Order, OrderItem
 
