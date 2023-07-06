@@ -3,7 +3,7 @@ package com.example.kakaoshop.order;
 import com.example.kakaoshop._core.utils.ApiUtils;
 import com.example.kakaoshop.order.item.OrderItemDTO;
 import com.example.kakaoshop.order.response.OrderProductDTO;
-import com.example.kakaoshop.order.response.OrderRespFindByIdDTO;
+import com.example.kakaoshop.order.response.OrderResponseFindByIdDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,7 +41,7 @@ public class OrderRestController {
                         .orderItems(orderItemDTOList)
                         .build()
         );
-        OrderRespFindByIdDTO responseDTO = new OrderRespFindByIdDTO(id, productDTOList, 19900);
+        OrderResponseFindByIdDTO responseDTO = new OrderResponseFindByIdDTO(id, productDTOList, 19900);
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
 }

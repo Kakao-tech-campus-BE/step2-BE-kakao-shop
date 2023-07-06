@@ -7,7 +7,7 @@ import lombok.Setter;
 import java.util.List;
 
 @Getter @Setter
-public class ProductRespFindByIdDTO {
+public class ProductResponseFindByIdDTO {
 
     private int id;
     private String productName;
@@ -18,7 +18,7 @@ public class ProductRespFindByIdDTO {
     private List<ProductOptionDTO> options;
 
     @Builder
-    public ProductRespFindByIdDTO(int id, String productName, String description, String image, int price, int starCount, List<ProductOptionDTO> options) {
+    public ProductResponseFindByIdDTO(int id, String productName, String description, String image, int price, int starCount, List<ProductOptionDTO> options) {
         this.id = id;
         this.productName = productName;
         this.description = description;

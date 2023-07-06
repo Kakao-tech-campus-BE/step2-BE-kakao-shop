@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class ProductRespFindAllDTO {
+public class ProductResponseFindAllDTO {
 
     private int id;
     private String productName;
@@ -14,7 +14,7 @@ public class ProductRespFindAllDTO {
     private int price;
 
     @Builder
-    public ProductRespFindAllDTO(int id, String productName, String description, String image, int price) {
+    public ProductResponseFindAllDTO(int id, String productName, String description, String image, int price) {
         this.id = id;
         this.productName = productName;
         this.description = description;

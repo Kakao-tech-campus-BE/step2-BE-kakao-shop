@@ -58,7 +58,7 @@ public class CartRestController {
                         .build()
         );
 
-        CartRespFindAllDTO responseDTO = new CartRespFindAllDTO(productDTOList, 104500);
+        CartResponseFindAllDTO responseDTO = new CartResponseFindAllDTO(productDTOList, 104500);
 
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
