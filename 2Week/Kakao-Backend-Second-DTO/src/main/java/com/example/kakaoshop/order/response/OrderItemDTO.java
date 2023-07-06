@@ -1,7 +1,10 @@
 package com.example.kakaoshop.order.response;
 
 import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter @Setter
 public class OrderItemDTO {
     private int id;
     private String optionName;
