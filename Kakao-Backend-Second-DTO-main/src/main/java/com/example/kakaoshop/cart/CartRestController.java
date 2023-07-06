@@ -2,10 +2,8 @@ package com.example.kakaoshop.cart;
 
 import com.example.kakaoshop._core.utils.ApiUtils;
 import com.example.kakaoshop.cart.request.CartRequestDTO;
-import com.example.kakaoshop.cart.response.CartItemDTO;
-import com.example.kakaoshop.cart.response.CartRespFindAllDTO;
-import com.example.kakaoshop.cart.response.ProductOptionDTO;
-import com.example.kakaoshop.cart.response.ProductDTO;
+import com.example.kakaoshop.cart.request.CartUpdateRequestDTO;
+import com.example.kakaoshop.cart.response.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -69,5 +67,30 @@ public class CartRestController {
     public ResponseEntity<?> addCart(@RequestBody List<CartRequestDTO> cartRequestDTOList){
 
         return ResponseEntity.ok().body(new ApiUtils.ApiResult(true, null, null));
+    }
+
+    @PostMapping("/carts/update")
+    public ResponseEntity<?> updateCart(@RequestBody List<CartUpdateRequestDTO> cartUpdateRequestDTOList){
+        List<CartUpdateItemDTO> cartUpdateItemDTOList = new ArrayList<>();
+        CartUpdateItemDTO cartUpdateItemDTO1 = CartUpdateItemDTO.builder()
+                .cartId(1)
+                .optionId(2)
+                .optionName("22년산 햇단밤 700g(한정판매)")
+                .price(5000)
+                .quantity(2)
+                .build();
+        cartUpdateItemDTOList.add(cartUpdateItemDTO1);
+
+        CartUpdateItemDTO cartUpdateItemDTO2 = CartUpdateItemDTO.builder()
+                .cartId(3)
+                .optionId(1)
+                .optionName("달달한 꿀사과")
+                .price(2345)
+                .quantity(1)
+                .build();
+        cartUpdateItemDTOList.add(cartUpdateItemDTO2);
+
+        CartUpdateResponseDTO responseDTO = new CartUpdateResponseDTO(cartUpdateItemDTOList, 12345);
+        return ResponseEntity.ok().body(responseDTO);
     }
 }
