@@ -1379,8 +1379,6 @@
 
 ## **Assignment 2**
 
-</br>
-
 ### **[3] 이메일 중복 체크**
 
 - UserRequest에서 CheckDTO를 생성합니다.
