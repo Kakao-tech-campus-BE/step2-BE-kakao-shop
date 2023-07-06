@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 public class CartRestController {
 
-    @GetMapping("/carts")
+    @GetMapping("/cart")
     public ResponseEntity<?> findAll() {
         // 카트 아이템 리스트 만들기
         List<CartItemDTO> cartItemDTOList = new ArrayList<>();
