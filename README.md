@@ -54,6 +54,7 @@ public class CartRequest {
 }
 ```
 base URI를 기준으로 분기를 하기 위해 base URI를 기준으로 맵핑하였습니다.
+<br> RequestBody의 요청은 여러개의 상품 담기를 요청하기 때문에 List 자료형으로 받아옵니다.
 ```java
 @RequestMapping(value = "/carts")
 public class CartRestController {
@@ -64,7 +65,7 @@ public class CartRestController {
   }
 ...
 ```
-RequestBody의 요청은 여러개의 상품 담기를 요청하기 때문에 List 자료형으로 받아옵니다.
+JSON 응답입니다.
 ```json
 //과제에서 요구하는 JSON 응답
 {
@@ -85,6 +86,90 @@ RequestBody의 요청은 여러개의 상품 담기를 요청하기 때문에 Li
             "quantity": 5
         }
     ],
+    "error": null
+}
+```
+
+### 장바구니 수정
+Setter보다 가독성이 좋은 Builder를 선택하여 객체를 초기화하도록 하였습니다.
+```java
+import lombok.Builder;
+import lombok.Getter;
+
+@Getter
+public class CartUpdateDTO {
+    private int cartId;
+    private int optionId;
+    private String optionName;
+    private int quantity;
+    private int price;
+
+    @Builder
+    public CartUpdateDTO(int cartId, int optionId, String optionName, int quantity, int price) {
+        this.cartId = cartId;
+        this.optionId = optionId;
+        this.optionName = optionName;
+        this.quantity = quantity;
+        this.price = price;
+    }
+}
+```
+RequestBody의 요청은 여러개의 상품 수정을 요청하기 때문에 List 자료형으로 받아옵니다.
+<br> JSON 응답을 위한 더미 데이터를 작성했습니다.
+```java
+@PostMapping("/update")
+    public ResponseEntity<?> cartUpdate(@RequestBody List<CartRequest.UpdateDTO> updateDTOs) {
+        List<CartUpdateDTO> cartUpdateDTOs = new ArrayList<>();
+
+        CartUpdateDTO cartUpdateDTO1 = CartUpdateDTO.builder()
+                .cartId(1)
+                .optionId(1)
+                .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
+                .quantity(10)
+                .price(100000)
+                .build();
+        cartUpdateDTOs.add(cartUpdateDTO1);
+
+        CartUpdateDTO cartUpdateDTO2 = CartUpdateDTO.builder()
+                .cartId(2)
+                .optionId(2)
+                .optionName("02. 슬라이딩 지퍼백 플라워에디션 5종")
+                .quantity(10)
+                .price(109000)
+                .build();
+        cartUpdateDTOs.add(cartUpdateDTO2);
+
+        CartRespUpdateDTO responseDTO = CartRespUpdateDTO.builder()
+                .carts(cartUpdateDTOs)
+                .totalPrice(209000)
+                .build();
+
+        return ResponseEntity.ok(ApiUtils.success(responseDTO));
+    }
+```
+JSON 응답입니다.
+```json
+{
+    "success": true,
+    "response": {
+        "carts": [
+            {
+                "cartId": 1,
+                "optionId": 1,
+                "optionName": "01. 슬라이딩 지퍼백 크리스마스에디션 4종",
+                "quantity": 10,
+                "price": 100000
+            },
+            {
+                "cartId": 2,
+                "optionId": 2,
+                "optionName": "02. 슬라이딩 지퍼백 플라워에디션 5종",
+                "quantity": 10,
+                "price": 109000
+            }
+        ],
+        "totalPrice": 209000
+    },
     "error": null
 }
 ```
