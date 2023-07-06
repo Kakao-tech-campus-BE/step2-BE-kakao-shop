@@ -45,6 +45,220 @@
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
+
+<br>
+
+# 1주차 과제 수행
+
+## **요구사항**
+
+<p align="center"><img src="./images/Untitled.png" height="300px" width="300px"></p>
+
+| 회원 | 상품 | 장바구니 | 주문/결제 |
+| --- | --- | --- | --- |
+| 회원가입 | 전체 상품 목록 조회 | 장바구니 담기 | 주문 |
+| 로그인 | 개별 상품 상세 조회 | 장바구니 보기 | 결제 |
+| 로그아웃 | 상품 옵션 선택 | 장바구니 상품 옵션 확인 및 수량 결정 | 주문 결과 확인 |
+|  | 옵션 확인 및 수량 결정 |  |  |
+
+<br>
+
+## 1. 부족한/추가될 수 있는 요구사항
+
+
+- 장바구니
+
+    - 옵션 삭제
+    - 상품 삭제
+    - 이미 선택된 옵션을 다시 선택할 경우 옵션의 수량 증가
+    
+    <br>
+
+- 상품
+
+    - 할인 정보 제공
+    - 배송 정보 제공
+    - 상품 등록, 수정, 삭제
+    - 상품 검색, 정렬
+    
+    <br>
+
+- 주문/결제
+
+    - 배송지, 연락처 등의 개인정보 입력
+    - 결제 시 필수 정보 기입과 약관 동의 확인
+    - 주문 취소
+
+    <br>
+
+- 고객 개인 페이지 제공
+
+    - 개인 주문 내역 조회
+    - 월별 지출 금액 조회
+    - 배송지 관리
+
+
+<br><br>
+
+## 2. 서버의 API 주소와 화면 매칭
+
+### 1. **전체 상품 목록 조회**
+
+<p align="center"><img src="./images/Untitled%201.png" height="300px" width="300px"></p>
+
+
+- Local URL : [http://localhost:8080/products](http://localhost:8080/products)
+- 페이지로 전체 상품 목록 조회
+    - Local URL : [http://localhost:8080/products?page=1](http://localhost:8080/products?page=1)(페이지 번호)
+
+### 2. **개별 상품 상세 조회**
+
+
+<p align="center"><img src="./images/Untitled%202.png" height="200px" width="300px"></p>
+
+- Local URL : [http://localhost:8080/products/1](http://localhost:8080/products/1)(제품 ID)
+
+### 3. **회원가입**
+
+
+<p align="center"><img src="./images/Untitled%203.png" height="200px" width="300px"></p>
+
+- Local URL : [http://localhost:8080/join](http://localhost:8080/join)
+
+### 4. 로그인
+
+<p align="center"><img src="./images/Untitled%204.png" height="200px" width="300px"></p>
+
+- Local URL : [http://localhost:8080/login](http://localhost:8080/login)
+
+### 5. 장바구니 담기
+
+<p align="center"><img src="./images/Untitled%205.png" height="400px" width="250px"></p>
+
+- Local URL : [http://localhost:8080/carts/add](http://localhost:8080/carts/add)
+
+### 6. 장바구니 조회
+
+<p align="center"><img src="./images/Untitled%206.png" height="100px" width="400px"></p>
+
+<p align="center"><img src="./images/Untitled%207.png" height="200px" width="400px"></p>
+
+- Local URL : [http://localhost:8080/carts](http://localhost:8080/carts)
+
+### 7. 장바구니 수정
+
+<p align="center"><img src="./images/Untitled%208.png" height="200px" width="200px"></p>
+
+
+- Local URL : [http://localhost:8080/carts/update](http://localhost:8080/carts/update)
+
+### 8. 결제하기
+
+<p align="center"><img src="./images/Untitled%209.png" height="350px" width="400px"></p>
+
+- Local URL : [http://localhost:8080/orders/save](http://localhost:8080/orders/save)
+
+### 9. 주문 결과 확인
+
+<p align="center"><img src="./images/Untitled%2010.png" height="200px" width="300px"></p>
+
+- Local URL : [http://localhost:8080/orders/1](http://localhost:8080/orders/1)(주문번호)
+
+<br><br>
+
+## 3. Response Data 확인, 부족한 데이터 추가
+
+| 기능 | URL Path | Method | Request | Response |
+| --- | --- | --- | --- | --- |
+| 전체상품목록조회 | /products | GET |  | id<br>productName<br>description<br>image<br>price |
+| 개별상품상세조회 | /products/# | GET |  | id<br>productName<br>description<br>image<br>price<br>starCount<br>options<br>　id<br>　optionName<br>　price |
+| 회원가입 | /join | POST | username<br>email<br>password |  |
+| 로그인 | /login | POST | email<br>password |  |
+| 장바구니 담기 | /carts/add | POST | optionId<br>quantity |  |
+| 장바구니 조회 | /carts | GET |  | products<br>　id<br>　productName<br>　carts<br>　　id<br>　　option<br>　　　id<br>　　　optionName<br>　　　price<br>　　quantity<br>　　price<br>totalPrice |
+| 장바구니 수정 | /carts/update | POST | cartId<br>quantity | carts<br>　cartId<br>　optionId<br>　optionName<br>　quantity<br>　price<br>totalPrice |
+| 결제하기 | /orders/save | POST |  | id<br>products<br>　productName<br>　items<br>　　id<br>　　optionName<br>　　quantity<br>　　price<br>totalPrice |
+| 주문결과확인 | /orders/# | GET |  | id<br>products<br>　productName<br>　items<br>　　id<br>　　optionName<br>　　quantity<br>　　price<br>totalPrice |
+<br>
+
+### 응답되는 데이터를 화면과 대조하여 부족한 데이터 탐색
+
+- 전체 상품 목록 조회, 개별 상품 상세 조회에 배송정보가 있으나 요구사항에 없으므로 따로 추가할 필요 없어 보인다.
+    
+<p align="center"><img src="./images/Untitled%2011.png" height="50px" width="100px"></p>
+<p align="center"><img src="./images/Untitled%2012.png" height="95px" width="300px"></p>
+
+- 개별 상품 상세 조회에 description 내용은 없으므로 description 필드는 제외해도 될 것으로 보인다.
+- 결제하기에서 상품명 없이 옵션명만 있으므로 productName 제외해도 될 것으로 보인다.
+    
+    <p align="center"><img src="./images/Untitled%2013.png" height="300px" width="300px"></p>
+    
+- 주문 결과 확인에서 옵션 하나만이 반영되므로 첫번째 옵션 외의 다른 옵션을 제외해도 될 것으로 보인다.
+    
+    <p align="center"><img src="./images/Untitled%2014.png" height="200px" width="300px"></p>    
+        
+<br><br>
+
+## 4. 테이블 설계, ERD
+
+- User
+    
+    
+    | Field name | Data Type | Constraint |
+    | --- | --- | --- |
+    | ID | INT | PK |
+    | username | VARCHAR(30) | NOT NULL |
+    | email | VARCHAR(50) | NOT NULL, UNIQUE |
+    | password | VARCHAR(20) | NOT NULL |
+    | created_at | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP |
+- Product
+    
+    
+    | Field name | Data Type | Constraint |
+    | --- | --- | --- |
+    | ID | INT | PK |
+    | product_name | VARCHAR(100) | NOT NULL |
+    | image | BLOB |  |
+    | price | INT | NOT NULL |
+    | created_at | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP |
+- Option
+    
+    
+    | Field name | Data Type | Constraint |
+    | --- | --- | --- |
+    | ID | INT | PK |
+    | product_id | INT | FK |
+    | option_name | VARCHAR(50) | NOT NULL |
+    | price | INT | NOT NULL |
+    | created_at | TIMESTAMP | DEFAULT CURRENT_TIMESTAMP |
+- Cart
+    
+    
+    | Field name | Data Type | Constraint |
+    | --- | --- | --- |
+    | ID | INT | PK |
+    | option_id | INT | FK |
+    | user_id | INT | FK |
+    | quantity | INT | NOT NULL, CHECK (quantity > 0) |
+- Order
+    
+    
+    | Field name | Data Type | Constraint |
+    | --- | --- | --- |
+    | ID | INT | PK |
+    | user_id | INT | FK |
+- Order Item
+    
+    
+    | Field name | Data Type | Constraint |
+    | --- | --- | --- |
+    | ID | INT | PK |
+    | option_id | INT | FK |
+    | order_id | INT | FK |
+    | quantity | INT | NOT NULL, CHECK (quantity > 0) |
+
+![Untitled](./images/Untitled%2015.png)
+
 # 2주차
 
 카카오 테크 캠퍼스 2단계 - BE - 2주차 클론 과제
