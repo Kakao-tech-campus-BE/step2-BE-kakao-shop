@@ -107,12 +107,12 @@
 
 * 전체 상품 조회 시
 ![전체 상품](https://github.com/boseungk/TIL/assets/95980754/58420baa-7a07-4e78-b12a-5163162fc6be)
-  * [get] http://localhost:8080/products?page=1
+  * [get] http://localhost:8080/products?page={number}
 
 
 * 개별 상품 / 옵션 조회 시
 ![개별 상품](https://github.com/boseungk/TIL/assets/95980754/16d690cf-55f9-47c8-88be-037147edb81f)
-  * [get] http://localhost:8080/products/1
+  * [get] http://localhost:8080/products/{number}
 
 
 * 장바구니 담기 버튼 클릭 시 
@@ -143,7 +143,7 @@
 
 * 주문 조회 시
 ![주문 조회](https://github.com/boseungk/TIL/assets/95980754/314adac8-8935-4980-b2f2-1fd54bd24eba)
-  * [get] http://localhost:8080/orders/1
+  * [get] http://localhost:8080/orders/{number}
 
 </details>
 </br>
