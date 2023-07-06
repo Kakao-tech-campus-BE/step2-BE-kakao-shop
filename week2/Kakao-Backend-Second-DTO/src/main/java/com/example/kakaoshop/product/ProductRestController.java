@@ -66,7 +66,6 @@ public ResponseEntity<?> findById(@PathVariable int id) {
         optionDTOList.add(new ProductOptionDTO(4, "뽑아쓰는 키친타올 130매 12팩", 16900));
         optionDTOList.add(new ProductOptionDTO(4, "2겹 식빵수세미 6매", 8900));
         responseDTO = new ProductRespFindByIdDTO(1, "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전", "", "/images/1.jpg", 1000, 5, optionDTOList);
-
     }else if(id == 2){
         List<ProductOptionDTO> optionDTOList = new ArrayList<>();
         optionDTOList.add(new ProductOptionDTO(6, "22년산 햇단밤 700g(한정판매)", 9900));
