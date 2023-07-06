@@ -1,13 +1,11 @@
 package com.example.kakaoshop.cart;
 
 import com.example.kakaoshop._core.utils.ApiUtils;
-import com.example.kakaoshop.cart.response.CartItemDTO;
-import com.example.kakaoshop.cart.response.CartRespFindAllDTO;
-import com.example.kakaoshop.cart.response.ProductOptionDTO;
-import com.example.kakaoshop.cart.response.ProductDTO;
+import com.example.kakaoshop.cart.request.CartDTO2;
+import com.example.kakaoshop.cart.request.ProductOptionDTO2;
+import com.example.kakaoshop.cart.response.*;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,5 +58,35 @@ public class CartRestController {
         CartRespFindAllDTO responseDTO = new CartRespFindAllDTO(productDTOList, 104500);
 
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
+    }
+
+    @PostMapping("carts/add")
+    public ResponseEntity<?> addCart(@RequestBody List<ProductOptionDTO2> productOptionDTO2List){
+        return ResponseEntity.ok((ApiUtils.success(null)));
+    }
+    @PutMapping("carts/update")
+    public ResponseEntity<?> updateCart(@RequestBody List<CartDTO2> cartDTO2List) {
+        //카트 리스트 만들기
+        List<CartDTO> cartDTOList = new ArrayList<>();
+        CartDTO cartDTO1 = CartDTO.builder()
+                .cartId(4)
+                .optionId(1)
+                .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
+                .quantity(10)
+                .price(100000)
+                .build();
+        cartDTOList.add(cartDTO1);
+
+        CartDTO cartDTO2 = CartDTO.builder()
+                .cartId(5)
+                .optionId(2)
+                .optionName("02. 슬라이딩 지퍼백 플라워에디션 5종")
+                .quantity(10)
+                .price(109000)
+                .build();
+        cartDTOList.add(cartDTO2);
+        return ResponseEntity.ok(cartDTOList);
+
+
     }
 }
