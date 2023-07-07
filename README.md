@@ -1010,7 +1010,7 @@ ex2) 여러명의 유저가 같은 옵션을 구매했을때 한 옵션에 대�
 <br/>
 <br/>
 
-## <span style="color:7DE5ED">**1. 전체 API 주소 설계**</span>
+## <span style="color:#7DE5ED">**1. 전체 API 주소 설계**</span>
 API주소를 설계하여 README에 내용을 작성하시오.
 
 > 작성된 API를 **Restful한 API**로 변경하기
@@ -1227,12 +1227,1716 @@ http://kakao-app-env.eba-kfsgeb74.ap-northeast-2.elasticbeanstalk.com/check-emai
 <br/>
 <br/>
 
-## <span style="color:7DE5ED">**2. Mock API Controller 구현**</span>
+## <span style="color:#7DE5ED">**2. Mock API Controller 구현**</span>
 가짜 데이터를 설계하여 응답하는 스프링부트 컨트롤러를 작성하고 소스코드를 업로드하시오.
+## <span style="color:#068FFF">**상품(product)**</span>
+<br/>
+
+### **1. 전체 상품 목록 조회 - MOCK**
+#### **DTO**
+```java
+@Getter @Setter
+public class ProductRespFindAllDTO {
+
+    private int id;
+    private String productName;
+    private String description;
+    private String image;
+    private int price;
+
+    @Builder
+    public ProductRespFindAllDTO(int id, String productName, String description, String image, int price) {
+        this.id = id;
+        this.productName = productName;
+        this.description = description;
+        this.image = image;
+        this.price = price;
+    }
+}
+```
+</br>
+
+#### **Controller**
+```java
+@RestController
+public class ProductRestController {
+
+    @GetMapping("/products")
+    public ResponseEntity<?> findAll() {
+        List<ProductRespFindAllDTO> responseDTO = new ArrayList<>();
+
+        // 상품 하나씩 집어넣기
+        ProductRespFindAllDTO dto1 = ProductRespFindAllDTO.builder()
+                .id(1)
+                .productName("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전")
+                .description("")
+                .image("/images/1.jpg")
+                .price(1000)
+                .build();
+        //담기
+        responseDTO.add(dto1);
+
+        // 상품 하나씩 집어넣기
+        ProductRespFindAllDTO dto2 = ProductRespFindAllDTO.builder()
+                .id(2)
+                .productName("[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율")
+                .description("")
+                .image("/images/2.jpg")
+                .price(2000)
+                .build();
+        //담기
+        responseDTO.add(dto2);
+
+        // 상품 하나씩 집어넣기
+        ProductRespFindAllDTO dto3 = ProductRespFindAllDTO.builder()
+                .id(3)
+                .productName("삼성전자 JBL JR310 외 어린이용/성인용 헤드셋 3종!")
+                .description("")
+                .image("/images/3.jpg")
+                .price(30000)
+                .build();
+        //담기
+        responseDTO.add(dto2);
+
+        // 상품 하나씩 집어넣기
+        ProductRespFindAllDTO dto4 = ProductRespFindAllDTO.builder()
+                .id(4)
+                .productName("바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종")
+                .description("")
+                .image("/images/4.jpg")
+                .price(4000)
+                .build();
+        //담기
+        responseDTO.add(dto4);
+
+        // 상품 하나씩 집어넣기
+        ProductRespFindAllDTO dto5 = ProductRespFindAllDTO.builder()
+                .id(5)
+                .productName("[더주] 컷팅말랑장족, 숏다리 100g/300g 외 주전부리 모음 /중독성 최고/마른안주")
+                .description("")
+                .image("/images/5.jpg")
+                .price(5000)
+                .build();
+        //담기
+        responseDTO.add(dto5);
+
+        // 상품 하나씩 집어넣기
+        ProductRespFindAllDTO dto6 = ProductRespFindAllDTO.builder()
+                .id(6)
+                .productName("굳지않는 앙금절편 1,050g 2팩 외 우리쌀떡 모음전")
+                .description("")
+                .image("/images/6.jpg")
+                .price(15900)
+                .build();
+        //담기
+        responseDTO.add(dto6);
+
+        // 상품 하나씩 집어넣기
+        ProductRespFindAllDTO dto7 = ProductRespFindAllDTO.builder()
+                .id(7)
+                .productName("eoe 이너딜리티 30포, 오렌지맛 고 식이섬유 보충제")
+                .description("")
+                .image("/images/7.jpg")
+                .price(26800)
+                .build();
+        //담기
+        responseDTO.add(dto7);
+
+        // 상품 하나씩 집어넣기
+        ProductRespFindAllDTO dto8 = ProductRespFindAllDTO.builder()
+                .id(8)
+                .productName("제나벨 PDRN 크림 2개. 피부보습/진정 케어")
+                .description("")
+                .image("/images/8.jpg")
+                .price(25900)
+                .build();
+        //담기
+        responseDTO.add(dto8);
+
+        // 상품 하나씩 집어넣기
+        ProductRespFindAllDTO dto9 = ProductRespFindAllDTO.builder()
+                .id(9)
+                .productName("플레이스테이션 VR2 호라이즌 번들. 생생한 몰입감")
+                .description("")
+                .image("/images/9.jpg")
+                .price(797000)
+                .build();
+        //담기
+        responseDTO.add(dto9);
+        
+        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
+    }
+}
+
+```
+
+<br/>
+
+> 생성자에 들어갈 인자가 많으므로,  생성자에서 **builder 패턴**으로 바꾸어 생성했다.
+
+**Mock Test**
+```java
+@AutoConfigureMockMvc
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+public class ProductRestControllerTest {
+    @Autowired
+    private MockMvc mvc;
+
+    @Test
+    @DisplayName("전체 상품 목록 조회")
+    public void findAll_test() throws Exception {
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                get("/products")
+        );
+
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("true"));
+        resultActions.andExpect(jsonPath("$.response[0].id").value(1));
+        resultActions.andExpect(jsonPath("$.response[0].productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"));
+        resultActions.andExpect(jsonPath("$.response[0].description").value(""));
+        resultActions.andExpect(jsonPath("$.response[0].image").value("/images/1.jpg"));
+        resultActions.andExpect(jsonPath("$.response[0].price").value(1000));
+        resultActions.andExpect(jsonPath("$.response[1].id").value(2));
+        resultActions.andExpect(jsonPath("$.response[1].productName").value("[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율"));
+        resultActions.andExpect(jsonPath("$.response[1].description").value(""));
+        resultActions.andExpect(jsonPath("$.response[1].image").value("/images/2.jpg"));
+        resultActions.andExpect(jsonPath("$.response[1].price").value(2000));
+    }
+}
+```
+
+</br>
+
+### **2. 개별 상품 상세 조회 - MOCK**
+
+<br/>
+
+#### **DTO**
+
+ProductRespFindAllDTO
+```java
+@Getter @Setter
+public class ProductRespFindAllDTO {
+
+    private int id;
+    private String productName;
+    private String description;
+    private String image;
+    private int price;
+
+    @Builder
+    public ProductRespFindAllDTO(int id, String productName, String description, String image, int price) {
+        this.id = id;
+        this.productName = productName;
+        this.description = description;
+        this.image = image;
+        this.price = price;
+    }
+}
+```
+ProductOptionDTO
+```java
+@Getter @Setter
+public class ProductOptionDTO {
+
+    private int id;
+    private String optionName;
+    private int price;
+
+    @Builder
+    public ProductOptionDTO(int id, String optionName, int price) {
+        this.id = id;
+        this.optionName = optionName;
+        this.price = price;
+    }
+}
+```
+
+
+<br/>
+
+#### **Controller**
+```java
+@RestController
+public class ProductRestController {
+@GetMapping("/products/{id}")
+    public ResponseEntity<?> findById(@PathVariable int id) {
+        // 상품을 담을 DTO 생성
+        ProductRespFindByIdDTO responseDTO = null;
+
+        if(id == 1) {
+            List<ProductOptionDTO> optionDTOList = new ArrayList<>();
+            optionDTOList.add(
+                    ProductOptionDTO.builder()
+                    .id(1)
+                    .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
+                    .price(10000)
+                    .build());
+
+            optionDTOList.add(ProductOptionDTO.builder()
+                    .id(2)
+                    .optionName("02. 슬라이딩 지퍼백 플라워에디션 5종")
+                    .price(10900)
+                    .build());
+
+            optionDTOList.add(ProductOptionDTO.builder()
+                    .id(3)
+                    .optionName("고무장갑 베이지 S(소형) 6팩")
+                    .price(9900)
+                    .build());
+
+            optionDTOList.add(ProductOptionDTO.builder()
+                    .id(4)
+                    .optionName("뽑아쓰는 키친타올 130매 12팩")
+                    .price(16900)
+                    .build());
+
+            optionDTOList.add(ProductOptionDTO.builder()
+                    .id(5)
+                    .optionName("2겹 식빵수세미 6매")
+                    .price(8900)
+                    .build());
+
+            responseDTO = ProductRespFindByIdDTO.builder()
+                    .id(1)
+                    .productName("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전")
+                    .description("")
+                    .image("/images/1.jpg")
+                    .price(1000)
+                    .starCount(5)
+                    .options(optionDTOList)
+                    .build();
+
+        }else if(id == 2){
+            List<ProductOptionDTO> optionDTOList = new ArrayList<>();
+            optionDTOList.add(ProductOptionDTO.builder()
+                    .id(6)
+                    .optionName("22년산 햇단밤 700g(한정판매)")
+                    .price(9900)
+                    .build());
+
+            optionDTOList.add(ProductOptionDTO.builder()
+                    .id(7)
+                    .optionName("22년산 햇단밤 1kg(한정판매)")
+                    .price(14500)
+                    .build());
+
+            optionDTOList.add(ProductOptionDTO.builder()
+                    .id(8)
+                    .optionName("밤깎기+다회용 구이판 세트")
+                    .price(5500)
+                    .build());
+
+            responseDTO = ProductRespFindByIdDTO.builder()
+                    .id(1)
+                    .productName("[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율")
+                    .description("")
+                    .image("/images/2.jpg")
+                    .price(2000)
+                    .starCount(5)
+                    .options(optionDTOList)
+                    .build();
+
+        }else { //id가 1,2가 아닐 경우
+            return ResponseEntity.badRequest().body(ApiUtils.error("해당 상품을 찾을 수 없습니다 : " + id, HttpStatus.BAD_REQUEST));
+        }
+
+        return ResponseEntity.ok(ApiUtils.success(responseDTO));
+    }
+
+}
+```
+> Builder 패턴으로 수정했다.
+
+
+<br/>
+
+**Mock Test**
+```java
+@AutoConfigureMockMvc
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+public class ProductRestControllerTest {
+    @Autowired
+    private MockMvc mvc;
+ @Test
+    @DisplayName("개별 상품 상세 조회")
+    public void findById_test() throws Exception {
+        // given
+        int id = 1;
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                get("/products/" + id)
+        );
+
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("true"));
+        resultActions.andExpect(jsonPath("$.response.id").value(1));
+        resultActions.andExpect(jsonPath("$.response.productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"));
+        resultActions.andExpect(jsonPath("$.response.description").value(""));
+        resultActions.andExpect(jsonPath("$.response.image").value("/images/1.jpg"));
+        resultActions.andExpect(jsonPath("$.response.price").value(1000));
+        resultActions.andExpect(jsonPath("$.response.options[0].id").value(1));
+        resultActions.andExpect(jsonPath("$.response.options[0].optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"));
+        resultActions.andExpect(jsonPath("$.response.options[0].price").value(10000));
+        resultActions.andExpect(jsonPath("$.response.options[1].id").value(2));
+        resultActions.andExpect(jsonPath("$.response.options[1].optionName").value("02. 슬라이딩 지퍼백 플라워에디션 5종"));
+        resultActions.andExpect(jsonPath("$.response.options[1].price").value(10900));
+    }
+
+}
+```
+
+</br>
+
+## <span style="color:#068FFF">**장바구니(cart)**</span>
+
+### **1. 장바구니 조회 - Mock**
+
+
+<br/>
+
+#### **DTO**
+CartRespFindAllDTO
+```java
+@Getter @Setter
+public class CartRespFindAllDTO {
+    private List<ProductDTO> products;
+    private int totalPrice;
+
+    @Builder
+    public CartRespFindAllDTO(List<ProductDTO> products, int totalPrice) {
+        this.products = products;
+        this.totalPrice = totalPrice;
+    }
+}
+```
+ProductDTO
+```java
+@Getter @Setter
+public class ProductDTO {
+    private int id;
+    private String productName;
+    private List<CartItemDTO> cartItems;
+
+    @Builder
+    public ProductDTO(int id, String productName, List<CartItemDTO> cartItems) {
+        this.id = id;
+        this.productName = productName;
+        this.cartItems = cartItems;
+    }
+}
+```
+CartItemDTO
+```java
+@Getter @Setter
+public class CartItemDTO {
+
+    private int id;
+    private ProductOptionDTO option;
+    private int quantity;
+    private int price;
+
+    @Builder
+    public CartItemDTO(int id, ProductOptionDTO option, int quantity, int price) {
+        this.id = id;
+        this.option = option;
+        this.quantity = quantity;
+        this.price = price;
+    }
+}
+
+```
+ProductOptionDTO
+```java
+@Getter @Setter
+public class ProductOptionDTO {
+
+    private int id;
+    private String optionName;
+    private int price;
+
+    @Builder
+    public ProductOptionDTO(int id, String optionName, int price) {
+        this.id = id;
+        this.optionName = optionName;
+        this.price = price;
+    }
+}
+```
+
+<br/>
+
+#### **Controller**
+CartRestController
+```java
+@RestController
+public class CartRestController {
+
+    @GetMapping("/carts")
+    public ResponseEntity<?> findAll() {
+        // 카트 아이템 리스트 만들기
+        List<CartItemDTO> cartItemDTOList = new ArrayList<>();
+
+        // 카트 아이템 리스트에 담기
+        CartItemDTO cartItemDTO1 = CartItemDTO.builder()
+                .id(4)
+                .quantity(5)
+                .price(50000)
+                .build();
+        cartItemDTO1.setOption(ProductOptionDTO.builder()
+                                .id(1)
+                                .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
+                                .price(10000)
+                                .build());
+        cartItemDTOList.add(cartItemDTO1);
+
+        CartItemDTO cartItemDTO2 = CartItemDTO.builder()
+                .id(5)
+                .quantity(5)
+                .price(54500)
+                .build();
+        cartItemDTO2.setOption(ProductOptionDTO.builder()
+                                .id(1)
+                                .optionName("02. 슬라이딩 지퍼백 크리스마스에디션 5종")
+                                .price(10900)
+                                .build());
+        cartItemDTOList.add(cartItemDTO2);
+
+        // productDTO 리스트 만들기
+        List<ProductDTO> productDTOList = new ArrayList<>();
+
+        // productDTO 리스트에 담기
+        productDTOList.add(
+                ProductDTO.builder()
+                        .id(1)
+                        .productName("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전")
+                        .cartItems(cartItemDTOList)
+                        .build()
+        );
+
+        CartRespFindAllDTO responseDTO = new CartRespFindAllDTO(productDTOList, 104500);
+
+        return ResponseEntity.ok(ApiUtils.success(responseDTO));
+    }
+}
+```
+
+<br/>
+
+#### **Mock Test**
+```java
+@AutoConfigureMockMvc
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+public class CartRestControllerTest {
+    @Autowired
+    private MockMvc mvc;
+
+    @Test
+    @WithMockUser
+    @DisplayName("장바구니 조회")
+    public void findAll_test() throws Exception {
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                get("/carts")
+        );
+
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("true"));
+        resultActions.andExpect(jsonPath("$.response.totalPrice").value(104500));
+        resultActions.andExpect(jsonPath("$.response.products[0].id").value(1));
+        resultActions.andExpect(jsonPath("$.response.products[0].productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"));
+        resultActions.andExpect(jsonPath("$.response.products[0].cartItems[0].id").value(4));
+        resultActions.andExpect(jsonPath("$.response.products[0].cartItems[0].option.id").value(1));
+        resultActions.andExpect(jsonPath("$.response.products[0].cartItems[0].option.optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"));
+        resultActions.andExpect(jsonPath("$.response.products[0].cartItems[0].option.price").value(10000));
+        resultActions.andExpect(jsonPath("$.response.products[0].cartItems[0].quantity").value(5));
+        resultActions.andExpect(jsonPath("$.response.products[0].cartItems[0].price").value(50000));
+
+    }
+}
+```
+
+<br/>
+
+### **2. 장바구니 담기 - Mock**
+
+
+<br/>
+
+#### **DTO + Controller**
+
+```java
+@RestController
+@RequestMapping("/carts")
+public class CartRestController {
+//장바구니 담기
+    @PostMapping("/add") // /carts/add
+    public ResponseEntity<?> addCart(@RequestBody List<CartDTO> request) { //리스트 형식으로 요청받음
+        return ResponseEntity.ok(ApiUtils.success(null));
+    }
+    @Data
+    static class CartDTO{
+        private int optionId;
+        private int quantity;
+
+        @Builder
+        public CartDTO(int optionId, int quantity) {
+            this.optionId = optionId;
+            this.quantity = quantity;
+        }
+    }
+```
+> DTO를 **Inner static class**로 작성하여 DTO 클래스가 너무 많아지는 것을 방지했습니다. 
+
+> 생성자의 파라미터 필드에 대해서만 빌더 메서드를 생성하고자 </br> **생성자 레벨 Builder**를 사용했습니다.
+
+<br/>
+
+#### **Mock Test**
+```java
+@Test
+    @WithMockUser
+    @DisplayName("장바구니 담기")
+    public void addCart_test() throws Exception {
+        //given
+        List<CartRestController.CartDTO> cartDTOList = new ArrayList<>();
+        CartRestController.CartDTO cartDTO1 = new CartRestController.CartDTO(1,5);
+        CartRestController.CartDTO cartDTO2 = new CartRestController.CartDTO(2,5);
+        cartDTOList.add(cartDTO1);
+        cartDTOList.add(cartDTO2);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String requestData = objectMapper.writeValueAsString(cartDTOList);
+        System.out.println(requestData);
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/carts/add")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestData)
+        );
+
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("true"));
+        resultActions.andExpect(jsonPath("$.response").doesNotExist()); //null인지 확인
+        resultActions.andExpect(jsonPath("$.error").doesNotExist());
+    }
+```
+
+<br/>
+
+### **3. 주문하기(장바구니 수정) - Mock**
+
+<br/>
+
+#### **DTO + Controller**
+
+```java
+@RestController
+@RequestMapping("/carts")
+public class CartRestController {
+//장바구니 수정
+    @PostMapping("/update") //  /carts/update
+    public ResponseEntity<?> updateCart(@RequestBody List<CartUpdateRequestDTO> request) {
+        // 카트 Info 리스트 만들기
+        List<CartInfoDTO> cartInfoDTOList = new ArrayList<>();
+
+        // 카트 Info 리스트에 담기
+        CartInfoDTO cartInfoDTO1 = CartInfoDTO.builder()
+                .cartId(4)
+                .optionId(1)
+                .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
+                .quantity(10)
+                .price(100000)
+                .build();
+        cartInfoDTOList.add(cartInfoDTO1);
+
+        CartInfoDTO cartInfoDTO2 = CartInfoDTO.builder()
+                .cartId(5)
+                .optionId(2)
+                .optionName("02. 슬라이딩 지퍼백 플라워에디션 5종")
+                .quantity(10)
+                .price(109000)
+                .build();
+        cartInfoDTOList.add(cartInfoDTO2);
+
+        //responseDTO 만들기
+        CartUpdateResponseDTO responseDTO = CartUpdateResponseDTO.builder()
+                .carts(cartInfoDTOList)
+                .totalPrice(209000)
+                .build();
+
+        return ResponseEntity.ok(ApiUtils.success(responseDTO));
+    }
+    @Data
+    static class CartUpdateRequestDTO{
+        private int cartId;
+        private int quantity;
+
+        @Builder
+        public CartUpdateRequestDTO(int cartId, int quantity) {
+            this.cartId = cartId;
+            this.quantity = quantity;
+        }
+    }
+
+    @Data
+    static class CartUpdateResponseDTO{
+        private List<CartInfoDTO> carts;
+        private int totalPrice;
+
+        @Builder
+        public CartUpdateResponseDTO(List<CartInfoDTO> carts, int totalPrice) {
+            this.carts = carts;
+            this.totalPrice = totalPrice;
+        }
+    }
+    @Data
+    static class CartInfoDTO{
+        private int cartId;
+        private int optionId;
+        private String optionName;
+        private int quantity;
+        private int price;
+
+        @Builder
+        public CartInfoDTO(int cartId, int optionId, String optionName, int quantity, int price) {
+            this.cartId = cartId;
+            this.optionId = optionId;
+            this.optionName = optionName;
+            this.quantity = quantity;
+            this.price = price;
+        }
+    }
+}
+```
+
+<br/>
+
+#### **Mock Test**
+
+```java
+@AutoConfigureMockMvc
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+@DisplayName("장바구니 수정")
+public class CartRestControllerTest {
+    @Autowired
+    private MockMvc mvc;
+@Test
+    @WithMockUser
+    // 장바구니 수정
+    public void updateCart_test() throws Exception {
+        //given
+        List<CartRestController.CartUpdateRequestDTO> cartList = new ArrayList<>();
+        CartRestController.CartUpdateRequestDTO cartDTO1 = new CartRestController.CartUpdateRequestDTO(4,10);
+        CartRestController.CartUpdateRequestDTO cartDTO2 = new CartRestController.CartUpdateRequestDTO(5,10);
+        cartList.add(cartDTO1);
+        cartList.add(cartDTO2);
+        //JSON 문자열로 변환
+        ObjectMapper objectMapper = new ObjectMapper();
+        String requestData = objectMapper.writeValueAsString(cartList);
+        
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/carts/update")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestData)
+        );
+
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("true"));
+        resultActions.andExpect(jsonPath("$.response.totalPrice").value(209000));
+
+        resultActions.andExpect(jsonPath("$.response.carts[0].cartId").value(4));
+        resultActions.andExpect(jsonPath("$.response.carts[0].optionId").value(1));
+        resultActions.andExpect(jsonPath("$.response.carts[0].optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"));
+        resultActions.andExpect(jsonPath("$.response.carts[0].quantity").value(10));
+        resultActions.andExpect(jsonPath("$.response.carts[0].price").value(100000));
+
+        resultActions.andExpect(jsonPath("$.response.carts[1].cartId").value(5));
+        resultActions.andExpect(jsonPath("$.response.carts[1].optionId").value(2));
+        resultActions.andExpect(jsonPath("$.response.carts[1].optionName").value("02. 슬라이딩 지퍼백 플라워에디션 5종"));
+        resultActions.andExpect(jsonPath("$.response.carts[1].quantity").value(10));
+        resultActions.andExpect(jsonPath("$.response.carts[1].price").value(109000));
+
+        resultActions.andExpect(jsonPath("$.error").doesNotExist());
+    }
+}
+```
+
+<br/>
+
+## <span style="color:#068FFF">**주문(Order)**</span>
+</br>
+
+### **1. 주문 결과 확인 - Mock**
+
+<br/>
+
+#### **DTO + Controller**
+
+```java
+@RestController
+@RequestMapping("/orders")
+public class OrderRestController {
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findById(@PathVariable int id) {
+        // 주문을 담을 DTO 생성
+        OrderRespFindByIdDTO responseDTO = null;
+
+        if(id == 1) {
+            //ItemInfo 담을 리스트 생성
+            List<ItemInfoDTO> itemInfoDTOList = new ArrayList<>();
+            //ItemInfo 리스트에 담기
+            ItemInfoDTO itemInfoDTO1 = ItemInfoDTO.builder()
+                    .id(4)
+                    .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
+                    .quantity(10)
+                    .price(100000)
+                    .build();
+            itemInfoDTOList.add(itemInfoDTO1);
+
+            ItemInfoDTO itemInfoDTO2 = ItemInfoDTO.builder()
+                    .id(5)
+                    .optionName("02. 슬라이딩 지퍼백 플라워에디션 5종")
+                    .quantity(10)
+                    .price(109000)
+                    .build();
+            itemInfoDTOList.add(itemInfoDTO2);
+
+            //ProductItem 리스트 만들기
+            List<ProductItemDTO> productItemDTOList = new ArrayList<>();
+            ProductItemDTO productItemDTO1 = ProductItemDTO.builder()
+                    .productName("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전")
+                    .items(itemInfoDTOList)
+                    .build();
+            //ProductItem 리스트에 담기
+            productItemDTOList.add(productItemDTO1);
+
+            //응답할 dto 생성
+            responseDTO = OrderRespFindByIdDTO.builder()
+                    .id(2)
+                    .products(productItemDTOList)
+                    .totalPrice(209000)
+                    .build();
+        }
+        else { //id가 1이 아닌 경우
+            return ResponseEntity.badRequest().body(ApiUtils.error("해당 주문을 찾을 수 없습니다 : " + id, HttpStatus.BAD_REQUEST));
+        }
+
+        return ResponseEntity.ok(ApiUtils.success(responseDTO));
+    }
+
+    @Data
+    static class OrderRespFindByIdDTO{
+        private int id;
+        private List<ProductItemDTO> products;
+        private int totalPrice;
+
+        @Builder
+        public OrderRespFindByIdDTO(int id, List<ProductItemDTO> products, int totalPrice) {
+            this.id = id;
+            this.products = products;
+            this.totalPrice = totalPrice;
+        }
+    }
+    @Data
+    static class ProductItemDTO{
+        private String productName;
+        private List<ItemInfoDTO> items;
+
+        @Builder
+        public ProductItemDTO(String productName, List<ItemInfoDTO> items) {
+            this.productName = productName;
+            this.items = items;
+        }
+    }
+    @Data
+    static class ItemInfoDTO{
+        private int id;
+        private String optionName;
+        private int quantity;
+        private int price;
+
+        @Builder
+        public ItemInfoDTO(int id, String optionName, int quantity, int price) {
+            this.id = id;
+            this.optionName = optionName;
+            this.quantity = quantity;
+            this.price = price;
+        }
+    }
+
+}
+```
+
+<br/>
+
+#### **Mock Test**
+
+```java
+@AutoConfigureMockMvc
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+@DisplayName("주문 결과 확인")
+class OrderRestControllerTest {
+    @Autowired
+    private MockMvc mvc;
+    @Test
+    @WithMockUser //인증된 사용자 생성
+    // 주문 결과 확인
+    public void findById_test() throws Exception {
+        // given
+        int id = 1;
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                get("/orders/" + id)
+        );
+
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("true"));
+        resultActions.andExpect(jsonPath("$.response.id").value(2));
+        resultActions.andExpect(jsonPath("$.response.totalPrice").value(209000));
+
+        resultActions.andExpect(jsonPath("$.response.products[0].productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"));
+        resultActions.andExpect(jsonPath("$.response.products[0].items[0].id").value(4));
+        resultActions.andExpect(jsonPath("$.response.products[0].items[0].optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"));
+        resultActions.andExpect(jsonPath("$.response.products[0].items[0].quantity").value(10));
+        resultActions.andExpect(jsonPath("$.response.products[0].items[0].price").value(100000));
+
+        resultActions.andExpect(jsonPath("$.response.products[0].items[1].id").value(5));
+        resultActions.andExpect(jsonPath("$.response.products[0].items[1].optionName").value("02. 슬라이딩 지퍼백 플라워에디션 5종"));
+        resultActions.andExpect(jsonPath("$.response.products[0].items[1].quantity").value(10));
+        resultActions.andExpect(jsonPath("$.response.products[0].items[1].price").value(109000));
+
+    }
+    
+}
+```
+> 주문은 회원만 가능하므로, **@WithMockUser**를 사용하여 인증된 상태로 테스트했다.
+
+</br>
+
+### **2. 결제하기 (주문 저장하기) - Mock**
+
+<br/>
+
+#### **Controller**
+
+```java
+//결제하기(주문 인서트)
+    @PostMapping("/save") //  /orders/save
+    public ResponseEntity<?> saveOrder() {
+        OrderRespDTO responseDTO = null;
+
+        //ItemInfo 담을 리스트 생성
+        List<ItemInfoDTO> itemInfoDTOList = new ArrayList<>();
+        //ItemInfo 리스트에 담기
+        ItemInfoDTO itemInfoDTO1 = ItemInfoDTO.builder()
+                .id(4)
+                .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
+                .quantity(10)
+                .price(100000)
+                .build();
+        itemInfoDTOList.add(itemInfoDTO1);
+
+        ItemInfoDTO itemInfoDTO2 = ItemInfoDTO.builder()
+                .id(5)
+                .optionName("02. 슬라이딩 지퍼백 플라워에디션 5종")
+                .quantity(10)
+                .price(109000)
+                .build();
+        itemInfoDTOList.add(itemInfoDTO2);
+
+        //ProductItem 리스트 만들기
+        List<ProductItemDTO> productItemDTOList = new ArrayList<>();
+        ProductItemDTO productItemDTO1 = ProductItemDTO.builder()
+                .productName("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전")
+                .items(itemInfoDTOList)
+                .build();
+        //ProductItem 리스트에 담기
+        productItemDTOList.add(productItemDTO1);
+
+        //응답할 dto 생성
+        responseDTO = OrderRespDTO.builder()
+                .id(2)
+                .products(productItemDTOList)
+                .totalPrice(209000)
+                .build();
+
+        return ResponseEntity.ok(ApiUtils.success(responseDTO));
+    }
+```
+> **주문 결과 확인**과 **결제하기**는 같은 응답구조를 가지므로 동일한 DTO를 사용했다. 
+
+<br/>
+
+#### **Mock Test**
+```java
+@AutoConfigureMockMvc
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+@DisplayName("결제하기(주문 인서트)")
+class OrderRestControllerTest {
+    @Autowired
+    private MockMvc mvc;
+ @Test
+    @WithMockUser //인증된 사용자 생성
+    // 결제하기(주문 인서트)
+    public void saveOrder_test() throws Exception {
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/orders/save")
+        );
+
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("true"));
+        resultActions.andExpect(jsonPath("$.response.id").value(2));
+        resultActions.andExpect(jsonPath("$.response.totalPrice").value(209000));
+
+        resultActions.andExpect(jsonPath("$.response.products[0].productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"));
+        resultActions.andExpect(jsonPath("$.response.products[0].items[0].id").value(4));
+        resultActions.andExpect(jsonPath("$.response.products[0].items[0].optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"));
+        resultActions.andExpect(jsonPath("$.response.products[0].items[0].quantity").value(10));
+        resultActions.andExpect(jsonPath("$.response.products[0].items[0].price").value(100000));
+
+        resultActions.andExpect(jsonPath("$.response.products[0].items[1].id").value(5));
+        resultActions.andExpect(jsonPath("$.response.products[0].items[1].optionName").value("02. 슬라이딩 지퍼백 플라워에디션 5종"));
+        resultActions.andExpect(jsonPath("$.response.products[0].items[1].quantity").value(10));
+        resultActions.andExpect(jsonPath("$.response.products[0].items[1].price").value(109000));
+    }
+}
+```
+
+<br/>
+
+## <span style="color:#068FFF">**유저(User)**</span>
+</br>
+
+### **1. 로그인**
+
+<br/>
+
+#### **DTO**
+```java
+public class UserRequest {
+    @Getter
+    @Setter
+    public static class LoginDTO {
+        private String email;
+        private String password;
+    }
+}
+
+```
+<br/>
+
+#### **Controller**
+
+```java
+@RestController
+@RequiredArgsConstructor
+public class UserRestController {
+    private final UserJPARepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
+@PostMapping("/login")
+    public ResponseEntity<?> login(@RequestHeader(value = "Authorization", required = false) String authHeader, @RequestBody UserRequest.LoginDTO loginDTO) {
+            //검증 단계
+            String email = loginDTO.getEmail();
+            String password = loginDTO.getPassword();
+            //올바른 이메일 형식인지 확인
+            if (!email.contains("@"))
+                return ResponseEntity.badRequest().body(ApiUtils.error("이메일 형식으로 작성해주세요:email", HttpStatus.BAD_REQUEST));
+            //유효한 비밀번호인지 확인
+            if (!isValidPassword(password))
+                return ResponseEntity.badRequest().body(ApiUtils.error("영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니다.:password", HttpStatus.BAD_REQUEST));
+            //인증 확인
+            if (authHeader == null || authHeader.isEmpty())
+                return ResponseEntity.badRequest().body(ApiUtils.error("인증되지 않았습니다", HttpStatus.UNAUTHORIZED));
+            //비밀번호 길이 검증
+            int passwordLength = loginDTO.getPassword().length();
+            if(!(passwordLength>=8 && passwordLength <= 20))
+                return ResponseEntity.badRequest().body(ApiUtils.error("8에서 20자 이내여야 합니다.:password", HttpStatus.BAD_REQUEST));
+
+            //로그인 수행
+            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
+                    = new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword());
+            Authentication authentication;
+            //로그인 성공, 실패 여부 확인
+            try {
+                authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+                return ResponseEntity.badRequest().body(ApiUtils.error("email 또는 password가 올바르지 않습니다", HttpStatus.BAD_REQUEST));
+            }
+            CustomUserDetails myUserDetails = (CustomUserDetails) authentication.getPrincipal();
+            String jwt = JWTProvider.create(myUserDetails.getUser());
+
+            //로그인 성공
+            return ResponseEntity.ok().header(JWTProvider.HEADER, jwt).body(ApiUtils.success(null));
+    }
+
+    //비밀번호 유효성 검사
+    private boolean isValidPassword(String password) {
+        boolean hasLetter = false; //문자 여부
+        boolean hasDigit = false; //숫자 여부
+        boolean hasSpecialCharacter = false; //특수문자 여부
+        for (char c:password.toCharArray()){
+            if(Character.isLetter(c)) hasLetter=true;
+            else if (Character.isDigit(c)) hasDigit = true;
+            else if (isSpecialCharacter(c)) hasSpecialCharacter = true;
+            if(hasLetter && hasDigit && hasSpecialCharacter) break;
+        }
+        //문자,숫자,특수문자가 있어야하고, 공백이 없어야한다.
+        return hasLetter && hasDigit && hasSpecialCharacter && !password.contains(" ");
+    }
+    //특수 문자 포함하는지 확인
+    private boolean isSpecialCharacter(char c) {
+        String specialCharacters = "!@#$%^&*()-_=+[]{};:'\"\\|<>,.?/~`";
+        return specialCharacters.contains(String.valueOf(c));
+    }
+}
+```
+> 로그인 성공, 로그인 실패(형식 / 문자 / 인증 / 비밀번호 길이)의 경우를 구현했다.
+
+> API 문서에는 기능이 구현되어있지만, 문자 포함 여부와 비밀번호 길이 검증은 회원가입시 이미 검증하므로 필요없을 것 같다.
+
+> 로그인 시마다 jwt 토큰은 항상 달라지는데, 요청시 토큰을 필요로 하는 이유가 궁금하다. 
+
+</br>
+
+#### **Mock Test**
+
+```java
+@Transactional //테스트 후 rollback
+@AutoConfigureMockMvc
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+class UserRestControllerTest {
+    @Autowired
+    private MockMvc mvc;
+    @Autowired
+    private UserJPARepository userJPARepository;
+    @Autowired
+    PasswordEncoder passwordEncoder;
+    @Autowired
+    private WebApplicationContext context;
+
+    //Spring Security 테스트 환경 구성
+    @BeforeEach
+    public void setup(){
+        mvc = MockMvcBuilders
+                .webAppContextSetup(this.context)
+                .apply(SecurityMockMvcConfigurers.springSecurity())
+                .build();
+    }
+@Test
+    @WithMockUser
+    @DisplayName("로그인 성공(가입된 id와 비밀번호)")
+    public void login_success_test() throws Exception {
+        //given
+        //user 생성
+        User user = User.builder()
+                .email("user1@nate.com")
+                .password(passwordEncoder.encode("user1234!"))
+                .username("user")
+                .roles("ROLE_USER")
+                .build();
+        //저장
+        userJPARepository.save(user);
+
+        //요청 body
+        UserRequest.LoginDTO loginDTO = new UserRequest.LoginDTO();
+        loginDTO.setEmail("user1@nate.com");
+        loginDTO.setPassword("user1234!");
+        ObjectMapper objectMapper = new ObjectMapper();
+        String requestData = objectMapper.writeValueAsString(loginDTO);
+        //jwt Token
+        String jwtToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMTIzMzZAbmF0ZS5jb20iLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWQiOjEsImV4cCI6MTY4ODg5ODkxNn0.2ovT4QRQHAKFsjHZG1g_bFwC3RN9-3TxdgS_gMm3FKVstqrqPrw6C0VZEwmh5buZzz3ek3Ez_Z3IsNqiVnONcQ";
+
+        //when
+        mvc.perform(
+                post("/login")
+                        .header("Authorization", "Bearer " + jwtToken)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestData))
+                .andDo(print()) //결과 출력
+        //then
+                .andExpect(jsonPath("$.success").value("true"));
+    }
+
+    @Test
+    @WithMockUser
+    @DisplayName("로그인 실패 -가입된 id와 잘못된 비밀번호")
+    public void login_fail_pw_test() throws Exception {
+        //given
+        //user 생성
+        User user = User.builder()
+                .email("user@nate.com")
+                .password(passwordEncoder.encode("user1234!"))
+                .username("user")
+                .roles("ROLE_USER")
+                .build();
+        //저장
+        userJPARepository.save(user);
+        //요청 body
+        UserRequest.LoginDTO loginDTO = new UserRequest.LoginDTO();
+        loginDTO.setEmail("user@nate.com");
+        loginDTO.setPassword("wrongpassword!");
+        ObjectMapper objectMapper = new ObjectMapper();
+        String requestData = objectMapper.writeValueAsString(loginDTO);
+        //jwt Token
+        String jwtToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMTIzMzZAbmF0ZS5jb20iLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWQiOjEsImV4cCI6MTY4ODg5ODkxNn0.2ovT4QRQHAKFsjHZG1g_bFwC3RN9-3TxdgS_gMm3FKVstqrqPrw6C0VZEwmh5buZzz3ek3Ez_Z3IsNqiVnONcQ";
+
+        //when
+        mvc.perform(
+                post("/login")
+                        .header("Authorization", "Bearer " + jwtToken)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestData))
+                .andDo(print()) //결과 출력
+        //then
+                .andExpect(jsonPath("$.success").value("false"));
+    }
+
+    @Test
+    @WithMockUser
+    @DisplayName("로그인 실패 - 존재하지 않는 id와 비밀번호 (미가입)")
+    public void login_fail_unregistered_test() throws Exception {
+        //given
+        //user 생성
+        User user = User.builder()
+                .email("user@nate.com")
+                .password(passwordEncoder.encode("user1234!"))
+                .username("user")
+                .roles("ROLE_USER")
+                .build();
+        //저장
+        userJPARepository.save(user);
+        //요청 body
+        UserRequest.LoginDTO loginDTO = new UserRequest.LoginDTO();
+        loginDTO.setEmail("newuser@nate.com"); //이미 존재하는 id
+        loginDTO.setPassword("fake1234!");
+        ObjectMapper objectMapper = new ObjectMapper();
+        String requestData = objectMapper.writeValueAsString(loginDTO);
+        //jwt Token
+        String jwtToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMTIzMzZAbmF0ZS5jb20iLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWQiOjEsImV4cCI6MTY4ODg5ODkxNn0.2ovT4QRQHAKFsjHZG1g_bFwC3RN9-3TxdgS_gMm3FKVstqrqPrw6C0VZEwmh5buZzz3ek3Ez_Z3IsNqiVnONcQ";
+
+        //when
+        mvc.perform(
+                post("/login")
+                        .header("Authorization", "Bearer " + jwtToken)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestData))
+                .andDo(print()) //결과 출력
+        //then
+                .andExpect(jsonPath("$.success").value("false"));
+
+    }
+
+    @Test
+    @WithMockUser
+    @DisplayName("로그인 실패 - 이메일 형식 검증")
+    public void login_fail_email_format_test() throws Exception {
+        //given
+        //요청 body
+        UserRequest.LoginDTO loginDTO = new UserRequest.LoginDTO();
+        loginDTO.setEmail("newusernate.com"); //올바르지 않은 이메일 (@가 없음)
+        loginDTO.setPassword("user1234!");
+        ObjectMapper objectMapper = new ObjectMapper();
+        String requestData = objectMapper.writeValueAsString(loginDTO);
+        //jwt Token
+        String jwtToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMTIzMzZAbmF0ZS5jb20iLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWQiOjEsImV4cCI6MTY4ODg5ODkxNn0.2ovT4QRQHAKFsjHZG1g_bFwC3RN9-3TxdgS_gMm3FKVstqrqPrw6C0VZEwmh5buZzz3ek3Ez_Z3IsNqiVnONcQ";
+
+        //when
+        mvc.perform(
+                    post("/login")
+                            .header("Authorization", "Bearer " + jwtToken)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(requestData))
+                .andDo(print()) //결과 출력
+                //then
+                .andExpect(jsonPath("$.success").value("false"));
+    }
+
+    @Test
+    @WithMockUser
+    @DisplayName("로그인 실패 - 비밀번호 글자 검증")
+    public void login_fail_password_character_test() throws Exception {
+        //given
+        //요청 body
+        UserRequest.LoginDTO loginDTO = new UserRequest.LoginDTO();
+        loginDTO.setEmail("newuser@nate.com");
+        loginDTO.setPassword("user1234"); //특수문자가 없는 비밀번호
+        ObjectMapper objectMapper = new ObjectMapper();
+        String requestData = objectMapper.writeValueAsString(loginDTO);
+        //jwt Token
+        String jwtToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMTIzMzZAbmF0ZS5jb20iLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWQiOjEsImV4cCI6MTY4ODg5ODkxNn0.2ovT4QRQHAKFsjHZG1g_bFwC3RN9-3TxdgS_gMm3FKVstqrqPrw6C0VZEwmh5buZzz3ek3Ez_Z3IsNqiVnONcQ";
+
+        //when
+        mvc.perform(
+                    post("/login")
+                            .header("Authorization", "Bearer " + jwtToken)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(requestData))
+                .andDo(print()) //결과 출력
+                //then
+                .andExpect(jsonPath("$.success").value("false"));
+    }
+    @Test
+    @WithMockUser
+    @DisplayName("로그인 실패 - 인증되지 않은 유저")
+    public void login_fail_unauth_test() throws Exception {
+        //given
+        //요청 body
+        UserRequest.LoginDTO loginDTO = new UserRequest.LoginDTO();
+        loginDTO.setEmail("newuser@nate.com");
+        loginDTO.setPassword("user1234!");
+        ObjectMapper objectMapper = new ObjectMapper();
+        String requestData = objectMapper.writeValueAsString(loginDTO);
+
+        //when
+        mvc.perform( //토큰 보내지 않음
+                    post("/login")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(requestData))
+                .andDo(print()) //결과 출력
+                //then
+                .andExpect(jsonPath("$.success").value("false"));
+    }
+
+    @Test
+    @WithMockUser
+    @DisplayName("로그인 실패 - 비밀번호 글자수")
+    public void login_fail_password_length_test() throws Exception {
+        //given
+        //요청 body
+        UserRequest.LoginDTO loginDTO = new UserRequest.LoginDTO();
+        loginDTO.setEmail("newuser@nate.com");
+        loginDTO.setPassword("us4!"); //적은 글자수의 비밀번호
+        ObjectMapper objectMapper = new ObjectMapper();
+        String requestData = objectMapper.writeValueAsString(loginDTO);
+
+        //when
+        mvc.perform( //토큰 보내지 않음
+                        post("/login")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(requestData))
+                .andDo(print()) //결과 출력
+                //then
+                .andExpect(jsonPath("$.success").value("false"));
+    }
+}
+
+```
+> **Test Case**
+> - **로그인 성공** (가입된 id와 비밀번호)
+> * **로그인 실패** 
+>   - 가입된 id와 <U>잘못된 비밀번호</U> 
+>   - <U>존재하지 않는 id</U>와 비밀번호 (미가입)
+> * 형식, 중복 검증
+>   - 올바르지 않은 이메일
+>   - 이메일 형식 검증 (@가 없음)
+>   - 비밀번호 글자 검증(영문, 숫자, 특수문자 포함, 공백 포함X)
+>   - 중복 이메일 검증
+>   - 비밀번호 글자수 제한 검증
+
+> **@Transactional** 어노테이션을 붙여 테스트 후 rollback 되도록 하였다.
+
+</br>
+
+### **2. 회원가입**
+<br/>
+
+#### **DTO**
+```java
+public class UserRequest {
+
+    @Getter
+    @Setter
+    public static class JoinDTO {
+        private String email;
+        private String password;
+        private String username;
+    }
+}
+```
+
+<br/>
+
+#### **Controller**
+```java
+@RestController
+@RequiredArgsConstructor
+public class UserRestController {
+    private final UserJPARepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
+
+    @PostMapping("/join")
+    public ResponseEntity<?> join(@RequestBody UserRequest.JoinDTO joinDTO) {
+        //검증
+        String email = joinDTO.getEmail();
+        String password = joinDTO.getPassword();
+        //올바른 이메일 형식인지 확인
+        if (!email.contains("@"))
+            return ResponseEntity.badRequest().body(ApiUtils.error("이메일 형식으로 작성해주세요:email", HttpStatus.BAD_REQUEST));
+
+        //유효한 비밀번호인지 확인
+        if (!isValidPassword(password))
+            return ResponseEntity.badRequest().body(ApiUtils.error("영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니다.:password", HttpStatus.BAD_REQUEST));
+
+        //동일한 이메일이 존재하는지 확인
+        UserRequest.CheckEmailDTO checkEmailDTO = new UserRequest.CheckEmailDTO();
+        checkEmailDTO.setEmail(email);
+        ResponseEntity<?> responseEntity = check(checkEmailDTO); //check 메서드 사용
+        boolean isSuccessful = responseEntity.getStatusCode().is2xxSuccessful();
+        if (!isSuccessful)
+            return ResponseEntity.badRequest().body(ApiUtils.error("동일한 이메일이 존재합니다 : "+email, HttpStatus.BAD_REQUEST));
+
+        //비밀번호 길이 검증
+        int passwordLength = password.length();
+        if(!(passwordLength>=8 && passwordLength <= 20))
+            return ResponseEntity.badRequest().body(ApiUtils.error("8에서 20자 이내여야 합니다.:password", HttpStatus.BAD_REQUEST));
+
+        //회원가입 성공
+        //유저 생성
+        User user = User.builder()
+                .email(joinDTO.getEmail())
+                .password(passwordEncoder.encode(joinDTO.getPassword()))
+                .username(joinDTO.getUsername())
+                .roles("ROLE_USER")
+                .build();
+        //repo에 저장
+        userRepository.save(user);
+        return ResponseEntity.ok(ApiUtils.success(null));
+    }
+        private boolean isValidPassword(String password) {
+        boolean hasLetter = false; //문자 여부
+        boolean hasDigit = false; //숫자 여부
+        boolean hasSpecialCharacter = false; //특수문자 여부
+        for (char c:password.toCharArray()){
+            if(Character.isLetter(c)) hasLetter=true;
+            else if (Character.isDigit(c)) hasDigit = true;
+            else if (isSpecialCharacter(c)) hasSpecialCharacter = true;
+            if(hasLetter && hasDigit && hasSpecialCharacter) break;
+        }
+        //문자,숫자,특수문자가 있어야하고, 공백이 없어야한다.
+        return hasLetter && hasDigit && hasSpecialCharacter && !password.contains(" ");
+    }
+    //특수 문자 포함하는지 확인
+    private boolean isSpecialCharacter(char c) {
+        String specialCharacters = "!@#$%^&*()-_=+[]{};:'\"\\|<>,.?/~`";
+        return specialCharacters.contains(String.valueOf(c));
+    }
+}
+```
+> 회원가입시 검증코드를 작성했습니다.
+
 <br/>
 
 
+**Mock Test**
+```java
+@Transactional //테스트 후 rollback
+@AutoConfigureMockMvc
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+class UserRestControllerTest {
+    @Autowired
+    private MockMvc mvc;
+    @Autowired
+    private UserJPARepository userJPARepository;
+    @Autowired
+    PasswordEncoder passwordEncoder;
+    @Autowired
+    private WebApplicationContext context;
 
+    //Spring Security 테스트 환경 구성
+    @BeforeEach
+    public void setup(){
+        mvc = MockMvcBuilders
+                .webAppContextSetup(this.context)
+                .apply(SecurityMockMvcConfigurers.springSecurity())
+                .build();
+    }
+
+    //회원가입 요청 메서드
+    private ResultActions doPerform(String requestData) throws Exception {
+        return mvc.perform(
+                post("/join")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestData));
+    }
+
+    @Test
+    @WithMockUser
+    @DisplayName("회원가입 성공(가입된 id와 비밀번호)")
+    public void join_success_test() throws Exception {
+        //given
+        //유저 생성
+        UserRequest.JoinDTO joinDTO = new JoinDTO();
+        joinDTO.setUsername("newuser");
+        joinDTO.setEmail("newuser@nate.com");
+        joinDTO.setPassword("newuser1234!");
+        //JSON 문자열로 변경
+        ObjectMapper objectMapper = new ObjectMapper();
+        String requestData = objectMapper.writeValueAsString(joinDTO);
+
+        //when
+        doPerform(requestData)
+                .andDo(print()) //결과 출력
+        //then
+                .andExpect(jsonPath("$.success").value("true"));
+    }
+
+    @Test
+    @WithMockUser
+    @DisplayName("회원가입-올바르지않은 이메일")
+    public void join_fail_email_format_test() throws Exception {
+        //given
+        //유저 생성
+        UserRequest.JoinDTO joinDTO = new JoinDTO();
+        joinDTO.setUsername("newuser");
+        joinDTO.setEmail("newusernate.com"); //@가 없는 올바르지 않은 이메일
+        joinDTO.setPassword("newuser1234!");
+        //JSON 문자열로 변경
+        ObjectMapper objectMapper = new ObjectMapper();
+        String requestData = objectMapper.writeValueAsString(joinDTO);
+
+        //when
+        doPerform(requestData)
+                .andDo(print()) //결과 출력
+                //then
+                .andExpect(jsonPath("$.success").value("false"));
+    }
+
+    @Test
+    @WithMockUser
+    @DisplayName("회원가입-비밀번호 검증")
+    public void join_fail_password_test() throws Exception {
+        //given
+        //유저 생성
+        UserRequest.JoinDTO joinDTO = new JoinDTO();
+        joinDTO.setUsername("newuser");
+        joinDTO.setEmail("newuser@nate.com");
+        joinDTO.setPassword("newuser1234"); //특수문자가 없는 비밀번호
+        //JSON 문자열로 변경
+        ObjectMapper objectMapper = new ObjectMapper();
+        String requestData = objectMapper.writeValueAsString(joinDTO);
+
+        //when
+        doPerform(requestData)
+                .andDo(print()) //결과 출력
+                //then
+                .andExpect(jsonPath("$.success").value("false"));
+    }
+
+    @Test
+    @WithMockUser
+    @DisplayName("회원가입-중복 이메일 검증")
+    public void join_fail_email_duplicated_test() throws Exception {
+        //given
+        //유저 생성
+        UserRequest.JoinDTO joinDTO = new JoinDTO();
+        joinDTO.setUsername("newuser");
+        joinDTO.setEmail("newuser@nate.com");
+        joinDTO.setPassword("newuser1234!");
+        //JSON 문자열로 변경
+        ObjectMapper objectMapper = new ObjectMapper();
+        String requestData = objectMapper.writeValueAsString(joinDTO);
+
+        //when
+        doPerform(requestData)
+                .andExpect(jsonPath("$.success").value("true"));
+        //중복 이메일
+        doPerform(requestData)
+                .andDo(print()) //결과 출력
+                //then
+                .andExpect(jsonPath("$.success").value("false"));
+    }
+
+    @Test
+    @WithMockUser
+    @DisplayName("회원가입-글자수 검증")
+    public void join_fail_password_length_test() throws Exception {
+        //given
+        //유저 생성
+        UserRequest.JoinDTO joinDTO = new JoinDTO();
+        joinDTO.setUsername("newuser");
+        joinDTO.setEmail("newuser@nate.com");
+        joinDTO.setPassword("new12!");
+        //JSON 문자열로 변경
+        ObjectMapper objectMapper = new ObjectMapper();
+        String requestData = objectMapper.writeValueAsString(joinDTO);
+
+        //when
+        //중복 이메일
+        doPerform(requestData)
+                .andDo(print()) //결과 출력
+        //then
+                .andExpect(jsonPath("$.success").value("false"));
+    }
+```
+> **Test Case**
+> - **회원가입 성공** (가입되지않은 id와 비밀번호)
+> - **회원가입 실패** 
+>      * 이메일 형식 검증 (@가 없음)
+>      * 비밀번호 글자 검증(영문, 숫자, 특수문자 포함, 공백 포함X)
+>      * 중복 이메일 검증
+>      * 비밀번호 글자수 제한 검증
+
+</br>
+
+### **3. 이메일 중복 확인**
+<br/>
+
+#### **DTO**
+```java
+public class UserRequest {
+    @Getter
+    @Setter
+    public static class CheckEmailDTO {
+        private String email;
+    }
+}
+```
+<br/>
+
+#### **Controller**
+```java
+@RestController
+@RequiredArgsConstructor
+public class UserRestController {
+    private final UserJPARepository userRepository;
+ @PostMapping("/check")
+    public ResponseEntity<?> check(@RequestBody UserRequest.CheckEmailDTO emailDTO) {
+        //요청 email 얻기
+        String email = emailDTO.getEmail();
+
+        //repository에서 email이 존재하는지 확인
+        Optional<User> byEmail = userRepository.findByEmail(email);
+
+        if (byEmail.isPresent()) { //email이 이미 존재하면
+            return ResponseEntity.badRequest().body(ApiUtils.error("동일한 이메일이 존재합니다:email ", HttpStatus.BAD_REQUEST));
+        } else { //email 중복이 아님
+            if (email.contains("@")) //이메일 형식이면
+                return ResponseEntity.ok(ApiUtils.success(null));
+            else
+                return ResponseEntity.badRequest().body(ApiUtils.error("이메일 형식으로 작성해주세요:email", HttpStatus.BAD_REQUEST));
+
+        }
+    }
+
+}
+```
+>이메일 중복 확인, 형식 확인을 하는 API이다.
+
+<br/>
+
+**Mock Test**
+```java
+@Transactional //테스트 후 rollback
+@AutoConfigureMockMvc
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+class UserRestControllerTest {
+    @Autowired
+    private MockMvc mvc;
+    @Autowired
+    private UserJPARepository userJPARepository;
+    @Autowired
+    PasswordEncoder passwordEncoder;
+    @Autowired
+    private WebApplicationContext context;
+
+    //Spring Security 테스트 환경 구성
+    @BeforeEach
+    public void setup(){
+        mvc = MockMvcBuilders
+                .webAppContextSetup(this.context)
+                .apply(SecurityMockMvcConfigurers.springSecurity())
+                .build();
+    }
+    @Test
+    @WithMockUser
+    @DisplayName("이메일 확인 테스트 - 이미 존재하는 email")
+    public void check_fail_duplicated_test() throws Exception {
+        //given
+        //user 생성
+        User user = User.builder()
+                .email("user1@nate.com")
+                .password(passwordEncoder.encode("user1234!"))
+                .username("user")
+                .roles("ROLE_USER")
+                .build();
+        //저장
+        userJPARepository.save(user);
+
+        //요청 body
+        UserRequest.CheckEmailDTO checkEmailDTO = new UserRequest.CheckEmailDTO();
+        checkEmailDTO.setEmail("user1@nate.com"); //존재하는 email
+        ObjectMapper objectMapper = new ObjectMapper();
+        String requestData = objectMapper.writeValueAsString(checkEmailDTO);
+
+        //when
+        mvc.perform(
+                        post("/check")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(requestData))
+                .andDo(print()) //결과 출력
+        // verify
+                .andExpect(jsonPath("$.success").value("false"));
+    }
+
+    @Test
+    @WithMockUser
+    @DisplayName("이메일 확인 테스트 - 올바르지않은 형식")
+    public void check_fail_format_test() throws Exception {
+        //given
+        //요청 body
+        UserRequest.CheckEmailDTO checkEmailDTO = new UserRequest.CheckEmailDTO();
+        checkEmailDTO.setEmail("user1nate.com"); //올바르지않은 형식(@가 없음)
+        ObjectMapper objectMapper = new ObjectMapper();
+        String requestData = objectMapper.writeValueAsString(checkEmailDTO);
+
+        //when
+        mvc.perform(
+                        post("/check")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(requestData))
+                .andDo(print()) //결과 출력
+                // verify
+                .andExpect(jsonPath("$.success").value("false"))
+                .andExpect(jsonPath("$.error.status").value(400)); //400번 에러
+    }
+}
+```
+> **Test Case**
+> - **이메일 중복** (이미 가입된 email)
+> * **잘못된 이메일 형식** (@가 없는 email)
 
 
 <br/>

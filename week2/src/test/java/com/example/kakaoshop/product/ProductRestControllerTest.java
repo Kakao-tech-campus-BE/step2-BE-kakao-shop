@@ -1,5 +1,6 @@
 package com.example.kakaoshop.product;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -17,7 +18,7 @@ public class ProductRestControllerTest {
     private MockMvc mvc;
 
     @Test
-    // 전체 상품 목록 조회
+    @DisplayName("전체 상품 목록 조회")
     public void findAll_test() throws Exception {
 
         // when
@@ -43,7 +44,7 @@ public class ProductRestControllerTest {
     }
 
     @Test
-// 개별 상품 상세 조회
+    @DisplayName("개별 상품 상세 조회")
     public void findById_test() throws Exception {
         // given
         int id = 1;

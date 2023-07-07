@@ -18,4 +18,10 @@ public class UserRequest {
         private String email;
         private String password;
     }
+
+    @Getter
+    @Setter
+    public static class CheckEmailDTO {
+        private String email;
+    }
 }
