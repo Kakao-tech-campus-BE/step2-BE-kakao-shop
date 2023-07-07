@@ -85,7 +85,7 @@
 </br>
 
 ### **과제 4**
-![kakaoshop-clone](https://github.com/chaee813/git-practice/assets/82564901/d6ae62a1-2978-4796-9efc-a4fb6af3affa)
+![kakaoshop-clone](https://github.com/chaee813/git-practice/assets/82564901/0ecb69e4-da24-4f98-b5eb-763e370a6042)
 
 
 </br>
