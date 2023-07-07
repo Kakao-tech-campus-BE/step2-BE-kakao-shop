@@ -14,9 +14,11 @@ public class OrderRestController {
     // 주문 조회
     @PostMapping("/orders/{id}")
     public ResponseEntity<?> findAll(@PathVariable int id){
+        // 주문 아이템 리스트 만들기
         List<ProductOptionDTO> productOptionDTOList = new ArrayList<>();
 
         if(id == 1) {
+            // 1번 주문 아이템 리스트에 담기
             ProductOptionDTO productOptionDTO1 = ProductOptionDTO.builder()
                     .id(4)
                     .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
@@ -33,6 +35,7 @@ public class OrderRestController {
                     .build();
             productOptionDTOList.add(productOptionDTO2);
         } else if (id == 2) {
+            // 2번 주문 아이템 리스트에 담기
             ProductOptionDTO productOptionDTO1 = ProductOptionDTO.builder()
                     .id(4)
                     .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
@@ -49,9 +52,11 @@ public class OrderRestController {
                     .build();
             productOptionDTOList.add(productOptionDTO2);
         }else{
+            // 주문 정보 없음
             return ResponseEntity.badRequest().body(ApiUtils.error("해당 주문을 찾을 수 없습니다 : " + id, HttpStatus.BAD_REQUEST));
         }
 
+        // 주문 상품 리스트 만들기
         List<ProductDTO> productDTOList = new ArrayList<>();
 
         productDTOList.add(
@@ -61,6 +66,7 @@ public class OrderRestController {
                         .build()
         );
 
+        // 주문 반환 객체 만들기
         OrderRespFindAllDTO responseDTO = new OrderRespFindAllDTO(1, productDTOList, 104500);
 
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
@@ -69,9 +75,10 @@ public class OrderRestController {
     // 주문하기
     @PostMapping("/orders/save")
     public ResponseEntity<?> save(){
+        // 주문 저장 아이템 리스트 만들기
         List<OrderSaveItemDTO> orderSaveItemDTOList = new ArrayList<>();
 
-
+        // 주문 저장 아이템 리스트에 담기
         OrderSaveItemDTO orderSaveItemDTO1 = OrderSaveItemDTO.builder()
                 .id(4)
                 .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
@@ -88,6 +95,7 @@ public class OrderRestController {
                 .build();
         orderSaveItemDTOList.add(orderSaveItemDTO2);
 
+        // 주문 저장 상품 리스트 만들기
         List<OrderSaveProductDTO> orderSaveProductDTOList = new ArrayList<>();
 
         orderSaveProductDTOList.add(
@@ -97,6 +105,7 @@ public class OrderRestController {
                         .build()
         );
 
+        // 주문 저장 객체 만들기
         OrderSaveDTO responseDTO = new OrderSaveDTO(1, orderSaveProductDTOList, 104500);
 
         return ResponseEntity.ok(ApiUtils.success(responseDTO));

@@ -4,20 +4,16 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter @Setter
 public class CartUpdateDTO {
-    private int cartId;
-    private int optionId;
-    private String optionName;
-    private int quantity;
-    private int price;
+    private List<CartUpdateItemDTO> carts;
+    private int totalPrice;
 
     @Builder
-    public CartUpdateDTO(int cartId, int optionId, String optionName, int quantity, int price){
-        this.cartId = cartId;
-        this.optionId = optionId;
-        this.optionName = optionName;
-        this.quantity = quantity;
-        this.price = price;
+    public CartUpdateDTO(List<CartUpdateItemDTO> carts, int totalPrice){
+        this.carts = carts;
+        this.totalPrice = totalPrice;
     }
 }

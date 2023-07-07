@@ -69,29 +69,29 @@ public class CartRestController {
     @PutMapping("/carts/update")
     public ResponseEntity<?> update(@RequestBody List<CartItemReqDTO> cartItemReqDTOList){
         // 카트 아이템 리스트 만들기
-        List<CartUpdateDTO> cartUpdateDTOList = new ArrayList<>();
+        List<CartUpdateItemDTO> cartUpdateItemDTOList = new ArrayList<>();
 
         // 카트 아이템 리스트에 담기
-        CartUpdateDTO cartItemDTO1 = CartUpdateDTO.builder()
+        CartUpdateItemDTO cartItemDTO1 = CartUpdateItemDTO.builder()
                 .cartId(4)
                 .optionId(1)
                 .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
                 .quantity(5)
                 .price(10000)
                 .build();
-        cartUpdateDTOList.add(cartItemDTO1);
+        cartUpdateItemDTOList.add(cartItemDTO1);
 
-        CartUpdateDTO cartItemDTO2 = CartUpdateDTO.builder()
+        CartUpdateItemDTO cartItemDTO2 = CartUpdateItemDTO.builder()
                 .cartId(5)
                 .optionId(2)
                 .optionName("02. 슬라이딩 지퍼백 크리스마스에디션 5종")
                 .quantity(2)
                 .price(10900)
                 .build();
-        cartUpdateDTOList.add(cartItemDTO2);
+        cartUpdateItemDTOList.add(cartItemDTO2);
 
-        // 카트 업데이트 만들기
-        CartRespUpdateDTO responseDTO = new CartRespUpdateDTO(cartUpdateDTOList, 104500);
+        // 카트 업데이트 객체 만들기
+        CartUpdateDTO responseDTO = new CartUpdateDTO(cartUpdateItemDTOList, 104500);
 
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
