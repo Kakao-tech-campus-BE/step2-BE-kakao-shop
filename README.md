@@ -832,6 +832,91 @@ order_item_id 로 구분
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
+## 과제 2-1
+
+## 기존 API
+
+### 상품조회
+
+- method : GET
+- URL : localhost:8080/products
+
+### 개별 상품 조회
+
+- method : GET
+- URL : [localhost:8080/product](http://localhost:8080/products/1)s/{id}
+
+### 이메일 중복 체크
+
+- method : POST
+- URL : [localhost:8080/](http://localhost:8080/products/1)check
+
+### 회원가입
+
+- method : POST
+- URL : [localhost:8080/](http://localhost:8080/products/1)join
+
+### 로그인
+
+- method : POST
+- URL : [localhost:8080/](http://localhost:8080/products/1)login
+
+### 장바구니 담기
+
+- method : POST
+- URL : [localhost:8080/](http://localhost:8080/products/1)carts/add
+
+### 장바구니 조회
+
+- method : GET
+- URL : [localhost:8080/](http://localhost:8080/products/1)carts/add
+
+### API Method
+
+1. GET : 리소스 조회
+2. POST : 요청 데이터 처리
+3. PUT : 리소스 대체(덮어쓰기)
+4. PETCH : 리소스 부분 변경
+5. DELETE : 리소스 제거
+
+## API설계
+
+### 상품
+
+| Description | URI | Method | Params |
+| --- | --- | --- | --- |
+| 전체 상품 조회 | /products | GET | page |
+| 개별 상품 조회 | /products/{product_id} | GET |  |
+
+### 인증
+
+| Description | URI | Method |
+| --- | --- | --- |
+| 회원가입 | auth/join | POST |
+| 로그인 | auth/login | POST |
+| 이메일 중복 체크 | auth/check | POST |
+
+모듈화를 위해서 인증 과정은 prefix로 auth/
+
+### 장바구니
+
+| Description | URI | Method |
+| --- | --- | --- |
+| 장바구니 조회 | /carts | GET |
+| 장바구니 담기 | /carts/add | POST |
+| 장바구니 수정 | /carts/update | PETCH |
+| 장바구니 삭제 | /carts/delete | DELETE |
+
+수정은 부분 수정이 가능한 PETCH로 작성
+
+삭제는 DELETE
+
+### 주문
+| Description | URI | Method |
+| --- | --- | --- |
+| 결재하기 | orders/save | POST |
+| 주문 결과 확인 | orders/{order_id} | GET |
+
 # 3주차
 
 카카오 테크 캠퍼스 2단계 - BE - 3주차 클론 과제
