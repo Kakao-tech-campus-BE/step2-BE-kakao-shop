@@ -1,6 +1,7 @@
 package com.example.kakaoshop.user;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 public class UserRequest {
     @Getter
