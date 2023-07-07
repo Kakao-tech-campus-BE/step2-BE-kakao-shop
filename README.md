@@ -193,8 +193,7 @@ Local URL : http://localhost:8080/orders/1
 <br>
 
 ### 과제 경로  
-week2->Kakao-Backend-Second-DTO->src->main->java
-->com->example->kakaoshop
+src->main->java->com->example->kakaoshop
 
 <br>
 
