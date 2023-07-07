@@ -6,14 +6,16 @@ import lombok.Setter;
 
 import java.util.List;
 
-@Getter @Setter
+@Getter
+@Setter
 public class CartUpdateRespDTO {
-    private List<CartUpdateDTO> carts;
-    private int totalPrice;
 
-    @Builder
-    public CartUpdateRespDTO(List<CartUpdateDTO> carts, int totalPrice){
-        this.carts = carts;
-        this.totalPrice = totalPrice;
-    }
+  private List<CartUpdateDTO> carts;
+  private int totalPrice;
+
+  @Builder
+  public CartUpdateRespDTO(List<CartUpdateDTO> carts, int totalPrice) {
+    this.carts = carts;
+    this.totalPrice = totalPrice;
+  }
 }

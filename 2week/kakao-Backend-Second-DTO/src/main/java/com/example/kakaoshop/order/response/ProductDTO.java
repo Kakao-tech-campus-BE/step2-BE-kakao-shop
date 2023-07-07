@@ -6,14 +6,16 @@ import lombok.Setter;
 
 import java.util.List;
 
-@Getter @Setter
+@Getter
+@Setter
 public class ProductDTO {
-    private String productName;
-    private List<OrderItemDTO> items;
 
-    @Builder
-    public ProductDTO(String productName, List<OrderItemDTO> items){
-        this.productName = productName;
-        this.items = items;
-    }
+  private String productName;
+  private List<OrderItemDTO> items;
+
+  @Builder
+  public ProductDTO(String productName, List<OrderItemDTO> items) {
+    this.productName = productName;
+    this.items = items;
+  }
 }

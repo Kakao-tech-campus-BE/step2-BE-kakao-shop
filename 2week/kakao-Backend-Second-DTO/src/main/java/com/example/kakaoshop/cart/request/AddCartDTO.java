@@ -3,8 +3,10 @@ package com.example.kakaoshop.cart.request;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 public class AddCartDTO {
-    private int optionId;
-    private int quantity;
+
+  private int optionId;
+  private int quantity;
 }
