@@ -10,12 +10,12 @@ import java.util.List;
 public class ProductDTO {
     private int id;
     private String productName;
-    private List<CartItemDTO> cartItems;
+    private List<CartItemDTO> carts;
 
     @Builder
-    public ProductDTO(int id, String productName, List<CartItemDTO> cartItems) {
+    public ProductDTO(int id, String productName, List<CartItemDTO> carts) {
         this.id = id;
         this.productName = productName;
-        this.cartItems = cartItems;
+        this.carts = carts;
     }
 }

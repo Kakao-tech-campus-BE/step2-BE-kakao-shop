@@ -8,12 +8,12 @@ import java.util.List;
 
 @Getter @Setter
 public class CartRespUpdateDTO {
-    private List<CartItemUpdateDTO> cartItems;
+    private List<CartItemUpdateDTO> carts;
     private int totalPrice;
 
     @Builder
-    public CartRespUpdateDTO(List<CartItemUpdateDTO> cartItems, int totalPrice) {
-        this.cartItems = cartItems;
+    public CartRespUpdateDTO(List<CartItemUpdateDTO> carts, int totalPrice) {
+        this.carts = carts;
         this.totalPrice = totalPrice;
     }
 }

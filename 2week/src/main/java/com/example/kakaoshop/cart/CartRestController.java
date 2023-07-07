@@ -51,7 +51,7 @@ public class CartRestController {
                 ProductDTO.builder()
                         .id(1)
                         .productName("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전")
-                        .cartItems(cartItemDTOList)
+                        .carts(cartItemDTOList)
                         .build()
         );
 
