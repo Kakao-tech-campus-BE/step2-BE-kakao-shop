@@ -71,7 +71,7 @@ public class OrderRestController {
         ProductRespOrderAddDTO productRespOrderAddDTO1 = new ProductRespOrderAddDTO("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전", items);
         products.add(productRespOrderAddDTO1);
 
-        OrderRespAddDTO orderRespAddDTO = new OrderRespAddDTO(2, products, 209000);
+        OrderRespAddDTO orderRespAddDTO = new OrderRespAddDTO(1, products, 209000);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiUtils.success(orderRespAddDTO));
     }
