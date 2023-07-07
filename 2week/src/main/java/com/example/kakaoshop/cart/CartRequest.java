@@ -4,8 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 public class CartRequest {
-    @Getter
-    @Setter
+    @Getter @Setter
     public static class CartAddDTO {
         private int optionId;
         private int quantity;
