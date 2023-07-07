@@ -22,7 +22,7 @@ public class UserRestController {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
-    @PostMapping("/join")
+    @PostMapping("/auth/join")
     public ResponseEntity<?> join(@RequestBody UserRequest.JoinDTO joinDTO) {
         User user = User.builder()
                 .email(joinDTO.getEmail())
@@ -33,10 +33,10 @@ public class UserRestController {
 
         userRepository.save(user);
 
-        return ResponseEntity.ok("ok");
+        return ResponseEntity.ok().body(ApiUtils.success(null));
     }
 
-    @PostMapping("/login")
+    @PostMapping("/auth/login")
     public ResponseEntity<?> login(@RequestBody UserRequest.LoginDTO loginDTO) {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
                 = new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword());
@@ -44,6 +44,6 @@ public class UserRestController {
         CustomUserDetails myUserDetails = (CustomUserDetails) authentication.getPrincipal();
         String jwt = JWTProvider.create(myUserDetails.getUser());
 
-        return ResponseEntity.ok().header(JWTProvider.HEADER, jwt).body("ok");
+        return ResponseEntity.ok().header(JWTProvider.HEADER, jwt).body(ApiUtils.success(null));
     }
 }
