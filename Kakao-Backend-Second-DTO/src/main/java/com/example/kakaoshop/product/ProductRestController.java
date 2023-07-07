@@ -54,7 +54,7 @@ public class ProductRestController {
     }
 
     @GetMapping("/products/{id}")
-    public ResponseEntity<ApiUtils.ApiResult<ProductOptionResponse>> findById(@PathVariable int id) {
+    public ResponseEntity<ApiUtils.ApiResult<ProductFindByIdResponse>> findById(@PathVariable int id) {
         ProductFindByIdResponse responseDTO = null;
         if (id == 1) {
             List<ProductOptionResponse> optionDTOList = new ArrayList<>();
@@ -71,10 +71,7 @@ public class ProductRestController {
             optionDTOList.add(new ProductOptionResponse(7, "22년산 햇단밤 1kg(한정판매)", 14500));
             optionDTOList.add(new ProductOptionResponse(8, "밤깎기+다회용 구이판 세트", 5500));
             responseDTO = new ProductFindByIdResponse(2, "[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율", "", "/images/2.jpg", 2000, 5, optionDTOList);
-        } else {
-            return ResponseEntity.badRequest().body(ApiUtils.error("해당 상품을 찾을 수 없습니다 : " + id, HttpStatus.BAD_REQUEST));
         }
-
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
 
