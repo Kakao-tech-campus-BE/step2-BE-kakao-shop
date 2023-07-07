@@ -1379,6 +1379,10 @@
 
 ## **Assignment 2**
 
+- Assignment 1에서 설계한 api가 아닌 API 문서를 기반으로 구현했습니다.
+
+</br>
+
 ### **[3] 이메일 중복 체크**
 
 - UserRequest에서 CheckDTO를 생성합니다.
