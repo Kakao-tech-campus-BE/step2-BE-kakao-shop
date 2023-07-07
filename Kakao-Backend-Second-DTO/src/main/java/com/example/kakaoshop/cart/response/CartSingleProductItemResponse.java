@@ -8,10 +8,10 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder(toBuilder = true)
-public class ProductCartItemReponse {
+public class CartSingleProductItemResponse {
 
     private int id;
     private String productName;
-    private List<CartItemResponse> cartItems;
+    private List<CartSingleOptionResponse> cartItems;
 
 }

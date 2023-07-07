@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-public class CartItemResponse {
+public class CartSingleOptionResponse {
 
     private int id;
-    private ProductOptionResponse option;
+    private CartOptionInfoResponse option;
     private int quantity;
     private int price;
 

@@ -6,7 +6,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-public class ProductOptionResponse {
+public class CartOptionInfoResponse {
 
     private int id;
     private String optionName;

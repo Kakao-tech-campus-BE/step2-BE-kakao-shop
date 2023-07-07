@@ -1,14 +1,16 @@
 package com.example.kakaoshop.cart;
 
 import com.example.kakaoshop._core.utils.ApiUtils;
-import com.example.kakaoshop.cart.response.CartItemResponse;
-import com.example.kakaoshop.cart.response.CartFindAllResponse;
-import com.example.kakaoshop.cart.response.ProductOptionResponse;
-import com.example.kakaoshop.cart.response.ProductCartItemReponse;
+import com.example.kakaoshop.cart.request.CartSaveRequest;
+import com.example.kakaoshop.cart.request.CartUpdateRequest;
+import com.example.kakaoshop.cart.response.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,53 +19,53 @@ public class CartRestController {
 
     @GetMapping("/carts")
     public ResponseEntity<ApiUtils.ApiResult<CartFindAllResponse>> findAll() {
-        // 카트 아이템 리스트 만들기
-        List<CartItemResponse> cartItemDTOList = new ArrayList<>();
 
-        ProductOptionResponse productOptionResponse = ProductOptionResponse.builder()
+        ArrayList<CartSingleOptionResponse> cartOptionsBySingleProduct = new ArrayList<>();
+
+        CartOptionInfoResponse optionInfo = CartOptionInfoResponse.builder()
                 .id(1)
                 .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
                 .price(10000)
                 .build();
 
         // 카트 아이템 리스트에 담기
-        CartItemResponse cartItemDTO1 = CartItemResponse.builder()
+        CartSingleOptionResponse cartSingleOptionBySingleProduct = CartSingleOptionResponse.builder()
                 .id(4)
-                .option(productOptionResponse)
+                .option(optionInfo)
                 .quantity(5)
                 .price(50000)
                 .build();
 
-        cartItemDTOList.add(cartItemDTO1);
+        cartOptionsBySingleProduct.add(cartSingleOptionBySingleProduct);
 
-        ProductOptionResponse productOptionResponse1 = ProductOptionResponse.builder()
+        CartOptionInfoResponse optionInfo2 = CartOptionInfoResponse.builder()
                 .id(1)
                 .optionName("02. 슬라이딩 지퍼백 크리스마스에디션 5종")
                 .price(10900)
                 .build();
 
-        CartItemResponse cartItemDTO2 = CartItemResponse.builder()
+        CartSingleOptionResponse cartItemDTO2 = CartSingleOptionResponse.builder()
                 .id(5)
-                .option(productOptionResponse1)
+                .option(optionInfo2)
                 .quantity(5)
                 .price(54500)
                 .build();
 
-        cartItemDTOList.add(cartItemDTO2);
+        cartOptionsBySingleProduct.add(cartItemDTO2);
 
         // productDTO 리스트 만들기
-        List<ProductCartItemReponse> productDTOList = new ArrayList<>();
+        List<CartSingleProductItemResponse> cartProducts = new ArrayList<>();
 
         // productDTO 리스트에 담기
-        productDTOList.add(
-                ProductCartItemReponse.builder()
+        cartProducts.add(
+                CartSingleProductItemResponse.builder()
                         .id(1)
                         .productName("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전")
-                        .cartItems(cartItemDTOList)
+                        .cartItems(cartOptionsBySingleProduct)
                         .build()
         );
 
-        CartFindAllResponse responseDTO = new CartFindAllResponse(productDTOList, 104500);
+        CartFindAllResponse responseDTO = new CartFindAllResponse(cartProducts, 104500);
 
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
