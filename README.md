@@ -45,10 +45,6 @@
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
-<<<<<<< HEAD
-=======
-
->>>>>>> a13fd81e0e655a04f972474ead9b394187dfd14b
 ## 01. 요구사항 분석/ API 요청 및 응답 시나리오 분석
 ---
 ### 01) 요구사항 시나리오를 보고 부족해 보이는 기능을 하나 이상 체크하여 README에 작성
@@ -155,12 +151,7 @@ http://localhost:8080/products/1 (각 숫자)
 ⇒ [ { "optionId":1, "quantity":5 }, { "optionId":2, "quantity":5 } ]
 
 ---
-<<<<<<< HEAD
 
-=======
-## 02. 요구사항 추가 반영 및 테이블 설계도
----
->>>>>>> a13fd81e0e655a04f972474ead9b394187dfd14b
 ### 03) 배포된 서버에 모든 API를 POSTMAN으로 요청해본 뒤 응답되는 데이터를 확인하고 부족한 데이터가 무엇인지 체크하여 README에 내용을 작성하시오.
  
 
@@ -693,10 +684,7 @@ CREATE TABLE item (
 
 
 
-<<<<<<< HEAD
 
-=======
->>>>>>> a13fd81e0e655a04f972474ead9b394187dfd14b
 # 2주차
 
 카카오 테크 캠퍼스 2단계 - BE - 2주차 클론 과제
@@ -735,6 +723,161 @@ CREATE TABLE item (
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
+
+(실수로 강의 자료 내에 있는 DTO 자료를 가지고 과제를 진행했는데, 혹시 문제가 있다면 말씀해주세요 !)
+
+### 과제명
+1. 전체 API 주소 설계
+2. Mock API Controller 구현
+ 
+### 과제 설명
+1. API주소를 설계하여 README에 내용을 작성하시오.
+2. 가짜 데이터를 설계하여 응답하는 스프링부트 컨트롤러를 작성하고 소스코드를 업로드하시오.
+ 
+
+### 과제 상세 : 과제를 진행할 때, 유념해야할 것
+> 전체 API 주소 설계가 RestAPI 맞게 설계되었는가? (예를 들어 배포된 서버는 POST와 GET으로만 구현되었는데, 학생들은 PUT과 DELETE도 배울 예정이라 이부분이 반영되었고, 주소가 RestAPI에 맞게 설계되었는지)
+
+> 가짜 데이터를 설계하여 Mock API를 잘 구현하였는가? (예를 들어 DB연결없이 컨트롤러만 만들어서 배포된 서버의 응답과 동일한 형태로 데이터가 응답되는지 여부)
+ 
+
+> ## 1. 전체 API 주소 설계
+---
+### 01) API 주소를 설계하여 README에 내용을 작성하시오
+- 유의 사항 : 주소가 RestAPI에 맞게 설계할 것
+ 
+---
+
+#### 📌 Restful API 설계 예시 
+
+##### 1. URI는 동사보다는 명사를, 대문자보다는 소문자를 사용하여야 한다.
+
+Bad Example http://khj93.com/Running/
+Good Example  http://khj93.com/run/  
+ 
+
+##### 2. 마지막에 슬래시 (/)를 포함하지 않는다.
+
+Bad Example http://khj93.com/test/  
+Good Example  http://khj93.com/test
+ 
+
+##### 3. 언더바 대신 하이폰을 사용한다.
+
+Bad Example http://khj93.com/test_blog
+Good Example  http://khj93.com/test-blog  
+ 
+
+##### 4. 파일확장자는 URI에 포함하지 않는다.
+
+Bad Example http://khj93.com/photo.jpg  
+Good Example  http://khj93.com/photo  
+ 
+
+##### 5. 행위를 포함하지 않는다.
+
+Bad Example http://khj93.com/delete-post/1  
+Good Example  http://khj93.com/post/1  
+ 
+
+[참고 : https://khj93.tistory.com/entry/%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC-REST-API%EB%9E%80-REST-RESTful%EC%9D%B4%EB%9E%80]
+
+ 
+(추후 Rest API에 대해 정리해 올려야 할 것 같다. 모르는 게 너무 많다 ....)
+
+---
+### 1. User
+
+
+#### 1. 로그인 / 로그아웃
+- POST
+- http://localhost:8080/login
+- Request Body ⇒ { "email":"ssar@nate.com", "password":"meta1234!" }
+ 
+
+#### 2. 회원가입 - 이메일 중복체크
+- POST
+- http://localhost:8080/duplicate-check
+- Request Body ⇒ { "email":"ssarnate.com" }
+
+> check > duplicate-check로 변경하였는데, 이 때의 check는 '행위'인 것 같은데 사용해도 괜찮은 것일까 ?
+ 
+
+#### 3. 회원가입
+- POST
+- http://localhost:8080/join
+- Request Body ⇒ { "username":"mata", "email":"meta@nate.com", "password":"meta1234!" }
+ 
+
+> * login과 join의 경우 관습적으로 사용되는 단어이고 Restful API에 완벽히 부합하지는 않다. 
+- 하지만 사용하지 않는 경우(다른 언어로 대체, 관련성 감소)보다 사용하는 경우(이해가 쉬움)의 이득이 더 크기 때문에 수정하지 않았다. (멘토님 답변 내용)
+ 
+---
+### 2. Product
+
+ 
+
+#### 1. 전체 상품 목록 조회
+- GET
+- http://localhost:8080/products
+ 
+
+#### 2. 개별 상품 상세 조회
+- GET
+- http://localhost:8080/products/id
+
+> 이때의 id는 Product table의 PK id를 뜻한다.
+ 
+---
+### 3. Cart
+
+ 
+
+#### 1. 장바구니 조회
+- GET
+- http://localhost:8080/carts
+- Request Header
+- ⇒ Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzc2FyQG5hdGUuY29tIiwicm9sZSI6Il JPTEVfVVNFUiIsImlkIjoxLCJleHAiOjE2ODcwNTM5MzV9.fXlD0NZQXYYfPHV8rokRJTM86nhS869L Z1KIGi7_qvPOcVbXgvyZLKvnlLxomIiS3YFnQRLzXAJ2G41yI_AmGg
+ 
+
+#### 2. 장바구니 담기
+- POST
+- http://localhost:8080/carts
+- Request Header
+⇒ Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzc2FyQG5hdGUuY29tIiwicm9sZSI6Il JPTEVfVVNFUiIsImlkIjoxLCJleHAiOjE2ODcwNTM5MzV9.fXlD0NZQXYYfPHV8rokRJTM86nhS869L Z1KIGi7_qvPOcVbXgvyZLKvnlLxomIiS3YFnQRLzXAJ2G41yI_AmGg
+- Request Body ⇒ [ { "optionId":1, "quantity":5 }, { "optionId":2, "quantity":5 } ]
+
+>carts/add x : (설계원칙 5) 행위를 포함하지 않는다.
+ 
+
+#### 3. 주문하기 - 장바구니 수정
+- PUT
+- http://localhost:8080/carts 
+- Request Header ⇒ Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzc2FyQG5hdGUuY29tIiwicm9sZSI6Il JPTEVfVVNFUiIsImlkIjoxLCJleHAiOjE2ODcwNTM5MzV9.fXlD0NZQXYYfPHV8rokRJTM86nhS869L Z1KIGi7_qvPOcVbXgvyZLKvnlLxomIiS3YFnQRLzXAJ2G41yI_AmGg
+- Request Body ⇒ [ { "cartId":4, "quantity":10 }, { "cartId":5, "quantity":10 } ]
+
+>POST > PUT : 수정에 대한 내용이므로, PUT 사용
+update x : (설계원칙 5) 행위를 포함하지 않는다.
+ 
+---
+### 4. Order
+
+ 
+
+#### 1. 주문 insert
+- POST
+- http://localhost:8080/orders
+- Request Header ⇒ Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzc2FyQG5hdGUuY29tIiwicm9sZSI6Il JPTEVfVVNFUiIsImlkIjoxLCJleHAiOjE2ODcwNTM5MzV9.fXlD0NZQXYYfPHV8rokRJTM86nhS869L Z1KIGi7_qvPOcVbXgvyZLKvnlLxomIiS3YFnQRLzXAJ2G41yI_AmGg
+
+> save x : (설계원칙 5) 행위를 포함하지 않는다.
+ 
+
+#### 2. 주문 완료
+- GET
+- http://localhost:8080/orders/id
+- Request Header ⇒ Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzc2FyQG5hdGUuY29tIiwicm9sZSI6Il JPTEVfVVNFUiIsImlkIjoxLCJleHAiOjE2ODcwNTM5MzV9.fXlD0NZQXYYfPHV8rokRJTM86nhS869L Z1KIGi7_qvPOcVbXgvyZLKvnlLxomIiS3YFnQRLzXAJ2G41yI_AmGg
+
+---
 # 3주차
 
 카카오 테크 캠퍼스 2단계 - BE - 3주차 클론 과제
