@@ -18,7 +18,7 @@ import java.util.List;
 public class CartRestController {
 
     @PostMapping("/carts/add")
-    public ResponseEntity<?> save(@RequestBody List<CartRequest> cartRequests) {
+    public ResponseEntity<?> save(@RequestBody List<CartRequest.CreateDTO> cartRequestCreateDTOList) {
         return ResponseEntity.ok(ApiUtils.success(null));
     }
 
@@ -70,11 +70,11 @@ public class CartRestController {
     }
 
     @PostMapping("/carts/update")
-    public ResponseEntity<?> update(@Valid @RequestBody List<CartRequest> carts) {
+    public ResponseEntity<?> update(@Valid @RequestBody List<CartRequest.UpdateDTO> cartRequestUpdateDTOList) {
         CartRespUpdateDTO responseDTO = null;
         List<CartOptionDTO> cartsDTO = new ArrayList<>();
 
-        for(CartRequest cart: carts) {
+        for(CartRequest.UpdateDTO cart: cartRequestUpdateDTOList) {
             if (cart.getCartId() == 4) {
                 cartsDTO.add(CartOptionDTO.builder()
                         .cartId(4L)

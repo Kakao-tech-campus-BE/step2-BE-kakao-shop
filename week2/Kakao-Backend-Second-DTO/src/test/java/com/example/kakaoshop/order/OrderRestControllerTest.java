@@ -1,5 +1,6 @@
 package com.example.kakaoshop.order;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -20,6 +21,7 @@ class OrderRestControllerTest {
 
 
     @Test
+    @DisplayName("주문 생성 성공")
     @WithMockUser
     void orderSave_test() throws Exception {
         // when
@@ -47,6 +49,7 @@ class OrderRestControllerTest {
     }
 
     @Test
+    @DisplayName("주문 ID로 찾기 성공")
     @WithMockUser
     void findByIdSuccess_test() throws Exception {
         // given
@@ -76,6 +79,7 @@ class OrderRestControllerTest {
     }
 
     @Test
+    @DisplayName("주문 ID로 찾기 실패 해당 주문 ID없음")
     @WithMockUser
     void findByIdFail_test() throws Exception {
         // given

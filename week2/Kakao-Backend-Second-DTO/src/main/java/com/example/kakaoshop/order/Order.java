@@ -28,13 +28,6 @@ public class Order extends BaseEntity {
         this.user = Objects.requireNonNull(user);
     }
 
-    public Order changeUser(User user) {
-        return Order.builder()
-                .id(id)
-                .user(user)
-                .build();
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

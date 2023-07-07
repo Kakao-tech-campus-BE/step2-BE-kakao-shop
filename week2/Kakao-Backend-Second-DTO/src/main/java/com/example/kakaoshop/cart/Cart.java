@@ -43,24 +43,6 @@ public class Cart extends BaseEntity {
         this.quantity = isValidQuantity(quantity);
     }
 
-    public Cart changeProductOption(ProductOption productOption) {
-        return Cart.builder()
-                .id(id)
-                .productOption(productOption)
-                .user(user)
-                .quantity(quantity)
-                .build();
-    }
-
-    public Cart changeUser(User user) {
-        return Cart.builder()
-                .id(id)
-                .productOption(productOption)
-                .user(user)
-                .quantity(quantity)
-                .build();
-    }
-
     public Cart changeQuantity(int quantity) {
         return Cart.builder()
                 .id(id)
