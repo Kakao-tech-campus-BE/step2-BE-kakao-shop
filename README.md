@@ -109,6 +109,45 @@ Week1_END
 
 <br>
 
+---
+
+<br>
+
+## 2주차 과제  
+
+#### ( 전체 API 주소 설계 )
+```
+
+(기능 1) [POST] 회원가입 : `/join`
+(기능 2) [POST] 로그인 : `/login`
+(기능 3) [GET] 전체 상품 목록 조회 : `/products`
+(기능 4) [GET] 개별 상품 상세 조회 : `/products/{product_id}`
+(기능 5) [POST] 장바구니 담기 : `/carts`
+(기능 6) [GET] 장바구니 보기 : `/carts`
+(기능 7) [PUT] 주문 (장바구니 수정) : `carts`
+(기능 8) [POST] 결제 : `orders`
+(기능 9) [GET] 주문 결과 확인 : `orders/{orders_id}`
+
+```
+
+
+#### ( Mock API Controller 구현)
+
+[OrderRespFindByIdDTO.java](week2\src\main\java\com\example\kakaoshop\order\response\OrderRespFindByIdDTO.java)  
+[OrderResponseDTO.java](week2\src\main\java\com\example\kakaoshop\order\response\OrderResponseDTO.java)  
+[ProductDTO.java](week2\src\main\java\com\example\kakaoshop\order\response\ProductDTO.java)  
+[OrderItemDTO.java](week2\src\main\java\com\example\kakaoshop\order\response\OrderItemDTO.java)  
+ 
+<br>
+
+---
+```
+Week2_END
+```
+---
+
+<br>
+
 # 2주차
 
 카카오 테크 캠퍼스 2단계 - BE - 2주차 클론 과제

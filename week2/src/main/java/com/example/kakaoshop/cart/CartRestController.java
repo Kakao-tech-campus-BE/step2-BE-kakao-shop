@@ -39,7 +39,7 @@ public class CartRestController {
                 .price(54500)
                 .build();
         cartItemDTO2.setOption(ProductOptionDTO.builder()
-                                .id(1)
+                                .id(2)
                                 .optionName("02. 슬라이딩 지퍼백 크리스마스에디션 5종")
                                 .price(10900)
                                 .build());
