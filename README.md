@@ -1409,9 +1409,9 @@
 
 </br>
 
-### **[9] 주문 인서트**
+### **[9] 주문 저장**
 
-- OrderRestController에서 insertOrder()를 생성합니다.
+- OrderRestController에서 save()를 생성합니다.
 - 주문 인서트 로직은 아직 구현되지 않았지만 더미 데이터를 반환합니다.
 - 더미 데이터는 id, products, totalPrice를 가지는 OrderRespInsertDTO를 통해 생성됩니다.
 - OrderRespInsertDTO의 products는 OrderProductItemDTO 리스트이고 OrderProductItemDTO는 productName, items를 가집니다.
@@ -1421,7 +1421,7 @@
 
 ### **[10] 주문 결과 확인**
 
-- OrderRestController에서 findOrderResult()를 생성합니다.
+- OrderRestController에서 findById()를 생성합니다.
 - 주문 결과 확인 로직은 아직 구현되지 않았지만 더미 데이터를 반환합니다.
 - 더미 데이터는 id, products, totalPrice를 가지는 OrderRespUpdateDTO를 통해 생성됩니다.
 - OrderRespInsertDTO의 products는 OrderProductItemDTO 리스트이고 OrderProductItemDTO는 productName, items를 가집니다.
@@ -1429,7 +1429,15 @@
 
 </br>
 
-### **ProductRestController 구현**
+### **예외 처리**
+
+- OrderException을 생성해서 주문 예외를 추가합니다.
+- MyControllerAdvice에 @RestControllerAdvice를 사용해서 예외 코드를 분리합니다.
+- @ExceptionHandler를 통해 예외 코드를 추가합니다. 기존에 구현된 ApiUtils의 ApiError를 이용해서 데이터를 반환합니다.
+
+</br>
+
+### **ProductRestControllerTest 구현**
 
 - 기존 : findAll(), findById()
 - 로그 남기기
@@ -1437,7 +1445,7 @@
 
 </br>
 
-### **CartRestController 구현**
+### **CartRestControllerTest 구현**
 
 - 기존 : findAll()
 - 추가 : add(), update()
@@ -1447,9 +1455,10 @@
 
 </br>
 
-### **OrderRestController 구현**
+### **OrderRestControllerTest 구현**
 
-- 추가 : insertOrder(), findOrderResult()
+- 추가 : insertOrder(), findOrderResult(), findById_fail()
+- findById_fail()를 통해 예외 처리될 경우 테스트하기
 - 로그 남기기
 - given-when-then
 

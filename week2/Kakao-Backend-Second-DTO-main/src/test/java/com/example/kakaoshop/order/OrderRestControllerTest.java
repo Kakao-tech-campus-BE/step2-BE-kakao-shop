@@ -24,7 +24,7 @@ class OrderRestControllerTest {
 
     @Test
     @WithMockUser
-    void insertOrder() throws Exception {
+    void save() throws Exception {
 
         //when
         ResultActions resultActions = mvc.perform(
@@ -32,7 +32,7 @@ class OrderRestControllerTest {
         );
 
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
-        log.info("Order Test insertOrder(): " + responseBody);
+        log.info("Order Test save(): " + responseBody);
 
         //then
         resultActions.andExpect(jsonPath("$.success").value("true"));
@@ -51,7 +51,7 @@ class OrderRestControllerTest {
 
     @Test
     @WithMockUser
-    void findOrderResult() throws Exception {
+    void findById() throws Exception {
 
         //given
         int id = 1;
@@ -62,7 +62,7 @@ class OrderRestControllerTest {
         );
 
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
-        log.info("OrderTest: " + responseBody);
+        log.info("Order Test findById(): " + responseBody);
 
         //then
         resultActions.andExpect(jsonPath("$.success").value("true"));
@@ -77,5 +77,26 @@ class OrderRestControllerTest {
         resultActions.andExpect(jsonPath("$.response.products[0].items[1].optionName").value("02. 슬라이딩 지퍼백 플라워에디션 5종"));
         resultActions.andExpect(jsonPath("$.response.products[0].items[1].quantity").value(10));
         resultActions.andExpect(jsonPath("$.response.products[0].items[1].price").value(109000));
+    }
+
+    @Test
+    @WithMockUser
+    void findById_fail() throws Exception {
+
+        //given
+        int id = 2;
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                get("/orders/" + id)
+        );
+
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        log.info("Order Test findById_fail(): " + responseBody);
+
+        resultActions.andExpect(jsonPath("$.success").value("false"));
+        resultActions.andExpect(jsonPath("$.response").value((Object)null));
+        resultActions.andExpect(jsonPath("$.error.status").value(404));
+        resultActions.andExpect(jsonPath("$.error.message").value("해당 주문을 찾을 수 없습니다."));
     }
 }

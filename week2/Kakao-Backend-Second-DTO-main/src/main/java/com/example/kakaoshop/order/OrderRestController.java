@@ -1,10 +1,11 @@
 package com.example.kakaoshop.order;
 
 import com.example.kakaoshop._core.utils.ApiUtils;
+import com.example.kakaoshop.exception.OrderException;
 import com.example.kakaoshop.order.response.OrderItemDTO;
 import com.example.kakaoshop.order.response.OrderProductItemDTO;
-import com.example.kakaoshop.order.response.OrderRespFindResultDTO;
-import com.example.kakaoshop.order.response.OrderRespInsertDTO;
+import com.example.kakaoshop.order.response.OrderRespFindByIdDTO;
+import com.example.kakaoshop.order.response.OrderRespSaveDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +19,7 @@ import java.util.List;
 public class OrderRestController {
 
     @PostMapping("/orders/save")
-    public ResponseEntity<?> insertOrder(){
+    public ResponseEntity<?> save(){
 
         List<OrderItemDTO> orderItemList = new ArrayList<>();
         orderItemList.add(
@@ -46,13 +47,17 @@ public class OrderRestController {
                         .build()
         );
 
-        OrderRespInsertDTO responseDTO = new OrderRespInsertDTO(1, productItemList, 209000);
+        OrderRespSaveDTO responseDTO = new OrderRespSaveDTO(1, productItemList, 209000);
 
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
 
     @GetMapping("/orders/{id}")
-    public ResponseEntity<?> findOrderResult(@PathVariable int id){
+    public ResponseEntity<?> findById(@PathVariable int id){
+
+        if(id != 1){
+            throw new OrderException("해당 주문을 찾을 수 없습니다.");
+        }
 
         List<OrderItemDTO> orderItemList = new ArrayList<>();
         orderItemList.add(
@@ -80,7 +85,7 @@ public class OrderRestController {
                         .build()
         );
 
-        OrderRespFindResultDTO responseDTO = new OrderRespFindResultDTO(1, productItemList, 209000);
+        OrderRespFindByIdDTO responseDTO = new OrderRespFindByIdDTO(1, productItemList, 209000);
 
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
