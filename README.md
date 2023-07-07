@@ -130,10 +130,10 @@ Week1_ERD.png 파일에 첨부
 
 #### ( Mock API Controller 구현)
 
-(Code Link): [OrderRespFindByIdDTO.java](week2/src/main/java/com/example/kakaoshop/order/response/OrderRespFindByIdDTO.java)  
-(Code Link): [OrderResponseDTO.java](week2/src/main/java/com/example/kakaoshop/order/response/OrderResponseDTO.java)  
-(Code Link): [ProductDTO.java](week2/src/main/java/com/example/kakaoshop/order/response/ProductDTO.java)  
-(Code Link): [OrderItemDTO.java](week2/src/main/java/com/example/kakaoshop/order/response/OrderItemDTO.java)  
+Link : [OrderRespFindByIdDTO.java](week2/src/main/java/com/example/kakaoshop/order/response/OrderRespFindByIdDTO.java)  
+Link : [OrderResponseDTO.java](week2/src/main/java/com/example/kakaoshop/order/response/OrderResponseDTO.java)  
+Link : [ProductDTO.java](week2/src/main/java/com/example/kakaoshop/order/response/ProductDTO.java)  
+Link : [OrderItemDTO.java](week2/src/main/java/com/example/kakaoshop/order/response/OrderItemDTO.java)  
  
 <br>
 
