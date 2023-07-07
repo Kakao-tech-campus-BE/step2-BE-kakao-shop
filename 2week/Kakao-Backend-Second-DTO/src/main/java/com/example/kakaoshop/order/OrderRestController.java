@@ -34,8 +34,8 @@ public class OrderRestController {
             orderItemDTOList.add(orderItemDTO1);
 
             OrderItemDTO orderItemDTO2 = OrderItemDTO.builder()
-                    .id(4)
-                    .optionName("02. 슬라이딩 지퍼백 크리스마스에디션 5종")
+                    .id(5)
+                    .optionName("02. 슬라이딩 지퍼백 플라워에디션 5종")
                     .quantity(10)
                     .price(109000)
                     .build();
@@ -47,11 +47,11 @@ public class OrderRestController {
             productDTOList.add(
                     ProductDTO.builder()
                             .productName("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전")
-                            .orderItems(orderItemDTOList)
+                            .items(orderItemDTOList)
                             .build()
             );
 
-            OrderRespFindByIdDTO responseDTO = new OrderRespFindByIdDTO(2, productDTOList, 209000);
+            OrderRespFindByIdDTO responseDTO = new OrderRespFindByIdDTO(id, productDTOList, 209000);
             return ResponseEntity.ok(ApiUtils.success(responseDTO));
         }
 
@@ -76,8 +76,8 @@ public class OrderRestController {
         orderItemDTOList.add(orderItemDTO1);
 
         OrderItemDTO orderItemDTO2 = OrderItemDTO.builder()
-                .id(4)
-                .optionName("02. 슬라이딩 지퍼백 크리스마스에디션 5종")
+                .id(5)
+                .optionName("02. 슬라이딩 지퍼백 플라워에디션 5종")
                 .quantity(10)
                 .price(109000)
                 .build();
@@ -89,7 +89,7 @@ public class OrderRestController {
         productDTOList.add(
                 ProductDTO.builder()
                         .productName("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전")
-                        .orderItems(orderItemDTOList)
+                        .items(orderItemDTOList)
                         .build()
         );
 

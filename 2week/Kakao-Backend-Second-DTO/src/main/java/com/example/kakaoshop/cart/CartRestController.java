@@ -67,7 +67,7 @@ public class CartRestController {
     }
 
     @PostMapping("/carts/update")
-    public ResponseEntity<?> update(@RequestBody CartRequest.CartAddDTO[] cartUpdateDTOS){
+    public ResponseEntity<?> update(@RequestBody CartRequest.CartUpdateDTO[] cartUpdateDTOS){
 
         List<CartUpdateItemDTO> cartUpdateItemDTOList = new ArrayList<>();
 

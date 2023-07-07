@@ -12,4 +12,11 @@ public class CartRequest {
         private int quantity;
     }
 
+    @Getter
+    @Setter
+    public static class CartUpdateDTO{
+        private int cartId;
+        private int quantity;
+    }
+
 }
