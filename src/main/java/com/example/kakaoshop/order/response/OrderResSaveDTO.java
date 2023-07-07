@@ -6,21 +6,23 @@ import lombok.Setter;
 
 import java.util.List;
 
+
 @Getter @Setter
-public class OrderResFindByIdDTO {
+public class OrderResSaveDTO {
     private Long id;
     private List<ProductDTO> products;
     private int totalPrice;
 
 
     @Builder
-    public OrderResFindByIdDTO(Long id, List<ProductDTO> products, int totalPrice) {
+    public OrderResSaveDTO(Long id, List<ProductDTO> products, int totalPrice) {
         this.id = id;
         this.products = products;
         this.totalPrice = totalPrice;
     }
 
-    @Getter @Setter
+    @Getter
+    @Setter
     public static class ProductDTO {
         private String productName;
         private List<OrderItemDTO> items;
