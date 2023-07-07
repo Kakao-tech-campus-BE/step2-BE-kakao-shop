@@ -6,7 +6,6 @@ import lombok.Setter;
 
 @Getter @Setter
 public class ProductOptionDTO {
-
     private int id;
     private String optionName;
     private int price;
