@@ -41,7 +41,7 @@ public class UserService {
             throw new CustomException(ErrorCode.DUPLICATE_MEMBER_EMAIL);
         }
 
-        if (isRightEmailType(checkEmailDTO.getEmail())) {
+        if (!isRightEmailType(checkEmailDTO.getEmail())) {
             throw new CustomException(ErrorCode.WRONG_EMAIL_TYPE);
         }
     }
