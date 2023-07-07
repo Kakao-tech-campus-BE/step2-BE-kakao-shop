@@ -23,7 +23,7 @@ public class CartRestController {
 
         // 카트 아이템 리스트에 담기
         CartItemDTO cartItemDTO1 = CartItemDTO.builder()
-                .id(4)
+                .id(1)
                 .quantity(5)
                 .price(50000)
                 .build();
@@ -35,12 +35,12 @@ public class CartRestController {
         cartItemDTOList.add(cartItemDTO1);
 
         CartItemDTO cartItemDTO2 = CartItemDTO.builder()
-                .id(5)
+                .id(2)
                 .quantity(5)
                 .price(54500)
                 .build();
         cartItemDTO2.setOption(ProductOptionDTO.builder()
-                .id(1)
+                .id(2)
                 .optionName("02. 슬라이딩 지퍼백 크리스마스에디션 5종")
                 .price(10900)
                 .build());
