@@ -1,9 +1,9 @@
 package com.example.kakaoshop.order;
 
 import com.example.kakaoshop._core.utils.ApiUtils;
-import com.example.kakaoshop.order.response.OrderItemDTO;
-import com.example.kakaoshop.order.response.OrderProductDTO;
-import com.example.kakaoshop.order.response.OrderRespDTO;
+import com.example.kakaoshop.order.response.OrderItem;
+import com.example.kakaoshop.order.response.OrderProduct;
+import com.example.kakaoshop.order.response.OrderResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,9 +15,9 @@ import java.util.List;
 public class OrderRestController {
     @PostMapping("/save")
     public ResponseEntity<?> orderSave() {
-        List<OrderItemDTO.SaveDTO> itemSaveDTOs = new ArrayList<>();
+        List<OrderItem.SaveDTO> itemSaveDTOs = new ArrayList<>();
 
-        OrderItemDTO.SaveDTO orderItemDTO1 = OrderItemDTO.SaveDTO.builder()
+        OrderItem.SaveDTO orderItemDTO1 = OrderItem.SaveDTO.builder()
                 .id(1)
                 .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
                 .quantity(10)
@@ -25,7 +25,7 @@ public class OrderRestController {
                 .build();
         itemSaveDTOs.add(orderItemDTO1);
 
-        OrderItemDTO.SaveDTO orderItemDTO2 = OrderItemDTO.SaveDTO.builder()
+        OrderItem.SaveDTO orderItemDTO2 = OrderItem.SaveDTO.builder()
                 .id(2)
                 .optionName("02. 슬라이딩 지퍼백 플라워에디션 5종")
                 .quantity(10)
@@ -33,15 +33,15 @@ public class OrderRestController {
                 .build();
         itemSaveDTOs.add(orderItemDTO2);
 
-        List<OrderProductDTO.SaveDTO> productSaveDTOs = new ArrayList<>();
+        List<OrderProduct.SaveDTO> productSaveDTOs = new ArrayList<>();
 
-        OrderProductDTO.SaveDTO orderProductDTO = OrderProductDTO.SaveDTO.builder()
+        OrderProduct.SaveDTO orderProductDTO = OrderProduct.SaveDTO.builder()
                 .productName("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전")
                 .items(itemSaveDTOs)
                 .build();
         productSaveDTOs.add(orderProductDTO);
 
-        OrderRespDTO.SaveDTO responseDTO = OrderRespDTO.SaveDTO.builder()
+        OrderResponse.SaveDTO responseDTO = OrderResponse.SaveDTO.builder()
                 .id(1)
                 .products(productSaveDTOs)
                 .totalPrice(209000)
@@ -52,9 +52,9 @@ public class OrderRestController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> orderFindById(@PathVariable int id) {
-        List<OrderItemDTO.ConfirmDTO> itemConfirmDTOs = new ArrayList<>();
+        List<OrderItem.ConfirmDTO> itemConfirmDTOs = new ArrayList<>();
 
-        OrderItemDTO.ConfirmDTO orderItemDTO1 = OrderItemDTO.ConfirmDTO.builder()
+        OrderItem.ConfirmDTO orderItemDTO1 = OrderItem.ConfirmDTO.builder()
                 .id(1)
                 .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
                 .quantity(10)
@@ -62,7 +62,7 @@ public class OrderRestController {
                 .build();
         itemConfirmDTOs.add(orderItemDTO1);
 
-        OrderItemDTO.ConfirmDTO orderItemDTO2 = OrderItemDTO.ConfirmDTO.builder()
+        OrderItem.ConfirmDTO orderItemDTO2 = OrderItem.ConfirmDTO.builder()
                 .id(2)
                 .optionName("02. 슬라이딩 지퍼백 플라워에디션 5종")
                 .quantity(10)
@@ -70,15 +70,15 @@ public class OrderRestController {
                 .build();
         itemConfirmDTOs.add(orderItemDTO2);
 
-        List<OrderProductDTO.ConfirmDTO> productDTOs = new ArrayList<>();
+        List<OrderProduct.ConfirmDTO> productDTOs = new ArrayList<>();
 
-        OrderProductDTO.ConfirmDTO orderProductDTO = OrderProductDTO.ConfirmDTO.builder()
+        OrderProduct.ConfirmDTO orderProductDTO = OrderProduct.ConfirmDTO.builder()
                 .productName("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전")
                 .items(itemConfirmDTOs)
                 .build();
         productDTOs.add(orderProductDTO);
 
-        OrderRespDTO.ConfirmDTO responseDTO = OrderRespDTO.ConfirmDTO.builder()
+        OrderResponse.ConfirmDTO responseDTO = OrderResponse.ConfirmDTO.builder()
                 .id(id)
                 .products(productDTOs)
                 .totalPrice(209000)

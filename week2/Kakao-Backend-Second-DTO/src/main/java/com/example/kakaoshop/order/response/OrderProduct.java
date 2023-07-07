@@ -4,14 +4,14 @@ import lombok.Builder;
 import lombok.Getter;
 import java.util.List;
 
-public class OrderProductDTO {
+public class OrderProduct {
     @Getter
     public static class SaveDTO {
         private String productName;
-        private List<OrderItemDTO.SaveDTO> items;
+        private List<OrderItem.SaveDTO> items;
 
         @Builder
-        public  SaveDTO(String productName, List<OrderItemDTO.SaveDTO> items) {
+        public  SaveDTO(String productName, List<OrderItem.SaveDTO> items) {
             this.productName = productName;
             this.items = items;
         }
@@ -20,10 +20,10 @@ public class OrderProductDTO {
     @Getter
     public static class ConfirmDTO {
         private String productName;
-        private List<OrderItemDTO.ConfirmDTO> items;
+        private List<OrderItem.ConfirmDTO> items;
 
         @Builder
-        public  ConfirmDTO(String productName, List<OrderItemDTO.ConfirmDTO> items) {
+        public  ConfirmDTO(String productName, List<OrderItem.ConfirmDTO> items) {
             this.productName = productName;
             this.items = items;
         }

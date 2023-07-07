@@ -3,7 +3,7 @@ package com.example.kakaoshop.order.response;
 import lombok.Builder;
 import lombok.Getter;
 
-public class OrderItemDTO {
+public class OrderItem {
     @Getter
     public static class SaveDTO {
         private int id;
