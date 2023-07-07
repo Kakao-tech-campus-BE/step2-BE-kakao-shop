@@ -204,6 +204,10 @@ CREATE TABLE OrderItem (
 | 결제 | /orders | POST |
 | 주문 결과 확인 | /orders/{ordersID} | GET |
 
+- 장바구니 담기 url은 /add (행위)를 제외하고 method로 구별 가능하게 했습니다.
+- 장바구니 수정은 일부 정보만 수정하므로 PATCH method를 사용했습니다. 
+- 결제하기에서도 마찬가지로 /save 를 제외했습니다.   
+
 </br>
 </br>
 
