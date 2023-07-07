@@ -680,11 +680,11 @@ Response
 
 update를 할 때 API에서 요청한 형태가 달라 DTO를 하나 새로 만들어 주었다.
 
-![Untitled](step2-BE-kakao-shop/week2/Untitled.png)
+![Untitled](week2/week2/Untitled.png)
 
 request요청이 들어올 때 request예상에 맞춰 DTO를 만들었다. 추후에 다른 메서드들이 추가되면 한 파일에 request DTO들을 관리할 수 있다.
 
-![Untitled](step2-BE-kakao-shop/week2/Untitled%201.png)
+![Untitled](week2/week2/Untitled%201.png)
 
 **장바구니 추가 API**
 
@@ -694,13 +694,13 @@ update부분은 Putmapping을 사용해서 업데이트를 하는 API임을 명�
 
 **URL : /carts/add**
 
-![Untitled](step2-BE-kakao-shop/week2/Untitled%202.png)
+![Untitled](week2/week2/Untitled%202.png)
 
 **장바구니 수정 API**
 
 **URL : /carts/update**
 
-![Untitled](step2-BE-kakao-shop/week2/Untitled%203.png)
+![Untitled](week2/week2/Untitled%203.png)
 
 ### 2. OrderRestController
 
@@ -710,19 +710,19 @@ update부분은 Putmapping을 사용해서 업데이트를 하는 API임을 명�
 
 주문한 item들의 option을 저장하는 dto이다. product 관련하여 가장 작은 단위이다.
 
-![Untitled](step2-BE-kakao-shop/week2/Untitled%204.png)
+![Untitled](week2/week2/Untitled%204.png)
 
 - OrderItemDTO
 
 주문한 Item이 무엇인지 저장하는 dto이다. 주문한 상품에 대한 정보이며, ItemOptionDTO의 리스트를 속성으로 갖는다.
 
-![Untitled](step2-BE-kakao-shop/week2/Untitled%205.png)
+![Untitled](week2/week2/Untitled%205.png)
 
 - OrderRespFindByIdDTO
 
 주문내역은 모든 ID의 주문내역을 return하는 DTO는 불필요하다고 생각했고, Id로 데이터를 찾는 OrderRespFindByIdDTO는 필수라고 생각했다.
 
-![Untitled](step2-BE-kakao-shop/week2/Untitled%206.png)
+![Untitled](week2/week2/Untitled%206.png)
 
 **주문내역 API**
 
@@ -730,7 +730,7 @@ id에 맞는 주문내역을 read하는 API이므로 Get으로 매핑한다.
 
 **URL : /orders/<int:id>**
 
-![Untitled](step2-BE-kakao-shop/week2/Untitled%207.png)
+![Untitled](week2/week2/Untitled%207.png)
 
 **주문 API**
 
@@ -738,7 +738,7 @@ id에 맞는 주문내역을 read하는 API이므로 Get으로 매핑한다.
 
 **URL : /orders/save**
 
-![Untitled](step2-BE-kakao-shop/week2/Untitled%208.png)
+![Untitled](week2/week2/Untitled%208.png)
 
 ## Mock Test
 
@@ -747,14 +747,14 @@ id에 맞는 주문내역을 read하는 API이므로 Get으로 매핑한다.
     각각의 테스트 유닛은 Cart, Order, Product의 controller 테스트이며, input에 따른 output이 동일한지를 확인하는 블랙박스 테스팅이다. 결과 값이 예측 값과 동일하다면 테스트가 통과되고 그렇지 않다면 오류가 발생한다. mock mvc를 활용하였다.
     
 
-![Untitled](step2-BE-kakao-shop/week2/Untitled%209.png)
+![Untitled](week2/week2/Untitled%209.png)
 
 - 결과
     
     테스트를 통과하여 체크표시와 함께 빌드가 성공한 것을 확인할 수 있다.
     
 
-![Untitled](step2-BE-kakao-shop/week2/Untitled%2010.png)
+![Untitled](week2/week2/Untitled%2010.png)
 
 ---
 
