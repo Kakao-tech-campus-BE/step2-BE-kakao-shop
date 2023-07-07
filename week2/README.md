@@ -1,4 +1,4 @@
-# 2주차 과
+# 2주차 과제
 **요구사항**
 1. 전체 API 주소 설계
 	- API 요구사항 반영
@@ -7,12 +7,15 @@
 	- Spring Boot 컨트롤러 작성
 	- 완성된 소스코드 제출
 
-## 1. 전체 상품 목록 조회
+## Product
+
+### 1. 전체 상품 목록 조회
 ```ad-note
 - Method : Get
 - Local URL : http://localhost:8080/products
 - Param : page={number}
 ```
+
 **구현 사항**
 - `findAll(@RequestParam(defaultValue = "0") int page)`
 	- 전체 상품 목록 조회 API는 Parmeter를 통해 [[페이지네이션]]을 고려하고 있습니다
@@ -57,7 +60,7 @@
     }
 ```
 
-## 2. 개별 상품 상세 조회
+### 2. 개별 상품 상세 조회
 ```ad-note
 - Method : Get
 - Local URL : http://localhost:8080/products/{id}
@@ -96,7 +99,8 @@ public ResponseEntity<?> findById(@PathVariable int id) {
 
 }
 ```
-## 3. 이메일 중복 체크
+## User
+### 3. 이메일 중복 체크
 - Method : Post
 - Local URL : http://localhost:8080/check
 - 요청
@@ -151,7 +155,7 @@ public class EmailValidator {
 }
 ```
 
-## 4. 회원 가입
+### 4. 회원 가입
 - Method : Post
 - Local URL : http://localhost:8080/join
 - 요청
@@ -211,7 +215,7 @@ public class PasswordValidator {
         return ResponseEntity.ok(ApiUtils.success(null) );
     }
 ```
-## 5. 로그인
+### 5. 로그인
 - Method : Post
 - Local URL : http://localhost:8080/login
 - 요청
@@ -250,8 +254,14 @@ public class PasswordValidator {
         return ResponseEntity.ok().header(JWTProvider.HEADER, jwt).body("ok");
     }
 ```
+## Carts
+### API 수정 사항 : 이렇게 되면 어떨까요?
+- 장바구니 조회 : GET - http://localhost:8080/carts/{cartId}
+- 장바구니 저장 : POST - http://localhost:8080/carts
+- 장바구니 수정 : PUT - http://localhost:8080/carts/{cartId}
 
-## 6. 장바구니 담기
+- 장바구니 삭제 : DELETE - http://localhost:8080/carts/{cartId}
+### 6. 장바구니 담기
 - Method : Post
 - Local URL : http://localhost:8080/carts/add
 
@@ -266,7 +276,7 @@ public class PasswordValidator {
 }
 ```
 
-## 7. 장바구니 조회
+### 7. 장바구니 조회
 - Method : Get
 - Local URL : http://localhost:8080/carts
 - 구현 사항
@@ -321,7 +331,7 @@ public class PasswordValidator {
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
 ```
-## 8. 주문하기 - (장바구니 수정)
+### 8. 주문하기 - (장바구니 수정)
 - Method : Post
 - Local URL : http://localhost:8080/carts/update
 
@@ -407,7 +417,8 @@ public class CartsFindAllDTO {
         return ResponseEntity.ok(ApiUtils.success(cartsFindAllDTO));
     }
 ```
-## 9. 결재하기 - (주문 인서트)
+## Orders
+### 9. 결재하기 - (주문 인서트)
 - Method : Post
 - Local URL : http://localhost:8080/orders/save
 
@@ -481,7 +492,7 @@ public class ProductDTO {
 		return ResponseEntity.ok(ApiUtils.success(orderRespFindAllDTO));
 	}
 ```
-## 10. 주문 조회
+### 10. 주문 조회
 - Method : Get
 - Local URL : http://localhost:8080/orders/{id}
 ```java
