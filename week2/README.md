@@ -130,7 +130,7 @@
     ```java
     // ProductRestController
     
-        @GetMapping("/products/{id}")
+    @GetMapping("/products/{id}")
         public ResponseEntity<?> findById(@PathVariable int id) {
         }
     ```
