@@ -264,9 +264,9 @@
 
 ## 2. 가짜 데이터를 설계하여 MOCK API 구현
 - 강사님께서 주신 예제 소스코드를 제외하고, 제가 직접 작성한 코드는 다음과 같습니다.
-  - src/main/java/com/example/kakaoshop/cart/
-  - src/main/java/com/example/kakaoshop/order/
-  - src/test/java/com/example/kakaoshop/cart/CartControllerTest.java
+  - week2/Kakao-Backend-Second-DTO/src/main/java/com/example/kakaoshop/cart/
+  - week2/Kakao-Backend-Second-DTO/src/main/java/com/example/kakaoshop/order/
+  - week2/Kakao-Backend-Second-DTO/src/test/java/com/example/kakaoshop/cart/CartControllerTest.java
 - 최대한 강사님께서 주신 예제 소스코드(구조)를 참고하여 작성하였습니다.
 
 </details>
