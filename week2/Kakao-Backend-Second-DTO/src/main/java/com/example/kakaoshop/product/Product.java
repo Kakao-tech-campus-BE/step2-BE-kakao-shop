@@ -44,7 +44,6 @@ public class Product extends BaseEntity {
         return price;
     }
 
-    // 실제라면 log같은 것을 남길 수 있도록 만드는 것이 좋을 듯 하다.
     // 요즘은 객체 불변성이 중요하다고 알고있어 setter같이 상태를 변화시키기 보다 새 객체를 내어주었습니다.
     // 더 나은 방법을 찾고싶어 디자인 패턴을 조사하는 중 이는 POJO 철학에 위배할 것 같아 해당 방법으로만 작성합니다.
     public Product changePrice(int price){

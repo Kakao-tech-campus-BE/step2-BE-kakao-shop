@@ -47,24 +47,6 @@ public class OrderItem extends BaseEntity {
                 this.price = isValidPrice(price);
         }
 
-        public OrderItem changeOrder(Order order) {
-                return OrderItem.builder()
-                        .order(order)
-                        .productOption(productOption)
-                        .quantity(quantity)
-                        .price(price)
-                        .build();
-        }
-
-        public OrderItem changeProductOption(ProductOption productOption) {
-                return OrderItem.builder()
-                        .order(order)
-                        .productOption(productOption)
-                        .quantity(quantity)
-                        .price(price)
-                        .build();
-        }
-
         public OrderItem changeQuantity(int quantity) {
                 return OrderItem.builder()
                         .order(order)

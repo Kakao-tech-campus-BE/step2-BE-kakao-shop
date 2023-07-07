@@ -37,7 +37,6 @@ public class User extends BaseEntity {
         this.roles = roles;
     }
 
-    // 실제라면 log같은 것을 남길 수 있도록 만드는 것이 좋을 듯 하다.
     // 요즘은 객체 불변성이 중요하다고 알고있어 setter같이 상태를 변화시키기 보다 새 객체를 내어주었습니다.
     // 하지만 password의 경우는 변경을 노출 시키는 것이 맞는지 모르겠습니다.
     public User changePassword(String password) {
