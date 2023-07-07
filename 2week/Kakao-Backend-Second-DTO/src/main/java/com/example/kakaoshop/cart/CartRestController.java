@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 public class CartRestController {
-
+    // 강사님 작성
     @GetMapping("/carts")
     public ResponseEntity<?> findAll() {
         // 카트 아이템 리스트 만들기

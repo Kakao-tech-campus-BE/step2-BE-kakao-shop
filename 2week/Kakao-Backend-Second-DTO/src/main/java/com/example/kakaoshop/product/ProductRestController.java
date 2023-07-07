@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 
+// 강사님 작성
 @RestController
 public class ProductRestController {
-
     @GetMapping("/products")
     public ResponseEntity<?> findAll() {
         List<ProductRespFindAllDTO> responseDTO = new ArrayList<>();

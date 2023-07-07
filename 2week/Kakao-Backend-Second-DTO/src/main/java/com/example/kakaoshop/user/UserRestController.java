@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collections;
 
+// 강사님 작성
 @RestController
 @RequiredArgsConstructor
 public class UserRestController {
