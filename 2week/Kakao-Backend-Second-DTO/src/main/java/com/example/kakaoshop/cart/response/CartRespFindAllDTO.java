@@ -8,11 +8,11 @@ import java.util.List;
 
 @Getter @Setter
 public class CartRespFindAllDTO {
-    private List<ProductDTO> products;
+    private List<ProductRespFindAllDTO> products;
     private int totalPrice;
 
     @Builder
-    public CartRespFindAllDTO(List<ProductDTO> products, int totalPrice) {
+    public CartRespFindAllDTO(List<ProductRespFindAllDTO> products, int totalPrice) {
         this.products = products;
         this.totalPrice = totalPrice;
     }
