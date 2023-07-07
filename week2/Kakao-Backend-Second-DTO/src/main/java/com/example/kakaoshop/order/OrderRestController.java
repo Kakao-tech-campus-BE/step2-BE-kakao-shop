@@ -15,17 +15,18 @@ import java.util.List;
 @RestController
 public class OrderRestController {
 
+    // 주문하기
     @PostMapping("/orders")
     public ResponseEntity<?> save() {
         List<OrderItemDTO> orderItemList = new ArrayList<>();
         orderItemList.add(OrderItemDTO.builder()
                 .id(4)
-                .optionName("01. 슬라이딩 지퍼백 크리스마에디션 4종")
+                .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
                 .quantity(10)
                 .price(100000).build());
         orderItemList.add(OrderItemDTO.builder()
                 .id(5)
-                .optionName("02. 슬라이딩 지퍼백 플라워에디 5종")
+                .optionName("02. 슬라이딩 지퍼백 플라워에디션 5종")
                 .quantity(10)
                 .price(109000).build());
 
@@ -44,6 +45,7 @@ public class OrderRestController {
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
 
+    // 주문 정보 조회
     @GetMapping("/orders/{id}")
     public ResponseEntity<?> findById(@PathVariable int id){
 

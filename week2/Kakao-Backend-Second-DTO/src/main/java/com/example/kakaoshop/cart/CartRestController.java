@@ -95,7 +95,7 @@ public class CartRestController {
                 .price(100000).build();
         CartItemDTO1.setOption(CartProductOptionUpdateDTO.builder()
                 .id(1)
-                .optionName("0  1. 슬라이딩 지퍼백 크리스마스 에디션 4종").build());
+                .optionName("1. 슬라이딩 지퍼백 크리스마스 에디션 4종").build());
 
         cartItemList.add(CartItemDTO1);
 
@@ -115,8 +115,6 @@ public class CartRestController {
                 .cartItems(cartItemList).build());
 
         CartUpdateRespDTO responseDTO = new CartUpdateRespDTO(productList, 209000);
-
-
 
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }

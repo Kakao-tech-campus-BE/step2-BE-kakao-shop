@@ -9,6 +9,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 
@@ -42,6 +43,37 @@ public class CartRestControllerTest {
         resultActions.andExpect(jsonPath("$.response.products[0].cartItems[0].option.price").value(10000));
         resultActions.andExpect(jsonPath("$.response.products[0].cartItems[0].quantity").value(5));
         resultActions.andExpect(jsonPath("$.response.products[0].cartItems[0].price").value(50000));
+
+    }
+
+    @Test
+    @WithMockUser
+    // 전체 상품 목록 조회
+    public void update_test() throws Exception {
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                put("/carts")
+        );
+
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("true"));
+        resultActions.andExpect(jsonPath("$.response.products[0].cartItems[0].id").value(4));
+        resultActions.andExpect(jsonPath("$.response.products[0].cartItems[0].quantity").value(10));
+        resultActions.andExpect(jsonPath("$.response.products[0].cartItems[0].price").value(100000));
+        resultActions.andExpect(jsonPath("$.response.products[0].cartItems[0].option.id").value(1));
+        resultActions.andExpect(jsonPath("$.response.products[0].cartItems[0].option.optionName").value("1. 슬라이딩 지퍼백 크리스마스 에디션 4종"));
+
+        resultActions.andExpect(jsonPath("$.response.products[0].cartItems[1].id").value(5));
+        resultActions.andExpect(jsonPath("$.response.products[0].cartItems[1].quantity").value(10));
+        resultActions.andExpect(jsonPath("$.response.products[0].cartItems[1].price").value(109000));
+        resultActions.andExpect(jsonPath("$.response.products[0].cartItems[1].option.id").value(2));
+        resultActions.andExpect(jsonPath("$.response.products[0].cartItems[1].option.optionName").value("02. 슬라이딩 지퍼백 플라워에디션 5종"));
+
+        resultActions.andExpect(jsonPath("$.response.totalPrice").value(209000));
 
     }
 }
