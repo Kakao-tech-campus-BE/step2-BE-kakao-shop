@@ -416,7 +416,7 @@ POST 메서드를 이용하므로 굳이 add를 다시 붙일 필요가 없기 �
 - 장바구니 업데이트
 
 ```
-POST /carts
+PUT /carts
 
 [ {
   "cartId" : 1,
