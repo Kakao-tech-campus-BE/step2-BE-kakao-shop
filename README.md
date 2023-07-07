@@ -917,6 +917,50 @@ order_item_id 로 구분
 | 결재하기 | orders/save | POST |
 | 주문 결과 확인 | orders/{order_id} | GET |
 
+
+## 과제2-2
+API 명세서 기준으로 응답데이터를 똑같이 만들어 구현
+
+팀원이 올려준 json 파일을 토대로 mock api를 구현해서 동일한 형태로 데이터가 응답되는지 확인
+
+![image](./image/task2/task2-2/task2-2-1.png)
+
+1. 회원가입
+
+   ![image](./image/task2/task2-2/task2-2-2.png)
+
+2. 로그인
+
+   ![image](./image/task2/task2-2/task2-2-3.png)
+
+3. 전체 상품 목록 조회
+
+   ![image](./image/task2/task2-2/task2-2-4.png)
+
+4. 개별 상품 조회
+
+   ![image](./image/task2/task2-2/task2-2-5.png)
+
+5. 장바구니 담기
+
+   ![image](./image/task2/task2-2/task2-2-6.png)
+
+6. 장바구니 조회
+
+   ![image](./image/task2/task2-2/task2-2-7.png)
+
+7. 장바구니 수정
+
+   ![image](./image/task2/task2-2/task2-2-8.png)
+
+8. 결재하기
+
+   ![image](./image/task2/task2-2/task2-2-9.png)
+
+9. 주문 결과 확인
+
+   ![image](./image/task2/task2-2/task2-2-10.png)
+
 # 3주차
 
 카카오 테크 캠퍼스 2단계 - BE - 3주차 클론 과제
