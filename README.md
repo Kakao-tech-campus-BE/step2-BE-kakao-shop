@@ -639,7 +639,7 @@ cartid와 최종 개수를 받아 배열로 전송
         "products": [
             {
                 "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전",
-                "items": [
+                "OrderItemDTO": [
                     {
                         "id": 1,
                         "optionName": "01. 슬라이딩 지퍼백 크리스마스에디션 4종",
@@ -683,7 +683,7 @@ order 테이블에 들어갈 내용들, products, option 내용이 들어감
         "products": [
             {
                 "productName": "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전",
-                "items": [
+                "OrderItemDTO": [
                     {
                         "id": 1,
                         "optionName": "01. 슬라이딩 지퍼백 크리스마스에디션 4종",

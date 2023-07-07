@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class items {
+public class OrderItemDTO {
     private int id;
     private String optionName;
     private int quantity;
@@ -14,7 +14,7 @@ public class items {
 
 
     @Builder
-    public items(int id, String optionName, int quantity, int price) {
+    public OrderItemDTO(int id, String optionName, int quantity, int price) {
         this.id = id;
         this.optionName = optionName;
         this.quantity = quantity;
