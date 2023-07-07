@@ -350,6 +350,393 @@ CREATE TABLE `order_item_tb` (
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
+## **과제명**
+<details>
+    <summary>1. API주소를 설계하여 README에 내용을 작성하시오.</summary>
+
+<details>
+<summary>3. DTO 설계 규칙</summary>
+
+하나의 URI에 대해 요청과 응답의 DTO 설계 규칙을 정하고  
+각 요청과 응답은 아래의 형식을 지키고 있다.
+하나의 클래스 안에 이너 클래스 형식으로 구성요소들을 구성하여 벗어나지 못하도록 했다.
+### Request
+```
+@Getter
+public class [action]RequestDTO {
+    private [type] [member variable name];
+}
+```
+### Response
+```
+@Getter
+@Builder
+public class [action]ResponseDTO {
+    private [type] [member variable name];
+
+    // constructor;
+}
+```
+</details>
+
+## 변경 사항
+인증 관련 URI는 통합되어 있지 않아 하나로 묶여있다고 알 수 없다. 그래서 이를 표현하고자 /auth prefix를 추가하여 일관성을 유지하고자 했다. 추가로 다른 도메인의 URI도 공통 prefix가 존재하여 도메인 컨트롤러에 @RequestMapping을 추가하여 중복을 최소화 했다.
+### 인증(prefix : /auth)
+
+| method | URI | New-URI | Description |
+| --- | --- | --- | --- |
+| POST | /join | /join | 회원가입 |
+| POST | /login | /login | 로그인 |
+
+### 제품(prefix : /products)
+
+| method | URI | params | Description |
+| --- | --- | --- | --- |
+| GET |  | page | 전체 상품 목록 조회 |
+| GET | /[product_idx] |  | 개별 상품 조회 |
+
+### 장바구니(prefix : /carts)
+
+| method | URI | Description |
+| --- | --- | --- |
+| POST | /add  | 장바구니 담기 |
+| GET |  | 장바구니 조회 |
+| POST | /update | 장바구니 수정 |
+
+### 주문(prefix : /orders)
+
+| method | URI | Description |
+| --- | --- | --- |
+| POST | /save | 결재하기 |
+| GET | /[order_index] | 주문 결과 확인 |
+</details>
+<details>
+<summary>2. 가짜 데이터를 설계하여 응답하는 스프링부트 컨트롤러를 작성하고 소스코드를 업로드하시오.</summary>
+
+### 인증
+```
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/auth")
+public class UserRestController {
+    private final UserJPARepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
+
+    @PostMapping("/join")
+    public ResponseEntity<?> join(@RequestBody UserRequest.JoinDTO joinDTO) {
+        User user = User.builder()
+                .email(joinDTO.getEmail())
+                .password(passwordEncoder.encode(joinDTO.getPassword()))
+                .username(joinDTO.getUsername())
+                .roles("ROLE_USER")
+                .build();
+
+        userRepository.save(user);
+
+        return ResponseEntity.ok().body(ApiUtils.success(null));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody UserRequest.LoginDTO loginDTO) {
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
+                = new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword());
+        Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+        CustomUserDetails myUserDetails = (CustomUserDetails) authentication.getPrincipal();
+        String jwt = JWTProvider.create(myUserDetails.getUser());
+
+        return ResponseEntity.ok().header(JWTProvider.HEADER, jwt).body(ApiUtils.success(null));
+    }
+}
+```
+### 제품
+```
+@RestController
+@RequestMapping("/products")
+public class ProductRestController {
+    @GetMapping("")
+    public ResponseEntity<?> findAll(@RequestParam int page) {
+        List<ProductFindAllResponseDTO.Response> responseDTO = new ArrayList<>();
+
+        // 상품 하나씩 집어넣기
+        responseDTO.add(new ProductFindAllResponseDTO.Response(
+                1, "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전", "", "/images/1.jpg", 1000
+        ));
+        responseDTO.add(new ProductFindAllResponseDTO.Response(
+                2, "[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율", "", "/images/2.jpg", 2000
+        ));
+        responseDTO.add(new ProductFindAllResponseDTO.Response(
+                3, "삼성전자 JBL JR310 외 어린이용/성인용 헤드셋 3종!", "", "/images/3.jpg", 30000
+        ));
+        responseDTO.add(new ProductFindAllResponseDTO.Response(
+                4, "바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종", "", "/images/4.jpg", 4000
+        ));
+        responseDTO.add(new ProductFindAllResponseDTO.Response(
+                5, "[더주] 컷팅말랑장족, 숏다리 100g/300g 외 주전부리 모음 /중독성 최고/마른안주", "", "/images/5.jpg", 5000
+        ));
+        responseDTO.add(new ProductFindAllResponseDTO.Response(
+                6, "굳지않는 앙금절편 1,050g 2팩 외 우리쌀떡 모음전", "", "/images/6.jpg", 15900
+        ));
+        responseDTO.add(new ProductFindAllResponseDTO.Response(
+                7, "eoe 이너딜리티 30포, 오렌지맛 고 식이섬유 보충제", "", "/images/7.jpg", 26800
+        ));
+        responseDTO.add(new ProductFindAllResponseDTO.Response(
+                8, "제나벨 PDRN 크림 2개. 피부보습/진정 케어", "", "/images/8.jpg", 25900
+        ));
+        responseDTO.add(new ProductFindAllResponseDTO.Response(
+                9, "플레이스테이션 VR2 호라이즌 번들. 생생한 몰입감", "", "/images/9.jpg", 797000
+        ));
+
+
+        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findById(@PathVariable int id) {
+        // 상품을 담을 DTO 생성
+        ProductFindByIdResponseDTO.Response responseDTO = null;
+
+        if(id == 1){
+            List<ProductFindByIdResponseDTO.Option> optionDTOList = new ArrayList<>();
+            optionDTOList.add(new ProductFindByIdResponseDTO.Option(1, "01. 슬라이딩 지퍼백 크리스마스에디션 4종", 10000));
+            optionDTOList.add(new ProductFindByIdResponseDTO.Option(2, "02. 슬라이딩 지퍼백 플라워에디션 5종", 10900));
+            optionDTOList.add(new ProductFindByIdResponseDTO.Option(3, "고무장갑 베이지 S(소형) 6팩", 9900));
+            optionDTOList.add(new ProductFindByIdResponseDTO.Option(4, "뽑아쓰는 키친타올 130매 12팩", 16900));
+            optionDTOList.add(new ProductFindByIdResponseDTO.Option(5, "2겹 식빵수세미 6매", 8900));
+            responseDTO = new ProductFindByIdResponseDTO.Response(1, "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전", "", "/images/1.jpg", 1000, 5, optionDTOList);
+        }else if(id == 2){
+            List<ProductFindByIdResponseDTO.Option> optionDTOList = new ArrayList<>();
+            optionDTOList.add(new ProductFindByIdResponseDTO.Option(6, "22년산 햇단밤 700g(한정판매)", 9900));
+            optionDTOList.add(new ProductFindByIdResponseDTO.Option(7, "22년산 햇단밤 1kg(한정판매)", 14500));
+            optionDTOList.add(new ProductFindByIdResponseDTO.Option(8, "밤깎기+다회용 구이판 세트", 5500));
+            responseDTO = new ProductFindByIdResponseDTO.Response(2, "[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율", "", "/images/2.jpg", 2000, 5, optionDTOList);
+        }else {
+            return ResponseEntity.badRequest().body(ApiUtils.error("해당 상품을 찾을 수 없습니다 : " + id, HttpStatus.BAD_REQUEST));
+        }
+
+        return ResponseEntity.ok(ApiUtils.success(responseDTO));
+    }
+}
+```
+### 장바구니
+```
+@RestController
+@RequestMapping("/carts")
+public class CartRestController {
+    @PostMapping("/update")
+    public ResponseEntity<?> updateOption(@RequestBody List<UpdateOptionRequestDTO> updateDTOList) {
+        List<UpdateOptionResponseDTO.Item> itemList = new ArrayList<>();
+        itemList.add(
+                UpdateOptionResponseDTO.Item.builder()
+                        .cartId(4)
+                        .optionId(1)
+                        .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
+                        .quantity(10)
+                        .price(100000)
+                        .build());
+
+        itemList.add(
+                UpdateOptionResponseDTO.Item.builder()
+                        .cartId(5)
+                        .optionId(2)
+                        .optionName("02. 슬라이딩 지퍼백 플라워에디션 5종")
+                        .quantity(10)
+                        .price(109000)
+                        .build());
+
+        UpdateOptionResponseDTO.Response responseDTO = UpdateOptionResponseDTO.Response.builder()
+                .carts(itemList)
+                .totalPrice(209000)
+                .build();
+        return ResponseEntity.ok(ApiUtils.success(responseDTO));
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<?> addOption(@RequestBody List<AddOptionRequestDTO.Request> requests) {
+        return ResponseEntity.ok(ApiUtils.success(null));
+    }
+
+    @GetMapping("")
+    public ResponseEntity<?> findAll() {
+        // 카트 아이템 리스트 만들기
+        List<FindAllResponseDTO.Item> items = new ArrayList<>();
+
+        FindAllResponseDTO.Option option1 = FindAllResponseDTO.Option.builder()
+                .id(1)
+                .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
+                .price(10000)
+                .build();
+
+        // 카트 아이템 리스트에 담기
+        FindAllResponseDTO.Item cartItemDTO1 = FindAllResponseDTO.Item.builder()
+                .id(4)
+                .quantity(5)
+                .price(50000)
+                .option(option1)
+                .build();
+        items.add(cartItemDTO1);
+
+
+        FindAllResponseDTO.Option option2 = FindAllResponseDTO.Option.builder()
+                .id(2)
+                .optionName("02. 슬라이딩 지퍼백 플라워에디션 5종")
+                .price(10900)
+                .build();
+        FindAllResponseDTO.Item cartItemDTO2 = FindAllResponseDTO.Item.builder()
+                .id(5)
+                .quantity(5)
+                .price(54500)
+                .option(option2)
+                .build();
+        items.add(cartItemDTO2);
+
+        // productDTO 리스트 만들기
+        List<FindAllResponseDTO.Product> productDTOList = new ArrayList<>();
+
+        // productDTO 리스트에 담기
+        productDTOList.add(
+                FindAllResponseDTO.Product.builder()
+                        .id(1)
+                        .productName("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전")
+                        .carts(items)
+                        .build());
+
+        FindAllResponseDTO.Response responseDTO = FindAllResponseDTO.Response.builder()
+                .products(productDTOList)
+                .totalPrice(104500)
+                .build();
+
+        return ResponseEntity.ok(ApiUtils.success(responseDTO));
+    }
+}
+```
+### 주문
+```
+@RestController
+@RequestMapping("/orders")
+public class OrderRestController {
+    @PostMapping("/save")
+    public ResponseEntity<?> save() {
+        OrderFindResponseDTO.Item item1 = OrderFindResponseDTO.Item.builder()
+                .id(4)
+                .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
+                .quantity(10)
+                .price(100000)
+                .build();
+
+        OrderFindResponseDTO.Item item2 = OrderFindResponseDTO.Item.builder()
+                .id(5)
+                .optionName("02. 슬라이딩 지퍼백 플라워에디션 5종")
+                .quantity(10)
+                .price(109000)
+                .build();
+
+        List<OrderFindResponseDTO.Item> itemList = new ArrayList<>();
+        itemList.add(item1);
+        itemList.add(item2);
+
+        OrderFindResponseDTO.Product orderProduct = OrderFindResponseDTO.Product.builder()
+                .productName("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션외 주방용품 특가전")
+                .items(itemList)
+                .build();
+
+        List<OrderFindResponseDTO.Product> products = new ArrayList<>();
+        products.add(orderProduct);
+
+        OrderFindResponseDTO.Response responseDTO = OrderFindResponseDTO.Response.builder()
+                .id(2)
+                .products(products)
+                .totalPrice(209000)
+                .build();
+
+        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
+    }
+
+    @GetMapping("/{idx}")
+    public ResponseEntity<?> findById(@PathVariable("idx") int idx) {
+        OrderSaveResponseDTO.Item item1 = OrderSaveResponseDTO.Item.builder()
+                .id(4)
+                .optionName("01. 슬라이딩 지퍼백 크리스마스 에디션 4종")
+                .quantity(10)
+                .price(100000)
+                .build();
+
+        OrderSaveResponseDTO.Item item2 = OrderSaveResponseDTO.Item.builder()
+                .id(5)
+                .optionName("02. 슬라이딩 지퍼백 플라워에디션 4종")
+                .quantity(10)
+                .price(109000)
+                .build();
+
+        List<OrderSaveResponseDTO.Item> orderItemList = new ArrayList<>();
+        orderItemList.add(item1);
+        orderItemList.add(item2);
+
+        OrderSaveResponseDTO.Product orderProduct = OrderSaveResponseDTO.Product.builder()
+                .productName("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전")
+                .items(orderItemList)
+                .build();
+
+        List<OrderSaveResponseDTO.Product> products = new ArrayList<>();
+        products.add(orderProduct);
+
+        OrderSaveResponseDTO.Response responseDTO = OrderSaveResponseDTO.Response.builder()
+                .id(2)
+                .products(products)
+                .totalPrice(209000)
+                .build();
+
+        List<OrderSaveResponseDTO.Response> responseDTOs = new ArrayList<>();
+        responseDTOs.add(responseDTO);
+        OrderSaveResponseDTO.Response order1 = OrderSaveResponseDTO.Response.builder()
+                .id(2)
+                .products(products)
+                .totalPrice(209000)
+                .build();
+        responseDTOs.add(responseDTO);
+
+        return ResponseEntity.ok().body(ApiUtils.success(responseDTOs.get(idx-1)));
+    }
+}
+```
+</details>
+
+<details>
+<summary>3. DTO 설계 원칙 정의</summary>
+
+하나의 요청에 대해서 response와 request 를 저장하는 DTO를 설계했다.  
+하나의 파일에서 이너클래스를 통하여 외부로 벗어나지 않도록 했다.  
+DTO 처리 일관성을 위해서 @Setter 제거했다.  
+설계된 모든 DTO는 아래와 같은 양식을 따른다.  
+### Response
+```
+@Getter
+public class [action]ResponseDTO {
+    // member variable
+    private static [type] [variable name]
+}
+```
+### Request
+```
+@Getter
+@Builder
+public class [action]RequestDTO {
+    // member variable
+    private static [type] [variable name]
+
+    // constructor
+}
+```
+</details>
+
+<details>
+<summary>4. Mock API를 구성하여 테스트한 결과</summary>
+
+API 문서의 응답 결과를 postman을 통해 검증하였다.  
+[postman API 테스트 모음](<readme-src/references/API 명세서 기반 요청들.postman_collection.json>)
+응답 결과가 정확히 일치하는지 테스트를 했고 결과적으로 전부 일치한 결과를 얻을 수 있었다.  
+</details>
+
 # 3주차
 
 카카오 테크 캠퍼스 2단계 - BE - 3주차 클론 과제
