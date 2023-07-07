@@ -53,8 +53,8 @@ iii# step2-BE-kakao-shop
 5. 상품 검색 기능
 
 #### 예시 ( 쿠팡, 카카오 쇼핑하기 비교 )
-<p><img src="./images/coupang.png"></img></p>
-<p><img src="./images/kakao_main.png"></img></p>
+<p><img src="./1week/images/coupang.png"></img></p>
+<p><img src="./1week/images/kakao_main.png"></img></p>
 
 #### 쿠팡처럼 검색기능, 카테고리 선택 기능 등 여러 기능들을 추가하면 좋을 것이라 생각했습니다.
 
@@ -102,38 +102,38 @@ iii# step2-BE-kakao-shop
 >- 응답되는 데이터가 프론트앤드 화면에 모두 반영될 수 있는지를 체크하였는가?(예를 들어 배송관련 비용이 있는데, 이런것들이 API에는 없는데 이런 부분을 캐치할 수 있는지)
 
 ### 전체 상품 목록 조회 : 없음
-<p><img src="./images/postman/1.png"></img></p>
+<p><img src="./1week/images/postman/1.png"></img></p>
 
 #### Param 을 사용하여 전체 상품 목록 조회 : 없음
-<p><img src="./images/postman/2.png"></img></p>
+<p><img src="./1week/images/postman/2.png"></img></p>
 
 ### 개별 상품 상세 조회 : 배송과 관련된 데이터가 없음
-<p><img src="./images/postman/3.png"></img></p>
+<p><img src="./1week/images/postman/3.png"></img></p>
 
 ### 이메일 중복 체크 : 없음
-<p><img src="./images/postman/4.png"></img></p>
+<p><img src="./1week/images/postman/4.png"></img></p>
 
 ### 회원가입 : 없음
 여기서 같은 이름도 잡을 필요가 있는지? 하고 잠깐 생각을 해봤는데, 동명이인도 있을 수 있으니 필요 없다고 생각했습니다.
-<p><img src="./images/postman/5.png"></img></p>
+<p><img src="./1week/images/postman/5.png"></img></p>
 
 ### 로그인 : 없음
-<p><img src="./images/postman/6.png"></img></p>
+<p><img src="./1week/images/postman/6.png"></img></p>
 
 ### 장바구니 담기 : 없음
-<p><img src="./images/postman/7.png"></img></p>
+<p><img src="./1week/images/postman/7.png"></img></p>
 
 ### 장바구니 조회 : 여기서 배송비가 붙어서 주문 예상 금액에 반영되면 좋을 것 같습니다.
-<p><img src="./images/postman/8.png"></img></p>
+<p><img src="./1week/images/postman/8.png"></img></p>
 
 ### 주문하기 - ( 장바구니 수정 ) : 없음
-<p><img src="./images/postman/9.png"></img></p>
+<p><img src="./1week/images/postman/9.png"></img></p>
 
 ### 결재하기 - ( 주문 인서트 ) : 없음
-<p><img src="./images/postman/10.png"></img></p>
+<p><img src="./1week/images/postman/10.png"></img></p>
 
 ### 주문 결과 확인 : 없음
-<p><img src="./images/postman/11.png"></img></p>
+<p><img src="./1week/images/postman/11.png"></img></p>
 
 ---
 
@@ -142,7 +142,7 @@ iii# step2-BE-kakao-shop
 >- 테이블 설계가 모든 API를 만족할 수 있게 나왔는가? (테이블이 효율적으로 나왔는가 보다는 해당 테이블로 요구사항을 만족할 수 있는지에 대한 여부만)
 >- 테이블명이 이해하기 쉽게 만들어졌는가? (상품테이블이 product이면 이해하기 쉽지만, material이라고 하면 이해하기 어렵기 때문)
 
-<p><img src="./images/postman/erd.png"></img></p>
+<p><img src="./1week/images/postman/erd.png"></img></p>
 
 ## 제약사항
 
