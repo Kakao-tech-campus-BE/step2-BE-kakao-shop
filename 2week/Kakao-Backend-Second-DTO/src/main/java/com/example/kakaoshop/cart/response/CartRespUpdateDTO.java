@@ -9,11 +9,11 @@ import java.util.List;
 // 장바구니 수량 수정 시 사용되는 dto
 @Getter @Setter
 public class CartRespUpdateDTO {
-    private List<CartItemUpdateDTO> cartItemList;
+    private List<CartItemResUpdateDTO> cartItemList;
     private int totalPrice;
 
     @Builder
-    public CartRespUpdateDTO(List<CartItemUpdateDTO> cartItemList, int totalPrice) {
+    public CartRespUpdateDTO(List<CartItemResUpdateDTO> cartItemList, int totalPrice) {
         this.cartItemList = cartItemList;
         this.totalPrice = totalPrice;
     }
