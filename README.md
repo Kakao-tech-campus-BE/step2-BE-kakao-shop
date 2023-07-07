@@ -240,7 +240,6 @@ public class Order extends BaseEntity{
     private List<OrderItem> item_list = new ArrayList<>();
 
 }
-```
 
 
 # Step-2.-Week-2 #
