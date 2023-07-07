@@ -28,13 +28,13 @@
 </br>
 
 ## **전체 API 주소 설계**
-** 전체 상품 목록 조회 ** -> (GET) /products
-** 개별 상품 상세 조회 ** -> (GET) /products/{id}
-** 이메일 중복 체크 ** -> (POST) /check
-** 회원가입 ** -> (POST) /join
-** 로그인 ** -> (POST) /login
-** 장바구니 보기 ** -> (GET) /carts
-** 장바구니 담기 ** -> (POST) /carts/add
-** 장바구니 수정 ** -> (POST) /carts/update
-** 결제 ** -> (POST) /orders/save
-** 주문 결과 확인 ** -> (GET) /orders/{id}
+- **전체 상품 목록 조회** -> (GET) /products
+- **개별 상품 상세 조회** -> (GET) /products/{id}
+- **이메일 중복 체크** -> (POST) /check
+- **회원가입** -> (POST) /join
+- **로그인** -> (POST) /login
+- **장바구니 보기** -> (GET) /carts
+- **장바구니 담기** -> (POST) /carts/add
+- **장바구니 수정** -> (POST) /carts/update
+- **결제** -> (POST) /orders/save
+- **주문 결과 확인** -> (GET) /orders/{id}
