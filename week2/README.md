@@ -33,7 +33,7 @@
     ```java
     // ProductRestController
     
-    	@GetMapping("/products")
+    @GetMapping("/products")
         public ResponseEntity<?> findAll(@RequestParam(value="page", required = false, defaultValue = "0") int page) {
         }
     ```
@@ -218,7 +218,7 @@
     ```java
     // CartRestController
     
-    	@PostMapping("/carts")
+    @PostMapping("/carts")
         public ResponseEntity<?> add() {
             return ResponseEntity.ok(ApiUtils.success(null));
         }
@@ -260,7 +260,7 @@
     ```java
     // CartRestController
     
-    	@GetMapping("/carts")
+    @GetMapping("/carts")
         public ResponseEntity<?> findAll() {
         }
     ```
@@ -348,7 +348,7 @@
     ```java
     // CartRestController
     
-    	@PatchMapping("/carts")
+    @PatchMapping("/carts")
         public ResponseEntity<?> update() {
         }
     ```
@@ -409,7 +409,7 @@
     ```java
     // OrderRestController
     
-    	@PostMapping("/orders")
+    @PostMapping("/orders")
         public ResponseEntity<?> add() {
         }
     ```
@@ -470,6 +470,7 @@
     
     @GetMapping("/orders/{id}")
         public ResponseEntity<?> findById(@PathVariable int id) {
+        }
     ```
     
 - Response Body
