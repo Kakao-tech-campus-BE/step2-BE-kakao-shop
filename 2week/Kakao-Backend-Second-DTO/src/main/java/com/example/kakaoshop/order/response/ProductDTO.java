@@ -1,4 +1,4 @@
-package com.example.kakaoshop.cart.response;
+package com.example.kakaoshop.order.response;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -8,14 +8,13 @@ import java.util.List;
 
 @Getter @Setter
 public class ProductDTO {
-    private int id;
     private String productName;
-    private List<CartItemDTO> carts;
+    List<OrderItemDTO> items;
 
     @Builder
-    public ProductDTO(int id, String productName, List<CartItemDTO> carts) {
-        this.id = id;
+    public ProductDTO(String productName, List<OrderItemDTO> items) {
         this.productName = productName;
-        this.carts = carts;
+        this.items = items;
     }
+
 }
