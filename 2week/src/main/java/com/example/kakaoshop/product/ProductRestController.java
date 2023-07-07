@@ -30,10 +30,10 @@ public class ProductRestController {
                 3, "삼성전자 JBL JR310 외 어린이용/성인용 헤드셋 3종!", "", "/images/3.jpg", 30000
         ));
         responseDTO.add(new ProductRespFindAllDTO(
-                4, "바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종", "", "/images/4.jpg", 4000
+                4, "바른 누룽지맛 발효효소 2박스 역가수치보장/외 7종", "", "/images/4.jpg", 4000
         ));
         responseDTO.add(new ProductRespFindAllDTO(
-                5, "[더주] 컷팅말랑장족, 숏다리 100g/300g 외 주전부리 모음 /중독성 최고/마른안주", "", "/images/5.jpg", 5000
+                5, "[더주] 컷팅말랑장족, 숏다리 100g/300g 외 주전부리 모음/중독성 최고/마른안주", "", "/images/5.jpg", 5000
         ));
         responseDTO.add(new ProductRespFindAllDTO(
                 6, "굳지않는 앙금절편 1,050g 2팩 외 우리쌀떡 모음전", "", "/images/6.jpg", 15900
