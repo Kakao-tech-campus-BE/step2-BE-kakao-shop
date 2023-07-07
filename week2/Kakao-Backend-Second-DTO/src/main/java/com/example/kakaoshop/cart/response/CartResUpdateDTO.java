@@ -8,12 +8,18 @@ import java.util.List;
 
 @Getter @Setter
 public class CartResUpdateDTO {
-    private int totalPrice;
-    private List<ProductDTO> products;
-
+    private int cartId;
+    private int optionId;
+    private String optionName;
+    private int quantity;
+    private int price;
     @Builder
-    public CartResUpdateDTO(int totalPrice, List<ProductDTO> products) {
-        this.totalPrice = totalPrice;
-        this.products = products;
+
+    public CartResUpdateDTO(int cartId, int optionId, String optionName, int quantity, int price) {
+        this.cartId = cartId;
+        this.optionId = optionId;
+        this.optionName = optionName;
+        this.quantity = quantity;
+        this.price = price;
     }
 }
