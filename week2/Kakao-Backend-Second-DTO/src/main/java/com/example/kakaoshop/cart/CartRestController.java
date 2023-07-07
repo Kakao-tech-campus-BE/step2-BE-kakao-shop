@@ -62,12 +62,12 @@ public class CartRestController {
     }
 
     @PostMapping("/carts/add")
-    public ResponseEntity<?> addCart(@RequestBody List<InsertCartRequest> commands) {
+    public ResponseEntity<?> addCart(@RequestBody List<InsertCartRequest> requests) {
         return ResponseEntity.ok().body(ApiUtils.success(null));
     }
 
     @PostMapping("/carts/update")
-    public ResponseEntity<?> updateCart(@RequestBody List<UpdateCartRequest> commands) {
+    public ResponseEntity<?> updateCart(@RequestBody List<UpdateCartRequest> requests) {
         List<UpdatedCartItemDTO> updatedCartItemDTOList = new ArrayList<>();
         updatedCartItemDTOList.add(UpdatedCartItemDTO.builder()
                 .cartId(4)
