@@ -1,10 +1,20 @@
 package com.example.kakaoshop.order.request;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+@Getter @Setter
+public class OrderItemDTO {
+    private int id;
+    private String optionName;
+    private int quantity;
+    private int price;
 
-@Getter
-@Setter
-public class OrderSaveDTO {
-    private int userId; // User ID from the header
+    @Builder
+    public OrderItemDTO(int id, String optionName, int quantity, int price) {
+        this.id = id;
+        this.optionName = optionName;
+        this.quantity = quantity;
+        this.price = price;
+    }
 }
