@@ -7,13 +7,13 @@ import lombok.Setter;
 import java.util.List;
 
 @Getter @Setter
-public class OrderDTO {
+public class RespFindByIdDTO {
     private int id;
-    private List<OrderProductDTO> products;
+    private List<OrderResultProductDTO> products;
     private int totalPrice;
 
     @Builder
-    public OrderDTO(int id, List<OrderProductDTO> orders, int totalPrice) {
+    public RespFindByIdDTO(int id, List<OrderResultProductDTO> orders, int totalPrice) {
         this.id = id;
         this.products = orders;
         this.totalPrice = totalPrice;

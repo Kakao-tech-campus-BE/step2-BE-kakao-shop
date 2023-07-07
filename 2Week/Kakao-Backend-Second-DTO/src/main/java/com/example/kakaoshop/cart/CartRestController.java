@@ -36,7 +36,7 @@ public class CartRestController {
                 .price(54500)
                 .build();
         cartItemDTO2.setOption(ProductOptionDTO.builder()
-                                .id(1)
+                                .id(2)
                                 .optionName("02. 슬라이딩 지퍼백 크리스마스에디션 5종")
                                 .price(10900)
                                 .build());
@@ -54,17 +54,17 @@ public class CartRestController {
                         .build()
         );
 
-        CartRespFindAllDTO responseDTO = new CartRespFindAllDTO(productDTOList, 104500);
+        RespFindAllDTO responseDTO = new RespFindAllDTO(productDTOList, 104500);
 
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
 
-    @PostMapping("/carts/add")
-    public ResponseEntity<?> addProductInCarts(@RequestBody CartRequest.AddDTO addDTO){
+    @PostMapping("/carts")
+    public ResponseEntity<?> addProduct(@RequestBody List<CartRequest.AddDTO> addDTO){
         return ResponseEntity.ok(ApiUtils.success(null));
     }
 
-    @PatchMapping("/carts/update")
+    @PatchMapping("/carts")
     public ResponseEntity<?> updateCarts(@RequestBody List<CartRequest.UpdateDTO> updateDTO){
         List<CartUpdateDTO> cartUpdateDTOList = new ArrayList<>();
 
@@ -88,7 +88,7 @@ public class CartRestController {
 
         cartUpdateDTOList.add(cartUpdateDTO2);
 
-        CartRespUpdateDTO responseDTO = new CartRespUpdateDTO(cartUpdateDTOList, 104500);
+        RespUpdateCartsDTO responseDTO = new RespUpdateCartsDTO(cartUpdateDTOList, 104500);
 
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }

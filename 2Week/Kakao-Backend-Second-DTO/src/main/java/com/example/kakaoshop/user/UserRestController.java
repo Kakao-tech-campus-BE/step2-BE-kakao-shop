@@ -22,7 +22,7 @@ public class UserRestController {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
-    @PostMapping("/join")
+    @PostMapping("/auth/join")
     public ResponseEntity<?> join(@RequestBody UserRequest.JoinDTO joinDTO) {
         User user = User.builder()
                 .email(joinDTO.getEmail())
@@ -36,7 +36,7 @@ public class UserRestController {
         return ResponseEntity.ok("ok");
     }
 
-    @PostMapping("/login")
+    @PostMapping("/auth/login")
     public ResponseEntity<?> login(@RequestBody UserRequest.LoginDTO loginDTO) {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
                 = new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword());

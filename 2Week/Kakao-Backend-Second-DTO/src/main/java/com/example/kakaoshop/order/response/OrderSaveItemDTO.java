@@ -5,14 +5,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class OrderItemDTO {
+public class OrderSaveItemDTO {
     private int id;
     private String optionName;
     private int quantity;
     private int price;
 
     @Builder
-    public OrderItemDTO(int id, String optionName, int quantity, int price) {
+    public OrderSaveItemDTO(int id, String optionName, int quantity, int price) {
         this.id = id;
         this.optionName = optionName;
         this.quantity = quantity;

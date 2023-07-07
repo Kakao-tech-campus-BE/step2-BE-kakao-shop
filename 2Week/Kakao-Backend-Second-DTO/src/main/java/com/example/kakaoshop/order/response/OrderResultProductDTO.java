@@ -7,12 +7,12 @@ import lombok.Setter;
 import java.util.List;
 
 @Getter @Setter
-public class OrderProductDTO {
+public class OrderResultProductDTO {
     private String productName;
-    private List<OrderItemDTO> items;
+    private List<OrderResultItemDTO> items;
 
     @Builder
-    public OrderProductDTO(String productName, List<OrderItemDTO> orderItems) {
+    public OrderResultProductDTO(String productName, List<OrderResultItemDTO> orderItems) {
         this.productName = productName;
         this.items = orderItems;
     }

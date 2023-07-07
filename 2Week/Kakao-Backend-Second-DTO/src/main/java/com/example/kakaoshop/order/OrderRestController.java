@@ -1,9 +1,7 @@
 package com.example.kakaoshop.order;
 
 import com.example.kakaoshop._core.utils.ApiUtils;
-import com.example.kakaoshop.order.response.OrderDTO;
-import com.example.kakaoshop.order.response.OrderItemDTO;
-import com.example.kakaoshop.order.response.OrderProductDTO;
+import com.example.kakaoshop.order.response.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,38 +13,38 @@ import java.util.List;
 
 @RestController
 public class OrderRestController {
-    @PostMapping("/orders/save")
-    public ResponseEntity<?> orderSave(){
-        List<OrderItemDTO> orderItemDTOList = new ArrayList<>();
+    @PostMapping("/orders")
+    public ResponseEntity<?> saveOrders(){
+        List<OrderSaveItemDTO> orderSaveItemsList = new ArrayList<>();
 
-        OrderItemDTO orderItemDTO1 = OrderItemDTO.builder()
+        OrderSaveItemDTO orderSaveItem1 = OrderSaveItemDTO.builder()
                 .id(4)
                 .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
                 .quantity(10)
                 .price(100000)
                 .build();
 
-        orderItemDTOList.add(orderItemDTO1);
+        orderSaveItemsList.add(orderSaveItem1);
 
-        OrderItemDTO orderItemDTO2 = OrderItemDTO.builder()
+        OrderSaveItemDTO orderSaveItem2 = OrderSaveItemDTO.builder()
                 .id(5)
                 .optionName("02. 슬라이딩 지퍼백 플라워에디션 5종")
                 .quantity(10)
                 .price(109000)
                 .build();
 
-        orderItemDTOList.add(orderItemDTO2);
+        orderSaveItemsList.add(orderSaveItem2);
 
-        List<OrderProductDTO> orderProductDTOList = new ArrayList<>();
+        List<OrderSaveProductDTO> orderSaveProductsList = new ArrayList<>();
 
-        orderProductDTOList.add(
-                OrderProductDTO.builder()
+        orderSaveProductsList.add(
+                OrderSaveProductDTO.builder()
                         .productName("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전")
-                        .orderItems(orderItemDTOList)
+                        .orderItems(orderSaveItemsList)
                         .build()
         );
 
-        OrderDTO responseDTO = new OrderDTO(1, orderProductDTOList, 209000);
+        RespSaveOrdersDTO responseDTO = new RespSaveOrdersDTO(1, orderSaveProductsList, 209000);
 
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
@@ -55,40 +53,40 @@ public class OrderRestController {
     public ResponseEntity<?> findById(@PathVariable int id){
 
         if(id == 1){
-            List<OrderItemDTO> orderItemDTOList = new ArrayList<>();
+            List<OrderResultItemDTO> orderResultItemsList = new ArrayList<>();
 
-            OrderItemDTO orderItemDTO1 = OrderItemDTO.builder()
+            OrderResultItemDTO orderResultItem1 = OrderResultItemDTO.builder()
                     .id(4)
                     .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
                     .quantity(10)
                     .price(100000)
                     .build();
 
-            orderItemDTOList.add(orderItemDTO1);
+            orderResultItemsList.add(orderResultItem1);
 
-            OrderItemDTO orderItemDTO2 = OrderItemDTO.builder()
+            OrderResultItemDTO orderResultItem2 = OrderResultItemDTO.builder()
                     .id(5)
                     .optionName("02. 슬라이딩 지퍼백 플라워에디션 5종")
                     .quantity(10)
                     .price(109000)
                     .build();
 
-            orderItemDTOList.add(orderItemDTO2);
+            orderResultItemsList.add(orderResultItem2);
 
-            List<OrderProductDTO> orderProductDTOList = new ArrayList<>();
+            List<OrderResultProductDTO> orderResultProductsList = new ArrayList<>();
 
-            orderProductDTOList.add(
-                    OrderProductDTO.builder()
+            orderResultProductsList.add(
+                    OrderResultProductDTO.builder()
                             .productName("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전")
-                            .orderItems(orderItemDTOList)
+                            .orderItems(orderResultItemsList)
                             .build()
             );
 
-            OrderDTO responseDTO = new OrderDTO(1, orderProductDTOList, 209000);
+            RespFindByIdDTO responseDTO = new RespFindByIdDTO(1, orderResultProductsList, 209000);
 
             return ResponseEntity.ok(ApiUtils.success(responseDTO));
         }
 
-        return ResponseEntity.ok(ApiUtils.success("오류입니다"));
+        return ResponseEntity.ok(ApiUtils.success("주문 항목이 없습니다."));
     }
 }
