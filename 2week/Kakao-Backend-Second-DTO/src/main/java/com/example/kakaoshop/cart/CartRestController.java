@@ -1,7 +1,8 @@
 package com.example.kakaoshop.cart;
 
 import com.example.kakaoshop._core.utils.ApiUtils;
-import com.example.kakaoshop.cart.request.CartRequestDTO;
+import com.example.kakaoshop.cart.request.CartRequestSaveDTO;
+import com.example.kakaoshop.cart.request.CartRequestUpdateDTO;
 import com.example.kakaoshop.cart.response.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -64,14 +65,14 @@ public class CartRestController {
 
      @PostMapping("/carts/add")
 //    @PostMapping("/carts")
-    public ResponseEntity<Void> saveCarts(CartRequestDTO cartRequestDTO){
+    public ResponseEntity<Void> saveCarts(CartRequestSaveDTO cartRequestSaveDTO){
         return new ResponseEntity(ApiUtils.success(null), HttpStatus.OK);
     }
 
 
 //     @PutMapping("/carts")
     @PostMapping("/carts/update")
-    public ResponseEntity<ApiUtils.ApiResult<CartResponseUpdateDTO>> updateCarts(CartRequestDTO cartRequestDTO){
+    public ResponseEntity<ApiUtils.ApiResult<CartResponseUpdateDTO>> updateCarts(CartRequestUpdateDTO cartRequestUpdateDTO){
 
         List<CartProductDTO> cartProductDTOS = new ArrayList<>();
 
@@ -94,11 +95,16 @@ public class CartRestController {
         cartProductDTOS.add(cartProductDTO1);
         cartProductDTOS.add(cartProductDTO2);
 
-        Integer totalPrice = cartProductDTO2.getPrice() + cartProductDTO2.getPrice();
+        Integer totalPrice = cartProductDTO1.getPrice() + cartProductDTO2.getPrice();
 
-        CartResponseUpdateDTO cartResponseUpdateDTO = new CartResponseUpdateDTO(cartProductDTOS,totalPrice);
+
+        CartResponseUpdateDTO cartResponseUpdateDTO = CartResponseUpdateDTO.builder()
+                .orderProducts(cartProductDTOS)
+                .totalPrice(totalPrice)
+                .build();
 
         return new ResponseEntity<>(ApiUtils.success(cartResponseUpdateDTO),HttpStatus.OK);
 
     }
+
 }

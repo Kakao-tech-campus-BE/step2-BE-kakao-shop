@@ -2,7 +2,8 @@ package com.example.kakaoshop.order;
 
 import com.example.kakaoshop._core.utils.ApiUtils;
 import com.example.kakaoshop.order.item.response.OptionDTO;
-import com.example.kakaoshop.order.item.response.OrderResponseDTO;
+import com.example.kakaoshop.order.item.response.OrderResponseFindByIdDTO;
+import com.example.kakaoshop.order.item.response.OrderResponseSaveDTO;
 import com.example.kakaoshop.order.item.response.ProductDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,7 @@ public class OrderRestController {
 
     @PostMapping("/orders/save")
     // @PostMapping("/orders")
-    public ResponseEntity<ApiUtils.ApiResult<OrderResponseDTO>> saveOrder(){
+    public ResponseEntity<ApiUtils.ApiResult<OrderResponseSaveDTO>> saveOrder(){
 
         List<OptionDTO> items = new ArrayList<>();
 
@@ -48,7 +49,7 @@ public class OrderRestController {
 
         Integer totalPrice = optionDTO1.getPrice() + optionDTO2.getPrice();
 
-        OrderResponseDTO orderResponseDTO = OrderResponseDTO.builder()
+        OrderResponseSaveDTO orderResponseDTO = OrderResponseSaveDTO.builder()
                 .id(2L)
                 .products(productDTO)
                 .totalPrice(totalPrice)
@@ -87,13 +88,13 @@ public class OrderRestController {
 
         Integer totalPrice = optionDTO1.getPrice() + optionDTO2.getPrice();
 
-        OrderResponseDTO orderResponseDTO = OrderResponseDTO.builder()
+        OrderResponseFindByIdDTO orderResponseFindByIdDTO = OrderResponseFindByIdDTO.builder()
                 .id(1L)
                 .products(productDTO)
                 .totalPrice(totalPrice)
                 .build();
 
-        return new ResponseEntity<>(ApiUtils.success(orderResponseDTO),HttpStatus.OK);
+        return new ResponseEntity<>(ApiUtils.success(orderResponseFindByIdDTO),HttpStatus.OK);
     }
 
 
