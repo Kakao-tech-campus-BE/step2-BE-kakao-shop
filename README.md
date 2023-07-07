@@ -28,9 +28,9 @@
 (기능 8) [POST] 장바구니 담기 : `/carts/add`
 (기능 9) [POST] 장바구니 보기 : `/carts`
 (기능10) 장바구니 상품 옵션 확인 및 수량 결정 : (Front-end Side)
-(기능11) [POST] 주문 : `carts/update`
-(기능12) [POST] 결제 : `orders/save`
-(기능13) [GET] 주문 결과 확인 : `orders/{orders_id}`
+(기능11) [POST] 주문 : `/carts/update`
+(기능12) [POST] 결제 : `/orders/save`
+(기능13) [GET] 주문 결과 확인 : `/orders/{orders_id}`
 
 ```
 
@@ -53,10 +53,7 @@ Week1_ERD.png 파일에 첨부
 
 <br>
 
----
-```
-Week1_END
-```
+### ~ Week1_Assignment_END
 ---
 
 <br>
@@ -124,26 +121,23 @@ Week1_END
 (기능 4) [GET] 개별 상품 상세 조회 : `/products/{product_id}`
 (기능 5) [POST] 장바구니 담기 : `/carts`
 (기능 6) [GET] 장바구니 보기 : `/carts`
-(기능 7) [PUT] 주문 (장바구니 수정) : `carts`
-(기능 8) [POST] 결제 : `orders`
-(기능 9) [GET] 주문 결과 확인 : `orders/{orders_id}`
+(기능 7) [PUT] 주문 (장바구니 수정) : `/carts`
+(기능 8) [POST] 결제하기 : `/orders`
+(기능 9) [GET] 주문 결과 확인 : `/orders/{orders_id}`
 
 ```
 
 
 #### ( Mock API Controller 구현)
 
-[OrderRespFindByIdDTO.java](week2\src\main\java\com\example\kakaoshop\order\response\OrderRespFindByIdDTO.java)  
-[OrderResponseDTO.java](week2\src\main\java\com\example\kakaoshop\order\response\OrderResponseDTO.java)  
-[ProductDTO.java](week2\src\main\java\com\example\kakaoshop\order\response\ProductDTO.java)  
-[OrderItemDTO.java](week2\src\main\java\com\example\kakaoshop\order\response\OrderItemDTO.java)  
+(Code Link): [OrderRespFindByIdDTO.java](week2/src/main/java/com/example/kakaoshop/order/response/OrderRespFindByIdDTO.java)  
+(Code Link): [OrderResponseDTO.java](week2/src/main/java/com/example/kakaoshop/order/response/OrderResponseDTO.java)  
+(Code Link): [ProductDTO.java](week2/src/main/java/com/example/kakaoshop/order/response/ProductDTO.java)  
+(Code Link): [OrderItemDTO.java](week2/src/main/java/com/example/kakaoshop/order/response/OrderItemDTO.java)  
  
 <br>
 
----
-```
-Week2_END
-```
+### ~ Week2_Assignment_END
 ---
 
 <br>
