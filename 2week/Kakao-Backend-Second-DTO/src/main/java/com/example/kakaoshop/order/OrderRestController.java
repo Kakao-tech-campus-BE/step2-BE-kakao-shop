@@ -7,10 +7,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@RestController
 public class OrderRestController {
 
     @PostMapping("/orders/save")
@@ -49,13 +51,12 @@ public class OrderRestController {
         // productDTO 리스트에 담기
         productDTOList.add(
                 ProductDTO.builder()
-                        .id(2)
                         .productName("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전")
                         .orderItems(orderItemDTOList)
                         .build()
         );
 
-        OrderRespFindAllDTO responseDTO = new OrderRespFindAllDTO(productDTOList, 209000);
+        OrderRespFindAllDTO responseDTO = new OrderRespFindAllDTO(2, productDTOList, 209000);
 
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
@@ -100,13 +101,12 @@ public class OrderRestController {
             // productDTO 리스트에 담기
             productDTOList.add(
                     ProductDTO.builder()
-                            .id(2)
                             .productName("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전")
                             .orderItems(orderItemDTOList)
                             .build()
             );
 
-            responseDTO = new OrderRespFindByIdDTO(productDTOList, 209000);
+            responseDTO = new OrderRespFindByIdDTO(id, productDTOList, 209000);
 
         }else {
             return ResponseEntity.badRequest().body(ApiUtils.error("주문 내역을 찾을 수 없습니다 : " + id, HttpStatus.BAD_REQUEST));

@@ -9,11 +9,13 @@ import java.util.List;
 @Getter
 @Setter
 public class OrderRespFindAllDTO {
+    private int id;
     private List<ProductDTO> products;
     private int totalPrice;
 
     @Builder
-    public OrderRespFindAllDTO(List<ProductDTO> products, int totalPrice) {
+    public OrderRespFindAllDTO(int id, List<ProductDTO> products, int totalPrice) {
+        this.id = id;
         this.products = products;
         this.totalPrice = totalPrice;
     }

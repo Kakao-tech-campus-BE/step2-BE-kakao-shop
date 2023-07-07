@@ -14,7 +14,8 @@ public class OrderRespFindByIdDTO {
     private int totalPrice;
 
     @Builder
-    public OrderRespFindByIdDTO(List<ProductDTO> products, int totalPrice) {
+    public OrderRespFindByIdDTO(int id, List<ProductDTO> products, int totalPrice) {
+        this.id = id;
         this.products = products;
         this.totalPrice = totalPrice;
     }
