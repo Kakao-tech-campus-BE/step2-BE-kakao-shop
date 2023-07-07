@@ -29,7 +29,7 @@ public class ProductRestControllerTest {
         System.out.println("테스트 : " + responseBody);
 
         // verify
-        resultActions.andExpect(jsonPath("$.success").value("true"));
+        resultActions.andExpect(jsonPath("$.success").value(true));
         resultActions.andExpect(jsonPath("$.response[0].id").value(1));
         resultActions.andExpect(jsonPath("$.response[0].productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"));
         resultActions.andExpect(jsonPath("$.response[0].description").value(""));
@@ -57,7 +57,7 @@ public class ProductRestControllerTest {
         System.out.println("테스트 : " + responseBody);
 
         // verify
-        resultActions.andExpect(jsonPath("$.success").value("true"));
+        resultActions.andExpect(jsonPath("$.success").value(true));
         resultActions.andExpect(jsonPath("$.response.id").value(1));
         resultActions.andExpect(jsonPath("$.response.productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"));
         resultActions.andExpect(jsonPath("$.response.description").value(""));
