@@ -17,7 +17,7 @@ import java.util.List;
 public class ProductRestController {
 
     @GetMapping("/products")
-    public ResponseEntity<?> findAll() {
+    public ResponseEntity<ApiUtils.ApiResult<List<ProductFindAllResponse>>> findAll() {
         List<ProductFindAllResponse> responseDTO = new ArrayList<>();
 
         // 상품 하나씩 집어넣기
@@ -54,7 +54,7 @@ public class ProductRestController {
     }
 
     @GetMapping("/products/{id}")
-    public ResponseEntity<?> findById(@PathVariable int id) {
+    public ResponseEntity<ApiUtils.ApiResult<ProductOptionResponse>> findById(@PathVariable int id) {
         ProductFindByIdResponse responseDTO = null;
         if (id == 1) {
             List<ProductOptionResponse> optionDTOList = new ArrayList<>();
