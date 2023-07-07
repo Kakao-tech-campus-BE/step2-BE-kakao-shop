@@ -31,7 +31,7 @@ public class OrderRestController {
 
   // TODO: Transactional
   @PostMapping("/order")
-  public ResponseEntity<?> order(@AuthenticationPrincipal CustomUserDetails userInfo) {
+  public ResponseEntity<Object> order(@AuthenticationPrincipal CustomUserDetails userInfo) {
 
     List<CartItem> cartItemList = cartRepository.findAllByUserId(userInfo.getId());
 
@@ -68,14 +68,14 @@ public class OrderRestController {
 
   // 주문 내역 목록 조회
   @GetMapping("/orders")
-  public ResponseEntity<?> getOrders() {
+  public ResponseEntity<Object> getOrders() {
     // TODO: 주문 내역 목록 조회
     return ResponseEntity.ok().body(ApiUtils.success("주문 내역 목록 요약"));
   }
 
   // 단건 주문 내역 상세 조회
   @GetMapping("/orders/{order-id}")
-  public ResponseEntity<?> getOrder(@PathVariable("order-id") int orderId) {
+  public ResponseEntity<Object> getOrder(@PathVariable("order-id") int orderId) {
     // TODO: 주문 내역 상세 조회
     return ResponseEntity.ok().body(ApiUtils.success("주문 내역 상세"));
   }

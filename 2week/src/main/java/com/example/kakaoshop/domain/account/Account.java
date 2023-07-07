@@ -26,6 +26,13 @@ public class Account {
     private String roles; // role은 한 개 이상
     // , 로 구분되는 일종의 csv 형식으로 저장하는 것 같음
 
+    // ROLE NameSpace
+    public static class Role {
+        public static final String USER = "ROLE_USER";
+        public static final String ADMIN = "ROLE_ADMIN";
+        public static final String SELLER = "ROLE_SELLER";
+    }
+
     @Builder
     public Account(int id, String email, String password, String username, String roles) {
         this.id = id;

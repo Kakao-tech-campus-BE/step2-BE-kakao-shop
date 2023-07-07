@@ -20,7 +20,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="product_option_tb",
         indexes = {
-                @Index(name = "product_option_product_id_idx", columnList = "product_id")
+                @Index(name = "product_option_product_id_idx", columnList = "product_id"),
         })
 public class ProductOption {
 

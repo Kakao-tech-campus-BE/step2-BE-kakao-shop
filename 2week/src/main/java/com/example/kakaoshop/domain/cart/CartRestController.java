@@ -29,7 +29,7 @@ public class CartRestController {
 
   // 장바구니 조회
   @GetMapping("/cart")
-  public ResponseEntity<?> findAll(@AuthenticationPrincipal CustomUserDetails userInfo) {
+  public ResponseEntity<Object> findAll(@AuthenticationPrincipal CustomUserDetails userInfo) {
     List<CartItem> cartItemList = cartRepository.findAllByUserId(userInfo.getId());
 
     List<CartItemDto> cartItemDtoList = cartService.buildCartItemDtoList(cartItemList);
@@ -53,7 +53,7 @@ public class CartRestController {
 
   // 장바구니 담기
   @PostMapping("/cart/items")
-  public ResponseEntity<?> addCartItem(
+  public ResponseEntity<Object> addCartItem(
     @AuthenticationPrincipal CustomUserDetails userInfo,
     @RequestBody CartRequest.CartItemAddDto cartItemAddDto
   ) {
@@ -91,9 +91,8 @@ public class CartRestController {
       .build());
     cartItemDtoList.add(cartItemDto2);
 
-    // cartRepository.save(cartItemDtoList);
 
-    return ResponseEntity.ok(ApiUtils.success(null));
+    return ResponseEntity.ok(ApiUtils.success());
   }
 
   /**
@@ -103,7 +102,7 @@ public class CartRestController {
    * 수량이 0이 되면, 장바구니에서 삭제됨.
    */
   @PatchMapping("/carts")
-  public ResponseEntity<?> updateCartItem(
+  public ResponseEntity<Object> updateCartItem(
     @AuthenticationPrincipal CustomUserDetails userInfo,
     @RequestBody CartRequest.CartItemUpdateDto cartItemUpdateDto) {
 
@@ -113,27 +112,27 @@ public class CartRestController {
     // 2. 수량 변경
     // 3. 수량이 0이면 장바구니에서 삭제
 
-    return ResponseEntity.ok(ApiUtils.success(null));
+    return ResponseEntity.ok(ApiUtils.success());
   }
 
   // 장바구니 옵션 1개 삭제
   @DeleteMapping("/carts/{cart-item-id}")
-  public ResponseEntity<?> deleteCartItem(
+  public ResponseEntity<Object> deleteCartItem(
     @AuthenticationPrincipal CustomUserDetails userInfo,
     @PathVariable("cart-item-id") int cartItemId) {
     cartRepository.deleteByIdAndAccountId(cartItemId, userInfo.getId());
 
-    return ResponseEntity.ok(ApiUtils.success(null));
+    return ResponseEntity.ok(ApiUtils.success());
   }
 
   // 장바구니 전체 비우기
   @DeleteMapping("/carts")
-  public ResponseEntity<?> deleteCart(@RequestParam("cart-item-id") int cartItemId) {
+  public ResponseEntity<Object> deleteCart(@RequestParam("cart-item-id") int cartItemId) {
 
     // Mock Delete
     cartRepository.clearMockCartData();
 
-    return ResponseEntity.ok(ApiUtils.success(null));
+    return ResponseEntity.ok(ApiUtils.success());
   }
 
 }

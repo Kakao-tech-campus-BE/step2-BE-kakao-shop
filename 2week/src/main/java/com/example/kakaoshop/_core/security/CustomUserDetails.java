@@ -11,8 +11,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
 @Getter
+@RequiredArgsConstructor
 public class CustomUserDetails implements UserDetails {
 
     private final Account account;

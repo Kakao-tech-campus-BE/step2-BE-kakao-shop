@@ -24,17 +24,17 @@ public class AccountRestController {
 
     // 이메일 사용 가능 여부
     @GetMapping("/email-use-permission")
-    public ResponseEntity<?> checkEmailDuplicate(@RequestParam String email) {
+    public ResponseEntity<Object> checkEmailDuplicate(@RequestParam String email) {
         accountService.checkEmailDuplicate(email);
 
         // + 특정 도메인의 이메일 사용 제한이 추가되는 경우 등 ..
 
-        return ResponseEntity.ok(ApiUtils.success(null));
+        return ResponseEntity.ok(ApiUtils.success());
     }
 
     // 회원가입
     @PostMapping("/sign-up")
-    public ResponseEntity<?> signUp(@RequestBody @Validated AccountRequestDto.SignUpDto signUpDTO) {
+    public ResponseEntity<Object> signUp(@RequestBody @Validated AccountRequestDto.SignUpDto signUpDTO) {
         accountService.checkEmailDuplicate(signUpDTO.getEmail());
 
 
@@ -43,22 +43,22 @@ public class AccountRestController {
             .email(signUpDTO.getEmail())
             .password(passwordEncoder.encode(signUpDTO.getPassword()))
             .username(signUpDTO.getUsername())
-            .roles("ROLE_USER")
+            .roles(Account.Role.USER)
             .build()
         );
 
-        return ResponseEntity.ok(ApiUtils.success(null));
+        return ResponseEntity.ok(ApiUtils.success());
     }
 
     // 로그인
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AccountRequestDto.LoginDto loginDTO) {
+    public ResponseEntity<Object> login(@RequestBody AccountRequestDto.LoginDto loginDTO) {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
                 = new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword());
         Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
         CustomUserDetails myUserDetails = (CustomUserDetails) authentication.getPrincipal();
         String jwt = JWTProvider.create(myUserDetails.getAccount());
 
-        return ResponseEntity.ok().header(JWTProvider.HEADER, jwt).body(ApiUtils.success(null));
+        return ResponseEntity.ok().header(JWTProvider.HEADER, jwt).body(ApiUtils.success());
     }
 }

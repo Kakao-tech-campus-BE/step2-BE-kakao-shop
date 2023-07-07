@@ -7,11 +7,15 @@ public class ApiUtils {
 
     private ApiUtils() {} // prevent instantiation
 
+    public static <T> ApiResult<T> success() {
+        return new ApiResult<>(true, null, null);
+    }
     public static <T> ApiResult<T> success(T response) {
         return new ApiResult<>(true, response, null);
     }
 
-    public static ApiResult<?> error(String message, HttpStatus status) {
+
+    public static ApiResult<Object> error(String message, HttpStatus status) {
         return new ApiResult<>(false, null, new ApiError(message, status.value()));
     }
 
