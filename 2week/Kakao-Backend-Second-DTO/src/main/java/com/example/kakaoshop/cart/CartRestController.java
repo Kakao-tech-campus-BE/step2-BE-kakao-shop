@@ -80,6 +80,9 @@ public class CartRestController {
                         .quantity(5)
                         .build());
 
+        // return ResponseEntity.ok(null);
+        // 응답과 동일하게 하려면 null으로 반환하는 것이 맞지만 포스트맨 확인차 바디에 요청값을 넣었습니다.
+
         return ResponseEntity.status(HttpStatus.OK).body(ApiUtils.success(cartAddDTOList));
     }
 
