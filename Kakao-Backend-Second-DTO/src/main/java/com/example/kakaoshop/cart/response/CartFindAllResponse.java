@@ -10,7 +10,7 @@ import java.util.List;
 @Builder(toBuilder = true)
 public class CartFindAllResponse {
 
-    private List<ProductCartItemReponse> products;
+    private List<CartSingleProductItemResponse> products;
     private int totalPrice;
 
 }
