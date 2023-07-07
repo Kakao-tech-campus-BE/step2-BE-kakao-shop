@@ -287,7 +287,7 @@
 4. 테이블 설계를 하여 README에 ER-Diagram을 추가하여 제출하시오.
 ![ERD basic](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FKkcwo%2FbtsmzZ03JFO%2FpscrsMEL8RkO4Z6XH3StL1%2Fimg.png)
 
-![ERD](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fd3SBK5%2FbtslZDYv5ue%2FHXYYKJpghwL5cuc6uWMhAk%2Fimg.png)
+![ERD](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcS5QAZ%2FbtsmHFG4ABL%2FeCXtt7NrsKWegvKpRGrZKK%2Fimg.png)
 
 PDF과제
 ```
@@ -907,8 +907,11 @@ CREATE TABLE IF NOT EXISTS `mydb`.`announcement_tb` (
 
 ## **과제 상세 : 수강생들이 과제를 진행할 때, 유념해야할 것**
 아래 항목은 반드시 포함하여 과제 수행해주세요!
->- 전체 API 주소 설계가 RestAPI 맞게 설계되었는가? (예를 들어 배포된 서버는 POST와 GET으로만 구현되었는데, 학생들은 PUT과 DELETE도 배울 예정이라 이부분이 반영되었고, 주소가 RestAPI에 맞게 설계되었는지)
+>- User 도메인을 제외한 전체 API 주소 설계가 RestAPI 맞게 설계되었는가? POST와 GET으로만 구현되어 있어도 됨.
 >- 가짜 데이터를 설계하여 Mock API를 잘 구현하였는가? (예를 들어 DB연결없이 컨트롤러만 만들어서 배포된 서버의 응답과 동일한 형태로 데이터가 응답되는지 여부)
+>- DTO에 타입은 올바르게 지정되었는가?
+>- DTO에 이름은 일관성이 있는가? (예를 들어 어떤 것은 JoinDTO, 어떤 것은 joinDto, 어떤 것은 DtoJoin 이런식으로 되어 있으면 일관성이 없는것이다)
+>- DTO를 공유해서 쓰면 안된다 (동일한 데이터가 응답된다 하더라도, 화면은 수시로 변경될 수 있기 때문에 DTO를 공유하고 있으면 배점을 받지 못함)
 </br>
 
 ##과제1: 전체 API주소 설계
