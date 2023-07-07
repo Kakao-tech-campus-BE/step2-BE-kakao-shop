@@ -66,7 +66,7 @@ public class CartRestController {
     @PostMapping("/carts")
     public ResponseEntity<?> addCart(@RequestBody List<CartRequestDTO> cartRequestDTOList){
 
-        return ResponseEntity.ok().body(new ApiUtils.ApiResult(true, null, null));
+        return ResponseEntity.ok(ApiUtils.success(null));
     }
 
     @PostMapping("/carts/update")
