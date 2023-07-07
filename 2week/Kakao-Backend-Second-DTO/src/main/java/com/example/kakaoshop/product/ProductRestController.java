@@ -53,31 +53,31 @@ public class ProductRestController {
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 
-@GetMapping("/products/{id}")
-public ResponseEntity<?> findById(@PathVariable int id) {
-    // 상품을 담을 DTO 생성
-    ProductRespFindByIdDTO responseDTO = null;
+    @GetMapping("/products/{id}")
+    public ResponseEntity<?> findById(@PathVariable int id) {
+        // 상품을 담을 DTO 생성
+        ProductRespFindByIdDTO responseDTO = null;
 
-    if(id == 1){
-        List<ProductOptionDTO> optionDTOList = new ArrayList<>();
-        optionDTOList.add(new ProductOptionDTO(1, "01. 슬라이딩 지퍼백 크리스마스에디션 4종", 10000));
-        optionDTOList.add(new ProductOptionDTO(2, "02. 슬라이딩 지퍼백 플라워에디션 5종", 10900));
-        optionDTOList.add(new ProductOptionDTO(3, "고무장갑 베이지 S(소형) 6팩", 9900));
-        optionDTOList.add(new ProductOptionDTO(4, "뽑아쓰는 키친타올 130매 12팩", 16900));
-        optionDTOList.add(new ProductOptionDTO(4, "2겹 식빵수세미 6매", 8900));
-        responseDTO = new ProductRespFindByIdDTO(1, "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전", "", "/images/1.jpg", 1000, 5, optionDTOList);
+        if(id == 1){
+            List<ProductOptionDTO> optionDTOList = new ArrayList<>();
+            optionDTOList.add(new ProductOptionDTO(1, "01. 슬라이딩 지퍼백 크리스마스에디션 4종", 10000));
+            optionDTOList.add(new ProductOptionDTO(2, "02. 슬라이딩 지퍼백 플라워에디션 5종", 10900));
+            optionDTOList.add(new ProductOptionDTO(3, "고무장갑 베이지 S(소형) 6팩", 9900));
+            optionDTOList.add(new ProductOptionDTO(4, "뽑아쓰는 키친타올 130매 12팩", 16900));
+            optionDTOList.add(new ProductOptionDTO(4, "2겹 식빵수세미 6매", 8900));
+            responseDTO = new ProductRespFindByIdDTO(1, "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전", "", "/images/1.jpg", 1000, 5, optionDTOList);
 
-    }else if(id == 2){
-        List<ProductOptionDTO> optionDTOList = new ArrayList<>();
-        optionDTOList.add(new ProductOptionDTO(6, "22년산 햇단밤 700g(한정판매)", 9900));
-        optionDTOList.add(new ProductOptionDTO(7, "22년산 햇단밤 1kg(한정판매)", 14500));
-        optionDTOList.add(new ProductOptionDTO(8, "밤깎기+다회용 구이판 세트", 5500));
-        responseDTO = new ProductRespFindByIdDTO(2, "[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율", "", "/images/2.jpg", 2000, 5, optionDTOList);
-    }else {
-        return ResponseEntity.badRequest().body(ApiUtils.error("해당 상품을 찾을 수 없습니다 : " + id, HttpStatus.BAD_REQUEST));
+        }else if(id == 2){
+            List<ProductOptionDTO> optionDTOList = new ArrayList<>();
+            optionDTOList.add(new ProductOptionDTO(6, "22년산 햇단밤 700g(한정판매)", 9900));
+            optionDTOList.add(new ProductOptionDTO(7, "22년산 햇단밤 1kg(한정판매)", 14500));
+            optionDTOList.add(new ProductOptionDTO(8, "밤깎기+다회용 구이판 세트", 5500));
+            responseDTO = new ProductRespFindByIdDTO(2, "[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율", "", "/images/2.jpg", 2000, 5, optionDTOList);
+        }else {
+            return ResponseEntity.badRequest().body(ApiUtils.error("해당 상품을 찾을 수 없습니다 : " + id, HttpStatus.BAD_REQUEST));
+        }
+
+        return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
-
-    return ResponseEntity.ok(ApiUtils.success(responseDTO));
-}
 
 }
