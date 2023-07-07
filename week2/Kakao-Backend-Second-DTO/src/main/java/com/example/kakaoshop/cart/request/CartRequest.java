@@ -1,4 +1,4 @@
-package com.example.kakaoshop.cart;
+package com.example.kakaoshop.cart.request;
 
 import lombok.Getter;
 

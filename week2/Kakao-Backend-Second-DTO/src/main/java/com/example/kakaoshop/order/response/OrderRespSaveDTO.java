@@ -2,12 +2,9 @@ package com.example.kakaoshop.order.response;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
-
 import java.util.List;
 
 @Getter
-@Setter
 public class OrderRespSaveDTO {
     private int id;
     private List<OrderProductDTO> products;

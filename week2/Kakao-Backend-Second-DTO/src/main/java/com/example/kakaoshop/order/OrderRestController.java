@@ -15,7 +15,7 @@ import java.util.List;
 public class OrderRestController {
     @PostMapping("/save")
     public ResponseEntity<?> orderSave() {
-        List<OrderItemDTO> itemDTOList = new ArrayList<>();
+        List<OrderItemDTO> itemDTOs = new ArrayList<>();
 
         OrderItemDTO orderItemDTO1 = OrderItemDTO.builder()
                 .id(1)
@@ -23,7 +23,7 @@ public class OrderRestController {
                 .quantity(10)
                 .price(100000)
                 .build();
-        itemDTOList.add(orderItemDTO1);
+        itemDTOs.add(orderItemDTO1);
 
         OrderItemDTO orderItemDTO2 = OrderItemDTO.builder()
                 .id(2)
@@ -31,19 +31,19 @@ public class OrderRestController {
                 .quantity(10)
                 .price(109000)
                 .build();
-        itemDTOList.add(orderItemDTO2);
+        itemDTOs.add(orderItemDTO2);
 
-        List<OrderProductDTO> productDTOList = new ArrayList<>();
+        List<OrderProductDTO> productDTOs = new ArrayList<>();
 
         OrderProductDTO orderProductDTO = OrderProductDTO.builder()
                 .productName("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전")
-                .items(itemDTOList)
+                .items(itemDTOs)
                 .build();
-        productDTOList.add(orderProductDTO);
+        productDTOs.add(orderProductDTO);
 
         OrderRespSaveDTO responseDTO = OrderRespSaveDTO.builder()
                 .id(1)
-                .products(productDTOList)
+                .products(productDTOs)
                 .totalPrice(209000)
                 .build();
 
@@ -52,7 +52,7 @@ public class OrderRestController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> orderFindById(@PathVariable int id) {
-        List<OrderItemDTO> itemDTOList = new ArrayList<>();
+        List<OrderItemDTO> itemDTOs = new ArrayList<>();
 
         OrderItemDTO orderItemDTO1 = OrderItemDTO.builder()
                 .id(1)
@@ -60,7 +60,7 @@ public class OrderRestController {
                 .quantity(10)
                 .price(100000)
                 .build();
-        itemDTOList.add(orderItemDTO1);
+        itemDTOs.add(orderItemDTO1);
 
         OrderItemDTO orderItemDTO2 = OrderItemDTO.builder()
                 .id(2)
@@ -68,19 +68,19 @@ public class OrderRestController {
                 .quantity(10)
                 .price(109000)
                 .build();
-        itemDTOList.add(orderItemDTO2);
+        itemDTOs.add(orderItemDTO2);
 
-        List<OrderProductDTO> productDTOList = new ArrayList<>();
+        List<OrderProductDTO> productDTOs = new ArrayList<>();
 
         OrderProductDTO orderProductDTO = OrderProductDTO.builder()
                 .productName("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전")
-                .items(itemDTOList)
+                .items(itemDTOs)
                 .build();
-        productDTOList.add(orderProductDTO);
+        productDTOs.add(orderProductDTO);
 
         OrderRespSaveDTO responseDTO = OrderRespSaveDTO.builder()
                 .id(id)
-                .products(productDTOList)
+                .products(productDTOs)
                 .totalPrice(209000)
                 .build();
 
