@@ -7,6 +7,8 @@ import com.example.kakaoshop.cart.response.ProductOptionDTO;
 import com.example.kakaoshop.cart.response.ProductDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -59,5 +61,10 @@ public class CartRestController {
         CartRespFindAllDTO responseDTO = new CartRespFindAllDTO(productDTOList, 104500);
 
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
+    }
+
+    @PostMapping("/carts/add")
+    public ResponseEntity<?> add(@RequestBody List<CartRequest.CartAddDTO> cartAddDTO) {
+        return ResponseEntity.ok(ApiUtils.success(null));
     }
 }
