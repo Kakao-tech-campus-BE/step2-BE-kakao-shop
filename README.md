@@ -377,7 +377,7 @@ https://drive.google.com/uc?export=view&id=1pkgYkErdQ9-vE3zfOh6cZXM6C0fp7ADE
 
    HTTP Status :
 
-   (성공) 200 OK
+   (성공) 201 Created
 
    (실패1 - 세션 만료) 401 Unauthorized - "회원 인증이 필요합니다"
 
@@ -388,7 +388,7 @@ https://drive.google.com/uc?export=view&id=1pkgYkErdQ9-vE3zfOh6cZXM6C0fp7ADE
 
    HTTP Status :
 
-   (성공) 200
+   (성공) 200 OK
 
    (실패 - 세션 만료) 401 Unauthorized - "회원 인증이 필요합니다"
 
@@ -397,7 +397,7 @@ https://drive.google.com/uc?export=view&id=1pkgYkErdQ9-vE3zfOh6cZXM6C0fp7ADE
 
    HTTP Status :
 
-   (성공) 200
+   (성공) 200 OK
 
    (실패 - 세션 만료) 401 Unauthorized - "회원 인증이 필요합니다"
 
@@ -406,7 +406,7 @@ https://drive.google.com/uc?export=view&id=1pkgYkErdQ9-vE3zfOh6cZXM6C0fp7ADE
 
    HTTP Status :
 
-   (성공) 200 OK
+   (성공) 201 Created
 
    (실패1 - 세션 만료) 401 Unauthorized - "회원 인증이 필요합니다"
 
@@ -417,7 +417,7 @@ https://drive.google.com/uc?export=view&id=1pkgYkErdQ9-vE3zfOh6cZXM6C0fp7ADE
 
       HTTP Status :
 
-      (성공) 200
+      (성공) 200 OK
 
     (실패1)  404 Not Found - "존재하지 않는 내역입니다."
    
