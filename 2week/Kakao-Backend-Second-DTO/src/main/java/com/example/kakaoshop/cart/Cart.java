@@ -1,6 +1,6 @@
-package com.example.kakaoshop.order.item;
+package com.example.kakaoshop.cart;
 
-import com.example.kakaoshop.order.Order;
+import com.example.kakaoshop.product.Product;
 import com.example.kakaoshop.product.option.ProductOption;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -12,32 +12,31 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name="order_item_tb")
-public class OrderItem {
-
+@Table(name = "cart_tb")
+public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
     private int id;
+
+    @Column(name ="user_id", nullable = false)
+    private int userId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private ProductOption productOption;
 
-    @Column(name="quantity", nullable=false)
+    @Column
     private int quantity;
 
-    @Column(name="price", nullable=false)
+    @Column
     private int price;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Order order;
-
     @Builder
-    public OrderItem(int id, ProductOption productOption, int quantity, int price, Order order) {
+    public Cart(int id, int userId, ProductOption productOption, int quantity, int price){
         this.id = id;
+        this.userId = userId;
         this.productOption = productOption;
         this.quantity = quantity;
         this.price = price;
-        this.order = order;
     }
+
 }
