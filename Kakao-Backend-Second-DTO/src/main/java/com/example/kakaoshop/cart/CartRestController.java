@@ -68,5 +68,11 @@ public class CartRestController {
         CartFindAllResponse responseDTO = new CartFindAllResponse(cartProducts, 104500);
 
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
+
+    }
+    @PostMapping("/carts/add")
+//    @PostMapping("/carts")
+    public ResponseEntity<Void> saveCarts(@Valid CartSaveRequest cartSaveRequest){
+        return new ResponseEntity(ApiUtils.success(null), HttpStatus.OK);
     }
 }
