@@ -95,6 +95,15 @@
 ## **과제 설명**
 ```
 1. API주소를 설계하여 README에 내용을 작성하시오.
+ /join 회원가입API, Method : Post
+ /login 로그인API, Method : Post
+ /products 전체상품 조회API, Method : Get
+ /products/{id} 개별상품 조회API, Method : Get
+ /carts/add 장바구니 추가API, Method : Post
+ /carts 장바구니 조회API, Method : Get
+ /carts/update 장바구니 목록의 수량 변경API, Method : Post
+ /orders/save 주문API, Method : Post
+ /orders/{id} 주문내역 확인API, Method : Post
 2. 가짜 데이터를 설계하여 응답하는 스프링부트 컨트롤러를 작성하고 소스코드를 업로드하시오.
 ```
 
