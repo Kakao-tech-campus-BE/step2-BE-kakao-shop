@@ -281,8 +281,11 @@
 
 ## **과제 상세 : 수강생들이 과제를 진행할 때, 유념해야할 것**
 아래 항목은 반드시 포함하여 과제 수행해주세요!
->- 전체 API 주소 설계가 RestAPI 맞게 설계되었는가? (예를 들어 배포된 서버는 POST와 GET으로만 구현되었는데, 학생들은 PUT과 DELETE도 배울 예정이라 이부분이 반영되었고, 주소가 RestAPI에 맞게 설계되었는지)
+>- User 도메인을 제외한 전체 API 주소 설계가 RestAPI 맞게 설계되었는가?  POST와 GET으로만 구현되어 있어도 됨.	
 >- 가짜 데이터를 설계하여 Mock API를 잘 구현하였는가? (예를 들어 DB연결없이 컨트롤러만 만들어서 배포된 서버의 응답과 동일한 형태로 데이터가 응답되는지 여부)
+>- DTO에 타입은 올바르게 지정되었는가?
+>- DTO에 이름은 일관성이 있는가? (예를 들어 어떤 것은 JoinDTO, 어떤 것은 joinDto, 어떤 것은 DtoJoin 이런식으로 되어 있으면 일관성이 없는것이다)
+>- DTO를 공유해서 쓰면 안된다 (동일한 데이터가 응답된다 하더라도, 화면은 수시로 변경될 수 있기 때문에 DTO를 공유하고 있으면 배점을 받지 못함)
 </br>
 
 ## **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
@@ -296,6 +299,115 @@
 
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
+
+## 1. 전체 API 주소 설계
+
+---
+
+- 상품
+    - 전체 상품 목록 조회
+        
+        ```java
+        GET /products
+        GET /products?page={number} //page의 default 값은 0
+        ```
+        
+    - 개별 상품 상세 조회
+        
+        ```java
+        GET /products/{id}
+        ```
+        
+- 회원
+    - 회원가입
+        
+        ```java
+        POST /join
+        Content-Type: application/json; charset=UTF-8
+        {
+        	"email" : "이메일",
+          "password" : "비밀번호",
+          "username" : "이름"
+        }
+        ```
+        
+    - 로그인
+        
+        ```java
+        POST /login
+        Content-Type: application/json; charset=UTF-8
+        {
+          "email" : "이메일",
+          "password" : "비밀번호"
+        }
+        ```
+        
+- 장바구니
+    - 장바구니 담기
+        
+        ```java
+        POST /carts/add
+        Content-Type: application/json; charset=UTF-8
+        Authorization: Bearer <credentials>
+        [
+        	{
+        	  "optionId" : 옵션 아이디,
+        	  "quantity" : 수량
+        	}, 
+        	{
+        	  "optionId" : 옵션 아이디,
+        	  "quantity" : 수량
+        	} 
+        	...
+        ]
+        ```
+        
+    - 장바구니 조회
+        
+        ```java
+        GET /carts
+        Authorization: Bearer <credentials>
+        ```
+        
+    - 장바구니 수정
+        
+        ```java
+        POST /carts/update
+        Content-Type: application/json;charset=UTF-8
+        Authorization: Bearer <credentials>
+        [
+        	{
+        	  "optionId" : 옵션 아이디,
+        	  "quantity" : 수량
+        	}, 
+        	{
+        	  "optionId" : 옵션 아이디,
+        	  "quantity" : 수량
+        	} 
+        	...
+        ]
+        ```
+        
+- 주문/결제
+    - 결제하기(주문 인서트)
+        
+        ```java
+        POST /orders/save
+        Authorization: Bearer <credentials>
+        ```
+        
+    - 주문결과확인
+        
+        ```java
+        GET /orders/{orderId}
+        Authorization: Bearer <credentials>
+        ```
+        
+
+## 2. Mock API Controller 구현
+
+- 2week 폴더
+
 
 # 3주차
 
