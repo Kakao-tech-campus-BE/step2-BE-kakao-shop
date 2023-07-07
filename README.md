@@ -365,3 +365,91 @@ public ResponseEntity<?> orderFindById(@PathVariable int id) {
 }
 ```
 (내부 더미 데이터 작성과 응답 로직은 결제하기와 중복되어 작성 생략하겠습니다.)
+
+## 리팩토링 단계
+
+### DTO 중복
+1. 결제하기와 주문 확인 API의 DTO가 중복되므로 동일한 DTO를 사용하였습니다.
+2. 동일한 DTO를 사용하게 되면 둘 중에 하나의 API 응답이 수정되면 다른 DTO를 생성해야합니다.
+3. 그래서 나중에 생길 수도 있는 수정 단계를 고려하여 DTO를 구분하여 구현합니다.
+4. DTO 네이밍이 복잡하고 어려워졌습니다. 예를들면 OrderItemForSaveDTO 같은 길고 이해하기 어려운 명명을 피하려고 합니다.
+5. 수정도 쉽게 하고 하나의 컨트롤러에서 생기는 여러가지 응답을 하나의 소스파일로 관리할 수 있도록 이너 클래스로 작성합니다.
+<br>
+
+```java
+import lombok.Builder;
+import lombok.Getter;
+
+@Getter
+public class OrderItemDTO {
+    private int id;
+    private String optionName;
+    private int quantity;
+    private int price;
+
+    @Builder
+    public OrderItemDTO(int id, String optionName, int quantity, int price) {
+        this.id = id;
+        this.optionName = optionName;
+        this.quantity = quantity;
+        this.price = price;
+    }
+}
+```
+위 DTO는 중복으로 사용됐는데, 이는 둘중에 하나의 기능이 DTO를 수정하면 문제가 발생하므로 또 다른 DTO를 생성해야 하는 상황이 발생합니다.
+```java
+import lombok.Builder;
+import lombok.Getter;
+
+public class OrderItem {
+    @Getter
+    public static class SaveDTO {
+        private int id;
+        private String optionName;
+        private int quantity;
+        private int price;
+
+        @Builder
+        public SaveDTO(int id, String optionName, int quantity, int price) {
+            this.id = id;
+            this.optionName = optionName;
+            this.quantity = quantity;
+            this.price = price;
+        }
+    }
+
+    @Getter
+    public static class ConfirmDTO {
+        private int id;
+        private String optionName;
+        private int quantity;
+        private int price;
+
+        @Builder
+        public ConfirmDTO(int id, String optionName, int quantity, int price) {
+            this.id = id;
+            this.optionName = optionName;
+            this.quantity = quantity;
+            this.price = price;
+        }
+    }
+}
+```
+그래서 비슷한 성격의 DTO를 이너 클래스들로 구현하여 수정이 간편하도록 구현하였습니다.
+
+### page 단위의 전체 상품 조회 구현
+1. 강사님이 구현해두신 전체 상품 조회 기능은 9번의 상품까지만 조회합니다.
+2. 이미지 폴더에는 15개의 상품 사진이 등록되어 있고 API 명세서에는 페이지 별로 상품을 다르게 출력하게 되어 있습니다.
+3. Controller 수정의 필요성을 느끼게 되어 리팩토링하게 되었습니다.
+<br> 아래는 기존의 컨트롤러입니다.
+<br>
+
+```java
+@GetMapping("/products")
+    public ResponseEntity<?> findAll() {
+```
+page는 입력되지 않을 수 있기 때문에 required = false를 설정하였으며 입력하지 않았을 시 페이지 0을 띄우기 위해 디폴트 값을 0으로 설정하였습니다.
+```java
+@GetMapping("/products")
+    public ResponseEntity<?> findAll(@RequestParam(value="page", required = false, defaultValue = "0")int id) {
+```
