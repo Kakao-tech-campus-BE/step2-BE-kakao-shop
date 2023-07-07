@@ -1,7 +1,6 @@
 package com.example.kakaoshop.cart;
 
 import com.example.kakaoshop._core.utils.ApiUtils;
-import com.example.kakaoshop.cart.request.CartAddReqDTO;
 import com.example.kakaoshop.cart.response.CartItemDTO;
 import com.example.kakaoshop.cart.response.CartRespFindAllDTO;
 import com.example.kakaoshop.cart.response.ProductOptionDTO;
@@ -62,7 +61,12 @@ public class CartRestController {
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
     @PostMapping("/carts/add")
-    public ResponseEntity<?> add(){
+    public ResponseEntity<?> additional(){
         return ResponseEntity.ok(ApiUtils.success(null));
     }
+
+//    @PostMapping("/carts/update")
+//    public ResponseEntity<?> update(){
+//
+//    }
 }
