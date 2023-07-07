@@ -17,6 +17,33 @@
 
 ## API 주소 설계
 
+전체 상품 조회<br>
+GET /products
+
+개별 상품 조회<br>
+GET /products/{productId}
+
+회원가입<br>
+POST /join
+
+로그인<br>
+POST /login
+
+장바구니(카트) 조회<br>
+GET /carts
+
+장바구니(카트) 추가<br>
+POST /carts/add
+
+장바구니(카트) 수정<br>
+POST /carts/update
+
+주문하기<br>
+POST /orders/save
+
+주문번호확인<br>
+GET /orders/{orderId}
+
 1. cart/response 내부의 ProductOptionDTO와 product/response 내부의 ProductOptionDTO가 겹친다고 생각하여 cart쪽의 DTO 를 CartProductOptionDTO로 수정하였습니다.
 
 2. 구현되지 않은 "/orders/{id}"와 내부 DTO들을 구현하였습니다.
@@ -24,7 +51,7 @@
 ### 아이디어 방향성은 이렇습니다.
 
 cart에 넣어 주문을 하면 어떤 유저가 어떠한 상품을 저장했는지에 대한 정보가 저장됩니다. user_id를 이용하여 cart를 조회할수 있다는 뜻이죠. 따라서, Orderitem에서는 Order_id에 대한 User_id에 해당하는 카트들을 조회해서 불러오는 Controller를 작성하려 하였습니다.  
-하지만 여기서 문제가 조금 생겼습니다. 어떻게 해야 Order_id에 대한 User_id를 불러오는지 알기 어려웠습니다. 그리고 현재 존재하는 CartRestController 에서도 user와 연결되어 있지는 않은것 같아서 mockData에 카트를 그대로 넣고 요청에 따라 반환하는 방식으로 진행하였습니다.
+하지만 여기서 문제가 조금 생겼습니다. 어떻게 해야 Order_id에 대한 User_id를 저장하고 불러오는지 알기 어려웠습니다. 그리고 현재 존재하는 CartRestController 에서도 user와 연결되어 있지는 않은것 같아서 mockData에 카트를 그대로 넣고 요청에 따라 반환하는 방식으로 진행하였습니다.
 
 ## 프로젝트 중 발생한 궁금한 사항
 
