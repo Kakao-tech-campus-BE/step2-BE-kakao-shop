@@ -195,6 +195,22 @@ items 테이블
 >- DTO를 공유해서 쓰면 안된다 (동일한 데이터가 응답된다 하더라도, 화면은 수시로 변경될 수 있기 때문에 DTO를 공유하고 있으면 배점을 받지 못함)
 </br>
 
+## **과제 수행**
+### API 주소 설계
+| URL | Method |
+| :---: | :---: |
+| /auth/join | Post |
+| /auth/login | Post |
+| /email_check | Post |
+| /products | Get |
+| /products/{product_id} | Get |
+| /carts | Get |
+| /carts/add | Post |
+| /carts/update | Put |
+| /carts/delete | Delete |
+| /orders/save | Post |
+| /orders/{order_id} | Post |
+
 ## **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
 **1. PR 제목과 내용을 아래와 같이 작성 해주세요.**
 
