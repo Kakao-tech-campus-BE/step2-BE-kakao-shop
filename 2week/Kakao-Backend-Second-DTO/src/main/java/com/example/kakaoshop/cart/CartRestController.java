@@ -1,13 +1,10 @@
 package com.example.kakaoshop.cart;
 
 import com.example.kakaoshop._core.utils.ApiUtils;
-import com.example.kakaoshop.cart.response.CartItemDTO;
-import com.example.kakaoshop.cart.response.CartRespFindAllDTO;
-import com.example.kakaoshop.cart.response.ProductOptionDTO;
-import com.example.kakaoshop.cart.response.ProductDTO;
+import com.example.kakaoshop.cart.request.CartItemReqDTO;
+import com.example.kakaoshop.cart.response.*;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +12,13 @@ import java.util.List;
 @RestController
 public class CartRestController {
 
+    @PostMapping("/carts/add")
+    public ResponseEntity<?> addToCart(@RequestBody List<CartItemReqDTO> cartItemReqDTOList){
+        //ReqDTOList를 DB에 저장
+
+
+        return ResponseEntity.ok(ApiUtils.success(null));
+    }
     @GetMapping("/carts")
     public ResponseEntity<?> findAll() {
         // 카트 아이템 리스트 만들기
@@ -57,8 +61,27 @@ public class CartRestController {
                         .build()
         );
 
-        CartRespFindAllDTO responseDTO = new CartRespFindAllDTO(productDTOList, 104500);
+        CartFindAllDTO responseDTO = new CartFindAllDTO(productDTOList, 104500);
 
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
+
+    @PostMapping("/carts/update")
+    public ResponseEntity<?> updateCart(@RequestBody List<CartItemReqDTO> cartItemReqDTOList) {
+        //CartItemReqDTOList를 DB에 저장
+        CartUpdateDTO responseDTO = null;
+
+        List<CartItemUpdateDTO> cartItemUpdateDTOList = new ArrayList<>();
+
+        cartItemUpdateDTOList.add(new CartItemUpdateDTO(4,1,"01. 슬라이딩 지퍼백 크리스마스에디션 4종",10,100000));
+        cartItemUpdateDTOList.add(new CartItemUpdateDTO(5,2,"02. 슬라이딩 지퍼백 플라워에디션 5종",10,109000));
+
+
+        responseDTO = new CartUpdateDTO(cartItemUpdateDTOList,209000);
+
+        return ResponseEntity.ok(ApiUtils.success(responseDTO));
+
+    }
+
+
 }
