@@ -94,6 +94,8 @@ public class CartRestControllerTest {
                         .content(requestJson)
         );
 
+        @Test
+        @WithMockUser
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
         System.out.println("테스트 : " + responseBody);
 
