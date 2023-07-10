@@ -43,7 +43,33 @@ public class ProductRestControllerTest {
     }
 
     @Test
-// 개별 상품 상세 조회
+    // 페이징 목록 조회
+    public void findPaging_test() throws Exception {
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                get("/products?page=1")
+        );
+
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("true"));
+        resultActions.andExpect(jsonPath("$.response[0].id").value(11));
+        resultActions.andExpect(jsonPath("$.response[0].productName").value("아삭한 궁채 장아찌 1kg 외 인기 반찬 모음전"));
+        resultActions.andExpect(jsonPath("$.response[0].description").value(""));
+        resultActions.andExpect(jsonPath("$.response[0].image").value("/images/11.jpg"));
+        resultActions.andExpect(jsonPath("$.response[0].price").value(6900));
+        resultActions.andExpect(jsonPath("$.response[1].id").value(12));
+        resultActions.andExpect(jsonPath("$.response[1].productName").value("깨끗한나라 순수소프트 30롤 2팩. 무형광, 도톰 3겹"));
+        resultActions.andExpect(jsonPath("$.response[1].description").value(""));
+        resultActions.andExpect(jsonPath("$.response[1].image").value("/images/12.jpg"));
+        resultActions.andExpect(jsonPath("$.response[1].price").value(28900));
+    }
+
+    @Test
+    // 개별 상품 상세 조회
     public void findById_test() throws Exception {
         // given
         int id = 1;
