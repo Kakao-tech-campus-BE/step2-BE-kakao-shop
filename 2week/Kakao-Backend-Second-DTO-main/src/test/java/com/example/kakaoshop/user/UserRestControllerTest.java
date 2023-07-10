@@ -30,7 +30,7 @@ public class UserRestControllerTest {
     @Test
     // 회원가입
     public void join() throws Exception {
-        String content = objectMapper.writeValueAsString(new UserRequest.JoinDTO("cha", "cha@naver.com", "12341234"));
+        String content = objectMapper.writeValueAsString(new UserRequest.JoinDTO("cha@naver.com", "12341234", "cah"));
 
         // when
         ResultActions resultActions = mvc.perform(
@@ -50,10 +50,19 @@ public class UserRestControllerTest {
 
     @Test
     public void login() throws Exception {
-        String content = objectMapper.writeValueAsString(new UserRequest.LoginDTO("cha@naver.com", "12341234"));
+        String content = objectMapper.writeValueAsString(new UserRequest.JoinDTO("cha@naver.com", "12341234", "cah"));
 
         // when
-        ResultActions resultActions = mvc.perform(
+        ResultActions resultActions =  mvc.perform(
+                post("/auth/join")
+                        .content(content)
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        content = objectMapper.writeValueAsString(new UserRequest.LoginDTO("cha@naver.com", "12341234"));
+
+        // when
+        resultActions = mvc.perform(
                 post("/auth/login")
                         .content(content)
                         .contentType(MediaType.APPLICATION_JSON)

@@ -12,6 +12,8 @@ public class UserRequest {
 
     @Getter
     @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class JoinDTO {
         private String email;
         private String password;
@@ -20,6 +22,8 @@ public class UserRequest {
 
     @Getter
     @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class LoginDTO {
         private String email;
         private String password;
