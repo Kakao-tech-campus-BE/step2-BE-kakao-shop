@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class OrderRestController {
   private <OrderRespDTO> OrderRespDTO getMockOrderDTO(Class<OrderRespDTO> cls)
-      throws NoSuchMethodException, InvocationTargetException, InstantiationException,
+      throws NoSuchMethodException,
+          InvocationTargetException,
+          InstantiationException,
           IllegalAccessException {
     final List<ProductItemDTO> cartItemDTOList = new ArrayList<>();
     cartItemDTOList.add(
@@ -50,15 +52,20 @@ public class OrderRestController {
 
   @PostMapping("/orders/save")
   public ResponseEntity<?> save()
-      throws InvocationTargetException, NoSuchMethodException, InstantiationException,
+      throws InvocationTargetException,
+          NoSuchMethodException,
+          InstantiationException,
           IllegalAccessException {
     return ResponseEntity.ok(ApiUtils.success(getMockOrderDTO(OrderRespSaveDTO.class)));
   }
 
   @GetMapping("/orders/{id}")
   public ResponseEntity<?> findById(@PathVariable int id)
-      throws OrderNotFoundException, InvocationTargetException, NoSuchMethodException,
-          InstantiationException, IllegalAccessException {
+      throws OrderNotFoundException,
+          InvocationTargetException,
+          NoSuchMethodException,
+          InstantiationException,
+          IllegalAccessException {
     if (id == 1)
       return ResponseEntity.ok(ApiUtils.success(getMockOrderDTO(OrderRespFindByIdDTO.class)));
     throw new OrderNotFoundException();
