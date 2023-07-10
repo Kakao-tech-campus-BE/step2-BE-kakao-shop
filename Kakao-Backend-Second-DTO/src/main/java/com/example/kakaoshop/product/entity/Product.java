@@ -1,4 +1,4 @@
-package com.example.kakaoshop.product;
+package com.example.kakaoshop.product.entity;
 
 import lombok.*;
 
@@ -9,8 +9,6 @@ import javax.persistence.*;
 @Entity
 @Table(name="product_tb")
 public class Product {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
