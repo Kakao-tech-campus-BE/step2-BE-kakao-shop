@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-
 // 재고 관리 여부는 없다.
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
