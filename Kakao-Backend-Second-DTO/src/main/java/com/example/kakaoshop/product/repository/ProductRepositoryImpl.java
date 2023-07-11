@@ -20,7 +20,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public List<ProductEntity> findAll(int page) {
+    public List<ProductEntity> findAll(Long page) {
         return productRepository.findAll(page);
     }
 

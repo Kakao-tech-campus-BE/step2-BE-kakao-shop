@@ -10,6 +10,6 @@ import java.util.Optional;
 public interface ProductRepository {
     Optional<ProductEntity> findById(Long id);
 
-    List<ProductEntity> findAll(int page);
+    List<ProductEntity> findAll(Long page);
 
 }

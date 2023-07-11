@@ -29,7 +29,7 @@ public class MemoryProductRepository {
         return Optional.ofNullable(productEntities.get(id));
     }
 
-    List<ProductEntity> findAll(int page) {
+    List<ProductEntity> findAll(Long page) {
         if (!productEntities.containsKey(page * 9L)) {
             // TODO : 추후 ExceptionHandler 사용
             throw new IllegalArgumentException("해당 페이지에 상품이 존재하지 않습니다.");
