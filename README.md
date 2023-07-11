@@ -243,14 +243,81 @@ CartItemEntity
 2. Mock API Controller 구현
 ```
 
-## **과제 설명**
+## **과제**
 
-```
-1. API주소를 설계하여 README에 내용을 작성하시오.
-2. 가짜 데이터를 설계하여 응답하는 스프링부트 컨트롤러를 작성하고 소스코드를 업로드하시오.
-```
+### 1. API주소를 설계하여 README에 내용을 작성하시오.
+
+|  Module  |   Method    |    Endpoint    |  Description   |
+| :------: | :---------: | :------------: | :------------: |
+| 장바구니 |     GET     |     /cart      |      조회      |
+| 장바구니 |    POST     |   /cart/add    |   상품 담기    |
+| 장바구니 | POST(PATCH) |     /carts     |   옵션 변경    |
+| 장바구니 |   DELETE    |  /carts/{id}   |   항목 삭제    |
+|   상품   |     GET     |   /products    | 전체 목록 조회 |
+|   상품   |     GET     | /products/{id} |   상세 조회    |
+|   주문   |    POST     |   /order/pay   |    주문하기    |
+|   주문   |     GET     |    /orders     | 내역 전체 조회 |
+|   주문   |     GET     |  /orders/{id}  | 내역 상세 조회 |
 
 </br>
+
+### 2. 가짜 데이터를 설계하여 응답하는 스프링부트 컨트롤러를 작성하고 소스코드를 업로드하시오.
+
+</br>
+
+과제 상세에나 추후 과제 설명에 보면 "가짜 DTO", "DB연결 없이" 라는 조건을 확인하여 Entity를 만들 당시에 JPA 연관매핑을 진행하지 않고 필드 선언만 하려했으나 1. Product와 ProductOption이 매핑이 진행되어있고 2. User에는 매핑이 되어있지 않아서 User와의 매핑은 무시하고
+
+- productOption > product (구현되어 있었음)
+- orderItem > productOption, order
+- cart > productOption
+
+위 관계에만 한정하여 적용을 하였습니다.
+
+</br>
+
+또한 제공해주셨던 productOption의 @Table 옵션에 @Index 를 통해 인덱싱을 진행한것을 확인하여
+
+- orderItem > productOption, order
+
+옵션에 대해서도 인덱싱을 진행하였습니다.
+
+```
+@Table(name="order_item_tb",
+    indexes = {
+        @Index(name="order_item_option_id_idx", columnList="product_option_tb"),
+        @Index(name="order_item_order_id_idx", columnList="order_id")
+    }
+)
+```
+
+#### 새롭게 작성/수정한 DTO, Entity, Test 리스트
+
+- kakaoshop
+  - KakaoshopApplication.java
+  - cart
+    - Cart.java
+    - request
+      - CartItemReqDTO.java
+      - CartItemUpdateReqDTO.java
+    - response
+      - CartItemUpdateDTO.java
+      - CartUpdateDTO.java
+  - order
+    - Order.java
+    - item
+      - OrderItem.java
+      - response
+        - OrderItemDTO.java
+    - response
+      - OrderProductDTO.java
+      - OrderRespFindByIdDTO.java
+- test
+  - cart
+    - CartRestControllerTest.java
+  - order
+    - OrderRestControllerTest.java
+  - product
+    - ProductRestControllerTest.java
 
 ## **과제 상세 : 수강생들이 과제를 진행할 때, 유념해야할 것**
 
@@ -272,6 +339,11 @@ CartItemEntity
 
 > - 코드 작성하면서 어려웠던 점
 > - 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
+
+1. 왜 장바구니 엔티티에는 인덱싱이 이루어지지 않았을지
+
+- User에 연결되어 있기에 사용자 id 에 대한 인덱싱이 유리하기 때문인가요? 하지만 엄청 많은 물건을 주문하는 소비자에 대응하기 위해선 필요할것 같기도 합니다. 현업에서는 어떻게 대응을 하는지 궁금합니다.
+- 현업에서는 인덱싱 전략에 대해 결정할때 팀원간의 회의를 통해 정해지나요? 미리 fakeDB로 실험을 진행해보나요?
 
 # 3주차
 
