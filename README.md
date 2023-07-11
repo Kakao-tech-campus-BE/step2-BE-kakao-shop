@@ -91,10 +91,10 @@ Local URL : http://localhost:8080/orders/1
 </br>
 
 사진1
-<img src="img1.png" width="max" height="max"/>
+<img src="week1/img1.png" width="max" height="max"/>
 
 사진2
-<img src="img2.png" width="max" height="max"/>
+<img src="week1/img2.png" width="max" height="max"/>
 
 처음 장바구니에 한번 담고 요청을 보내면 사진1처럼 응답이 잘 오지만
 한번 더 요청을 보내면 사진2처럼 서버에러가 나온다
@@ -106,7 +106,7 @@ Local URL : http://localhost:8080/orders/1
 
 ## 과제4번. 테이블 설계를 하여 README에 ER-Diagram을 추가하여 제출하시오.
 
-<img src="img3.png" width="max" height="max"/>
+<img src="week1/img3.png" width="max" height="max"/>
 
 </br>
 </br>
@@ -147,6 +147,70 @@ Local URL : http://localhost:8080/orders/1
 아래 항목은 반드시 포함하여 과제 수행해주세요!
 >- 전체 API 주소 설계가 RestAPI 맞게 설계되었는가? (예를 들어 배포된 서버는 POST와 GET으로만 구현되었는데, 학생들은 PUT과 DELETE도 배울 예정이라 이부분이 반영되었고, 주소가 RestAPI에 맞게 설계되었는지)
 >- 가짜 데이터를 설계하여 Mock API를 잘 구현하였는가? (예를 들어 DB연결없이 컨트롤러만 만들어서 배포된 서버의 응답과 동일한 형태로 데이터가 응답되는지 여부)
+
+</br>
+
+## 과제1번.  API주소를 설계하여 README에 내용을 작성하시오.
+
+</br>
+
+### 1. 회원가입-post 
+/auth/join
+### 2. 이메일 중복 체크-post 
+/auth/check-email
+### 3. 로그인-post 
+/auth/login
+### 4. 로그아웃-post 
+/auth/logout
+### 5. 전체 상품 목록 조회-get 
+/products
+### 6. 개별 상품 상세 조회-get 
+/products/{id}
+### 7. 장바구니 담기-post 
+/carts
+### 8. 장바구니 조회-get 
+/carts
+### 9. 장바구니 수정-put 
+/carts
+### 10. 장바구니 삭제-delete 
+/carts
+### 11. 주문하기-post 
+/orders
+### 12. 결재하기-post 
+/orders/save
+### 13. 주문 결과 확인-get 
+/orders/{id}
+
+
+</br>
+
+## 과제2번. 가짜 데이터를 설계하여 응답하는 스프링부트 컨트롤러를 작성하고 소스코드를 업로드하시오.
+
+</br>
+
+### 해당 부분은 week2파일에 구현하였습니다
+
+<br>
+
+### 과제 경로  
+src->main->java->com->example->kakaoshop
+
+<br>
+
+### 아래 내용은 수정한 부분입니다
+### -cart
+ AddCartDTO 생성<br>
+ UpdateCartDTO 생성<br>
+ UpdateCartItemDTO 생성<br>
+ UpdateCartRespFindAllDTO 생성<br>
+ CartRestController 변경
+
+### -order
+OrderItemDTO 생성<br>
+OrderRespFindAllDTO 생성<br>
+ProductDTO 생성<br>
+OrderRestController 생성
+
 </br>
 
 ## **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
