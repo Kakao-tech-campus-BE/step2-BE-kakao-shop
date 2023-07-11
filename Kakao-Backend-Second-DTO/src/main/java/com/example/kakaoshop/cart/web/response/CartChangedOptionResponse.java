@@ -1,23 +1,20 @@
-package com.example.kakaoshop.cart.request;
+package com.example.kakaoshop.cart.web.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotNull;
-
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-public class CartReqeust {
+public class CartChangedOptionResponse {
 
-    @NotNull
+    private Long cartId;
     private Long optionId;
-    @NotNull
+    private String optionName;
     private Integer quantity;
-    @NotNull
-    private Long price;
+    private Integer price;
 
 }

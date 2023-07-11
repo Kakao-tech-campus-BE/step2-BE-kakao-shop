@@ -1,4 +1,4 @@
-package com.example.kakaoshop.cart.response;
+package com.example.kakaoshop.cart.web.response;
 
 import lombok.*;
 

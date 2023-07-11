@@ -1,4 +1,4 @@
-package com.example.kakaoshop.cart.response;
+package com.example.kakaoshop.cart.web.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-public class CartUpdateResponse {
-    private List<CartChangedOptionResponse> cartChangedOptionResponses;
-    private int totalPrice;
+public class CartUpdateRequest {
+    private List<CartReqeust> cartUpdateRequest;
 }

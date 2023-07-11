@@ -1,9 +1,9 @@
-package com.example.kakaoshop.cart;
+package com.example.kakaoshop.cart.web;
 
 import com.example.kakaoshop._core.utils.ApiUtils;
-import com.example.kakaoshop.cart.request.CartSaveRequest;
-import com.example.kakaoshop.cart.request.CartUpdateRequest;
-import com.example.kakaoshop.cart.response.*;
+import com.example.kakaoshop.cart.web.request.CartSaveRequest;
+import com.example.kakaoshop.cart.web.request.CartUpdateRequest;
+import com.example.kakaoshop.cart.web.response.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

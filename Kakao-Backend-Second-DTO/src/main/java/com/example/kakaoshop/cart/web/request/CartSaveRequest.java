@@ -1,4 +1,4 @@
-package com.example.kakaoshop.cart.request;
+package com.example.kakaoshop.cart.web.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
