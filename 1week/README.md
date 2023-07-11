@@ -45,6 +45,231 @@
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
+
+# 카카오 테크 캠퍼스 2단계 - BE - 1주차 클론 과제
+
+
+### 1. 요구사항분석/API요청 및 응답 시나리오 분석
+
+
+<br>
+
+- (기능1) 회원가입
+    - POST /check
+        - 폼에 작성된 이메일을 받아서 중복 여부를 반환한다.
+        - 예외: 이메일 중복, 이메일 형식 오류
+    - POST /join
+        - 이름, 이메일, 비밀번호를 받아서 회원 계정을 생성하고 결과를 반환한다.
+        - 예외: 이메일 중복, 이메일 형식 오류, 비밀번호 유효성 검사
+    - 이메일 소유자 인증
+
+<br>
+
+- (기능2) 로그인
+    - POST /login
+        - 이메일, 비밀번호를 입력받아 토큰을 반환한다.
+        - 예외: 이메일 및 비밀번호 형식 오류, 이메일이 존재하지 않는 경우, 비밀번호가 일치하지 않는 경우
+
+<br>
+
+- (기능3) 로그아웃
+    - 연결된 API 없음.
+    - 필요하다면 토큰을 입력받아서 블랙리스트를 구현하는 시도 등을 할 수 있겠다.
+
+<br>  
+
+- (기능4) 전체 상품 목록 조회
+    - GET /products?page={number}
+    - 번호에 해당하는 페이지의 상품 목록을 반환한다.
+    - PK 기반 페이지네이션으로 구현하려는 경우, page 가 아닌 product-id 를 받아야 할 것 같다.
+
+<br>
+
+- (기능5) 개별 상품 상세 조회
+    - GET /products/{product-id}
+    - 해당 상품의 옵션들을 반환한다.
+
+<br>
+
+- (기능6) 상품 옵션 선택
+- (기능7) 옵션 확인 및 수량 결정
+    - 클라이언트 상에서 처리되는 부분으로 보인다.
+
+<br>
+
+- (기능8) 장바구니 담기
+    - POST /carts/add
+    - 옵션 아이템과 수량, 토큰을 함께 전달하여, 유저의 장바구니를 업데이트한다.
+
+<br>
+
+- (기능9) 장바구니 보기
+    - GET /carts
+    - 토큰을 전달하여 유저의 장바구니를 조회한다.
+
+<br>
+
+- (기능10) 장바구니 상품 옵션 확인 및 수량 결정
+    - POST /carts/update
+    - 변경하고자 하는 옵션 ID 와 수량을 입력받아 장바구니를 업데이트한다.
+    - 예외: 장바구니에 없는 옵션 ID, 수량이 0 이하인 경우
+
+<br>
+
+- (기능11) 주문
+    - POST /orders/save
+    - 유저의 장바구니 정보를 기반으로 주문을 생성하고 장바구니를 비운다.
+    - 예외: 장바구니가 비어있는 경우
+
+<br>
+
+- (기능12) 결제
+    - 생략
+
+<br>
+
+- (기능13) 주문 결과 확인
+    - GET /orders/{order-id}
+    - 주문 ID 를 입력받아서 주문 정보를 반환한다.
+    - 주문 완료 후 자동으로 보여지는 구매 결과 확인 페이지로 확인된다.
+
+<br>
+
+- (기능14) 주문 내역 확인
+    - GET /orders<br>
+    - 토큰을 입력받아서 해당 유저의 주문 내역을 반환한다. 날짜 등을 입력할 수 있고 페이지네이션도 고려해볼 수 있겠다.
+
+
+상품 카테고리   
+상품 검색  
+환불 등 ...
+
+
+
+
+### 2. 요구사항 추가 반영 및 테이블 설계도
+
+- User table
+    - status 는 ACTIVE, INACTIVE, DELETE 등... WAS 에서 enum 으로 관리하면 좋을 것 같습니다.
+    - Customer 가 아닌 고객의 계정도 관리할 필요가 있다면, Account 로 이름을 바꾸고 계정 역할 필드를 추가하고, 1:1 관계로 Customer, Seller 등으로 분할하는것에 대해서 생각...
+
+
+    CREATE TABLE `user` (  
+      `id` int NOT NULL AUTO_INCREMENT,  
+      `name` varchar(255),  
+      `email` varchar(255) NOT NULL,  
+      `password` varchar(255),  
+      `status` varchar(255),  
+      `created_at` datetime(6),  
+      `updated_at` datetime(6),  
+
+      PRIMARY KEY (`id`),  
+      UNIQUE KEY (`email`)  
+    )  
+
+- Product table
+    - starCount 는 생략하였습니다.
+    - status 에 ACTIVE, INACTIVE, DELETE 뿐 아니라 품절상태를 관리할 수 있으면 좋을 것 같습니다.
+    - 실제로 가격을 가지고 있는 것은 Product 에 연결된 Option 들이기 때문에, Product 에서 가격을 제거하고 반드시 1개 이상의 Option을 가지도록 하는 것을 생각해보았습니다.
+
+
+    CREATE TABLE `product` (  
+      `id` int NOT NULL AUTO_INCREMENT,  
+      `name` varchar(255),  
+      `image_url` varchar(255),  
+      `status` varchar(255),  
+      `created_at` datetime(6),  
+      `updated_at` datetime(6),  
+
+      PRIMARY KEY (`id`)  
+    )  
+
+
+- Option table
+    - sequence: 클라이언트 화면에 보여지는 옵션의 순서 관리
+    - status 는 활성화 여부, 삭제 정도로 일단 충분할 것 같습니다.
+
+
+    CREATE TABLE `product_option` (
+      `id` int NOT NULL AUTO_INCREMENT,
+      `name` varchar(255),
+      `price` int NOT NULL,
+      `sequence` int NOT NULL,
+      `status` varchar(255)ACTIVE',
+      `created_at` datetime(6),
+      `updated_at` datetime(6),
+      `product_id` int,
+      PRIMARY KEY (`id`),
+      KEY (`product_id`),
+      CONSTRAINT FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
+    )
+
+
+- Cart table
+
+
+    CREATE TABLE `shopping_cart` (  
+      `id` int NOT NULL AUTO_INCREMENT,  
+      `user_id` int,  
+      `option_id` int,  
+      `quantity` int NOT NULL,  
+      `created_at` datetime(6),  
+      `updated_at` datetime(6),  
+
+      PRIMARY KEY (`id`),  
+      KEY (`user_id`),  
+      KEY (`option_id`),  
+      CONSTRAINT FOREIGN KEY (`option_id`) REFERENCES `product_option` (`id`),  
+      CONSTRAINT FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)  
+    )  
+
+
+
+- Order table
+
+
+    CREATE TABLE `orders` (
+      `id` int NOT NULL AUTO_INCREMENT,
+      `ordered_at` datetime(6),
+      `user_id` int,  
+
+      PRIMARY KEY (`id`),
+      KEY (`user_id`),
+      CONSTRAINT FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+    )
+
+
+- Item table
+    - 주문 시 장바구니 내역을 그대로 옮겨적는 History table.
+    - 추후 product 와 option 의 정보가 변경될 수 있으니 필요한 정보들을 기록하는 것이 좋을 것 같습니다.
+
+
+    CREATE TABLE `order_item` (
+      `id` int NOT NULL AUTO_INCREMENT,
+      `option_name` varchar(255),
+      `price` varchar(255),
+      `product_name` varchar(255),
+      `quantity` int NOT NULL,
+      `order_id` int,
+
+      PRIMARY KEY (`id`),
+      KEY (`order_id`),
+      CONSTRAINT FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`)
+    )
+
+
+- ER Diagram
+
+![ER Diagram](./image/ERD.jpg)
+
+
+
+
+
+
+
+
+
 # 2주차
 
 카카오 테크 캠퍼스 2단계 - BE - 2주차 클론 과제
@@ -67,11 +292,8 @@
 
 ## **과제 상세 : 수강생들이 과제를 진행할 때, 유념해야할 것**
 아래 항목은 반드시 포함하여 과제 수행해주세요!
->- User 도메인을 제외한 전체 API 주소 설계가 RestAPI 맞게 설계되었는가?  POST와 GET으로만 구현되어 있어도 됨.	
+>- 전체 API 주소 설계가 RestAPI 맞게 설계되었는가? (예를 들어 배포된 서버는 POST와 GET으로만 구현되었는데, 학생들은 PUT과 DELETE도 배울 예정이라 이부분이 반영되었고, 주소가 RestAPI에 맞게 설계되었는지)
 >- 가짜 데이터를 설계하여 Mock API를 잘 구현하였는가? (예를 들어 DB연결없이 컨트롤러만 만들어서 배포된 서버의 응답과 동일한 형태로 데이터가 응답되는지 여부)
->- DTO에 타입은 올바르게 지정되었는가?
->- DTO에 이름은 일관성이 있는가? (예를 들어 어떤 것은 JoinDTO, 어떤 것은 joinDto, 어떤 것은 DtoJoin 이런식으로 되어 있으면 일관성이 없는것이다)
->- DTO를 공유해서 쓰면 안된다 (동일한 데이터가 응답된다 하더라도, 화면은 수시로 변경될 수 있기 때문에 DTO를 공유하고 있으면 배점을 받지 못함)
 </br>
 
 ## **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
@@ -111,7 +333,6 @@
 >- 테스트 메서드끼리 유기적으로 연결되지 않았는가? (테스트는 격리성이 필요하다)
 >- Persistene Context를 clear하여서 테스트가 구현되었는가? (더미데이터를 JPA를 이용해서 insert 할 예정인데, 레포지토리 테스트시에 영속화된 데이터 때문에 쿼리를 제대로 보지 못할 수 있기 때문에)
 >- 테스트 코드의 쿼리 관련된 메서드가 너무 많은 select를 유발하지 않는지? (적절한 한방쿼리, 효율적인 in query, N+1 문제 등이 해결된 쿼리)
->- BDD 패턴으로 구현되었는가? given, when, then
 </br>
 
 ## **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
@@ -151,7 +372,6 @@
 >- Mockito를 이용하여 stub을 구현하였는가?
 >- 인증이 필요한 컨트롤러를 테스트할 수 있는가?
 >- 200 ok만 체크한 것은 아닌가? (해당 컨트롤러에서 제일 필요한 데이터에 대한 테스트가 구현되었는가?)
->- 모든 요청과 응답이 json으로 처리되어 있는가?
 </br>
 
 ## **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
@@ -189,9 +409,6 @@
 아래 항목은 반드시 포함하여 과제 수행해주세요!
 >- 실패 단위 테스트가 구현되었는가?
 >- 모든 예외에 대한 실패 테스트가 구현되었는가?
->- 예외에 대한 처리를 ControllerAdvice or RestControllerAdvice로 구현하였는가?
->- Validation 라이브러리를 사용하여 유효성 검사가 되었는가?
->- 테스트는 격리되어 있는가?
 </br>
 
 ## **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
@@ -223,6 +440,7 @@
 2. API문서를 구현하시오. (swagger, restdoc, word로 직접 작성, 공책에 적어서 제출 등 모든 방법이 다 가능합니다)
 3. 프론트앤드에 입장을 생각해본뒤 어떤 문서를 가장 원할지 생각해본뒤 API문서를 작성하시오.
 4. 카카오 클라우드에 배포하시오.
+5. 배포한 뒤 서비스 장애가 일어날 수 있으니, 해당 장애에 대처할 수 있게 로그를 작성하시오. (로그는 DB에 넣어도 되고, 외부 라이브러리를 사용해도 되고, 파일로 남겨도 된다 - 단 장애 발생시 확인을 할 수 있어야 한다)
 ```
 
 </br>
@@ -232,8 +450,7 @@
 >- 통합테스트가 구현되었는가?
 >- API문서가 구현되었는가?
 >- 배포가 정상적으로 되었는가?
->- 프로그램이 정상 작동되고 있는가?
->- API 문서에 실패 예시가 작성되었는가?
+>- 서비스에 문제가 발생했을 때, 로그를 통해 문제를 확인할 수 있는가?
 </br>
 
 ## **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**

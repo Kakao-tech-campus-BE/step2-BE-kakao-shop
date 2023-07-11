@@ -81,10 +81,76 @@
 
 </br>
 
+
 **2. PR 내용 :**
 
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
+
+
+## API 주소 설계  
+
+### 계정
+
+>- GET /account/email-use-permission?email={email}
+>  - 이메일 중복 체크  
+
+>- POST /account/sign-up
+   >  - 회원가입  
+
+>- POST /account/login
+   >  - 로그인
+
+### 장바구니  
+  
+>- GET /cart
+   >  - 장바구니 조회  
+
+>- POST /cart/items
+   >  - 장바구니에 상품 담기
+
+>- PATCH /carts
+   >  - 장바구니에 담긴 상품옵션 수량 변경
+
+>- DELETE /carts/{cartItemId}
+   >  - 장바구니에 담긴 상품 삭제
+
+>- DELETE /carts
+   >  - 장바구니 전체 비우기
+
+### 상품
+  
+>- GET /products
+   >  - 상품 전체 목록 조회
+
+>- GET /products/{productId}
+   >  - 상품 상세 조회
+
+### 주문  
+
+>- POST /order
+   >  - 주문하기
+
+>- GET /orders
+   >  - 주문 내역 전체 목록 조회
+
+>- GET /orders/{orderId}
+   >  - 주문 내역 상세 조회
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # 3주차
 
