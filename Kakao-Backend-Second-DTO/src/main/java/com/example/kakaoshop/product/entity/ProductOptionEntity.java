@@ -16,20 +16,20 @@ import javax.persistence.*;
         indexes = {
                 @Index(name = "product_option_product_id_idx", columnList = "product_id")
         })
-public class ProductOption {
+public class ProductOptionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Product product;
+    private ProductEntity product;
 
     @Column(length = 100, nullable = false)
     private String optionName;
     private int price;
 
     @Builder
-    public ProductOption(int id, Product product, String optionName, int price) {
+    public ProductOptionEntity(int id, ProductEntity product, String optionName, int price) {
         this.id = id;
         this.product = product;
         this.optionName = optionName;

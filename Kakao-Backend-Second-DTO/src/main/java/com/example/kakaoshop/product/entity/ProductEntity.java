@@ -8,7 +8,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name="product_tb")
-public class Product {
+public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -22,7 +22,7 @@ public class Product {
 
 
     @Builder
-    public Product(int id, String productName, String description, String image, int price) {
+    public ProductEntity(int id, String productName, String description, String image, int price) {
         this.id = id;
         this.productName = productName;
         this.description = description;
