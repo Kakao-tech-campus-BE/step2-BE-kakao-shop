@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DummyEntity {
     protected User newUser(String username){
@@ -54,15 +55,26 @@ public class DummyEntity {
                 .order(order)
                 .option(cart.getOption())
                 .quantity(cart.getQuantity())
-                .price(cart.getOption().getPrice() * cart.getQuantity())
+                .price(cart.getOption().getPrice() * cart.getQuantity()) // 이렇게 할거면 최소한 totalPrice , paidPrice 등으로 이름을 바꿔야 함.
                 .build();
     }
 
     protected Order newOrder(User user){
         return Order.builder()
                 .user(user)
-                .id(1)
                 .build();
+    }
+
+    protected List<Item> itemDummyList(List<Cart> carts, Order order){
+        return carts.stream()
+          .map(cart -> newItem(cart, order))
+          .collect(Collectors.toList());
+    }
+
+    protected List<Cart> cartDummyList(User user, List<Option> options) {
+        return options.stream()
+          .map(option -> newCart(user, option, 1))
+          .collect(Collectors.toList());
     }
 
     // product repository 테스트할 때 가져옴
@@ -86,6 +98,7 @@ public class DummyEntity {
         );
     }
 
+    // 48 개
     protected List<Option> optionDummyList(List<Product> productListPS) {
         return Arrays.asList(
                 newOption(productListPS.get(0), "01. 슬라이딩 지퍼백 크리스마스에디션 4종", 10000),

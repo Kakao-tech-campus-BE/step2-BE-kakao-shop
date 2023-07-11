@@ -27,7 +27,7 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
-        String jwt = request.getHeader(JWTProvider.HEADER);
+        String jwt = request.getHeader(JwtProvider.HEADER);
 
         if (jwt == null) {
             chain.doFilter(request, response);
@@ -35,7 +35,7 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
         }
 
         try {
-            DecodedJWT decodedJWT = JWTProvider.verify(jwt);
+            DecodedJWT decodedJWT = JwtProvider.verify(jwt);
             int id = decodedJWT.getClaim("id").asInt();
             String roles = decodedJWT.getClaim("role").asString();
             System.out.println("roles : "+roles);

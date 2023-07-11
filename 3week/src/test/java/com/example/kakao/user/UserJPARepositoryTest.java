@@ -7,12 +7,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.test.annotation.DirtiesContext;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 @DataJpaTest
-public class UserJPARepositoryTest extends DummyEntity {
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+class UserJPARepositoryTest extends DummyEntity {
 
     @Autowired
     private UserJPARepository userJPARepository;
@@ -26,7 +28,7 @@ public class UserJPARepositoryTest extends DummyEntity {
     // 2. 못찾으면 exception
     // 3. setUp에 유저 한명 추가
     @Test
-    public void findByEmail_test() {
+    void findByEmail_test() {
         // given
         String email = "ssar@nate.com";
 
@@ -46,7 +48,7 @@ public class UserJPARepositoryTest extends DummyEntity {
     }
 
     @Test
-    public void save(){}
+    void save(){}
 
 
 }

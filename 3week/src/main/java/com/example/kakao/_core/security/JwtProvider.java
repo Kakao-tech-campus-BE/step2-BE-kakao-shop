@@ -13,7 +13,9 @@ import java.util.Date;
 
 
 @Component
-public class JWTProvider {
+public class JwtProvider {
+
+    private JwtProvider() {}
     public static final Long EXP = 1000L * 60 * 60 * 48; // 48시간 - 테스트 하기 편함.
     public static final String TOKEN_PREFIX = "Bearer "; // 스페이스 필요함
     public static final String HEADER = "Authorization";
@@ -30,10 +32,9 @@ public class JWTProvider {
     }
 
     public static DecodedJWT verify(String jwt) throws SignatureVerificationException, TokenExpiredException {
-        jwt = jwt.replace(JWTProvider.TOKEN_PREFIX, "");
-        DecodedJWT decodedJWT = JWT.require(Algorithm.HMAC512(SECRET))
+        jwt = jwt.replace(JwtProvider.TOKEN_PREFIX, "");
+        return JWT.require(Algorithm.HMAC512(SECRET))
                 .build().verify(jwt);
-        return decodedJWT;
     }
 
 }

@@ -15,6 +15,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.test.annotation.DirtiesContext;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -22,7 +23,8 @@ import java.util.stream.Collectors;
 
 @Import(ObjectMapper.class)
 @DataJpaTest
-public class ProductJPARepositoryTest extends DummyEntity {
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+class ProductJPARepositoryTest extends DummyEntity {
 
     @Autowired
     private EntityManager em;
@@ -44,7 +46,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
     }
 
     @Test
-    public void product_findAll_test() throws JsonProcessingException {
+    void product_findAll_test() throws JsonProcessingException {
         // given
         int page = 0;
         int size = 9;
@@ -58,19 +60,19 @@ public class ProductJPARepositoryTest extends DummyEntity {
         // then
         Assertions.assertThat(productPG.getTotalPages()).isEqualTo(2);
         Assertions.assertThat(productPG.getSize()).isEqualTo(9);
-        Assertions.assertThat(productPG.getNumber()).isEqualTo(0);
+        Assertions.assertThat(productPG.getNumber()).isZero();
         Assertions.assertThat(productPG.getTotalElements()).isEqualTo(15);
-        Assertions.assertThat(productPG.isFirst()).isEqualTo(true);
+        Assertions.assertThat(productPG.isFirst()).isTrue();
         Assertions.assertThat(productPG.getContent().get(0).getId()).isEqualTo(1);
         Assertions.assertThat(productPG.getContent().get(0).getProductName()).isEqualTo("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전");
-        Assertions.assertThat(productPG.getContent().get(0).getDescription()).isEqualTo("");
+        Assertions.assertThat(productPG.getContent().get(0).getDescription()).isEmpty();
         Assertions.assertThat(productPG.getContent().get(0).getImage()).isEqualTo("/images/1.jpg");
         Assertions.assertThat(productPG.getContent().get(0).getPrice()).isEqualTo(1000);
     }
 
     // ManyToOne 전략을 Eager로 간다면 추천
     @Test
-    public void option_findByProductId_eager_test() throws JsonProcessingException {
+    void option_findByProductId_eager_test() throws JsonProcessingException {
         // given
         int id = 1;
 
@@ -78,6 +80,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
         // 충분한 데이터 - product만 0번지에서 빼면  된다
         // 조인은 하지만, fetch를 하지 않아서, product를 한번 더 select 했다.
         List<Option> optionListPS = optionJPARepository.findByProductId(id); // Eager
+
 
         System.out.println("json 직렬화 직전========================");
         String responseBody = om.writeValueAsString(optionListPS);
@@ -87,7 +90,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
     }
 
     @Test
-    public void option_findByProductId_lazy_error_test() throws JsonProcessingException {
+    void option_findByProductId_lazy_error_test() throws JsonProcessingException {
         // given
         int id = 1;
 
@@ -109,7 +112,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
     // 추천
     // 조인쿼리 직접 만들어서 사용하기
     @Test
-    public void option_mFindByProductId_lazy_test() throws JsonProcessingException {
+    void option_mFindByProductId_lazy_test() throws JsonProcessingException {
         // given
         int id = 1;
 

@@ -19,7 +19,8 @@ public class Option {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="product_id")
     private Product product;
 
     @Column(length = 100, nullable = false)

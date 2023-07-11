@@ -26,14 +26,14 @@ public class Cart {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user; // user별로 장바구니에 묶여 있음.
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     private Option option;
 
     @Column(nullable = false)
     private int quantity;
 
     @Column(nullable = false)
-    private int price;
+    private int price; // 반정규화 ?
 
     @Builder
     public Cart(int id, User user, Option option, int quantity, int price) {
