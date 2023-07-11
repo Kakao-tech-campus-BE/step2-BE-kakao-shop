@@ -5,7 +5,6 @@ import com.example.kakaoshop.product.domain.converter.ProductOptionConverter;
 import com.example.kakaoshop.product.domain.model.Product;
 import com.example.kakaoshop.product.domain.model.ProductOption;
 import com.example.kakaoshop.product.entity.ProductEntity;
-import com.example.kakaoshop.product.entity.ProductOptionEntity;
 import com.example.kakaoshop.product.web.converter.ProductResponseConverter;
 import com.example.kakaoshop.product.web.response.ProductReponse;
 import lombok.RequiredArgsConstructor;
@@ -34,5 +33,16 @@ public class ProductService {
                 .collect(Collectors.toList());
 
         return ProductResponseConverter.from(product, productOptions);
+    }
+
+    public List<ProductReponse.ProductFindAllResponse> getPosts(Long page) {
+        List<Product> products = productRepository.findAll(page)
+                .stream()
+                .map(ProductConverter::from)
+                .collect(Collectors.toList());
+
+        return products.stream()
+                .map(ProductResponseConverter::from)
+                .collect(Collectors.toList());
     }
 }

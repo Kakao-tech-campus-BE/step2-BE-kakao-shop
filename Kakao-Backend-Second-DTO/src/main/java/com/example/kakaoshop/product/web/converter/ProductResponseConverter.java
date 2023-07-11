@@ -24,4 +24,14 @@ public class ProductResponseConverter {
                 )
                 .build();
     }
+
+    public static ProductReponse.ProductFindAllResponse from(Product product){
+        return ProductReponse.ProductFindAllResponse.builder()
+                .id(product.getId())
+                .productName(product.getProductName())
+                .description(product.getDescription())
+                .image(product.getImage())
+                .price(product.getPrice())
+                .build();
+    }
 }
