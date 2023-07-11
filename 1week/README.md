@@ -267,46 +267,6 @@
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
-<<<<<<< HEAD
-
-# 2주차 클론 과제
-
-> 1. 전체 API 주소 설계
-> 
->- 전체 상품 목록 조회
->   - GET /products
-> 
->- 개별 상품 상세 조회
->   - GET /products/:id
-> 
->- 회원가입
->   - POST /join
-> 
->- 로그인
->   - POST /login
-> 
->- 장바구니 담기
->   - POST /carts/add
-> 
->- 장바구니 조회
->   - GET /carts
-> 
->- 주문하기 - (장바구니 수정)
->   - POST /carts/update
-> 
->- 결제하기 - (주문 인서트)
->   - POST /orders/save
-> 
->- 주문 결과 확인
->   - GET /orders/:id
-> 
-> 
-> 2. Mock API Controller 구현
->
-> 2week/Kakao-Backend-Second-DTO 경로에 구현 파일이 있습니다.
-
-=======
->>>>>>> 8580a17efa1d62830c7419e66df69b64b72fbad9
 # 3주차
 
 카카오 테크 캠퍼스 2단계 - BE - 3주차 클론 과제
