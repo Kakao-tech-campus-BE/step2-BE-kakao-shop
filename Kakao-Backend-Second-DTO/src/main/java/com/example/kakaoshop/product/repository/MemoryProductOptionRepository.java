@@ -18,7 +18,7 @@ public class MemoryProductOptionRepository {
 
     public MemoryProductOptionRepository(ProductDummyData dummyData) {
         productOptionEntities = new ConcurrentHashMap<>();
-        dummyData.optionDummyList(dummyData.productDummyList())
+        dummyData.optionDummyList()
                 .forEach(i -> productOptionEntities.put(count++, i));
     }
 
