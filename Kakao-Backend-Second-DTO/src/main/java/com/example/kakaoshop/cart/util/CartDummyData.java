@@ -20,7 +20,7 @@ public class CartDummyData {
     }
 
 
-    private List<CartEntity> cartDummyList() {
+    public List<CartEntity> cartDummyList() {
         return Arrays.asList(
                 newCart(getProProductOptionEntities().get(0), 1, 5),
                 newCart(getProProductOptionEntities().get(1), 2, 5)
