@@ -313,6 +313,128 @@ https://drive.google.com/uc?export=view&id=1pkgYkErdQ9-vE3zfOh6cZXM6C0fp7ADE
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
+</br>
+
+### 과제 1 - API 주소 설계하기
+1. 이메일 중복 체크  - POST /auth/email
+   
+   HTTP Status :
+
+   (성공) 200 OK
+   
+   (실패1 - 동일한 이메일 존재) 409 Conflict - "동일한 이메일이 존재합니다"
+
+   (실패2 - 이메일 형식) 400 Bad Request - "이메일 형식으로 작성해주세요:email"
+
+
+2. 회원가입  - POST /auth/members
+
+   HTTP Status :
+
+   (성공) 201 Created
+
+   (실패1 - 이메일 형식) 400 Bad Request - "이메일 형식으로 작성해주세요:email"
+
+   (실패2 - 비밀번호 형식) 400 Bad Request - "영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니
+   다.:password"
+
+   (실패3 - 비밀번호 길이) 400 Bad Request - "8에서 20자 이내여야 합니다.:password"
+
+
+
+3. 로그인 - POST /auth/login
+
+   HTTP Status :
+
+   (성공) 200 OK
+
+   (실패1 - 이메일 형식) 400 Bad Request - "이메일 형식으로 작성해주세요:email"
+
+   (실패2 - 이메일 불일치) 400 Bad Request - "등록되지 않은 회원입니다.:email"
+
+   (실패3 - 비밀번호 불일치) 400 Bad Request - "비밀번호가 일치하지 않습니다:password"
+
+
+4. 전체 상품 목록 조회 - GET /products
+
+   HTTP Status :
+
+   (성공) 200 OK
+
+   (실패) 404 Not Found - "존재하지 않는 페이지입니다."
+
+
+5. 개별 상품 상세 조회 - GET /products/{product_id}
+
+   HTTP Status :
+
+   (성공) 200 OK
+
+   (실패) 404 Not Found - "존재하지 않는 상품입니다."
+
+
+6. 장바구니 담기 - POST /carts
+
+   HTTP Status :
+
+   (성공) 201 Created
+
+   (실패1 - 세션 만료) 401 Unauthorized - "회원 인증이 필요합니다"
+
+   (실패2 - 품절) 412 Precondition Failed - "품절된 상품입니다."
+
+
+7. 장바구니 조회 - GET /carts
+
+   HTTP Status :
+
+   (성공) 200 OK
+
+   (실패 - 세션 만료) 401 Unauthorized - "회원 인증이 필요합니다"
+
+
+8. 장바구니 수정하기 - PUT /carts
+
+   HTTP Status :
+
+   (성공) 200 OK
+
+   (실패 - 세션 만료) 401 Unauthorized - "회원 인증이 필요합니다"
+
+
+9. 주문하기 - POST /orders
+
+   HTTP Status :
+
+   (성공) 201 Created
+
+   (실패1 - 세션 만료) 401 Unauthorized - "회원 인증이 필요합니다"
+
+   (실패2 - 품절) 412 Precondition Failed - "품절된 상품입니다."
+
+
+10. 주문결과 확인 - GET /orders/{id}
+
+      HTTP Status :
+
+      (성공) 200 OK
+
+    (실패1)  404 Not Found - "존재하지 않는 내역입니다."
+   
+      (실패2 - 세션 만료) 401 Unauthorized - "회원 인증이 필요합니다"
+
+      
+
+
+</br>
+
+   
+### 과제 2 - Mock API 구현하기
+   2week에 필요한 컨트롤러 및 DTO를 추가하거나 보완했습니다.
+
+
+</br>
+
 # 3주차
 
 카카오 테크 캠퍼스 2단계 - BE - 3주차 클론 과제
