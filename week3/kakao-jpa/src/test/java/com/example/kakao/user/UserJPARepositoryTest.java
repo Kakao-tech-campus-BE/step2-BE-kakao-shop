@@ -1,12 +1,16 @@
 package com.example.kakao.user;
 
 import com.example.kakao._core.util.DummyEntity;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+
+import javax.persistence.EntityManager;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -15,11 +19,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class UserJPARepositoryTest extends DummyEntity {
 
     @Autowired
+    private EntityManager em;
+
+    @Autowired
     private UserJPARepository userJPARepository;
 
     @BeforeEach
     public void setUp(){
+        em.createNativeQuery("ALTER TABLE user_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
         userJPARepository.save(newUser("ssar"));
+        em.clear();
     }
 
     // 1. 눈으로 findByEmail() 쿼리 확인

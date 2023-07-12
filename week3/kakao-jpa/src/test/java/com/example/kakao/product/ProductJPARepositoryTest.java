@@ -38,6 +38,8 @@ public class ProductJPARepositoryTest extends DummyEntity {
 
     @BeforeEach
     public void setUp(){
+        em.createNativeQuery("ALTER TABLE product_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        em.createNativeQuery("ALTER TABLE option_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
         List<Product> productListPS = productJPARepository.saveAll(productDummyList());
         optionJPARepository.saveAll(optionDummyList(productListPS));
         em.clear();
@@ -69,22 +71,23 @@ public class ProductJPARepositoryTest extends DummyEntity {
     }
 
     // ManyToOne 전략을 Eager로 간다면 추천
-    @Test
-    public void option_findByProductId_eager_test() throws JsonProcessingException {
-        // given
-        int id = 1;
-
-        // when
-        // 충분한 데이터 - product만 0번지에서 빼면  된다
-        // 조인은 하지만, fetch를 하지 않아서, product를 한번 더 select 했다.
-        List<Option> optionListPS = optionJPARepository.findByProductId(id); // Eager
-
-        System.out.println("json 직렬화 직전========================");
-        String responseBody = om.writeValueAsString(optionListPS);
-        System.out.println("테스트 : "+responseBody);
-
-        // then
-    }
+    // Option의 ManyToOne 전략을 Lazy로 가기때문에 주석 처리
+//    @Test
+//    public void option_findByProductId_eager_test() throws JsonProcessingException {
+//        // given
+//        int id = 1;
+//
+//        // when
+//        // 충분한 데이터 - product만 0번지에서 빼면  된다
+//        // 조인은 하지만, fetch를 하지 않아서, product를 한번 더 select 했다.
+//        List<Option> optionListPS = optionJPARepository.findByProductId(id); // Eager
+//
+//        System.out.println("json 직렬화 직전========================");
+//        String responseBody = om.writeValueAsString(optionListPS);
+//        System.out.println("테스트 : "+responseBody);
+//
+//        // then
+//    }
 
     @Test
     public void option_findByProductId_lazy_error_test() throws JsonProcessingException {
@@ -99,11 +102,13 @@ public class ProductJPARepositoryTest extends DummyEntity {
         // 이때 json 변환을 시도하는 것이 타이밍적으로 더 빠르다 (I/O)가 없기 때문에!!
         // 그래서 hibernateLazyInitializer 오류가 발생한다.
         // 그림 설명 필요
-        System.out.println("json 직렬화 직전========================");
-        String responseBody = om.writeValueAsString(optionListPS);
-        System.out.println("테스트 : "+responseBody);
 
-        // then
+        System.out.println("json 직렬화 직전========================");
+        // when then
+        Assertions.assertThatThrownBy(() -> {
+            String responseBody = om.writeValueAsString(optionListPS);
+            System.out.println("테스트 : "+responseBody);
+        });
     }
 
     // 추천
@@ -121,6 +126,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
         System.out.println("테스트 : "+responseBody);
 
         // then
+        // exception 없이 정상 작동
     }
 
 
@@ -144,6 +150,6 @@ public class ProductJPARepositoryTest extends DummyEntity {
         System.out.println("테스트 : "+responseBody2);
 
         // then
+        // exception 없이 정상 작동
     }
-
 }
