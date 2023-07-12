@@ -85,7 +85,7 @@
 </br>
 
 ### **과제 4**
-![kakaoshop-clone](https://github.com/chaee813/git-practice/assets/82564901/d6ae62a1-2978-4796-9efc-a4fb6af3affa)
+![kakaoshop-clone](https://github.com/chaee813/git-practice/assets/82564901/0ecb69e4-da24-4f98-b5eb-763e370a6042)
 
 
 </br>
@@ -129,6 +129,10 @@
 1. API주소를 설계하여 README에 내용을 작성하시오.
 2. 가짜 데이터를 설계하여 응답하는 스프링부트 컨트롤러를 작성하고 소스코드를 업로드하시오.
 ```
+
+### **과제 1**
+![2주차 API](https://github.com/chaee813/git-practice/assets/82564901/572009ee-6d11-4019-9c50-3144bf0eb106)
+
 
 </br>
 
