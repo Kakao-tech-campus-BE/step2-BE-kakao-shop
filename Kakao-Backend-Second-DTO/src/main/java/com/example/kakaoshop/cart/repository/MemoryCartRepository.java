@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @Repository
 public class MemoryCartRepository {
-    private Map<Long, CartEntity> cartEntities = new ConcurrentHashMap<>();
+    private Map<Long, CartEntity> cartEntities;
 
     private Long count = 0L;
 
@@ -23,4 +23,6 @@ public class MemoryCartRepository {
         dummyData.cartDummyList()
                 .forEach(i -> cartEntities.put(count++, i));
     }
+
+
 }
