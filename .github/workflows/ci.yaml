@@ -30,9 +30,9 @@ jobs:
           distribution: 'zulu'
           java-version: 11
       - run: chmod +x ./gradlew
-        working-directory: ./2week/Kakao-Backend-Second-DTO
+        working-directory: ./3week/kakao-jpa
         shell: bash
       - name: Test and build
-        working-directory: ./2week/Kakao-Backend-Second-DTO
+        working-directory: ./3week/kakao-jpa
         run: ./gradlew build
         shell: bash

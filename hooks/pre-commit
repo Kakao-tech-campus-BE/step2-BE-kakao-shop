@@ -64,4 +64,4 @@ else
     echo "No Java files changes found."
 fi
 
-cd ./2week/Kakao-Backend-Second-DTO && ./gradlew build
+cd ./3week/kakao-jpa && ./gradlew build
