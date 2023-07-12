@@ -117,7 +117,7 @@ public class DummyEntity {
                 newOption(productListPS.get(7), "제나벨 PDRN 자생크림 1+1", 25900),
                 newOption(productListPS.get(8), "플레이스테이션 VR2 호라이즌 번들", 839000),
                 newOption(productListPS.get(8), "플레이스테이션 VR2", 797000),
-                newOption(productListPS.get(9),"홍가리비2kg(50미이내)", 8900), //30
+                newOption(productListPS.get(9), "홍가리비2kg(50미이내)", 8900), //30
                 newOption(productListPS.get(10), "궁채 절임 1kg", 6900),
                 newOption(productListPS.get(10), "양념 깻잎 1kg", 8900),
                 newOption(productListPS.get(10), "된장 깻잎 1kg", 8900),
@@ -137,5 +137,11 @@ public class DummyEntity {
                 newOption(productListPS.get(14), "화이트", 148000),
                 newOption(productListPS.get(14), "블랙", 148000)
         );
+    }
+        protected List<Cart> cartDummyList(List<Option> optionListPS) {
+            return Arrays.asList(
+                    newCart()
+            )
+        }
     }
 }
