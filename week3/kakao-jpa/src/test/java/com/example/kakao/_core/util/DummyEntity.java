@@ -16,8 +16,8 @@ public class DummyEntity {
     protected User newUser(String username){
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return User.builder()
-                .email(username+"@nate.com")
-                .password(passwordEncoder.encode("meta1234!"))
+                .email(username+"@naver.com")
+                .password(passwordEncoder.encode("@@alstjr12"))
                 .username(username)
                 .roles(username.equals("admin") ? "ROLE_ADMIN" : "ROLE_USER")
                 .build();
