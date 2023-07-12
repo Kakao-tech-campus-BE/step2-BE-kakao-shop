@@ -68,6 +68,23 @@ public class ProductJPARepositoryTest extends DummyEntity {
         Assertions.assertThat(productPG.getContent().get(0).getPrice()).isEqualTo(1000);
     }
 
+    @Test
+    public void product_findAll_paging_test() throws JsonProcessingException {
+        //given
+        int page = 1;
+        int size = 9;
+
+        //when
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<Product> productPG = productJPARepository.findAll(pageRequest);
+        String responseBody = om.writeValueAsString(productPG);
+        System.out.println("테스트 : " + responseBody);
+
+        //then
+        Assertions.assertThat(productPG.getSize()).isEqualTo(9);
+        Assertions.assertThat(productPG.getNumber()).isEqualTo(1);
+        Assertions.assertThat(productPG.getContent().get(0).getId()).isEqualTo(10);
+    }
     // ManyToOne 전략을 Eager로 간다면 추천
     @Test
     public void option_findByProductId_eager_test() throws JsonProcessingException {
@@ -85,6 +102,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
 
         // then
     }
+
 
     @Test
     public void option_findByProductId_lazy_error_test() throws JsonProcessingException {
