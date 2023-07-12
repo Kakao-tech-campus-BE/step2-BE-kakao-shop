@@ -4,13 +4,16 @@
 ## 목차
 
 - [1주차](#week1)
-  - [과제](#task)
+  - [과제](#task1)
     - [기능 추가](#add-function)
     - [API 매핑](#api-scenario)
     - [ER-Diagram](#er-diagram)
     - [테이블 설계](#table-design)
   
 - [2주차](#week2)
+  - [과제](#task2)
+    - [REST API 설계](#rest-api)
+    - [요청-응답 확인](#response)
 
 - [3주차](#week3)
 
@@ -65,7 +68,7 @@
 
 <br>
 
-## Task
+## Task1
 
 ---
 
@@ -114,7 +117,7 @@
 
 **회원 가입**
 
-<img src="week1_image/join.png" width="400" height="200" alt="회원 가입">
+<img src="week1/week1_image/join.png" width="400" height="200" alt="회원 가입">
 
 - 로그인 페이지 내 회원 가입 버튼 클릭 시
     - Local URL : localhost:8080/join
@@ -141,7 +144,7 @@
 
 **로그인**
 
-<img src="week1_image/login.png" width="400" height="200" alt="로그인">
+<img src="week1/week1_image/login.png" width="400" height="200" alt="로그인">
 
 - 메인 페이지 내 로그인 버튼 클릭 시
     - Local URL : localhost:8080/login
@@ -167,7 +170,7 @@
 
 **전체 상품 목록 조회**
 
-<img src="week1_image/products.png" width="400" height="400" alt="전체 상품 목록 조회">
+<img src="week1/week1_image/products.png" width="400" height="400" alt="전체 상품 목록 조회">
 
 - 로그인 후 메인 페이지
     - Local URL : localhost:8080/products
@@ -250,7 +253,7 @@
 
 **개별 상품 목록 조회**
 
-<img src="week1_image/product.png" width="400" height="200" alt="개별상품 조회">
+<img src="week1/week1_image/product.png" width="400" height="200" alt="개별상품 조회">
 
 - 전체 상품 목록 조회에서 특정 상품 클릭 시
     - Local URL : localhost:3000/products/{productId}
@@ -293,7 +296,7 @@
 
 **장바구니 담기**
 
-<img src="week1_image/option.png" width="400" height="400" alt="장바구니 담기">
+<img src="week1/week1_image/option.png" width="400" height="400" alt="장바구니 담기">
 
 - 개별 상품 상세 조회 페이지 내 옵션 선택 후 하단의 장바구니 버튼 클릭 시
     - Local URL : localhost:8080/carts/add
@@ -325,7 +328,7 @@
 
 **장바구니 조회**
 
-<img src="week1_image/cart.png" width="400" height="200" alt="장바구니 조회">
+<img src="week1/week1_image/cart.png" width="400" height="200" alt="장바구니 조회">
 
 - 네비게이션 바 오른쪽 상단의 장바구니 버튼 클릭 시
     - Local URL : localhost:8080/carts
@@ -374,7 +377,7 @@
 
 **주문하기**
 
-<img src="week1_image/order.png" width="400" height="400" alt="주문하기">
+<img src="week1/week1_image/order.png" width="400" height="400" alt="주문하기">
 
 - 장바구니 페이지 내 주문하기 버튼 클릭 시
     - Local URL : localhost:8080/carts/update
@@ -420,7 +423,7 @@
 
 **주문 결과 확인**
 
-<img src="week1_image/result.png" width="400" height="400" alt="주문 결과 확인">
+<img src="week1/week1_image/result.png" width="400" height="400" alt="주문 결과 확인">
 
 - 주문 페이지 내 결제하기 버튼 클릭 시
     - Local URL : localhost:8080/orders/{order_id}
@@ -479,7 +482,7 @@
 
 ### ER-Diagram
 
-<img src="week1_image/erd.png" width="400" height="400"></img>
+<img src="week1/week1_image/erd.png" width="400" height="400" alt="ER-Diagram"></img>
 
 #### Table Design
 
@@ -595,6 +598,90 @@ CREATE INDEX `idx_oi_option_id` ON `order_item_tb` (`optionId`);
 
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
+
+<br>
+
+## Task2
+
+---
+
+### REST API
+
+<br>
+
+- 전체 상품 목록 조회
+
+  *GET /products*
+
+
+- 개별 상품 상세 조회
+
+  *GET /products/{productId}*
+
+
+- 이메일 중복 체크
+
+  *POST /check -> POST /check/email*
+
+
+- 회원가입
+
+  *POST /join -> POST /users*
+
+
+- 로그인
+
+  *POST /login*
+
+
+- 장바구니 담기
+
+  *POST /carts/add -> POST /carts*
+
+
+- 장바구니 조회
+
+  *GET /carts*
+
+
+- 장바구니 수정
+
+  *POST /carts/update -> PUT /carts*
+
+
+- 주문하기
+
+  *POST /orders/save -> POST /orders*
+
+
+- 주문 확인
+
+  *GET /orders/{orderId}*
+
+### Response
+
+**/carts/add**
+
+<img src="week2/week2_image/carts_add.png" width="400" height="300" alt="carts_add">
+
+**/carts/update**
+
+<img src="week2\week2_image\carts_update1.png" width="400" height="200" alt="carts_update1">
+
+<img src="week2/week2_image/carts_update2.png" width="400" height="400" alt="carts_update2">
+
+**/orders/save**
+
+<img src="week2/week2_image/orders_Save.png" width="400" height="400" alt="orders_save">
+
+**/orders/2**
+
+<img src="week2/week2_image/orders_2.png" width="400" height="400" alt="orders_2">
+
+**/orders/3**
+
+<img src="week2/week2_image/orders_3.png" width="400" height="200" alt="orders_3">
+
 
 # Week3
 
