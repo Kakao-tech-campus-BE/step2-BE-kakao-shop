@@ -303,6 +303,85 @@ CREATE TABLE order_item(
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
+</br>
+
+## **과제 내용**
+
+>1. API주소를 설계하여 README에 내용을 작성하시오.
+
+</br>
+
+&nbsp;&nbsp;&nbsp;● Rest API의 설게 규칙 - URI를 통해 자원을 표시하고 HTTP METHOD로 행위를 규정한다. 또한 URI에 행위를 나타내지 않는다.
+
+<table>
+<thead>
+  <tr>
+    <th>기능</th>
+    <th>URL</th>
+    <th>메소드</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>회원가입</td>
+    <td>{base_url}/join</td>
+    <td>POST</td>
+  </tr>
+  <tr>
+    <td>로그인</td>
+    <td>{base_url}/login</td>
+    <td>POST</td>
+  </tr>
+  <tr>
+    <td>상품 목록 조회</td>
+    <td>{base_url}/products?page={num}</td>
+    <td>GET</td>
+  </tr>
+  <tr>
+    <td>개별 상품 정보 조회</td>
+    <td>{base_url}/products/{product_id}</td>
+    <td>GET</td>
+  </tr>
+  <tr>
+    <td>장바구니 담기</td>
+    <td>{base_url}/carts</td>
+    <td>POST</td>
+  </tr>
+  <tr>
+    <td>장바구니 조회</td>
+    <td>{base_url}/carts</td>
+    <td>GET</td>
+  </tr>
+  <tr>
+    <td>장바구니 수정</td>
+    <td>{base_url}/carts/{carts_id}</td>
+    <td>PUT</td>
+  </tr>
+  <tr>
+    <td>장바구니 삭제</td>
+    <td>{base_url}/carts/{carts_id}</td>
+    <td>DELETE</td>
+  </tr>
+  <tr>
+    <td>결제</td>
+    <td>{base_url}/orders/{user_id}</td>
+    <td>POST</td>
+  </tr>
+  <tr>
+    <td>주문 내역 확인</td>
+    <td>{base_url}/orders/{user_id}/{order_id}</td>
+    <td>GET</td>
+  </tr>
+</tbody>
+</table>
+
+</br>
+
+>2. 가짜 데이터를 설계하여 응답하는 스프링부트 컨트롤러를 작성하고 소스코드를 업로드하시오.
+</br>
+&nbsp;&nbsp;&nbsp;● 2week 폴더 참조
+</br>
+
 # 3주차
 
 카카오 테크 캠퍼스 2단계 - BE - 3주차 클론 과제
@@ -459,3 +538,4 @@ CREATE TABLE order_item(
 
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
+
