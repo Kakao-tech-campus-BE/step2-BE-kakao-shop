@@ -16,7 +16,6 @@ import java.util.List;
 
 @RestController
 public class CartRestController {
-
     @GetMapping("/carts")
     public ResponseEntity<?> findAll() {
         // 카트 아이템 리스트 만들기
