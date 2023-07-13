@@ -30,7 +30,6 @@ public class CartJPARepositoryTest extends DummyEntity {
     @Autowired
     private EntityManager em;
 
-    // 최대한 다른 Repository는 쓰지 않는 것이 좋은가?
     @Autowired
     private UserJPARepository userJPARepository;
 
@@ -86,29 +85,38 @@ public class CartJPARepositoryTest extends DummyEntity {
         assertThat(cartList.get(1).getQuantity()).isEqualTo(5);
         assertThat(cartList.get(1).getPrice()).isEqualTo(54500);
 
-        /* option을 LAZY로 하고 하는 방법은?
-        List<CartDTO> cartDTOList = cartList.stream()
-                        .map(cart -> new CartDTO(
-                                cart.getId(),
-                                cart.getUser(),
-                                cart.getQuantity(),
-                                cart.getPrice()
-                        ))
-                                .collect(Collectors.toList());
-
-        1. 새로운 DTO를 만든다
-        2. Object Mapper를 고친다
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        String json = mapper.writeValueAsString(newCart);
+        System.out.println("직렬화 문제 해결 ==============================================================");
+        om.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        String json = om.writeValueAsString(cartList);
         System.out.println(json);
+    };
 
-        3. 즉시 로딩 전략으로 수정한다
-        4. 프록시 객체를 강제로 초기화한다.
-        Hibernate.initialize(cart.getOption());
+    @Test
+    @DisplayName("장바구니 조회 - left join fetch 추가")
+    public void cart_find_test2() throws JsonProcessingException {
+        // given
+        User user = userJPARepository.findById(1).orElseThrow(
+                () -> new RuntimeException("해당 고객을 찾을 수 없습니다.")
+        );
 
-        System.out.println(om.writeValueAsString(cartList));
-         */
+        // when
+        List<Cart> cartList = cartJPARepository.findAllByUserId2(user.getId());
+
+        // then
+        assertThat(cartList.get(0).getId()).isEqualTo(1);
+        assertThat(cartList.get(0).getUser()).isEqualTo(user);
+        assertThat(cartList.get(0).getOption().getId()).isEqualTo(1);
+        assertThat(cartList.get(0).getQuantity()).isEqualTo(5);
+        assertThat(cartList.get(0).getPrice()).isEqualTo(50000);
+
+        assertThat(cartList.get(1).getId()).isEqualTo(2);
+        assertThat(cartList.get(1).getUser()).isEqualTo(user);
+        assertThat(cartList.get(1).getOption().getId()).isEqualTo(2);
+        assertThat(cartList.get(1).getQuantity()).isEqualTo(5);
+        assertThat(cartList.get(1).getPrice()).isEqualTo(54500);
+
+        String json = om.writeValueAsString(cartList);
+        System.out.println(json);
     };
 
     @Test
@@ -137,15 +145,15 @@ public class CartJPARepositoryTest extends DummyEntity {
         assertThat(newCart.getQuantity()).isEqualTo(quantity);
         assertThat(newCart.getPrice()).isEqualTo(100000);
 
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        String json = mapper.writeValueAsString(newCart);
+        System.out.println("직렬화 문제 해결 ==============================================================");
+        om.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        String json = om.writeValueAsString(newCart);
         System.out.println(json);
     }
 
     @Test
     @DisplayName("장바구니 전체 삭제")
-    public void cart_delete_all_test() {
+    public void cart_delete_all_test() throws JsonProcessingException {
         // given
 
         //when
@@ -155,5 +163,8 @@ public class CartJPARepositoryTest extends DummyEntity {
         List<Cart> cartList = cartJPARepository.findAll();
 
         assertThat(cartList).isEmpty();
+
+        String json = om.writeValueAsString(cartList);
+        System.out.println(json);
     }
 }

@@ -51,6 +51,9 @@ public class OrderJPARepositoryTest extends DummyEntity {
     @Autowired
     private ItemJPARepository itemJPARepository;
 
+    @Autowired
+    private ObjectMapper om;
+
     @BeforeEach
     public void setUp() {
         User user = userJPARepository.save(newUser("ssar"));
@@ -83,9 +86,25 @@ public class OrderJPARepositoryTest extends DummyEntity {
         List<Item> itemList = itemJPARepository.findAllByOrderId(user.getId());
 
         //then
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        String json = mapper.writeValueAsString(itemList);
+        System.out.println("직렬화 문제 해결 ==============================================================");
+        om.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        String json = om.writeValueAsString(itemList);
+        System.out.println(json);
+    }
+
+    @Test
+    @DisplayName("주문 상세 확인 - left join fetch 추가")
+    void order_item_find_test2() throws JsonProcessingException {
+        //given
+        User user = userJPARepository.findById(1).orElseThrow(
+                () -> new RuntimeException("해당 고객을 찾을 수 없습니다.")
+        );
+
+        //when
+        List<Item> itemList = itemJPARepository.findAllByOrderId2(user.getId());
+
+        //then
+        String json = om.writeValueAsString(itemList);
         System.out.println(json);
     }
 
@@ -105,9 +124,7 @@ public class OrderJPARepositoryTest extends DummyEntity {
         assertThat(orderList.get(0).getId()).isEqualTo(1);
         assertThat(orderList.get(0).getUser().getId()).isEqualTo(1);
 
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        String json = mapper.writeValueAsString(orderList);
+        String json = om.writeValueAsString(orderList);
         System.out.println(json);
     }
 }
