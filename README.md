@@ -186,11 +186,101 @@ ALTER TABLE `ORDERITEM` ADD CONSTRAINT `PK_ORDERITEM` PRIMARY KEY (
 </br>
 </br>
 
-## **과제명**
-```
-1. 전체 API 주소 설계
-2. Mock API Controller 구현
-```
+### 1. 전체 API 주소 설계
+
+---
+#### 이메일 체크 : /check → /email
+~~~
+POST /email HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 30
+Host: localhost:8080
+
+{
+"email" : "cos@nate.com"
+}
+~~~
+#### 회원가입 하기 : /join → /user
+~~~
+POST /user HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 78
+Host: localhost:8080
+
+{
+  "email" : "cosnate.com",
+  "password" : "cos1234!",
+  "username" : "cos"
+}
+~~~
+#### 로그인하기 : 그대로
+~~~
+POST /login HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 59
+Host: localhost:8080
+
+{
+  "email" : "ssar@nate.com",
+  "password" : "meta1234!"
+}
+~~~
+#### 장바구니 담기 : /carts/add → /carts
+~~~
+POST /carts HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzc2FyQG5hdGUuY29tIiwicm9sZSI6IlJPTEVfVVNFUiIsImlkIjoyLCJleHAiOjE2ODcwNTIzNTd9.v-0C5EoV-QfGVC3Qdis1HLfKf4ZaYIBacWQ5ttkdtTOj6QqVJ4KoyQdvxBUz3NvjC-W0gs7EDFgwzMaaV1vuGg
+Content-Length: 82
+Host: localhost:8080
+
+[ {
+  "optionId" : 1,
+  "quantity" : 5
+}, {
+  "optionId" : 2,
+  "quantity" : 5
+} ]
+~~~
+#### 장바구니 조회 : 그대로
+~~~
+GET /carts HTTP/1.1
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzc2FyQG5hdGUuY29tIiwicm9sZSI6IlJPTEVfVVNFUiIsImlkIjoyLCJleHAiOjE2ODcwNTIzNTd9.v-0C5EoV-QfGVC3Qdis1HLfKf4ZaYIBacWQ5ttkdtTOj6QqVJ4KoyQdvxBUz3NvjC-W0gs7EDFgwzMaaV1vuGg
+Host: localhost:8080
+~~~
+#### 장바구니 수정 : POST /carts/update → PUT /carts (PUT은 수정할 때 사용)
+~~~
+PUT /carts HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzc2FyQG5hdGUuY29tIiwicm9sZSI6IlJPTEVfVVNFUiIsImlkIjoyLCJleHAiOjE2ODcwNTIzNTZ9.KcuBbtdhvlFng8_VZqGbczxWp1RDoWAqHdbil7ooYywP98RicRS3aK8viZObFJc7MU7KlKAo6FeLk32HKKnDcw
+Content-Length: 78
+Host: localhost:8080
+
+[ {
+  "cartId" : 1,
+  "quantity" : 3
+}, {
+  "cartId" : 2,
+  "quantity" : 5
+} ]
+~~~
+#### 주문하기 : /orders/save → /orders
+~~~~
+POST /orders HTTP/1.1
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzc2FyQG5hdGUuY29tIiwicm9sZSI6IlJPTEVfVVNFUiIsImlkIjoyLCJleHAiOjE2ODcwNTIzNTd9.v-0C5EoV-QfGVC3Qdis1HLfKf4ZaYIBacWQ5ttkdtTOj6QqVJ4KoyQdvxBUz3NvjC-W0gs7EDFgwzMaaV1vuGg
+Host: localhost:8080
+~~~~
+#### 주문 조회 : 그대로
+~~~
+GET /orders HTTP/1.1
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzc2FyQG5hdGUuY29tIiwicm9sZSI6IlJPTEVfVVNFUiIsImlkIjoyLCJleHAiOjE2ODcwNTIzNTd9.v-0C5EoV-QfGVC3Qdis1HLfKf4ZaYIBacWQ5ttkdtTOj6QqVJ4KoyQdvxBUz3NvjC-W0gs7EDFgwzMaaV1vuGg
+Host: localhost:8080
+~~~
+---
+
+### 2. Mock API Controller 구현
+~~~
+week2에 소스코드 작성했음
+~~~
 
 ## **과제 설명**
 ```
