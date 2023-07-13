@@ -3,7 +3,7 @@ server:
     encoding:
       charset: utf-8
       force: true
-  port: 5000
+  port: 8080
 spring:
   datasource:
     url: jdbc:h2:mem:test;MODE=MySQL

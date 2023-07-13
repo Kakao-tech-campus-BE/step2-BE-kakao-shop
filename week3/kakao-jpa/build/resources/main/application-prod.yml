@@ -3,19 +3,15 @@ server:
     encoding:
       charset: utf-8
       force: true
-  port: 5000
+  port: 8080
 spring:
   datasource:
-    url: jdbc:h2:mem:test;MODE=MySQL
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
-  h2:
-    console:
-      enabled: true
-  jpa:
+    url: ${DATABASE_URL}?allowPublicKeyRetrieval=true&useSSL=false
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: root
+    password: root
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     show-sql: true
     properties:
       hibernate:
@@ -25,7 +21,7 @@ spring:
 
 logging:
   level:
-    '[com.example.kakao]': DEBUG
+    '[com.example.kakao]': INFO
     '[org.hibernate.type]': TRACE
 
 file:
