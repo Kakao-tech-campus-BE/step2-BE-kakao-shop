@@ -138,6 +138,22 @@
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
+
+</br>
+
+## 2주차 답안
+
+
+
+```
+1. API 주소를 설계하여 README에 내용을 작성하시오.
+```
+
+<a href="https://ibb.co/wSHHJfV"><img src="https://i.ibb.co/F5vvsF2/api.png" alt="api" border="0"></a><br />
+
+</br>
+
+
 # 3주차
 
 카카오 테크 캠퍼스 2단계 - BE - 3주차 클론 과제
