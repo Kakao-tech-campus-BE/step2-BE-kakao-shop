@@ -147,4 +147,13 @@ public class DummyEntity {
 
         return carts;
     }
+
+    protected List<Item> itemDummys(List<Cart> carts, Order order) {
+        List<Item> items = Arrays.asList(
+                newItem(carts.get(0), order),
+                newItem(carts.get(1), order)
+        );
+
+        return items;
+    }
 }

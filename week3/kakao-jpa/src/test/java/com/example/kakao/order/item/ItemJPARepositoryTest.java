@@ -13,6 +13,7 @@ import com.example.kakao.user.User;
 import com.example.kakao.user.UserJPARepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,14 +28,14 @@ import java.util.List;
 @Import(ObjectMapper.class)
 @DataJpaTest
 class ItemJPARepositoryTest extends DummyEntity {
-    private CartJPARepository cartJPARepository;
-    private OptionJPARepository optionJPARepository;
-    private ProductJPARepository productJPARepository;
-    private UserJPARepository userJPARepository;
-    private ItemJPARepository itemJPARepository;
-    private OrderJPARepository orderJPARepository;
-    private EntityManager em;
-    private ObjectMapper om;
+    private final CartJPARepository cartJPARepository;
+    private final OptionJPARepository optionJPARepository;
+    private final ProductJPARepository productJPARepository;
+    private final UserJPARepository userJPARepository;
+    private final ItemJPARepository itemJPARepository;
+    private final OrderJPARepository orderJPARepository;
+    private final EntityManager em;
+    private final ObjectMapper om;
 
     @Autowired
     public ItemJPARepositoryTest(CartJPARepository cartJPARepository, OptionJPARepository optionJPARepository, ProductJPARepository productJPARepository, UserJPARepository userJPARepository, ItemJPARepository itemJPARepository, OrderJPARepository orderJPARepository, EntityManager em, ObjectMapper om) {
@@ -49,30 +50,18 @@ class ItemJPARepositoryTest extends DummyEntity {
     }
 
     @BeforeEach
-    public void setUp() throws JsonProcessingException {
+    public void setUp(){
         User user = userJPARepository.save(newUser("rhalstjr1999"));
         List<Product> products = productJPARepository.saveAll(productDummyList());
         List<Option> options = optionJPARepository.saveAll(optionDummyList(products));
-        List<Cart> carts = Arrays.asList(
-                newCart(user, options.get(0), 5),
-                newCart(user, options.get(1), 5)
-        );
+        List<Cart> carts = cartDummys(user, options);
 
         cartJPARepository.saveAll(carts);
 
-        Order saveOrder = newOrder(user);
-        orderJPARepository.save(saveOrder);
+        Order order = orderJPARepository.save(newOrder(user));
 
-        Order order = orderJPARepository.findByUserId(user.getId());
-
-        List<Item> items = Arrays.asList(
-                newItem(carts.get(0), order),
-                newItem(carts.get(1), order)
-        );
-
+        List<Item> items = itemDummys(carts, order);
         itemJPARepository.saveAll(items);
-
-        //List<Item> search = itemJPARepository.findByOrderId(user.getId());
 
         em.clear();
     }
@@ -102,9 +91,17 @@ class ItemJPARepositoryTest extends DummyEntity {
     }
 
     @Test
-    void 주문_아이템_등록_테스트() throws JsonProcessingException {
+    void 주문_아이템_등록_테스트() {
         //given
         int id = 1;
+        //User ID가 계속 1로 생성되는 기존 로직 때문에 주문과 아이템 테이블을 비우고 등록 시작
+        orderJPARepository.deleteAll();
+        itemJPARepository.deleteAll();
+
+        em.createNativeQuery("ALTER TABLE item_tb ALTER COLUMN `id` RESTART WITH 1")
+                .executeUpdate();
+        em.createNativeQuery("ALTER TABLE order_tb ALTER COLUMN `id` RESTART WITH 1")
+                .executeUpdate();
 
         List<Cart> carts = cartJPARepository.findByUserId(id).orElseThrow(
                 () -> new RuntimeException("해당 유저의 장바구니는 비어있습니다.")
@@ -115,23 +112,15 @@ class ItemJPARepositoryTest extends DummyEntity {
         );
 
         //when
-        Order saveOrder = newOrder(user);
-        orderJPARepository.save(saveOrder);
+        Order order = orderJPARepository.save(newOrder(user));
 
-        Order order = orderJPARepository.findByUserId(id);
-
-        List<Item> items = Arrays.asList(
-                newItem(carts.get(0), order),
-                newItem(carts.get(1), order)
-        );
-
+        List<Item> items = itemDummys(carts, order);
         itemJPARepository.saveAll(items);
 
-        List<Item> search = itemJPARepository.findByOrderId(1);
+        //then
+        List<Item> searchItems = itemJPARepository.findByOrderId(user.getId());
 
-        System.out.println("============JSON 직렬화============");
-        String responseBody = om.writeValueAsString(search);
-        System.out.println("테스트 : " + responseBody);
+        Assertions.assertThat(items).isEqualTo(searchItems);
     }
 
     @Test
