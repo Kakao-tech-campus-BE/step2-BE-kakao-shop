@@ -135,6 +135,31 @@ public class CartJPARepositoryTest extends DummyEntity {
         assertEquals(price, cart.getPrice());
     }
 
+    @DisplayName("수량 데이터 업데이트 테스트")
+    @Test
+    public void quantity_update_test(){
+        int id = 1;
+        int quantity = 10;
+
+
+        cartJPARepository.updateQuantityById(id, quantity);
+        Cart cart = cartJPARepository.findById(id).orElseThrow(RuntimeException::new);
+
+        assertEquals(quantity, cart.getQuantity());
+    }
+
+    @DisplayName("가격 데이터 업데이트 테스트")
+    @Test
+    public void price_update_test(){
+        int id = 1;
+        int price = 1000;
+
+        cartJPARepository.updatePriceById(id, price);
+        Cart cart = cartJPARepository.findById(id).orElseThrow(RuntimeException::new);
+
+        assertEquals(price, cart.getPrice());
+    }
+
     @DisplayName("데이터 삭제 테스트")
     @Test
     public void delete_test() throws JsonProcessingException {
