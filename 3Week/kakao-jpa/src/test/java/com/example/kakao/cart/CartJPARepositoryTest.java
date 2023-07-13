@@ -9,12 +9,14 @@ import com.example.kakao.user.User;
 import com.example.kakao.user.UserJPARepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.dao.EmptyResultDataAccessException;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -115,6 +117,7 @@ public class CartJPARepositoryTest extends DummyEntity {
 
         String result = om.writeValueAsString(carts);
         System.out.println(result);
+        //데이터 조회 then은 어떻게 구현할까
     }
 
     @DisplayName("데이터 업데이트 테스트")
@@ -131,7 +134,7 @@ public class CartJPARepositoryTest extends DummyEntity {
 
     @DisplayName("데이터 삭제 테스트")
     @Test
-    public void delete_test() throws JsonProcessingException {
+    public void delete_test(){
         int id = 1;
 
         List<Cart> beforeCarts = cartJPARepository.findAll();
@@ -140,5 +143,15 @@ public class CartJPARepositoryTest extends DummyEntity {
         //현재는 id 값이 재정렬 되지 않았는데 트랜잭션이 끝나면 재정렬되는가?
 
         assertEquals(beforeCarts.size() - 1, afterCarts.size());
+    }
+
+    @DisplayName("없는 데이터 삭제 테스트")
+    @Test
+    public void null_delete_test(){
+        int id = Integer.MAX_VALUE;
+
+        Assertions.assertThatThrownBy( () -> {
+            cartJPARepository.deleteById(id);
+        }).isInstanceOf(EmptyResultDataAccessException.class);
     }
 }
