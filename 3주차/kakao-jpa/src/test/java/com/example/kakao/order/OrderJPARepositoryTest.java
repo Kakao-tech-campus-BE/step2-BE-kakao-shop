@@ -69,6 +69,8 @@ class OrderJPARepositoryTest extends DummyEntity {
         itemJPARepository.save(dummyItem1);
         itemJPARepository.save(dummyItem2);
 
+        em.clear();
+
 
     }
     @Test

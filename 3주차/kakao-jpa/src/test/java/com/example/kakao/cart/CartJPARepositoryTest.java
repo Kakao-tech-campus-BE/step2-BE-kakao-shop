@@ -84,7 +84,7 @@ class CartJPARepositoryTest extends DummyEntity {
     }
 
     @Test
-    public void add_cartItem_Test(){
+    public void add_cartItem_test(){
         // given
 
         cartJPARepository.findAll().forEach(System.out::println);
