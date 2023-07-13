@@ -1,0 +1,66 @@
+-- Database 생성
+create database kakaoshop;
+use kakaoshop;
+
+-- 테이블 생성
+CREATE TABLE User (
+    userId INT PRIMARY KEY,
+    username VARCHAR(255),
+    email VARCHAR(255),
+    password VARCHAR(255),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+
+);
+
+CREATE TABLE Product (
+    ProductId INT PRIMARY KEY,
+    productName VARCHAR(255),
+    description TEXT,
+    image VARCHAR(255),
+    price DECIMAL(10, 2),
+    starCount INT,
+    available BOOLEAN DEFAULT TRUE,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Options (
+    optionId INT PRIMARY KEY,
+    optionName VARCHAR(255),
+    price DECIMAL(10, 2),
+    product_id INT,
+    FOREIGN KEY (product_id) REFERENCES Product (ProductId)
+);
+
+CREATE TABLE Cart (
+    CartId INT PRIMARY KEY,
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES User (userId)
+);
+
+CREATE TABLE CartItem (
+    CartItemId INT PRIMARY KEY,
+    quantity INT UNSIGNED,
+    price DECIMAL(10, 2),
+    option_id INT,
+    cart_id INT,
+    FOREIGN KEY (option_id) REFERENCES Options (optionId),
+    FOREIGN KEY (cart_id) REFERENCES Cart (CartId)
+);
+
+CREATE TABLE Orders (
+    orderId INT PRIMARY KEY,
+    user_id INT,
+    totalPrice DECIMAL(10, 2),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES User (userId)
+);
+
+CREATE TABLE OrderItem (
+    orderItemId INT PRIMARY KEY,
+    quantity INT UNSIGNED,
+    price DECIMAL(10, 2),
+    option_id INT,
+    order_id INT,
+    FOREIGN KEY (option_id) REFERENCES Options (optionId),
+    FOREIGN KEY (order_id) REFERENCES Orders (orderId)
+);

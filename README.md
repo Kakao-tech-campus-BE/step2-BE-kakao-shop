@@ -381,6 +381,62 @@ CartItem / OrderItem와 Option: N:1
 
 </br>
 
+---
+
+## **과제 1. 전체 API 주소 설계하기.**
+
+</br>
+
+- 전체 API 주소를 RESTful API로 재설계 해보는 작업을 해보았다.
+
+- **과제 수행 내용 (필수)**
+  - API 주소 설계
+    - 이전에 Get Post만 이용하여 설계를 해보았으니 이번에 Restful API를 설계해보면 ..
+      | 기능단위 | 기능 | URL | 특이사항 |
+      | ----------------- | ---------------------- | ---------------------------------------- | --------------------------------------------------------------------- |
+      | users | 회원가입 | POST /user | |
+      | | 로그인 | POST /auth/tokens | |
+      | | 로그아웃 | | 클라이언트 단에서 토큰 제거로 구현 |
+      | product | 전체 상품 목록 조회 | GET /products | |
+      | | 개별 상품 상세 조회 | GET /products/{productId} | |
+      | option(상품 선택) | 상품 옵션 선택 | GET /products/{productId}/options | |
+      | | 옵션 확인 및 수량 결제 | /products/{productId}/options/{optionId} | 옵션 추가의 경우 Post, 옵션 수정의 경우 Put, 옵션 삭제의 경우 delete |
+      | cart | 장바구니 보기 | GET /carts | 장바구니 조회의 경우 get |
+      | | 장바구니 담기 | POST /carts/{cartId}/items | 장바구니 아이템 추가의 경우 post, 수정과 삭제의 경우 각각 put, delete |
+      | | | | |
+      | order | 주문 | POST /users/{userId}/orders | 특정 사용자의 주문이 post로 생성 |
+      | | | | |
+      | | 주문 결과 확인 | GET /users/{userId}/orders/{orderId} | |
+
+---
+
+## **과제 2. Mock API Controller 구현.**
+
+</br>
+
+- 구현되지 않은(구현해야 하는) API주소는 다음과 같다.
+
+  - Cart/Add, Cart/update, Orders/save, Orders/1..
+
+  </br>
+
+- Carts/Add와 Carts/update를 구현할 때에는 기존 코드를 수정하는 형식으로 컨트롤러를 구현해야 했다. 기존에 있던 /carts 엔트포인트에 /carts/add와 /carts/update를 엔드포인트로 추가하고 로직을 짰다.
+  - CartItemAddDTO와 CartItemUpdateDTO, CartItemResponseDTO를 새로 만들어 요청과 응답 DTO를 만들어 보았다.
+
+</br>
+
+- Order/save와 Order/1을 구현 할 때에는 OrderRestController에 엔드포인트를 찾고 주문 생성로직을 관심사 분리 해보기로 하였다.
+
+  - OrderService로 주문생성 및 조회를 위한 로직을 처리하는 클래스를 따로 빼서 동작하도록 코드를 만들었다.
+  - OrderResponseDTO과 OrderItemDTO를 사용해 OrderService에서 새로운 주문 아이디 생성하고 임의의 상품정보 및 총가격을 설정한뒤 저장하고 주문 번호를 반환하도록 했다. 또한 주문 조회의 경우에는 주문 아이디에 해당하는 주문번호를 반환하도록 하였다.
+
+ </br>
+      전체 코드는 2week 폴더에 있습니다.
+
+---
+
+</br>
+
 ## **과제 상세 : 수강생들이 과제를 진행할 때, 유념해야할 것**
 
 아래 항목은 반드시 포함하여 과제 수행해주세요!
