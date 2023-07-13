@@ -73,9 +73,7 @@ public class OrderJPARepositoryTest extends DummyEntity {
         List<Option> optionListPS = optionJPARepository.saveAll(optionDummyList(productListPS));
         List<Cart> cartListPS = cartJPARepository.saveAll(cartDummyList(ssar, optionListPS));
         Order order = orderJPARepository.save(newOrder(ssar));
-        List<Item> items =itemJPARepository.saveAll(itemDummyList(cartListPS, order));
-        String result = om.writeValueAsString(items);
-        System.out.println(result);
+        itemJPARepository.saveAll(itemDummyList(cartListPS, order));
 
         em.clear();
     }
@@ -104,5 +102,33 @@ public class OrderJPARepositoryTest extends DummyEntity {
         System.out.println("영속화 되기 후 id : " + item.getId());
 
         assertEquals(3, item.getId());
+    }
+
+    @DisplayName("주문 데이터 조회 테스트")
+    @Test
+    public void order_read_test() throws JsonProcessingException {
+        int userId = 1;
+
+        List<Order> orders = orderJPARepository.mFindByUserId(userId);
+
+        String result = om.writeValueAsString(orders);
+        System.out.println(result);
+
+        //then 구현
+    }
+
+    @DisplayName("아이템 데이터 조회 테스트")
+    @Test
+    public void item_read_test() throws JsonProcessingException {
+        int userrId = 1;
+
+        List<Order> orders = orderJPARepository.mFindByUserId(userrId);
+        //유저가 주문한 여러개의 주문 내역 중 하나를 임의로 선택
+        List<Item> items = itemJPARepository.mFindByOrderId(orders.get(0).getId());
+
+        String result = om.writeValueAsString(items);
+        System.out.println(result);
+
+        //then 구현
     }
 }

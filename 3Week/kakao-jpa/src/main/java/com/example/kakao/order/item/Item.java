@@ -19,7 +19,7 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     private Option option;
     @ManyToOne(fetch = FetchType.LAZY)
     private Order order;
