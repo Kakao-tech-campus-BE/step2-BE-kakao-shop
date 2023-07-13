@@ -34,6 +34,20 @@ public class OrderJPARepositoryTest extends DummyEntity {
   }
 
   @Test
+  public void order_findAll_test() {
+    // given
+    int page = 0;
+    int size = 9;
+
+    // when
+    List<Order> orders = orderJPARepository.findAll(PageRequest.of(page, size)).getContent();
+
+    // then
+    Assertions.assertThat(orders.size()).isEqualTo(1);
+    Assertions.assertThat(orders.get(0).getId()).isEqualTo(1);
+  }
+
+  @Test
   public void order_findByUserId_test() {
     // given
     String email = "ssar@nate.com";
