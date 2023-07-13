@@ -33,7 +33,6 @@ public class CartDummyData {
                 .user(userDummyData.newUser(1, "ssar"))
                 .productOptionEntity(option)
                 .quantity(quantity)
-                .price(option.getPrice() * quantity)
                 .build();
     }
 
