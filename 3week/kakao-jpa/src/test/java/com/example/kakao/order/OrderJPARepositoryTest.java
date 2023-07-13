@@ -51,6 +51,8 @@ public class OrderJPARepositoryTest extends DummyEntity {
 
     @BeforeEach
     public void setUp(){
+        em.createNativeQuery("ALTER TABLE item_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        em.createNativeQuery("ALTER TABLE order_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
 
         User user = newUser("sonny");
         userJPARepository.save(user);
@@ -118,11 +120,10 @@ public class OrderJPARepositoryTest extends DummyEntity {
         }
 
         List<Item> savedItems = itemJPARepository.saveAll(items);
-        // 2
-        // when
 
+        // when
         List<Item> findItems = itemJPARepository.findItemsWithOptionUsingFetchJoinById(orderId);
-        // 1??
+
         //then
 
         Assertions.assertThat(savedItems.size()).isEqualTo(findItems.size());
