@@ -14,7 +14,8 @@ import javax.persistence.*;
 @Table(name = "product_option_tb",
         indexes = {
                 @Index(name = "product_option_product_id_idx", columnList = "product_id")
-        })
+        }
+)
 public class ProductOptionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
