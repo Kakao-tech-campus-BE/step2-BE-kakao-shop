@@ -255,6 +255,20 @@ ENGINE = InnoDB
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
+
+## 2주차 과제 내용
+### 1. API주소를 설계하여 README에 내용을 작성하시오.
+```
+1. 전체 상품 조회 : (Get) /products
+2. 개별 상품 상세 조회 : (Get) /products/{id}
+3. 장바구니 담기 : (Post) /carts/add
+4. 장바구니 조회 : (Get) /carts
+5. 주문하기 - (장바구니 수정) : (Post) /carts/update
+6. 결제하기 : (Post) /orders/save
+7. 주문 결과 확인 : (Get) /orders/{id}
+```
+
+
 # 3주차
 
 카카오 테크 캠퍼스 2단계 - BE - 3주차 클론 과제
