@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -16,5 +17,10 @@ public class ProductOptionRepositoryImpl implements ProductOptionRepository {
     @Override
     public List<ProductOptionEntity> findByProductEntity(ProductEntity productEntity) {
         return productOptionRepository.findByProductEntity(productEntity);
+    }
+
+    @Override
+    public Optional<ProductOptionEntity> findById(int productOptionId) {
+        return productOptionRepository.findById(productOptionId);
     }
 }

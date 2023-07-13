@@ -18,4 +18,17 @@ public class ProductConverter {
                 .image(entity.getImage())
                 .build();
     }
+
+    public static ProductEntity to(Product product) {
+        if (product == null) {
+            return null;
+        }
+
+        return ProductEntity.builder()
+                .id(product.getId())
+                .price(product.getPrice())
+                .productName(product.getProductName())
+                .image(product.getImage())
+                .build();
+    }
 }

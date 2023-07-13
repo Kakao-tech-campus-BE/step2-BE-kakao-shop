@@ -20,4 +20,16 @@ public class ProductOptionConverter {
                 .product(ProductConverter.from(entity.getProduct()))
                 .build();
     }
+
+    public static ProductOptionEntity to(ProductOption productOption) {
+        if (productOption == null) {
+            return null;
+        }
+        return ProductOptionEntity.builder()
+                .id(productOption.getId())
+                .price(productOption.getPrice())
+                .optionName(productOption.getOptionName())
+                .product(ProductConverter.to(productOption.getProduct()))
+                .build();
+    }
 }
