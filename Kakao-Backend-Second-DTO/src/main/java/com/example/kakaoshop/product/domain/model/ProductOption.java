@@ -12,7 +12,7 @@ import lombok.*;
 @ToString
 public class ProductOption {
     private int id;
-    private ProductEntity product;
+    private Product product;
     private String optionName;
     private int price;
 }

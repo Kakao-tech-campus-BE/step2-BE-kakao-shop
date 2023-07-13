@@ -17,7 +17,7 @@ public class ProductOptionConverter {
                 .id(entity.getId())
                 .price(entity.getPrice())
                 .optionName(entity.getOptionName())
-                .product(entity.getProduct())
+                .product(ProductConverter.from(entity.getProduct()))
                 .build();
     }
 }
