@@ -22,12 +22,12 @@ public class CartDummyData {
 
     public List<CartEntity> cartDummyList() {
         return Arrays.asList(
-                newCart(getProProductOptionEntities().get(0), 1, 5),
-                newCart(getProProductOptionEntities().get(1), 2, 5)
+                newCart(getProProductOptionEntities().get(0), 1L, 5),
+                newCart(getProProductOptionEntities().get(1), 2L, 5)
         );
     }
 
-    private CartEntity newCart(ProductOptionEntity option, Integer id, Integer quantity) {
+    private CartEntity newCart(ProductOptionEntity option, Long id, Integer quantity) {
         return CartEntity.builder()
                 .id(id)
                 .user(userDummyData.newUser(1L, "ssar"))

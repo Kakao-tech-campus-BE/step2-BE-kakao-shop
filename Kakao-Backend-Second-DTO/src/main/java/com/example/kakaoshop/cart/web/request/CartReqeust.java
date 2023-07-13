@@ -14,10 +14,10 @@ import javax.validation.constraints.NotNull;
 public class CartReqeust {
 
     @NotNull
-    private Long optionId;
+    private int optionId;
     @NotNull
     private Integer quantity;
     @NotNull
-    private Long price;
+    private int price;
 
 }

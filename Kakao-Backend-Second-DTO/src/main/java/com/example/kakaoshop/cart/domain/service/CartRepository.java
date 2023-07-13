@@ -10,5 +10,8 @@ import java.util.Optional;
 @Repository
 public interface CartRepository {
     public Optional<CartEntity> save(CartEntity entity);
+
     public List<CartEntity> findByUser(User user);
+
+    public List<CartEntity> saveAll(List<CartEntity> entities);
 }

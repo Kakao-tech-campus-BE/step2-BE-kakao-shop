@@ -13,7 +13,7 @@ import java.util.Map;
 @EqualsAndHashCode
 @ToString
 public class Cart {
-    private int id;
+    private Long id;
     private User user;
     private ProductOption productOption;
     private int quantity;

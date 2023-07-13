@@ -19,7 +19,7 @@ import javax.persistence.*;
 public class CartEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
@@ -30,7 +30,7 @@ public class CartEntity {
     private int quantity;
 
     @Builder
-    public CartEntity(int id, User user, ProductOptionEntity productOptionEntity, int quantity) {
+    public CartEntity(Long id, User user, ProductOptionEntity productOptionEntity, int quantity) {
         this.id = id;
         this.user = user;
         this.productOption = productOptionEntity;

@@ -23,4 +23,9 @@ public class CartRepositoryImpl implements CartRepository {
     public List<CartEntity> findByUser(User user) {
         return cartRepository.findByUser(user);
     }
+
+    @Override
+    public List<CartEntity> saveAll(List<CartEntity> entities) {
+        return cartRepository.saveAll(entities);
+    }
 }
