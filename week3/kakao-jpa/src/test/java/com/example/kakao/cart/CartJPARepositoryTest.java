@@ -77,8 +77,8 @@ public class CartJPARepositoryTest extends DummyEntity {
         System.out.println("result set : " + response);
 
         // then
-        assertThat(cartJPARepository.findById(cart.getId()).getOption().getId()).isEqualTo(28);
-        assertThat(cartJPARepository.findById(cart.getId()).getQuantity()).isEqualTo(2);
+        assertThat(savedCart.getOption().getId()).isEqualTo(28);
+        assertThat(savedCart.getQuantity()).isEqualTo(2);
         assertThat(cartJPARepository.count()).isEqualTo(previous_cart_count + 1);
     }
 
@@ -111,5 +111,33 @@ public class CartJPARepositoryTest extends DummyEntity {
         assertThat(cart.getUser().getUsername()).isEqualTo("ssar");
         assertThat(cart.getOption().getOptionName()).isEqualTo("01. 슬라이딩 지퍼백 크리스마스에디션 4종");
         assertThat(cart.getQuantity()).isEqualTo(5);
+    }
+
+    @DisplayName("update cart test")
+    @Test
+    public void updateTest() {
+        // given
+
+        // when
+        Cart cart = cartJPARepository.findById(1);
+        cart.update(10, 10 * 10000);
+
+        // then
+        assertThat(cartJPARepository.findById(1).getQuantity()).isEqualTo(10);
+        assertThat(cartJPARepository.findById(1).getPrice()).isEqualTo(10 * 10000);
+    }
+
+    @DisplayName("delete cart test")
+    @Test
+    public void deleteTest() {
+        // given
+        long previous_count = cartJPARepository.count();
+
+        // when
+        Cart cart = cartJPARepository.findById(1);
+        cartJPARepository.delete(cart);
+
+        // then
+        assertThat(cartJPARepository.count()).isEqualTo(previous_count - 1);
     }
 }
