@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import java.util.List;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 @Import(ObjectMapper.class)
 @DataJpaTest
@@ -56,7 +56,7 @@ public class CartJPARepositoryTest extends DummyEntity {
         List<Product> productListPS = productJPARepository.saveAll(productDummyList());
         List<Option> optionListPS = optionJPARepository.saveAll(optionDummyList(productListPS));
 
-        // 카트 생성 - 10개
+        // 카트 생성 - 2개
         cartJPARepository.saveAll(cartDummyList(user, optionListPS, 5));
 
         em.clear();
@@ -79,7 +79,12 @@ public class CartJPARepositoryTest extends DummyEntity {
         assertThat(cartList.get(0).getOption().getId()).isEqualTo(1);
         assertThat(cartList.get(0).getQuantity()).isEqualTo(5);
         assertThat(cartList.get(0).getPrice()).isEqualTo(50000);
-        assertThat(cartList.get(cartList.size() - 1).getId()).isEqualTo(10);
+
+        assertThat(cartList.get(1).getId()).isEqualTo(2);
+        assertThat(cartList.get(1).getUser()).isEqualTo(user);
+        assertThat(cartList.get(1).getOption().getId()).isEqualTo(2);
+        assertThat(cartList.get(1).getQuantity()).isEqualTo(5);
+        assertThat(cartList.get(1).getPrice()).isEqualTo(54500);
 
         /* option을 LAZY로 하고 하는 방법은?
         List<CartDTO> cartDTOList = cartList.stream()
@@ -136,5 +141,19 @@ public class CartJPARepositoryTest extends DummyEntity {
         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         String json = mapper.writeValueAsString(newCart);
         System.out.println(json);
+    }
+
+    @Test
+    @DisplayName("장바구니 전체 삭제")
+    public void cart_delete_all_test() {
+        // given
+
+        //when
+        cartJPARepository.deleteAll();
+
+        //then
+        List<Cart> cartList = cartJPARepository.findAll();
+
+        assertThat(cartList).isEmpty();
     }
 }

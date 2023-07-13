@@ -141,6 +141,10 @@ public class DummyEntity {
     }
 
     protected List<Cart> cartDummyList(User user, List<Option> optionList, int quantity) {
-        return optionList.stream().limit(10).map(option -> newCart(user, option, quantity)).collect(Collectors.toList());
+        return optionList.stream().limit(2).map(option -> newCart(user, option, quantity)).collect(Collectors.toList());
+    }
+
+    protected List<Item> itemDummyList(List<Cart> cartList, Order order) {
+        return cartList.stream().map(cart -> newItem(cart, order)).collect(Collectors.toList());
     }
 }
