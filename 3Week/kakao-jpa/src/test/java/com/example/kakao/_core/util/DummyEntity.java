@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DummyEntity {
     protected User newUser(String username){
@@ -144,5 +145,11 @@ public class DummyEntity {
                 newCart(user, optionList.get(0), 1),
                 newCart(user, optionList.get(2), 1)
         );
+    }
+
+    protected List<Item> itemDummyList(List<Cart> carts, Order order){
+        return carts.stream()
+                .map(cart -> newItem(cart, order))
+                .collect(Collectors.toList());
     }
 }
