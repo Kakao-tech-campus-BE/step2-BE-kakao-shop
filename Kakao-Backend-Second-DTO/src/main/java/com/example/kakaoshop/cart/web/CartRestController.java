@@ -28,9 +28,9 @@ public class CartRestController {
     }
 
     @PostMapping("")
-    public ResponseEntity<Void> saveCarts(@AuthenticationPrincipal CustomUserDetails user, @Valid @RequestBody CartSaveRequest cartSaveRequest) {
+    public ResponseEntity<ApiUtils.ApiResult> saveCarts(@AuthenticationPrincipal CustomUserDetails user, @Valid @RequestBody CartSaveRequest cartSaveRequest) {
         cartService.addCarts(user.getUser(), cartSaveRequest);
-        return new ResponseEntity(ApiUtils.success(null), HttpStatus.OK);
+        return ResponseEntity.ok(ApiUtils.successWithoutData());
     }
 
     @PutMapping("")
