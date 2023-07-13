@@ -9,11 +9,15 @@ import com.example.kakao.user.User;
 import com.example.kakao.user.UserJPARepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
 public class CartJPARepositoryTest extends DummyEntity {
@@ -52,5 +56,15 @@ public class CartJPARepositoryTest extends DummyEntity {
         List<Option> optionListPS = optionJPARepository.saveAll(optionDummyList(productListPS));
         cartJPARepository.saveAll(cartDummyList(ssar, optionListPS));
         em.clear();
+    }
+
+    @DisplayName("영속화 테스트")
+    @Test
+    public void join_test(){
+        Cart cart = newCart(newUser("cos"), optionDummyList(productDummyList()).get(1), 1);
+        System.out.println("영속화 되기 전 id : " + cart.getId());
+        cartJPARepository.save(cart);
+        System.out.println("영속화 된 후 id : " + cart.getId());
+        assertEquals(3, cart.getId());
     }
 }
