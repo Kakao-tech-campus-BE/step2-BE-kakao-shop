@@ -124,25 +124,31 @@ public class CartJPARepositoryTest extends DummyEntity {
     @Test
     public void update_test(){
         int id = 1;
-        int quantity = 10;
+        int quantity = 11;
+        int price = 1000;
 
+
+        cartJPARepository.updateColumsById(id, quantity, price);
         Cart cart = cartJPARepository.findById(id).orElseThrow(RuntimeException::new);
-        cart.update(quantity, cart.getPrice());
 
         assertEquals(quantity, cart.getQuantity());
+        assertEquals(price, cart.getPrice());
     }
 
     @DisplayName("데이터 삭제 테스트")
     @Test
-    public void delete_test(){
+    public void delete_test() throws JsonProcessingException {
         int id = 1;
 
         List<Cart> beforeCarts = cartJPARepository.findAll();
         cartJPARepository.deleteById(id);
         List<Cart> afterCarts = cartJPARepository.findAll();
-        //현재는 id 값이 재정렬 되지 않았는데 트랜잭션이 끝나면 재정렬되는가?
+        //현재는 id 값이 재정렬 되지 않았는데 트랜잭션이 끝나면 재정렬되는가 ?
 
         assertEquals(beforeCarts.size() - 1, afterCarts.size());
+        //beforeCarts를 통해 DB에서 값을 가져온 후 DB에 다이렉트로 삭제 쿼리를 보냈다
+        //하지만 PC에 값은 남겨져 잇는거 아닌가?
+        //다시 findAll로 받아와야지 영속화가 되는 거 아닌가?
     }
 
     @DisplayName("없는 데이터 삭제 테스트")
