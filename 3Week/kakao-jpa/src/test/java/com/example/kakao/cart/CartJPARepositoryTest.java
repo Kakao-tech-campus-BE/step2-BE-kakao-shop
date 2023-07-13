@@ -14,12 +14,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@Import(ObjectMapper.class)
 @DataJpaTest
 public class CartJPARepositoryTest extends DummyEntity {
     private final EntityManager em;
@@ -51,11 +53,17 @@ public class CartJPARepositoryTest extends DummyEntity {
     }
 
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws JsonProcessingException {
+        em.createNativeQuery("ALTER TABLE user_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        em.createNativeQuery("ALTER TABLE option_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        em.createNativeQuery("ALTER TABLE cart_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
         User ssar = userJPARepository.save(newUser("ssar"));
         List<Product> productListPS = productJPARepository.saveAll(productDummyList());
         List<Option> optionListPS = optionJPARepository.saveAll(optionDummyList(productListPS));
-        cartJPARepository.saveAll(cartDummyList(ssar, optionListPS));
+        List<Cart> carts = cartJPARepository.saveAll(cartDummyList(ssar, optionListPS));
+        List<User> users = userJPARepository.findAll();
+        String result = om.writeValueAsString(carts);
+        System.out.println(result);
         em.clear();
     }
 
@@ -97,5 +105,14 @@ public class CartJPARepositoryTest extends DummyEntity {
         assertEquals(option.getProduct().getProductName(), cart.getOption().getProduct().getProductName());
         assertEquals(option.getProduct().getImage(), cart.getOption().getProduct().getImage());
         assertEquals(option.getProduct().getPrice(), cart.getOption().getProduct().getPrice());
+    }
+
+    @DisplayName("데이터 조회 테스트")
+    @Test
+    public void read_test() throws JsonProcessingException {
+        int userId = 1;
+        List<Cart> carts = cartJPARepository.mFindAllByUserId(userId);
+        String result = om.writeValueAsString(carts);
+        System.out.println(result);
     }
 }
