@@ -75,10 +75,12 @@ public class OrderJPARepositoryTest extends DummyEntity {
     @DisplayName("주문 상세 확인")
     void order_item_find_test() throws JsonProcessingException {
         //given
-        List<Item> itemList = itemJPARepository.findAllByOrderId(1);
+        User user = userJPARepository.findById(1).orElseThrow(
+                () -> new RuntimeException("해당 고객을 찾을 수 없습니다.")
+        );
 
         //when
-
+        List<Item> itemList = itemJPARepository.findAllByOrderId(user.getId());
 
         //then
         ObjectMapper mapper = new ObjectMapper();
@@ -90,8 +92,15 @@ public class OrderJPARepositoryTest extends DummyEntity {
     @Test
     @DisplayName("주문 내역 확인")
     void order_find_test() throws JsonProcessingException {
-        List<Order> orderList = orderJPARepository.findAllByUserId(1);
+        //given
+        User user = userJPARepository.findById(1).orElseThrow(
+                () -> new RuntimeException("해당 고객을 찾을 수 없습니다.")
+        );
 
+        //when
+        List<Order> orderList = orderJPARepository.findAllByUserId(user.getId());
+
+        //then
         assertThat(orderList).hasSize(1);
         assertThat(orderList.get(0).getId()).isEqualTo(1);
         assertThat(orderList.get(0).getUser().getId()).isEqualTo(1);
