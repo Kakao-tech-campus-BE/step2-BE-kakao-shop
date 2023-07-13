@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UserDummyData {
-    public User newUser(Integer id, String username) {
+    public User newUser(Long id, String username) {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return User.builder()
                 .id(id)

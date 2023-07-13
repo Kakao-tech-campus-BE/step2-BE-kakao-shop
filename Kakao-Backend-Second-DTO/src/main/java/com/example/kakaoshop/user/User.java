@@ -1,11 +1,9 @@
 package com.example.kakaoshop.user;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -15,7 +13,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     @Column(length = 100, nullable = false, unique = true)
     private String email; // 인증시 필요한 필드
     @Column(length = 256, nullable = false)
@@ -27,11 +25,24 @@ public class User {
     private String roles; // role은 한 개 이상
 
     @Builder
-    public User(int id, String email, String password, String username, String roles) {
+    public User(Long id, String email, String password, String username, String roles) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.username = username;
         this.roles = roles;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return Objects.equals(getId(), user.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 }

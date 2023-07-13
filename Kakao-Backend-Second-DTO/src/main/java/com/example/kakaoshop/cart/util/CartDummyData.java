@@ -30,7 +30,7 @@ public class CartDummyData {
     private CartEntity newCart(ProductOptionEntity option, Integer id, Integer quantity) {
         return CartEntity.builder()
                 .id(id)
-                .user(userDummyData.newUser(1, "ssar"))
+                .user(userDummyData.newUser(1L, "ssar"))
                 .productOptionEntity(option)
                 .quantity(quantity)
                 .build();

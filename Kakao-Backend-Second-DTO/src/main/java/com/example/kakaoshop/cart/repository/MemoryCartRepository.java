@@ -25,7 +25,7 @@ public class MemoryCartRepository {
 
     public List<CartEntity> findByUser(User user) {
         return cartEntities.values().stream()
-                .filter(x -> Objects.equals(x.getUser().getId(), user.getId()))
+                .filter(x->x.getUser().equals(user))
                 .collect(Collectors.toList());
     }
 }
