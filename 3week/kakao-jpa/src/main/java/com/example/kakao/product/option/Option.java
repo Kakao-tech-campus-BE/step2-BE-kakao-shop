@@ -18,7 +18,8 @@ public class Option {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
 
-  @ManyToOne private Product product;
+  @ManyToOne(fetch = FetchType.EAGER)
+  private Product product;
 
   @Column(length = 100, nullable = false)
   private String optionName;

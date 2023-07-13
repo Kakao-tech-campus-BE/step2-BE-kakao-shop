@@ -20,13 +20,9 @@ import java.util.List;
 @Import(ObjectMapper.class)
 @DataJpaTest
 public class ProductJPARepositoryTest extends DummyEntity {
-
   @Autowired private EntityManager em;
-
   @Autowired private ProductJPARepository productJPARepository;
-
   @Autowired private OptionJPARepository optionJPARepository;
-
   @Autowired private ObjectMapper om;
 
   @BeforeEach
@@ -37,6 +33,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
     List<Product> productListPS = productJPARepository.saveAll(productDummyList());
     optionJPARepository.saveAll(optionDummyList(productListPS));
     em.clear();
+    System.out.println("=============");
   }
 
   @Test
@@ -67,7 +64,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
 
   // ManyToOne 전략을 Eager로 간다면 추천
   @Test
-  public void option_findByProductId_eager_test() throws JsonProcessingException {
+  public void option_findByProductId_test() throws JsonProcessingException {
     // given
     int id = 1;
 
@@ -81,26 +78,44 @@ public class ProductJPARepositoryTest extends DummyEntity {
     System.out.println("테스트 : " + responseBody);
 
     // then
-  }
+    Assertions.assertThat(optionListPS.size()).isEqualTo(5);
 
-  @Test
-  public void option_findByProductId_lazy_error_test() throws JsonProcessingException {
-    // given
-    int id = 1;
+    // 0
+    Assertions.assertThat(optionListPS.get(0).getId()).isEqualTo(1);
+    Assertions.assertThat(optionListPS.get(0).getOptionName())
+        .isEqualTo("01. 슬라이딩 지퍼백 크리스마스에디션 4종");
+    Assertions.assertThat(optionListPS.get(0).getPrice()).isEqualTo(10000);
 
-    // when
-    // option을 select했는데, product가 lazy여서 없는 상태이다.
-    List<Option> optionListPS = optionJPARepository.findByProductId(id); // Lazy
+    // 1
+    Assertions.assertThat(optionListPS.get(1).getId()).isEqualTo(2);
+    Assertions.assertThat(optionListPS.get(1).getOptionName()).isEqualTo("02. 슬라이딩 지퍼백 플라워에디션 5종");
+    Assertions.assertThat(optionListPS.get(1).getPrice()).isEqualTo(10900);
 
-    // product가 없는 상태에서 json 변환을 시도하면 (hibernate는 select를 요청하는데, json mapper는 json 변환을 시도하게 된다)
-    // 이때 json 변환을 시도하는 것이 타이밍적으로 더 빠르다 (I/O)가 없기 때문에!!
-    // 그래서 hibernateLazyInitializer 오류가 발생한다.
-    // 그림 설명 필요
-    System.out.println("json 직렬화 직전========================");
-    String responseBody = om.writeValueAsString(optionListPS);
-    System.out.println("테스트 : " + responseBody);
+    // 2
+    Assertions.assertThat(optionListPS.get(2).getId()).isEqualTo(3);
+    Assertions.assertThat(optionListPS.get(2).getOptionName()).isEqualTo("고무장갑 베이지 S(소형) 6팩");
+    Assertions.assertThat(optionListPS.get(2).getPrice()).isEqualTo(9900);
 
-    // then
+    // 3
+    Assertions.assertThat(optionListPS.get(3).getId()).isEqualTo(4);
+    Assertions.assertThat(optionListPS.get(3).getOptionName()).isEqualTo("뽑아쓰는 키친타올 130매 12팩");
+    Assertions.assertThat(optionListPS.get(3).getPrice()).isEqualTo(16900);
+
+    // 4
+    Assertions.assertThat(optionListPS.get(4).getId()).isEqualTo(5);
+    Assertions.assertThat(optionListPS.get(4).getOptionName()).isEqualTo("2겹 식빵수세미 6매");
+    Assertions.assertThat(optionListPS.get(4).getPrice()).isEqualTo(8900);
+
+    // each product test
+    for (Option option : optionListPS) {
+      Product product = option.getProduct();
+      Assertions.assertThat(product.getId()).isEqualTo(1);
+      Assertions.assertThat(product.getProductName())
+          .isEqualTo("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전");
+      Assertions.assertThat(product.getDescription()).isEqualTo("");
+      Assertions.assertThat(product.getImage()).isEqualTo("/images/1.jpg");
+      Assertions.assertThat(product.getPrice()).isEqualTo(1000);
+    }
   }
 
   // 추천
@@ -118,6 +133,8 @@ public class ProductJPARepositoryTest extends DummyEntity {
     System.out.println("테스트 : " + responseBody);
 
     // then
+      Assertions.assertThat(product.getPrice()).isEqualTo(1000);
+    }
   }
 
   // 추천
