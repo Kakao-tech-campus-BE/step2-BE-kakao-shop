@@ -2,13 +2,12 @@ package com.example.kakaoshop.cart.repository;
 
 import com.example.kakaoshop.cart.entity.CartEntity;
 import com.example.kakaoshop.cart.util.CartDummyData;
-import com.example.kakaoshop.product.entity.ProductEntity;
-import com.example.kakaoshop.product.entity.ProductOptionEntity;
-import com.example.kakaoshop.product.util.ProductDummyData;
+import com.example.kakaoshop.user.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
@@ -24,5 +23,9 @@ public class MemoryCartRepository {
                 .forEach(i -> cartEntities.put(count++, i));
     }
 
-
+    public List<CartEntity> findByUser(User user) {
+        return cartEntities.values().stream()
+                .filter(x -> Objects.equals(x.getUser().getId(), user.getId()))
+                .collect(Collectors.toList());
+    }
 }
