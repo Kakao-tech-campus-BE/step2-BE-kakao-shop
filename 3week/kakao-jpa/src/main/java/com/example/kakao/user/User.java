@@ -19,6 +19,8 @@ public class User{
     private String email; // 인증시 필요한 필드
     @Column(length = 256, nullable = false)
     private String password;
+
+    @Setter //테스트를 위해 추가하였는데 괜찮은 Setter 사용일까요?
     @Column(length = 45, nullable = false)
     private String username;
 
