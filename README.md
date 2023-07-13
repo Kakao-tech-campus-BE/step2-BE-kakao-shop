@@ -254,6 +254,21 @@
 <details>
 <summary>2주차 과제 수행</summary>
 
+## 1. API 설계
+
+![img.png](week2/img/img.png)
+- 만약 `PATCH` 요청을 사용 가능하다면, `POST /carts/update` 대신,  `PATCH /carts` 를 사용했을 것입니다.
+  - 왜냐하면, 장바구니를 수정하는 경우는, 보통 장바구니의 수량을 변경하는 작업이기 때문입니다.
+  - 장바구니 아이템의 삭제에 관한 API가 존재한다면, `DELETE /carts/{optionId}` 로 수행했을 것입니다.
+- 기존의 주어진 API 설계에서, POST, GET으로만의 구현으로 최대한 동사의 사용을 제외하기를 원해서 API를 조금씩 수정하였습니다.
+
+## 2. 가짜 데이터를 설계하여 MOCK API 구현
+- 강사님께서 주신 예제 소스코드를 제외하고, 제가 직접 작성한 코드는 다음과 같습니다.
+  - week2/Kakao-Backend-Second-DTO/src/main/java/com/example/kakaoshop/cart/
+  - week2/Kakao-Backend-Second-DTO/src/main/java/com/example/kakaoshop/order/
+  - week2/Kakao-Backend-Second-DTO/src/test/java/com/example/kakaoshop/cart/CartControllerTest.java
+- 최대한 강사님께서 주신 예제 소스코드(구조)를 참고하여 작성하였습니다.
+
 </details>
 
 </br>
