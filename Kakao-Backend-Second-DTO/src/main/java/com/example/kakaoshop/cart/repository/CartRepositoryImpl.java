@@ -15,8 +15,8 @@ public class CartRepositoryImpl implements CartRepository {
     private final MemoryCartRepository cartRepository;
 
     @Override
-    public Optional<CartEntity> save(CartEntity entity) {
-        return Optional.empty();
+    public CartEntity save(CartEntity entity) {
+        return cartRepository.save(entity);
     }
 
     @Override
