@@ -9,6 +9,7 @@ import com.example.kakao.user.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -138,4 +139,12 @@ public class DummyEntity {
                 newOption(productListPS.get(14), "블랙", 148000)
         );
     }
+
+    protected List<Cart> cartDummyList(User user, List<Option> optionListPS) {
+        return Arrays.asList(
+                newCart(user, optionListPS.get(0), 5),
+                newCart(user, optionListPS.get(1), 5)
+        );
+    }
+
 }
