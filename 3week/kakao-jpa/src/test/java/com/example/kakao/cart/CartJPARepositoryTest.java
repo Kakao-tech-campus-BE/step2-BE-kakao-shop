@@ -79,10 +79,6 @@ public class CartJPARepositoryTest extends DummyEntity {
 
         // when
         List<Cart> cartListPS = cartJPARepository.findByUserId(id);
-        // cartListPS.get(0) -> id, user, option, quantity, price
-        // 기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전
-        System.out.println(cartListPS.get(0).getOption().getProduct().getProductName());
-        System.out.println(cartListPS.get(0).getPrice());
         // then ( 상태 검사 )
 
         // productId check

@@ -21,6 +21,7 @@ import org.springframework.context.annotation.Import;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
 @Import(ObjectMapper.class)
 @DataJpaTest
@@ -112,4 +113,16 @@ public class OrderJPARepositoryTest extends DummyEntity {
         Assertions.assertThat(itemListPS.get(0).getOrder().getUser().getUsername()).isEqualTo("ssar");
     }
 
+    // 주문 목록 확인
+    @Test
+    public void order_findAll_test() {
+        // given
+        int id = 1;
+
+        // when
+        Optional<Order> order = orderJPARepository.findById(id);
+
+        // then ( 상태 검사 )
+        Assertions.assertThat(order.get().getId()).isEqualTo(1);
+    }
 }
