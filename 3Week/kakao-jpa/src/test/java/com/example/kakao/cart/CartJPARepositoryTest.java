@@ -60,10 +60,7 @@ public class CartJPARepositoryTest extends DummyEntity {
         User ssar = userJPARepository.save(newUser("ssar"));
         List<Product> productListPS = productJPARepository.saveAll(productDummyList());
         List<Option> optionListPS = optionJPARepository.saveAll(optionDummyList(productListPS));
-        List<Cart> carts = cartJPARepository.saveAll(cartDummyList(ssar, optionListPS));
-        List<User> users = userJPARepository.findAll();
-        String result = om.writeValueAsString(carts);
-        System.out.println(result);
+        cartJPARepository.saveAll(cartDummyList(ssar, optionListPS));
         em.clear();
     }
 
@@ -114,5 +111,17 @@ public class CartJPARepositoryTest extends DummyEntity {
         List<Cart> carts = cartJPARepository.mFindAllByUserId(userId);
         String result = om.writeValueAsString(carts);
         System.out.println(result);
+    }
+
+    @DisplayName("데이터 업데이트 테스트")
+    @Test
+    public void update_test(){
+        int id = 1;
+        int quantity = 10;
+
+        Cart cart = cartJPARepository.findById(id).orElseThrow(RuntimeException::new);
+        cart.update(quantity, cart.getPrice());
+
+        assertEquals(quantity, cart.getQuantity());
     }
 }
