@@ -4,6 +4,7 @@ import com.example.kakao._core.util.DummyEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -34,6 +35,7 @@ public class UserJPARepositoryTest extends DummyEntity {
     // 1. 눈으로 findByEmail() 쿼리 확인
     // 2. 못찾으면 exception
     // 3. setUp에 유저 한명 추가
+    @DisplayName("로그인 테스트(findByEmail)")
     @Test
     public void findByEmail_test() {
         // given

@@ -9,6 +9,7 @@ import com.example.kakao.user.User;
 import com.example.kakao.user.UserJPARepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -68,6 +69,7 @@ class CartJPARepositoryTest extends DummyEntity {
      * cart 확인 시 option의 내용이 필요함
      * LAZY FETCH 정책 상에서, option 내용 접근 시 SELECT query가 하나 더 날아감(비추천)
      */
+    @DisplayName("장바구니 조회 테스트(findAllByUserId) - LAZY FETCH 로 추가 쿼리 발생")
     @Test
     public void cart_findAllByUserId_test() {
         // given
@@ -99,6 +101,7 @@ class CartJPARepositoryTest extends DummyEntity {
      * cart 확인 시 option의 내용이 필요함
      * JOIN FETCH로 한번의 query로 가져옴(Query 한번으로 되기 때문에 더 권장)
      */
+    @DisplayName("장바구니 조회 테스트(mFindAllByUserId) - JOIN FETCH 사용")
     @Test
     public void cart_mFindAllByUserId_test() {
         // given
@@ -126,6 +129,7 @@ class CartJPARepositoryTest extends DummyEntity {
     }
 
 
+    @DisplayName("장바구니 담기 테스트")
     @Test
     public void cart_save_test() {
         // given
@@ -155,6 +159,7 @@ class CartJPARepositoryTest extends DummyEntity {
      * update를 위해 price를 가져와야해서 option 내부에 접근하게 되고
      * select query가 update해야하는 옵션들의 개수만큼 추가로 사용된다.
      */
+    @DisplayName("장바구니 수정 테스트(findAllByUserIdAndOptionIdIn) - 추가 query 발생")
     @Test
     public void cart_update_test() {
         // given
@@ -190,6 +195,7 @@ class CartJPARepositoryTest extends DummyEntity {
     /**
      * 처음부터 option 내부까지 들고와 추가 select query가 발생하지 않는다.
      */
+    @DisplayName("장바구니 수정 테스트(findAllByUserIdAndOptionIdIn) - JOIN FETCH 사용")
     @Test
     public void cart_updateJoinFetch_test() {
         // given

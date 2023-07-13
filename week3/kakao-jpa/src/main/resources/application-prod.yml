@@ -10,6 +10,7 @@ spring:
     driver-class-name: org.mariadb.jdbc.Driver
     username: root
     password: root
+  jpa:
     hibernate:
       ddl-auto: none
     show-sql: true

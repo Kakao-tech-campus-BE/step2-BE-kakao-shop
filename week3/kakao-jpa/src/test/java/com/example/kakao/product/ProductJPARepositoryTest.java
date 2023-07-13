@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.api.Assertions;
 import org.hibernate.Hibernate;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -45,6 +46,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
         em.clear();
     }
 
+    @DisplayName("상품 목록 조회 - 페이지 0, size 9")
     @Test
     public void product_findAll_test() throws JsonProcessingException {
         // given
@@ -89,6 +91,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
 //        // then
 //    }
 
+    @DisplayName("LAZY FETCH 직렬화 시도 exception 시나리오(상품 상세 조회)")
     @Test
     public void option_findByProductId_lazy_error_test() throws JsonProcessingException {
         // given
@@ -113,6 +116,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
 
     // 추천
     // 조인쿼리 직접 만들어서 사용하기
+    @DisplayName("LAZY FETCH 직렬화 시도 JOIN FETCH 사용(상품 상세 조회)")
     @Test
     public void option_mFindByProductId_lazy_test() throws JsonProcessingException {
         // given
@@ -131,6 +135,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
 
 
     // 추천
+    @DisplayName("JOIN FETCH 없이 product와 option을 전부 영속화하여 직렬화 시도(상품 상세 조회)")
     @Test
     public void product_findById_and_option_findByProductId_lazy_test() throws JsonProcessingException {
         // given
