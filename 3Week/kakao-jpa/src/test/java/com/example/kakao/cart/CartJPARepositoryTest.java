@@ -57,10 +57,12 @@ public class CartJPARepositoryTest extends DummyEntity {
         em.createNativeQuery("ALTER TABLE user_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
         em.createNativeQuery("ALTER TABLE option_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
         em.createNativeQuery("ALTER TABLE cart_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
+
         User ssar = userJPARepository.save(newUser("ssar"));
         List<Product> productListPS = productJPARepository.saveAll(productDummyList());
         List<Option> optionListPS = optionJPARepository.saveAll(optionDummyList(productListPS));
         cartJPARepository.saveAll(cartDummyList(ssar, optionListPS));
+
         em.clear();
     }
 
@@ -68,9 +70,11 @@ public class CartJPARepositoryTest extends DummyEntity {
     @Test
     public void join_test(){
         Cart cart = newCart(newUser("cos"), optionDummyList(productDummyList()).get(1), 1);
+
         System.out.println("영속화 되기 전 id : " + cart.getId());
         cartJPARepository.save(cart);
         System.out.println("영속화 된 후 id : " + cart.getId());
+
         assertEquals(3, cart.getId());
     }
 
@@ -85,8 +89,7 @@ public class CartJPARepositoryTest extends DummyEntity {
 
         Cart cart = newCart(user, option, 2);
         cartJPARepository.save(cart);
-        String responseBody = om.writeValueAsString(cart);
-        System.out.println(responseBody);
+
         assertEquals(3, cart.getId());
         assertEquals(2, cart.getQuantity());
         assertEquals(option.getPrice() * cart.getQuantity(), cart.getPrice());
@@ -109,6 +112,7 @@ public class CartJPARepositoryTest extends DummyEntity {
     public void read_test() throws JsonProcessingException {
         int userId = 1;
         List<Cart> carts = cartJPARepository.mFindAllByUserId(userId);
+
         String result = om.writeValueAsString(carts);
         System.out.println(result);
     }
@@ -123,5 +127,18 @@ public class CartJPARepositoryTest extends DummyEntity {
         cart.update(quantity, cart.getPrice());
 
         assertEquals(quantity, cart.getQuantity());
+    }
+
+    @DisplayName("데이터 삭제 테스트")
+    @Test
+    public void delete_test() throws JsonProcessingException {
+        int id = 1;
+
+        List<Cart> beforeCarts = cartJPARepository.findAll();
+        cartJPARepository.deleteById(id);
+        List<Cart> afterCarts = cartJPARepository.findAll();
+        //현재는 id 값이 재정렬 되지 않았는데 트랜잭션이 끝나면 재정렬되는가?
+
+        assertEquals(beforeCarts.size() - 1, afterCarts.size());
     }
 }
