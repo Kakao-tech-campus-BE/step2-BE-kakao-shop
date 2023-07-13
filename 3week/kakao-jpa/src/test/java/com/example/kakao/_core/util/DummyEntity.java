@@ -9,11 +9,15 @@ import com.example.kakao.user.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 public class DummyEntity {
-    protected User newUser(String username){
+     protected User newUser(String username){
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return User.builder()
                 .email(username+"@nate.com")
@@ -63,6 +67,29 @@ public class DummyEntity {
                 .user(user)
                 .id(1)
                 .build();
+    }
+
+    // item 더미리스트 생성
+    protected List<Item> itemDummyList(List<Cart> carts, Order order) {
+        ArrayList<Item> itemList = new ArrayList<>();
+
+        for (Cart cart : carts) {
+            Item item = newItem(cart, order);
+            itemList.add(item);
+        }
+
+        return itemList;
+    }
+
+    // cart 더미 리스트 생성
+    protected List<Cart> cartDummyList(User user, List<Option> options) {
+        ArrayList<Cart> cartList = new ArrayList<>();
+
+        for (Option option : options) {
+            Cart cart = newCart(user, option, 0);
+            cartList.add(cart);
+        }
+        return cartList;
     }
 
     // product repository 테스트할 때 가져옴
