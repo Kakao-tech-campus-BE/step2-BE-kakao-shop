@@ -12,6 +12,7 @@ import com.example.kakao.product.option.OptionJPARepository;
 import com.example.kakao.user.User;
 import com.example.kakao.user.UserJPARepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,8 +89,27 @@ public class OrderJPARepositoryTest extends DummyEntity {
         entityManager.clear();
     }
 
+    // 테스트 - 결재하기, 주문 목록 확인
+    // 결재하기
     @Test
-    void Test() {
-        System.out.println(0);
+    void order_save_test() {
+        // given
+        int id = 1;
+
+        // when
+        List<Item> itemListPS = itemJPARepository.findByOrderId(id);
+
+        System.out.println(itemListPS.get(0).getOption().getProduct().getProductName());
+        // then ( 상태 검사 )
+
+        // productName check
+        Assertions.assertThat(itemListPS.get(0).getOption().getProduct().getProductName()).isEqualTo("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전");
+
+        // items - optionName check
+        Assertions.assertThat(itemListPS.get(0).getOption().getOptionName()).isEqualTo("01. 슬라이딩 지퍼백 크리스마스에디션 4종");
+
+        // userName check
+        Assertions.assertThat(itemListPS.get(0).getOrder().getUser().getUsername()).isEqualTo("ssar");
     }
+
 }
