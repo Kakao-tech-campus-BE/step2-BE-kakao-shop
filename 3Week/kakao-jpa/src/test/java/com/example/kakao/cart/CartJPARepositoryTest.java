@@ -19,6 +19,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.dao.EmptyResultDataAccessException;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -117,6 +118,7 @@ public class CartJPARepositoryTest extends DummyEntity {
 
         String result = om.writeValueAsString(carts);
         System.out.println(result);
+
         //데이터 조회 then은 어떻게 구현할까
     }
 
@@ -176,7 +178,7 @@ public class CartJPARepositoryTest extends DummyEntity {
         //다시 findAll로 받아와야지 영속화가 되는 거 아닌가?
     }
 
-    @DisplayName("없는 데이터 삭제 테스트")
+    @DisplayName("null인 데이터 삭제 테스트")
     @Test
     public void null_delete_test(){
         int id = Integer.MAX_VALUE;
@@ -184,5 +186,20 @@ public class CartJPARepositoryTest extends DummyEntity {
         Assertions.assertThatThrownBy( () -> {
             cartJPARepository.deleteById(id);
         }).isInstanceOf(EmptyResultDataAccessException.class);
+    }
+
+    @DisplayName("전체 데이터 삭제 테스트")
+    @Test
+    public void all_delete_test(){
+        List<Cart> carts = cartJPARepository.findAll();
+        List<Integer> cartIds = new ArrayList<>();
+
+        for(int i = 1; i<=carts.size(); i++){
+            cartIds.add(i);
+        }
+
+        cartJPARepository.deleteAllById(cartIds);
+
+        Assertions.assertThat(cartJPARepository.count()).isZero();
     }
 }
