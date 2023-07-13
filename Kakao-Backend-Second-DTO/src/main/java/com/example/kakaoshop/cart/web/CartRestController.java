@@ -3,20 +3,14 @@ package com.example.kakaoshop.cart.web;
 import com.example.kakaoshop._core.security.CustomUserDetails;
 import com.example.kakaoshop._core.utils.ApiUtils;
 import com.example.kakaoshop.cart.domain.service.CartService;
-import com.example.kakaoshop.cart.web.request.CartReqeust;
 import com.example.kakaoshop.cart.web.request.CartSaveRequest;
 import com.example.kakaoshop.cart.web.request.CartUpdateRequest;
 import com.example.kakaoshop.cart.web.response.*;
-import com.example.kakaoshop.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -24,22 +18,23 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/carts")
 public class CartRestController {
     private final CartService cartService;
 
-    @GetMapping("/carts")
+    @GetMapping("")
     public ResponseEntity<ApiUtils.ApiResult<CartFindAllResponse>> findAll(@AuthenticationPrincipal CustomUserDetails user) {
         return ResponseEntity.ok(ApiUtils.success(cartService.getCartsByUser(user.getUser())));
     }
 
-    @PostMapping("/carts")
+    @PostMapping("")
     public ResponseEntity<Void> saveCarts(@AuthenticationPrincipal CustomUserDetails user, @Valid @RequestBody CartSaveRequest cartSaveRequest) {
         cartService.addCarts(user.getUser(), cartSaveRequest);
         return new ResponseEntity(ApiUtils.success(null), HttpStatus.OK);
     }
 
-    @PostMapping("/carts/update")
-    public ResponseEntity<ApiUtils.ApiResult<CartUpdateResponse>> updateCarts(@Valid CartUpdateRequest cartUpdateRequest) {
+    @PutMapping("")
+    public ResponseEntity<ApiUtils.ApiResult<CartUpdateResponse>> updateCarts(@AuthenticationPrincipal CustomUserDetails user, @Valid @RequestBody CartUpdateRequest cartUpdateRequest) {
 
         List<CartChangedOptionResponse> changedOptions = new ArrayList<>();
 
