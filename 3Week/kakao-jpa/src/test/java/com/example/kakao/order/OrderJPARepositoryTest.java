@@ -131,4 +131,29 @@ public class OrderJPARepositoryTest extends DummyEntity {
 
         //then 구현
     }
+
+    @DisplayName("전체 데이터 삽입 테스트")
+    @Test
+    public void create_test() {
+        int userId = 1;
+
+        User user = userJPARepository.findById(userId).orElseThrow(RuntimeException::new);
+        Order order = newOrder(user);
+
+        orderJPARepository.save(order);
+
+        //cart를 선택해서 주문하는 기능에 관해 고민 중...
+        List<Cart> carts = cartJPARepository.mFindAllByUserId(userId);
+        List<Item> items = itemDummyList(carts, order);
+
+        itemJPARepository.saveAll(items);
+
+        assertEquals(2, order.getId());
+        assertEquals(user.getId(), order.getUser().getId());
+        assertEquals(user.getEmail(), order.getUser().getEmail());
+        assertEquals(user.getPassword(), order.getUser().getPassword());
+        assertEquals(user.getUsername(), order.getUser().getUsername());
+        assertEquals(user.getRoles(), order.getUser().getRoles());
+        //item에 대한 then
+    }
 }
