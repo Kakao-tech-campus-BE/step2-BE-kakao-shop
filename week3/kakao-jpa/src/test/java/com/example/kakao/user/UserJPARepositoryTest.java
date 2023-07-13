@@ -53,7 +53,18 @@ public class UserJPARepositoryTest extends DummyEntity {
     }
 
     @Test
-    public void signup_exist_user(){
+    public void email_check_success_test() {
+        //given
+        String email = "jun@naver.com";
+        //when
+        Optional<User> findUser = userJPARepository.findByEmail(email);
+        //then
+        Assertions.assertThat(findUser.isEmpty()).isEqualTo(true);
+    }
+
+
+    @Test
+    public void signup_exist_user_test(){
         //given
         String userName = "ssar";
         User user2 = newUser(userName);
@@ -62,14 +73,12 @@ public class UserJPARepositoryTest extends DummyEntity {
         Optional<User> findUser = userJPARepository.findByEmail(user2.getEmail());
 
         //then
-        if(!findUser.isEmpty()){
-            Assertions.assertThat(user2.getEmail()).isEqualTo(findUser.get().getEmail());
-            System.out.println("이미 존재하는 회원입니다.");
-        }
+        Assertions.assertThat(findUser.isEmpty()).isEqualTo(false);
     }
 
+
     @Test
-    public void signup_success() {
+    public void signup_success_test() {
         //given
         String userName = "jun";
         User newUser = newUser(userName);
