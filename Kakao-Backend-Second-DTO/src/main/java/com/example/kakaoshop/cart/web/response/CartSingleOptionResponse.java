@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder(toBuilder = true)
 public class CartSingleOptionResponse {
 
-    private int id;
+    private int cartId;
     private CartOptionInfoResponse option;
     private int quantity;
     private int price;

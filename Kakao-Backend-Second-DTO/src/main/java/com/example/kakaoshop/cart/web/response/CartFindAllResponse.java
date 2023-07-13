@@ -9,7 +9,6 @@ import java.util.List;
 @AllArgsConstructor
 @Builder(toBuilder = true)
 public class CartFindAllResponse {
-
     private List<CartSingleProductItemResponse> products;
     private int totalPrice;
 
