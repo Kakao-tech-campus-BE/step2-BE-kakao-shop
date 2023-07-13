@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Getter
@@ -12,5 +13,5 @@ import java.util.List;
 @NoArgsConstructor
 @Builder(toBuilder = true)
 public class CartSaveRequest {
-    private List<CartReqeust> cartSaveRequest;
+    private List<CartReqeust> cartSaveRequests;
 }

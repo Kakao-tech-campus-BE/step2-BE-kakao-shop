@@ -3,6 +3,7 @@ package com.example.kakaoshop.cart.web;
 import com.example.kakaoshop._core.security.CustomUserDetails;
 import com.example.kakaoshop._core.utils.ApiUtils;
 import com.example.kakaoshop.cart.domain.service.CartService;
+import com.example.kakaoshop.cart.web.request.CartReqeust;
 import com.example.kakaoshop.cart.web.request.CartSaveRequest;
 import com.example.kakaoshop.cart.web.request.CartUpdateRequest;
 import com.example.kakaoshop.cart.web.response.*;
@@ -14,6 +15,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -30,9 +32,9 @@ public class CartRestController {
         return ResponseEntity.ok(ApiUtils.success(cartService.getCartsByUser(user.getUser())));
     }
 
-    @PostMapping("/carts/add")
-//    @PostMapping("/carts")
-    public ResponseEntity<Void> saveCarts(@Valid CartSaveRequest cartSaveRequest) {
+    @PostMapping("/carts")
+    public ResponseEntity<Void> saveCarts(@AuthenticationPrincipal CustomUserDetails user, @Valid @RequestBody CartSaveRequest cartSaveRequest) {
+        cartService.addCarts(user.getUser(), cartSaveRequest);
         return new ResponseEntity(ApiUtils.success(null), HttpStatus.OK);
     }
 
