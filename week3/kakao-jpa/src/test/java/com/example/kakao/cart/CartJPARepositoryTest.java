@@ -18,19 +18,18 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import javax.persistence.EntityManager;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 @Import(ObjectMapper.class)
 @DataJpaTest
 class CartJPARepositoryTest extends DummyEntity {
-    private CartJPARepository cartJPARepository;
-    private OptionJPARepository optionJPARepository;
-    private ProductJPARepository productJPARepository;
-    private UserJPARepository userJPARepository;
-    private EntityManager em;
-    private ObjectMapper om;
+    private final CartJPARepository cartJPARepository;
+    private final OptionJPARepository optionJPARepository;
+    private final ProductJPARepository productJPARepository;
+    private final UserJPARepository userJPARepository;
+    private final EntityManager em;
+    private final ObjectMapper om;
 
     @Autowired
     public CartJPARepositoryTest(CartJPARepository cartJPARepository, OptionJPARepository optionJPARepository, ProductJPARepository productJPARepository, UserJPARepository userJPARepository, EntityManager em, ObjectMapper om) {
@@ -47,14 +46,12 @@ class CartJPARepositoryTest extends DummyEntity {
         User user = userJPARepository.save(newUser("rhalstjr1999"));
         List<Product> products = productJPARepository.saveAll(productDummyList());
         List<Option> options = optionJPARepository.saveAll(optionDummyList(products));
-        List<Cart> carts = Arrays.asList(
-                newCart(user, options.get(0), 5),
-                newCart(user, options.get(1), 5)
-        );
+        List<Cart> carts = cartDummys(user, options);
 
         cartJPARepository.saveAll(carts);
         em.clear();
     }
+
     @AfterEach
     public void resetIndex() {
         cartJPARepository.deleteAll();
@@ -81,15 +78,15 @@ class CartJPARepositoryTest extends DummyEntity {
         List<Option> options = optionJPARepository.saveAll(optionDummyList(products));
 
         //when
-        List<Cart> carts = Arrays.asList(
-                newCart(user, options.get(0), 5),
-                newCart(user, options.get(1), 5)
-        );
-
+        List<Cart> carts = cartDummys(user, options);
         cartJPARepository.saveAll(carts);
 
         //then
-        cartJPARepository.findByUserId(user.getId());
+        List<Cart> searchCarts = cartJPARepository.findByUserId(user.getId()).orElseThrow(
+                () -> new RuntimeException("장바구니가 비어있습니다.")
+        );
+
+        Assertions.assertThat(carts).isEqualTo(searchCarts);
     }
 
     @Test
@@ -105,39 +102,27 @@ class CartJPARepositoryTest extends DummyEntity {
         System.out.println("테스트 : " + responseBody);
 
         //then
-
     }
 
     @Test
     void 장바구니_수정_테스트() {
         //given
         int id = 1;
+        int updateQuantity = 15;
 
         //then
         Cart cart = cartJPARepository.findById(id).orElseThrow(
                         () -> new RuntimeException("해당 장바구니가 존재하지 않습니다.")
         );
 
-        cart.update(11, cart.getOption().getPrice() * 11);
+        cart.update(updateQuantity, cart.getOption().getPrice() * updateQuantity);
         cartJPARepository.save(cart);
 
-        Cart cart1 = cartJPARepository.findById(id).orElseThrow(
-                () -> new RuntimeException("해당 장바구니가 존재하지 않습니다.")
-        );
-
         //then
-        Assertions.assertThat(cart1).isEqualTo(cart);
-    }
-
-    @Test
-    void 장바구니_삭제_테스트() {
-        //given
-        int id = 1;
-
-        //when
-        Cart cart = cartJPARepository.findById(id).orElseThrow(
+        Cart searchCart = cartJPARepository.findById(id).orElseThrow(
                 () -> new RuntimeException("해당 장바구니가 존재하지 않습니다.")
         );
-        cartJPARepository.delete(cart);
+
+        Assertions.assertThat(searchCart).isEqualTo(cart);
     }
 }

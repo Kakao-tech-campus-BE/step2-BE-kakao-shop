@@ -138,4 +138,13 @@ public class DummyEntity {
                 newOption(productListPS.get(14), "블랙", 148000)
         );
     }
+
+    protected List<Cart> cartDummys(User user, List<Option> options) {
+        List<Cart> carts = Arrays.asList(
+                newCart(user, options.get(0), 5),
+                newCart(user, options.get(1), 5)
+        );
+
+        return carts;
+    }
 }
