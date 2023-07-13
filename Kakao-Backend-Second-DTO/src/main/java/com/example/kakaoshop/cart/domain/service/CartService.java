@@ -20,12 +20,14 @@ public class CartService {
         this.cartRepository = cartRepository;
     }
 
-    public void getCartsByUser(User user) {
+    public CartFindAllResponse getCartsByUser(User user) {
         List<Cart> cartList = cartRepository.findByUser(user)
                 .stream().map(CartConverter::from)
                 .collect(Collectors.toList());
 
         Cashier cashier = CashierConverter.from(cartList);
         int totalPrice = cashier.calculateTotalPrice();
+
+        return CartFindAllResponseConverter.from(cashier,totalPrice);
     }
 }
