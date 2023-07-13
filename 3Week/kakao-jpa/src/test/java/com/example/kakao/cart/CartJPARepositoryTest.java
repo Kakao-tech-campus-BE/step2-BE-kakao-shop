@@ -7,6 +7,7 @@ import com.example.kakao.product.option.Option;
 import com.example.kakao.product.option.OptionJPARepository;
 import com.example.kakao.user.User;
 import com.example.kakao.user.UserJPARepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -66,5 +67,35 @@ public class CartJPARepositoryTest extends DummyEntity {
         cartJPARepository.save(cart);
         System.out.println("영속화 된 후 id : " + cart.getId());
         assertEquals(3, cart.getId());
+    }
+
+    @DisplayName("데이터 삽입 테스트")
+    @Test
+    public void create_test() throws JsonProcessingException {
+        int userId = 1;
+        int optionId = 2;
+
+        User user = userJPARepository.findById(userId).orElseThrow(RuntimeException::new);
+        Option option = optionJPARepository.findById(optionId).orElseThrow(RuntimeException::new);
+
+        Cart cart = newCart(user, option, 2);
+        cartJPARepository.save(cart);
+        String responseBody = om.writeValueAsString(cart);
+        System.out.println(responseBody);
+        assertEquals(3, cart.getId());
+        assertEquals(2, cart.getQuantity());
+        assertEquals(option.getPrice() * cart.getQuantity(), cart.getPrice());
+        assertEquals(user.getId(), cart.getUser().getId());
+        assertEquals(user.getEmail(), cart.getUser().getEmail());
+        assertEquals(user.getPassword(), cart.getUser().getPassword());
+        assertEquals(user.getUsername(), cart.getUser().getUsername());
+        assertEquals(user.getRoles(), cart.getUser().getRoles());
+        assertEquals(option.getId(), cart.getOption().getId());
+        assertEquals(option.getOptionName(), cart.getOption().getOptionName());
+        assertEquals(option.getPrice(), cart.getOption().getPrice());
+        assertEquals(option.getProduct().getId(), cart.getOption().getProduct().getId());
+        assertEquals(option.getProduct().getProductName(), cart.getOption().getProduct().getProductName());
+        assertEquals(option.getProduct().getImage(), cart.getOption().getProduct().getImage());
+        assertEquals(option.getProduct().getPrice(), cart.getOption().getProduct().getPrice());
     }
 }
