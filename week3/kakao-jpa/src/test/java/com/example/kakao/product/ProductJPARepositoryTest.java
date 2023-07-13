@@ -95,6 +95,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
         // option을 select했는데, product가 lazy여서 없는 상태이다.
         List<Option> optionListPS = optionJPARepository.findByProductId(id); // Lazy
 
+
         // product가 없는 상태에서 json 변환을 시도하면 (hibernate는 select를 요청하는데, json mapper는 json 변환을 시도하게 된다)
         // 이때 json 변환을 시도하는 것이 타이밍적으로 더 빠르다 (I/O)가 없기 때문에!!
         // 그래서 hibernateLazyInitializer 오류가 발생한다.
