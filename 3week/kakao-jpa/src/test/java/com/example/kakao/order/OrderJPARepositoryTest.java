@@ -71,7 +71,7 @@ public class OrderJPARepositoryTest extends DummyEntity {
 
     @DisplayName("주문하기")
     @Test
-    public void order_save_test() { // save order3
+    public void order_save_test() {
         // given
         User user = userJPARepository.save(newUser("user2"));  // userId:2
         Option option = optionJPARepository.findById(22).orElseThrow(); // optionId:22 - productId:6

@@ -55,12 +55,12 @@ public class CartJPARepositoryTest extends DummyEntity {
         em.createNativeQuery("ALTER TABLE option_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
         em.createNativeQuery("ALTER TABLE cart_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
 
-        User user = userJPARepository.save(newUser("user"));
+        User user = userJPARepository.save(newUser("user"));   // userId:1
         List<Product> products = productJPARepository.saveAll(productDummyList());
         List<Option> options = optionJPARepository.saveAll(optionDummyList(products));
         cartJPARepository.saveAll(Arrays.asList(
-                newCart(user, options.get(0), 5),   // optionId: 1
-                newCart(user, options.get(1), 5)    // optionId: 2
+                newCart(user, options.get(0), 5),   // cartId:1 - optionId: 1
+                newCart(user, options.get(1), 5)    // cartId:2 - optionId: 2
         ));
 
         em.clear();
@@ -69,13 +69,14 @@ public class CartJPARepositoryTest extends DummyEntity {
     @DisplayName("장바구니 담기")
     @Test
     public void cart_save_test() {
-        User user2 = userJPARepository.save(newUser("user2"));
-        Option option = optionJPARepository.findById(22).orElseThrow();
-        Cart cart = cartJPARepository.save(newCart(user2, option, 4));
+        User user2 = userJPARepository.save(newUser("user2"));      // userId:2
+        Option option = optionJPARepository.findById(22).orElseThrow();     // optionId:22 - productId:6
+        Cart cart = cartJPARepository.save(newCart(user2, option, 4));  // cartId:3
 
         Assertions.assertThat(cart.getId()).isEqualTo(3);
         Assertions.assertThat(cart.getUser().getId()).isEqualTo(2);
         Assertions.assertThat(cart.getOption().getId()).isEqualTo(22);
+        Assertions.assertThat(cart.getOption().getProduct().getId()).isEqualTo(6);
         Assertions.assertThat(cart.getQuantity()).isEqualTo(4);
     }
 
@@ -109,7 +110,6 @@ public class CartJPARepositoryTest extends DummyEntity {
         Assertions.assertThat(carts.get(1).getUser().getId()).isEqualTo(userId);
         Assertions.assertThat(carts.get(1).getOption().getId()).isEqualTo(2);
         Assertions.assertThat(carts.get(1).getQuantity()).isEqualTo(5);
-
     }
 
     @DisplayName("장바구니 전체 삭제")
@@ -130,7 +130,5 @@ public class CartJPARepositoryTest extends DummyEntity {
 
         Optional<Cart> cart = cartJPARepository.findById(id);
         Assertions.assertThat(cart.isPresent()).isFalse();
-
-
     }
 }
