@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="212f15c1-9eab-4699-bea5-8cf13f814bea" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../week2/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../week2/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../week2/Kakao-Backend-Second-DTO/src/main/java/com/example/kakaoshop/user/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../week2/Kakao-Backend-Second-DTO/src/main/java/com/example/kakaoshop/user/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/2/c/2c74aa283fd78ca5cbe17cb35ce47394fc933d6a" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/6/5/65eaca3c8b86cb00f09b9243e63c157963216000" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/f/9f683967f4486705a06fece145cb043875d3f345" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/9/f/9fc06634ef1f61927af8c1d5202ab16ae226582f" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/a/a/aa0450e76527dc7f38ad7c4ab3f788f404f6545b" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/b/0/b01baef4b0bb8d536958b2853b2e6b05448464aa" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/2/c/2c74aa283fd78ca5cbe17cb35ce47394fc933d6a" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/6/5/65eaca3c8b86cb00f09b9243e63c157963216000" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/9/f/9f683967f4486705a06fece145cb043875d3f345" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/9/f/9fc06634ef1f61927af8c1d5202ab16ae226582f" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/a/a/aa0450e76527dc7f38ad7c4ab3f788f404f6545b" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/b/0/b01baef4b0bb8d536958b2853b2e6b05448464aa" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/week3.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/week3.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kakao-jpa/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/kakao-jpa/gradlew" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kakao-jpa/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/kakao-jpa/gradlew.bat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kakao-jpa/src/main/java/com/example/kakao/cart/CartJPARepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/kakao-jpa/src/main/java/com/example/kakao/cart/CartJPARepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kakao-jpa/src/main/java/com/example/kakao/order/OrderJPARepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/kakao-jpa/src/main/java/com/example/kakao/order/OrderJPARepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kakao-jpa/src/test/java/com/example/kakao/cart/CartJPARepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/kakao-jpa/src/test/java/com/example/kakao/cart/CartJPARepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kakao-jpa/src/test/java/com/example/kakao/order/OrderJPARepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/kakao-jpa/src/test/java/com/example/kakao/order/OrderJPARepositoryTest.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$/kakao-jpa">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2SXnh2hwdMbvByrLt5oO95CFTyl" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "spring.configuration.checksum": "3fcb6ad08501ea2e40c61ba5f4596338",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="KakaoApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="kakao.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.kakao.KakaoApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="212f15c1-9eab-4699-bea5-8cf13f814bea" name="Changes" comment="" />
+      <created>1689301911708</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1689301911708</updated>
+      <workItem from="1689301913236" duration="390000" />
+      <workItem from="1689302328822" duration="8896000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
