@@ -63,8 +63,10 @@ public class CartJPARepositoryTest extends DummyEntity {
         String email = "ssar@nate.com";
 
         //when
+        // 아래 두 코드 넣으니 HibernateLAZYInitializer 에러 해결
         User user = userJPARepository.findByEmail(email).orElseThrow(() -> new RuntimeException());
         List<Option> optionPS = optionJPARepository.findAll();
+        //
         List<Cart> cartTestList = cartJPARepository.mFindAll(email);
         String responseBody = om.writeValueAsString(cartTestList);
         System.out.println("테스트 : "+responseBody);
