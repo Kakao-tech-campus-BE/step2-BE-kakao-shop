@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -34,12 +35,15 @@ public class ProductJPARepositoryTest extends DummyEntity {
 
     @BeforeEach
     public void setUp() {
+        em.createNativeQuery("ALTER TABLE product_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        em.createNativeQuery("ALTER TABLE option_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
         List<Product> productListPS = productJPARepository.saveAll(productDummyList());
         optionJPARepository.saveAll(optionDummyList(productListPS));
         em.clear();
     }
 
     @Test
+    @DisplayName("(기능 4) 전체 상품 목록 조회")
     public void product_findAll_test() throws JsonProcessingException {
         // given
         int page = 0;
@@ -49,7 +53,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
         PageRequest pageRequest = PageRequest.of(page, size);
         Page<Product> productPG = productJPARepository.findAll(pageRequest);
         String responseBody = om.writeValueAsString(productPG);
-        System.out.println("테스트 : "+responseBody);
+        System.out.println("테스트 : " + responseBody);
 
         // then
         Assertions.assertThat(productPG.getTotalPages()).isEqualTo(2);
@@ -64,8 +68,8 @@ public class ProductJPARepositoryTest extends DummyEntity {
         Assertions.assertThat(productPG.getContent().get(0).getPrice()).isEqualTo(1000);
     }
 
-    // ManyToOne 전략을 Eager로 간다면 추천
     @Test
+    @DisplayName("(기능 5) 개별 상품 상세 조회")
     public void option_findByProductId_eager_test() throws JsonProcessingException {
         // given
         int id = 1;
@@ -78,65 +82,6 @@ public class ProductJPARepositoryTest extends DummyEntity {
         System.out.println("json 직렬화 직전========================");
         String responseBody = om.writeValueAsString(optionListPS);
         System.out.println("테스트 : " + responseBody);
-
-        // then
-    }
-
-    @Test
-    public void option_findByProductId_lazy_error_test() throws JsonProcessingException {
-        // given
-        int id = 1;
-
-        // when
-        // option을 select했는데, product가 lazy여서 없는 상태이다.
-        List<Option> optionListPS = optionJPARepository.findByProductId(id); // Lazy
-
-        // product가 없는 상태에서 json 변환을 시도하면 (hibernate는 select를 요청하는데, json mapper는 json 변환을 시도하게 된다)
-        // 이때 json 변환을 시도하는 것이 타이밍적으로 더 빠르다 (I/O)가 없기 때문에!!
-        // 그래서 hibernateLazyInitializer 오류가 발생한다.
-        // 그림 설명 필요
-        System.out.println("json 직렬화 직전========================");
-        String responseBody = om.writeValueAsString(optionListPS);
-        System.out.println("테스트 : " + responseBody);
-
-        // then
-    }
-
-    // 추천
-    // 조인쿼리 직접 만들어서 사용하기
-    @Test
-    public void option_mFindByProductId_lazy_test() throws JsonProcessingException {
-        // given
-        int id = 1;
-
-        // when
-        List<Option> optionListPS = optionJPARepository.mFindByProductId(id); // Lazy
-
-        System.out.println("json 직렬화 직전========================");
-        String responseBody = om.writeValueAsString(optionListPS);
-        System.out.println("테스트 : "+responseBody);
-
-        // then
-    }
-
-    // 추천
-    @Test
-    public void product_findById_and_option_findByProductId_lazy_test() throws JsonProcessingException {
-        // given
-        int id = 1;
-
-        // when
-        Product productPS = productJPARepository.findById(id).orElseThrow(
-                () -> new RuntimeException("상품을 찾을 수 없습니다")
-        );
-
-        // product 상품은 영속화 되어 있어서, 아래에서 조인해서 데이터를 가져오지 않아도 된다.
-        List<Option> optionListPS = optionJPARepository.findByProductId(id); // Lazy
-
-        String responseBody1 = om.writeValueAsString(productPS);
-        String responseBody2 = om.writeValueAsString(optionListPS);
-        System.out.println("테스트 : "+responseBody1);
-        System.out.println("테스트 : "+responseBody2);
 
         // then
     }
