@@ -110,7 +110,7 @@ public class OrderJPARepositoryTest extends DummyEntity {
         List<Order> orderList = orderJPARepository.findByUserId(userId);
 
         // then
-        assertThat(orderList.size()).isEqualTo(2);
+        assertThat(orderList.size()).isEqualTo(3);
         assertThat(orderList.get(0).getId()).isEqualTo(1);
         assertThat(orderList.get(0).getUser().getId()).isEqualTo(1);
         assertThat(orderList.get(0).getUser().getUsername()).isEqualTo("ssar");
