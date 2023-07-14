@@ -49,6 +49,14 @@ public class DummyEntity {
                 .build();
     }
 
+    protected List<Cart> newCarts(User user, List<Option> options) {
+        return Arrays.asList(
+                newCart(user, options.get(0), 5),
+                newCart(user, options.get(1), 5),
+                newCart(user, options.get(2), 10)
+        );
+    }
+
     protected Item newItem(Cart cart, Order order){
         return Item.builder()
                 .order(order)
@@ -61,7 +69,6 @@ public class DummyEntity {
     protected Order newOrder(User user){
         return Order.builder()
                 .user(user)
-                .id(1)
                 .build();
     }
 
