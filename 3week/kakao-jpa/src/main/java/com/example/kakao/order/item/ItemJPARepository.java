@@ -13,7 +13,6 @@ public interface ItemJPARepository extends JpaRepository<Item, Integer> {
     @Query("select i from Item i join fetch i.order where i.order.id = :id")
     List<Item> findOrderIdByFetchJoin(@Param("id") int id);
 
-    Optional<Item> findItemByOptionAndOrderId(@Param("optionid") int optionid, @Param("orderid") int orderid);
 
 
 }

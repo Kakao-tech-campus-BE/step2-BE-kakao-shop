@@ -85,7 +85,7 @@ class CartJPARepositoryTest extends DummyEntity {
         //given
         //user의 id
         int productId=1;
-        int id =1;
+        int userId =1;
         //when
 
         //먼저, insert 시켜준 상품(Product) 1번을 select 하여 데이터를 가져온다. (Lazy Loading)
@@ -98,12 +98,12 @@ class CartJPARepositoryTest extends DummyEntity {
 
         //유저는(User) 아직 영속화가 되지 않았기 때문에
         // 장바구니(Cart) 엔티티와 유저(User) 엔티티를 fetch join 하여 cartList에 담는다. N:1관계
-        List<Cart> cartList = cartJPARepository.findAllByJoinFetch(id);
+        List<Cart> cartList = cartJPARepository.findAllByJoinFetch(userId);
 
         //직렬화
         String responseBody2 = om.writeValueAsString(cartList);
         System.out.println("테스트 : "+responseBody2);
-        //then
+
 
     }
 
@@ -144,7 +144,7 @@ class CartJPARepositoryTest extends DummyEntity {
     public void cart_deleteById_test(){
         //given
         int cartId = 1; //1번 카트 아이템 삭제
-        //then
+        //when
         Optional<Cart> CartOP = cartJPARepository.findCartById(cartId);
 
         if(CartOP.isPresent()){
@@ -152,8 +152,8 @@ class CartJPARepositoryTest extends DummyEntity {
             em.flush(); //단위테스트할때 자동으로 rollback되므로 강제로 flush
         }
 
-
-        //when
+        //then
+        Assertions.assertThat(CartOP.isPresent()).isEqualTo(true);
 
     }
 

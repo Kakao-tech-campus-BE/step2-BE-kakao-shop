@@ -93,6 +93,21 @@ class OrderJPARepositoryTest extends DummyEntity {
     @Test
     public void orderItem_test() throws JsonProcessingException {
 
+        //given
+        int id = 1;
+
+        //when
+        //option & product
+        optionJPARepository.mFindByProductId(id);
+        //user & order
+        orderJPARepository.findOrderByUserId(id);
+        //item & order
+        Optional<Item> item = itemJPARepository.findById(id);
+
+
+        //then
+        String responseBody = om.writeValueAsString(item.get());
+        System.out.println("test : " + responseBody);
 
     }
 
