@@ -1,12 +1,16 @@
 package com.example.kakao.product;
 
 import com.example.kakao._core.util.DummyEntity;
+import com.example.kakao._core.utils.PrintUtils;
 import com.example.kakao.product.option.Option;
 import com.example.kakao.product.option.OptionJPARepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.assertj.core.api.Assertions;
 import org.hibernate.Hibernate;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +45,20 @@ public class ProductJPARepositoryTest extends DummyEntity {
         List<Product> productListPS = productJPARepository.saveAll(productDummyList());
         optionJPARepository.saveAll(optionDummyList(productListPS));
         em.clear();
+        System.out.println("-----before 완료-----");
+    }
+
+    @AfterEach
+    public void resetIndex() {
+        System.out.println("-----after 시작-----");
+        productJPARepository.deleteAll();
+        optionJPARepository.deleteAll();
+        em.createNativeQuery("ALTER TABLE product_tb ALTER COLUMN `id` RESTART WITH 1")
+                .executeUpdate();
+        em.createNativeQuery("ALTER TABLE option_tb ALTER COLUMN `id` RESTART WITH 1")
+                .executeUpdate();
+        em.clear();
+        System.out.println("-----after 완료-----");
     }
 
     @Test
@@ -99,9 +117,10 @@ public class ProductJPARepositoryTest extends DummyEntity {
         // 이때 json 변환을 시도하는 것이 타이밍적으로 더 빠르다 (I/O)가 없기 때문에!!
         // 그래서 hibernateLazyInitializer 오류가 발생한다.
         // 그림 설명 필요
+//        System.out.println("테스트 : "+optionListPS.get(0).getProduct());
         System.out.println("json 직렬화 직전========================");
         String responseBody = om.writeValueAsString(optionListPS);
-        System.out.println("테스트 : "+responseBody);
+        System.out.println("테스트 : " + responseBody);
 
         // then
     }
@@ -140,10 +159,10 @@ public class ProductJPARepositoryTest extends DummyEntity {
 
         String responseBody1 = om.writeValueAsString(productPS);
         String responseBody2 = om.writeValueAsString(optionListPS);
-        System.out.println("테스트 : "+responseBody1);
-        System.out.println("테스트 : "+responseBody2);
+
+        System.out.println("테스트 : "+ PrintUtils.getPrettyString(responseBody1));
+        System.out.println("테스트 : "+ PrintUtils.getPrettyString(responseBody2));
 
         // then
     }
-
 }
