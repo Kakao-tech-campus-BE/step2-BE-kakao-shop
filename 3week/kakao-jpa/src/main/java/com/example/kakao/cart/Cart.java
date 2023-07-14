@@ -49,4 +49,11 @@ public class Cart {
         this.quantity = quantity;
         this.price = price;
     }
+
+    //만약 Option 과의 관계가 ManyToOne이었으면 쓰였을것 같다.
+    public void addOption(Option option, int quantity, int price){
+        this.option = option;
+        this.quantity = quantity;
+        this.price = price;
+    }
 }
