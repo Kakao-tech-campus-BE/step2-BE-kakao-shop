@@ -38,6 +38,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
 
     @BeforeEach
     public void setUp(){
+        em.createNativeQuery("Alter TABLE product_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
         List<Product> productListPS = productJPARepository.saveAll(productDummyList());
         optionJPARepository.saveAll(optionDummyList(productListPS));
         em.clear();
@@ -116,11 +117,16 @@ public class ProductJPARepositoryTest extends DummyEntity {
         // when
         List<Option> optionListPS = optionJPARepository.mFindByProductId(id); // Lazy
 
-        System.out.println("json 직렬화 직전========================");
         String responseBody = om.writeValueAsString(optionListPS);
-        System.out.println("테스트 : "+responseBody);
 
         // then
+        Assertions.assertThat(optionListPS.size()).isEqualTo(5);
+        Assertions.assertThat(optionListPS.get(0).getProduct().getProductName()).isEqualTo("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전");
+        Assertions.assertThat(optionListPS.get(0).getProduct().getDescription()).isEqualTo("");
+        Assertions.assertThat(optionListPS.get(0).getProduct().getImage()).isEqualTo("/images/1.jpg");
+        Assertions.assertThat(optionListPS.get(0).getProduct().getPrice()).isEqualTo(1000);
+        Assertions.assertThat(optionListPS.get(0).getOptionName()).isEqualTo("01. 슬라이딩 지퍼백 크리스마스에디션 4종");
+        Assertions.assertThat(optionListPS.get(0).getPrice()).isEqualTo(10000);
     }
 
 

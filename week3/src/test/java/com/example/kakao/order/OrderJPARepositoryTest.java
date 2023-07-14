@@ -57,6 +57,7 @@ public class OrderJPARepositoryTest extends DummyEntity {
 
     @BeforeEach
     public void setUp() {
+        em.createNativeQuery("Alter TABLE user_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
         User user = userJPARepository.save(newUser("ssal"));
 
         List<Product> productListPS = productJPARepository.saveAll(productDummyList());
@@ -65,29 +66,28 @@ public class OrderJPARepositoryTest extends DummyEntity {
         Cart cart1 = cartJPARepository.save(newCart(user,  optionListPS.get(0),10));
         Cart cart2 = cartJPARepository.save(newCart(user,  optionListPS.get(1),10));
 
+        Order order = orderJPARepository.save(newOrder(user));
         em.clear();
 
     }
 
     @Test
-    public void save_test(){
+    public void save(){
         //given
-        User user = userJPARepository.findByUsername("ssal");
-        Order order = orderJPARepository.save(newOrder(user));
+        int id = 1;
+        List<Cart> cartList = cartJPARepository.findByUserId(id);
+        Order order = orderJPARepository.findByUserId(id);
 
-        List<Cart> cartList = cartJPARepository.findByUserId(user.getId());
         //when
         // cart에 들어 있는 데이터를 지울 수 잇어야 함
         Item item1 = itemJPARepository.save(newItem( cartList.get(0),order));
         Item item2 = itemJPARepository.save(newItem( cartList.get(1),order));
 
-        System.out.println("item1 : "+item1.getOrder().getUser().getUsername()+item1.getOption().getOptionName());
-        System.out.println("item2 : "+item2.getOrder().getUser().getUsername()+item2.getOption().getOptionName());
-
         cartJPARepository.deleteAll(cartList);
+
         //then
-        Assertions.assertThat(cartJPARepository.findByUserId(user.getId()).size()).isEqualTo(0);
-        //item 확인
+        Assertions.assertThat(cartJPARepository.findByUserId(id)).isEmpty();
+
         Assertions.assertThat(item1.getOrder().getUser().getUsername()).isEqualTo("ssal");
         Assertions.assertThat(item1.getOption().getOptionName()).isEqualTo("01. 슬라이딩 지퍼백 크리스마스에디션 4종");
         Assertions.assertThat(item2.getOrder().getUser().getUsername()).isEqualTo("ssal");
@@ -97,9 +97,9 @@ public class OrderJPARepositoryTest extends DummyEntity {
     @Test
     public void findById(){
         //given
-        User user = userJPARepository.findByUsername("ssal");
-        Order order = orderJPARepository.save(newOrder(user));
-        List<Cart> cartList = cartJPARepository.findByUserId(user.getId());
+        int id = 1;
+        List<Cart> cartList = cartJPARepository.findByUserId(id);
+        Order order = orderJPARepository.findByUserId(id);
         Item item1 = itemJPARepository.save(newItem( cartList.get(0),order));
         Item item2 = itemJPARepository.save(newItem( cartList.get(1),order));
 
@@ -111,6 +111,6 @@ public class OrderJPARepositoryTest extends DummyEntity {
         Assertions.assertThat(itemList.get(0).getOption().getOptionName()).isEqualTo("01. 슬라이딩 지퍼백 크리스마스에디션 4종");
         Assertions.assertThat(itemList.get(1).getOrder().getUser().getUsername()).isEqualTo("ssal");
         Assertions.assertThat(itemList.get(1).getOption().getOptionName()).isEqualTo("02. 슬라이딩 지퍼백 플라워에디션 5종");
- }
+    }
 
 }

@@ -19,16 +19,19 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Import(ObjectMapper.class)
 @DataJpaTest
 public class CartJPARepositoryTest extends DummyEntity {
     @Autowired
-    private EntityManager em;// JPA를 직접 사용하기 위해 주입
+    private EntityManager em;
 
     @Autowired
-    private CartJPARepository cartJPARepository;// 테스트할 Repository
+    private CartJPARepository cartJPARepository;
 
     @Autowired
     private UserJPARepository userJPARepository;
@@ -37,10 +40,15 @@ public class CartJPARepositoryTest extends DummyEntity {
     private OptionJPARepository optionJPARepository;
 
     @Autowired
+    private ObjectMapper om;
+
+    @Autowired
     private ProductJPARepository productJPARepository;
 
-    @BeforeEach// 테스트 전에 실행되는 메소드
+    @BeforeEach
     public void setUp(){
+        em.createNativeQuery("Alter TABLE option_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        em.createNativeQuery("Alter TABLE cart_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
         User user = userJPARepository.save(newUser("ssal"));
         List<Product> productListPS = productJPARepository.saveAll(productDummyList());
         List<Option> optionListPS = optionJPARepository.saveAll(optionDummyList(productListPS));
@@ -49,74 +57,152 @@ public class CartJPARepositoryTest extends DummyEntity {
         Cart cart3 = cartJPARepository.save(newCart(user,  optionListPS.get(10),5));
         em.clear();
      }
+
+     // 기본 save : 3.392ms
     @Test
-    public void cart_add_test(){
+    public void save(){
         //given
-        int optionId1 = 1;
-        int optionId2 = 2;
         int quantity = 5;
         String username = "ssal";
-        //when
+
         User user = userJPARepository.findByUsername(username);
-        Option option1 = optionJPARepository.findById(optionId1).orElseThrow(
-                () -> new RuntimeException("해당 옵션을 찾을 수 없습니다.")
-        );
-        Cart cart1 = cartJPARepository.save(newCart(user, option1, quantity));
 
-        Option option2 = optionJPARepository.findById(optionId2).orElseThrow(
-                () -> new RuntimeException("해당 옵션을 찾을 수 없습니다.")
-        );
-        Cart cart2 = cartJPARepository.save(newCart(user, option2, quantity));
+        List<Integer> optionIds = Arrays.asList(1, 2);
+
+        List<Cart> carts = new ArrayList<>();
+
+        //when
+        List<Option> options = optionJPARepository.findAllById(optionIds);
+
+        if(options.size() != optionIds.size()) {
+            throw new RuntimeException("해당 옵션을 찾을 수 없습니다.");
+        }
+
+        for (Option option : options) {
+            Cart newCart = newCart(user, option, quantity);
+            carts.add(newCart);
+        }
+
+        List<Cart> savedCarts = cartJPARepository.saveAll(carts);
+
         //then
-        Assertions.assertThat(cart1.getUser().getUsername()).isEqualTo(username);
-        Assertions.assertThat(cart1.getOption().getId()).isEqualTo(optionId1);
-
-        Assertions.assertThat(cart2.getUser().getUsername()).isEqualTo(username);
-        Assertions.assertThat(cart2.getOption().getId()).isEqualTo(optionId2);
-        Assertions.assertThat(cart1.getQuantity()).isEqualTo(quantity);
+        for (int i = 0; i < savedCarts.size(); i++) {
+            Cart savedCart = savedCarts.get(i);
+            Assertions.assertThat(savedCart.getUser().getUsername()).isEqualTo(username);
+            Assertions.assertThat(savedCart.getOption().getId()).isEqualTo(optionIds.get(i));
+            Assertions.assertThat(savedCart.getQuantity()).isEqualTo(quantity);
+        };
     }
 
+    // join fetch : 2.742ms
     @Test
-    public void cart_findAll_test(){
+    public void findAll_with_join_fetch() throws JsonProcessingException {
         //given
 
         //when
-        List<Cart> cartList = cartJPARepository.findAll();
+        List<Cart> cartList = cartJPARepository.findAllWithUserAndOption();
+        String responseBody = om.writeValueAsString(cartList);
+
         //then
-        Assertions.assertThat(cartList.size()).isEqualTo(3);
+        Assertions.assertThat(cartList).hasSize(3);
 
 
         Assertions.assertThat(cartList.get(0).getUser().getUsername()).isEqualTo("ssal");
-        Assertions.assertThat(cartList.get(0).getOption().getId()).isEqualTo(5);//왜
+        Assertions.assertThat(cartList.get(0).getOption().getId()).isEqualTo(5);
         Assertions.assertThat(cartList.get(0).getOption().getPrice()).isEqualTo(8900);
         Assertions.assertThat(cartList.get(0).getOption().getOptionName()).isEqualTo("2겹 식빵수세미 6매");
 
-        Assertions.assertThat(cartList.get(1).getOption().getId()).isEqualTo(10);//왜
+        Assertions.assertThat(cartList.get(1).getOption().getId()).isEqualTo(10);
         Assertions.assertThat(cartList.get(1).getOption().getPrice()).isEqualTo(49900);
         Assertions.assertThat(cartList.get(1).getOption().getOptionName()).isEqualTo("JR310BT (무선 전용) - 레드");
 
-        Assertions.assertThat(cartList.get(2).getOption().getId()).isEqualTo(11);//왜
+        Assertions.assertThat(cartList.get(2).getOption().getId()).isEqualTo(11);
         Assertions.assertThat(cartList.get(2).getOption().getPrice()).isEqualTo(49900);
         Assertions.assertThat(cartList.get(2).getOption().getOptionName()).isEqualTo("JR310BT (무선 전용) - 그린");
 
 
+
+    }
+    @Test
+    public void findAllByUserId() throws JsonProcessingException {
+        //given
+        int id = 1;
+        //when
+        List<Cart> cartList = cartJPARepository.findByUserId(id);
+        List<CartDTO> cartDtoList = cartList.stream()
+                .map(CartDTO::new)
+                .collect(Collectors.toList());
+
+        String responseBody = om.writeValueAsString(cartDtoList);
+        System.out.println("cartDtoList : "+ responseBody);
+
+        //then
+        Assertions.assertThat(cartDtoList).hasSize(3);
+
+        Assertions.assertThat(cartDtoList.get(0).getUser().getName()).isEqualTo("ssal");
+        Assertions.assertThat(cartDtoList.get(0).getOption().getId()).isEqualTo(5);
+        Assertions.assertThat(cartDtoList.get(0).getOption().getPrice()).isEqualTo(8900);
+        Assertions.assertThat(cartDtoList.get(0).getOption().getOptionName()).isEqualTo("2겹 식빵수세미 6매");
+
+        Assertions.assertThat(cartDtoList.get(1).getOption().getId()).isEqualTo(10);
+        Assertions.assertThat(cartDtoList.get(1).getOption().getPrice()).isEqualTo(49900);
+        Assertions.assertThat(cartDtoList.get(1).getOption().getOptionName()).isEqualTo("JR310BT (무선 전용) - 레드");
+
+        Assertions.assertThat(cartDtoList.get(2).getOption().getId()).isEqualTo(11);
+        Assertions.assertThat(cartDtoList.get(2).getOption().getPrice()).isEqualTo(49900);
+        Assertions.assertThat(cartDtoList.get(2).getOption().getOptionName()).isEqualTo("JR310BT (무선 전용) - 그린");
     }
 
+
+    // 기본 findAll : 3.194ms
+    // Option과 User를 Join하느라 느림
     @Test
-    public void cart_update_test(){
+    public void findAll() throws JsonProcessingException {
+        //given
+
+        //when
+        List<Cart> cartList = cartJPARepository.findAll();
+        List<CartDTO> cartDtoList = cartList.stream()
+                .map(CartDTO::new)
+                .collect(Collectors.toList());
+
+        String responseBody = om.writeValueAsString(cartDtoList);
+        System.out.println("cartDtoList : "+ responseBody);
+
+        //then
+        Assertions.assertThat(cartDtoList).hasSize(3);
+
+        Assertions.assertThat(cartDtoList.get(0).getUser().getName()).isEqualTo("ssal");
+        Assertions.assertThat(cartDtoList.get(0).getOption().getId()).isEqualTo(5);
+        Assertions.assertThat(cartDtoList.get(0).getOption().getPrice()).isEqualTo(8900);
+        Assertions.assertThat(cartDtoList.get(0).getOption().getOptionName()).isEqualTo("2겹 식빵수세미 6매");
+
+        Assertions.assertThat(cartDtoList.get(1).getOption().getId()).isEqualTo(10);
+        Assertions.assertThat(cartDtoList.get(1).getOption().getPrice()).isEqualTo(49900);
+        Assertions.assertThat(cartDtoList.get(1).getOption().getOptionName()).isEqualTo("JR310BT (무선 전용) - 레드");
+
+        Assertions.assertThat(cartDtoList.get(2).getOption().getId()).isEqualTo(11);
+        Assertions.assertThat(cartDtoList.get(2).getOption().getPrice()).isEqualTo(49900);
+        Assertions.assertThat(cartDtoList.get(2).getOption().getOptionName()).isEqualTo("JR310BT (무선 전용) - 그린");
+
+    }
+
+    // 실행시간 : 275ms
+    @Test
+    public void update() {
         //given
         int cartId = 1;
         int quantity = 10;
 
-        //when
         Cart cart = cartJPARepository.findById(cartId).orElseThrow(
                 () -> new RuntimeException("해당 카트를 찾을 수 없습니다.")
         );
+        //when
 
-        cart.update(quantity, cart.getOption().getPrice()*quantity); //수량과 가격을 업데이트,카트에는 수량만큼의 가격이 들어가야 한다
-        em.flush();// 영속성 컨텍스트의 변경 내용을 데이터베이스에 반영
+        cart.update(quantity, cart.getOption().getPrice() * quantity);
+        em.flush();
         //then
-
+        Assertions.assertThat(cart.getQuantity()).isEqualTo(quantity);
+        Assertions.assertThat(cart.getPrice()).isEqualTo(cart.getOption().getPrice() * quantity);
     }
-
 }
