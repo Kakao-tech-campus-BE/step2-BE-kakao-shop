@@ -9,6 +9,7 @@ import com.example.kakao.user.User;
 import com.example.kakao.user.UserJPARepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import javax.persistence.EntityManager;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -55,7 +57,6 @@ public class CartJPARepositoryTest extends DummyEntity {
                 newCart(userSP, optionsSP.get(1), 3),
                 newCart(userSP, optionsSP.get(2), 5)
         );
-
         cartJPARepository.saveAll(cartsSP);
 
         em.clear();
@@ -96,9 +97,6 @@ public class CartJPARepositoryTest extends DummyEntity {
                 .orElseGet(Collections::emptyList);
         if (findCarts.isEmpty()) { Assertions.fail("빈 카트 입니다");}
         //then - setup의 카트 값과 같은지?
-        System.out.println("json 직렬화 직전========================");
-        String responseBody = om.writeValueAsString(findCarts);
-        System.out.println("테스트 : "+getPrettyString(responseBody));
         //두개 카트 중 카트 1개만 진행
         Assertions.assertThat(findCarts.get(0).getOption().getOptionName()).isEqualTo(options.get(0).getOptionName());
         Assertions.assertThat(findCarts.get(0).getQuantity()).isEqualTo(1);
