@@ -1,5 +1,4 @@
 # step2-BE-kakao-shop
-
 카카오 테크 캠퍼스 2단계 카카오 쇼핑하기 백엔드 클론 프로젝트 레포지토리입니다.
 
 # 1주차
@@ -9,106 +8,242 @@
 </br>
 
 ## **과제명**
-
 ```
 1. 요구사항분석/API요청 및 응답 시나리오 분석
 2. 요구사항 추가 반영 및 테이블 설계도
 ```
 
-## 1. 요구사항 시나리오를 보고 부족해 보이는 기능 작성
+## **과제 설명**
+```
+1. 요구사항 시나리오를 보고 부족해 보이는 기능을 하나 이상 체크하여 README에 내용을 작성하시오.
+2. 제시된 화면설계를 보고 해당 화면설계와 배포된 기존 서버의 API주소를 매칭하여 README에 내용을 작성하시오. (카카오 화면설계 시나리오가 있음)
+3. 배포된 서버에 모든 API를 POSTMAN으로 요청해본 뒤 응답되는 데이터를 확인하고 부족한 데이터가 무엇인지 체크하여 README에 내용을 작성하시오.
+4. 테이블 설계를 하여 README에 ER-Diagram을 추가하여 제출하시오.
+```
 
-<br>
-고객 입장
+</br>
 
-- 계정 생성 날짜
-- 상품별 즐겨찾기 기능
-- 상품별 별점 및 평가
-- 상품별 리뷰
-- 최근에 본 상품
-- 비슷한 상품 추천
+## **과제 상세 : 수강생들이 과제를 진행할 때, 유념해야할 것**
+아래 항목은 반드시 포함하여 과제 수행해주세요!
+>- 부족한 기능에 대한 요구사항을 미리 예상할 수 있는가? (예를 들면 상품등록 api가 기존 요구사항에는 없는데 추후 필요하지는 않을지, 이런 부분들을 생각하였는지) 
+>- 요구사항에 맞는 API를 분석하고 사용자 시나리오를 설계하였는가? (예를 들어 배포된 서버와 화면 설계를 제시해줄 예정인데, 특정 버튼을 클릭했을 때 어떤 API가 호출되어야 할지를 아는지)
+>- 응답되는 데이터가 프론트앤드 화면에 모두 반영될 수 있는지를 체크하였는가?(예를 들어 배송관련 비용이 있는데, 이런것들이 API에는 없는데 이런 부분을 캐치할 수 있는지)
+>- 테이블 설계가 모든 API를 만족할 수 있게 나왔는가? (테이블이 효율적으로 나왔는가 보다는 해당 테이블로 요구사항을 만족할 수 있는지에 대한 여부만)
+>- 테이블명이 이해하기 쉽게 만들어졌는가? (상품테이블이 product이면 이해하기 쉽지만, material이라고 하면 이해하기 어렵기 때문)
 
-관리자 입장
+</br>
 
-- 비밀번호 유효 검사
-- 상품 등록
-- 상품 삭제
-- 상품 리뷰 삭제
-- 상품 옵션 추가
-- 상품 옵션 삭제
+## **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
+**1. PR 제목과 내용을 아래와 같이 작성 해주세요.**
 
-<br>
+>- PR 제목 : 부산대BE_라이언_1주차 과제
 
-## 2. 제시된 화면설계를 보고 해당 화면설계와 배포된 기존 서버의 API주소를 매칭
+</br>
 
-![join](https://lh3.googleusercontent.com/fife/APg5EOZAH8A61W6hCp4gmEzc_dfKjCEuZ5GzROVCYhHtIN_lsfjNFh0_CbxvtPacNkz3UMfan7ZLLclW15V6BXWEwVADL3Ri1OlAiImp5HS42FJTqs9HtsQZJUdSX58r4GnOMO9wsRuyMNqdrBKlmdWb9KC1SPawPfeXOmJHUeIlmuA9AXXt2-b2L27RNUiAKBwLXKSWxt6MUkldCCs3FjvLjzbQSBL4Li6YQtGWEICTNnZ4wdF8ACqvEVNGtzDxUt01UBHqhYxRLNSc0HL4wriahtWxUtso5BcYMpf9CYVwFqOdzJc9p6b3672jKhoGPDq7_V7rt8ap6DSVHepRv8Ak6DEgXkDiJ6D9X_BU0ZrqQ2L0SKJVMm8rLEc8_lr8PwRZ5U8tWBsLJ-i5tuORIiwZFZtPMmH_YXvKry0A2IqizByYfM44KQQ3sdf-rCNPWG8Nx8YxwHMhBzuUx2rftQj8rdxl89D93Dc5QxbxNLX7RoeY0goLEEmS04bFNWP6cbDJmWf3iNOvk9sGzqatMhxouxTX5xjK_xHDnBLekg5Wdr0u_g4xTHrgoclDYRzEfbbKL42g9gtp0BubVo4NUKMNaNMeEg5OCcA7FeHP54WYGesr8q4BFSDCrqaNL3Wb-T1OtZyxeL8tGs9cKFA4-_0l0311awsJ0u_khjlhJ6zWcqsNzieAy740mTbP7UG5u2_EVOd4Cd3_lCZn4RoK-owM9wExtKAexXI6GOMgpQwBL_gVkbXfBLX-4EpRKGgHYfsjYH7fRvg1WZJG6GuvRh9CCaqLHywpImMX7nYSRRh_sEjPqjkuMPE1u-YpjzCVT_mXWL38m-KsEQQuFKeg4_4JSAMh4ni1F-iinOIJ19BpVnXXVXiXiwjeOhEaKeQg1JhCQADpBO-wVBl6ngvKAY764ZtdbbRH3S0EauLVrX_MLLALez-Mt2uovy0GG0J7S2uG4tcN1UThOZ7sm544oyIEYgenQWaAU22W4Xeu3IKll62lY6bSfDncWIXGJevNbqzBSa_BS9BkOr2ZKTMwgT29wOwDdS_DmmUFaCfjiFb_qYO3Ku2f_gI1c5aWNaelGaGK9pTv4W25Gxvf0fWG9_90LOqS-A09ffJIJa22-tAysVCwp6dCpXH1oiAD3XHMpNSn0OlBUWS-EAG-uI_fOQ_rZDp9epM-3e_p6L_mdiHMe6XpSZPfBj7PDP8NAM5ERR3PdqBHG1ipWYHEAZWY8gy9Yw-F_u6-q-CpCO1bxeqPEtpkVw2q-RDvBdLapfpWa7A2xX6ZH62K-6JJfAd7sPuM4V1qOv5gkDCD5kRkDol9aGgwmTRgndUDyuWR0jmK4JyEUpm2sxOQy4Rd7RDUijpVC2dZb8z9D-RmqU3TamTuzQ5UPPpl8HrG55WOpU6GckLW4Cy6BQQ9edoWYBQjU_QvRQ7CgPBuaDeqXuNtSZPI3fyu4qYM3Zg5ATZLlI6l12QwczuuwZiQt_KS_EYathK33PhiE1y2I5tPDrWdj0Nepnl0wGOTZjSKhoEZWQMdIull7XJ72MU5jCXBOvSuvg=w542-h952)
+**2. PR 내용 :**
 
-회원가입 페이지  
-Method : Post  
-URL : http://localhost:8080/join
-<br>
+>- 코드 작성하면서 어려웠던 점
+>- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
-![login](https://lh3.googleusercontent.com/fife/APg5EObymE9o08PIYNG3yCdzWGa8vHOTD1IU3df_XT6bJlh72MSbk1DeorK0a5nhMSaznCqEgL-QUUWGdcJPrJkardVfJYwzl9KS-FlR1daD0FyAOTxENk2g33hLHUoWv-Bb5NOjETnJW4Gj9Qalze26HZKnCdyUPqoc5hxp_wLtiZcMPMfpq_JbFx-41HyT0mfDRsay2Fbdp9KQh9X7u_zqQNka6jPmeuCH-qWvSYy-PsOTRjzvMWodbCDqTKCbhqPQE2jpvcbFxbLZjH7k77Kdl9wjFfIKBBOoak9FsmyhkKCA_7_bVsVXhlG0rpyYvxkR0KS-0NLzJ8QLhXzVPZucE_mBMGq5aVM8Y22_04rbRImvWmJKvkLETYDutkujnG9OKuKLZvtstLREOEWkGHarbJlTPc-ZVzE1AbV5f2KBhotU8R8mJqUgXkoh2-g2EhsKt4IjykAA3MzMq4ulYb48AW0DiSmv1GIA1pm419ql-hhiLIxLmwZlHafh6kHoIFkwtptggKsZu1oV2fvW_RW89jeEmC4U9RgKwrQSRuzcCypwDQ0fE3G-_WbMUbKX-dmVl_K6hITYwA2um52OQXEnfl6ov0v6-92WHIElUC0kmRFhRTQ-YpQYQVSnUFJhN1D18DrOM3ccOLX_2KFXP4zWBNSoJq6M6AtYrk47NhwYSoXlou4dh-8hzDqiBXGzcMwYQK-yDsemub8VMl_J3k9LGTQLB0jeTsJaAQXsb0WsLhQWbJ7aQWbo7TLb48-_CkPqrJkEWzvq_VIWDXQRzEpnGkDkeYBRT4iaQaBsYJcxVJ1YN9z1K0UkyqvHJkGTSlVYrhr82xUU9ea6bDQ6idkPiSxHZb6S1X2vcRWeOfCmGyd1WIk2l56GXXoHBrHM2f-8C7dqHqheLu-NVrSG23q0FkVedjb38RUiUuRS72z7VoE5s21Q8pWKxhrJXGs0On_yUa_O7ZIoZDVLeXoEalTIK-9dfpQNY1U6Os6UlDA8loUzohziUAMi9ee9QnOdXv9ChuCaEckWz___o88Jj9s_PVgxMUdWmEVjmgxztln6fqq3jePk8ixy-P8aDZFD0iT35xOPFMQV9qN_wml5eGvFJFIFzHt24WR3LqJfcXWr24ipvIcaCKylcF8wBuWqS9l1219F5v0AdRDp4Xva_TuOekR4L0otCV1oWZZKmfx5qQZPGd6uJQYZRoFxGvvJ6RkkfJEY2saLeyJDdcE1hS5jhEfnyEMH3hzh4oXlqCGXfTYuaCozPBfThVtr6YOAMqBNuBs_myB7W-duLSEFxxja-WVRHSDMF_1cc9HSYk4_tXNW1y0xd_Nje0E6tuBpk6XMXJR7NTN1gtnCTeAOXQkewXAyoADQnHU37jODffFNM3Vai4u-82bQAofRaAS7Mn-nVMGDbxvdJ2ejCYr1EIULfmc-JTBsX5-XFtRkqtwV3eZq-RxAw4ciAsJUjMcGJWRUIVXArYkjE1xIMCafB7KMF7WV9Fy4GU9LnSUh_mLGh6puyGZXsyTXInW3xnrORaGNgQV39XeZaAPqnmV9pQ=w542-h952)
+# 2주차
 
-로그인 페이지  
-Method : post  
-URL : http://localhost:8080/login
-<br>
+카카오 테크 캠퍼스 2단계 - BE - 2주차 클론 과제
+</br>
+</br>
 
-![TotalItem](https://lh3.googleusercontent.com/fife/APg5EObf9k5_MWUBzwM4X3FLOSfhQAFexYsUlEAiHLJ3aoV62dYoXEX_5p4ian_6KBMeCNH0YH2ueD3BR5EIuXRNIrdk2QMrCV9LQer-s284_mDy1nRoMUhiRCzzDzzRCPE8ZA1cz5VqqFIGbvJlxdnfrOfj8fxAjefUScEFcfykxu8bhoKusV9GhjgqrO6LlDocrAt2qHbE9CDTfWRHx4pWfNjjz2OGwduKqanv77Ypo2YL-H5sIPejPtA4F_UBt-oLrGmepZ25dbRJg-35rvIcyIVh1LA_lS0b5WFIzqbcq64LNDDRiHgEXh6svCDAsolVlehTUSnpg1Vvuo1aWon9qBOGkGBim0HPvH8GbGjX2SC3LtUYeS13sOJSJ9J47fGBPN-7nD8s_Y6M1iaU_v_XqP7kHeX_oaNASjMzRrP9KOnr9xCd3Tet82dlGp16QZQFMtK5H_HAgwrhagTLq6MLFO7DsUXL7oZtFxr1p_xDy3x8Dbwtz8ZAp3BcfyRfhtoZ-Jog4dEFG6M0T9zkynmUVvjOhr8_NYR9-HVuBFcJPJRLNQXY_XOxGotDlAFhNfeRQuqz-PYMZzyVI78TkO3l3PYazSZaNJKZpBdgCtdmthR2_wqwkR0GT-Gj0tulqQwuw4xxTVRIJysXlFCGt5CGyMVQRms34tdi9wT_Kh0DV93cYcxmcY4REA9wBhjhkuA-ZF64T_TwFqq-0JfFSa9lP6I64bfGQfK33hr3r6mFAK9aaU1J8tCLpy1u1EY1H5_zQW8cqMidRt6qp40DtYIFuKUKZgDxz4sFTJofC9c2GBlSxHQXCAI5P7q7xx65RsBFrSrBvnW-dKwAQ-eYh7QBQ6jOC9jM3EvHMbPllMiPXju5RjFSoKaewVJ6EXiiVcIwkEFY_CQ4BZNpzxR1bPHlx7cYUICnrn8dr8wMbSi22V1mk4zQdf-p6fICBLJFww9rU3C-ntuqwaLONxrRQqS53k_0Q188lF5EFsCUhPp5FUTphWswZ5J88AHKjjMzO3GfnrkK6gBh9NWeUppghfGaxk0WrUtldt0u3xfkY2oXAYYHQ3GSt-ISw7-srFL_UOVLCvc_5iUZS4q1TMQA_45mrcOmmifyTDhQ_9zP4EfOqOnyk_w-8qGmiwml7Rle6RjIHn8eMow83o-dk9bvCnOBYkxHjndZ6sIlYhfpXXrDqlFHg8pBfFzYaysgN-4B9IJOgGxBFS3UY2F-qjfQFdrbjMTGQ0FPlAJLpBk1EBcV4bH6oQ0_z22VfezsdY3_u39gvUEybA-uuK3FN4pTugqB5IKt71FP_TESd47KhSgjkNmMQdqOOFP5-U8GBa61Q6D1kUJtMbzJDgLAIE8pnrpORz4Jwu4H6FTYayqhWli__I88cFLnjIm76k0uyrEBrrjL0WWXlgl6XpHxhdTNWgahR2g5aRwKSZ4jJPMqar5_HWZaEM50CFPw4H5RUeIqoEh79og2KjsWARQEkhhAGUCORx6pOxJh8tIMsps2yUI1QmW8PLchonxprogbapwYhYxOZuhZZlQlOi-LwzAa5g=w542-h952)
+## **과제명**
+```
+1. 전체 API 주소 설계
+2. Mock API Controller 구현
+```
 
-전체 상품 조회  
-Method : Get  
-URL : http://localhost:8080/products
-<br>
+## **과제 설명**
+```
+1. API주소를 설계하여 README에 내용을 작성하시오.
+2. 가짜 데이터를 설계하여 응답하는 스프링부트 컨트롤러를 작성하고 소스코드를 업로드하시오.
+```
 
-![EachItem](https://lh3.googleusercontent.com/fife/APg5EOa4DQ1rf8cwL9XtdKK1naMHauCUVZ1vaTinRcMT10u7sEprXLntJOnvZEVPRnZVffgZTDQw6jACfA8Ed-Kz6vGUQxkFPSPNgFFwfAn9lSFAUjZZ0LqGluSZ8Ox5ri9I1YOVnikGqT0-zlzfDhDrMGXT3rnVV7UH2mBSqcHeDtVYaO8E3CRt0Kuqh-UTUGGVPq2LmnsMDwzHYznuP1u1qa4VWc2q86PkItGtC8NxuRZoKY9qUGQ2jFSiLDJFK_3CQAb4PWUrzZ4J2adkVPpcV5zmSv3OVgWFO78t6er6zSzHUkTgtxuRg4EhRRVwNZgcVjA576G7JEUvVHuuMIq-ZSjFszmqYl0cNXZ8tkao5tYxRAu_0HeHpW2ppzDsFYppJiYKhw6eURuaHEz7x37HUzEOgmP6q4dV91pNaUp1uHPwxvC8PSV6QOXq3VYx1qcti-A-w5K56dhp83cgrGe1bhnHXGcFFVc5wTAeGRSDiXQvUOdxUbSwIe2KQaToOBnoNzEjcVGnApr5F-8Z2y6gry92QBC-fQb5bq98Q_J8dYT5dUowwY0TBKYVbKY_nDh-UJjITUU139AZUSocjt-T7bk8CRTHBYn5qLWM73W9J_2jQDQa-MCvkQ3qKrZXMShr0ICd1I3KgS_kHQERRO2q-bWbB3SJ9W4ZrEqyEnFKShPrxJ6T9wXcteB03JpqQOnF79-i5nlegciJjgNSGmE8g9D63dCpgZVPTl8q0msinbGZsg-z6x2m4SVN--aYLenpG0qxaEdJ9S-2GgP5ZtGkaVUJMvHzm4opM9E1QrjB1HPRDdgEHx_mGJNU-M-Kg3eQP_pnC0_94UpPYomRT9SOrBKUsT57_edCTTEcMnyp4nxtik6y1WPklvb0E5-g6h03K13h79BmojO5tcC9bYvMMKjtIr8zZEXY23txipcgbxIcZc_crDJJaxr2hxBiH3Vx-vKtQ8br2WtVoVxPc6d5p72Tz3Sm1UfZCID4EhrbXKdXKTHr7y7dRrItAWVQoc7EUNYw-DoUC4hmuq6X3hq2ktmWmpwM17YBU2VIdFo-Dw2fo4ftpasq1lN_ZhZ9UZI59Iftj4Ukpgz3ckA5D6l4hYWQpZcZI0v6eIng9QK62xkxQ0br0mUnKwuKQOggFT4DVgdKgmhtRuDMm1-uF1CqV-T7zoXwgEiGENCFxXs68QPyakAZqhOWanlsF98JfmEo6T6SSas7mqj0OPVrZBG068b9FRZJlkaZNuY1vT_XGWRl2nnWqDLInH-Dx1CmmlI8cR2-i33n5PhLKa5L20Yt6Sfg1OIWjOvBPt8s1ZuT1R22JhHaRqSV9sjjpLxylZjzZ1E7_SMzSgd7z0ImZPMmQRjJOgBBHFgNRytpLNVnr096Xj7LTV8OWL8D19mFtHVBsH44f6myZdyLvBcCbmz20VWAO3t-LsGawSHHpYOXuv59_Q1UKL0mPcAVxSrIZ5rOWLWtnjJhcCwG-N_jYFD77iM5pYkMAE6UXEEXoTySsWsAotjz8byhbeSrF2_VWKirmOnpswN-XnW0IgVmOA=w1064-h952)
+</br>
 
-개별 상품 조회  
-Method : Get  
-URL : http://localhost:8080/products/{product_id}
-<br>
+## **과제 상세 : 수강생들이 과제를 진행할 때, 유념해야할 것**
+아래 항목은 반드시 포함하여 과제 수행해주세요!
+>- User 도메인을 제외한 전체 API 주소 설계가 RestAPI 맞게 설계되었는가?  POST와 GET으로만 구현되어 있어도 됨.	
+>- 가짜 데이터를 설계하여 Mock API를 잘 구현하였는가? (예를 들어 DB연결없이 컨트롤러만 만들어서 배포된 서버의 응답과 동일한 형태로 데이터가 응답되는지 여부)
+>- DTO에 타입은 올바르게 지정되었는가?
+>- DTO에 이름은 일관성이 있는가? (예를 들어 어떤 것은 JoinDTO, 어떤 것은 joinDto, 어떤 것은 DtoJoin 이런식으로 되어 있으면 일관성이 없는것이다)
+>- DTO를 공유해서 쓰면 안된다 (동일한 데이터가 응답된다 하더라도, 화면은 수시로 변경될 수 있기 때문에 DTO를 공유하고 있으면 배점을 받지 못함)
+</br>
 
-![Basket](https://lh3.googleusercontent.com/fife/APg5EObk77hWJ5uWB-Eq6ebsmvBngh4SnetY1Ropwc7tzWncWiTUHjHoL9EwgWUeFkizeSnQYTv1VFHzo8S3uCSTGIMMfWo2QZAM5p-FwS84AS9F8o_AjCwEl20kvDaw-hnUMRO1gYS-GcNgOjQibLgmLNFvVnITv4HXnTnVIpPiJWTgHPT1C9AllRPLh8vsamNn6EJeWjLpOQLcMLid2tMb3y_Zp_W_nhnVUIHKwfi7Tnke1Pa1NnuONjEtjs7ur_q0QwNaG27a_pcIv2gcf5jYi4cPj38ql5HK_gTubRdMM9LEmK7I40cc9MdZx1LgBUbE38_aoj1bPQx9Srrg3pHYkIZPcN0ZieoBI0OeAvZbt9SZ5NJ2YTBab7cB1nJ478L4-0pb4ieOL7VnSUn6oLscUyeupkrNJVZCu-iOxsDY524IqU2azogxfGUsmPPJ5R0FzRQWg3QLj06ndR_Hfw0BVAJjMY4m36VjmgMBUb8hrK49W7hpsjMAzXQsayFIh5mm_L95NOBX9E5zpk1NlKC8yKb_EZLRShB3XxB0YhsLJFoXj1BStFDL-Gw3sI6FyYx7U2vxta-6ImZqFwEWmWA30ppWsdT_4fa2OB2AcJRIZm94TcoU-Ujt-2JzTL_uI2D8RCTNEAjTAkBjAVEuZSUlpairfPgNoclAaKppP3-sxcaZhqhX9riidnH-SjTht09-yUiu0cb2rWLuYIjfd6Ps1-IVa53TyhA1ASKWkZRPjLxyjPd0DwSYmhUzZpTYcc8-nek51btw6_1hPuywviAYKhUsXT_4wQB44cPDqPn6Tpwq_V75DdPc1WHct3YFAsaYniuMNGm6PmQBlQSdDKMg2SYQvdVjQa5p9y86RvCeAUHdXl8e9cQepuxHKV9u5guTAuKrYmcdyKvi7jVyU0oDOUXCvjz1qm3WYBzXC1Hb1kcQvMNbDE6p1buoOIL2DeEj4SBXcGiyAEIDKbrheR5bFPUDgSVnLdM8-ZicsuovBc_jrRIfYyo02UI05MXAoP5AmnVFc9N5EYx-UuZJy8OOyMbXN0NkhFyxK0BiTLDxySNPuIjrSlTmDzu4CMt_S6Bb_uE-aeEOhcT4C2UfY-mCe2cBos-eOtPKZIIjuPiNAvErdZMliF7WU8XK5TrKj0-EyDqu4F4Olz_tvd5_ee84FiGS9G9bOOWtBJsciFsiJboEwHhGqS39ILFthobTcB1AKmiJFYYn4PSXwRxED_HORhQJAk5JvcgAnvUvC2Tik3yAthKuNHEeeGQnLYkhnXdCbhFCxbS6g6pv0GvoR--lJSIQtA2JlHj_q57o_fy9i-F9g3WqpEu_ygdv-Ss5Mw3BkjeoQ47A_ufm6TrTV6GgqOXM81B0aRdqa8ukn9vsegPP5m82ird6jIgWExcrlBkpWabQImrJI8tS4yROvd1z17C6YjCMQTuaMckV_t8Yegc2mf9Jcl0na616w0lEhbYWYInU9m1v1DCDHHHjwVLjIPNocQp7IF7r0uVjlLBUGHnjHc3XAHmDT_1eDQYYkGE2FbREGOLbki3C65GEVw=w542-h952)
+## **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
+**1. PR 제목과 내용을 아래와 같이 작성 해주세요.**
 
-장바구니  
-Method : Post  
-URL : http://localhost:8080/carts/add
-<br><br>
+>- PR 제목 : 부산대BE_라이언_2주차 과제
 
-장바구니 조회  
-Method : Get  
-URL : http://localhost:8080/carts
-<br><br>
+</br>
 
-장바구니 갱신  
-Method : Post  
-URL : http://localhost:8080/carts/update
-<br><br>
+**2. PR 내용 :**
 
-![payment](https://lh3.googleusercontent.com/fife/APg5EOaw759REuvdC9FZm3_SR4hAhxUU7q1IPRWXVvg7t4MaMPYb3fu_Z0IfjpF44pxBHz4B_zDhcRaOIwfI9gjcwEON7Jxm9OdIpySOuxAARIsUSJ5KuH6vODs96pkzkKRDZMXjcirfuGJXCRzGn57OSU4nsOvk-VudWCI6hPkVJPwj9JFE5SWM_9UbjK9i1Oc06JiZW1xQtbeEWOw-l8PraTtMI-dpysoMY9SIeKpXF7pO1S9aj6gjARsQ9XVuqQD_D1XXdN9i2caIx1DX36fpONneCKXuOzmcjUVZ2tPtKZkPC8Tq1y77AOvt-FFX6QVuYWdUkH191ArgLwsN7TU-F3v1RzRtB-Z3sFaRFB8JzptRAqNT5MFK2aq-ac1XQcd67F1pRWc3QxfABDlziwxXD6yZDgpize_XcXu_oGN7_PhZWkTFyOJd_8DY1lIRqYW0DnA-Dt18fGCZKOWIW9ohtB4n-6hCM2ieQcw0TcJ0-yk-SkxBnSC2iXSmYah1yntnmJuWOJtIrLrWMRelBKRuqUaML75yYHqUIT_YvV2y6su-QHFroZaCZmU7vIU0IDsfD6GEGm2siG6MnynGLbddGMGdqIn-0PROotScDlW7UeqKJPI8v54wSd6V2-kHWzrORzieMXT1nzw8Q0PpWhXfvnVwJLySC5S8UGu3s1K_1w_h7wkOq-b9nyAY32zAnzw76JJ6X2JyR3p7Uh3vwjWxfysFm85IJr5whPEMQ268HxhV5yEwYDMzP0PiEo7dbEvniDKupMZD8a-gozkpBmrl6MT-BScxL48-KZtYLpTzcwCFT26Xq7Hzu--lgi4UoKX3K2qysMZs9TQMQM6VlTPeOvsvLrOaKX__KYHBG0FxQciZdZuNhTJaUrtxvexDe8XsNVoV9b0f7SIqoNLKjBekQodR_HDsl2ObcGklPXCcqvQiEF8Cdnde7tlPAPgXvJ3xAySdhuZQVfr2zkE1om3rn-I71OAmN3RD8zF0y4-RgSw-gM51SvCEPOq-YKAOQEXAo6S2JqDJWIuaKMzTpWNugGznLHMpsu50dpRQeyRwNMmo0qW4dXsp2hXCfuL2C8AdhJijZ8WT6MTwfm2YQVKfE1qZTM3OTON_CmyAMZG-CDAcggs2OX8pcU4QowqFfFovfIbIdilKSKOJhwU5THdx6UIK9EqS3Bv8RVclA6SZYmhUha5Xsos202tjlaDnHZt58WuNoeWTX-8l3hoe4BST0i4vW5sZZ6-QTFDlsNY17aNmXYMLBOvE-YAbC9_P5Uj_3ea7NIDk8CDIgsgoxqEjyL8n-LskgF0cqAQgi89Rpz2HMEdMB0NVGBYSr8aSjkxiTZ98OIxbYTaZlnQredIp-5jqs1Yq2iCUq6sD-PzoP0GzVgWnk3aUTTB63fUQtHBzFu6A3XubKyisUdlcPPc2ZWBK8kTRjwRLrtLs4MZBpFICn321Hz9-jfT3LFpgvqF2KdVFL6l3Sfibnkogf1LRJBsUZuxs2HEP70OqpvFYUZydKZIo8RFDm4bRILGhHTjpu6-q11MWkJYk-9m8lA=w542-h952)
+>- 코드 작성하면서 어려웠던 점
+>- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
-결제  
-Method : Post  
-URL : http://localhost:8080/orders/save
-<br><br>
-결제 정보 확인  
-Method : Get  
-URL : http://localhost:8080/orders/{order_id}
-<br><br>
+# 3주차
 
-## 3. 배포된 서버에 모든 API를 POSTMAN으로 요청해본 뒤 응답되는 데이터를 확인하고 부족한 데이터가 무엇인지 체크
+카카오 테크 캠퍼스 2단계 - BE - 3주차 클론 과제
+</br>
+</br>
 
-- http://localhost:8080/check  
-  이메일 중복여부만 확인하고 있지만 비밀번호 역시 유효성검사를 해야될것같습니다.
+## **과제명**
+```
+1. 레포지토리 단위테스트
+```
 
-  <br><br>
+## **과제 설명**
+```
+1. 레포지토리 단위테스트를 구현하여 소스코드를 제출하시오.
+2. 쿼리를 테스트하면서 가장 좋은 쿼리를 작성해보시오.
+```
 
-- http://localhost:8080/login  
-  로그인시 반환하는 데이터에 권한을 넘겨 줘야 할것같습니다. admin일 경우에 상품 삭제 등록 등의 더 다양한 역할을 할 수 있습니다.
-  <br><br>
+</br>
 
-## 4. 테이블 설계를 하여 README에 ER-Diagram을 추가
+## **과제 상세 : 수강생들이 과제를 진행할 때, 유념해야할 것**
+아래 항목은 반드시 포함하여 과제 수행해주세요!
+>- 레포지토리 단위테스트가 구현되었는가?
+>- 테스트 메서드끼리 유기적으로 연결되지 않았는가? (테스트는 격리성이 필요하다)
+>- Persistene Context를 clear하여서 테스트가 구현되었는가? (더미데이터를 JPA를 이용해서 insert 할 예정인데, 레포지토리 테스트시에 영속화된 데이터 때문에 쿼리를 제대로 보지 못할 수 있기 때문에)
+>- 테스트 코드의 쿼리 관련된 메서드가 너무 많은 select를 유발하지 않는지? (적절한 한방쿼리, 효율적인 in query, N+1 문제 등이 해결된 쿼리)
+>- BDD 패턴으로 구현되었는가? given, when, then
+</br>
 
-pdf에 채워야 될 내용들 통합하여 ERD로 작성하였습니다.
+## **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
+**1. PR 제목과 내용을 아래와 같이 작성 해주세요.**
 
-![ERD](https://lh3.googleusercontent.com/fife/APg5EOY-fxq1SY9PFj0MoCkKCZSJiAszPJec6cfhcl9UaimzwoEl27J9ecuyyMkQKnOn2l28m_018pH2k56aoQTAi85GCj6s29-7hkaYbPfx6Y0l59dGP6_CBrAC7Tgm1aD6tE-cAMYpnz5ixrfVZ1YIFJtQhT84LxFtMAgJPHiqsUoTpfBkNG6f7DCnuF2ZY41dcRHLjlHxLMLnE97_PGgRqha7bmkTyLehpuE2o7IZ5o__hyvk9IJctYy7Vvtb_QdT_te5FcZnwCdyYxS9N_lnae9fMkGaKeDLfCWxoAd-Vzw0WBYjOLE0zt_uBISbWBqACnl3N-bs3KLAYoiYG0il2QvToRAouN5hxPCg3rZsi9_0-pR9sNtnkFAiw1D113giaa8PyTVoXhnXEXSPFA70vV80w1xDW6Gx3nhn4uWt79FKpz-o8S7s0-6N72foepYZ7IDOEyVgZsullj_VZqOqBfqoxkFHXlcoN_-vtUh9QLvKsbatukW42kkaNy6ZwMYLXTGxYjWPBWDCKRK5GTt_TnK1v4Higni8g_DxbELfk76nSCcbbMQoE2fWiLCx-Vv-rVdj8twBey2sC1g_KJiQaTDQBJmvG7QROFG5qyG4Pb1CFKecvxehTUhQm7RkXmlGpb9Naq_U0Z47oGOeGNFiDmFVO_EkU3Jo9JNN3cTdopxFqsw3zWWSMLmzYPeQlpnwbLd2p8CxD2W4wZAiGUD6qSM6SEf2yfUe0O9rxuIlkqTl0MZF8UTO5zokkOpFowBBEXoK7wS76gWNb5KK7EoI-5j2kFSHwwxl10NtrNqy9z4ojwp7ZADpc7gywVQKSbaI9o0W1CI9kZzlIyeLmrMNinxEAScAaWPsLgzMXit57FYRARKU6Ws4VHwVod0dDfy3kfjv6AOCvgzy0Ud94L1HPXBkiSkBb2j5hHkOvWfg41BMLTVpX2zfoPCXymtwgNiU9zHORj0LqEXDQ02XrweoqFCLOZOhYyBGpWVVmMTfgHvsJyzY5php4Cf1ZL5vJLSRMHWZisPJMCOQeXUMOrXibRXA36yi1Y638qGp8hbYKYqE7kZEjhHQCOvP3HoayNCO7tlXpZHxzoi4doKJ8LTz8mXvJw_f8eYz0FUoJ_3wD7KHEdahxMQLXrWZoVachkwEUZIgsUnxUz9y78Z3l1eP4tcsnzzqoIVrvWEtg6bgUF2myTuuaJYYj_j7JujCa00dS59faXkN-owGMlbegS0_-os-6cKaZQcbveStTeraxxOaEu1CFDOXmwg11T_oo4tkX4JljMqWdeLecTbHzJ5IoRLouW-lYhFyjkFPk_MWSNgzsdTB3QskzR6Qxli9xUK3zt1xa7DlYIcWUOe7-ktl59Vxrd3HxXjs73T9O8Deuj7JzmL1WAeNer4K31bHxALoOKzfELvHOQbrUzgAloa43FHam1cq1FINsrFjeGAhMFvI18Flb2rSm5jrL2iz3XKupuIkNuvxrR_xHODYJTlZgo34b-PvbDq_jqf4GeIukDU_UizKTEynRDSxbyqs6joh4pdHLGkWvReaT_WA9A=w1064-h952)
+>- PR 제목 : 부산대BE_라이언_3주차 과제
+
+</br>
+
+**2. PR 내용 :**
+
+>- 코드 작성하면서 어려웠던 점
+>- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
+
+# 4주차
+
+카카오 테크 캠퍼스 2단계 - BE - 4주차 클론 과제
+</br>
+</br>
+
+## **과제명**
+```
+1. 컨트롤러 단위 테스트
+```
+
+## **과제 설명**
+```
+1. 컨트롤러 단위테스트를 작성한뒤 소스코드를 업로드하시오.
+2. stub을 구현하시오.
+```
+
+</br>
+
+## **과제 상세 : 수강생들이 과제를 진행할 때, 유념해야할 것**
+아래 항목은 반드시 포함하여 과제 수행해주세요!
+>- 컨트롤러 단위테스트가 구현되었는가?
+>- Mockito를 이용하여 stub을 구현하였는가?
+>- 인증이 필요한 컨트롤러를 테스트할 수 있는가?
+>- 200 ok만 체크한 것은 아닌가? (해당 컨트롤러에서 제일 필요한 데이터에 대한 테스트가 구현되었는가?)
+>- 모든 요청과 응답이 json으로 처리되어 있는가?
+</br>
+
+## **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
+**1. PR 제목과 내용을 아래와 같이 작성 해주세요.**
+
+>- PR 제목 : 부산대BE_라이언_4주차 과제 
+
+</br>
+
+**2. PR 내용 :**
+
+>- 코드 작성하면서 어려웠던 점
+>- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
+
+# 5주차
+
+카카오 테크 캠퍼스 2단계 - BE - 5주차 클론 과제
+</br>
+</br>
+
+## **과제명**
+```
+1. 실패 단위 테스트
+```
+
+## **과제 설명**
+```
+1. 컨트롤러 단위테스트를 구현하는데, 실패 테스트 코드를 구현하시오.
+2. 어떤 문제가 발생할 수 있을지 모든 시나리오를 생각해본 뒤, 실패에 대한 모든 테스트를 구현하시오.
+```
+
+</br>
+
+## **과제 상세 : 수강생들이 과제를 진행할 때, 유념해야할 것**
+아래 항목은 반드시 포함하여 과제 수행해주세요!
+>- 실패 단위 테스트가 구현되었는가?
+>- 모든 예외에 대한 실패 테스트가 구현되었는가?
+>- 예외에 대한 처리를 ControllerAdvice or RestControllerAdvice로 구현하였는가?
+>- Validation 라이브러리를 사용하여 유효성 검사가 되었는가?
+>- 테스트는 격리되어 있는가?
+</br>
+
+## **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
+**1. PR 제목과 내용을 아래와 같이 작성 해주세요.**
+
+>- PR 제목 : 부산대BE_라이언_5주차 과제
+
+</br>
+
+**2. PR 내용 :**
+
+>- 코드 작성하면서 어려웠던 점
+>- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
+
+# 6주차
+
+카카오 테크 캠퍼스 2단계 - BE - 6주차 클론 과제
+</br>
+</br>
+
+## **과제명**
+```
+1. 카카오 클라우드 배포
+```
+
+## **과제 설명**
+```
+1. 통합테스트를 구현하시오.
+2. API문서를 구현하시오. (swagger, restdoc, word로 직접 작성, 공책에 적어서 제출 등 모든 방법이 다 가능합니다)
+3. 프론트앤드에 입장을 생각해본뒤 어떤 문서를 가장 원할지 생각해본뒤 API문서를 작성하시오.
+4. 카카오 클라우드에 배포하시오.
+```
+
+</br>
+
+## **과제 상세 : 수강생들이 과제를 진행할 때, 유념해야할 것**
+아래 항목은 반드시 포함하여 과제 수행해주세요!
+>- 통합테스트가 구현되었는가?
+>- API문서가 구현되었는가?
+>- 배포가 정상적으로 되었는가?
+>- 프로그램이 정상 작동되고 있는가?
+>- API 문서에 실패 예시가 작성되었는가?
+</br>
+
+## **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
+**1. PR 제목과 내용을 아래와 같이 작성 해주세요.**
+
+>- PR 제목 : 부산대BE_라이언_6주차 과제
+
+</br>
+
+**2. PR 내용 :**
+
+>- 코드 작성하면서 어려웠던 점
+>- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
