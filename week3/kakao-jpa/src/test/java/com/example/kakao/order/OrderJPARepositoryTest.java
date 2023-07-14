@@ -73,6 +73,8 @@ public class OrderJPARepositoryTest extends DummyEntity {
         //when
         User user = userJPARepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
+        //아래 문장 추가하니 HibernateLAZYInitializer 오류 해결
+        List<Option> optionListPS = optionJPARepository.findAll();
         Order order = newOrder(user);
         orderJPARepository.save(order);
 
