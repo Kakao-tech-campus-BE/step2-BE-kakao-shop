@@ -22,9 +22,6 @@ spring:
         format_sql: true
       default_batch_fetch_size: 100
     open-in-view: false
-  output:
-    ansi:
-      enabled: always
 
 logging:
   level:
