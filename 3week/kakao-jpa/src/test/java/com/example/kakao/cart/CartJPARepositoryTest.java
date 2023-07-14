@@ -121,4 +121,16 @@ public class CartJPARepositoryTest extends DummyEntity {
         List<Cart> carts = cartJPARepository.findByUserId(userId);
         Assertions.assertThat(carts.size()).isEqualTo(0);
     }
+
+    @DisplayName("장바구니 개별 아이템 삭제")
+    @Test
+    public void cart_deleteById_test() {
+        int id = 1;
+        cartJPARepository.deleteById(id);
+
+        Optional<Cart> cart = cartJPARepository.findById(id);
+        Assertions.assertThat(cart.isPresent()).isFalse();
+
+
+    }
 }
