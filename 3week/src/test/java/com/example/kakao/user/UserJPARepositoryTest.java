@@ -10,10 +10,8 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-
 @DataJpaTest
 public class UserJPARepositoryTest extends DummyEntity {
-
     @Autowired
     private UserJPARepository userJPARepository;
 
@@ -46,7 +44,6 @@ public class UserJPARepositoryTest extends DummyEntity {
     }
 
     @Test
-    public void save(){}
-
-
+    public void save(){
+    }
 }

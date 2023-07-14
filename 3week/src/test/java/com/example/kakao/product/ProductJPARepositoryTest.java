@@ -6,24 +6,20 @@ import com.example.kakao.product.option.OptionJPARepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.api.Assertions;
-import org.hibernate.Hibernate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 import javax.persistence.EntityManager;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Import(ObjectMapper.class)
 @DataJpaTest
 public class ProductJPARepositoryTest extends DummyEntity {
-
     @Autowired
     private EntityManager em;
 
@@ -37,7 +33,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
     private ObjectMapper om;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         List<Product> productListPS = productJPARepository.saveAll(productDummyList());
         optionJPARepository.saveAll(optionDummyList(productListPS));
         em.clear();
@@ -75,13 +71,13 @@ public class ProductJPARepositoryTest extends DummyEntity {
         int id = 1;
 
         // when
-        // 충분한 데이터 - product만 0번지에서 빼면  된다
+        // 충분한 데이터 - product만 0번지에서 빼면 된다.
         // 조인은 하지만, fetch를 하지 않아서, product를 한번 더 select 했다.
         List<Option> optionListPS = optionJPARepository.findByProductId(id); // Eager
 
         System.out.println("json 직렬화 직전========================");
         String responseBody = om.writeValueAsString(optionListPS);
-        System.out.println("테스트 : "+responseBody);
+        System.out.println("테스트 : " + responseBody);
 
         // then
     }
@@ -101,7 +97,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
         // 그림 설명 필요
         System.out.println("json 직렬화 직전========================");
         String responseBody = om.writeValueAsString(optionListPS);
-        System.out.println("테스트 : "+responseBody);
+        System.out.println("테스트 : " + responseBody);
 
         // then
     }
@@ -122,7 +118,6 @@ public class ProductJPARepositoryTest extends DummyEntity {
 
         // then
     }
-
 
     // 추천
     @Test
@@ -145,5 +140,4 @@ public class ProductJPARepositoryTest extends DummyEntity {
 
         // then
     }
-
 }

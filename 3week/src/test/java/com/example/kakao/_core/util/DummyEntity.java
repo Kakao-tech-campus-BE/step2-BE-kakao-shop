@@ -13,10 +13,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class DummyEntity {
-    protected User newUser(String username){
+    protected User newUser(String username) {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return User.builder()
-                .email(username+"@nate.com")
+                .email(username + "@nate.com")
                 .password(passwordEncoder.encode("meta1234!"))
                 .username(username)
                 .roles(username.equals("admin") ? "ROLE_ADMIN" : "ROLE_USER")
@@ -66,13 +66,13 @@ public class DummyEntity {
     }
 
     // product repository 테스트할 때 가져옴
-    protected List<Product> productDummyList(){
+    protected List<Product> productDummyList() {
         return Arrays.asList(
                 newProduct("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전", 1, 1000),
                 newProduct("[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율", 2, 2000),
                 newProduct("삼성전자 JBL JR310 외 어린이용/성인용 헤드셋 3종!", 3, 30000),
-                newProduct("바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종", 4, 4000),
-                newProduct("[더주] 컷팅말랑장족, 숏다리 100g/300g 외 주전부리 모음 /중독성 최고/마른안주", 5, 5000),
+                newProduct("바른 누룽지맛 발효효소 2박스 역가수치보장/외 7종", 4, 4000),
+                newProduct("[더주] 컷팅말랑장족, 숏다리 100g/300g 외 주전부리 모음/중독성 최고/마른안주", 5, 5000),
                 newProduct("굳지않는 앙금절편 1,050g 2팩 외 우리쌀떡 모음전", 6, 15900),
                 newProduct("eoe 이너딜리티 30포, 오렌지맛 고 식이섬유 보충제", 7, 26800),
                 newProduct("제나벨 PDRN 크림 2개. 피부보습/진정 케어", 8, 25900),
