@@ -1,0 +1,19 @@
+package com.example.kakao.cart;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
+import java.util.Optional;
+
+
+public interface CartJPARepository extends JpaRepository<Cart, Integer> {
+
+    Optional<Cart> findCartById(@Param("cartId") int cartId);
+
+    @Query("select c from Cart c join fetch c.user where c.user.id = :userId")
+    List<Cart> findAllByJoinFetch(@Param("userId") int userId);
+
+
+}
