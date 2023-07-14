@@ -3,6 +3,7 @@ package com.example.kakao.user;
 import com.example.kakao._core.util.DummyEntity;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -11,11 +12,15 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
+@DisplayName("유저관련 JAP 테스트")
 @DataJpaTest
 public class UserJPARepositoryTest extends DummyEntity {
 
-    @Autowired
     private UserJPARepository userJPARepository;
+
+    public UserJPARepositoryTest( @Autowired UserJPARepository userJPARepository) {
+        this.userJPARepository = userJPARepository;
+    }
 
     @BeforeEach
     public void setUp(){
@@ -26,6 +31,8 @@ public class UserJPARepositoryTest extends DummyEntity {
     // 2. 못찾으면 exception
     // 3. setUp에 유저 한명 추가
     @Test
+    @DisplayName("이메일 테스트")
+
     public void findByEmail_test() {
         // given
         String email = "ssar@nate.com";
