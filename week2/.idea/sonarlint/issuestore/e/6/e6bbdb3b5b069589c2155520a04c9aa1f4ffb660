@@ -1,0 +1,19 @@
+
+R
+java:S1854F"<Remove this useless assignment to local variable "quantity".(ÿ¥õ…
+W
+java:S1854E"<Remove this useless assignment to local variable "optionId".(½Ù®Üşÿÿÿÿ
+H
+java:S1481E"-Remove this unused "optionId" local variable.(½Ù®Üşÿÿÿÿ
+C
+java:S1481F"-Remove this unused "quantity" local variable.(ÿ¥õ…
+V	java:S125I"<This block of commented-out lines of code should be removed.(ëÉô¥ıÿÿÿÿ
+W
+java:S1854R"<Remove this useless assignment to local variable "quantity".(Ô§Äïùÿÿÿÿ
+U
+java:S1854Q":Remove this useless assignment to local variable "cartId".(ö’şÿÿÿÿÿ
+F
+java:S1481Q"+Remove this unused "cartId" local variable.(ö’şÿÿÿÿÿ
+H
+java:S1481R"-Remove this unused "quantity" local variable.(Ô§Äïùÿÿÿÿ
+Q	java:S125U"<This block of commented-out lines of code should be removed.(šõ„¯
