@@ -21,10 +21,8 @@ public class UserJPARepositoryTest extends DummyEntity {
     public void setUp(){
         userJPARepository.save(newUser("ssar"));
     }
-
-    // 1. 눈으로 findByEmail() 쿼리 확인
-    // 2. 못찾으면 exception
-    // 3. setUp에 유저 한명 추가
+    // 로그인 테스트도 '이메일 찾기 테스트'를 통해 해결 가능하기 때문에 따로 적지 않았습니다.
+    @DisplayName("이메일 찾기")
     @Test
     public void findByEmail_test() {
         // given
@@ -38,11 +36,7 @@ public class UserJPARepositoryTest extends DummyEntity {
         System.out.println(userPS.getPassword());
 
         // then (상태 검사)
-        Assertions.assertThat(userPS.getId()).isEqualTo(1);
-        Assertions.assertThat(userPS.getEmail()).isEqualTo("ssar@nate.com");
-        assertTrue(BCrypt.checkpw("meta1234!", userPS.getPassword()));
-        Assertions.assertThat(userPS.getUsername()).isEqualTo("ssar");
-        Assertions.assertThat(userPS.getRoles()).isEqualTo("ROLE_USER");
+        assertEquals(userPS, new User(1, "ssar@nate.com", "meta1234!", "ssar", "ROLE_USER"));
     }
 
     @Test
