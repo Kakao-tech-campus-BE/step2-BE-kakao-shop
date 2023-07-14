@@ -77,15 +77,11 @@ public class CartJPARepositoryTest extends DummyEntity {
         System.out.println("======================end======================");
         // then
         Assertions.assertThat(cartJPARepository.count()).isEqualTo(previousCount+1);
-        Assertions.assertThat(cartJPARepository.findByUserId(userid).orElseThrow(
-                ()-> new RuntimeException("해당 cart를 찾을 수 없습니다.")
-        ).getId()).isEqualTo(cartid);
-        Assertions.assertThat(cartJPARepository.findByUserId(userid).orElseThrow(
-                ()-> new RuntimeException("해당 cart를 찾을 수 없습니다.")
-        ).getUser().getId()).isEqualTo(userid);
-        Assertions.assertThat(cartJPARepository.findByUserId(userid).orElseThrow(
-                ()-> new RuntimeException("해당 cart를 찾을 수 없습니다."))
-                .getOption().getId()).isEqualTo(optionid);
+        Cart savedCart = cartJPARepository.findByUserId(userid).orElseThrow(
+                ()-> new RuntimeException("해당 cart를 찾을 수 없습니다."));
+        Assertions.assertThat(savedCart.getId()).isEqualTo(cartid);
+        Assertions.assertThat(savedCart.getUser().getId()).isEqualTo(userid);
+        Assertions.assertThat(savedCart.getOption().getId()).isEqualTo(optionid);
     }
 
     @Test
@@ -158,6 +154,7 @@ public class CartJPARepositoryTest extends DummyEntity {
         );
         cart.update(30,900000);
         em.flush();
+        System.out.println("====================end===================");
         // then
         Cart updatedCart = cartJPARepository.findById(cartid).orElseThrow(
                 () -> new RuntimeException("장바구리를 찾을 수 없거나 비어있습니다.")

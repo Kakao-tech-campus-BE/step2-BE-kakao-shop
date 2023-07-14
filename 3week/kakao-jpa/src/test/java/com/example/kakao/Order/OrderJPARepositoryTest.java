@@ -112,7 +112,7 @@ public class OrderJPARepositoryTest extends DummyEntity {
 
     @Test
     @DisplayName("주문 결과 확인 테스트 lazy- 에러")
-    void itemProductOption_findByOrderId_lazy_error_test() throws JsonProcessingException {
+    void itemProductOption_findByOrderId_lazy_error_test()  {
         // given
         Integer orderid=1;
         // when
@@ -124,7 +124,7 @@ public class OrderJPARepositoryTest extends DummyEntity {
     }
 
     @Test
-    @DisplayName("주문 결과 확인 테스트 lazy- 커스텀 쿼(product, user, option, user fetch join)")
+    @DisplayName("주문 결과 확인 테스트 lazy- 커스텀 쿼리(product, user, option, user fetch join)")
     void itemProductOption_findByOrderId_lazy_test1() throws JsonProcessingException {
         // given
         Integer orderid=1;
