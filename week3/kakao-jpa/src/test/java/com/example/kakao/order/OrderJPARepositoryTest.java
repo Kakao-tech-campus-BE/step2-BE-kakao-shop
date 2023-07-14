@@ -92,8 +92,14 @@ public class OrderJPARepositoryTest extends DummyEntity {
         // then
         assertThat(orderJPARepository.count()).isEqualTo(previous_order_count + 1);
         assertThat(itemJPARepository.count()).isEqualTo(previous_item_count + 1);
-        assertThat(order.getUser().getId()).isEqualTo(user.getId());
-        assertThat(item.getOrder().getId()).isEqualTo(order.getId());
+        assertThat(order)
+                .extracting("user")
+                .extracting("id")
+                .isEqualTo(user.getId());
+        assertThat(item)
+                .extracting("order")
+                .extracting("id")
+                .isEqualTo(order.getId());
     }
 
     @DisplayName("find all order items using order-id test")
