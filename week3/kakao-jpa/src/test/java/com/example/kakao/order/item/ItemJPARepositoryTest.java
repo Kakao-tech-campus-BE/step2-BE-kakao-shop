@@ -94,22 +94,12 @@ class ItemJPARepositoryTest extends DummyEntity {
     void 주문_아이템_등록_테스트() {
         //given
         int id = 1;
-        //User ID가 계속 1로 생성되는 기존 로직 때문에 주문과 아이템 테이블을 비우고 등록 시작
-        orderJPARepository.deleteAll();
-        itemJPARepository.deleteAll();
-
-        em.createNativeQuery("ALTER TABLE item_tb ALTER COLUMN `id` RESTART WITH 1")
-                .executeUpdate();
-        em.createNativeQuery("ALTER TABLE order_tb ALTER COLUMN `id` RESTART WITH 1")
-                .executeUpdate();
 
         List<Cart> carts = cartJPARepository.findByUserId(id).orElseThrow(
-                () -> new RuntimeException("해당 유저의 장바구니는 비어있습니다.")
-        );
+                () -> new RuntimeException("해당 유저의 장바구니는 비어있습니다."));
 
         User user = userJPARepository.findById(id).orElseThrow(
-                () -> new RuntimeException("해당 유저를 찾을 수 없습니다.")
-        );
+                () -> new RuntimeException("해당 유저를 찾을 수 없습니다."));
 
         //when
         Order order = orderJPARepository.save(newOrder(user));
@@ -118,7 +108,7 @@ class ItemJPARepositoryTest extends DummyEntity {
         itemJPARepository.saveAll(items);
 
         //then
-        List<Item> searchItems = itemJPARepository.findByOrderId(user.getId());
+        List<Item> searchItems = itemJPARepository.findByOrderId(order.getId());
 
         Assertions.assertThat(items).isEqualTo(searchItems);
     }
