@@ -20,6 +20,7 @@ public class Option {
     private int id;
 
     @ManyToOne
+    @JoinColumn(name = "product_id")
     private Product product;
 
     @Column(length = 100, nullable = false)

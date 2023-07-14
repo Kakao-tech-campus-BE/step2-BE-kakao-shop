@@ -1,5 +1,6 @@
 package com.example.kakao.user;
 
+import com.example.kakao.cart.Cart;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,6 +25,9 @@ public class User{
 
     @Column(length = 30)
     private String roles;
+
+//    @OneToMany(mappedBy = "user")
+//    private List<Cart> Carts;
 
     @Builder
     public User(int id, String email, String password, String username, String roles) {
