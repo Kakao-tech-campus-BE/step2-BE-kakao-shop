@@ -217,6 +217,40 @@ Ref: Option.product_id - Product.id
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
+</br>
+</br>
+
+## 1. API 주소 설계
+
+|  | URL | 기능 | Method | Request Body |
+| --- | --- | --- | --- | --- |
+| Cart |  |  |  |  |
+|  | /carts | 장바구니 조회 | GET |  |
+|  | /carts/add | 장바구니 추가 | POST | [{"optionId":1,"quantity":5},{"optionId":2,"quantity":5}] |
+|  | /carts/update | 장바구니 업데이트 | POST | [ {"cartId":4,"quantity":10 },{"cartId":5"quantity":10}] |
+|  | /carts/{id} | 장바구니 삭제 | DELETE | [{"cartId":4}] |
+|  | /carts/change | 장바구니 아이템 수량 변경 | PATCH | [{"cartId":4,"add":true,"subtract":false}] |
+| Order |  |  |  |  |
+|  | /orders/save | 결제하기 | POST |  |
+|  | /orders/{id} | 주문 결과 확인하기 | GET |  |
+| Product |  |  |  |  |
+|  | /products | 전체 상품 목록 조회 | GET |  |
+|  | /products/{id} | 개별 상품 상세 조회 | GET |  |
+| User |  |  |  |  |
+|  | /join | 회원가입 | POST | {"username":"meta","email":"meta@nate.com","password":"meta1234!"} |
+|  | /check | 이메일 중복 체크 | POST | {"email":"meta@nate.com"} |
+|  | /login | 로그인 | POST | {"email":"meta@nate.com","password":"meta1234!"} |
+
+
+
+## 2. 가짜 데이터 설계 후 응답하는 스프링부트 컨트롤러 작성 
+- 2week에 첨부.
+</br>
+</br>
+
+
+
+
 # 3주차
 
 카카오 테크 캠퍼스 2단계 - BE - 3주차 클론 과제
