@@ -15,10 +15,8 @@ import com.example.kakao.user.User;
 import com.example.kakao.user.UserJPARepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
@@ -55,7 +53,7 @@ public class ItemJPARepositoryTest extends DummyEntity {
 
     @BeforeEach
     public void setUp() {
-        User user = userJPARepository.save(newUser("ssar"));
+        User user = userJPARepository.save(newUser("han"));
         List<Product> productListPS = productJPARepository.saveAll(productDummyList());
         List<Option> optionListPS = optionJPARepository.saveAll(optionDummyList(productListPS));
         List<Cart> cartListPS = Arrays.asList(
@@ -69,11 +67,9 @@ public class ItemJPARepositoryTest extends DummyEntity {
                 .map(x->newItem(x,order))
                 .collect(Collectors.toList()));
         em.clear();
-        System.out.println("-----before 완료-----");
     }
     @AfterEach
     public void close() {
-        System.out.println("-----after 시작-----");
         em.clear();
         cartJPARepository.deleteAll();
         userJPARepository.deleteAll();
@@ -94,16 +90,19 @@ public class ItemJPARepositoryTest extends DummyEntity {
         em.createNativeQuery("ALTER TABLE item_tb ALTER COLUMN `id` RESTART WITH 1")
                 .executeUpdate();
         em.clear();
-        System.out.println("-----after 완료-----");
     }
 
     @Test
     @DisplayName("OrderItem 아이디로 조회")
     public void item_findItemByItemId() throws JsonProcessingException {
+        //when
         int id = 1;
-        Item itemList = itemJPARepository.findById(id).orElse(null);
-
-
+        //when
+        Item searchItem = itemJPARepository.findById(id).orElse(null);
+        //then
+        Assertions.assertThat(searchItem.getId()).isEqualTo(id);
+        Assertions.assertThat(searchItem.getOption().getOptionName()).isEqualTo("01. 슬라이딩 지퍼백 크리스마스에디션 4종");
+        Assertions.assertThat(searchItem.getPrice()).isEqualTo(50000);
 //        String responseBody = om.writeValueAsString(itemList);
 //        System.out.println(responseBody);
     }
@@ -111,9 +110,16 @@ public class ItemJPARepositoryTest extends DummyEntity {
     @Test
     @DisplayName("Order 아이디로 조회")
     public void item_findByOrderId() throws  JsonProcessingException{
+        //when
         int orderId = 1;
-        List<Item> itemList = itemJPARepository.findByOrderId(orderId);
 
+        //given
+        List<Item> searchItemList = itemJPARepository.findByOrderId(orderId);
+
+        //then
+        Assertions.assertThat(searchItemList.get(0).getId()).isEqualTo(orderId);
+        Assertions.assertThat(searchItemList.get(0).getOption().getOptionName()).isEqualTo("01. 슬라이딩 지퍼백 크리스마스에디션 4종");
+        Assertions.assertThat(searchItemList.get(0).getPrice()).isEqualTo(50000);
 
     }
 
