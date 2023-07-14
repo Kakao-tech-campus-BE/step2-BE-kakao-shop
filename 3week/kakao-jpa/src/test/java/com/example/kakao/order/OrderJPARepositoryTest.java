@@ -121,13 +121,18 @@ public class OrderJPARepositoryTest extends DummyEntity {
 
         List<Item> savedItems = itemJPARepository.saveAll(items);
 
+        em.clear();
+
         // when
         List<Item> findItems = itemJPARepository.findItemsWithOptionUsingFetchJoinById(orderId);
+        // todo Fetch Join을 사용하면, Item, Option, Order, Product가 조회되는 데 이것이 맞는 것인가??
+        // 응답 데이터에 다 포함되있는 것들이라서 괜찮은 것 같다.
 
         //then
-
         Assertions.assertThat(savedItems.size()).isEqualTo(findItems.size());
         Assertions.assertThat(findItems.get(0).getOption().getProduct().getProductName()).isEqualTo("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전");
+        Assertions.assertThat(findItems.get(0).getOption().getOptionName()).isEqualTo("01. 슬라이딩 지퍼백 크리스마스에디션 4종");
+        Assertions.assertThat(findItems.get(0).getPrice()).isEqualTo(100000);
         Assertions.assertThat(findItems.stream().mapToInt(s -> s.getPrice()).sum()).isEqualTo(209000);
     }
 
