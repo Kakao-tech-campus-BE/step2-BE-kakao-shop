@@ -44,6 +44,6 @@ public class UserJPARepositoryTest extends DummyEntity {
     }
 
     @Test
-    public void save(){
+    public void save() {
     }
 }
