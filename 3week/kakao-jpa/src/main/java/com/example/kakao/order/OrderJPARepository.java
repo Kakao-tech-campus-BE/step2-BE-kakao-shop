@@ -1,7 +1,5 @@
 package com.example.kakao.order;
 
-import com.example.kakao.product.Product;
-import com.example.kakao.product.option.Option;
 import com.example.kakao.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
