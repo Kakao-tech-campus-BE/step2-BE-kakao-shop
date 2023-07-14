@@ -1,6 +1,8 @@
 package com.example.kakao.user;
 
+import com.example.kakao.cart.Cart;
 import lombok.*;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -32,5 +34,12 @@ public class User{
         this.password = password;
         this.username = username;
         this.roles = roles;
+    }
+
+    public boolean equals(Object object){
+        User myUser = (User) object;
+        return this.id == myUser.id && this.email.equals(myUser.email)
+                && BCrypt.checkpw(myUser.password, this.password) && this.username.equals(myUser.username)
+                && this.roles.equals(myUser.roles);
     }
 }

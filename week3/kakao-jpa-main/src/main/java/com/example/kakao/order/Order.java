@@ -1,5 +1,6 @@
 package com.example.kakao.order;
 
+import com.example.kakao.order.item.Item;
 import com.example.kakao.user.User;
 import lombok.*;
 
@@ -24,5 +25,9 @@ public class Order {
     public Order(int id, User user) {
         this.id = id;
         this.user = user;
+    }
+    public boolean equals(Object object){
+        Order myOrder = (Order) object;
+        return this.id == myOrder.id && this.user == myOrder.user;
     }
 }

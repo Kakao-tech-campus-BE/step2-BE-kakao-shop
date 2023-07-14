@@ -49,4 +49,10 @@ public class Cart {
         this.quantity = quantity;
         this.price = price;
     }
+    public boolean equals(Object object){
+        Cart mycart = (Cart) object;
+        return this.id == mycart.id && this.user == mycart.user
+                && this.option == mycart.option && this.quantity == mycart.quantity
+                && this.price == mycart.price;
+    }
 }

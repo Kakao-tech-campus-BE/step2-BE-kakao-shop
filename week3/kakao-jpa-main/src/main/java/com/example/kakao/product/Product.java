@@ -1,5 +1,6 @@
 package com.example.kakao.product;
 
+import com.example.kakao.cart.Cart;
 import lombok.*;
 
 import javax.persistence.*;
@@ -28,5 +29,11 @@ public class   Product {
         this.description = description;
         this.image = image;
         this.price = price;
+    }
+    public boolean equals(Object object){
+        Product myProduct = (Product) object;
+        return this.id == myProduct.id && this.productName.equals(myProduct.productName)
+                && this.description.equals(myProduct.description) && this.image.equals(myProduct.image)
+                && this.price == myProduct.price;
     }
 }

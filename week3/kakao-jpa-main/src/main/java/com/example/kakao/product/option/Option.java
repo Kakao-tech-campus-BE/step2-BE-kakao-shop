@@ -1,5 +1,6 @@
 package com.example.kakao.product.option;
 
+import com.example.kakao.order.Order;
 import com.example.kakao.product.Product;
 import lombok.*;
 
@@ -32,5 +33,10 @@ public class Option {
         this.product = product;
         this.optionName = optionName;
         this.price = price;
+    }
+    public boolean equals(Object object){
+        Option myOption = (Option) object;
+        return this.id == myOption.id && this.product == myOption.product
+                && this.optionName.equals(myOption.optionName) && this.price == myOption.price;
     }
 }
