@@ -13,10 +13,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class DummyEntity {
-    protected User newUser(String username){
+    protected User newUser(String username) {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return User.builder()
-                .email(username+"@nate.com")
+                .email(username + "@nate.com")
                 .password(passwordEncoder.encode("meta1234!"))
                 .username(username)
                 .roles(username.equals("admin") ? "ROLE_ADMIN" : "ROLE_USER")
@@ -40,7 +40,7 @@ public class DummyEntity {
                 .build();
     }
 
-    protected Cart newCart(User user, Option option, Integer quantity){
+    protected Cart newCart(User user, Option option, Integer quantity) {
         return Cart.builder()
                 .user(user)
                 .option(option)
@@ -49,7 +49,7 @@ public class DummyEntity {
                 .build();
     }
 
-    protected Item newItem(Cart cart, Order order){
+    protected Item newItem(Cart cart, Order order) {
         return Item.builder()
                 .order(order)
                 .option(cart.getOption())
@@ -58,7 +58,7 @@ public class DummyEntity {
                 .build();
     }
 
-    protected Order newOrder(User user){
+    protected Order newOrder(User user) {
         return Order.builder()
                 .user(user)
                 .id(1)
@@ -66,7 +66,7 @@ public class DummyEntity {
     }
 
     // product repository 테스트할 때 가져옴
-    protected List<Product> productDummyList(){
+    protected List<Product> productDummyList() {
         return Arrays.asList(
                 newProduct("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전", 1, 1000),
                 newProduct("[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율", 2, 2000),
@@ -117,7 +117,7 @@ public class DummyEntity {
                 newOption(productListPS.get(7), "제나벨 PDRN 자생크림 1+1", 25900),
                 newOption(productListPS.get(8), "플레이스테이션 VR2 호라이즌 번들", 839000),
                 newOption(productListPS.get(8), "플레이스테이션 VR2", 797000),
-                newOption(productListPS.get(9),"홍가리비2kg(50미이내)", 8900), //30
+                newOption(productListPS.get(9), "홍가리비2kg(50미이내)", 8900), //30
                 newOption(productListPS.get(10), "궁채 절임 1kg", 6900),
                 newOption(productListPS.get(10), "양념 깻잎 1kg", 8900),
                 newOption(productListPS.get(10), "된장 깻잎 1kg", 8900),
@@ -137,5 +137,26 @@ public class DummyEntity {
                 newOption(productListPS.get(14), "화이트", 148000),
                 newOption(productListPS.get(14), "블랙", 148000)
         );
+    }
+
+    protected List<Cart> cartDummyList(User user, List<Option> optionDummyList, int quantity) {
+        return Arrays.asList(
+                newCart(user, optionDummyList.get(0), quantity),
+                newCart(user, optionDummyList.get(1), quantity)
+        );
+    }
+
+    protected List<Product> productDummyList2() {
+        return Arrays.asList(
+                newProduct("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전", 1, 1000),
+                newProduct("[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율", 2, 2000),
+                newProduct("삼성전자 JBL JR310 외 어린이용/성인용 헤드셋 3종!", 3, 30000));
+    }
+
+    protected List<Option> optionDummyList2(List<Product> productListPS) {
+        return Arrays.asList(
+                newOption(productListPS.get(0), "01. 슬라이딩 지퍼백 크리스마스에디션 4종", 10000),
+                newOption(productListPS.get(0), "02. 슬라이딩 지퍼백 플라워에디션 5종", 10900),
+                newOption(productListPS.get(0), "고무장갑 베이지 S(소형) 6팩", 9900));
     }
 }
