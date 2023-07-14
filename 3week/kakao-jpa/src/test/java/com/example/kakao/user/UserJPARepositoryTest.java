@@ -8,17 +8,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
+import javax.persistence.EntityManager;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+// 테스트 시 고민해야 할 사항 -> 메모리에 무엇을 울려야 하는가?
+// filter -> dispatcher servlet(handler, aop) -> controller -> service -> repository ->
+// persistence context -> Datasource
 
+// r -> pc -> Datasource 만 걸어놓는 것을 @DataJpaTest 로 할 수 있다.
 @DataJpaTest
 public class UserJPARepositoryTest extends DummyEntity {
+
+    @Autowired
+    private EntityManager em;
 
     @Autowired
     private UserJPARepository userJPARepository;
 
     @BeforeEach
     public void setUp(){
+        em.createNativeQuery("ALTER TABLE user_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
         userJPARepository.save(newUser("ssar"));
     }
 
@@ -47,6 +57,5 @@ public class UserJPARepositoryTest extends DummyEntity {
 
     @Test
     public void save(){}
-
 
 }
