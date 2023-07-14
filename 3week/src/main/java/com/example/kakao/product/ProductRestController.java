@@ -16,14 +16,13 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @RestController
 public class ProductRestController {
-
     private final FakeStore fakeStore;
 
     // (기능4) 전체 상품 목록 조회 (페이징 9개씩)
     @GetMapping("/products")
     public ResponseEntity<?> findAll(@RequestParam(defaultValue = "0") int page) {
         // 1. 더미데이터 가져와서 페이징하기
-        List<Product> productList = fakeStore.getProductList().stream().skip(page*9).limit(9).collect(Collectors.toList());
+        List<Product> productList = fakeStore.getProductList().stream().skip(page * 9).limit(9).collect(Collectors.toList());
 
         // 2. DTO 변환
         List<ProductResponse.FindAllDTO> responseDTOs =

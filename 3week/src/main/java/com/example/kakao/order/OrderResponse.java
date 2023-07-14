@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class OrderResponse {
-
     @Getter @Setter
     public static class FindByIdDTO {
         private int id;
@@ -23,7 +22,6 @@ public class OrderResponse {
                     .map(product -> new ProductDTO(itemList, product)).collect(Collectors.toList());
             this.totalPrice = itemList.stream().mapToInt(item -> item.getOption().getPrice() * item.getQuantity()).sum();
         }
-
 
         @Getter @Setter
         public class ProductDTO {
@@ -51,9 +49,8 @@ public class OrderResponse {
                     this.id = item.getId();
                     this.optionName = item.getOption().getOptionName();
                     this.quantity = item.getQuantity();
-                    this.price = item.getOption().getPrice()*item.getQuantity();
+                    this.price = item.getOption().getPrice() * item.getQuantity();
                 }
-
             }
         }
     }

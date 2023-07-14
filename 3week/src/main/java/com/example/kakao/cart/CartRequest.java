@@ -5,7 +5,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 public class CartRequest {
-
     @Getter @Setter @ToString
     public static class SaveDTO {
         private int optionId;

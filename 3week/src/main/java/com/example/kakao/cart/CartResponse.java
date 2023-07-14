@@ -9,9 +9,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class CartResponse {
-
     @Getter @Setter
-    public static class UpdateDTO{
+    public static class UpdateDTO {
         private List<CartDTO> carts;
         private int totalPrice;
 
@@ -20,9 +19,7 @@ public class CartResponse {
             this.totalPrice = cartList.stream().mapToInt(cart -> cart.getOption().getPrice() * cart.getQuantity()).sum();
         }
 
-
-        @Getter
-        @Setter
+        @Getter @Setter
         public class CartDTO {
             private int cartId;
             private int optionId;
@@ -40,9 +37,8 @@ public class CartResponse {
         }
     }
 
-
     @Getter @Setter
-    public static class FindAllDTO{
+    public static class FindAllDTO {
         private List<ProductDTO> products;
         private int totalPrice;
 
@@ -53,9 +49,7 @@ public class CartResponse {
             this.totalPrice = cartList.stream().mapToInt(cart -> cart.getOption().getPrice() * cart.getQuantity()).sum();
         }
 
-
-        @Getter
-        @Setter
+        @Getter @Setter
         public class ProductDTO {
             private int id;
             private String productName;
@@ -81,7 +75,7 @@ public class CartResponse {
                     this.id = cart.getId();
                     this.option = new OptionDTO(cart.getOption());
                     this.quantity = cart.getQuantity();
-                    this.price = cart.getOption().getPrice()*cart.getQuantity();
+                    this.price = cart.getOption().getPrice() * cart.getQuantity();
                 }
 
                 @Getter @Setter
@@ -89,7 +83,6 @@ public class CartResponse {
                     private int id;
                     private String optionName;
                     private int price;
-
 
                     public OptionDTO(Option option) {
                         this.id = option.getId();

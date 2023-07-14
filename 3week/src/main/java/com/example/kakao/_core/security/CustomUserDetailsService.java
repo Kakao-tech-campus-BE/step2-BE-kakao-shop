@@ -1,6 +1,5 @@
 package com.example.kakao._core.security;
 
-
 import com.example.kakao.user.User;
 import com.example.kakao.user.UserJPARepository;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +15,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
-
     private final UserJPARepository userJPARepository;
 
     @Override

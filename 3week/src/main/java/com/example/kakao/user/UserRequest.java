@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-
 public class UserRequest {
     @Getter @Setter @ToString
     public static class JoinDTO {

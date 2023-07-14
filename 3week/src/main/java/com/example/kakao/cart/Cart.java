@@ -6,7 +6,6 @@ import lombok.*;
 
 import javax.persistence.*;
 
-
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
@@ -24,7 +23,7 @@ public class Cart {
     private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user; // user별로 장바구니에 묶여 있음.
+    private User user; // user 별로 장바구니에 묶여 있음.
 
     @OneToOne(fetch = FetchType.LAZY)
     private Option option;
@@ -45,7 +44,7 @@ public class Cart {
     }
 
     // 장바구니 업데이트
-    public void update(int quantity, int price){
+    public void update(int quantity, int price) {
         this.quantity = quantity;
         this.price = price;
     }

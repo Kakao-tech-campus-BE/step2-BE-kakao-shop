@@ -14,7 +14,6 @@ import javax.persistence.*;
                 @Index(name = "option_product_id_idx", columnList = "product_id")
         })
 public class Option {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -24,6 +23,7 @@ public class Option {
 
     @Column(length = 100, nullable = false)
     private String optionName;
+
     private int price;
 
     @Builder

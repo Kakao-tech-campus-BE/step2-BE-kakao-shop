@@ -8,10 +8,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ProductResponse {
-
     @Getter @Setter
     public static class FindAllDTO {
-
         private int id;
         private String productName;
         private String description;
@@ -27,10 +25,8 @@ public class ProductResponse {
         }
     }
 
-
     @Getter @Setter
     public static class FindByIdDTO {
-
         private int id;
         private String productName;
         private String description;
