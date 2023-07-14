@@ -175,8 +175,8 @@ public class CartJPARepositoryTest extends DummyEntity{
 
         // when
         List<Cart> cartList = cartJPARepository.findByIdIn(cartIds);
-        String responseData = om.writeValueAsString(cartList);
-        System.out.println(responseData);
+//        String responseData = om.writeValueAsString(cartList);
+//        System.out.println(responseData);
 
         // then
         assertThat(cartList.size()).isEqualTo(2);
