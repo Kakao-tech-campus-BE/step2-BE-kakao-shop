@@ -320,6 +320,35 @@
 <details>
 <summary>3주차 과제 수행</summary>
 
+## 테스트 목록
+
+### CartJPARepository
+- cart_insert_test (장바구니에 없던 옵션 담기)
+- cart_update_test (장바구니 수정)
+- cart_findByUserId_test (사용자 id로 장바구니 조회)
+  - 장바구니 조회 테스트 실행 시, 장바구니를 가진 유저 + 장바구니에 들어있는 옵션 + 장바구니의 옵션의 상품을 모두 한번에 가져오기 위하여, fetch join을 사용하였습니다. 
+  - fetch join을 사용하지 않았을 때, 의도치 않은 조회 쿼리가 추가로 나가는 것 같아, fetch join을 사용한 쿼리를 작성하였습니다.
+  - (fetch join과, entitygraph를 이용한 쿼리 2가지를 작성하였습니다)
+    - 작성할 때, fetch join을 사용하는 방법을 잘 몰라, h2 환경에서 일단 모든 item을 가져오는 SQL을 작성하여 테스트 한 후, 
+        chatGPT에게 SQL -> fetch join을 이용한 JPQL로 바꾸어 달라고 요청하였고, 조금 다듬어 실제로 조회쿼리가 덜 나가는 것을 확인했습니다..
+- cart_deleteById_success_test (장바구니 삭제 성공)
+- cart_deleteById_failed_test (장바구니 삭제 실패: 존재하지 않는 장바구니)
+
+
+### ItemJPARepository
+- orderItem_insert_test (주문 아이템 생성)
+- orderItem_selectById_test (pk로 주문 아이템 조회)
+- orderItem_selectByOrderId_test (주문번호로 주문 아이템 조회)
+- orderItem_selectByOrderId_failed_test (주문번호로 주문 아이템 조회 실패: 존재하지 않는 주문번호)
+
+
+### OrderJPARepository
+- order_selectById_test (주문한 유저 조회)
+- order_selectByUserId_test (유저가 주문한 내역 조회)
+- order_insert_test (주문 생성)
+
+> 제출 직전, 모든 테스트케이스를 통과한 것을 확인했습니다.
+
 </details>
 
 </br>
