@@ -73,6 +73,7 @@ public class OrderJPARepositoryTest extends DummyEntity {
         List<Option> optionListPS = optionJPARepository.saveAll(optionDummyList(productListPS));
         List<Cart> cartListPS = cartJPARepository.saveAll(cartDummyList(ssar, optionListPS));
         Order order = orderJPARepository.save(newOrder(ssar));
+
         itemJPARepository.saveAll(itemDummyList(cartListPS, order));
 
         em.clear();

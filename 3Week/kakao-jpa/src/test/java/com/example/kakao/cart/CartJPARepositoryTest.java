@@ -19,8 +19,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.dao.EmptyResultDataAccessException;
 
 import javax.persistence.EntityManager;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -56,7 +56,7 @@ public class CartJPARepositoryTest extends DummyEntity {
     }
 
     @BeforeEach
-    public void setUp() throws JsonProcessingException {
+    public void setUp() {
         em.createNativeQuery("ALTER TABLE user_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
         em.createNativeQuery("ALTER TABLE option_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
         em.createNativeQuery("ALTER TABLE cart_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
@@ -69,11 +69,14 @@ public class CartJPARepositoryTest extends DummyEntity {
         em.clear();
     }
 
-    @DisplayName("영속화 테스트")
+    //영속화 되기 전 값이 null이여야 하는데 nullPointException을 방지하기 위해
+    //jpa가 자동으로 0값을 넣어주는 것인가?
+    @DisplayName("영속성 테스트")
     @Test
-    public void join_test(){
+    public void join_test() {
         Cart cart = newCart(newUser("cos"), optionDummyList(productDummyList()).get(1), 1);
 
+        //id 값이 0이 나온다
         System.out.println("영속화 되기 전 id : " + cart.getId());
         cartJPARepository.save(cart);
         System.out.println("영속화 된 후 id : " + cart.getId());
@@ -83,7 +86,7 @@ public class CartJPARepositoryTest extends DummyEntity {
 
     @DisplayName("데이터 삽입 테스트")
     @Test
-    public void create_test() throws JsonProcessingException {
+    public void create_test() {
         int userId = 1;
         int optionId = 2;
 
@@ -93,6 +96,9 @@ public class CartJPARepositoryTest extends DummyEntity {
         Cart cart = newCart(user, option, 2);
         cartJPARepository.save(cart);
 
+        //삽입에 대한 결과를 확인할 때, 이렇게 모든 결과를 확인해야 하는 것인가?
+        //갯수나 정렬하여 예상된 순서를 검증하는 것도 생각해봤는데 그게 결과에 대한 보증이 된다고는 생각안해서..
+        //더 좋은 방법이 있을까요?
         assertEquals(3, cart.getId());
         assertEquals(2, cart.getQuantity());
         assertEquals(option.getPrice() * cart.getQuantity(), cart.getPrice());
@@ -113,25 +119,32 @@ public class CartJPARepositoryTest extends DummyEntity {
     @DisplayName("데이터 조회 테스트")
     @Test
     public void read_test() throws JsonProcessingException {
+//      3중 join fetch를 쓰는 것이 맞는 것일까?
+//      만약 쓰지 않는다면 아래의 주석 코드와 같이 Lazy Loading으로 통해 proxy 객체에 담아 assertEquals 메서드를 통해
+//      하나씩 꺼내어 비교하는 방법이 있을 것 같다 대신 데이터가 많아졌을 시, select문이 대량으로 발생하는 단점이 있을 것 같다
         int userId = 1;
         List<Cart> carts = cartJPARepository.mFindAllByUserId(userId);
 
         String result = om.writeValueAsString(carts);
         System.out.println(result);
 
-        //데이터 조회 then은 어떻게 구현할까
+//        carts.forEach(cart -> {
+//            cart.getOption().getProduct();
+//        });
+
+//      then을 어떻게 구현해야하는가
     }
 
-    @DisplayName("데이터 업데이트 테스트")
+    @DisplayName("전체 데이터 업데이트 테스트")
     @Test
     public void update_test(){
         int id = 1;
         int quantity = 11;
-        int price = 1000;
+        int price = 2000;
 
-
-        cartJPARepository.updateColumsById(id, quantity, price);
         Cart cart = cartJPARepository.findById(id).orElseThrow(RuntimeException::new);
+        cart.update(quantity, price);
+        em.flush();
 
         assertEquals(quantity, cart.getQuantity());
         assertEquals(price, cart.getPrice());
@@ -144,8 +157,9 @@ public class CartJPARepositoryTest extends DummyEntity {
         int quantity = 10;
 
 
-        cartJPARepository.updateQuantityById(id, quantity);
         Cart cart = cartJPARepository.findById(id).orElseThrow(RuntimeException::new);
+        cart.update(quantity, cart.getPrice());
+        em.flush();
 
         assertEquals(quantity, cart.getQuantity());
     }
@@ -156,29 +170,27 @@ public class CartJPARepositoryTest extends DummyEntity {
         int id = 1;
         int price = 1000;
 
-        cartJPARepository.updatePriceById(id, price);
         Cart cart = cartJPARepository.findById(id).orElseThrow(RuntimeException::new);
+        cart.update(cart.getQuantity(), price);
+        em.flush();
 
         assertEquals(price, cart.getPrice());
     }
 
     @DisplayName("데이터 삭제 테스트")
     @Test
-    public void delete_test() throws JsonProcessingException {
+    public void delete_test() {
         int id = 1;
 
         List<Cart> beforeCarts = cartJPARepository.findAll();
         cartJPARepository.deleteById(id);
+        em.flush();
         List<Cart> afterCarts = cartJPARepository.findAll();
-        //현재는 id 값이 재정렬 되지 않았는데 트랜잭션이 끝나면 재정렬되는가 ?
 
-        assertEquals(beforeCarts.size() - 1, afterCarts.size());
-        //beforeCarts를 통해 DB에서 값을 가져온 후 DB에 다이렉트로 삭제 쿼리를 보냈다
-        //하지만 PC에 값은 남겨져 잇는거 아닌가?
-        //다시 findAll로 받아와야지 영속화가 되는 거 아닌가?
+        assertEquals(beforeCarts.size()-1, afterCarts.size());
     }
 
-    @DisplayName("null인 데이터 삭제 테스트")
+    @DisplayName("없는 id에 대한 데이터 삭제 테스트")
     @Test
     public void null_delete_test(){
         int id = Integer.MAX_VALUE;
@@ -192,11 +204,9 @@ public class CartJPARepositoryTest extends DummyEntity {
     @Test
     public void all_delete_test(){
         List<Cart> carts = cartJPARepository.findAll();
-        List<Integer> cartIds = new ArrayList<>();
-
-        for(int i = 1; i<=carts.size(); i++){
-            cartIds.add(i);
-        }
+        List<Integer> cartIds = carts.stream()
+                .map(Cart::getId)
+                .collect(Collectors.toList());
 
         cartJPARepository.deleteAllById(cartIds);
 
