@@ -61,7 +61,6 @@ public class DummyEntity {
     protected Order newOrder(User user){
         return Order.builder()
                 .user(user)
-                .id(1)
                 .build();
     }
 
@@ -138,4 +137,23 @@ public class DummyEntity {
                 newOption(productListPS.get(14), "블랙", 148000)
         );
     }
+    protected List<Cart> cartDummyList(User user, List<Option> option){
+        return Arrays.asList(
+                newCart(user, option.get(0), 1),
+                newCart(user, option.get(4), 2),
+                newCart(user, option.get(8), 3),
+                newCart(user, option.get(12), 4),
+                newCart(user, option.get(16), 4)
+        );
+    }
+    protected List<Item> itemDummyList(List<Cart> cartList, Order order){
+        return Arrays.asList(
+                newItem(cartList.get(0), order),
+                newItem(cartList.get(1), order),
+                newItem(cartList.get(2), order),
+                newItem(cartList.get(3), order),
+                newItem(cartList.get(4), order)
+        );
+    }
+
 }
