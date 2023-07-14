@@ -15,21 +15,21 @@
 
 ### main/java/com/example/kakao/cart/CartJPARepository.java
 
-![Untitled](%E1%84%80%E1%85%AA%E1%84%8C%E1%85%A6%2045d368c594d945edac9b56c484eefc20/Untitled.png)
+![Untitled](week3photo/Untitled.png)
 
 - update 쿼리는 Cart 엔티티 내부에 존재
 
-![Untitled](%E1%84%80%E1%85%AA%E1%84%8C%E1%85%A6%2045d368c594d945edac9b56c484eefc20/Untitled%201.png)
+![Untitled](week3photo/Untitled%201.png)
 
 ### main/java/com/example/kakao/test/order/OrderJPARepository.java
 
-![Untitled](%E1%84%80%E1%85%AA%E1%84%8C%E1%85%A6%2045d368c594d945edac9b56c484eefc20/Untitled%202.png)
+![Untitled](week3photo/Untitled%202.png)
 
 하나의 user와 1:N관계이기 때문에 userId로 데이터를 검색할 수 있어야 한다.
 
 ### main/java/order/item/ItemJPARepository.java
 
-![Untitled](%E1%84%80%E1%85%AA%E1%84%8C%E1%85%A6%2045d368c594d945edac9b56c484eefc20/Untitled%203.png)
+![Untitled](week3photo/Untitled%203.png)
 
 하나의 order와 1:N관계이기 때문에 userId로 데이터를 검색할 수 있어야 한다.
 
@@ -37,7 +37,7 @@
 
 ### test/java/com/example/kakao/_core/util/dummy.java
 
-![Untitled](%E1%84%80%E1%85%AA%E1%84%8C%E1%85%A6%2045d368c594d945edac9b56c484eefc20/Untitled%204.png)
+![Untitled](week3photo/Untitled%204.png)
 
 - product와 user부분은 더미 데이터가 완성이 되어 있었고 형식에 맞춰 order, cart, item부분의 더미데이터를 생성할 수 있는 코드를 구현했다.
 - cart는 하나의 user객체와 N개의 option 리스트들을 받아들이도록 설정했다. 테스트 상에선 2개의 옵션만 갖도록 설정했다.
@@ -54,23 +54,23 @@
 
 - 전/후처리
 
-![Untitled](%E1%84%80%E1%85%AA%E1%84%8C%E1%85%A6%2045d368c594d945edac9b56c484eefc20/Untitled%205.png)
+![Untitled](week3photo/Untitled%205.png)
 
 - **findByUserId_findById_test**
 
-![Untitled](%E1%84%80%E1%85%AA%E1%84%8C%E1%85%A6%2045d368c594d945edac9b56c484eefc20/Untitled%206.png)
+![Untitled](week3photo/Untitled%206.png)
 
 ssar@nate.com을 이메일로 하는 유저의 장바구니를 호출하고, 정확검사를 진행하고 통과하였다.
 
 - **updateCart_test**
 
-![Untitled](%E1%84%80%E1%85%AA%E1%84%8C%E1%85%A6%2045d368c594d945edac9b56c484eefc20/Untitled%207.png)
+![Untitled](week3photo/Untitled%207.png)
 
 update테스트를 진행하였다. 시나리오는 ssar@nate.com을 이메일로 하는 유저의 장바구니를 호출하고, 첫번째 카트에서 옵션의 양을 10에서 20으로 변경하는 검사를 하였다. 정확검사를 진행하고 통과하지 못했다.
 
 - **deleteCart_test**
 
-![Untitled](%E1%84%80%E1%85%AA%E1%84%8C%E1%85%A6%2045d368c594d945edac9b56c484eefc20/Untitled%208.png)
+![Untitled](week3photo/Untitled%208.png)
 
 시나리오는 ssar@nate.com을 이메일로 하는 유저의 장바구니를 호출하고, 두번째 카트를 제거하는 검사를 하였다. 정확검사를 진행하고 해당 Optional이 null임을 확인하여 통과하였다.
 
@@ -79,13 +79,13 @@ update테스트를 진행하였다. 시나리오는 ssar@nate.com을 이메일�
 - 전/후처리는 cart와 비슷하고 좀 더 추가되었다.
 - **order_findByUserId_test**
 
-![Untitled](%E1%84%80%E1%85%AA%E1%84%8C%E1%85%A6%2045d368c594d945edac9b56c484eefc20/Untitled%209.png)
+![Untitled](week3photo/Untitled%209.png)
 
 시나리오는 ssar@nate.com을 이메일로 하는 유저의 주문내역을 모두 호출하는 것이다.
 
 - **item_findByOrderId_test**
 
-![Untitled](%E1%84%80%E1%85%AA%E1%84%8C%E1%85%A6%2045d368c594d945edac9b56c484eefc20/Untitled%2010.png)
+![Untitled](week3photo/Untitled%2010.png)
 
 시나리오는 ssar@nate.com을 이메일로 하는 유저의 주문내역에 포함된 상품들을 모두 호출하는 것이다.
 
@@ -93,16 +93,16 @@ update테스트를 진행하였다. 시나리오는 ssar@nate.com을 이메일�
 
 - **updateCart_test**
 
-![Untitled](%E1%84%80%E1%85%AA%E1%84%8C%E1%85%A6%2045d368c594d945edac9b56c484eefc20/Untitled%2011.png)
+![Untitled](week3photo/Untitled%2011.png)
 
-![Untitled](%E1%84%80%E1%85%AA%E1%84%8C%E1%85%A6%2045d368c594d945edac9b56c484eefc20/Untitled%2012.png)
+![Untitled](week3photo/Untitled%2012.png)
 
 user의 id가 3, cart의 id가 5로 나타나는데 user의 데이터가 5개가 있지 않는다. 왜 저렇게 뜨는지 모르겠다.
 
 - **item_findByOrderId_test**
 
-![Untitled](%E1%84%80%E1%85%AA%E1%84%8C%E1%85%A6%2045d368c594d945edac9b56c484eefc20/Untitled%2013.png)
+![Untitled](week3photo/Untitled%2013.png)
 
-![Untitled](%E1%84%80%E1%85%AA%E1%84%8C%E1%85%A6%2045d368c594d945edac9b56c484eefc20/Untitled%2014.png)
+![Untitled](week3photo/Untitled%2014.png)
 
 item의 id가 3, order의 id가 3로 나타나는데 order의 데이터가 2개, item데이터도 2개를 생성했는데 왜 저렇게 뜨는지 모르겠다.
