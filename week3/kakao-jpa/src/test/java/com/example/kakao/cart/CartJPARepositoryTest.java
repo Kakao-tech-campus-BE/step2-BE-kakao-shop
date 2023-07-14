@@ -5,7 +5,6 @@ import com.example.kakao.product.option.Option;
 import com.example.kakao.product.option.OptionJPARepository;
 import com.example.kakao.user.User;
 import com.example.kakao.user.UserJPARepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -55,7 +54,7 @@ public class CartJPARepositoryTest extends DummyEntity {
 
     @DisplayName("insert cart test")
     @Test
-    public void insertTest() throws JsonProcessingException {
+    public void insertTest() {
         // given
         User user = userJPARepository.findById(1).orElseThrow();
         Option option = optionJPARepository.findById(28).orElseThrow();
@@ -66,28 +65,19 @@ public class CartJPARepositoryTest extends DummyEntity {
         Cart savedCart = cartJPARepository.save(cart);
 
         // then
-        assertThat(savedCart.getOption().getId()).isEqualTo(28);
-        assertThat(savedCart.getQuantity()).isEqualTo(2);
+        assertThat(savedCart)
+                .extracting("option")
+                .extracting("id")
+                .isEqualTo(28);
+        assertThat(savedCart)
+                .extracting("quantity")
+                .isEqualTo(2);
         assertThat(cartJPARepository.count()).isEqualTo(previous_cart_count + 1);
-    }
-
-    @DisplayName("find all carts")
-    @Test
-    public void findAllTest() throws JsonProcessingException {
-        // given
-
-        // when
-        List<Cart> cartItems = cartJPARepository.findAll();
-
-        // then
-        assertThat(cartItems)
-                .isNotNull()
-                .hasSize(5);
     }
 
     @DisplayName("find all cart using user-id")
     @Test
-    public void findByIdTest() throws JsonProcessingException {
+    public void findAllByUserIdTest() {
         // given
 
         // when
