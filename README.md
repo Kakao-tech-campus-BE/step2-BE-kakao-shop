@@ -164,6 +164,25 @@
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
+## 2주차 과제 제출
+
+> API주소를 설계하여 README에 내용을 작성하시오.
+> 
+
+| URI | Method | 기능 |
+| --- | --- | --- |
+| /auth/join | POST | 회원가입 |
+| /auth/login | POST | 로그인 |
+| /check-email | POST | 이메일 중복 확인 |
+| /products?page={pageNum} | GET | 전체 상품 조회 |
+| /products/{productId} | GET | 개별 상품 상세 조회 |
+| /carts | GET | 장바구니 조회 |
+| /carts | POST | 장바구니 담기 |
+| /carts | PUT | 장바구니 수정 |
+| /carts/{cartId} | DELETE | 장바구니 삭제 |
+| /orders/{orderId} | GET | 주문 조회 |
+| /orders | POST | 주문 생성 |
+
 # 3주차
 
 카카오 테크 캠퍼스 2단계 - BE - 3주차 클론 과제
