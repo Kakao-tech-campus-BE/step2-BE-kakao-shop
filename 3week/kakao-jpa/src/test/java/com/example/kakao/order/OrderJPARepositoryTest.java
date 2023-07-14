@@ -76,6 +76,7 @@ public class OrderJPARepositoryTest extends DummyEntity {
 
         //then
         Assertions.assertThat(findOrder.get().getId()).isEqualTo(order.getId());
+        Assertions.assertThat(findOrder.get().getUser().getUsername()).isEqualTo(order.getUser().getUsername());
     }
 
     @Test
@@ -95,8 +96,10 @@ public class OrderJPARepositoryTest extends DummyEntity {
     public void order_findByOrderId_test() throws JsonProcessingException{ // bt orderID
         //given
         int orderId = 1;
+
         //when
         Order order = orderJPARepository.findById(orderId).get();
+
         //then
         Assertions.assertThat(order.getId()).isEqualTo(orderId);
     }

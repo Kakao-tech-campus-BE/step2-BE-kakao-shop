@@ -53,8 +53,7 @@ class CartJPARepositoryTest extends DummyEntity {
         List<Product> productListPS = productJPARepository.saveAll(productDummyList());
         List<Option> optionList = optionJPARepository.saveAll(optionDummyList(productListPS));
 
-        Cart cart1 = cartJPARepository.save(newCart(user,optionList.get(4),10));
-        Cart cart2 = cartJPARepository.save(newCart(user,optionList.get(5),10));
+        Cart cart = cartJPARepository.save(newCart(user,optionList.get(4),10));
 
         em.clear();
     }
@@ -73,12 +72,13 @@ class CartJPARepositoryTest extends DummyEntity {
 
         //then
         Assertions.assertThat(findCart.get().getId()).isEqualTo(cart.getId());
+        Assertions.assertThat(findCart.get().getUser().getUsername()).isEqualTo(cart.getUser().getUsername());
         Assertions.assertThat(findCart.get().getOption().getId()).isEqualTo(optionId);
         Assertions.assertThat(findCart.get().getQuantity()).isEqualTo(cart.getQuantity());
     }
 
     @Test
-    public void cart_findByUserId_test() throws JsonProcessingException { // 7. 장바구니 조회 기능 테스트
+    public void cart_findByUserId_test() throws JsonProcessingException { // 7. 장바구니 조회 기능 테스트 by userID
         //given
         int userId = 1;
 
@@ -91,11 +91,13 @@ class CartJPARepositoryTest extends DummyEntity {
     }
 
     @Test
-    public void cart_findByCartId_test() throws JsonProcessingException{
+    public void cart_findByCartId_test() throws JsonProcessingException{ // by cartID
         //given
         int cartId = 1;
+
         //when
         Cart cart = cartJPARepository.findById(cartId).get();
+
         //then
         Assertions.assertThat(cart.getId()).isEqualTo(cartId);
     }

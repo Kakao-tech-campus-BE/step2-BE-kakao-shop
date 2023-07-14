@@ -123,7 +123,6 @@ public class ProductJPARepositoryTest extends DummyEntity {
         // then
     }
 
-
     // 추천
     @Test
     public void product_findById_and_option_findByProductId_lazy_test() throws JsonProcessingException {
