@@ -1,6 +1,9 @@
 # step2-BE-kakao-shop
 카카오 테크 캠퍼스 2단계 카카오 쇼핑하기 백엔드 클론 프로젝트 레포지토리입니다.
 
+<details>
+<summary>1주차</summary>
+
 # 1주차
 
 ## 카카오 테크 캠퍼스 2단계 - BE - 1주차 클론 과제
@@ -554,17 +557,22 @@
 
 </details>
 
+</details>
+
 ---
 
-<details>
+<!-- <details>
 
-<summary> 2주차 </summary>
+<summary> 2주차 </summary> -->
 
 # 2주차
 
 카카오 테크 캠퍼스 2단계 - BE - 2주차 클론 과제
 </br>
 </br>
+
+<details>
+<summary>과제 설명</summary>
 
 ## **과제명**
 ```
@@ -598,6 +606,80 @@
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 </details>
+
+<details>
+<summary>전체 API 주소 설계</summary>
+
+### 1. 이메일 중복 체크
+- Method : `POST`
+- URI : `/auth/check`
+
+</br>
+
+### 2. 회원가입
+- Method : `POST`
+- URI : `/auth/join`
+
+</br>
+
+### 3. 로그인
+- Method : `POST`
+- URI : `/auth/login`
+
+</br>
+
+### 4. 데이터 리셋
+- Method : `DELETE`
+- URI : `/admin/reset`
+
+</br>
+
+### 5. 전체 상품 목록 조회
+- Method : `GET`
+- URI : `/products`
+
+</br>
+
+### 6. 개별 상품 목록 조회
+- Method : `GET`
+- URI : `/products/{product-id}`
+
+</br>
+
+### 7. 장바구니 담기
+- Method : `POST`
+- URI : `/carts`
+
+</br>
+
+### 8. 장바구니 수정
+- Method : `PATCH`
+- URI : `/carts`
+
+</br>
+
+### 9. 장바구니 조회
+- Method : `GET`
+- URI : `/carts`
+
+</br>
+
+### 10. 주문하기
+- Method : `POST`
+- URI : `/orders`
+
+</br>
+
+### 11. 주문결과 확인
+- Method : `GET`
+- URI : `orders/{order-id}`
+
+</details>
+
+
+<!-- </details> -->
+
+---
 
 <details>
 
