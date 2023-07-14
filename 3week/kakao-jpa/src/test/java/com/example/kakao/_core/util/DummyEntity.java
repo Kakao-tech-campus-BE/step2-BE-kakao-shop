@@ -62,7 +62,7 @@ public class DummyEntity {
     protected Order newOrder(User user){
         return Order.builder()
                 .user(user)
-                .id(1)
+              //  .id(1)
                 .build();
     }
 
@@ -87,6 +87,7 @@ public class DummyEntity {
         );
     }
 
+    // option 48개
     protected List<Option> optionDummyList(List<Product> productListPS) {
         return Arrays.asList(
                 newOption(productListPS.get(0), "01. 슬라이딩 지퍼백 크리스마스에디션 4종", 10000),
@@ -140,6 +141,7 @@ public class DummyEntity {
         );
     }
 
+    // Cart 2개
     protected List<Cart> cartDummyList(User user, List<Option> optionListPS) {
         return Arrays.asList(
                 newCart(user, optionListPS.get(0), 5),
@@ -147,4 +149,12 @@ public class DummyEntity {
         );
     }
 
+    // Item 2개
+    protected List<Item> itemDummyList(Order order, List<Cart> cartListPS) {
+        List<Item> list = new ArrayList<>();
+        for (int i=0; i<cartListPS.size(); i++) {
+            list.add(newItem(cartListPS.get(i), order));
+        }
+        return list;
+    }
 }
