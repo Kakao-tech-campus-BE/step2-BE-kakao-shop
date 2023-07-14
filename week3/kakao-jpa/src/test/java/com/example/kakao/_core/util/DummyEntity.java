@@ -17,7 +17,7 @@ public class DummyEntity {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return User.builder()
                 .email(username+"@nate.com")
-                .password(passwordEncoder.encode("meta1234!"))
+                .password(passwordEncoder.encode(username + "1234!"))
                 .username(username)
                 .roles(username.equals("admin") ? "ROLE_ADMIN" : "ROLE_USER")
                 .build();
@@ -61,7 +61,7 @@ public class DummyEntity {
     protected Order newOrder(User user){
         return Order.builder()
                 .user(user)
-                .id(1)
+//                .id(1)
                 .build();
     }
 
