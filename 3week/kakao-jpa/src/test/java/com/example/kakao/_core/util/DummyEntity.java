@@ -140,21 +140,4 @@ public class DummyEntity {
                 newOption(productListPS.get(14), "블랙", 148000)
         );
     }
-
-    // Cart 2개
-    protected List<Cart> cartDummyList(User user, List<Option> optionListPS) {
-        return Arrays.asList(
-                newCart(user, optionListPS.get(0), 5),
-                newCart(user, optionListPS.get(1), 5)
-        );
-    }
-
-    // Item 2개
-    protected List<Item> itemDummyList(Order order, List<Cart> cartListPS) {
-        List<Item> list = new ArrayList<>();
-        for (int i=0; i<cartListPS.size(); i++) {
-            list.add(newItem(cartListPS.get(i), order));
-        }
-        return list;
-    }
 }

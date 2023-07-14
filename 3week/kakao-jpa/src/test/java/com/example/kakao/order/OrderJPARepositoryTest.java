@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import javax.persistence.EntityManager;
+import java.util.Arrays;
 import java.util.List;
 
 @DataJpaTest
@@ -49,20 +50,21 @@ public class OrderJPARepositoryTest extends DummyEntity {
         em.createNativeQuery("ALTER TABLE item_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
         em.createNativeQuery("ALTER TABLE order_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
 
-        // save order1
-        User user1 = userJPARepository.save(newUser("user_order"));    // userId: 1
-        List<Product> order1_products = productJPARepository.saveAll(productDummyList()); // productId: 1
-        List<Option> order1_options = optionJPARepository.saveAll(optionDummyList(order1_products)); // optionId: 1,2
-        List<Cart> order1_carts = cartJPARepository.saveAll(cartDummyList(user1, order1_options));
-        Order order1 = orderJPARepository.save(newOrder(user1));                // orderId: 1
-        List<Item> order1_items = itemJPARepository.saveAll(itemDummyList(order1, order1_carts));    // itemId: 1, 2
+        User user = userJPARepository.save(newUser("user"));
+        List<Product> products = productJPARepository.saveAll(productDummyList());
+        List<Option> options = optionJPARepository.saveAll(optionDummyList(products));
 
-        // save order2
-        Product order2_product = productJPARepository.getById(3);   // productId: 3
-        Option order2_option = optionJPARepository.getById(9);      // optionId: 9
-        Cart order2_cart = cartJPARepository.save(newCart(user1, order2_option, 1));
-        Order order2 = orderJPARepository.save(newOrder(user1));    // orderId: 2
-        Item order2_item = itemJPARepository.save(newItem(order2_cart, order2));    // itemId: 3
+        List<Cart> carts = cartJPARepository.saveAll(Arrays.asList(
+                newCart(user, options.get(3), 2),   // cartId:1 - optionId:4 - productId:1
+                newCart(user, options.get(5), 5)    // cartId:2 - optionId:6 - productId:2
+        ));
+
+        Order order = orderJPARepository.save(newOrder(user));
+
+        List<Item> items = itemJPARepository.saveAll(Arrays.asList(
+                newItem(carts.get(0), order),   // itemId:1
+                newItem(carts.get(1), order)    // itemId:2
+        ));
 
         em.clear();
     }
@@ -71,79 +73,52 @@ public class OrderJPARepositoryTest extends DummyEntity {
     @Test
     public void order_save_test() { // save order3
         // given
-        User user2 = userJPARepository.save(newUser("user2"));
-        Product order3_product = productJPARepository.getById(6); // productId: 6
-        Option order3_option = optionJPARepository.getById(22); // optionId: 22
-        Cart order3_cart = cartJPARepository.save(newCart(user2, order3_option, 1));
+        User user = userJPARepository.save(newUser("user2"));  // userId:2
+        Option option = optionJPARepository.findById(22).orElseThrow(); // optionId:22 - productId:6
+        Cart cart = cartJPARepository.save(newCart(user, option, 1));   // cartId:3
+        Order order = orderJPARepository.save(newOrder(user));  // orderId:2
+        Item item = itemJPARepository.save(newItem(cart, order)); // itemId:3
 
-        // when
-        Order order3 = orderJPARepository.save(newOrder(user2));  // orderId: 3
-        Item order3_item = itemJPARepository.save(newItem(order3_cart, order3)); // itemId: 4
+        Assertions.assertThat(order.getId()).isEqualTo(2);
+        Assertions.assertThat(order.getUser().getId()).isEqualTo(2);
 
-        // then
-        Assertions.assertThat(order3.getId()).isEqualTo(3);
-        Assertions.assertThat(order3.getUser().getId()).isEqualTo(2);
-
-        Assertions.assertThat(order3_item.getId()).isEqualTo(4);
-        Assertions.assertThat(order3_item.getOrder().getId()).isEqualTo(3);
-        Assertions.assertThat(order3_item.getOrder().getUser().getId()).isEqualTo(2);
-        Assertions.assertThat(order3_item.getOption().getProduct().getId()).isEqualTo(6);
-        Assertions.assertThat(order3_item.getOption().getId()).isEqualTo(22);
+        Assertions.assertThat(item.getId()).isEqualTo(3);
+        Assertions.assertThat(item.getOrder().getId()).isEqualTo(2);
+        Assertions.assertThat(item.getOrder().getUser().getId()).isEqualTo(2);
+        Assertions.assertThat(item.getOption().getProduct().getId()).isEqualTo(6);
+        Assertions.assertThat(item.getOption().getId()).isEqualTo(22);
     }
 
     @DisplayName("주문 단건 상세 조회")
     @Test
     public void order_findItemsByOrderId_test() {
-        // given
-        int order1_id = 1;
-        int order2_id = 2;
+        int orderId = 1;
+        List<Item> items = itemJPARepository.findByOrderId(orderId);
 
-        // when
-        List<Item> order1_items = itemJPARepository.findByOrderId(order1_id);
-        List<Item> order2_items = itemJPARepository.findByOrderId(order2_id);
+        Assertions.assertThat(items.size()).isEqualTo(2);   // itemId: 1, 2
 
-        // then
-        // get order1(item 1, 2)
-        Assertions.assertThat(order1_items.size()).isEqualTo(2);
-        Assertions.assertThat(order1_items.get(0).getId()).isEqualTo(1);
-        Assertions.assertThat(order1_items.get(0).getOrder().getId()).isEqualTo(order1_id);
-        Assertions.assertThat(order1_items.get(0).getOrder().getUser().getId()).isEqualTo(1);
-        Assertions.assertThat(order1_items.get(0).getOption().getId()).isEqualTo(1);
-        Assertions.assertThat(order1_items.get(0).getOption().getProduct().getId()).isEqualTo(1);
+        Assertions.assertThat(items.get(0).getId()).isEqualTo(1);
+        Assertions.assertThat(items.get(0).getOrder().getId()).isEqualTo(orderId);
+        Assertions.assertThat(items.get(0).getOrder().getUser().getId()).isEqualTo(1);
+        Assertions.assertThat(items.get(0).getOption().getId()).isEqualTo(4);
+        Assertions.assertThat(items.get(0).getOption().getProduct().getId()).isEqualTo(1);
 
-        Assertions.assertThat(order1_items.get(1).getId()).isEqualTo(2);
-        Assertions.assertThat(order1_items.get(1).getOrder().getId()).isEqualTo(order1_id);
-        Assertions.assertThat(order1_items.get(1).getOrder().getUser().getId()).isEqualTo(1);
-        Assertions.assertThat(order1_items.get(1).getOption().getId()).isEqualTo(2);
-        Assertions.assertThat(order1_items.get(1).getOption().getProduct().getId()).isEqualTo(1);
-
-        // get order2 (item 3)
-        Assertions.assertThat(order2_items.size()).isEqualTo(1);
-
-        Assertions.assertThat(order2_items.get(0).getId()).isEqualTo(3);
-        Assertions.assertThat(order2_items.get(0).getOrder().getId()).isEqualTo(order2_id);
-        Assertions.assertThat(order2_items.get(0).getOrder().getUser().getId()).isEqualTo(1);
-        Assertions.assertThat(order2_items.get(0).getOption().getId()).isEqualTo(9);
-        Assertions.assertThat(order2_items.get(0).getOption().getProduct().getId()).isEqualTo(3);
+        Assertions.assertThat(items.get(1).getId()).isEqualTo(2);
+        Assertions.assertThat(items.get(1).getOrder().getId()).isEqualTo(orderId);
+        Assertions.assertThat(items.get(1).getOrder().getUser().getId()).isEqualTo(1);
+        Assertions.assertThat(items.get(1).getOption().getId()).isEqualTo(6);
+        Assertions.assertThat(items.get(1).getOption().getProduct().getId()).isEqualTo(2);
     }
 
     @DisplayName("전체 주문내역 목록 조회")
     @Test
     public void order_findAllByUserId_test() {
-        // given
-        int user1_id = 1;
+        int userId = 1;
+        List<Order> orders = orderJPARepository.findByUserId(userId);
 
-        // when
-        List<Order> user1_orders = orderJPARepository.findByUserId(user1_id);
-
-        //then
-        // user1 orders
-        Assertions.assertThat(user1_orders.size()).isEqualTo(2);
-        Assertions.assertThat(user1_orders.get(0).getId()).isEqualTo(1);
-        Assertions.assertThat(user1_orders.get(0).getUser().getId()).isEqualTo(user1_id);
-        Assertions.assertThat(user1_orders.get(1).getId()).isEqualTo(2);
-        Assertions.assertThat(user1_orders.get(1).getUser().getId()).isEqualTo(user1_id);
-
+        Assertions.assertThat(orders.size()).isEqualTo(1);
+        Assertions.assertThat(orders.get(0).getId()).isEqualTo(1);
+        Assertions.assertThat(orders.get(0).getUser().getId()).isEqualTo(userId);
     }
 
 }

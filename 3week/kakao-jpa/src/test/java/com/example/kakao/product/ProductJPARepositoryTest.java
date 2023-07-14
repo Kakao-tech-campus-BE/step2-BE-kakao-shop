@@ -75,7 +75,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
         int id = 1;
 
         // when
-        // 충분한 데이터 - product만 0번지에서 빼면  된다
+        // 충분한 데이터 - product만 0번지에서 빼면 된다
         // 조인은 하지만, fetch를 하지 않아서, product를 한번 더 select 했다.
         List<Option> optionListPS = optionJPARepository.findByProductId(id); // Eager
 
