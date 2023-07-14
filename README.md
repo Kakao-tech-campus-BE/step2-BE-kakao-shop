@@ -834,7 +834,6 @@ public void cart_included_duplication_add_test() throws Exception  {
             .map(x-> new Integer(x.getOptionId()))
             .collect(Collectors.toList());
     Assertions.assertFalse(ids.isEmpty());
-    em.clear();
 
     // 중복된 장바구니 조회 및 담기
     System.out.println("중복된 장바구니 조회 및 담기");
