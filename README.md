@@ -16,6 +16,9 @@
     - [요청-응답 확인](#response)
 
 - [3주차](#week3)
+  - [과제](#task3)
+    - [CartJPARepositoryTest](#cartjparepositorytest)
+    - [OrderJPARepositoryTest](#orderjparepositorytest)
 
 - [4주차](#week4)
 
@@ -721,6 +724,60 @@ CREATE INDEX `idx_oi_option_id` ON `order_item_tb` (`optionId`);
 
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
+
+<br>
+
+## Task3
+
+---
+
+### CartJPARepositoryTest
+
+- 장바구니 조회 테스트 (Lazy 로딩)
+  - join fetch 한 번 사용
+  
+    <img src="week3/week3_image/cart_find_test.png" width="300" height="300" alt="장바구니 조회1">
+
+  - inner join fetch 추가 사용
+
+    <img src="week3/week3_image/cart_find_test2.png" width="300" height="300" alt="장바구니 조회2">
+
+  - left outer join fetch 추가 사용
+
+    <img src="week3/week3_image/cart_find_test2.png" width="300" height="300" alt="장바구니 조회3">
+
+- 장바구니 변경 테스트
+
+  <img src="week3/week3_image/cart_update_test.png" width="400" height="200" alt="장바구니 조회3">
+
+- 장바구니 삭제 테스트
+  
+  <img src="week3/week3_image/cart_delete_all_test.png"  width="100" height="50" alt="장바구니 삭제">
+
+- 장바구니 단일 삭제 테스트
+  
+  <img src="week3/week3_image/cart_delete_one_test.png" width="300" height="300" alt="장바구니 단일 삭제">
+
+
+### OrderJPARepositoryTest
+
+- 주문 상세 조회 테스트 (Lazy 로딩)
+  - join fetch 한 번 사용
+
+    <img src="week3/week3_image/order_item_find_test.png" width="300" height="300" alt="주문 상세 조회 1">
+
+  - inner join fetch 추가 사용
+
+    <img src="week3/week3_image/order_item_find_test2.png" width="300" height="300" alt="주문 상세 조회 2">
+
+  - left outer join fetch 추가 사용
+
+    <img src="week3/week3_image/order_item_find_test2.png" width="300" height="300" alt="주문 상세 조회 3">
+
+- 주문 조회 테스트
+
+  <img src="week3/week3_image/order_find_test.png" width="300" height="200" alt="주문 조회">
+
 
 # Week4
 

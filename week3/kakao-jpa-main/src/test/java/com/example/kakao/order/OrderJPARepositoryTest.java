@@ -56,6 +56,10 @@ public class OrderJPARepositoryTest extends DummyEntity {
 
     @BeforeEach
     public void setUp() {
+        // ID 초기화
+        resetId();
+
+        // 유저 생성
         User user = userJPARepository.save(newUser("ssar"));
 
         // 옵션 생성
@@ -72,6 +76,13 @@ public class OrderJPARepositoryTest extends DummyEntity {
         itemJPARepository.saveAll(itemDummyList(cartListPS, order));
 
         em.clear();
+    }
+
+    private void resetId() {
+        em.createNativeQuery("ALTER TABLE cart_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        em.createNativeQuery("ALTER TABLE user_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        em.createNativeQuery("ALTER TABLE product_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        em.createNativeQuery("ALTER TABLE option_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
     }
 
     @Test
@@ -93,7 +104,7 @@ public class OrderJPARepositoryTest extends DummyEntity {
     }
 
     @Test
-    @DisplayName("주문 상세 확인 - left join fetch 추가")
+    @DisplayName("주문 상세 확인 - inner join fetch 추가")
     void order_item_find_test2() throws JsonProcessingException {
         //given
         User user = userJPARepository.findById(1).orElseThrow(
@@ -102,6 +113,22 @@ public class OrderJPARepositoryTest extends DummyEntity {
 
         //when
         List<Item> itemList = itemJPARepository.findAllByOrderId2(user.getId());
+
+        //then
+        String json = om.writeValueAsString(itemList);
+        System.out.println(json);
+    }
+
+    @Test
+    @DisplayName("주문 상세 확인 - left outer join fetch 추가")
+    void order_item_find_test3() throws JsonProcessingException {
+        //given
+        User user = userJPARepository.findById(1).orElseThrow(
+                () -> new RuntimeException("해당 고객을 찾을 수 없습니다.")
+        );
+
+        //when
+        List<Item> itemList = itemJPARepository.findAllByOrderId3(user.getId());
 
         //then
         String json = om.writeValueAsString(itemList);
