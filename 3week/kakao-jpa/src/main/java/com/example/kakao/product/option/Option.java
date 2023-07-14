@@ -20,6 +20,8 @@ public class Option {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    // todo Product에 cascadeType.Persist 속성을 넣는 것 vs Product와 option의 연관관계를 끊는 것 어떤 것이 더 좋을까?
+    // 연관관계를 끊는 이유 : 단방향 연관관계를 사용하는 이유는 뭘까??
     @ManyToOne
     private Product product;
 

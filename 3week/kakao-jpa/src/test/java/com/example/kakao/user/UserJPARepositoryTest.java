@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
+import javax.persistence.EntityManager;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
@@ -17,8 +19,12 @@ public class UserJPARepositoryTest extends DummyEntity {
     @Autowired
     private UserJPARepository userJPARepository;
 
+    @Autowired
+    private EntityManager em;
+
     @BeforeEach
     public void setUp(){
+        em.createNativeQuery("ALTER TABLE user_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
         userJPARepository.save(newUser("ssar"));
     }
 

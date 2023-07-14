@@ -32,7 +32,6 @@ public class Cart {
     @OneToOne(fetch = FetchType.LAZY)
     private Option option;
 
-
     @Column(nullable = false)
     private int quantity;
 
