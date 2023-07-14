@@ -48,43 +48,17 @@ public class ProductJPARepositoryTest extends DummyEntity {
 
     @BeforeEach
     public void setUp(){
-
+        System.out.println("@BeforeEach 구문이 실행중입니다...\n");
         List<Product> productListPS = productJPARepository.saveAll(productDummyList());
         List<Option> optionDummy = optionJPARepository.saveAll(optionDummyList(productListPS));
-        em.clear();
+        //em.clear();
+        em.createNativeQuery("ALTER TABLE option_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        em.createNativeQuery("ALTER TABLE product_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        em.createNativeQuery("ALTER TABLE user_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        // hibernate lazy, 직렬화 에러가 뜰 것이다.
+        // clear하고 lazy하면 에러가 뜬다. 불러오는 시간보다 직렬화 하는 과정이 빨라서
     }
 
-    @Test
-    public void cart_test() throws JsonProcessingException {
-        // given
-        int id = 1;
-        int quantity = 5;
-        int optionDummyId = 0;
-
-        // when
-        List<Option> optionDummy = optionJPARepository.findAll();
-        User user = userJPARepository.save(newUser("gijun"));
-        Cart cart = cartJPARepository.save(newCart(user,optionDummy.get(optionDummyId),quantity));
-        String responseBody = om.writeValueAsString(cart);
-        System.out.println("테스트 : " + responseBody);
-
-
-        // then
-        Assertions.assertThat(cart.getId()).isEqualTo(1); // Cart의 pk를 확인합니다.
-        Assertions.assertThat(cart.getUser().getUsername()).isEqualTo("gijun"); // username을 체크합니다.
-        Assertions.assertThat(cart.getQuantity()).isEqualTo(5); // 수량이 맞는지 비교합니다.
-        Assertions.assertThat(cart.getPrice()).isEqualTo(50000); // 가격이 맞는지 비교합니다.
-        Assertions.assertThat(cart.getOption()).isEqualTo(optionDummy.get(optionDummyId)); // 옵션 더미 데이터와 비교합니다.
-    }
-
-    @Test
-    public void item_test() throws JsonProcessingException{
-        // given
-
-        // when
-
-        // then
-    }
 
     @Test
     public void product_findAll_test() throws JsonProcessingException {

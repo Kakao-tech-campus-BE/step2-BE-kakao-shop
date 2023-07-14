@@ -46,6 +46,7 @@ public class CartJPARepositoryTest extends DummyEntity {
     public void setUp(){
         List<Product> productListPS = productJPARepository.saveAll(productDummyList());
         List<Option> optionDummy = optionJPARepository.saveAll(optionDummyList(productListPS));
+        em.createNativeQuery("ALTER TABLE product_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
         em.clear();
 
     }

@@ -28,6 +28,8 @@ public class OrderJPARepositoryTest extends DummyEntity {
         User user = userJPARepository.save(newUser("gijun"));
 
         orderJPARepository.save(newOrder(user));
+        em.createNativeQuery("ALTER TABLE user_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        em.clear();
     }
 
     // BDD 패턴
