@@ -22,9 +22,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import static com.example.kakao._core.utils.PrintUtils.getPrettyString;
+
 
 @Import(ObjectMapper.class)
 @DataJpaTest
@@ -52,6 +54,20 @@ public class OrderJPARepositoryTest extends DummyEntity {
 
     @Autowired
     private OrderJPARepository orderJPARepository;
+
+    public void validateTest(int id) {
+        List<Cart> findCarts =new ArrayList<>();
+        // 1. 유저가 있는지 검증
+        if ((userJPARepository.findById(id)).isEmpty()) {
+            Assertions.fail("해당하는 유저가 존재하지 않습니다.");
+        } else { // 2. 빈 카트인지 검증
+            findCarts = cartJPARepository.findbyUserId(id)
+                    .orElseGet(Collections::emptyList);
+            if (findCarts.isEmpty()) {
+                Assertions.fail("해당 유저의 카트가 비어있습니다.");
+            }
+        }
+    }
 
     @BeforeEach //test 실행 전 호출 -> 백업
     public void setup() {
@@ -99,11 +115,12 @@ public class OrderJPARepositoryTest extends DummyEntity {
         itemJPARepository.saveAll(items);
 
         int id=2;
+        validateTest(id);
         List<Item> findByOrderIdItems = itemJPARepository.findByOrderId(id);
         //then
-        System.out.println("json 직렬화 직전========================");
+        System.out.println("json 직렬화 (주문 생성 테스트)========================");
         String responseBody = om.writeValueAsString(findByOrderIdItems);
-        System.out.println("테스트 : "+getPrettyString(responseBody));
+        System.out.println("테스트 : "+responseBody);
     }
     @DisplayName("Order 조회 테스트")
     @Test
@@ -113,9 +130,9 @@ public class OrderJPARepositoryTest extends DummyEntity {
         //when
         List<Item> items = itemJPARepository.findByOrderId(id);
         //then
-        System.out.println("json 직렬화 직전========================");
+        System.out.println("json 직렬화 (주문 조회 테스트)========================");
         String responseBody = om.writeValueAsString(items);
-        System.out.println("테스트 : "+getPrettyString(responseBody));
+        System.out.println("테스트 : "+responseBody);
 
         Assertions.assertThat(items.get(0).getQuantity()).isEqualTo(1);
         Assertions.assertThat(items.get(1).getQuantity()).isEqualTo(3);

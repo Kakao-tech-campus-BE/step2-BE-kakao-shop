@@ -9,7 +9,6 @@ import com.example.kakao.user.User;
 import com.example.kakao.user.UserJPARepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,11 +18,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import javax.persistence.EntityManager;
-
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import static com.example.kakao._core.utils.PrintUtils.getPrettyString;
 
 @Import(ObjectMapper.class)
 @DataJpaTest
@@ -46,6 +44,21 @@ public class CartJPARepositoryTest extends DummyEntity {
     @Autowired
     private ProductJPARepository productJPARepository;
 
+    public List<Cart> validateTest(int id) {
+        List<Cart> findCarts =new ArrayList<>();
+        // 1. 유저가 있는지 검증
+        if ((userJPARepository.findById(id)).isEmpty()) {
+            Assertions.fail("해당하는 유저가 존재하지 않습니다.");
+        } else { // 2. 빈 카트인지 검증
+            findCarts = cartJPARepository.findbyUserId(id)
+                    .orElseGet(Collections::emptyList);
+            if (findCarts.isEmpty()) {
+                Assertions.fail("해당 유저의 카트가 비어있습니다.");
+            }
+        }
+        return findCarts;
+    }
+
     @BeforeEach //test 실행 전 호출 -> 백업
     public void setup() {
         //cart 만들기 -> 필요한 매개변수 user,option, quantity
@@ -65,7 +78,7 @@ public class CartJPARepositoryTest extends DummyEntity {
 
     @DisplayName("Cart 생성 테스트")
     @Test
-    public void cart_add_test() {
+    public void cart_add_test() throws JsonProcessingException {
         //given
         User user = userJPARepository.save(newUser("won"));
         List<Product> products = productJPARepository.saveAll(productDummyList());
@@ -78,11 +91,10 @@ public class CartJPARepositoryTest extends DummyEntity {
         //when
         System.out.println("영속화");
         cartJPARepository.saveAll(carts);
-        //then - 어떻게 확인을 해야할까...
-//        Assertions.assertThat(cart.getId()).isEqualTo(2);
-//        Assertions.assertThat(cart.getQuantity()).isEqualTo(3);
-//        Assertions.assertThat(cart.getUser()).isEqualTo(user);
-//        Assertions.assertThat(cart.getOption()).isEqualTo(options.get(1));
+        //then
+        System.out.println("json 직렬화 (카트 생성)========================");
+        String responseBody = om.writeValueAsString(carts);
+        System.out.println("테스트 : "+ responseBody);
     }
 
     @DisplayName("Cart 조회 테스트")
@@ -93,10 +105,13 @@ public class CartJPARepositoryTest extends DummyEntity {
         List<Product> products = productJPARepository.saveAll(productDummyList());
         List<Option> options = optionJPARepository.saveAll(optionDummyList(products));
         //when
-        List<Cart> findCarts = cartJPARepository.findbyUserId(id)
-                .orElseGet(Collections::emptyList);
-        if (findCarts.isEmpty()) { Assertions.fail("빈 카트 입니다");}
+        List<Cart> findCarts =validateTest(id);
+
         //then - setup의 카트 값과 같은지?
+        System.out.println("json 직렬화 (카트 조회)========================");
+        String responseBody = om.writeValueAsString(findCarts);
+        System.out.println("테스트 : "+ responseBody);
+
         //두개 카트 중 카트 1개만 진행
         Assertions.assertThat(findCarts.get(0).getOption().getOptionName()).isEqualTo(options.get(0).getOptionName());
         Assertions.assertThat(findCarts.get(0).getQuantity()).isEqualTo(1);
@@ -107,10 +122,7 @@ public class CartJPARepositoryTest extends DummyEntity {
     public void cart_update_test() throws JsonProcessingException  {
         //given
         int id=1;
-        List<Cart> findCarts = cartJPARepository.findbyUserId(id)
-                .orElseGet(Collections::emptyList);
-        if (findCarts.isEmpty()) { Assertions.fail("빈 카트 입니다");}
-
+        List<Cart> findCarts = validateTest(id);
         Cart cart = findCarts.get(0);
 
         //when - 카트 수량 업데이트
@@ -119,15 +131,12 @@ public class CartJPARepositoryTest extends DummyEntity {
         em.flush();
 
         //then
-        List<Cart> findUpdatedCarts = cartJPARepository.findbyUserId(id)
-                .orElseGet(Collections::emptyList);
-        if (findUpdatedCarts.isEmpty()) { Assertions.fail("빈 카트 입니다");}
-
+        List<Cart> findUpdatedCarts =validateTest(id);
         Cart updatedCart = findUpdatedCarts.get(0);
 
-        System.out.println("json 직렬화 직전========================");
+        System.out.println("json 직렬화 (카트 업데이트)========================");
         String responseBody = om.writeValueAsString(findCarts);
-        System.out.println("테스트 : "+getPrettyString(responseBody));
+        System.out.println("테스트 : "+responseBody);
 
         Assertions.assertThat(cart.getQuantity()).isEqualTo(updatedCart.getQuantity());
         Assertions.assertThat(cart.getPrice()).isEqualTo(updatedCart.getPrice());

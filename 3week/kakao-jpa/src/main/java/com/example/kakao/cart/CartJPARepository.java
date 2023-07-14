@@ -12,8 +12,7 @@ public interface CartJPARepository extends JpaRepository<Cart, Integer> {
     //Optional<Cart> findById(int id);
     @Query ("select c from Cart c " +
             "join fetch c.user " +
-            "join fetch c.option o " +
-            "join fetch o.product " +
+            "join fetch c.option " +
             "where c.user.id = :userId ")
     Optional<List<Cart>>findbyUserId(@Param("userId") int userId);
 }
