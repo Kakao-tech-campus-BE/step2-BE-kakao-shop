@@ -34,6 +34,9 @@ dependencies {
 
 	// third party
 	implementation group: 'com.auth0', name: 'java-jwt', version: '4.3.0'
+
+	testCompileOnly 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
 }
 
 tasks.named('test') {

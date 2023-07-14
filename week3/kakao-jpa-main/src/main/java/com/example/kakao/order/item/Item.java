@@ -21,14 +21,15 @@ public class Item {
 
     @OneToOne(fetch = FetchType.LAZY)
     private Option option;
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Order order;
 
     @Column(nullable = false)
     private int quantity;
+
     @Column(nullable = false)
     private int price;
-
 
     @Builder
     public Item(int id, Option option, Order order, int quantity, int price) {

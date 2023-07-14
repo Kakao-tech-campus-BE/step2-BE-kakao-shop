@@ -24,7 +24,7 @@ public class Cart {
     private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user; // user별로 장바구니에 묶여 있음.
+    private User user;
 
     @OneToOne(fetch = FetchType.LAZY)
     private Option option;
@@ -44,7 +44,6 @@ public class Cart {
         this.price = price;
     }
 
-    // 장바구니 업데이트
     public void update(int quantity, int price){
         this.quantity = quantity;
         this.price = price;
