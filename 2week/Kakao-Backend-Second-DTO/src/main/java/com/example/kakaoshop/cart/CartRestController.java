@@ -5,15 +5,17 @@ import com.example.kakaoshop.cart.response.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("/carts")
 public class CartRestController {
     // 강사님 작성
-    @GetMapping("/carts")
+    @GetMapping()
     public ResponseEntity<?> findAll() {
         // 카트 아이템 리스트 만들기
         List<CartItemDTO> cartItemDTOList = new ArrayList<>();
@@ -61,8 +63,8 @@ public class CartRestController {
     }
 
     // update이므로 patch를 사용하는 것이 맞다고 판단되지만 명세서에 적힌대로 구현했습니다.
-    @PostMapping("/carts/add")
-    public ResponseEntity<?> addAll() {
+    @PostMapping("/add")
+    public ResponseEntity<?> addAll(List<CartItemDTO> cartItemList) {
         return ResponseEntity.ok(ApiUtils.success(null));
     }
 
@@ -70,7 +72,7 @@ public class CartRestController {
     // product id, name 등의 정보가 함께 나오도록 하는 것이 맞다고 판단되지만 명세서에 적힌대로 구현했습니다.
     // url은 /carts/update이지만 주문 버튼 클릭 시 주문하게 된 장바구니 속 상품(옵션)을 response로 return하도록
     // 동작하기 때문에 orderItemDTO를 사용하였습니다.
-    @PostMapping("/carts/update")
+    @PostMapping("update")
     public ResponseEntity<?> updateAll() {
         // 주문 아이템 리스트 만들기
         List<OrderItemDTO> orderItemDTOList = new ArrayList<>();
@@ -105,9 +107,5 @@ public class CartRestController {
         CartRespUpdateAllDTO responseDTO = new CartRespUpdateAllDTO(orderItemDTOList, 209000);
 
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
-
     }
-
-
-
 }

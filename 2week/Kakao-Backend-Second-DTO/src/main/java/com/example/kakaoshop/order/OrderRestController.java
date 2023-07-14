@@ -16,7 +16,7 @@ import java.util.List;
 public class OrderRestController {
 
     @PostMapping("/orders/save")
-    public ResponseEntity<?> findAll() {
+    public ResponseEntity<?> saveAll() {
         // 주문 아이템 리스트 만들기
         List<OrderItemDTO> orderItemDTOList = new ArrayList<>();
 
