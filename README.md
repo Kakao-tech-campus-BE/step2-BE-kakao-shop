@@ -164,7 +164,7 @@
 
 </details>
 
-<details open>
+<details>
     <summary><h2>2주차</h2></summary>
 
 카카오 테크 캠퍼스 2단계 - BE - 2주차 클론 과제
@@ -267,19 +267,21 @@ GET /orders/{id}
 
 </details>
 
-<details>
+<details open>
     <summary><h2>3주차</h2></summary>
 
 카카오 테크 캠퍼스 2단계 - BE - 3주차 클론 과제
-</br>
-</br>
 
-### **과제명**
+<details>
+    <summary><h3>과제 설명</h3></summary>
+
+#### **과제명**
+
 ```
 1. 레포지토리 단위테스트
 ```
 
-### **과제 설명**
+#### **과제 설명**
 ```
 1. 레포지토리 단위테스트를 구현하여 소스코드를 제출하시오.
 2. 쿼리를 테스트하면서 가장 좋은 쿼리를 작성해보시오.
@@ -287,7 +289,7 @@ GET /orders/{id}
 
 </br>
 
-### **과제 상세 : 수강생들이 과제를 진행할 때, 유념해야할 것**
+#### **과제 상세 : 수강생들이 과제를 진행할 때, 유념해야할 것**
 아래 항목은 반드시 포함하여 과제 수행해주세요!
 >- 레포지토리 단위테스트가 구현되었는가?
 >- 테스트 메서드끼리 유기적으로 연결되지 않았는가? (테스트는 격리성이 필요하다)
@@ -296,7 +298,7 @@ GET /orders/{id}
 >- BDD 패턴으로 구현되었는가? given, when, then
 </br>
 
-### **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
+#### **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
 **1. PR 제목과 내용을 아래와 같이 작성 해주세요.**
 
 >- PR 제목 : 부산대BE_라이언_3주차 과제
@@ -307,6 +309,33 @@ GET /orders/{id}
 
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
+
+</details>
+
+### 1. 레포지토리 단위테스트를 구현하여 소스코드를 제출하시오.
+
+주어진 코드를 바탕으로 Repository 단위 테스트를 작성하였습니다.
+
+- 주어진 `UserJPARepositoryTest.java`와 `ProductJPARepositoryTest.java` 외에
+- `CartJPARepositoryTest.java`와 `OrderJPARepositoryTest.java`를 작성하였습니다.
+
+### 2. 쿼리를 테스트하면서 가장 좋은 쿼리를 작성해보시오.
+
+주문내역을 불러오기 위해 주문번호로 주문을 조회했을 때의 쿼리입니다.
+
+```sql
+SELECT i
+FROM Item i JOIN FETCH i.order JOIN FETCH i.option o JOIN FETCH o.product
+WHERE i.order.id=:orderId
+```
+
+주문내역에는 order 정보와 각 order의 item들 그리고 item이 따르는 option과 option이 따르는 product까지 정보가 필요합니다.
+
+fetch join을 사용하여 여러 번의 SELECT query를 유발하지 않고 단일 query로 필요한 정보를 전부 가져왔습니다.
+
+<br/>
+
+이외의 최적화 쿼리들은 week3 폴더의 테스트 코드들을 확인해주세요.
 
 </details>
 
