@@ -23,7 +23,6 @@ import org.hibernate.exception.ConstraintViolationException;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @Import(ObjectMapper.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
@@ -108,18 +107,14 @@ public class ProductJPARepositoryTest extends DummyEntity {
         // when
         // option을 select했는데, product가 lazy여서 없는 상태이다.
         List<Option> optionListPS = optionJPARepository.findByProductId(id); // Lazy
-
-        // product가 없는 상태에서 json 변환을 시도하면 (hibernate는 select를 요청하는데, json mapper는 json 변환을 시도하게 된다)
-        // 이때 json 변환을 시도하는 것이 타이밍적으로 더 빠르다 (I/O)가 없기 때문에!!
-        // 그래서 hibernateLazyInitializer 오류가 발생한다.
-        // 그림 설명 필요
-
-        // then
-        assertThrows(JsonProcessingException.class, () -> {
+        Throwable thrown = catchThrowable(() -> {
             System.out.println("json 직렬화 직전========================");
             String responseBody = om.writeValueAsString(optionListPS);
             System.out.println("테스트 : "+responseBody);
         });
+
+        // then
+        Assertions.assertThat(thrown).isInstanceOf(JsonProcessingException.class);
     }
 
     // 추천
@@ -225,9 +220,9 @@ public class ProductJPARepositoryTest extends DummyEntity {
 
         //then
         //상품의 옵션들이 남아있기에 바로 Product를 사용하지 못한다.
-        //양방향 매핑 즉 cascadeType을 이용하면 product만 삭제해도 삭제될텐데.. 양방향 매핑을 도입하는것이 db관리 차원에서 좋은지 궁금합니다.
+        //1. 양방향 매핑 즉 cascadeType을 이용하면 product만 삭제해도 삭제될텐데.. 양방향 매핑을 도입하는것이 db관리 차원에서 좋은지 궁금합니다.
 
-        //상위 수준의 예외를 검사하는 경우와 내부 원인까지 검사해야되는 경우 어떤게 적절한지 궁금합니다.
+        //2. 상위 수준의 예외를 검사하는 경우와 내부 원인까지 검사해야되는 경우 어떤게 적절한지 궁금합니다.
 //        Assertions.assertThat(thrown).isInstanceOf(PersistenceException.class);
         Assertions.assertThat(thrown.getCause()).isInstanceOf(ConstraintViolationException.class);
 
