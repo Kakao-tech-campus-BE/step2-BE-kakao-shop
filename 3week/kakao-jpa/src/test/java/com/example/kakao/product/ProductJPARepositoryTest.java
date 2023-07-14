@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.api.Assertions;
 import org.hibernate.Hibernate;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -20,21 +21,29 @@ import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@DisplayName("상품 관련 JPA 쿼리 테스트")
 @Import(ObjectMapper.class)
 @DataJpaTest
 public class ProductJPARepositoryTest extends DummyEntity {
 
-    @Autowired
-    private EntityManager em;
 
-    @Autowired
+    private EntityManager em;
     private ProductJPARepository productJPARepository;
 
-    @Autowired
     private OptionJPARepository optionJPARepository;
 
-    @Autowired
     private ObjectMapper om;
+
+    public ProductJPARepositoryTest(
+            @Autowired EntityManager em,
+            @Autowired ProductJPARepository productJPARepository,
+            @Autowired OptionJPARepository optionJPARepository,
+            @Autowired ObjectMapper om) {
+        this.em = em;
+        this.productJPARepository = productJPARepository;
+        this.optionJPARepository = optionJPARepository;
+        this.om = om;
+    }
 
     @BeforeEach
     public void setUp(){
@@ -44,6 +53,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
     }
 
     @Test
+    @DisplayName("전체 상품 조회 테스트")
     public void product_findAll_test() throws JsonProcessingException {
         // given
         int page = 0;
@@ -69,6 +79,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
     }
 
     // ManyToOne 전략을 Eager로 간다면 추천
+    @DisplayName("개별 상품 상세 조회-eager전략")
     @Test
     public void option_findByProductId_eager_test() throws JsonProcessingException {
         // given
@@ -86,6 +97,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
         // then
     }
 
+    @DisplayName("개별 상품 상세 조회-lazy시 에러")
     @Test
     public void option_findByProductId_lazy_error_test() throws JsonProcessingException {
         // given
@@ -108,6 +120,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
 
     // 추천
     // 조인쿼리 직접 만들어서 사용하기
+    @DisplayName("개별 상품 상세 조회-커스텀 쿼리 전략")
     @Test
     public void option_mFindByProductId_lazy_test() throws JsonProcessingException {
         // given
@@ -125,12 +138,14 @@ public class ProductJPARepositoryTest extends DummyEntity {
 
 
     // 추천
+    @DisplayName("개별 상품 상세 조회")
     @Test
     public void product_findById_and_option_findByProductId_lazy_test() throws JsonProcessingException {
         // given
         int id = 1;
 
         // when
+        System.out.println("======================start================");
         Product productPS = productJPARepository.findById(id).orElseThrow(
                 () -> new RuntimeException("상품을 찾을 수 없습니다")
         );
