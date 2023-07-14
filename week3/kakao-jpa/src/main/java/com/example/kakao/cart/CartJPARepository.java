@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.parameters.P;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface CartJPARepository extends JpaRepository<Cart, Integer> {
@@ -21,7 +22,7 @@ public interface CartJPARepository extends JpaRepository<Cart, Integer> {
             "join fetch cart.user " +
             "join  fetch cart.option " +
             "where cart.id = :cartId")
-    Cart findById(int cartId);
+    Optional<Cart> findById(int cartId);
 
     @Query("select cart " +
             "from Cart cart " +

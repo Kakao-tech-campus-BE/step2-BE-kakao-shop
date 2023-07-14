@@ -5,6 +5,7 @@ import com.example.kakao.product.option.Option;
 import com.example.kakao.product.option.OptionJPARepository;
 import com.example.kakao.user.User;
 import com.example.kakao.user.UserJPARepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -91,7 +92,7 @@ public class CartJPARepositoryTest extends DummyEntity {
     @Test
     public void updateTest() {
         // given
-        Cart cart = cartJPARepository.findById(1);
+        Cart cart = cartJPARepository.findById(1).orElseThrow();
         cart.update(50, 50 * 10000);
 
         // when

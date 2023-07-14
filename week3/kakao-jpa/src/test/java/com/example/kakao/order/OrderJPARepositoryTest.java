@@ -106,7 +106,7 @@ public class OrderJPARepositoryTest extends DummyEntity {
     @Test
     public void findAllByUserIdTest() {
         // given
-        Order order = orderJPARepository.findById(1);
+        Order order = orderJPARepository.findById(1).orElseThrow();
 
         // when
         List<Item> items = itemJPARepository.findAllByOrderId(order.getId());
