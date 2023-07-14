@@ -61,7 +61,7 @@ public class CartJPARepositoryTest extends DummyEntity {
         System.out.println("----------추가 완료---------");
     }
 
-    @DisplayName("저장된 카트 데이터 불러오기 테스트")
+    @DisplayName("저장된 장바구니 데이터 불러오기 테스트")
     @Test
     public void loadSavedCart_checkPersistence() throws JsonProcessingException {
         //given
@@ -79,7 +79,7 @@ public class CartJPARepositoryTest extends DummyEntity {
     }
 
 
-    @DisplayName("카트에 물건 담기 테스트")
+    @DisplayName("장바구니에 물건 담기 테스트")
     @Test
     public void newProduct_addedToCart_checkPersistence(){
         //given
@@ -121,7 +121,7 @@ public class CartJPARepositoryTest extends DummyEntity {
     }
 
     //업데이트
-    @DisplayName("카트 내 물건수량 수정 테스트")
+    @DisplayName("장바구니 내 물건수량 수정 테스트")
     @Test
     public void quantity_updatedToCart_checkPersistence(){
         //given
