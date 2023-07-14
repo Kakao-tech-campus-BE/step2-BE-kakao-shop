@@ -3,19 +3,27 @@ package com.example.kakao.user;
 import com.example.kakao._core.util.DummyEntity;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.test.annotation.DirtiesContext;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import javax.persistence.EntityManager;
+
+import static org.assertj.core.api.BDDAssertions.catchThrowable;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 @DataJpaTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class UserJPARepositoryTest extends DummyEntity {
 
     @Autowired
     private UserJPARepository userJPARepository;
+    @Autowired
+    private EntityManager em;
 
     @BeforeEach
     public void setUp(){
@@ -42,5 +50,32 @@ public class UserJPARepositoryTest extends DummyEntity {
     @Test
     public void save(){}
 
+    @DisplayName("회원가입 실패 테스트 - 이미 존재하는 유저(이메일 중복)")
+    @Test
+    public void join_uk_error_test() {
+        // given
+        User user = newUser("ssar");
 
+        // when
+        Throwable thrown = catchThrowable(() -> {
+            userJPARepository.save(user);
+        });
+
+        // then
+        Assertions.assertThat(thrown).isInstanceOf(DataIntegrityViolationException.class);
+    }
+    @DisplayName("회원가입 성공 테스트")
+    @Test
+    public void join_test() {
+        // given
+        User user = newUser("cos");
+        System.out.println("영속화 되기 전 user id : " + user.getId());
+
+        // when
+        userJPARepository.save(user);
+        System.out.println("영속화 된 후 user id : " + user.getId());
+
+        // then
+        assertEquals(user, new User(2, "cos@nate.com", "meta1234!", "cos", "ROLE_USER"));
+    }
 }
