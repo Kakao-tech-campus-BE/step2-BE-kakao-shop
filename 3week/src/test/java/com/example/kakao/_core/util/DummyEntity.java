@@ -49,19 +49,19 @@ public class DummyEntity {
                 .build();
     }
 
+    protected Order newOrder(User user){
+        return Order.builder()
+                .user(user)
+                .id(1)
+                .build();
+    }
+
     protected Item newItem(Cart cart, Order order){
         return Item.builder()
                 .order(order)
                 .option(cart.getOption())
                 .quantity(cart.getQuantity())
                 .price(cart.getOption().getPrice() * cart.getQuantity())
-                .build();
-    }
-
-    protected Order newOrder(User user){
-        return Order.builder()
-                .user(user)
-                .id(1)
                 .build();
     }
 

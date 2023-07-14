@@ -29,9 +29,6 @@ public class CartJPARepositoryTest extends DummyEntity {
     private EntityManager em;
 
     @Autowired
-    private CartJPARepository cartJPARepository;
-
-    @Autowired
     private UserJPARepository userJPARepository;
 
     @Autowired
@@ -41,16 +38,16 @@ public class CartJPARepositoryTest extends DummyEntity {
     private OptionJPARepository optionJPARepository;
 
     @Autowired
-    private ItemJPARepository itemJPARepository;
+    private CartJPARepository cartJPARepository;
 
     @Autowired
     private ObjectMapper om;
 
     @BeforeEach
     public void setUp() {
-        em.createNativeQuery("ALTER TABLE cart_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
         em.createNativeQuery("ALTER TABLE product_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
         em.createNativeQuery("ALTER TABLE option_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        em.createNativeQuery("ALTER TABLE cart_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
 
         User user = userJPARepository.save(newUser("ssar"));
 
