@@ -195,7 +195,12 @@ public class CartJPARepositoryTest extends DummyEntity {
 
         // when
         Optional<Cart> optionalCart = cartJPARepository.findById(id);
-        optionalCart.ifPresent(cart -> cartJPARepository.deleteById(cart.getId()));
+
+        if (optionalCart.isPresent()) {
+            optionJPARepository.delete(optionalCart.get().getOption());
+            cartJPARepository.deleteById(optionalCart.get().getId());
+        }
+
         List<Cart> cartList = cartJPARepository.findAllByUserId(1);
 
         System.out.println("json 직렬화 직전========================");
