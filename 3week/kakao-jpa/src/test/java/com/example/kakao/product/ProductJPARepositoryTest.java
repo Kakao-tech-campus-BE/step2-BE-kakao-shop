@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.api.Assertions;
 import org.hibernate.Hibernate;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -24,7 +25,8 @@ import java.util.stream.Collectors;
 @DataJpaTest
 public class ProductJPARepositoryTest extends DummyEntity {
 
-    @Autowired
+    @Autowired //생성자 주입
+    //auto_increment 초기화를 시키기 위해 Entity Manager 선언
     private EntityManager em;
 
     @Autowired
@@ -36,16 +38,18 @@ public class ProductJPARepositoryTest extends DummyEntity {
     @Autowired
     private ObjectMapper om;
 
-    @BeforeEach
+    @BeforeEach //test 실행 전 호출 -> 백업
     public void setUp(){
         List<Product> productListPS = productJPARepository.saveAll(productDummyList());
         optionJPARepository.saveAll(optionDummyList(productListPS));
         em.clear();
     }
 
+
+    //@DisplayName("전체 상품 조회 테스트")
     @Test
     public void product_findAll_test() throws JsonProcessingException {
-        // given
+        // given - 0번 페이지, 9개까지 받아올거임 -> 9개 쿼리?
         int page = 0;
         int size = 9;
 
