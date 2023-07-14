@@ -1,0 +1,1093 @@
+{
+	"info": {
+		"_postman_id": "d89be2d4-6c74-4864-97bd-d132723c2eb7",
+		"name": "API 명세서 기반 요청 테스트",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28182127"
+	},
+	"item": [
+		{
+			"name": "회원가입",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var expectedJson = {\r",
+							"\"success\": true,\r",
+							"\"response\": null,\r",
+							"\"error\": null\r",
+							"};\r",
+							"\r",
+							"pm.test(\"Response should match expected JSON (with differences)\", function () {\r",
+							"    var responseJson = pm.response.json();\r",
+							"    var differences = findDifferences(expectedJson, responseJson);\r",
+							"\r",
+							"    pm.expect(differences.length).to.eql(0, \"Found differences in the response JSON:\\n\" + JSON.stringify(differences, null, 4));\r",
+							"});\r",
+							"\r",
+							"// 재귀적으로 속성과 값을 비교하여 다른 부분 찾기\r",
+							"function findDifferences(expected, actual, keyPath = []) {\r",
+							"    if (_.isEqual(expected, actual)) {\r",
+							"        return [];\r",
+							"    }\r",
+							"\r",
+							"    if (_.isObject(expected) && _.isObject(actual)) {\r",
+							"        var expectedKeys = Object.keys(expected);\r",
+							"        var actualKeys = Object.keys(actual);\r",
+							"        var allKeys = _.union(expectedKeys, actualKeys);\r",
+							"\r",
+							"        return allKeys.reduce(function (differences, key) {\r",
+							"            var newKeyPath = keyPath.concat(key);\r",
+							"            var expectedValue = expected[key];\r",
+							"            var actualValue = actual[key];\r",
+							"\r",
+							"            if (!_.isEqual(expectedValue, actualValue)) {\r",
+							"                var difference = {\r",
+							"                    key: newKeyPath.join(\".\"),\r",
+							"                    expected: expectedValue,\r",
+							"                    actual: actualValue\r",
+							"                };\r",
+							"                differences.push(difference);\r",
+							"            }\r",
+							"\r",
+							"            if (_.isObject(expectedValue) && _.isObject(actualValue)) {\r",
+							"                var nestedDifferences = findDifferences(expectedValue, actualValue, newKeyPath);\r",
+							"                differences.push(...nestedDifferences);\r",
+							"            }\r",
+							"\r",
+							"            return differences;\r",
+							"        }, []);\r",
+							"    }\r",
+							"\r",
+							"    return [{ key: keyPath.join(\".\"), expected: expected, actual: actual }];\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"username\":\"mata\",\r\n\"email\":\"meta@nate.com\",\r\n\"password\":\"meta1234!\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/join",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"join"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "로그인",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var expectedJson = {\r",
+							"\"success\": true,\r",
+							"\"response\": null,\r",
+							"\"error\": null\r",
+							"};\r",
+							"\r",
+							"pm.test(\"Response should match expected JSON (with differences)\", function () {\r",
+							"    var responseJson = pm.response.json();\r",
+							"    var differences = findDifferences(expectedJson, responseJson);\r",
+							"\r",
+							"    pm.expect(differences.length).to.eql(0, \"Found differences in the response JSON:\\n\" + JSON.stringify(differences, null, 4));\r",
+							"});\r",
+							"\r",
+							"// 재귀적으로 속성과 값을 비교하여 다른 부분 찾기\r",
+							"function findDifferences(expected, actual, keyPath = []) {\r",
+							"    if (_.isEqual(expected, actual)) {\r",
+							"        return [];\r",
+							"    }\r",
+							"\r",
+							"    if (_.isObject(expected) && _.isObject(actual)) {\r",
+							"        var expectedKeys = Object.keys(expected);\r",
+							"        var actualKeys = Object.keys(actual);\r",
+							"        var allKeys = _.union(expectedKeys, actualKeys);\r",
+							"\r",
+							"        return allKeys.reduce(function (differences, key) {\r",
+							"            var newKeyPath = keyPath.concat(key);\r",
+							"            var expectedValue = expected[key];\r",
+							"            var actualValue = actual[key];\r",
+							"\r",
+							"            if (!_.isEqual(expectedValue, actualValue)) {\r",
+							"                var difference = {\r",
+							"                    key: newKeyPath.join(\".\"),\r",
+							"                    expected: expectedValue,\r",
+							"                    actual: actualValue\r",
+							"                };\r",
+							"                differences.push(difference);\r",
+							"            }\r",
+							"\r",
+							"            if (_.isObject(expectedValue) && _.isObject(actualValue)) {\r",
+							"                var nestedDifferences = findDifferences(expectedValue, actualValue, newKeyPath);\r",
+							"                differences.push(...nestedDifferences);\r",
+							"            }\r",
+							"\r",
+							"            return differences;\r",
+							"        }, []);\r",
+							"    }\r",
+							"\r",
+							"    return [{ key: keyPath.join(\".\"), expected: expected, actual: actual }];\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZXRhQG5hdGUuY29tIiwicm9sZSI6IlJPTEVfVVNFUiIsImlkIjoxLCJleHAiOjE2ODg4MDA1NTZ9.fXzzYPs1pXM0vnKaGkXVjkLPuNO7q3TNfezCsKajqWU_pN-UjUVJyjpeN8J02pi9X8E2Dx6JElRGZDFr6XT67g",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"email\":\"meta@nate.com\",\r\n\"password\":\"meta1234!\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "전체 상품 목록 조회",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var expectedJson = {\r",
+							"    \"success\": true,\r",
+							"    \"response\": [\r",
+							"        {\r",
+							"            \"id\": 1,\r",
+							"            \"productName\": \"기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전\",\r",
+							"            \"description\": \"\",\r",
+							"            \"image\": \"/images/1.jpg\",\r",
+							"            \"price\": 1000\r",
+							"        },\r",
+							"        {\r",
+							"            \"id\": 2,\r",
+							"            \"productName\": \"[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율\",\r",
+							"            \"description\": \"\",\r",
+							"            \"image\": \"/images/2.jpg\",\r",
+							"            \"price\": 2000\r",
+							"        },\r",
+							"        {\r",
+							"            \"id\": 3,\r",
+							"            \"productName\": \"삼성전자 JBL JR310 외 어린이용/성인용 헤드셋 3종!\",\r",
+							"            \"description\": \"\",\r",
+							"            \"image\": \"/images/3.jpg\",\r",
+							"            \"price\": 30000\r",
+							"        },\r",
+							"        {\r",
+							"            \"id\": 4,\r",
+							"            \"productName\": \"바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종\",\r",
+							"            \"description\": \"\",\r",
+							"            \"image\": \"/images/4.jpg\",\r",
+							"            \"price\": 4000\r",
+							"        },\r",
+							"        {\r",
+							"            \"id\": 5,\r",
+							"            \"productName\": \"[더주] 컷팅말랑장족, 숏다리 100g/300g 외 주전부리 모음 /중독성 최고/마른안주\",\r",
+							"            \"description\": \"\",\r",
+							"            \"image\": \"/images/5.jpg\",\r",
+							"            \"price\": 5000\r",
+							"        },\r",
+							"        {\r",
+							"            \"id\": 6,\r",
+							"            \"productName\": \"굳지않는 앙금절편 1,050g 2팩 외 우리쌀떡 모음전\",\r",
+							"            \"description\": \"\",\r",
+							"            \"image\": \"/images/6.jpg\",\r",
+							"            \"price\": 15900\r",
+							"        },\r",
+							"        {\r",
+							"            \"id\": 7,\r",
+							"            \"productName\": \"eoe 이너딜리티 30포, 오렌지맛 고 식이섬유 보충제\",\r",
+							"            \"description\": \"\",\r",
+							"            \"image\": \"/images/7.jpg\",\r",
+							"            \"price\": 26800\r",
+							"        },\r",
+							"        {\r",
+							"            \"id\": 8,\r",
+							"            \"productName\": \"제나벨 PDRN 크림 2개. 피부보습/진정 케어\",\r",
+							"            \"description\": \"\",\r",
+							"            \"image\": \"/images/8.jpg\",\r",
+							"            \"price\": 25900\r",
+							"        },\r",
+							"        {\r",
+							"            \"id\": 9,\r",
+							"            \"productName\": \"플레이스테이션 VR2 호라이즌 번들. 생생한 몰입감\",\r",
+							"            \"description\": \"\",\r",
+							"            \"image\": \"/images/9.jpg\",\r",
+							"            \"price\": 797000\r",
+							"        }\r",
+							"    ],\r",
+							"    \"error\": null\r",
+							"};\r",
+							"\r",
+							"pm.test(\"Response should match expected JSON (with differences)\", function () {\r",
+							"    var responseJson = pm.response.json();\r",
+							"    var differences = findDifferences(expectedJson, responseJson);\r",
+							"\r",
+							"    pm.expect(differences.length).to.eql(0, \"Found differences in the response JSON:\\n\" + JSON.stringify(differences, null, 4));\r",
+							"});\r",
+							"\r",
+							"// 재귀적으로 속성과 값을 비교하여 다른 부분 찾기\r",
+							"function findDifferences(expected, actual, keyPath = []) {\r",
+							"    if (_.isEqual(expected, actual)) {\r",
+							"        return [];\r",
+							"    }\r",
+							"\r",
+							"    if (_.isObject(expected) && _.isObject(actual)) {\r",
+							"        var expectedKeys = Object.keys(expected);\r",
+							"        var actualKeys = Object.keys(actual);\r",
+							"        var allKeys = _.union(expectedKeys, actualKeys);\r",
+							"\r",
+							"        return allKeys.reduce(function (differences, key) {\r",
+							"            var newKeyPath = keyPath.concat(key);\r",
+							"            var expectedValue = expected[key];\r",
+							"            var actualValue = actual[key];\r",
+							"\r",
+							"            if (!_.isEqual(expectedValue, actualValue)) {\r",
+							"                var difference = {\r",
+							"                    key: newKeyPath.join(\".\"),\r",
+							"                    expected: expectedValue,\r",
+							"                    actual: actualValue\r",
+							"                };\r",
+							"                differences.push(difference);\r",
+							"            }\r",
+							"\r",
+							"            if (_.isObject(expectedValue) && _.isObject(actualValue)) {\r",
+							"                var nestedDifferences = findDifferences(expectedValue, actualValue, newKeyPath);\r",
+							"                differences.push(...nestedDifferences);\r",
+							"            }\r",
+							"\r",
+							"            return differences;\r",
+							"        }, []);\r",
+							"    }\r",
+							"\r",
+							"    return [{ key: keyPath.join(\".\"), expected: expected, actual: actual }];\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZXRhQG5hdGUuY29tIiwicm9sZSI6IlJPTEVfVVNFUiIsImlkIjoxLCJleHAiOjE2ODg3OTg5MzR9.tdyWxb-KDld_QQJeie1gdXxtHio6M9h1C30VRY8mTOi82GLGRTRqnFUjhW5-OsI5vOGRsEduRVTYWEIw_Y6OFg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/products",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "개별 상품 조회",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var expectedJson = {\r",
+							"    \"success\": true,\r",
+							"    \"response\": {\r",
+							"        \"id\": 1,\r",
+							"        \"productName\": \"기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전\",\r",
+							"        \"description\": \"\",\r",
+							"        \"image\": \"/images/1.jpg\",\r",
+							"        \"price\": 1000,\r",
+							"        \"starCount\": 5,\r",
+							"        \"options\": [\r",
+							"            {\r",
+							"                \"id\": 1,\r",
+							"                \"optionName\": \"01. 슬라이딩 지퍼백 크리스마스에디션 4종\",\r",
+							"                \"price\": 10000\r",
+							"            },\r",
+							"            {\r",
+							"                \"id\": 2,\r",
+							"                \"optionName\": \"02. 슬라이딩 지퍼백 플라워에디션 5종\",\r",
+							"                \"price\": 10900\r",
+							"            },\r",
+							"            {\r",
+							"                \"id\": 3,\r",
+							"                \"optionName\": \"고무장갑 베이지 S(소형) 6팩\",\r",
+							"                \"price\": 9900\r",
+							"            },\r",
+							"            {\r",
+							"                \"id\": 4,\r",
+							"                \"optionName\": \"뽑아쓰는 키친타올 130매 12팩\",\r",
+							"                \"price\": 16900\r",
+							"            },\r",
+							"            {\r",
+							"                \"id\": 5,\r",
+							"                \"optionName\": \"2겹 식빵수세미 6매\",\r",
+							"                \"price\": 8900\r",
+							"            }\r",
+							"        ]\r",
+							"    },\r",
+							"    \"error\": null\r",
+							"};\r",
+							"\r",
+							"pm.test(\"Response should match expected JSON (with differences)\", function () {\r",
+							"    var responseJson = pm.response.json();\r",
+							"    var differences = findDifferences(expectedJson, responseJson);\r",
+							"\r",
+							"    pm.expect(differences.length).to.eql(0, \"Found differences in the response JSON:\\n\" + JSON.stringify(differences, null, 4));\r",
+							"});\r",
+							"\r",
+							"// 재귀적으로 속성과 값을 비교하여 다른 부분 찾기\r",
+							"function findDifferences(expected, actual, keyPath = []) {\r",
+							"    if (_.isEqual(expected, actual)) {\r",
+							"        return [];\r",
+							"    }\r",
+							"\r",
+							"    if (_.isObject(expected) && _.isObject(actual)) {\r",
+							"        var expectedKeys = Object.keys(expected);\r",
+							"        var actualKeys = Object.keys(actual);\r",
+							"        var allKeys = _.union(expectedKeys, actualKeys);\r",
+							"\r",
+							"        return allKeys.reduce(function (differences, key) {\r",
+							"            var newKeyPath = keyPath.concat(key);\r",
+							"            var expectedValue = expected[key];\r",
+							"            var actualValue = actual[key];\r",
+							"\r",
+							"            if (!_.isEqual(expectedValue, actualValue)) {\r",
+							"                var difference = {\r",
+							"                    key: newKeyPath.join(\".\"),\r",
+							"                    expected: expectedValue,\r",
+							"                    actual: actualValue\r",
+							"                };\r",
+							"                differences.push(difference);\r",
+							"            }\r",
+							"\r",
+							"            if (_.isObject(expectedValue) && _.isObject(actualValue)) {\r",
+							"                var nestedDifferences = findDifferences(expectedValue, actualValue, newKeyPath);\r",
+							"                differences.push(...nestedDifferences);\r",
+							"            }\r",
+							"\r",
+							"            return differences;\r",
+							"        }, []);\r",
+							"    }\r",
+							"\r",
+							"    return [{ key: keyPath.join(\".\"), expected: expected, actual: actual }];\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZXRhQG5hdGUuY29tIiwicm9sZSI6IlJPTEVfVVNFUiIsImlkIjoxLCJleHAiOjE2ODg3MzU3OTV9.YNLYOB8utDhZwT_SnDva8hjomOOhSwsGRx86nUj5G_3Wb79QRYgsdn2D6pvDQ4d5mDVuTI28P9QLFkQ3e13cQA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/products/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "이메일 중복 체크",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response should match expected JSON\", function () {\r",
+							"    var expectedJson = {\r",
+							"        \"success\": false,\r",
+							"        \"response\": null,\r",
+							"        \"error\": {\r",
+							"            \"message\": \"8에서 20자 이내여야 합니다.:password\",\r",
+							"            \"status\": 400\r",
+							"        }\r",
+							"    };\r",
+							"\r",
+							"    pm.response.to.be.jsonBody(expectedJson);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZXRhQG5hdGUuY29tIiwicm9sZSI6IlJPTEVfVVNFUiIsImlkIjoxLCJleHAiOjE2ODg3OTU1NjV9.sqeCHXHBsC6pndBfIKcqGxqbTw0RcB6EHqYswyOo5FJ9BRt3PSqWWsNmYd1tvEFEYW8EuAQeH1JzDKRFG2VNTQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"email\":\"ssarnate.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/check",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"check"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "장바구니 담기",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var expectedJson = {\r",
+							"    \"success\": true,\r",
+							"    \"response\": null,\r",
+							"    \"error\": null\r",
+							"};\r",
+							"\r",
+							"pm.test(\"Response should match expected JSON (with differences)\", function () {\r",
+							"    var responseJson = pm.response.json();\r",
+							"    var differences = findDifferences(expectedJson, responseJson);\r",
+							"\r",
+							"    pm.expect(differences.length).to.eql(0, \"Found differences in the response JSON:\\n\" + JSON.stringify(differences, null, 4));\r",
+							"});\r",
+							"\r",
+							"// 재귀적으로 속성과 값을 비교하여 다른 부분 찾기\r",
+							"function findDifferences(expected, actual, keyPath = []) {\r",
+							"    if (_.isEqual(expected, actual)) {\r",
+							"        return [];\r",
+							"    }\r",
+							"\r",
+							"    if (_.isObject(expected) && _.isObject(actual)) {\r",
+							"        var expectedKeys = Object.keys(expected);\r",
+							"        var actualKeys = Object.keys(actual);\r",
+							"        var allKeys = _.union(expectedKeys, actualKeys);\r",
+							"\r",
+							"        return allKeys.reduce(function (differences, key) {\r",
+							"            var newKeyPath = keyPath.concat(key);\r",
+							"            var expectedValue = expected[key];\r",
+							"            var actualValue = actual[key];\r",
+							"\r",
+							"            if (!_.isEqual(expectedValue, actualValue)) {\r",
+							"                var difference = {\r",
+							"                    key: newKeyPath.join(\".\"),\r",
+							"                    expected: expectedValue,\r",
+							"                    actual: actualValue\r",
+							"                };\r",
+							"                differences.push(difference);\r",
+							"            }\r",
+							"\r",
+							"            if (_.isObject(expectedValue) && _.isObject(actualValue)) {\r",
+							"                var nestedDifferences = findDifferences(expectedValue, actualValue, newKeyPath);\r",
+							"                differences.push(...nestedDifferences);\r",
+							"            }\r",
+							"\r",
+							"            return differences;\r",
+							"        }, []);\r",
+							"    }\r",
+							"\r",
+							"    return [{ key: keyPath.join(\".\"), expected: expected, actual: actual }];\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZXRhQG5hdGUuY29tIiwicm9sZSI6IlJPTEVfVVNFUiIsImlkIjoxLCJleHAiOjE2ODg3OTU0OTF9.LZrcbnHhyBlE8fSCD0DrG0BbvS8--SwNAQAFbTpC99lCm6oHvo5KnfggTQskBh5jly29dok5jvX3piSlAfmmVA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n{\r\n\"optionId\":4,\r\n\"quantity\":5\r\n},\r\n{\r\n\"optionId\":5,\r\n\"quantity\":5\r\n}\r\n]\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/carts/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"carts",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "장바구니 조회",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var expectedJson = {\r",
+							"    \"success\": true,\r",
+							"    \"response\": {\r",
+							"        \"products\": [\r",
+							"            {\r",
+							"                \"id\": 1,\r",
+							"                \"productName\": \"기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전\",\r",
+							"                \"carts\": [\r",
+							"                    {\r",
+							"                        \"id\": 4,\r",
+							"                        \"option\": {\r",
+							"                            \"id\": 1,\r",
+							"                            \"optionName\": \"01. 슬라이딩 지퍼백 크리스마스에디션 4종\",\r",
+							"                            \"price\": 10000\r",
+							"                        },\r",
+							"                        \"quantity\": 5,\r",
+							"                        \"price\": 50000\r",
+							"                    },\r",
+							"                    {\r",
+							"                        \"id\": 5,\r",
+							"                        \"option\": {\r",
+							"                            \"id\": 2,\r",
+							"                            \"optionName\": \"02. 슬라이딩 지퍼백 플라워에디션 5종\",\r",
+							"                            \"price\": 10900\r",
+							"                        },\r",
+							"                        \"quantity\": 5,\r",
+							"                        \"price\": 54500\r",
+							"                    }\r",
+							"                ]\r",
+							"            }\r",
+							"        ],\r",
+							"        \"totalPrice\": 104500\r",
+							"    },\r",
+							"    \"error\": null\r",
+							"};\r",
+							"\r",
+							"pm.test(\"Response should match expected JSON (with differences)\", function () {\r",
+							"    var responseJson = pm.response.json();\r",
+							"    var differences = findDifferences(expectedJson, responseJson);\r",
+							"\r",
+							"    pm.expect(differences.length).to.eql(0, \"Found differences in the response JSON:\\n\" + JSON.stringify(differences, null, 4));\r",
+							"});\r",
+							"\r",
+							"// 재귀적으로 속성과 값을 비교하여 다른 부분 찾기\r",
+							"function findDifferences(expected, actual, keyPath = []) {\r",
+							"    if (_.isEqual(expected, actual)) {\r",
+							"        return [];\r",
+							"    }\r",
+							"\r",
+							"    if (_.isObject(expected) && _.isObject(actual)) {\r",
+							"        var expectedKeys = Object.keys(expected);\r",
+							"        var actualKeys = Object.keys(actual);\r",
+							"        var allKeys = _.union(expectedKeys, actualKeys);\r",
+							"\r",
+							"        return allKeys.reduce(function (differences, key) {\r",
+							"            var newKeyPath = keyPath.concat(key);\r",
+							"            var expectedValue = expected[key];\r",
+							"            var actualValue = actual[key];\r",
+							"\r",
+							"            if (!_.isEqual(expectedValue, actualValue)) {\r",
+							"                var difference = {\r",
+							"                    key: newKeyPath.join(\".\"),\r",
+							"                    expected: expectedValue,\r",
+							"                    actual: actualValue\r",
+							"                };\r",
+							"                differences.push(difference);\r",
+							"            }\r",
+							"\r",
+							"            if (_.isObject(expectedValue) && _.isObject(actualValue)) {\r",
+							"                var nestedDifferences = findDifferences(expectedValue, actualValue, newKeyPath);\r",
+							"                differences.push(...nestedDifferences);\r",
+							"            }\r",
+							"\r",
+							"            return differences;\r",
+							"        }, []);\r",
+							"    }\r",
+							"\r",
+							"    return [{ key: keyPath.join(\".\"), expected: expected, actual: actual }];\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZXRhQG5hdGUuY29tIiwicm9sZSI6IlJPTEVfVVNFUiIsImlkIjoxLCJleHAiOjE2ODg3MzU3OTV9.YNLYOB8utDhZwT_SnDva8hjomOOhSwsGRx86nUj5G_3Wb79QRYgsdn2D6pvDQ4d5mDVuTI28P9QLFkQ3e13cQA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/carts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"carts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "장바구니 수정",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var expectedJson = {\r",
+							"    \"success\": true,\r",
+							"    \"response\": {\r",
+							"        \"carts\": [\r",
+							"            {\r",
+							"                \"cartId\": 4,\r",
+							"                \"optionId\": 1,\r",
+							"                \"optionName\": \"01. 슬라이딩 지퍼백 크리스마스에디션 4종\",\r",
+							"                \"quantity\": 10,\r",
+							"                \"price\": 100000\r",
+							"            },\r",
+							"            {\r",
+							"                \"cartId\": 5,\r",
+							"                \"optionId\": 2,\r",
+							"                \"optionName\": \"02. 슬라이딩 지퍼백 플라워에디션 5종\",\r",
+							"                \"quantity\": 10,\r",
+							"                \"price\": 109000\r",
+							"            }\r",
+							"        ],\r",
+							"        \"totalPrice\": 209000\r",
+							"    },\r",
+							"    \"error\": null\r",
+							"};\r",
+							"\r",
+							"pm.test(\"Response should match expected JSON (with differences)\", function () {\r",
+							"    var responseJson = pm.response.json();\r",
+							"    var differences = findDifferences(expectedJson, responseJson);\r",
+							"\r",
+							"    pm.expect(differences.length).to.eql(0, \"Found differences in the response JSON:\\n\" + JSON.stringify(differences, null, 4));\r",
+							"});\r",
+							"\r",
+							"// 재귀적으로 속성과 값을 비교하여 다른 부분 찾기\r",
+							"function findDifferences(expected, actual, keyPath = []) {\r",
+							"    if (_.isEqual(expected, actual)) {\r",
+							"        return [];\r",
+							"    }\r",
+							"\r",
+							"    if (_.isObject(expected) && _.isObject(actual)) {\r",
+							"        var expectedKeys = Object.keys(expected);\r",
+							"        var actualKeys = Object.keys(actual);\r",
+							"        var allKeys = _.union(expectedKeys, actualKeys);\r",
+							"\r",
+							"        return allKeys.reduce(function (differences, key) {\r",
+							"            var newKeyPath = keyPath.concat(key);\r",
+							"            var expectedValue = expected[key];\r",
+							"            var actualValue = actual[key];\r",
+							"\r",
+							"            if (!_.isEqual(expectedValue, actualValue)) {\r",
+							"                var difference = {\r",
+							"                    key: newKeyPath.join(\".\"),\r",
+							"                    expected: expectedValue,\r",
+							"                    actual: actualValue\r",
+							"                };\r",
+							"                differences.push(difference);\r",
+							"            }\r",
+							"\r",
+							"            if (_.isObject(expectedValue) && _.isObject(actualValue)) {\r",
+							"                var nestedDifferences = findDifferences(expectedValue, actualValue, newKeyPath);\r",
+							"                differences.push(...nestedDifferences);\r",
+							"            }\r",
+							"\r",
+							"            return differences;\r",
+							"        }, []);\r",
+							"    }\r",
+							"\r",
+							"    return [{ key: keyPath.join(\".\"), expected: expected, actual: actual }];\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZXRhQG5hdGUuY29tIiwicm9sZSI6IlJPTEVfVVNFUiIsImlkIjoxLCJleHAiOjE2ODg3MzU3OTV9.YNLYOB8utDhZwT_SnDva8hjomOOhSwsGRx86nUj5G_3Wb79QRYgsdn2D6pvDQ4d5mDVuTI28P9QLFkQ3e13cQA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n{\r\n\"cartId\":4,\r\n\"quantity\":10\r\n},\r\n{\r\n\"cartId\":5,\r\n\"quantity\":10\r\n}\r\n]\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/carts/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"carts",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "결재하기",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var expectedJson = {\r",
+							"    \"success\": true,\r",
+							"    \"response\": {\r",
+							"        \"id\": 2,\r",
+							"        \"products\": [\r",
+							"            {\r",
+							"                \"productName\": \"기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션외 주방용품 특가전\",\r",
+							"                \"items\": [\r",
+							"                    {\r",
+							"                        \"id\": 4,\r",
+							"                        \"optionName\": \"01. 슬라이딩 지퍼백 크리스마스에디션 4종\",\r",
+							"                        \"quantity\": 10,\r",
+							"                        \"price\": 100000\r",
+							"                    },\r",
+							"                    {\r",
+							"                        \"id\": 5,\r",
+							"                        \"optionName\": \"02. 슬라이딩 지퍼백 플라워에디션 5종\",\r",
+							"                        \"quantity\": 10,\r",
+							"                        \"price\": 109000\r",
+							"                    }\r",
+							"                ]\r",
+							"            }\r",
+							"        ],\r",
+							"        \"totalPrice\": 209000\r",
+							"    },\r",
+							"    \"error\": null\r",
+							"};\r",
+							"\r",
+							"pm.test(\"Response should match expected JSON (with differences)\", function () {\r",
+							"    var responseJson = pm.response.json();\r",
+							"    var differences = findDifferences(expectedJson, responseJson);\r",
+							"\r",
+							"    pm.expect(differences.length).to.eql(0, \"Found differences in the response JSON:\\n\" + JSON.stringify(differences, null, 4));\r",
+							"});\r",
+							"\r",
+							"// 재귀적으로 속성과 값을 비교하여 다른 부분 찾기\r",
+							"function findDifferences(expected, actual, keyPath = []) {\r",
+							"    if (_.isEqual(expected, actual)) {\r",
+							"        return [];\r",
+							"    }\r",
+							"\r",
+							"    if (_.isObject(expected) && _.isObject(actual)) {\r",
+							"        var expectedKeys = Object.keys(expected);\r",
+							"        var actualKeys = Object.keys(actual);\r",
+							"        var allKeys = _.union(expectedKeys, actualKeys);\r",
+							"\r",
+							"        return allKeys.reduce(function (differences, key) {\r",
+							"            var newKeyPath = keyPath.concat(key);\r",
+							"            var expectedValue = expected[key];\r",
+							"            var actualValue = actual[key];\r",
+							"\r",
+							"            if (!_.isEqual(expectedValue, actualValue)) {\r",
+							"                var difference = {\r",
+							"                    key: newKeyPath.join(\".\"),\r",
+							"                    expected: expectedValue,\r",
+							"                    actual: actualValue\r",
+							"                };\r",
+							"                differences.push(difference);\r",
+							"            }\r",
+							"\r",
+							"            if (_.isObject(expectedValue) && _.isObject(actualValue)) {\r",
+							"                var nestedDifferences = findDifferences(expectedValue, actualValue, newKeyPath);\r",
+							"                differences.push(...nestedDifferences);\r",
+							"            }\r",
+							"\r",
+							"            return differences;\r",
+							"        }, []);\r",
+							"    }\r",
+							"\r",
+							"    return [{ key: keyPath.join(\".\"), expected: expected, actual: actual }];\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZXRhQG5hdGUuY29tIiwicm9sZSI6IlJPTEVfVVNFUiIsImlkIjoxLCJleHAiOjE2ODg3MzU3OTV9.YNLYOB8utDhZwT_SnDva8hjomOOhSwsGRx86nUj5G_3Wb79QRYgsdn2D6pvDQ4d5mDVuTI28P9QLFkQ3e13cQA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/orders/save",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"orders",
+						"save"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "주문 결과 확인",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var expectedJson = {\r",
+							"    \"success\": true,\r",
+							"    \"response\": {\r",
+							"        \"id\": 2,\r",
+							"        \"products\": [\r",
+							"            {\r",
+							"                \"productName\": \"기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전\",\r",
+							"                \"items\": [\r",
+							"                    {\r",
+							"                        \"id\": 4,\r",
+							"                        \"optionName\": \"01. 슬라이딩 지퍼백 크리스마스 에디션 4종\",\r",
+							"                        \"quantity\": 10,\r",
+							"                        \"price\": 100000\r",
+							"                    },\r",
+							"                    {\r",
+							"                        \"id\": 5,\r",
+							"                        \"optionName\": \"02. 슬라이딩 지퍼백 플라워에디션 4종\",\r",
+							"                        \"quantity\": 10,\r",
+							"                        \"price\": 109000\r",
+							"                    }\r",
+							"                ]\r",
+							"            }\r",
+							"        ],\r",
+							"        \"totalPrice\": 209000\r",
+							"    },\r",
+							"    \"error\": null\r",
+							"};\r",
+							"\r",
+							"// // 1. 속성 단위 비교\r",
+							"// pm.test(\"Response should match expected JSON\", function () {\r",
+							"//     pm.expect(pm.response.json()).to.eql(expectedJson);\r",
+							"// });\r",
+							"\r",
+							"// 2. 전체 JSON 비교\r",
+							"pm.test(\"Response should match expected JSON (with differences)\", function () {\r",
+							"    var responseJson = pm.response.json();\r",
+							"    var differences = findDifferences(expectedJson, responseJson);\r",
+							"\r",
+							"    pm.expect(differences.length).to.eql(0, \"Found differences in the response JSON:\\n\" + JSON.stringify(differences, null, 4));\r",
+							"});\r",
+							"\r",
+							"// 재귀적으로 속성과 값을 비교하여 다른 부분 찾기\r",
+							"function findDifferences(expected, actual) {\r",
+							"    if (_.isEqual(expected, actual)) {\r",
+							"        return [];\r",
+							"    }\r",
+							"\r",
+							"    if (_.isObject(expected) && _.isObject(actual)) {\r",
+							"        var expectedKeys = Object.keys(expected);\r",
+							"        var actualKeys = Object.keys(actual);\r",
+							"        var allKeys = _.union(expectedKeys, actualKeys);\r",
+							"\r",
+							"        return allKeys.reduce(function (differences, key) {\r",
+							"            var expectedValue = expected[key];\r",
+							"            var actualValue = actual[key];\r",
+							"\r",
+							"            if (!_.isEqual(expectedValue, actualValue)) {\r",
+							"                var difference = {\r",
+							"                    key: key,\r",
+							"                    expected: expectedValue,\r",
+							"                    actual: actualValue\r",
+							"                };\r",
+							"                differences.push(difference);\r",
+							"            }\r",
+							"\r",
+							"            return differences;\r",
+							"        }, []);\r",
+							"    }\r",
+							"\r",
+							"    return [{ expected: expected, actual: actual }];\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtZXRhQG5hdGUuY29tIiwicm9sZSI6IlJPTEVfVVNFUiIsImlkIjoxLCJleHAiOjE2ODg3MzU3OTV9.YNLYOB8utDhZwT_SnDva8hjomOOhSwsGRx86nUj5G_3Wb79QRYgsdn2D6pvDQ4d5mDVuTI28P9QLFkQ3e13cQA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/orders/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"orders",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
