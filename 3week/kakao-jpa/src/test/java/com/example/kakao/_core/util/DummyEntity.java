@@ -9,8 +9,12 @@ import com.example.kakao.user.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class DummyEntity {
     protected User newUser(String username){
@@ -58,12 +62,15 @@ public class DummyEntity {
                 .build();
     }
 
+    private int orderId = 1;
     protected Order newOrder(User user){
         return Order.builder()
                 .user(user)
-                .id(1)
+                .id(orderId++)
                 .build();
     }
+
+
 
     // product repository 테스트할 때 가져옴
     protected List<Product> productDummyList(){
@@ -85,6 +92,46 @@ public class DummyEntity {
                 newProduct("[LIVE][5%쿠폰] 홈카페 Y3.3 캡슐머신 베이직 세트", 15, 148000)
         );
     }
+
+    protected List<User> userDummyList(){
+        return Arrays.asList(
+                newUser("user1"),
+                newUser("user2"),
+                newUser("user3"),
+                newUser("user4"),
+                newUser("user5"),
+                newUser("user6"),
+                newUser("user7"),
+                newUser("user8"),
+                newUser("user9"),
+                newUser("user10")
+        );
+    }
+
+    // 나중에 테스트하기 편하기 위해서 수량과 유저를 하드코딩 하였음
+    protected List<Cart> cartDummyList(List<User> userListPS, List<Option> optionListPS) {
+        List<Cart> user1Carts = IntStream.range(0, 6)
+                .mapToObj(i -> newCart(userListPS.get(0), optionListPS.get(i), i + 1))
+                .collect(Collectors.toList());
+
+        List<Cart> user2Carts = IntStream.range(6, 12)
+                .mapToObj(i -> newCart(userListPS.get(1), optionListPS.get(i), 12 - i))
+                .collect(Collectors.toList());
+
+        List<Cart> carts = new ArrayList<>(user1Carts);
+        carts.addAll(user2Carts);
+
+        return carts;
+    }
+
+
+    protected List<Order> orderDummyList(List<User> userListPS) {
+        return userListPS.stream()
+                .flatMap(user -> Stream.generate(() -> newOrder(user)).limit(3))
+                .collect(Collectors.toList());
+    }
+
+
 
     protected List<Option> optionDummyList(List<Product> productListPS) {
         return Arrays.asList(
