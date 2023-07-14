@@ -40,7 +40,7 @@ public class DummyEntity {
                 .build();
     }
 
-    protected Cart newCart(User user, Option option, Integer quantity){
+    protected Cart newCart(User user, Option option, Integer quantity) {
         return Cart.builder()
                 .user(user)
                 .option(option)
@@ -49,14 +49,14 @@ public class DummyEntity {
                 .build();
     }
 
-    protected Order newOrder(User user){
+    protected Order newOrder(User user) {
         return Order.builder()
                 .user(user)
                 .id(1)
                 .build();
     }
 
-    protected Item newItem(Cart cart, Order order){
+    protected Item newItem(Cart cart, Order order) {
         return Item.builder()
                 .order(order)
                 .option(cart.getOption())
