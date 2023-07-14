@@ -777,6 +777,1234 @@ API 문서의 응답 결과를 postman을 통해 검증하였다.
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
+## **과제명**
+<details>
+<summary>
+1번, 2번 과제 동시 제출(Hibernate로 바로 비교하기 위함)
+
+1. 레포지토리 단위테스트를 구현하여 소스코드를 제출하시오.  
+
+2. 쿼리를 테스트하면서 가장 좋은 쿼리를 작성해보시오.
+</summary>
+
+## 장바구니
+    
+### 1. 장바구니 담기(중복 포함)
+given
+
+    유저 정보, saveDTO(옵션 id, 수량)
+
+when
+
+    기존 장바구니 목록에 더한다  
+    가정  
+    이미 등록한 제품이라면? 추가해야하는데 이걸 중복되게 할 수 있는가  
+    아니면 기존에서 찾은다음 추가하는 별도의 로직이 필요한가  
+    결론  
+    기존 장바구니에 있는 목록과 없는 목록을 분리
+
+**주요 로직**
+1. 중복 장바구니 조회 및 담기
+2. 남은 장바구니 담기
+
+구현 및 결과  
+테스트 코드
+
+```java
+@Test
+public void cart_included_duplication_add_test() throws Exception  {
+    // given
+    // 유저 정보, saveDTO 가 주어지고 saveDTO는 일붜 중복된 데이터이다.
+    int id = 1;
+    CartRequest.SaveDTO saveDTO1 = new CartRequest.SaveDTO();
+    saveDTO1.setOptionId(3);
+    saveDTO1.setQuantity(5);
+
+    CartRequest.SaveDTO saveDTO2 = new CartRequest.SaveDTO();
+    saveDTO2.setOptionId(4);
+    saveDTO2.setQuantity(5);
+
+    List<CartRequest.SaveDTO> saveDTOs = new ArrayList<>(Arrays.asList(saveDTO1, saveDTO2));
+
+    // when
+    // 유저 정보를 조회하고 장바구니에 담게되면
+    User user = userJPARepository.findById(id).orElse(null);
+    Assertions.assertNotNull(user);
+    List<Integer> ids =  saveDTOs.stream()
+            .map(x-> new Integer(x.getOptionId()))
+            .collect(Collectors.toList());
+    Assertions.assertFalse(ids.isEmpty());
+    em.clear();
+
+    // 중복된 장바구니 조회 및 담기
+    System.out.println("중복된 장바구니 조회 및 담기");
+    List<Cart> carts =  new ArrayList<>();
+    cartJPARepository.findDuplicatedCartsByOptionsIds(user.getId(), ids).forEach(x->{
+        System.out.println("option id : "+x.getId());
+        CartRequest.SaveDTO saveDTO = saveDTOs.stream()
+                .filter(y-> Objects.equals(y.getOptionId(), x.getOption().getId()))
+                .findFirst()
+                .orElse(null);
+
+        Assertions.assertNotNull(saveDTO);
+        saveDTOs.remove(saveDTO);
+
+        Assertions.assertNotNull(saveDTOs);
+        Option findOption = optionJPARepository.findById(saveDTO.getOptionId()).orElse(null);
+        Assertions.assertNotNull(findOption);
+        x.update(x.getQuantity()+saveDTO.getQuantity(), findOption.getPrice());
+        carts.add(x);
+    });
+
+    // 나머지 장바구니 담기
+    System.out.println("나머지 장바구니 담기");
+    saveDTOs.forEach(System.out::println);
+    saveDTOs.forEach(x->{
+        Option findOption = optionJPARepository.findById(x.getOptionId()).orElse(null);
+        Assertions.assertNotNull(findOption);
+        carts.add(newCart(user, findOption, x.getQuantity()));
+    });
+    System.out.println("장바구니 추가");
+    cartJPARepository.saveAll(carts);
+
+    // then
+    // 정상적으로 담겨야 한다.
+    System.out.println("담은 장바구니 검사");
+    List<Cart> findCarts = cartJPARepository.findCartByUserId(user.getId());
+    findCarts.forEach(x-> {
+        Cart first = x;
+        Option findOption = first.getOption();
+        Product findProduct = findOption.getProduct();
+        findProduct = Product.builder()
+                .productName(findProduct.getProductName())
+                .image(findProduct.getImage())
+                .id(findProduct.getId())
+                .price(findProduct.getPrice())
+                .description(findProduct.getDescription())
+                .build();
+        findOption = Option.builder()
+                .optionName(findOption.getOptionName())
+                .product(findProduct)
+                .price(findOption.getPrice())
+                .id(findOption.getId())
+                .build();
+        try {
+            System.out.println(x.getQuantity() + " : " + om.writeValueAsString(findOption));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    });
+}
+```
+
+커스텀 쿼리문
+
+```java
+@Query("select c " +
+        "from Cart c " +
+        "join fetch c.option o " +
+        "where c.user.id = :user_id and o.id in (:option_ids)")
+List<Cart> findDuplicatedCartsByOptionsIds(@Param("user_id")int id, @Param("option_ids") List<Integer> ids);
+```
+
+Hibernate 결과
+
+```java
+Hibernate:
+select
+    user0_.id as id1_5_0_,
+    user0_.email as email2_5_0_,
+    user0_.password as password3_5_0_,
+    user0_.roles as roles4_5_0_,
+    user0_.username as username5_5_0_
+from
+    user_tb user0_
+where
+    user0_.id=?
+중복된 장바구니 조회 및 담기
+Hibernate:
+select
+    cart0_.id as id1_0_0_,
+    option1_.id as id1_2_1_,
+    cart0_.option_id as option_i4_0_0_,
+    cart0_.price as price2_0_0_,
+    cart0_.quantity as quantity3_0_0_,
+    cart0_.user_id as user_id5_0_0_,
+    option1_.option_name as option_n2_2_1_,
+    option1_.price as price3_2_1_,
+    option1_.product_id as product_4_2_1_
+from
+    cart_tb cart0_
+inner join
+    option_tb option1_
+        on cart0_.option_id=option1_.id
+where
+    cart0_.user_id=?
+    and (
+        option1_.id in (
+            ? , ?
+        )
+    )
+option id : 3
+나머지 장바구니 담기
+CartRequest.SaveDTO(optionId=4, quantity=5)
+Hibernate:
+select
+    option0_.id as id1_2_0_,
+    option0_.option_name as option_n2_2_0_,
+    option0_.price as price3_2_0_,
+    option0_.product_id as product_4_2_0_
+from
+    option_tb option0_
+where
+    option0_.id=?
+장바구니 추가
+Hibernate:
+insert
+into
+    cart_tb
+    (id, option_id, price, quantity, user_id)
+values
+    (default, ?, ?, ?, ?)
+담은 장바구니 검사
+Hibernate:
+update
+    cart_tb
+set
+    option_id=?,
+    price=?,
+    quantity=?,
+    user_id=?
+where
+    id=?
+Hibernate:
+select
+    cart0_.id as id1_0_0_,
+    option1_.id as id1_2_1_,
+    product2_.id as id1_4_2_,
+    cart0_.option_id as option_i4_0_0_,
+    cart0_.price as price2_0_0_,
+    cart0_.quantity as quantity3_0_0_,
+    cart0_.user_id as user_id5_0_0_,
+    option1_.option_name as option_n2_2_1_,
+    option1_.price as price3_2_1_,
+    option1_.product_id as product_4_2_1_,
+    product2_.description as descript2_4_2_,
+    product2_.image as image3_4_2_,
+    product2_.price as price4_4_2_,
+    product2_.product_name as product_5_4_2_
+from
+    cart_tb cart0_
+inner join
+    option_tb option1_
+        on cart0_.option_id=option1_.id
+inner join
+    product_tb product2_
+        on option1_.product_id=product2_.id
+where
+    cart0_.user_id=?
+```
+
+실행 결과
+
+```java
+5 : {"id":1,"product":{"id":1,"productName":"기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전","description":"","image":"/images/1.jpg","price":1000},"optionName":"01. 슬라이딩 지퍼백 크리스마스에디션 4종","price":10000}
+10 : {"id":2,"product":{"id":1,"productName":"기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전","description":"","image":"/images/1.jpg","price":1000},"optionName":"02. 슬라이딩 지퍼백 플라워에디션 5종","price":10900}
+5 : {"id":3,"product":{"id":1,"productName":"기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전","description":"","image":"/images/1.jpg","price":1000},"optionName":"고무장갑 베이지 S(소형) 6팩","price":9900}
+```
+
+### 2. 장바구니 조회
+given
+
+유저 정보
+
+when & then
+
+유저 정보가 들어간 장바구니 조회  
+
+구현 및 결과  
+테스트 코드
+
+```java
+@Test
+public void cart_without_user_findByUserId() throws JsonProcessingException {
+    // given
+    // userId 가 다음과 같고
+    int id = 1;
+
+    // when
+    // 해당 유저가 가진 장바구니를 찾는다면
+    List<Cart> cartListPs = cartJPARepository.findCartByUserId(id);
+
+    // then
+    // 해당 유저의 장바구니 목록을 출력한다.(유저의 정보가 빠진채로)
+    System.out.println(om.writeValueAsString(cartListPs.get(0).getOption()));
+    System.out.println(cartListPs.get(0).getId());
+    System.out.println(cartListPs.get(0).getQuantity());
+    System.out.println(cartListPs.get(0).getPrice());
+
+    Assertions.assertEquals(cartListPs.get(0).getId(),1);
+    Assertions.assertEquals(cartListPs.get(1).getId(),2);
+    Assertions.assertDoesNotThrow(() -> {
+        Assertions.assertNotNull(om.writeValueAsString(cartListPs.get(0).getOption()));
+        Assertions.assertNotNull(om.writeValueAsString(cartListPs.get(0).getId()));
+        Assertions.assertNotNull(om.writeValueAsString(cartListPs.get(0).getQuantity()));
+        Assertions.assertNotNull(om.writeValueAsString(cartListPs.get(0).getPrice()));
+    });
+    Assertions.assertThrows(InvalidDefinitionException.class,() -> {
+        om.writeValueAsString(cartListPs.get(0).getUser());
+    });
+}
+```
+
+테스트용 쿼리
+
+```java
+@Query("select c " +
+        "from Cart c " +
+        "join fetch c.option o " +
+        "join fetch o.product " +
+        "where c.user.id = :userId")
+List<Cart> findCartByUserId(@Param("userId") int userId);
+```
+
+hibernate 결과
+
+```java
+select
+    cart0_.id as id1_0_0_,
+    option1_.id as id1_2_1_,
+    product2_.id as id1_4_2_,
+    cart0_.option_id as option_i4_0_0_,
+    cart0_.price as price2_0_0_,
+    cart0_.quantity as quantity3_0_0_,
+    cart0_.user_id as user_id5_0_0_,
+    option1_.option_name as option_n2_2_1_,
+    option1_.price as price3_2_1_,
+    option1_.product_id as product_4_2_1_,
+    product2_.description as descript2_4_2_,
+    product2_.image as image3_4_2_,
+    product2_.price as price4_4_2_,
+    product2_.product_name as product_5_4_2_
+from
+    cart_tb cart0_
+inner join
+    option_tb option1_
+        on cart0_.option_id=option1_.id
+inner join
+    product_tb product2_
+        on option1_.product_id=product2_.id
+where
+    cart0_.user_id=?
+```
+
+### 3. 장바구니 갱신
+
+given
+
+유저 정보, updateDTO(옵션 id, 수량)  
+
+when & then  
+
+장바구니에서 해당 옵션의 수량을 갱신  
+
+구현 및 결과  
+
+```java
+@Test
+public void cart_update_test() throws Exception  {
+    // given
+    // 유저 정보, saveDTO 가 주어지고
+    int id = 1;
+    CartRequest.UpdateDTO saveDTO1 = new CartRequest.UpdateDTO();
+    saveDTO1.setCartId(1);
+    saveDTO1.setQuantity(30);
+
+    CartRequest.UpdateDTO saveDTO2 = new CartRequest.UpdateDTO();
+    saveDTO2.setCartId(2);
+    saveDTO2.setQuantity(20);
+
+    List<CartRequest.UpdateDTO> saveDTOs = new ArrayList<>(Arrays.asList(saveDTO1, saveDTO2));
+
+    // when
+    // 유저 정보를 조회하고 장바구니에 담게되면
+    User user = userJPARepository.findById(id).orElse(null);
+    Assertions.assertNotNull(user);
+
+    List<Integer> ids =  saveDTOs.stream()
+            .map(x-> new Integer(x.getCartId()))
+            .collect(Collectors.toList());
+    Assertions.assertFalse(ids.isEmpty());
+
+    // 중복된 장바구니 조회 및 담기
+    System.out.println(ids);
+    List<Cart>carts = new ArrayList<>();
+    cartJPARepository.findDuplicatedCartsByOptionsIds(user.getId(), ids).forEach(x->{
+        System.out.println("option id : "+x.getId());
+        CartRequest.UpdateDTO saveDTO = saveDTOs.stream()
+                .filter(y-> Objects.equals(y.getCartId(), x.getOption().getId()))
+                .findFirst()
+                .orElse(null);
+        Assertions.assertNotNull(saveDTO);
+
+        saveDTOs.remove(saveDTO);
+
+        Option findOption = optionJPARepository.findById(saveDTO.getCartId()).orElse(null);
+        Assertions.assertNotNull(findOption);
+        x.update(saveDTO.getQuantity(), findOption.getPrice()*saveDTO.getQuantity());
+        carts.add(x);
+    });
+
+    System.out.println("장바구니 추가");
+    if (saveDTOs.isEmpty()) {
+        cartJPARepository.saveAll(carts);
+    } else {
+        System.out.println(saveDTOs);
+        throw new Exception("기존에 없던 옵션을 추가하려고 했습니다.");
+    }
+
+    // then
+    // 정상적으로 담겨야 한다.
+    List<Cart> findCarts = cartJPARepository.findCartByUserId(user.getId());
+    findCarts.forEach(x-> {
+        Cart first = x;
+        Option findOption = first.getOption();
+        Product findProduct = findOption.getProduct();
+        findProduct = Product.builder()
+                .productName(findProduct.getProductName())
+                .image(findProduct.getImage())
+                .id(findProduct.getId())
+                .price(findProduct.getPrice())
+                .description(findProduct.getDescription())
+                .build();
+        findOption = Option.builder()
+                .optionName(findOption.getOptionName())
+                .product(findProduct)
+                .price(findOption.getPrice())
+                .id(findOption.getId())
+                .build();
+        try {
+            System.out.println(x.getQuantity() + " : " + om.writeValueAsString(findOption));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    });
+}
+```
+
+커스텀 쿼리문
+
+```java
+@Query("select c " +
+        "from Cart c " +
+        "join fetch c.option o " +
+        "where c.user.id = :user_id and o.id in (:option_ids)")
+List<Cart> findDuplicatedCartsByOptionsIds(@Param("user_id")int id, @Param("option_ids") List<Integer> ids);
+```
+
+```java
+@Query("select c " +
+        "from Cart c " +
+        "join fetch c.option o " +
+        "join fetch o.product " +
+        "where c.user.id = :userId")
+List<Cart> findCartByUserId(@Param("userId") int userId);
+```
+
+Hibernate 결과
+
+```java
+Hibernate:
+select
+    user0_.id as id1_5_0_,
+    user0_.email as email2_5_0_,
+    user0_.password as password3_5_0_,
+    user0_.roles as roles4_5_0_,
+    user0_.username as username5_5_0_
+from
+    user_tb user0_
+where
+    user0_.id=?
+[1, 2]
+Hibernate:
+select
+    cart0_.id as id1_0_0_,
+    option1_.id as id1_2_1_,
+    cart0_.option_id as option_i4_0_0_,
+    cart0_.price as price2_0_0_,
+    cart0_.quantity as quantity3_0_0_,
+    cart0_.user_id as user_id5_0_0_,
+    option1_.option_name as option_n2_2_1_,
+    option1_.price as price3_2_1_,
+    option1_.product_id as product_4_2_1_
+from
+    cart_tb cart0_
+inner join
+    option_tb option1_
+        on cart0_.option_id=option1_.id
+where
+    cart0_.user_id=?
+    and (
+        option1_.id in (
+            ? , ?
+        )
+    )
+option id : 1
+option id : 2
+장바구니 추가
+Hibernate:
+update
+    cart_tb
+set
+    option_id=?,
+    price=?,
+    quantity=?,
+    user_id=?
+where
+    id=?
+Hibernate:
+update
+    cart_tb
+set
+    option_id=?,
+    price=?,
+    quantity=?,
+    user_id=?
+where
+    id=?
+```
+
+테스트 결과
+
+```java
+30 : {"id":1,"product":{"id":1,"productName":"기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전","description":"","image":"/images/1.jpg","price":1000},"optionName":"01. 슬라이딩 지퍼백 크리스마스에디션 4종","price":10000}
+20 : {"id":2,"product":{"id":1,"productName":"기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전","description":"","image":"/images/1.jpg","price":1000},"optionName":"02. 슬라이딩 지퍼백 플라워에디션 5종","price":10900}
+10 : {"id":3,"product":{"id":1,"productName":"기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전","description":"","image":"/images/1.jpg","price":1000},"optionName":"고무장갑 베이지 S(소형) 6팩","price":9900}
+```
+
+4. 장바구니 비우기
+
+given  
+
+유저 정보  
+
+when & then  
+
+전체 데이터 삭제  
+
+구현 및 결과  
+테스트 코드  
+
+```java
+@Test
+public void delete_by_userId_test() {
+    // given
+    // 유저 id 가 주어지고
+    int id = 1;
+
+    // 다른 장바구니에 간섭여부 확인을 위한 더미데이터
+    int otherUserId = 2;
+    User other = userJPARepository.save(newUser("hello"));
+    List<Product> productListPS = productJPARepository.saveAll(productDummyList());
+    List<Option> optionListPS = optionJPARepository.saveAll(optionDummyList(productListPS));
+    List<Cart> cartListPS = newCarts(other,optionListPS);
+    int otherCartCount = cartListPS.size();
+    cartJPARepository.saveAll(cartListPS);
+    em.clear();
+
+    // when
+    // 유저가 가진 모든 장바구니를 삭제하면
+    User user = userJPARepository.findById(id).orElse(null);
+    Assertions.assertNotNull(user);
+    cartJPARepository.deleteByIds(
+            cartJPARepository.findCartByUserId(user.getId())
+                    .stream()
+                    .map(x -> x.getId())
+                    .collect(Collectors.toList())
+    );
+
+    // then
+    // 장바구니에 남은 옵션이 없어야 한다.
+    Assertions.assertEquals(cartJPARepository.findCartByUserId(user.getId()).size(), 0);
+    other = userJPARepository.findById(otherUserId).orElse(null);
+    Assertions.assertNotNull(other);
+    Assertions.assertEquals(cartJPARepository.findCartByUserId(other.getId()).size(), otherCartCount);
+}
+```
+
+사용된 커스텀 쿼리문
+
+```java
+@Modifying
+@Query("delete from Cart c " +
+        "where c.id in (:ids)")
+void deleteByIds(@Param("ids") List<Integer> ids);
+```
+
+```java
+@Query("select c " +
+        "from Cart c " +
+        "join fetch c.option o " +
+        "join fetch o.product " +
+        "where c.user.id = :userId")
+List<Cart> findCartByUserId(@Param("userId") int userId);
+```
+
+Hibernate 결과
+
+```java
+장바구니 삭제
+Hibernate:
+select
+    user0_.id as id1_5_0_,
+    user0_.email as email2_5_0_,
+    user0_.password as password3_5_0_,
+    user0_.roles as roles4_5_0_,
+    user0_.username as username5_5_0_
+from
+    user_tb user0_
+where
+    user0_.id=?
+Hibernate:
+select
+    cart0_.id as id1_0_0_,
+    option1_.id as id1_2_1_,
+    product2_.id as id1_4_2_,
+    cart0_.option_id as option_i4_0_0_,
+    cart0_.price as price2_0_0_,
+    cart0_.quantity as quantity3_0_0_,
+    cart0_.user_id as user_id5_0_0_,
+    option1_.option_name as option_n2_2_1_,
+    option1_.price as price3_2_1_,
+    option1_.product_id as product_4_2_1_,
+    product2_.description as descript2_4_2_,
+    product2_.image as image3_4_2_,
+    product2_.price as price4_4_2_,
+    product2_.product_name as product_5_4_2_
+from
+    cart_tb cart0_
+inner join
+    option_tb option1_
+        on cart0_.option_id=option1_.id
+inner join
+    product_tb product2_
+        on option1_.product_id=product2_.id
+where
+    cart0_.user_id=?
+Hibernate:
+delete
+from
+    cart_tb
+where
+    id in (
+        ? , ? , ?
+    )
+Hibernate:
+select
+    cart0_.id as id1_0_0_,
+    option1_.id as id1_2_1_,
+    product2_.id as id1_4_2_,
+    cart0_.option_id as option_i4_0_0_,
+    cart0_.price as price2_0_0_,
+    cart0_.quantity as quantity3_0_0_,
+    cart0_.user_id as user_id5_0_0_,
+    option1_.option_name as option_n2_2_1_,
+    option1_.price as price3_2_1_,
+    option1_.product_id as product_4_2_1_,
+    product2_.description as descript2_4_2_,
+    product2_.image as image3_4_2_,
+    product2_.price as price4_4_2_,
+    product2_.product_name as product_5_4_2_
+from
+    cart_tb cart0_
+inner join
+    option_tb option1_
+        on cart0_.option_id=option1_.id
+inner join
+    product_tb product2_
+        on option1_.product_id=product2_.id
+where
+    cart0_.user_id=?
+Hibernate:
+select
+    user0_.id as id1_5_0_,
+    user0_.email as email2_5_0_,
+    user0_.password as password3_5_0_,
+    user0_.roles as roles4_5_0_,
+    user0_.username as username5_5_0_
+from
+    user_tb user0_
+where
+    user0_.id=?
+Hibernate:
+select
+    cart0_.id as id1_0_0_,
+    option1_.id as id1_2_1_,
+    product2_.id as id1_4_2_,
+    cart0_.option_id as option_i4_0_0_,
+    cart0_.price as price2_0_0_,
+    cart0_.quantity as quantity3_0_0_,
+    cart0_.user_id as user_id5_0_0_,
+    option1_.option_name as option_n2_2_1_,
+    option1_.price as price3_2_1_,
+    option1_.product_id as product_4_2_1_,
+    product2_.description as descript2_4_2_,
+    product2_.image as image3_4_2_,
+    product2_.price as price4_4_2_,
+    product2_.product_name as product_5_4_2_
+from
+    cart_tb cart0_
+inner join
+    option_tb option1_
+        on cart0_.option_id=option1_.id
+inner join
+    product_tb product2_
+        on option1_.product_id=product2_.id
+where
+    cart0_.user_id=?
+```
+
+
+## 주문
+
+### 1. 결제
+
+given  
+
+유저 정보, 기존 카트 정보  
+
+when & then  
+결재 등록  
+
+구현 및 결과  
+
+```java
+@Test
+public void order_test() {
+    // given
+    // 사용자 정보와 카트 정보가 주어졌을 때
+    User user = userJPARepository.save(newUser("hello"));
+    List<Option> optionListPS = optionJPARepository.findAll();
+    List<Cart> cartListPS = new ArrayList<>();
+    if (optionListPS.size() > 1) {
+        for(int i=0;i<2;i++) {
+            cartListPS.add(newCart(user, optionListPS.get(i), 3));
+        }
+    }
+    cartJPARepository.saveAll(cartListPS);
+
+    // when
+    // 주문을 저장하고 기존의 장바구니를 비우게 되면
+    int cartCountBeforeDelete = cartJPARepository.countByUserId(user.getId());
+    int orderCountBeforeDelete = orderJPARepository.countByUserId(user.getId());
+    int itemCountBeforeDelete = itemJPARepository.countByUserId(user.getId());
+    Order order = orderJPARepository.save(newOrder(user));
+    itemJPARepository.saveAll(cartListPS.stream()
+            .map(x->newItem(x,order))
+            .collect(Collectors.toList()));
+    cartJPARepository.deleteByUserId(user.getId());
+
+    // then
+    // 비워진 장바구니와 늘어난 주문과, 아이템을 볼 수 있다.
+    int cartCountNumAfterDelete = cartJPARepository.countByUserId(user.getId());
+    int orderCountAfterDelete = orderJPARepository.countByUserId(user.getId());
+    int itemCountAfterDelete = itemJPARepository.countByUserId(user.getId());
+    System.out.println("cart : " + cartCountBeforeDelete + "->" + cartCountNumAfterDelete);
+    System.out.println("order : " + orderCountBeforeDelete + "->" + orderCountAfterDelete);
+    System.out.println("item : " + itemCountBeforeDelete + "->" + itemCountAfterDelete);
+}
+```
+
+사용된 쿼리문
+
+```java
+@Query("select count(*)" +
+        "from Item i " +
+        "where i.order.user.id = :user_id")
+int countByUserId(@Param("user_id") int user_id);
+```
+
+```java
+@Query("select count(*)" +
+        "from Order o " +
+        "where o.user.id = :user_id")
+int countByUserId(@Param("user_id") int user_id);
+```
+
+```java
+@Modifying
+@Query("delete from Cart c " +
+        "where c.user.id in :id")
+void deleteByUserId(@Param("id") int id);
+```
+
+Hibernate 결과
+
+```java
+Hibernate:
+insert
+into
+    user_tb
+    (id, email, password, roles, username)
+values
+    (default, ?, ?, ?, ?)
+Hibernate:
+select
+    option0_.id as id1_2_,
+    option0_.option_name as option_n2_2_,
+    option0_.price as price3_2_,
+    option0_.product_id as product_4_2_
+from
+    option_tb option0_
+Hibernate:
+insert
+into
+    cart_tb
+    (id, option_id, price, quantity, user_id)
+values
+    (default, ?, ?, ?, ?)
+Hibernate:
+insert
+into
+    cart_tb
+    (id, option_id, price, quantity, user_id)
+values
+    (default, ?, ?, ?, ?)
+Hibernate:
+select
+    count(*) as col_0_0_
+from
+    cart_tb cart0_
+where
+    cart0_.user_id=?
+Hibernate:
+select
+    count(*) as col_0_0_
+from
+    order_tb order0_
+where
+    order0_.user_id=?
+Hibernate:
+select
+    count(*) as col_0_0_
+from
+    item_tb item0_ cross
+join
+    order_tb order1_
+where
+    item0_.order_id=order1_.id
+    and order1_.user_id=?
+Hibernate:
+insert
+into
+    order_tb
+    (id, user_id)
+values
+    (default, ?)
+Hibernate:
+insert
+into
+    item_tb
+    (id, option_id, order_id, price, quantity)
+values
+    (default, ?, ?, ?, ?)
+Hibernate:
+insert
+into
+    item_tb
+    (id, option_id, order_id, price, quantity)
+values
+    (default, ?, ?, ?, ?)
+Hibernate:
+delete
+from
+    cart_tb
+where
+    user_id in (
+        ?
+    )
+Hibernate:
+select
+    count(*) as col_0_0_
+from
+    cart_tb cart0_
+where
+    cart0_.user_id=?
+Hibernate:
+select
+    count(*) as col_0_0_
+from
+    order_tb order0_
+where
+    order0_.user_id=?
+Hibernate:
+select
+    count(*) as col_0_0_
+from
+    item_tb item0_ cross
+join
+    order_tb order1_
+where
+    item0_.order_id=order1_.id
+    and order1_.user_id=?
+```
+
+실행 결과
+
+```java
+cart : 2->0
+order : 0->1
+item : 0->2
+```
+
+2. 주문 결과 확인
+
+given
+
+유저 정보, 주문 인덱스  
+문제점이 index를 통해서 해당 주문을 가져오는건데  
+jpql은 from 에 subquery가 동작하지 않는다.  
+또한 from 으로 가져오는 테이블을 index에 적용할 수 없다 . 
+그렇다면 차선책이 유저기반으로 전부 찾아오고 인덱싱해서 추출  
+
+when & then  
+
+find by userId and id
+
+구현 및 결과
+
+테스트 코드
+
+```java
+@Test
+public void findOrderItemByUser_test() throws Exception {
+    // given
+    // 유저 정보와 주문 인덱스를 통해서
+    int id = 1;
+    int orderIndex = 2;
+
+    // 사용자의 주문을 하나 더 추가
+    User prevUser = userJPARepository.findById(id).orElse(null);
+    Assertions.assertNotNull(prevUser);
+    List<Option> optionListPS2 = optionJPARepository.findAll();
+    List<Cart> cartListPS2 = new ArrayList<>();
+    if (optionListPS2.size() > 8) {
+        for(int i=4;i<7;i++) {
+            cartListPS2.add(newCart(prevUser, optionListPS2.get(i), 40));
+        }
+    }
+    cartJPARepository.saveAll(cartListPS2);
+    orderJPARepository.save(newOrder(prevUser));
+    em.clear();
+
+    // when
+    // 주문 아이템을 최근 순서로 검색하면
+    User user = userJPARepository.findById(id).orElse(null);
+    Assertions.assertNotNull(user);
+    List<Order> orders = orderJPARepository.findByUserId(user.getId());
+    System.out.println("orders size : " + orders.size());
+    List<Item> item = null;
+    if (orderIndex > 0 && orders.size() > orderIndex-1) {
+        int orderId = orders.indexOf(orders.size() - orderIndex);
+            item = itemJPARepository.findByOrderId(orderId);
+    } else {
+        throw new Exception("찾을 없는 인덱스 입니다.");
+    }
+
+    // then
+    // 해당 주문들을 가져온 것을 알 수 있다.
+    Assertions.assertNotNull(item);
+    item.forEach(x->{
+        System.out.println("order id : " + x.getOrder().getId() + ", option id : " + x.getOption().getId());
+    });
+}
+```
+
+사용된 쿼리문
+
+```java
+@Query("select count(*)" +
+        "from Order o " +
+        "where o.user.id = :user_id")
+int countByUserId(@Param("user_id") int user_id);
+```
+
+```java
+@Query("select i " +
+        "from Item i " +
+        "where i.order.id = :order_id")
+List<Item> findByOrderId(@Param("order_id") int order_id);
+```
+
+Hibernate 결과
+
+```java
+Hibernate:
+select
+    user0_.id as id1_5_0_,
+    user0_.email as email2_5_0_,
+    user0_.password as password3_5_0_,
+    user0_.roles as roles4_5_0_,
+    user0_.username as username5_5_0_
+from
+    user_tb user0_
+where
+    user0_.id=?
+Hibernate:
+select
+    option0_.id as id1_2_,
+    option0_.option_name as option_n2_2_,
+    option0_.price as price3_2_,
+    option0_.product_id as product_4_2_
+from
+    option_tb option0_
+Hibernate:
+insert
+into
+    cart_tb
+    (id, option_id, price, quantity, user_id)
+values
+    (default, ?, ?, ?, ?)
+Hibernate:
+insert
+into
+    cart_tb
+    (id, option_id, price, quantity, user_id)
+values
+    (default, ?, ?, ?, ?)
+Hibernate:
+insert
+into
+    cart_tb
+    (id, option_id, price, quantity, user_id)
+values
+    (default, ?, ?, ?, ?)
+Hibernate:
+insert
+into
+    order_tb
+    (id, user_id)
+values
+    (default, ?)
+Hibernate:
+select
+    user0_.id as id1_5_0_,
+    user0_.email as email2_5_0_,
+    user0_.password as password3_5_0_,
+    user0_.roles as roles4_5_0_,
+    user0_.username as username5_5_0_
+from
+    user_tb user0_
+where
+    user0_.id=?
+Hibernate:
+select
+    order0_.id as id1_3_0_,
+    user1_.id as id1_5_1_,
+    order0_.user_id as user_id2_3_0_,
+    user1_.email as email2_5_1_,
+    user1_.password as password3_5_1_,
+    user1_.roles as roles4_5_1_,
+    user1_.username as username5_5_1_
+from
+    order_tb order0_
+inner join
+    user_tb user1_
+        on order0_.user_id=user1_.id
+where
+    order0_.user_id=?
+orders size : 2
+Hibernate:
+select
+    item0_.id as id1_1_,
+    item0_.option_id as option_i4_1_,
+    item0_.order_id as order_id5_1_,
+    item0_.price as price2_1_,
+    item0_.quantity as quantity3_1_
+from
+    item_tb item0_
+where
+    item0_.order_id=?
+```
+
+
+### 제품
+
+## 1. 전체 상품 목록 조회(페이징 구현)
+
+given
+
+page, size가 주어지면
+
+when & then  
+
+find all
+
+테스트 코드
+
+```java
+@Test
+public void product_findAll_test() throws JsonProcessingException {
+    // given
+    int page = 0;
+    int size = 9;
+
+    // when
+    PageRequest pageRequest = PageRequest.of(page, size);
+    Page<Product> productPG = productJPARepository.findAll(pageRequest);
+    String responseBody = om.writeValueAsString(productPG);
+    System.out.println("테스트 : "+responseBody);
+
+    // then
+    Assertions.assertThat(productPG.getTotalPages()).isEqualTo(2);
+    Assertions.assertThat(productPG.getSize()).isEqualTo(9);
+    Assertions.assertThat(productPG.getNumber()).isEqualTo(0);
+    Assertions.assertThat(productPG.getTotalElements()).isEqualTo(15);
+    Assertions.assertThat(productPG.isFirst()).isEqualTo(true);
+    Assertions.assertThat(productPG.getContent().get(0).getId()).isEqualTo(1);
+    Assertions.assertThat(productPG.getContent().get(0).getProductName()).isEqualTo("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전");
+    Assertions.assertThat(productPG.getContent().get(0).getDescription()).isEqualTo("");
+    Assertions.assertThat(productPG.getContent().get(0).getImage()).isEqualTo("/images/1.jpg");
+    Assertions.assertThat(productPG.getContent().get(0).getPrice()).isEqualTo(1000);
+}
+```
+
+Hibernate 결과
+
+```java
+Hibernate:
+select
+    product0_.id as id1_4_,
+    product0_.description as descript2_4_,
+    product0_.image as image3_4_,
+    product0_.price as price4_4_,
+    product0_.product_name as product_5_4_
+from
+    product_tb product0_ limit ?
+Hibernate:
+select
+    count(product0_.id) as col_0_0_
+from
+    product_tb product0_
+```
+
+## 2. 개별 상품 상세 조회
+
+given
+
+제품 인덱스
+
+when & then
+
+find by id
+
+테스트 구현
+
+```java
+@Test
+public void product_findById_and_option_findByProductId_lazy_test() throws JsonProcessingException {
+    // given
+    int id = 1;
+
+    // when
+    Product productPS = productJPARepository.findById(id).orElseThrow(
+            () -> new RuntimeException("상품을 찾을 수 없습니다")
+    );
+
+    // product 상품은 영속화 되어 있어서, 아래에서 조인해서 데이터를 가져오지 않아도 된다.
+    List<Option> optionListPS = optionJPARepository.findByProductId(id); // Lazy
+
+    String responseBody1 = om.writeValueAsString(productPS);
+    String responseBody2 = om.writeValueAsString(optionListPS);
+
+    System.out.println("테스트 : "+ PrintUtils.getPrettyString(responseBody1));
+    System.out.println("테스트 : "+ PrintUtils.getPrettyString(responseBody2));
+
+    // then
+}
+```
+
+Hibernate 결과
+
+```java
+Hibernate:
+select
+    product0_.id as id1_4_0_,
+    product0_.description as descript2_4_0_,
+    product0_.image as image3_4_0_,
+    product0_.price as price4_4_0_,
+    product0_.product_name as product_5_4_0_
+from
+    product_tb product0_
+where
+    product0_.id=?
+Hibernate:
+select
+    option0_.id as id1_2_,
+    option0_.option_name as option_n2_2_,
+    option0_.price as price3_2_,
+    option0_.product_id as product_4_2_
+from
+    option_tb option0_
+left outer join
+    product_tb product1_
+        on option0_.product_id=product1_.id
+where
+    product1_.id=?
+```
+
+사용된 쿼리
+
+```java
+@Query("select o from Option o " +
+        "join fetch o.product " +
+        "where o.product.id = :productId")
+List<Option> mFindByProductId(@Param("productId") int productId);
+```
+
+Hibernate 결과
+
+```java
+Hibernate:
+select
+    option0_.id as id1_2_0_,
+    product1_.id as id1_4_1_,
+    option0_.option_name as option_n2_2_0_,
+    option0_.price as price3_2_0_,
+    option0_.product_id as product_4_2_0_,
+    product1_.description as descript2_4_1_,
+    product1_.image as image3_4_1_,
+    product1_.price as price4_4_1_,
+    product1_.product_name as product_5_4_1_
+from
+    option_tb option0_
+inner join
+    product_tb product1_
+        on option0_.product_id=product1_.id
+where
+    option0_.product_id=?
+```
+</details>
+
+<details>
+<summary>3. 과제 상세 검사</summary>
+
+>- 레포지토리 단위테스트가 구현되었는가?  
+>   - 각 컨트롤러의 요청에 매칭될 수 있도록 레포지토리에서 service를 고려하여 테스트 하였다.
+>- 테스트 메서드끼리 유기적으로 연결되지 않았는가? (테스트는 격리성이 필요하다)
+>   -  각각의 동작을 구현하기 위해 생성되었지만, 사용하는 레포지토리 메서드들은 완전히 독립되지는 못했다.
+>- Persistene Context를 clear하여서 테스트가 구현되었는가? (더미데이터를 JPA를 이용해서 insert 할 예정인데, 레포지토리 테스트시에 영속화된 데이터 때문에 쿼리를 제대로 보지 못할 수 있기 때문에)
+>   - beforeEach를 통해서 em.clear()를 수행했고, 추가적으로 각 given 단계에서 생성하는 더미데이터 생성을 마친 이후에도 em.clear()를 추가했다.
+>- 테스트 코드의 쿼리 관련된 메서드가 너무 많은 select를 유발하지 않는지? (적절한 한방쿼리, 효율적인 in query, N+1 문제 등이 해결된 쿼리)
+>   - 모든 왜래키들은 lazy fetch로 설정했고, join fecth 구문을 활용하여 한방쿼리를 작성할 수 있도록 했다.
+>   - 또한 추가적인 select 문을 해결할 수 있었고, jpql 과 native query를 사용하여 최적화를 할 수 있도록 했다.
+>- BDD 패턴으로 구현되었는가? given, when, then
+>   - given(어떤 정보가 주어졌을 때 이를 기반으로)
+>   - when(동작을 수행하면)
+>   - then(동작이 적절하게 의도한데로 수행됨을 확인할 수 있다.)
+>   - 와 같은 하나의 문장형으로 BDD를 구현했다.
+</details>
+
 # 4주차
 
 카카오 테크 캠퍼스 2단계 - BE - 4주차 클론 과제
