@@ -48,13 +48,13 @@ public class CartJPARepositoryTest extends DummyEntity {
         em.createNativeQuery("ALTER TABLE option_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
         em.createNativeQuery("ALTER TABLE cart_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
 
-        User user = userJPARepository.save(newUser("ssar"));
+        User userPS = userJPARepository.save(newUser("ssar"));
 
         List<Product> productListPS = productJPARepository.saveAll(productDummyList());
         List<Option> optionListPS = optionJPARepository.saveAll(optionDummyList(productListPS));
 
-        cartJPARepository.save(newCart(user, optionListPS.get(0), 5));
-        cartJPARepository.save(newCart(user, optionListPS.get(1), 5));
+        cartJPARepository.save(newCart(userPS, optionListPS.get(0), 5));
+        cartJPARepository.save(newCart(userPS, optionListPS.get(1), 5));
 
         em.clear();
     }
