@@ -16,7 +16,7 @@ public class UserJPARepositoryTest extends DummyEntity {
     private UserJPARepository userJPARepository;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         userJPARepository.save(newUser("ssar"));
     }
 
