@@ -47,9 +47,6 @@ public class OrderJPARepositoryTest extends DummyEntity {
     // item JPA
     @Autowired
     private ItemJPARepository itemJPARepository;
-    // 파싱
-    @Autowired
-    private ObjectMapper objectMapper;
 
     // setup
     @BeforeEach

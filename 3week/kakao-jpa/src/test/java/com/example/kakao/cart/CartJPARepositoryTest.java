@@ -37,9 +37,6 @@ public class CartJPARepositoryTest extends DummyEntity {
     // cart JPA
     @Autowired
     private CartJPARepository cartJPARepository;
-    // 파싱
-    @Autowired
-    private ObjectMapper objectMapper;
 
     // setup
     @BeforeEach
