@@ -28,9 +28,9 @@
 (기능 8) [POST] 장바구니 담기 : `/carts/add`
 (기능 9) [POST] 장바구니 보기 : `/carts`
 (기능10) 장바구니 상품 옵션 확인 및 수량 결정 : (Front-end Side)
-(기능11) [POST] 주문 : `carts/update`
-(기능12) [POST] 결제 : `orders/save`
-(기능13) [GET] 주문 결과 확인 : `orders/{orders_id}`
+(기능11) [POST] 주문 : `/carts/update`
+(기능12) [POST] 결제 : `/orders/save`
+(기능13) [GET] 주문 결과 확인 : `/orders/{orders_id}`
 
 ```
 
@@ -39,7 +39,7 @@
 ```
 내용이 길어져서 Week1_#3.pdf 파일로 분리
 ```
-(링크를 걸어보려고 했지만 잘 작동하지 않음 ㅠㅠ) [Week1_#3.pdf](Week1_#3.pdf)  
+(링크를 걸어보려고 했지만 잘 작동하지 않음 ㅠㅠ) [Week1_#3.pdf](/week1/Week1_#3.pdf)  
  
 <br>
 
@@ -47,16 +47,13 @@
 ```
 Week1_ERD.png 파일에 첨부
 ```
-(링크) [Week1_ERD.png](Week1_ERD.png)  
+(링크) [Week1_ERD.png](/week1/Week1_ERD.png)  
 ![Week1_ERD](https://github.com/Rizingblare/step2-BE-kakao-shop/assets/77480122/f389dd2a-bfe8-4b57-a7cc-bb465696bbd0)
 
 
 <br>
 
----
-```
-Week1_END
-```
+### ~ Week1_Assignment_END
 ---
 
 <br>
@@ -106,6 +103,43 @@ Week1_END
 
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
+
+<br>
+
+---
+
+<br>
+
+## 2주차 과제  
+
+#### ( 전체 API 주소 설계 )
+```
+
+(기능 1) [POST] 회원가입 : `/join`
+(기능 2) [POST] 로그인 : `/login`
+(기능 3) [GET] 전체 상품 목록 조회 : `/products`
+(기능 4) [GET] 개별 상품 상세 조회 : `/products/{product_id}`
+(기능 5) [POST] 장바구니 담기 : `/carts`
+(기능 6) [GET] 장바구니 보기 : `/carts`
+(기능 7) [PUT] 주문 (장바구니 수정) : `/carts`
+(기능 8) [POST] 결제하기 : `/orders`
+(기능 9) [GET] 주문 결과 확인 : `/orders/{orders_id}`
+
+```
+
+
+#### ( Mock API Controller 구현)
+
+Link : [OrderRespFindByIdDTO](week2/src/main/java/com/example/kakaoshop/order/response/OrderRespFindByIdDTO.java)  
+Link : [OrderResponseDTO](week2/src/main/java/com/example/kakaoshop/order/response/OrderResponseDTO.java)  
+Link : [ProductDTO](week2/src/main/java/com/example/kakaoshop/order/response/ProductDTO.java)  
+Link : [OrderItemDTO](week2/src/main/java/com/example/kakaoshop/order/response/OrderItemDTO.java)  
+Link : [OrderRestController](week2/src/main/java/com/example/kakaoshop/order/OrderRestController.java)  
+ 
+<br>
+
+### ~ Week2_Assignment_END
+---
 
 <br>
 
