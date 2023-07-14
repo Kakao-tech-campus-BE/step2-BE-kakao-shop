@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -62,14 +63,54 @@ public class DummyEntity {
                 .build();
     }
 
+    protected Order newOrder(int id, User user){
+        return Order.builder()
+                .id(id)
+                .user(user)
+                .build();
+    }
+
+
+    /*OrderItem에서 일괄로 Order를 만들어 User와 연결하는 메서드를 만들면서 옳지 않다고 판단하였고
+    따라서 삭제를 하려다가 혹시나 레포지토리 테스트를 할때 일반적으로(변수로) 구현하고 싶기에 만들어 봤지만 불편한것 같습니다.
+    newSimpleOrder, orderSimpleDummyList, OrderJPARepositoryTest의 setUp 에 사용됨
+     */
     private int orderId = 1;
-    protected Order newOrder(User user){
+    protected Order newSimpleOrder(User user){
         return Order.builder()
                 .user(user)
                 .id(orderId++)
                 .build();
     }
+    protected List<Order> orderSimpleDummyList(List<User> userListPS) {
+        return userListPS.stream()
+                .flatMap(user -> Stream.generate(() -> newSimpleOrder(user)).limit(3))
+                .collect(Collectors.toList());
+    }
 
+    protected List<Order> orderDummyObject(User user) {
+        return Arrays.asList(
+                newOrder(1,user),
+                newOrder(2,user)
+        );
+    }
+    protected List<Cart> cartDummyObject(User user, List<Option>  optionListPS) {
+        return Arrays.asList(
+                newCart(user, optionListPS.get(0),5),
+                newCart(user, optionListPS.get(5),5),
+                newCart(user, optionListPS.get(10),5),
+                newCart(user, optionListPS.get(15),5)
+        );
+    }
+
+    protected List<Item> orderItemDummyList(List<Cart> cartListPS, List<Order> orderListPS){
+        return Arrays.asList(
+                newItem(cartListPS.get(0),orderListPS.get(0)),
+                newItem(cartListPS.get(1),orderListPS.get(0)),
+                newItem(cartListPS.get(2),orderListPS.get(0)),
+                newItem(cartListPS.get(3),orderListPS.get(1))
+        );
+    }
 
 
     // product repository 테스트할 때 가져옴
@@ -108,6 +149,7 @@ public class DummyEntity {
         );
     }
 
+
     // 나중에 테스트하기 편하기 위해서 수량과 유저를 하드코딩 하였음
     protected List<Cart> cartDummyList(List<User> userListPS, List<Option> optionListPS) {
         List<Cart> user1Carts = IntStream.range(0, 6)
@@ -125,11 +167,6 @@ public class DummyEntity {
     }
 
 
-    protected List<Order> orderDummyList(List<User> userListPS) {
-        return userListPS.stream()
-                .flatMap(user -> Stream.generate(() -> newOrder(user)).limit(3))
-                .collect(Collectors.toList());
-    }
 
 
 
