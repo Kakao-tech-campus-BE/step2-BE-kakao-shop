@@ -22,7 +22,6 @@ import org.springframework.context.annotation.Import;
 
 import javax.persistence.EntityManager;
 import java.util.List;
-import org.assertj.core.api.Assertions;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Import(ObjectMapper.class)
@@ -73,13 +72,12 @@ public class OrderJPARepositoryTest extends DummyEntity {
         List<Option> optionListPS = optionJPARepository.saveAll(optionDummyList(productListPS));
         List<Cart> cartListPS = cartJPARepository.saveAll(cartDummyList(ssar, optionListPS));
         Order order = orderJPARepository.save(newOrder(ssar));
-
         itemJPARepository.saveAll(itemDummyList(cartListPS, order));
 
         em.clear();
     }
 
-    @DisplayName("주문 테이블 영속화 테스트")
+    @DisplayName("주문 테이블 영속성 테스트")
     @Test
     public void order_join_test(){
         Order order = newOrder(newUser("cos"));
@@ -91,7 +89,7 @@ public class OrderJPARepositoryTest extends DummyEntity {
         assertEquals(2, order.getId());
     }
 
-    @DisplayName("아이템 테이블 영속화 테스트")
+    @DisplayName("아이템 테이블 영속성 테스트")
     @Test
     public void item_join_test(){
         Order order = newOrder(newUser("cos"));
@@ -107,7 +105,7 @@ public class OrderJPARepositoryTest extends DummyEntity {
 
     @DisplayName("데이터 조회 테스트")
     @Test
-    public void order_read_test() throws JsonProcessingException {
+    public void read_test() throws JsonProcessingException {
         int userId = 1;
 
         List<Order> orders = orderJPARepository.mFindByUserId(userId);
@@ -117,6 +115,7 @@ public class OrderJPARepositoryTest extends DummyEntity {
         System.out.println(orderResult);
         String itemResult = om.writeValueAsString(items);
         System.out.println(itemResult);
+
         //then 구현
     }
 
@@ -130,7 +129,6 @@ public class OrderJPARepositoryTest extends DummyEntity {
 
         orderJPARepository.save(order);
 
-        //cart를 선택해서 주문하는 기능에 관해 고민 중...
         List<Cart> carts = cartJPARepository.mFindAllByUserId(userId);
         List<Item> items = itemDummyList(carts, order);
 
@@ -142,6 +140,7 @@ public class OrderJPARepositoryTest extends DummyEntity {
         assertEquals(user.getPassword(), order.getUser().getPassword());
         assertEquals(user.getUsername(), order.getUser().getUsername());
         assertEquals(user.getRoles(), order.getUser().getRoles());
+
         //item에 대한 then
     }
 }
