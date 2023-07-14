@@ -2,6 +2,7 @@ package com.example.kakao.cart;
 
 import com.example.kakao.product.option.Option;
 import com.example.kakao.user.User;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,6 +23,7 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user; // user별로 장바구니에 묶여 있음.

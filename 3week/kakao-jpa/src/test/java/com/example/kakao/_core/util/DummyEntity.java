@@ -138,10 +138,21 @@ public class DummyEntity {
                 newOption(productListPS.get(14), "블랙", 148000)
         );
     }
-        protected List<Cart> cartDummyList(List<Option> optionListPS) {
+    protected List<Cart> cartDummyList(User user, List<Option> optionListPS) {
             return Arrays.asList(
-                    newCart()
-            )
-        }
+                    newCart(user, optionListPS.get(0),10),
+                    newCart(user, optionListPS.get(1), 10)
+            );
+    }
+
+    protected Order orderDummy(User user) {
+            return newOrder(user);
+    }
+
+    protected List<Item> itemDummyList(List<Cart> cartListPS, Order order) {
+        return Arrays.asList(
+                newItem(cartListPS.get(0), order),
+                newItem(cartListPS.get(1), order)
+        );
     }
 }
