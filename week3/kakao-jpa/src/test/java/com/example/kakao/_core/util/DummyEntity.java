@@ -61,7 +61,6 @@ public class DummyEntity {
     protected Order newOrder(User user){
         return Order.builder()
                 .user(user)
-                .id(1)
                 .build();
     }
 
