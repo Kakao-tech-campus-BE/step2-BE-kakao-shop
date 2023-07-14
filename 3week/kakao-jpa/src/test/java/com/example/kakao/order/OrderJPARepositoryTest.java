@@ -46,7 +46,7 @@ public class OrderJPARepositoryTest extends DummyEntity {
     @BeforeEach
     public void setUp(){
         List<User> userListPS = userJPARepository.saveAll(userDummyList());
-        orderJPARepository.saveAll(orderDummyList(userListPS));
+        orderJPARepository.saveAll(orderSimpleDummyList(userListPS));
         em.clear();
 
         System.out.println("----------추가 완료---------");
@@ -86,7 +86,7 @@ public class OrderJPARepositoryTest extends DummyEntity {
         User user = userJPARepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("유저를 찾을 수 없습니다."));
 
-        Order newOrder = newOrder(user);
+        Order newOrder = newSimpleOrder(user);
 
         // when
         orderJPARepository.save(newOrder);
