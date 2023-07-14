@@ -70,6 +70,7 @@ class OrderJPARepositoryTest extends DummyEntity {
         itemJPARepository.save(dummyItem2);
 
         em.clear();
+        System.out.println("-------------------------------------");
 
 
     }
@@ -107,6 +108,8 @@ class OrderJPARepositoryTest extends DummyEntity {
 
         // when
         Optional<Order> order = orderJPARepository.findById(userId);
+        List<Item> itemList = itemJPARepository.findByOrder_Id(order.get().getId());
+        itemList.forEach(System.out::println);
 
         // then
         Assertions.assertThat(order.get().getId()).isEqualTo(1);

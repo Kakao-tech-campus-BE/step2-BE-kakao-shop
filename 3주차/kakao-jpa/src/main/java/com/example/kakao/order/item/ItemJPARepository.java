@@ -6,5 +6,6 @@ import java.util.List;
 
 
 public interface ItemJPARepository extends JpaRepository<Item, Integer> {
+    List<Item> findByOrder_Id(int order_id);
 
 }

@@ -115,7 +115,7 @@ class CartJPARepositoryTest extends DummyEntity {
         // when
         Cart cart = cartJPARepository.findByUserIdAndOption_Id(1,1);
         cart.update(1,5000);
-        System.out.println(cart);
+        cartJPARepository.findAll().forEach(System.out::println);
 
         // then
         Assertions.assertThat(cart.getQuantity()).isEqualTo(1);
