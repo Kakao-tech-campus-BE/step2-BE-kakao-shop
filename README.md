@@ -1491,6 +1491,7 @@ public void order_test() {
         }
     }
     cartJPARepository.saveAll(cartListPS);
+    em.clear();
 
     // when
     // 주문을 저장하고 기존의 장바구니를 비우게 되면
