@@ -1,7 +1,6 @@
 package com.example.kakao.cart;
 
 import com.example.kakao._core.util.DummyEntity;
-import com.example.kakao.order.item.ItemJPARepository;
 import com.example.kakao.product.Product;
 import com.example.kakao.product.ProductJPARepository;
 import com.example.kakao.product.option.Option;
