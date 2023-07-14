@@ -19,7 +19,7 @@ public class Option {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Product product;
 
     @Column(length = 100, nullable = false)
@@ -32,5 +32,9 @@ public class Option {
         this.product = product;
         this.optionName = optionName;
         this.price = price;
+    }
+
+    public void changeOptionName(String newOptionName) {
+        this.optionName = newOptionName;
     }
 }
