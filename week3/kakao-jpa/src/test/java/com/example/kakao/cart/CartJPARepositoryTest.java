@@ -1,21 +1,16 @@
 package com.example.kakao.cart;
 
 import com.example.kakao._core.util.DummyEntity;
-import com.example.kakao.product.Product;
-import com.example.kakao.product.ProductJPARepository;
 import com.example.kakao.product.option.Option;
 import com.example.kakao.product.option.OptionJPARepository;
 import com.example.kakao.user.User;
 import com.example.kakao.user.UserJPARepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.Import;
 
 import javax.persistence.EntityManager;
 import java.util.Arrays;
@@ -24,24 +19,20 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("Cart Repository Test")
-@Import(ObjectMapper.class)
 @DataJpaTest
 public class CartJPARepositoryTest extends DummyEntity {
     private final CartJPARepository cartJPARepository;
     private final EntityManager entityManager;
-    private final ObjectMapper objectMapper;
     private final UserJPARepository userJPARepository;
     private final OptionJPARepository optionJPARepository;
 
     public CartJPARepositoryTest(
             @Autowired CartJPARepository cartJPARepository,
             @Autowired EntityManager entityManager,
-            @Autowired ObjectMapper objectMapper,
             @Autowired UserJPARepository userJPARepository,
             @Autowired OptionJPARepository optionJPARepository
     ) {
         this.cartJPARepository = cartJPARepository;
-        this.objectMapper = objectMapper;
         this.entityManager = entityManager;
         this.userJPARepository = userJPARepository;
         this.optionJPARepository = optionJPARepository;
@@ -73,8 +64,6 @@ public class CartJPARepositoryTest extends DummyEntity {
 
         // when
         Cart savedCart = cartJPARepository.save(cart);
-        String response = objectMapper.writeValueAsString(savedCart);
-        System.out.println("result set : " + response);
 
         // then
         assertThat(savedCart.getOption().getId()).isEqualTo(28);
@@ -88,43 +77,43 @@ public class CartJPARepositoryTest extends DummyEntity {
         // given
 
         // when
-        List<Cart> cartItems = cartJPARepository.findAllByFetchJoin();
-        String response = objectMapper.writeValueAsString(cartItems);
-        System.out.println("result set : " + response);
+        List<Cart> cartItems = cartJPARepository.findAll();
 
         // then
-        assertThat(cartItems).hasSize(5);
+        assertThat(cartItems)
+                .isNotNull()
+                .hasSize(5);
     }
 
-    @DisplayName("find cart using cart-id")
+    @DisplayName("find all cart using user-id")
     @Test
     public void findByIdTest() throws JsonProcessingException {
         // given
 
         // when
-        Cart cart = cartJPARepository.findById(1);
-        String response = objectMapper.writeValueAsString(cart);
-        System.out.println("result set : " + response);
+        List<Cart> cart = cartJPARepository.findAllByUserId(1);
 
         // then
-        assertThat(cart.getId()).isEqualTo(1);
-        assertThat(cart.getUser().getUsername()).isEqualTo("ssar");
-        assertThat(cart.getOption().getOptionName()).isEqualTo("01. 슬라이딩 지퍼백 크리스마스에디션 4종");
-        assertThat(cart.getQuantity()).isEqualTo(5);
+        assertThat(cart).hasSize(5);
     }
 
     @DisplayName("update cart test")
     @Test
     public void updateTest() {
         // given
+        Cart cart = cartJPARepository.findById(1);
+        cart.update(50, 50 * 10000);
 
         // when
-        Cart cart = cartJPARepository.findById(1);
-        cart.update(10, 10 * 10000);
+        Cart savedCart = cartJPARepository.save(cart);
 
         // then
-        assertThat(cartJPARepository.findById(1).getQuantity()).isEqualTo(10);
-        assertThat(cartJPARepository.findById(1).getPrice()).isEqualTo(10 * 10000);
+        assertThat(savedCart)
+                .extracting("quantity")
+                .isEqualTo(cart.getQuantity());
+        assertThat(savedCart)
+                .extracting("price")
+                .isEqualTo(cart.getPrice());
     }
 
     @DisplayName("delete cart test")
@@ -134,8 +123,7 @@ public class CartJPARepositoryTest extends DummyEntity {
         long previous_count = cartJPARepository.count();
 
         // when
-        Cart cart = cartJPARepository.findById(1);
-        cartJPARepository.delete(cart);
+        cartJPARepository.deleteById(1);
 
         // then
         assertThat(cartJPARepository.count()).isEqualTo(previous_count - 1);
