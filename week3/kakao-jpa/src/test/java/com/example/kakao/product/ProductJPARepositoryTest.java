@@ -6,19 +6,16 @@ import com.example.kakao.product.option.OptionJPARepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.api.Assertions;
-import org.hibernate.Hibernate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 import javax.persistence.EntityManager;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Import(ObjectMapper.class)
 @DataJpaTest
@@ -68,44 +65,6 @@ public class ProductJPARepositoryTest extends DummyEntity {
         Assertions.assertThat(productPG.getContent().get(0).getPrice()).isEqualTo(1000);
     }
 
-    // ManyToOne 전략을 Eager로 간다면 추천
-    @Test
-    public void option_findByProductId_eager_test() throws JsonProcessingException {
-        // given
-        int id = 1;
-
-        // when
-        // 충분한 데이터 - product만 0번지에서 빼면  된다
-        // 조인은 하지만, fetch를 하지 않아서, product를 한번 더 select 했다.
-        List<Option> optionListPS = optionJPARepository.findByProductId(id); // Eager
-
-        System.out.println("json 직렬화 직전========================");
-        String responseBody = om.writeValueAsString(optionListPS);
-        System.out.println("테스트 : "+responseBody);
-
-        // then
-    }
-
-    @Test
-    public void option_findByProductId_lazy_error_test() throws JsonProcessingException {
-        // given
-        int id = 1;
-
-        // when
-        // option을 select했는데, product가 lazy여서 없는 상태이다.
-        List<Option> optionListPS = optionJPARepository.findByProductId(id); // Lazy
-
-        // product가 없는 상태에서 json 변환을 시도하면 (hibernate는 select를 요청하는데, json mapper는 json 변환을 시도하게 된다)
-        // 이때 json 변환을 시도하는 것이 타이밍적으로 더 빠르다 (I/O)가 없기 때문에!!
-        // 그래서 hibernateLazyInitializer 오류가 발생한다.
-        // 그림 설명 필요
-        System.out.println("json 직렬화 직전========================");
-        String responseBody = om.writeValueAsString(optionListPS);
-        System.out.println("테스트 : "+responseBody);
-
-        // then
-    }
-
     // 추천
     // 조인쿼리 직접 만들어서 사용하기
     @Test
@@ -123,7 +82,6 @@ public class ProductJPARepositoryTest extends DummyEntity {
         // then
     }
 
-
     // 추천
     @Test
     public void product_findById_and_option_findByProductId_lazy_test() throws JsonProcessingException {
@@ -136,6 +94,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
         );
 
         // product 상품은 영속화 되어 있어서, 아래에서 조인해서 데이터를 가져오지 않아도 된다.
+        // product를 이미 불러온 상황이므로 굳이 mfindByProductId(id)를 호출하지(조인하지 않고) 않아도 된다.
         List<Option> optionListPS = optionJPARepository.findByProductId(id); // Lazy
 
         String responseBody1 = om.writeValueAsString(productPS);
