@@ -43,6 +43,7 @@ public class CartJPARepositoryTest extends DummyEntity {
 
     @BeforeEach
     public void setUp(){
+        em.clear();
         // pk 초기화
         em.createNativeQuery("ALTER TABLE user_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
         em.createNativeQuery("ALTER TABLE option_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
@@ -102,12 +103,12 @@ public class CartJPARepositoryTest extends DummyEntity {
                 optionJPARepository.getReferenceById(optionId), 2));
         String responseBody = om.writeValueAsString(cartPS);
         System.out.println("test : " + responseBody);
-        em.clear();
 
         // then
         Assertions.assertThat(cartPS.getUser().getId()).isEqualTo(1);
         Assertions.assertThat(cartPS.getId()).isEqualTo(3);
         Assertions.assertThat(cartPS.getQuantity()).isEqualTo(2);
+        em.clear();
     }
 
     // 옵션 중복 오류
@@ -146,9 +147,9 @@ public class CartJPARepositoryTest extends DummyEntity {
         Cart cartSavePS = cartJPARepository.save(cartPS);
         String responseBody = om.writeValueAsString(cartSavePS);
         System.out.println(responseBody);
-        em.clear();
 
         // then
         Assertions.assertThat(cartJPARepository.getReferenceById(id).getQuantity()).isEqualTo(5);
+        em.clear();
     }
 }
