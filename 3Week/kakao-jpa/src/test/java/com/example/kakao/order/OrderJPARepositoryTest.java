@@ -66,6 +66,10 @@ public class OrderJPARepositoryTest extends DummyEntity {
     @BeforeEach
     public void setUp() throws JsonProcessingException {
         em.createNativeQuery("ALTER TABLE order_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        em.createNativeQuery("ALTER TABLE option_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        em.createNativeQuery("ALTER TABLE cart_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        em.createNativeQuery("ALTER TABLE item_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        em.createNativeQuery("ALTER TABLE user_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
 
         User ssar = userJPARepository.save(newUser("ssar"));
         List<Product> productListPS = productJPARepository.saveAll(productDummyList());
