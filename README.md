@@ -518,8 +518,7 @@ CREATE TABLE `Order_Item` (
 
 # 2주차
 
-카카오 테크 캠퍼스 2단계 - BE - 2주차 클론 과제
-</br>
+> 카카오 테크 캠퍼스 2단계 - BE - 2주차 클론 과제
 </br>
 
 ## **과제명**
@@ -542,6 +541,267 @@ CREATE TABLE `Order_Item` (
 >- 가짜 데이터를 설계하여 Mock API를 잘 구현하였는가? (예를 들어 DB연결없이 컨트롤러만 만들어서 배포된 서버의 응답과 동일한 형태로 데이터가 응답되는지 여부)
 </br>
 
+### Mock API Controller 구현
+- `/join`
+    ```java
+    @PostMapping("/join")
+    public ResponseEntity<?> join(@RequestBody UserRequest.JoinDTO joinDTO) {
+        User user = User.builder()
+                .email(joinDTO.getEmail())
+                .password(passwordEncoder.encode(joinDTO.getPassword()))
+                .username(joinDTO.getUsername())
+                .roles("ROLE_USER")
+                .build();
+
+        userRepository.save(user);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("response", null);
+        response.put("error", null);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    ```
+    - 올바른 **Response Body** 를 반환하도록 구현하였다.
+
+- `/login`
+    ```java
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody UserRequest.LoginDTO loginDTO) {
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
+                = new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword());
+        Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
+        CustomUserDetails myUserDetails = (CustomUserDetails) authentication.getPrincipal();
+        String jwt = JWTProvider.create(myUserDetails.getUser());
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("response", null);
+        response.put("error", null);
+
+        return ResponseEntity.ok().header(JWTProvider.HEADER, jwt).body(response);
+    }
+    ```
+    - 올바른 **Response Body**를 반환하면서 jwt토큰을 반환하도록 구현했다.
+
+- `/carts/add`
+    ```java
+    @PostMapping("/carts/add")
+    public ResponseEntity<?> addItem() {
+        /*
+            현재 API문서 상에서는 optionId, quantity를 Request Body로 전달한다.
+            ProductOtpionDTO 에서 option의 id를 받아온다.
+            CartitemDTO에서 option의 quantity를 받아온다.
+        */
+
+        // Request Body return
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("response", null);
+        response.put("error", null);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    ```
+    - 올바른 **Response Body**를 반환하도록 구현했다.
+    - business logic 은 구현하지 않았다.
+
+- `/carts/update`
+    ```java
+    @GetMapping("/carts/update")
+    public ResponseEntity<?> updateItem() {
+        // carts항목의 더미 데이터 생성
+        List<CartUpdateItemDTO> carts = new ArrayList<>();
+        CartUpdateItemDTO cartUpdateItemDTO01 = CartUpdateItemDTO.builder()
+                .quantity(10)
+                .price(100000)
+                .cartId(4)
+                .optionId(1)
+                .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
+                .build();
+        CartUpdateItemDTO cartUpdateItemDTO02 = CartUpdateItemDTO.builder()
+                .quantity(10)
+                .price(100000)
+                .cartId(5)
+                .optionId(2)
+                .optionName("02. 슬라이딩 지퍼백 플라워에디션 5종")
+                .build();
+        carts.add(cartUpdateItemDTO01);
+        carts.add(cartUpdateItemDTO02);
+
+        // Response Body 생성
+        CartUpdateDTO responseDTO = CartUpdateDTO.builder()
+                .carts(carts)
+                .build();
+
+        // Response Body 반환
+        return ResponseEntity.ok(ApiUtils.success(responseDTO));
+    }
+    ```
+    - 더미 데이터를 이용하는 Mock API를 구현했다.
+    - API문서의 출력과 동일한 **Response Body**를 구현하기 위해 `CartUpdateDTO.java`, `CartUpdateItemDTO.java`를 생성했다.
+    - 해당 DTO를 이용하여 API문서와 동일한 형태의 json파일을 출력한다.
+        > 적절한 클래스 이름이 맞는지 확신이 서지 않습니다...
+    - `CartUpdateDTO.java`
+        ```java
+        @Getter @Setter
+        public class CartUpdateDTO {
+            private List<CartUpdateItemDTO> carts;
+            private int totalPrice;
+
+            @Builder
+            public CartUpdateDTO(List<CartUpdateItemDTO> carts, int totalPrice) {
+                this.carts = carts;
+                this.totalPrice = totalPrice;
+            }
+        }
+        ```
+    - `CartUpdateItemDTO.java`
+        ```java
+        @Getter @Setter
+        public class CartUpdateItemDTO {
+            private int quantity;
+            private int price;
+            private int cartId;
+            private int optionId;
+            private String optionName;
+
+            @Builder
+            public CartUpdateItemDTO(int quantity, int price, int cartId, int optionId, String optionName) {
+                this.quantity = quantity;
+                this.price = price;
+                this.cartId = cartId;
+                this.optionId = optionId;
+                this.optionName = optionName;
+            }
+        }
+        ```
+
+- `orders/save`
+    ```java
+    @PostMapping("/orders/save")
+    public ResponseEntity<?> makeOrder() {
+        List<OrderItem> items = new ArrayList<>();
+        OrderItem orderItem01 = OrderItem.builder()
+                .id(4)
+                .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
+                .quantity(10)
+                .price(100000)
+                .build();
+        OrderItem orderItem02 = OrderItem.builder()
+                .id(5)
+                .optionName("02. 슬라이딩 지퍼백 플라워에디션 5종")
+                .quantity(10)
+                .price(109000)
+                .build();
+        items.add(orderItem01);
+        items.add(orderItem02);
+
+        List<OrderProducts> products = new ArrayList<>();
+        OrderProducts orderProducts01 = OrderProducts.builder()
+                .productName("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션")
+                .items(items)
+                .build();
+        products.add(orderProducts01);
+
+        OrderResponseDTO response = new OrderResponseDTO(2, products, 209000);
+        return ResponseEntity.ok(ApiUtils.success(response));
+    }
+    ```
+    - 더미 데이터를 이용하는 Mock API를 구현했다.
+    - API문서의 출력과 동일한 **Response Body**를 구현하기 위해 `OrderItem.java`, `OrderProduct.java`, `OrderResponseDTO.java`를 생성했다.
+    - 위의 클래스들을 이용하여 API문서와 동일한 형태의 json파일을 출력한다.
+    - `OrderItem.java`
+        ```java
+        @Getter @Setter
+        public class OrderItem {
+            private int id;
+            private String optionName;
+            private int quantity;
+            private int price;
+
+            @Builder
+            public OrderItem(int id, String optionName, int quantity, int price) {
+                this.id = id;
+                this. optionName = optionName;
+                this. quantity = quantity;
+                this.price = price;
+            }
+        }
+        ```
+
+    - `OrderProducts.java`
+        ```java
+        @Getter @Setter
+        public class OrderProducts {
+            private String productName;
+            private List<OrderItem> items;
+
+            @Builder
+            public OrderProducts(String productName, List<OrderItem> items) {
+                this.productName = productName;
+                this.items = items;
+            }
+        }
+
+        ```
+    - `OrderResponseDTO.java`
+        ```java
+        @Getter @Setter
+        public class OrderResponseDTO {
+            private int id;
+            private List<OrderProducts> products;
+            private int totalPrice;
+
+            @Builder
+            public OrderResponseDTO(int id, List<OrderProducts> products, int totalPrice) {
+                this.id = id;
+                this.products = products;
+                this.totalPrice = totalPrice;
+            }
+        }
+        ```
+- `orders/{id}`
+    ```java
+    @GetMapping("/orders/{id}")
+    public ResponseEntity<?> findById(@PathVariable int id) {
+        OrderResponseDTO response = null;
+
+        if(id == 2){
+            List<OrderItem> items = new ArrayList<>();
+            OrderItem orderItem01 = OrderItem.builder()
+                    .id(4)
+                    .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
+                    .quantity(10)
+                    .price(100000)
+                    .build();
+            OrderItem orderItem02 = OrderItem.builder()
+                    .id(5)
+                    .optionName("02. 슬라이딩 지퍼백 플라워에디션 5종")
+                    .quantity(10)
+                    .price(109000)
+                    .build();
+            items.add(orderItem01);
+            items.add(orderItem02);
+
+            List<OrderProducts> products = new ArrayList<>();
+            OrderProducts orderProducts01 = OrderProducts.builder()
+                    .productName("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션")
+                    .items(items)
+                    .build();
+            products.add(orderProducts01);
+
+            response = new OrderResponseDTO(2, products, 209000);
+        }else {
+            return ResponseEntity.badRequest().body(ApiUtils.error("해당 주문을 찾을 수 없습니다 : " + id, HttpStatus.BAD_REQUEST));
+        }
+        return ResponseEntity.ok(ApiUtils.success(response));
+    }
+    ```
+    - API 문서의 예시를 반환하도록 더미 데이터를 구현하였다.
+    - 더미 데이터의 id가 2이므로 `/orders/2`를 입력해야 예시를 출력한다. 이외의 경우 "해당 주문을 찾을 수 없습니다."라는 메시지를 API문서의 출력과 같이 반환한다.
+    - `/orders/save`에서 출력한 것과 동일한 **Response Body**를 출력해야 하므로 `OrderItem.java`, `OrderProduct.java`, `OrderResponseDTO.java`를 사용한다.
 ## **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
 **1. PR 제목과 내용을 아래와 같이 작성 해주세요.**
 
@@ -579,6 +839,272 @@ CREATE TABLE `Order_Item` (
 >- 테스트 메서드끼리 유기적으로 연결되지 않았는가? (테스트는 격리성이 필요하다)
 >- Persistene Context를 clear하여서 테스트가 구현되었는가? (더미데이터를 JPA를 이용해서 insert 할 예정인데, 레포지토리 테스트시에 영속화된 데이터 때문에 쿼리를 제대로 보지 못할 수 있기 때문에)
 >- 테스트 코드의 쿼리 관련된 메서드가 너무 많은 select를 유발하지 않는지? (적절한 한방쿼리, 효율적인 in query, N+1 문제 등이 해결된 쿼리)
+</br>
+
+### ProductJPARepositoryTest - 개별상품조회
+- Product & Option 동시조회
+    ```java
+    @Test
+    public void product_findById_and_option_findByProductId_lazy_test() throws JsonProcessingException {
+        // given
+        int id = 1;
+
+        // when
+        Product productPS = productJPARepository.findById(id).orElseThrow(
+                () -> new RuntimeException("상품을 찾을 수 없습니다")
+        );
+
+        // product 상품은 영속화 되어 있어서, 아래에서 조인해서 데이터를 가져오지 않아도 된다.
+        // product를 이미 불러온 상황이므로 굳이 mfindByProductId(id)를 호출하지(조인하지 않고) 않아도 된다.
+        List<Option> optionListPS = optionJPARepository.findByProductId(id); // Lazy
+
+        String responseBody1 = om.writeValueAsString(productPS);
+        String responseBody2 = om.writeValueAsString(optionListPS);
+        System.out.println("테스트 : "+responseBody1);
+        System.out.println("테스트 : "+responseBody2);
+
+        // then
+    }    
+    ```
+    - 아래의 기존 테스트 코드는 삭제했다.
+        - option_findByProductId_lazy_error_test
+        - option_findByProductId_eager_test
+- Product 조회
+    ```java
+    @Test
+    public void option_mFindByProductId_lazy_test() throws JsonProcessingException {
+        // given
+        int id = 1;
+
+        // when
+        List<Option> optionListPS = optionJPARepository.mFindByProductId(id); // Lazy
+
+        System.out.println("json 직렬화 직전========================");
+        String responseBody = om.writeValueAsString(optionListPS);
+        System.out.println("테스트 : "+responseBody);
+
+        // then
+    }
+    ```
+    - Lazy Loading 설정 후 직접 쿼리를 작성하는 방식을 선택했다.
+
+</br>
+
+### ProductJPARepositoryTest - 전체상품조회
+```java
+@Test
+public void product_findAll_test() throws JsonProcessingException {
+    // given
+    int page = 0;
+    int size = 9;
+
+    // when
+    PageRequest pageRequest = PageRequest.of(page, size);
+    Page<Product> productPG = productJPARepository.findAll(pageRequest);
+    String responseBody = om.writeValueAsString(productPG);
+    System.out.println("테스트 : "+responseBody);
+
+    // then
+    Assertions.assertThat(productPG.getTotalPages()).isEqualTo(2);
+    Assertions.assertThat(productPG.getSize()).isEqualTo(9);
+    Assertions.assertThat(productPG.getNumber()).isEqualTo(0);
+    Assertions.assertThat(productPG.getTotalElements()).isEqualTo(15);
+    Assertions.assertThat(productPG.isFirst()).isEqualTo(true);
+    Assertions.assertThat(productPG.getContent().get(0).getId()).isEqualTo(1);
+    Assertions.assertThat(productPG.getContent().get(0).getProductName()).isEqualTo("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전");
+    Assertions.assertThat(productPG.getContent().get(0).getDescription()).isEqualTo("");
+    Assertions.assertThat(productPG.getContent().get(0).getImage()).isEqualTo("/images/1.jpg");
+    Assertions.assertThat(productPG.getContent().get(0).getPrice()).isEqualTo(1000);
+}
+```
+
+</br>
+
+### UserJPARepositoryTest - 이메일 중복 확인
+```java
+@Test
+public void findByEmail_test() {
+    // given
+    String email = "ssar@nate.com";
+
+    // when
+    User userPS = userJPARepository.findByEmail(email).orElseThrow(
+            () -> new RuntimeException("해당 이메일을 찾을 수 없습니다.")
+    );
+    System.out.println(userPS.getEmail());
+    System.out.println(userPS.getPassword());
+
+    // then (상태 검사)
+    Assertions.assertThat(userPS.getId()).isEqualTo(1);
+    Assertions.assertThat(userPS.getEmail()).isEqualTo("ssar@nate.com");
+    assertTrue(BCrypt.checkpw("meta1234!", userPS.getPassword()));
+    Assertions.assertThat(userPS.getUsername()).isEqualTo("ssar");
+    Assertions.assertThat(userPS.getRoles()).isEqualTo("ROLE_USER");
+}
+```
+
+</br>
+
+### UserJPARepositoryTest - 회원가입
+```java
+@Test
+public void join_test() {
+    // given
+    String email = "jason@nate.com";
+
+    // when
+    // jason 회원가입 -> newUser를 활용한 새로운 user 객체 생성
+    userJPARepository.save(newUser("jason"));
+    // jason의 이메일을 사용한 user 탐색
+    User userPS = userJPARepository.findByEmail(email).orElseThrow(
+            () -> new RuntimeException("해당 이메일을 찾을 수 없습니다.")
+    );
+    // jason의 email, password 출력
+    System.out.println("Jason's email : " + userPS.getEmail());
+    System.out.println("Jason's password : " + userPS.getPassword());
+
+    // then (상태 검사)
+    Assertions.assertThat(userPS.getId()).isEqualTo(2);
+    Assertions.assertThat(userPS.getEmail()).isEqualTo("jason@nate.com");
+    assertTrue(BCrypt.checkpw("meta1234!", userPS.getPassword()));
+    Assertions.assertThat(userPS.getUsername()).isEqualTo("jason");
+    Assertions.assertThat(userPS.getRoles()).isEqualTo("ROLE_USER");
+}
+```
+- jason이라는 새로운 user를 추가하여 이메일 테스트 코드를 활용해 테스트를 진행했다.
+- 본 테스트 코드는 `UserJPARepositoryTest.java`에서 @BeforeEach가 실행되면서 간접적으로 확인 가능한 사항이다. 
+- ~~굳이 따로 테스트 코드가 작성되어야 하는지 궁금하다.~~
+
+</br>
+
+### CartJPARepositoryTest - 장바구니 조회
+- 테스트를 위해 `DummyEntity.java`에 아래와 같이 cartDummyList 메서드를 추가했다.
+    ```java
+    protected List<Cart> cartDummyList(User user, List<Option> optionListOS) {
+    return Arrays.asList(
+            newCart(user, optionListOS.get(0), 5),
+            newCart(user, optionListOS.get(1), 5));
+    }
+    ```
+- 아래와 같이 mFindAll을 정의해 쿼리를 전송하여 필요한 데이터를 조회하도록 했다.
+    ```java
+    public interface CartJPARepository extends JpaRepository<Cart, Integer> {
+        @Query("select c from Cart c join fetch c.user join fetch c.option")
+        List<Cart> mFindAll();
+    }
+    ```
+- 아래와 같이 `CartJPARepositoryTest.java`에 carts_findAll_test 테스트를 만들어서 Lazy-Loading과 DTO를 활용하여 JSON을 생성하고, 그 값을 확인했다.
+    ```java
+    @Test
+    public void carts_findAll_test() throws JsonProcessingException {
+        // given
+        List<Cart> carts = cartJPARepository.mFindAll();
+        CartResponse.FindAllDTO response = new CartResponse.FindAllDTO(carts);
+
+        // when
+        System.out.println("DTO를 활용한 JSON 문자열 반환");
+        String responseBody = om.writeValueAsString(response);
+        System.out.println("테스트 : " + responseBody);
+
+        // then
+        Assertions.assertThat(carts.get(0).getId()).isEqualTo(1);
+        Assertions.assertThat(carts.get(0).getUser().getId()).isEqualTo(1);
+        Assertions.assertThat(carts.get(0).getOption().getId()).isEqualTo(1);
+        Assertions.assertThat(carts.get(0).getQuantity()).isEqualTo(5);
+        Assertions.assertThat(carts.get(0).getPrice()).isEqualTo(50000);
+        Assertions.assertThat(carts.get(1).getId()).isEqualTo(2);
+        Assertions.assertThat(carts.get(1).getUser().getId()).isEqualTo(1);
+        Assertions.assertThat(carts.get(1).getOption().getId()).isEqualTo(2);
+        Assertions.assertThat(carts.get(1).getQuantity()).isEqualTo(5);
+        Assertions.assertThat(carts.get(1).getPrice()).isEqualTo(54500);
+    }
+    ```
+    - `given` 에서는 cart객체 및 DTO response를 선언했다.
+    - `when` 에서는 response를 JSON으로 변환했다.
+    - `then` 에서는 cart의 더미 데이터에 담긴 두 항목의 값이 실제 값과 일치하는지 확인했다.
+ 
+ </br>
+
+ ### ItemJPARepositoryTest
+ - 테스트를 위해 아래와 같이 `DummyEntity.java`에 itemDummyList메서드를 추가했다.
+    ```java
+    protected List<Item> itemDummyList(List<Cart> cartList, Order order){
+        return Arrays.asList(
+            newItem(cartList.get(0), order),
+            newItem(cartList.get(1), order)
+        );
+    }
+    ```
+- 아래와 같이 mFindAll 메서드를 정의해 쿼리를 전송하여 필요한 데이터를 조회하도록 했다.
+    ```java
+    public interface ItemJPARepository extends JpaRepository<Item, Integer> {
+        @Query("select i from Item i join fetch i.option")
+        List<Item> mFindAll();
+    }
+    ```
+- 아래와 같이 `ItemRepositoryTest.java`에 show_order_item 테스트를 만들어서 Lazy-Loading과 DTO를 활용하여 JSON을 생성하고, 전달받은 객체의 값이 예상값과 일치하는지 확인했다.
+    ```java
+    @Test
+    public void show_order_item() throws JsonProcessingException {
+        // given
+        Order order = orderJPARepository.mFindOrder();
+        List<Item> itemList = itemJPARepository.mFindAll();
+        OrderResponse.FindByIdDTO response = new OrderResponse.FindByIdDTO(order, itemList);
+
+        // when
+        System.out.println("DTO를 활용한 JSON 문자열 반환 - ItemDTO");
+        String responseBody = om.writeValueAsString(response.getProducts().get(0).getItems());
+        System.out.println("테스트 : " + responseBody);
+
+        // then
+        Assertions.assertThat(itemList.get(0).getId()).isEqualTo(1);
+        Assertions.assertThat(itemList.get(0).getOption().getOptionName()).isEqualTo("01. 슬라이딩 지퍼백 크리스마스에디션 4종");
+        Assertions.assertThat(itemList.get(0).getQuantity()).isEqualTo(5);
+        Assertions.assertThat(itemList.get(0).getPrice()).isEqualTo(50000);
+        Assertions.assertThat(itemList.get(1).getId()).isEqualTo(2);
+        Assertions.assertThat(itemList.get(1).getOption().getOptionName()).isEqualTo("02. 슬라이딩 지퍼백 플라워에디션 5종");
+        Assertions.assertThat(itemList.get(1).getQuantity()).isEqualTo(5);
+        Assertions.assertThat(itemList.get(1).getPrice()).isEqualTo(54500);
+    }
+    ```
+    - 객체 값의 예상값 확인은 DummyEntity의 메서드를 이용하여 setup()에서 DB에 삽입한 데이터와 일치하는지를 확인했다.
+    - API문서의 예시 값을 DummyEntity에서 삽입하였다.
+
+</br>
+
+### OrderJPARepositoryTest - 결재하기(주문 인서트)
+- Item 객체는 하나의 Order 객체와 매핑되므로 따로 Order 객체 리스트를 사용하지 않았다.
+- 아래와 같이 mFindOrder 메서드를 정의해 쿼리를 전송하여 필요한 데이터를 조회하도록 했다.
+    ```java
+    public interface OrderJPARepository extends JpaRepository<Order, Integer> {
+        @Query("select o from Order o join fetch o.user")
+        Order mFindOrder();
+    }
+    ```
+- 아래와 같이 `OrderRepositoryTest.java`에 show_user_order 테스트를 만들어서 Lazy-Loading과 DTO를 활용하여 JSON을 생성하고, 전달받은 객체의 값이 예상값과 일치하는지 확인했다.
+    ```java
+    @Test
+    public void show_user_order() throws JsonProcessingException {
+        // given
+        Order order = orderJPARepository.mFindOrder();
+        List<Item> itemList = itemJPARepository.mFindAll();
+        OrderResponse.FindByIdDTO response = new OrderResponse.FindByIdDTO(order, itemList);
+
+        // when
+        System.out.println("DTO를 활용한 JSON 문자열 반환");
+        String responseBody = om.writeValueAsString(response);
+        System.out.println("테스트 : " + responseBody);
+
+        // then
+        Assertions.assertThat(order.getId()).isEqualTo(1);
+        Assertions.assertThat(order.getUser().getUsername()).isEqualTo("ssar");
+    }
+    ```
+    - Lazy-Loading을 활용하여 JSON을 에러 없이 생성하기 위해 OrderResponse.java에 정의된 DTO를 이용했다. 하지만 OrderResponse.java의 DTO는 Order, Item을 모두 받아 내부 연산을 거쳐 필요한 값을 가지는 DTO로 변환한다. 이때의 DTO의 값들은 Order객체의 필드와는 차이가 있기 때문에 then에서 확인할 수 있는 사항이 많지 않다.
+    - DTO의 구조와 맴버 객체의 구조가 달라서 얻을 수 있는 이점에 대해 생각해 보았다.
+        - 여러 요청 사항에 대해 유동적으로 DTO를 재정의하여 사용할 수 있다.
+        - 객체의 변경 없이 DTO를 수정, 추가 가능하므로 유지보수성이 증가한다.
+
 </br>
 
 ## **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
