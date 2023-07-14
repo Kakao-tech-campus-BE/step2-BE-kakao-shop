@@ -3,7 +3,6 @@ package com.example.kakao.order;
 import com.example.kakao._core.util.DummyEntity;
 import com.example.kakao.cart.Cart;
 import com.example.kakao.cart.CartJPARepository;
-import com.example.kakao.cart.CartJPARepositoryTest;
 import com.example.kakao.order.item.Item;
 import com.example.kakao.order.item.ItemJPARepository;
 import com.example.kakao.product.Product;
@@ -20,7 +19,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.jmx.support.ObjectNameManager;
 
 import javax.persistence.EntityManager;
 import java.util.Arrays;
