@@ -10,6 +10,7 @@ import com.example.kakao.user.UserJPARepository;
 import com.example.kakao.user.UserJPARepositoryTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import net.bytebuddy.implementation.auxiliary.MethodCallProxy;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -48,7 +49,7 @@ public class CartJPARepositoryTest extends DummyEntity {
 
     @BeforeEach
     public void setUp(){
-        User user = userJPARepository.save(newUser("ssar"));
+        User user = userJPARepository.save(newUser("han"));
         List<Product> productListPS = productJPARepository.saveAll(productDummyList());
         List<Option> optionListPS = optionJPARepository.saveAll(optionDummyList(productListPS));
         List<Cart> cartListPS = Arrays.asList(
@@ -63,7 +64,6 @@ public class CartJPARepositoryTest extends DummyEntity {
 
     @AfterEach
     public void resetIndex() {
-        System.out.println("완료");
         cartJPARepository.deleteAll();
         userJPARepository.deleteAll();
         productJPARepository.deleteAll();
@@ -104,6 +104,10 @@ public class CartJPARepositoryTest extends DummyEntity {
         String responseBody = om.writeValueAsString(cartListPS);
         System.out.println("테스트 : " + responseBody);
         //then
+        Assertions.assertThat(cartListPS.get(0).getUser().getUsername()).isEqualTo("han");
+        Assertions.assertThat(cartListPS.get(0).getUser().getId()).isEqualTo(1);
+        Assertions.assertThat(cartListPS.get(0).getQuantity()).isEqualTo(5);
+
     }
 
     @Test

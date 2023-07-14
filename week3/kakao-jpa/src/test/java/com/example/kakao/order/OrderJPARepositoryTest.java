@@ -4,6 +4,7 @@ import com.example.kakao._core.util.DummyEntity;
 import com.example.kakao.user.User;
 import com.example.kakao.user.UserJPARepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -43,11 +44,9 @@ public class OrderJPARepositoryTest extends DummyEntity {
 //        this.user = user;
 //    }
 
-    private User user = newUser("han");
-
     @BeforeEach
     public void setUp(){
-        userJPARepository.save(user);
+        User user = userJPARepository.save(newUser("han"));
         orderJPARepository.save(newOrder(user));
         em.clear();
     }
@@ -55,15 +54,23 @@ public class OrderJPARepositoryTest extends DummyEntity {
     @Test
     @DisplayName("유저아이디로 주문 조회")
     public void order_findOrderByUserId(){
+        //given
         int userId = 1;
+        //when
         List<Order> searchOrder = orderJPARepository.findByUserId(userId);
+        //then
+        Assertions.assertThat(searchOrder.get(0).getUser().getId()).isEqualTo(userId);
     }
 
     @Test
     @DisplayName("주문아이디로 주문 조회")
     public void order_findByOrderID(){
+        //when
         int id = 1;
+        //given
         List<Order> searchOrder = orderJPARepository.findByOrderId(id);
+        //then
+        Assertions.assertThat(searchOrder.get(0).getId()).isEqualTo(id);
     }
 
 
