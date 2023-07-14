@@ -103,20 +103,20 @@ public class CartJPARepositoryTest extends DummyEntity {
 
         // when
         Optional<Cart> cartOP = cartJPARepository.mFindById(id);
-        Cart cartPS = new Cart();
+        Cart cart = new Cart();
 
         if (cartOP.isPresent()) {
-            cartPS = cartOP.get();
-            cartPS.update(quantity, quantity * cartPS.getOption().getPrice());
+            cart = cartOP.get();
+            cart.update(quantity, cart.getOption().getPrice() * quantity);
             em.flush();
 
-            String responseBody = om.writeValueAsString(cartPS); //직렬화하여 출력
+            String responseBody = om.writeValueAsString(cart); // 직렬화하여 출력
             System.out.println("테스트 : " + responseBody);
         }
 
         // then
-        Assertions.assertThat(cartPS.getId()).isEqualTo(1);
-        Assertions.assertThat(cartPS.getQuantity()).isEqualTo(10);
-        Assertions.assertThat(cartPS.getPrice()).isEqualTo(100000);
+        Assertions.assertThat(cart.getId()).isEqualTo(1);
+        Assertions.assertThat(cart.getQuantity()).isEqualTo(10);
+        Assertions.assertThat(cart.getPrice()).isEqualTo(100000);
     }
 }
