@@ -82,8 +82,7 @@ public class OrderJPARepositoryTest extends DummyEntity {
 
         // when
         List<Order> orderListPS = orderJPARepository.mFindByUserId(id);
-
-        String responseBody = om.writeValueAsString(orderListPS); // 직렬화하여 출력
+        String responseBody = om.writeValueAsString(orderListPS);
         System.out.println("테스트 : " + responseBody);
 
         // then
