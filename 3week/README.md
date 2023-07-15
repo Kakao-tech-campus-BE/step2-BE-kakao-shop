@@ -61,10 +61,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
 ```
 <details>
 <summary>Code</summary>
-<<<<<<< HEAD
-=======
 
->>>>>>> 18a30fa8866549c4ecb82efbac0c711bda2eb094
   ```
   (기능 4) 전체 상품 목록 조회
   - 해당 페이지에 들어가면 전체 상품 목록 조회 API를 호출하여 page값에 따라 상품의 데이터를 받아온다.
