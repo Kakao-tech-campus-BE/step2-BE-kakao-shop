@@ -1,12 +1,11 @@
 package com.example.kakao._core.security;
 
-import com.example.kakao._core.errors.exception.Exception401;
-import com.example.kakao._core.errors.exception.Exception403;
+import com.example.kakao._core.errors.exception.UnAuthorizedException;
+import com.example.kakao._core.errors.exception.ForbiddenException;
 import com.example.kakao._core.utils.FilterResponseUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -60,12 +59,12 @@ public class SecurityConfig {
 
         // 8. 인증 실패 처리
         http.exceptionHandling().authenticationEntryPoint((request, response, authException) -> {
-            FilterResponseUtils.unAuthorized(response, new Exception401("인증되지 않았습니다"));
+            FilterResponseUtils.unAuthorized(response, new UnAuthorizedException("인증되지 않았습니다"));
         });
 
         // 9. 권한 실패 처리
         http.exceptionHandling().accessDeniedHandler((request, response, accessDeniedException) -> {
-            FilterResponseUtils.forbidden(response, new Exception403("권한이 없습니다"));
+            FilterResponseUtils.forbidden(response, new ForbiddenException("권한이 없습니다"));
         });
 
         // 11. 인증, 권한 필터 설정

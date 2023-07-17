@@ -1,7 +1,6 @@
 package com.example.kakao.product;
 
-import com.example.kakao._core.errors.exception.Exception404;
-import com.example.kakao._core.errors.exception.Exception500;
+import com.example.kakao._core.errors.exception.NotFoundException;
 import com.example.kakao._core.utils.ApiResponse;
 import com.example.kakao._core.utils.ApiUtils;
 import com.example.kakao._core.utils.FakeStore;
@@ -43,7 +42,7 @@ public class ProductRestController {
         Product product = fakeStore.getProductList().stream().filter(p -> p.getId() == id).findFirst().orElse(null);
 
         if(product == null){
-            Exception404 ex = new Exception404("해당 상품을 찾을 수 없습니다:"+id);
+            NotFoundException ex = new NotFoundException("해당 상품을 찾을 수 없습니다:"+id);
             return new ResponseEntity<>(
                     ex.body(),
                     ex.status()

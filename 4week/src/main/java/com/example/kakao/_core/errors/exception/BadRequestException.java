@@ -6,18 +6,19 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 
-// 권한 없음
+// 유효성 검사 실패, 잘못된 파라메터 요청
 @Getter
-public class Exception403 extends RuntimeException {
-    public Exception403(String message) {
+public class BadRequestException extends RuntimeException {
+
+    public BadRequestException(String message) {
         super(message);
     }
 
     public ApiResponse body(){
-        return ApiUtils.error(getMessage(), HttpStatus.FORBIDDEN);
+        return ApiUtils.error(getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     public HttpStatus status(){
-        return HttpStatus.FORBIDDEN;
+        return HttpStatus.BAD_REQUEST;
     }
 }

@@ -1,8 +1,8 @@
 package com.example.kakao.user;
 
 import com.example.kakao._core.errors.GlobalExceptionHandler;
-import com.example.kakao._core.errors.exception.Exception400;
-import com.example.kakao._core.errors.exception.Exception403;
+import com.example.kakao._core.errors.exception.BadRequestException;
+import com.example.kakao._core.errors.exception.ForbiddenException;
 import com.example.kakao._core.security.CustomUserDetails;
 import com.example.kakao._core.security.JWTProvider;
 import com.example.kakao._core.utils.ApiResponse;
@@ -33,7 +33,7 @@ public class UserRestController {
 
         if (errors.hasErrors()) {
             List<FieldError> fieldErrors = errors.getFieldErrors();
-            Exception400 ex = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
+            BadRequestException ex = new BadRequestException(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
             return new ResponseEntity<>(
                     ex.body(),
                     ex.status()
@@ -52,7 +52,7 @@ public class UserRestController {
 
         if (errors.hasErrors()) {
             List<FieldError> fieldErrors = errors.getFieldErrors();
-            Exception400 ex = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
+            BadRequestException ex = new BadRequestException(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
             return new ResponseEntity<>(
                     ex.body(),
                     ex.status()
@@ -77,7 +77,7 @@ public class UserRestController {
         // 유효성 검사
         if (errors.hasErrors()) {
             List<FieldError> fieldErrors = errors.getFieldErrors();
-            Exception400 e = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
+            BadRequestException e = new BadRequestException(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
             return new ResponseEntity<>(
                     e.body(),
                     e.status()
@@ -86,7 +86,7 @@ public class UserRestController {
 
         // 권한 체크 (디비를 조회하지 않아도 체크할 수 있는 것)
         if (id != userDetails.getUser().getId()) {
-            Exception403 e = new Exception403("인증된 user는 해당 id로 접근할 권한이 없습니다" + id);
+            ForbiddenException e = new ForbiddenException("인증된 user는 해당 id로 접근할 권한이 없습니다" + id);
             return new ResponseEntity<>(
                     e.body(),
                     e.status()
@@ -111,7 +111,7 @@ public class UserRestController {
     ) {
         // 권한 체크 (디비를 조회하지 않아도 체크할 수 있는 것)
         if (id != userDetails.getUser().getId()) {
-            Exception403 e = new Exception403("인증된 user는 해당 id로 접근할 권한이 없습니다:" + id);
+            ForbiddenException e = new ForbiddenException("인증된 user는 해당 id로 접근할 권한이 없습니다:" + id);
             return new ResponseEntity<>(
                     e.body(),
                     e.status()

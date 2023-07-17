@@ -6,19 +6,18 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 
-// 유효성 검사 실패, 잘못된 파라메터 요청
+// 권한 없음
 @Getter
-public class Exception400 extends RuntimeException {
-
-    public Exception400(String message) {
+public class NotFoundException extends RuntimeException {
+    public NotFoundException(String message) {
         super(message);
     }
 
     public ApiResponse body(){
-        return ApiUtils.error(getMessage(), HttpStatus.BAD_REQUEST);
+        return ApiUtils.error(getMessage(), HttpStatus.NOT_FOUND);
     }
 
     public HttpStatus status(){
-        return HttpStatus.BAD_REQUEST;
+        return HttpStatus.NOT_FOUND;
     }
 }

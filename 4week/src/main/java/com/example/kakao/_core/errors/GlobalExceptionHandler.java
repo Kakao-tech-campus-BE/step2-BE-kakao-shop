@@ -19,38 +19,38 @@ public class GlobalExceptionHandler {
     private final ErrorLogJPARepository errorLogJPARepository;
 
     public ResponseEntity<ApiResponse> handle(RuntimeException e, HttpServletRequest request){
-        if(e instanceof Exception400){
-            Exception400 ex = (Exception400) e;
+        if(e instanceof BadRequestException){
+            BadRequestException ex = (BadRequestException) e;
             return new ResponseEntity<>(
                     ex.body(),
                     ex.status()
             );
-        }else if(e instanceof Exception401){
-            Exception401 ex = (Exception401) e;
+        }else if(e instanceof UnAuthorizedException){
+            UnAuthorizedException ex = (UnAuthorizedException) e;
             return new ResponseEntity<>(
                     ex.body(),
                     ex.status()
             );
-        }else if(e instanceof Exception403){
-            Exception403 ex = (Exception403) e;
+        }else if(e instanceof ForbiddenException){
+            ForbiddenException ex = (ForbiddenException) e;
             return new ResponseEntity<>(
                     ex.body(),
                     ex.status()
             );
-        }else if(e instanceof Exception404){
-            Exception404 ex = (Exception404) e;
+        }else if(e instanceof NotFoundException){
+            NotFoundException ex = (NotFoundException) e;
             return new ResponseEntity<>(
                     ex.body(),
                     ex.status()
             );
-        }else if(e instanceof Exception500){
+        }else if(e instanceof InternalServerErrorException){
             ErrorLog errorLog = ErrorLog.builder()
                     .message(e.getMessage())
                     .userAgent(request.getHeader("User-Agent"))
                     .userIp(request.getRemoteAddr())
                     .build();
             errorLogJPARepository.save(errorLog);
-            Exception500 ex = (Exception500) e;
+            InternalServerErrorException ex = (InternalServerErrorException) e;
             return new ResponseEntity<>(
                     ex.body(),
                     ex.status()

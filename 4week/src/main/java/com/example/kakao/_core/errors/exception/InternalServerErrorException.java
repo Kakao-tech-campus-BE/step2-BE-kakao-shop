@@ -5,19 +5,18 @@ import com.example.kakao._core.utils.ApiUtils;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
-
-// 권한 없음
+// 서버 에러
 @Getter
-public class Exception404 extends RuntimeException {
-    public Exception404(String message) {
+public class InternalServerErrorException extends RuntimeException {
+    public InternalServerErrorException(String message) {
         super(message);
     }
 
     public ApiResponse body(){
-        return ApiUtils.error(getMessage(), HttpStatus.NOT_FOUND);
+        return ApiUtils.error(getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     public HttpStatus status(){
-        return HttpStatus.NOT_FOUND;
+        return HttpStatus.INTERNAL_SERVER_ERROR;
     }
 }
