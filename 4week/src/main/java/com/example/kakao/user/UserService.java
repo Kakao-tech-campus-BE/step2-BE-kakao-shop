@@ -62,8 +62,7 @@ public class UserService {
         );
 
         // 의미 있는 setter 추가
-        String encPassword =
-                passwordEncoder.encode(requestDTO.getPassword());
+        String encPassword = passwordEncoder.encode(requestDTO.getPassword());
         userPS.updatePassword(encPassword);
     } // 더티체킹 flush
 }

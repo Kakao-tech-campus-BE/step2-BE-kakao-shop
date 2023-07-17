@@ -1,18 +1,19 @@
 package com.example.kakao.cart;
 
 import com.example.kakao._core.security.CustomUserDetails;
+import com.example.kakao._core.utils.ApiResponse;
 import com.example.kakao._core.utils.ApiUtils;
 import com.example.kakao._core.utils.FakeStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -32,7 +33,7 @@ public class CartRestController {
 // ]
     // (기능8) 장바구니 담기
     @PostMapping("/carts/add")
-    public ResponseEntity<?> addCartList(@RequestBody List<CartRequest.SaveDTO> requestDTOs, @AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ResponseEntity<ApiResponse> addCartList(@RequestBody List<CartRequest.SaveDTO> requestDTOs, @AuthenticationPrincipal CustomUserDetails userDetails) {
         requestDTOs.forEach(
                 saveDTO -> System.out.println("요청 받은 장바구니 옵션 : "+saveDTO.toString())
         );
@@ -41,7 +42,7 @@ public class CartRestController {
 
     // (기능9) 장바구니 보기 - (주문화면, 결재화면)
     @GetMapping("/carts")
-    public ResponseEntity<?> findAll(@AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ResponseEntity<ApiResponse> findAll(@AuthenticationPrincipal CustomUserDetails userDetails) {
         List<Cart> cartList = fakeStore.getCartList();
         CartResponse.FindAllDTO responseDTO = new CartResponse.FindAllDTO(cartList);
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
@@ -60,7 +61,7 @@ public class CartRestController {
 // ]
     // (기능11) 주문하기 - (장바구니 업데이트)
     @PostMapping("/carts/update")
-    public ResponseEntity<?> update(@RequestBody @Valid List<CartRequest.UpdateDTO> requestDTOs, @AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ResponseEntity<ApiResponse> update(@RequestBody @Valid List<CartRequest.UpdateDTO> requestDTOs, @AuthenticationPrincipal CustomUserDetails userDetails) {
         requestDTOs.forEach(
                 updateDTO -> System.out.println("요청 받은 장바구니 수정 내역 : "+updateDTO.toString())
         );
@@ -81,7 +82,7 @@ public class CartRestController {
 
 
     @PostMapping("/carts/clear")
-    public ResponseEntity<?> clear(@AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ResponseEntity<ApiResponse> clear(@AuthenticationPrincipal CustomUserDetails userDetails) {
         return ResponseEntity.ok(ApiUtils.success(null));
     }
 }

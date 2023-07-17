@@ -1,6 +1,5 @@
 package com.example.kakao.user;
 
-import com.example.kakao._core.errors.GlobalExceptionHandler;
 import com.example.kakao._core.errors.exception.BadRequestException;
 import com.example.kakao._core.errors.exception.ForbiddenException;
 import com.example.kakao._core.security.CustomUserDetails;
@@ -24,7 +23,6 @@ import java.util.Map;
 @RestController
 public class UserRestController {
 
-    private final GlobalExceptionHandler globalExceptionHandler;
     private final UserService userService;
 
     @PostMapping("/join")
@@ -39,12 +37,10 @@ public class UserRestController {
                     ex.status()
             );
         }
-        try {
-            userService.join(requestDTO);
-            return ResponseEntity.ok().body(ApiUtils.success(null));
-        } catch (RuntimeException e) {
-            return globalExceptionHandler.handle(e, request);
-        }
+
+        userService.join(requestDTO);
+        return ResponseEntity.ok().body(ApiUtils.success(null));
+
     }
 
     @PostMapping("/login")
@@ -59,12 +55,10 @@ public class UserRestController {
             );
         }
 
-        try {
-            String jwt = userService.login(requestDTO);
-            return ResponseEntity.ok().header(JWTProvider.HEADER, jwt).body(ApiUtils.success(null));
-        }catch (RuntimeException e){
-            return globalExceptionHandler.handle(e, request);
-        }
+
+        String jwt = userService.login(requestDTO);
+        return ResponseEntity.ok().header(JWTProvider.HEADER, jwt).body(ApiUtils.success(null));
+
     }
 
     @PostMapping("/users/{id}/update-password")
@@ -93,13 +87,9 @@ public class UserRestController {
             );
         }
 
-        // 서비스 실행 : 내부에서 터지는 모든 익셉션은 예외 핸들러로 던지기
-        try {
-            userService.updatePassword(requestDTO, id);
-            return ResponseEntity.ok().body(ApiUtils.success(null));
-        } catch (RuntimeException e) {
-            return globalExceptionHandler.handle(e, request);
-        }
+        userService.updatePassword(requestDTO, id);
+        return ResponseEntity.ok().body(ApiUtils.success(null));
+
     }
 
     // 클라이언트로 부터 전달된 데이터는 신뢰할 수 없다.
@@ -118,13 +108,9 @@ public class UserRestController {
             );
         }
 
-        // 서비스 실행 : 내부에서 터지는 모든 익셉션은 예외 핸들러로 던지기
-        try {
-            UserResponse.FindById responseDTO = userService.findById(id);
-            return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
-        } catch (RuntimeException e) {
-            return globalExceptionHandler.handle(e, request);
-        }
+        UserResponse.FindById responseDTO = userService.findById(id);
+        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
+
     }
 
     // 이메일 중복체크 (기능에는 없지만 사용중)

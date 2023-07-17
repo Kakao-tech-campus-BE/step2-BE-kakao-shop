@@ -1,17 +1,18 @@
 package com.example.kakao.order;
 
 import com.example.kakao._core.security.CustomUserDetails;
+import com.example.kakao._core.utils.ApiResponse;
 import com.example.kakao._core.utils.ApiUtils;
 import com.example.kakao._core.utils.FakeStore;
 import com.example.kakao.order.item.Item;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -22,7 +23,7 @@ public class OrderRestController {
 
     // (기능12) 결재
     @PostMapping("/orders/save")
-    public ResponseEntity<?> save(@AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ResponseEntity<ApiResponse> save(@AuthenticationPrincipal CustomUserDetails userDetails) {
         Order order = fakeStore.getOrderList().get(0);
         List<Item> itemList = fakeStore.getItemList();
         OrderResponse.FindByIdDTO responseDTO = new OrderResponse.FindByIdDTO(order, itemList);
@@ -31,7 +32,7 @@ public class OrderRestController {
 
     // (기능13) 주문 결과 확인
     @GetMapping("/orders/{id}")
-    public ResponseEntity<?> findById(@PathVariable int id) {
+    public ResponseEntity<ApiResponse> findById(@PathVariable int id) {
         Order order = fakeStore.getOrderList().get(id-1);
         List<Item> itemList = fakeStore.getItemList();
         OrderResponse.FindByIdDTO responseDTO = new OrderResponse.FindByIdDTO(order, itemList);
