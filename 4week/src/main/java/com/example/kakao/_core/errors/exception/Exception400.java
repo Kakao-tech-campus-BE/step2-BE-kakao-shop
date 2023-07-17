@@ -1,5 +1,6 @@
 package com.example.kakao._core.errors.exception;
 
+import com.example.kakao._core.utils.ApiResponse;
 import com.example.kakao._core.utils.ApiUtils;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
@@ -13,7 +14,7 @@ public class Exception400 extends RuntimeException {
         super(message);
     }
 
-    public ApiUtils.ApiResult<?> body(){
+    public ApiResponse body(){
         return ApiUtils.error(getMessage(), HttpStatus.BAD_REQUEST);
     }
 

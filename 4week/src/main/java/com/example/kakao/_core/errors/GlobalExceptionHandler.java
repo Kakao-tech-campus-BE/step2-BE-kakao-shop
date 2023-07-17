@@ -1,6 +1,8 @@
 package com.example.kakao._core.errors;
 
 import com.example.kakao._core.errors.exception.*;
+import com.example.kakao._core.utils.ApiResponse;
+import com.example.kakao._core.utils.ApiUtils;
 import com.example.kakao.log.ErrorLog;
 import com.example.kakao.log.ErrorLogJPARepository;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +18,7 @@ public class GlobalExceptionHandler {
 
     private final ErrorLogJPARepository errorLogJPARepository;
 
-    public ResponseEntity<?> handle(RuntimeException e, HttpServletRequest request){
+    public ResponseEntity<ApiResponse> handle(RuntimeException e, HttpServletRequest request){
         if(e instanceof Exception400){
             Exception400 ex = (Exception400) e;
             return new ResponseEntity<>(
@@ -61,8 +63,8 @@ public class GlobalExceptionHandler {
                     .build();
             errorLogJPARepository.save(errorLog);
             return new ResponseEntity<>(
-                    "unknown server error",
-                    HttpStatus.INTERNAL_SERVER_ERROR
+                ApiUtils.error(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR),
+                HttpStatus.INTERNAL_SERVER_ERROR
             );
         }
     }

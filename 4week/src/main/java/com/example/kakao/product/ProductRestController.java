@@ -2,6 +2,7 @@ package com.example.kakao.product;
 
 import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao._core.errors.exception.Exception500;
+import com.example.kakao._core.utils.ApiResponse;
 import com.example.kakao._core.utils.ApiUtils;
 import com.example.kakao._core.utils.FakeStore;
 import com.example.kakao.product.option.Option;
@@ -23,7 +24,7 @@ public class ProductRestController {
 
     // (기능4) 전체 상품 목록 조회 (페이징 9개씩)
     @GetMapping("/products")
-    public ResponseEntity<?> findAll(@RequestParam(defaultValue = "0") int page) {
+    public ResponseEntity<ApiResponse> findAll(@RequestParam(defaultValue = "0") int page) {
         // 1. 더미데이터 가져와서 페이징하기
         List<Product> productList = fakeStore.getProductList().stream().skip(page*9).limit(9).collect(Collectors.toList());
 
@@ -37,7 +38,7 @@ public class ProductRestController {
 
     // (기능5) 개별 상품 상세 조회
     @GetMapping("/products/{id}")
-    public ResponseEntity<?> findById(@PathVariable int id) {
+    public ResponseEntity<ApiResponse> findById(@PathVariable int id) {
         // 1. 더미데이터 가져와서 상품 찾기
         Product product = fakeStore.getProductList().stream().filter(p -> p.getId() == id).findFirst().orElse(null);
 

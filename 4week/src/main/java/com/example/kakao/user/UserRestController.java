@@ -5,6 +5,7 @@ import com.example.kakao._core.errors.exception.Exception400;
 import com.example.kakao._core.errors.exception.Exception403;
 import com.example.kakao._core.security.CustomUserDetails;
 import com.example.kakao._core.security.JWTProvider;
+import com.example.kakao._core.utils.ApiResponse;
 import com.example.kakao._core.utils.ApiUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -27,8 +28,8 @@ public class UserRestController {
     private final UserService userService;
 
     @PostMapping("/join")
-    public ResponseEntity<?> join(@RequestBody @Valid UserRequest.JoinDTO requestDTO, Errors errors,
-                                  HttpServletRequest request) {
+    public ResponseEntity<ApiResponse> join(@RequestBody @Valid UserRequest.JoinDTO requestDTO, Errors errors,
+                                            HttpServletRequest request) {
 
         if (errors.hasErrors()) {
             List<FieldError> fieldErrors = errors.getFieldErrors();
@@ -47,7 +48,7 @@ public class UserRestController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody @Valid UserRequest.LoginDTO requestDTO, Errors errors, HttpServletRequest request) {
+    public ResponseEntity<ApiResponse> login(@RequestBody @Valid UserRequest.LoginDTO requestDTO, Errors errors, HttpServletRequest request) {
 
         if (errors.hasErrors()) {
             List<FieldError> fieldErrors = errors.getFieldErrors();
@@ -67,7 +68,7 @@ public class UserRestController {
     }
 
     @PostMapping("/users/{id}/update-password")
-    public ResponseEntity<?> updatePassword(
+    public ResponseEntity<ApiResponse> updatePassword(
             @PathVariable Integer id,
             @RequestBody @Valid UserRequest.UpdatePasswordDTO requestDTO, Errors errors,
             @AuthenticationPrincipal CustomUserDetails userDetails,
@@ -103,7 +104,7 @@ public class UserRestController {
 
     // 클라이언트로 부터 전달된 데이터는 신뢰할 수 없다.
     @GetMapping("/users/{id}")
-    public ResponseEntity<?> findById(
+    public ResponseEntity<ApiResponse> findById(
             @PathVariable Integer id,
             @AuthenticationPrincipal CustomUserDetails userDetails,
             HttpServletRequest request
@@ -128,14 +129,14 @@ public class UserRestController {
 
     // 이메일 중복체크 (기능에는 없지만 사용중)
     @PostMapping("/check")
-    public ResponseEntity<?> check(@RequestBody UserRequest.EmailCheckDTO emailCheckDTO) {
+    public ResponseEntity<ApiResponse> check(@RequestBody UserRequest.EmailCheckDTO emailCheckDTO) {
         return ResponseEntity.ok().body(ApiUtils.success(null));
     }
 
     // (기능3) - 로그아웃
     // 사용 안함 - 프론트에서 localStorage JWT 토큰을 삭제하면 됨.
     @GetMapping("/logout")
-    public ResponseEntity<?> logout(@RequestBody Map<String, String> user) {
+    public ResponseEntity<ApiResponse> logout(@RequestBody Map<String, String> user) {
         return ResponseEntity.ok().header(JWTProvider.HEADER, "").body(ApiUtils.success(null));
     }
 }
