@@ -1,21 +1,20 @@
-package com.example.kakao.user;
+package com.example.kakao.domain.user;
 
-import com.example.kakao._core.errors.exception.BadRequestException;
 import com.example.kakao._core.errors.exception.ForbiddenException;
 import com.example.kakao._core.security.CustomUserDetails;
 import com.example.kakao._core.security.JWTProvider;
 import com.example.kakao._core.utils.ApiResponse;
 import com.example.kakao._core.utils.ApiUtils;
+import com.example.kakao.domain.user.dto.UserResponse;
+import com.example.kakao.domain.user.dto.UserRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.Errors;
-import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.util.List;
 import java.util.Map;
 
 
@@ -26,89 +25,41 @@ public class UserRestController {
     private final UserService userService;
 
     @PostMapping("/join")
-    public ResponseEntity<ApiResponse> join(@RequestBody @Valid UserRequest.JoinDTO requestDTO, Errors errors,
-                                            HttpServletRequest request) {
-
-        if (errors.hasErrors()) {
-            List<FieldError> fieldErrors = errors.getFieldErrors();
-            BadRequestException ex = new BadRequestException(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
-            return new ResponseEntity<>(
-                    ex.body(),
-                    ex.status()
-            );
-        }
+    public ResponseEntity<ApiResponse> join(@RequestBody @Validated UserRequest.JoinDTO requestDTO) {
 
         userService.join(requestDTO);
-        return ResponseEntity.ok().body(ApiUtils.success(null));
-
+        return ResponseEntity.ok().body(ApiUtils.success());
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse> login(@RequestBody @Valid UserRequest.LoginDTO requestDTO, Errors errors, HttpServletRequest request) {
-
-        if (errors.hasErrors()) {
-            List<FieldError> fieldErrors = errors.getFieldErrors();
-            BadRequestException ex = new BadRequestException(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
-            return new ResponseEntity<>(
-                    ex.body(),
-                    ex.status()
-            );
-        }
-
+    public ResponseEntity<ApiResponse> login(@RequestBody @Validated UserRequest.LoginDTO requestDTO, Errors errors, HttpServletRequest request) {
 
         String jwt = userService.login(requestDTO);
-        return ResponseEntity.ok().header(JWTProvider.HEADER, jwt).body(ApiUtils.success(null));
-
+        return ResponseEntity.ok().header(JWTProvider.HEADER, jwt).body(ApiUtils.success());
     }
 
     @PostMapping("/users/{id}/update-password")
     public ResponseEntity<ApiResponse> updatePassword(
-            @PathVariable Integer id,
-            @RequestBody @Valid UserRequest.UpdatePasswordDTO requestDTO, Errors errors,
-            @AuthenticationPrincipal CustomUserDetails userDetails,
-            HttpServletRequest request) {
+            @PathVariable("id") Integer accessId,
+            @RequestBody @Validated UserRequest.UpdatePasswordDTO requestDTO,
+            @AuthenticationPrincipal CustomUserDetails userDetails) {
 
-        // 유효성 검사
-        if (errors.hasErrors()) {
-            List<FieldError> fieldErrors = errors.getFieldErrors();
-            BadRequestException e = new BadRequestException(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
-            return new ResponseEntity<>(
-                    e.body(),
-                    e.status()
-            );
-        }
+        userService.validateUserInfoAccessPermission(accessId, userDetails);
 
-        // 권한 체크 (디비를 조회하지 않아도 체크할 수 있는 것)
-        if (id != userDetails.getUser().getId()) {
-            ForbiddenException e = new ForbiddenException("인증된 user는 해당 id로 접근할 권한이 없습니다" + id);
-            return new ResponseEntity<>(
-                    e.body(),
-                    e.status()
-            );
-        }
+        userService.updatePassword(requestDTO, accessId);
 
-        userService.updatePassword(requestDTO, id);
-        return ResponseEntity.ok().body(ApiUtils.success(null));
-
+        return ResponseEntity.ok().body(ApiUtils.success());
     }
 
     // 클라이언트로 부터 전달된 데이터는 신뢰할 수 없다.
     @GetMapping("/users/{id}")
     public ResponseEntity<ApiResponse> findById(
-            @PathVariable Integer id,
-            @AuthenticationPrincipal CustomUserDetails userDetails,
-            HttpServletRequest request
+            @PathVariable("id") Integer accessId,
+            @AuthenticationPrincipal CustomUserDetails userDetails
     ) {
-        // 권한 체크 (디비를 조회하지 않아도 체크할 수 있는 것)
-        if (id != userDetails.getUser().getId()) {
-            ForbiddenException e = new ForbiddenException("인증된 user는 해당 id로 접근할 권한이 없습니다:" + id);
-            return new ResponseEntity<>(
-                    e.body(),
-                    e.status()
-            );
-        }
+        userService.validateUserInfoAccessPermission(accessId, userDetails);
 
-        UserResponse.FindById responseDTO = userService.findById(id);
+        UserResponse.FindById responseDTO = userService.findById(accessId);
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
 
     }
@@ -116,6 +67,7 @@ public class UserRestController {
     // 이메일 중복체크 (기능에는 없지만 사용중)
     @PostMapping("/check")
     public ResponseEntity<ApiResponse> check(@RequestBody UserRequest.EmailCheckDTO emailCheckDTO) {
+        userService.checkEmailDuplicated(emailCheckDTO.getEmail());
         return ResponseEntity.ok().body(ApiUtils.success(null));
     }
 
@@ -123,6 +75,6 @@ public class UserRestController {
     // 사용 안함 - 프론트에서 localStorage JWT 토큰을 삭제하면 됨.
     @GetMapping("/logout")
     public ResponseEntity<ApiResponse> logout(@RequestBody Map<String, String> user) {
-        return ResponseEntity.ok().header(JWTProvider.HEADER, "").body(ApiUtils.success(null));
+        return ResponseEntity.ok().header(JWTProvider.HEADER, "").body(ApiUtils.success());
     }
 }

@@ -1,4 +1,4 @@
-package com.example.kakao.user;
+package com.example.kakao.domain.user;
 
 import lombok.AccessLevel;
 import lombok.Builder;

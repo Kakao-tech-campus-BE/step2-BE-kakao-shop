@@ -1,5 +1,6 @@
-package com.example.kakao.user;
+package com.example.kakao.domain.user.dto;
 
+import com.example.kakao.domain.user.User;
 import lombok.Getter;
 import lombok.Setter;
 
