@@ -7,8 +7,12 @@ import com.example.kakao.log.ErrorLog;
 import com.example.kakao.log.ErrorLogJPARepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
@@ -18,9 +22,28 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @RequiredArgsConstructor
 @RestControllerAdvice
+@Order(Ordered.LOWEST_PRECEDENCE) // 도메인 별로 Custom Exception 을 추가하게 될 경우, 올바른 우선순위 처리를 위함.
 public class GlobalExceptionHandler {
 
   private final ErrorLogJPARepository errorLogJPARepository;
+
+  @ExceptionHandler(MethodArgumentNotValidException.class)
+  public ResponseEntity<ApiResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex){
+    log.error("Method Argument Not Valid",ex);
+
+    FieldError fieldError = ex.getBindingResult().getFieldError();
+
+    // 이 분기문이 실행되는 경우를 이해하지 못했음. 일단은 NullPointerException 방지를 위해 추가함.
+    if(fieldError == null) return new ResponseEntity<>(
+      ApiUtils.error("Argument Not Valid: No Field Error", HttpStatus.BAD_REQUEST),
+      HttpStatus.BAD_REQUEST
+    );
+
+    return new ResponseEntity<>(
+      ApiUtils.error("Argument Not Valid: "+ fieldError.getDefaultMessage(), HttpStatus.BAD_REQUEST),
+      HttpStatus.BAD_REQUEST
+    );
+  }
 
   @ExceptionHandler(BadRequestException.class)
   public ResponseEntity<ApiResponse> handleBadRequestException(BadRequestException ex, HttpServletRequest request) {
