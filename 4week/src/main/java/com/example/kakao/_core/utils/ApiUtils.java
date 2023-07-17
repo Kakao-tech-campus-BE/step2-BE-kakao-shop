@@ -9,6 +9,10 @@ public class ApiUtils {
 
     private ApiUtils() {}
 
+    public static ApiResponse success() {
+        return new ApiResult<>(true, null, null);
+    }
+
     public static <T> ApiResponse success(T response) {
         return new ApiResult<>(true, response, null);
     }
