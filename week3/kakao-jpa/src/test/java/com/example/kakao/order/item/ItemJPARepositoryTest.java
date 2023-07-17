@@ -58,7 +58,6 @@ class ItemJPARepositoryTest extends DummyEntity {
         User user = newUser(username);
         userJPARepository.save(user);
 
-
         Order order = newOrder(user);
         orderJPARepository.save(order);
 
@@ -82,7 +81,7 @@ class ItemJPARepositoryTest extends DummyEntity {
 
     @DisplayName("주문 아이템 생성")
     @Test
-    void orderItem_create_test() {
+    void orderItem_insert_test() {
 
         // given
         String username = "heechan2";
@@ -107,10 +106,8 @@ class ItemJPARepositoryTest extends DummyEntity {
 
         int previousItemSize = itemJPARepository.findAll().size();
 
-
         // when
         itemJPARepository.saveAll(List.of(item1, item2));
-
 
         // then
         assertThat(itemJPARepository.findAll()).hasSize(previousItemSize + 2);
@@ -140,10 +137,8 @@ class ItemJPARepositoryTest extends DummyEntity {
         // given
         int orderId = 1;
 
-
         // when
         List<Item> items = itemJPARepository.findAllByOrderId(orderId);
-
 
         // then
         assertThat(items).isNotNull().hasSize(2);
@@ -152,27 +147,23 @@ class ItemJPARepositoryTest extends DummyEntity {
         assertThat(items.get(0).getQuantity()).isEqualTo(1);
         assertThat(items.get(0).getOrder().getUser().getUsername()).isEqualTo("heechan");
         assertThat(items.get(0).getOption().getProduct().getProductName()).isEqualTo("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전");
-
         assertThat(items.get(1).getOption().getOptionName()).isEqualTo("고무장갑 베이지 S(소형) 6팩");
         assertThat(items.get(1).getOption().getPrice()).isEqualTo(9900);
         assertThat(items.get(1).getQuantity()).isEqualTo(1);
         assertThat(items.get(1).getOrder().getUser().getUsername()).isEqualTo("heechan");
         assertThat(items.get(1).getOption().getProduct().getProductName()).isEqualTo("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전");
-
     }
 
 
-    @DisplayName("없는 주문번호 조회")
+    @DisplayName("주문번호로 주문 아이템 조회 실패: 존재하지 않는 주문번호")
     @Test
     void orderItem_selectByOrderId_failed_test() {
 
         // given
         int orderId = 10000;
 
-
         // when
         List<Item> items = itemJPARepository.findAllByOrderId(orderId);
-
 
         // then
         assertThat(items).isEmpty();

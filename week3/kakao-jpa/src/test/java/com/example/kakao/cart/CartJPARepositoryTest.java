@@ -64,7 +64,7 @@ class CartJPARepositoryTest extends DummyEntity {
     }
 
     @Test
-    @DisplayName("장바구니에 없던 옵션 담기 테스트")
+    @DisplayName("장바구니에 없던 옵션 담기")
     void cart_insert_test() {
 
         // given
@@ -77,12 +77,10 @@ class CartJPARepositoryTest extends DummyEntity {
         Option option = optionJPARepository.findById(optionId).orElseThrow();
         Cart cart = newCart(user, option, newQuantity);
 
-
         // when
         // 장바구니에 해당 옵션이 없다는 것에 대한 validation 검증 후, save
         assertThat(cartJPARepository.findByUserIdAndOptionId(userId, optionId)).isEmpty();
         cartJPARepository.save(cart);
-
 
         // then
         Cart savedCart = cartJPARepository.findByUserIdAndOptionId(userId, optionId).orElseThrow(
@@ -95,8 +93,8 @@ class CartJPARepositoryTest extends DummyEntity {
 
 
     @Test
-    @DisplayName("장바구니에 존재하던 물건 추가로 담기 테스트")
-    void cart_alreadyExistItem_insert_test() {
+    @DisplayName("장바구니 수정")
+    void cart_update_test() {
 
         // given
         int optionId = 1;
@@ -108,7 +106,6 @@ class CartJPARepositoryTest extends DummyEntity {
         int previousCartSize = cartJPARepository.findAll().size();
         int previousQuantity = existingCartItem.getQuantity();
         int newQuantity = 100;
-
 
         // when
         existingCartItem.update(previousQuantity + newQuantity, (previousQuantity + newQuantity) * optionPrice);
@@ -125,18 +122,16 @@ class CartJPARepositoryTest extends DummyEntity {
 
 
     @Test
-    @DisplayName("사용자 id로 장바구니 조회 테스트")
+    @DisplayName("사용자 id로 장바구니 조회")
     void cart_findByUserId_test() {
 
         // given
         int userId = 1;
 
-
         // when
         // 존재하는 사용자라는 것에 대한 validation
         assertThat(userJPARepository.findById(userId)).isPresent();
         List<Cart> carts = cartJPARepository.findAllCartsWithOptionsAndUserAndProductByUserId(userId);
-
 
         // then
         assertThat(carts).hasSize(2);
@@ -154,7 +149,7 @@ class CartJPARepositoryTest extends DummyEntity {
 
 
     @Test
-    @DisplayName("장바구니 삭제 성공 테스트")
+    @DisplayName("장바구니 삭제 성공")
     void cart_deleteById_success_test() {
 
         // given
@@ -162,12 +157,10 @@ class CartJPARepositoryTest extends DummyEntity {
         int userId = 1;
         int previousCartSize = cartJPARepository.findByUserId(userId).size();
 
-
         // when
         // 존재하는 장바구니라는 것에 대한 validation
         assertThat(cartJPARepository.findById(cartId)).isPresent();
         cartJPARepository.deleteById(cartId);
-
 
         // then
         assertThat(cartJPARepository.findAll()).hasSize(previousCartSize - 1);
@@ -176,18 +169,16 @@ class CartJPARepositoryTest extends DummyEntity {
 
 
     @Test
-    @DisplayName("존재하지 않는 장바구니 아이템 삭제 테스트")
+    @DisplayName("장바구니 삭제 실패: 존재하지 않는 장바구니")
     void cart_deleteById_failed_test() {
 
         // given
         int cartId = 10;
 
-
         // when
         // 존재하지 않는 장바구니라는 것에 대한 validation
         assertThat(cartJPARepository.findById(cartId)).isEmpty();
         Throwable thrown = catchThrowable(() -> cartJPARepository.deleteById(cartId));
-
 
         // then
         // 존재하지 않는 장바구니 아이템을 삭제하려고 시도 시, 오류 발생 catch
