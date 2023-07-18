@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="29ae2cb3-f9e4-4321-93a8-e0a413cc6a12" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/out/production/resources/application-local.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/resources/application-prod.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/resources/static/docs/api-docs.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/example/kakao/cart/CartJPARepositoryTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/com/example/kakao/order/OrderJPARepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2SUtoWzGE14vbL1l5OSDQzDbRBT" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/Users/mae/Desktop/KTC/step2-BE-kakao-shop/week3",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "spring.configuration.checksum": "3fcb6ad08501ea2e40c61ba5f4596338",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.example.kakao.order" />
+      <recent name="com.example.kakao.cart" />
+      <recent name="com.example.kakao.product" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.OrderJPARepositoryTest.order_save_test">
+    <configuration name="CartJPARepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="kakao.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.kakao.cart.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.kakao.cart" />
+      <option name="MAIN_CLASS_NAME" value="com.example.kakao.cart.CartJPARepositoryTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CartJPARepositoryTest.update_cart_test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="kakao.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.kakao.cart.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.kakao.cart" />
+      <option name="MAIN_CLASS_NAME" value="com.example.kakao.cart.CartJPARepositoryTest" />
+      <option name="METHOD_NAME" value="update_cart_test" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="OrderJPARepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="kakao.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.kakao.order.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.kakao.order" />
+      <option name="MAIN_CLASS_NAME" value="com.example.kakao.order.OrderJPARepositoryTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="OrderJPARepositoryTest.order_findAll_test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="kakao.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.kakao.order.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.kakao.order" />
+      <option name="MAIN_CLASS_NAME" value="com.example.kakao.order.OrderJPARepositoryTest" />
+      <option name="METHOD_NAME" value="order_findAll_test" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="OrderJPARepositoryTest.order_save_test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="kakao.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.kakao.order.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.kakao.order" />
+      <option name="MAIN_CLASS_NAME" value="com.example.kakao.order.OrderJPARepositoryTest" />
+      <option name="METHOD_NAME" value="order_save_test" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="KakaoApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="kakao.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.kakao.KakaoApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.OrderJPARepositoryTest.order_save_test" />
+        <item itemvalue="JUnit.OrderJPARepositoryTest" />
+        <item itemvalue="JUnit.OrderJPARepositoryTest.order_findAll_test" />
+        <item itemvalue="JUnit.CartJPARepositoryTest.update_cart_test" />
+        <item itemvalue="JUnit.CartJPARepositoryTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="29ae2cb3-f9e4-4321-93a8-e0a413cc6a12" name="Changes" comment="" />
+      <created>1689213162727</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1689213162727</updated>
+      <workItem from="1689213163907" duration="731000" />
+      <workItem from="1689215624203" duration="36026000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+</project>

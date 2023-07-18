@@ -1678,7 +1678,7 @@ public class ProductOptionDTO {
 <br/>
 
 #### **Controller**
-CartRestController
+
 ```java
 @RestController
 public class CartRestController {
@@ -1800,6 +1800,7 @@ public class CartRestController {
             this.quantity = quantity;
         }
     }
+}
 ```
 > DTO를 **Inner static class**로 작성하여 DTO 클래스가 너무 많아지는 것을 방지했습니다. 
 
@@ -1810,35 +1811,36 @@ public class CartRestController {
 #### **Mock Test**
 ```java
 @Test
-    @WithMockUser
-    @DisplayName("장바구니 담기")
-    public void addCart_test() throws Exception {
-        //given
-        List<CartRestController.CartDTO> cartDTOList = new ArrayList<>();
-        CartRestController.CartDTO cartDTO1 = new CartRestController.CartDTO(1,5);
-        CartRestController.CartDTO cartDTO2 = new CartRestController.CartDTO(2,5);
-        cartDTOList.add(cartDTO1);
-        cartDTOList.add(cartDTO2);
+@WithMockUser
+@DisplayName("장바구니 담기")
+public void addCart_test() throws Exception {
+    //given
+    List<CartRestController.CartDTO> cartDTOList = new ArrayList<>();
+    CartRestController.CartDTO cartDTO1 = new CartRestController.CartDTO(1,5);
+    CartRestController.CartDTO cartDTO2 = new CartRestController.CartDTO(2,5);
+    cartDTOList.add(cartDTO1);
+    cartDTOList.add(cartDTO2);
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        String requestData = objectMapper.writeValueAsString(cartDTOList);
-        System.out.println(requestData);
+    ObjectMapper objectMapper = new ObjectMapper();
+    String requestData = objectMapper.writeValueAsString(cartDTOList);
+    System.out.println(requestData);
 
-        // when
-        ResultActions resultActions = mvc.perform(
-                post("/carts/add")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(requestData)
-        );
+    // when
+    ResultActions resultActions = mvc.perform(
+            post("/carts/add")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(requestData)
+    );
 
-        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
-        System.out.println("테스트 : " + responseBody);
+    String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+    System.out.println("테스트 : " + responseBody);
 
-        // verify
-        resultActions.andExpect(jsonPath("$.success").value("true"));
-        resultActions.andExpect(jsonPath("$.response").doesNotExist()); //null인지 확인
-        resultActions.andExpect(jsonPath("$.error").doesNotExist());
-    }
+    // verify
+    resultActions.andExpect(jsonPath("$.success").value("true"));
+    resultActions.andExpect(jsonPath("$.response").doesNotExist()); //null인지 확인
+    resultActions.andExpect(jsonPath("$.error").doesNotExist());
+}
+    
 ```
 
 <br/>
@@ -2802,6 +2804,7 @@ class UserRestControllerTest {
         //then
                 .andExpect(jsonPath("$.success").value("false"));
     }
+}
 ```
 > **Test Case**
 > - **회원가입 성공** (가입되지않은 id와 비밀번호)
@@ -2986,6 +2989,367 @@ class UserRestControllerTest {
 
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
+
+<br/>
+<br/>
+
+## **1. 레포지토리 단위테스트**
+
+### **기본 batch fetch size**
+> 조회 성능 개선을 위해 **default_batch_fetch_size: 100**으로 설정한다.
+
+<br/>
+
+## <span style="color:#068FFF">**상품(product)**</span>
+<br/>
+
+### **Test SetUp**
+* Test
+```java
+@Import(ObjectMapper.class)
+@DataJpaTest
+public class ProductJPARepositoryTest extends DummyEntity {
+
+    @Autowired
+    private EntityManager em;
+
+    @Autowired
+    private ProductJPARepository productJPARepository;
+
+    @Autowired
+    private OptionJPARepository optionJPARepository;
+
+    @Autowired
+    private ObjectMapper om;
+
+    @BeforeEach
+    public void setUp(){
+        List<Product> productListPS = productJPARepository.saveAll(productDummyList()); //상품 리스트 저장
+        optionJPARepository.saveAll(optionDummyList(productListPS)); //옵션 리스트 저장
+        em.clear(); 
+    }
+```
+> 필요한 의존객체 타입을 주입한다.
+
+> Dummy Data를 Repository에 저장한다.
+
+> 쿼리를 보기 위해 영속성 컨텍스트를 clear한다.
+
+<br/>
+
+* optionJPARepository
+```java
+public interface OptionJPARepository extends JpaRepository<Option, Integer> {
+
+    List<Option> findByProductId(@Param("productId") int productId);
+    Optional<Option> findById(int id);
+
+    // findById_select_product_lazy_error_fix_test
+    @Query("select o from Option o join fetch o.product where o.product.id = :productId") //fetch join
+    List<Option> mFindByProductId(@Param("productId") int productId);
+}
+```
+> fetch join 사용하는 쿼리가 존재한다.
+
+<br/>
+
+### **1. 전체 상품 목록 조회**
+* Test
+```java
+@Test
+@DisplayName("1. 전체 상품 목록 조회")
+public void product_findAll_test() throws JsonProcessingException {
+    // given
+    int page = 0;
+    int size = 9;
+
+    // when
+    PageRequest pageRequest = PageRequest.of(page, size);
+    Page<Product> productPG = productJPARepository.findAll(pageRequest);
+    String responseBody = om.writeValueAsString(productPG); //직렬화하여 출력
+    System.out.println("테스트 : "+responseBody);
+
+    // then
+    Assertions.assertThat(productPG.getTotalPages()).isEqualTo(2); //2페이지
+    Assertions.assertThat(productPG.getSize()).isEqualTo(9); //한 페이지당 9개 상품 보임
+    Assertions.assertThat(productPG.getNumber()).isEqualTo(0); //첫번째 페이지
+    Assertions.assertThat(productPG.getTotalElements()).isEqualTo(15); //상품 개수
+    Assertions.assertThat(productPG.isFirst()).isEqualTo(true); //첫번째 페이지인지 확인
+    Assertions.assertThat(productPG.getContent().get(0).getId()).isEqualTo(1);
+    Assertions.assertThat(productPG.getContent().get(0).getProductName()).isEqualTo("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전");
+    Assertions.assertThat(productPG.getContent().get(0).getDescription()).isEqualTo("");
+    Assertions.assertThat(productPG.getContent().get(0).getImage()).isEqualTo("/images/1.jpg");
+    Assertions.assertThat(productPG.getContent().get(0).getPrice()).isEqualTo(1000);
+}
+```
+> paging되어 조회되도록 구현된다.
+
+<br/>
+
+### **2. 개별 상품 상세 조회**
+* Test
+```java
+@Test
+@DisplayName("2. 개별 상품 상세 조회 : Lazy")
+public void option_mFindByProductId_lazy_test() throws JsonProcessingException {
+    // given
+    int id = 1;
+
+    // when
+    List<Option> optionListPS = optionJPARepository.mFindByProductId(id); 
+
+    System.out.println("json 직렬화 직전========================");
+    String responseBody = om.writeValueAsString(optionListPS);
+    System.out.println("테스트 : "+responseBody);
+
+    // then
+}
+```
+> 연관관계 객체의 FetchType이 Lazy로 설정되어있다.
+> fetch join 사용해서 한번에 연관관계 객체를 영속 컨텍스트로 가져온다.
+
+<br/>
+
+## <span style="color:#068FFF">**장바구니(cart)**</span>
+<br/>
+
+###  **Test SetUp**
+* Test
+```java
+@Import(ObjectMapper.class)
+@DataJpaTest
+public class CartJPARepositoryTest extends DummyEntity {
+
+    @Autowired
+    private EntityManager em;
+    @Autowired
+    private UserJPARepository userJPARepository;
+
+    @Autowired
+    private ProductJPARepository productJPARepository;
+
+    @Autowired
+    private OptionJPARepository optionJPARepository;
+
+    @Autowired
+    private CartJPARepository cartJPARepository;
+
+    @Autowired
+    private ObjectMapper om;
+
+    @BeforeEach
+    public void setUp(){
+        em.createNativeQuery("ALTER TABLE cart_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        List<Product> productListPS = productJPARepository.saveAll(productDummyList()); //상품 리스트 저장
+        List<Option> optionListPS = optionJPARepository.saveAll(optionDummyList(productListPS)); //옵션 리스트 저장
+        userJPARepository.save(userDummy);
+        cartJPARepository.saveAll(cartDummyList(optionListPS)); //장바구니 리스트 저장
+        em.clear(); //쿼리 보기 위해 PC clear
+    }
+}
+```
+> 매 테스트마다 cart 테이블의 id가 1부터 시작되어 저장되도록 하여 검증시 편리하도록 한다.
+
+<br/>
+
+
+* CartJPARepository
+```java
+public interface CartJPARepository extends JpaRepository<Cart, Integer> {
+    @Query("select c from Cart c join fetch c.user join fetch c.option")
+    List<Cart> mFindFetchAll();
+
+    @Query("select c from Cart c join fetch c.user join fetch c.option where c.id = :cartId")
+    Optional<Cart> mFindById(@Param("cartId") int cartId);
+
+}
+```
+> fetch join 쿼리를 작성하여 N+1문제를 예방한다.
+
+</br>
+
+### **1. 장바구니 조회 (전체 조회)**
+* Test
+```java
+@Test
+@DisplayName("1. 장바구니 조회 (전체 조회)")
+public void cart_findAll_test() throws JsonProcessingException {
+    // given
+
+    // when
+    List<Cart> cartPG = cartJPARepository.mFindFetchAll();
+    String responseBody = om.writeValueAsString(cartPG); //직렬화하여 출력
+    System.out.println("테스트 : "+responseBody);
+
+    // then
+    Assertions.assertThat(cartPG.get(0).getId()).isEqualTo(1);
+    Assertions.assertThat(cartPG.get(0).getOption().getOptionName()).isEqualTo("01. 슬라이딩 지퍼백 크리스마스에디션 4종");
+    Assertions.assertThat(cartPG.get(0).getOption().getPrice()).isEqualTo(10000);
+    Assertions.assertThat(cartPG.get(0).getQuantity()).isEqualTo(5);
+}
+```
+> select문 총 2번 수행(1번: join fetch, 1번:option의 product 조회)
+
+<br/>
+
+### **2. 장바구니 담기 (저장)**
+* Test
+```java
+@Test
+@DisplayName("2. 장바구니 담기 (저장)")
+public void add_cart_test() throws JsonProcessingException {
+    // given
+    System.out.println("장바구니 담기 전");
+    Cart cart = newCart(userDummy, optionDummyList(productDummyList()).get(0), 3);
+    // when
+    cartJPARepository.save(cart); //저장
+    String responseBody = om.writeValueAsString(cart); //직렬화하여 출력
+    System.out.println("테스트 : "+responseBody);
+
+    // then
+    Assertions.assertThat(cart.getId()).isEqualTo(3); //dummy로 cart 이미 2개 존재하므로 id는 3
+    Assertions.assertThat(cart.getOption().getOptionName()).isEqualTo("01. 슬라이딩 지퍼백 크리스마스에디션 4종");
+    Assertions.assertThat(cart.getOption().getPrice()).isEqualTo(10000);
+    Assertions.assertThat(cart.getQuantity()).isEqualTo(3);
+}
+```
+> insert 쿼리 1번 수행
+
+<br/>
+
+### **3. 주문하기 (장바구니 수정)**
+* Test
+```java
+@Test
+@DisplayName("3.주문하기 (장바구니 수정)")
+public void update_cart_test() throws JsonProcessingException {
+    // given
+
+    // when
+    Optional<Cart> cartOptional = cartJPARepository.mFindById(1);
+    if(cartOptional.isPresent()){
+        Cart c = cartOptional.get();
+        c.update(10); //장바구니 수정
+        em.flush(); //DB 반영
+        String responseBody = om.writeValueAsString(c); //직렬화하여 출력
+        System.out.println("테스트 : "+responseBody);
+
+        //then
+        Assertions.assertThat(c.getId()).isEqualTo(1);
+        Assertions.assertThat(c.getQuantity()).isEqualTo(10);
+
+    }
+
+}
+```
+> select 쿼리 2번 (join fetch 1번+ option의 Product 조회 1번) + update 쿼리 1번 수행
+
+<br/>
+
+## <span style="color:#068FFF">**주문(order)**</span>
+<br/>
+
+### **Test SetUp**
+```java
+@Import(ObjectMapper.class)
+@DataJpaTest
+public class OrderJPARepositoryTest extends DummyEntity {
+
+    @Autowired
+    private EntityManager em;
+
+    @Autowired
+    private UserJPARepository userJPARepository;
+
+    @Autowired
+    private OrderJPARepository orderJPARepository;
+
+    @Autowired
+    private ItemJPARepository itemJPARepository;
+
+    @Autowired
+    private ObjectMapper om;
+
+    @BeforeEach
+    public void setUp(){
+        em.createNativeQuery("ALTER TABLE order_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        em.createNativeQuery("ALTER TABLE user_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        userJPARepository.save(userDummy); //유저 저장
+        orderJPARepository.saveAll(orderDummyList()); //주문 리스트 저장
+        itemJPARepository.saveAll(itemDummyList(cartDummyList(optionDummyList(productDummyList())))); //아이템 리스트 저장
+        em.clear(); //쿼리 보기 위해 PC clear
+    }
+}
+```
+* OrderJPARepository
+```java
+public interface OrderJPARepository extends JpaRepository<Order, Integer> {
+    @Query("select o from Order o join fetch o.user")
+    List<Order> mFindFetchAll();
+
+}
+```
+
+</br>
+
+### **1. 주문 결과 확인**
+* Test
+```java
+@Test
+@DisplayName("1. 주문 결과 확인")
+public void order_findAll_test() throws JsonProcessingException {
+    // given
+
+    // when
+    List<Order> orderList = orderJPARepository.mFindFetchAll(); //join fetch하여 연관관계의 객체 가져오기
+    String responseBody = om.writeValueAsString(orderList); //직렬화하여 출력
+    System.out.println("테스트 : "+responseBody);
+
+    List<User> userList = userJPARepository.findAll();
+    System.out.println(om.writeValueAsString(userList));
+
+    // then
+    Assertions.assertThat(orderList.get(0).getId()).isEqualTo(1);
+    Assertions.assertThat(orderList.get(0).getUser().getId()).isEqualTo(1);
+    Assertions.assertThat(orderList.get(0).getUser().getEmail()).isEqualTo("user1@nate.com");
+    assertTrue(BCrypt.checkpw("meta1234!", orderList.get(0).getUser().getPassword()));
+    Assertions.assertThat(orderList.get(0).getUser().getUsername()).isEqualTo("user1");
+    Assertions.assertThat(orderList.get(0).getUser().getRoles()).isEqualTo("ROLE_USER");
+}
+```
+> select 쿼리 1번 (join fetch)
+
+<br/>
+
+### **2. 결제하기 (주문 저장)**
+* Test
+```java
+@Test
+@DisplayName("2.결제하기 (주문 저장)")
+public void order_save_test() throws JsonProcessingException {
+    // given
+    Order order = newOrder(userDummy); //주문 생성
+
+    // when
+    //insert 쿼리 1번
+    orderJPARepository.save(order); //주문 저장
+
+    // then
+    Assertions.assertThat(order.getId()).isEqualTo(2);
+    Assertions.assertThat(order.getUser().getId()).isEqualTo(1);
+    Assertions.assertThat(order.getUser().getEmail()).isEqualTo("user1@nate.com");
+    assertTrue(BCrypt.checkpw("meta1234!", order.getUser().getPassword()));
+    Assertions.assertThat(order.getUser().getUsername()).isEqualTo("user1");
+    Assertions.assertThat(order.getUser().getRoles()).isEqualTo("ROLE_USER");
+}
+```
+> insert 쿼리 1번 수행
+
+<br/>
+<br/>
+
+
+<br/>
 
 # 4주차
 

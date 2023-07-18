@@ -19,7 +19,6 @@ import javax.persistence.*;
         })
 public class ProductOption {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

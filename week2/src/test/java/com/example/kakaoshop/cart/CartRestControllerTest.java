@@ -1,6 +1,6 @@
 package com.example.kakaoshop.cart;
 
-import com.example.kakaoshop.user.UserRequest;
+import com.example.kakaoshop.cart.response.CartReqRespDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -58,9 +58,9 @@ public class CartRestControllerTest {
     @DisplayName("장바구니 담기")
     public void addCart_test() throws Exception {
         //given
-        List<CartRestController.CartDTO> cartDTOList = new ArrayList<>();
-        CartRestController.CartDTO cartDTO1 = new CartRestController.CartDTO(1,5);
-        CartRestController.CartDTO cartDTO2 = new CartRestController.CartDTO(2,5);
+        List<CartReqRespDTO.CartDTO> cartDTOList = new ArrayList<>();
+        CartReqRespDTO.CartDTO cartDTO1 = new CartReqRespDTO.CartDTO(1,5);
+        CartReqRespDTO.CartDTO cartDTO2 = new CartReqRespDTO.CartDTO(2,5);
         cartDTOList.add(cartDTO1);
         cartDTOList.add(cartDTO2);
 
@@ -88,9 +88,9 @@ public class CartRestControllerTest {
     @DisplayName("장바구니 수정")
     public void updateCart_test() throws Exception {
         //given
-        List<CartRestController.CartUpdateRequestDTO> cartList = new ArrayList<>();
-        CartRestController.CartUpdateRequestDTO cartDTO1 = new CartRestController.CartUpdateRequestDTO(4,10);
-        CartRestController.CartUpdateRequestDTO cartDTO2 = new CartRestController.CartUpdateRequestDTO(5,10);
+        List<CartReqRespDTO.CartUpdateRequestDTO> cartList = new ArrayList<>();
+        CartReqRespDTO.CartUpdateRequestDTO cartDTO1 = new CartReqRespDTO.CartUpdateRequestDTO(4,10);
+        CartReqRespDTO.CartUpdateRequestDTO cartDTO2 = new CartReqRespDTO.CartUpdateRequestDTO(5,10);
         cartList.add(cartDTO1);
         cartList.add(cartDTO2);
         //JSON 문자열로 변환
