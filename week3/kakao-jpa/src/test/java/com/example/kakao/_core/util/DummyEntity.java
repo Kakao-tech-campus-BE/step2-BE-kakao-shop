@@ -8,12 +8,13 @@ import com.example.kakao.product.option.Option;
 import com.example.kakao.user.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.List;
-
+@Component
 public class DummyEntity {
-    protected User newUser(String username){
+    public User newUser(String username){
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return User.builder()
                 .email(username+"@nate.com")
@@ -23,7 +24,7 @@ public class DummyEntity {
                 .build();
     }
 
-    protected Product newProduct(String productName, int imageNumber, int price) {
+    public Product newProduct(String productName, int imageNumber, int price) {
         return Product.builder()
                 .productName(productName)
                 .description("")
@@ -32,7 +33,7 @@ public class DummyEntity {
                 .build();
     }
 
-    protected Option newOption(Product product, String optionName, int price) {
+    public Option newOption(Product product, String optionName, int price) {
         return Option.builder()
                 .product(product)
                 .optionName(optionName)
@@ -40,7 +41,7 @@ public class DummyEntity {
                 .build();
     }
 
-    protected Cart newCart(User user, Option option, Integer quantity){
+    public Cart newCart(User user, Option option, Integer quantity){
         return Cart.builder()
                 .user(user)
                 .option(option)
@@ -49,7 +50,7 @@ public class DummyEntity {
                 .build();
     }
 
-    protected Item newItem(Cart cart, Order order){
+    public Item newItem(Cart cart, Order order){
         return Item.builder()
                 .order(order)
                 .option(cart.getOption())
@@ -58,7 +59,7 @@ public class DummyEntity {
                 .build();
     }
 
-    protected Order newOrder(User user){
+    public Order newOrder(User user){
         return Order.builder()
                 .user(user)
                 .id(1)
@@ -66,7 +67,7 @@ public class DummyEntity {
     }
 
     // product repository 테스트할 때 가져옴
-    protected List<Product> productDummyList(){
+    public List<Product> productDummyList(){
         return Arrays.asList(
                 newProduct("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전", 1, 1000),
                 newProduct("[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율", 2, 2000),
@@ -86,7 +87,7 @@ public class DummyEntity {
         );
     }
 
-    protected List<Option> optionDummyList(List<Product> productListPS) {
+    public List<Option> optionDummyList(List<Product> productListPS) {
         return Arrays.asList(
                 newOption(productListPS.get(0), "01. 슬라이딩 지퍼백 크리스마스에디션 4종", 10000),
                 newOption(productListPS.get(0), "02. 슬라이딩 지퍼백 플라워에디션 5종", 10900),
