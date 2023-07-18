@@ -5,7 +5,10 @@ import com.example.kakao._core.errors.exception.Exception500;
 import com.example.kakao._core.utils.ApiUtils;
 import com.example.kakao._core.utils.FakeStore;
 import com.example.kakao.product.option.Option;
+import com.example.kakao.product.option.OptionRequest;
+import com.example.kakao.product.option.OptionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,42 +23,52 @@ import java.util.stream.Collectors;
 public class ProductRestController {
 
     private final FakeStore fakeStore;
+    private final ProductService productService;
+    private final OptionService optionService;
+    private final GetProductUsecase getProductUsecase;
 
     // (기능4) 전체 상품 목록 조회 (페이징 9개씩)
     @GetMapping("/products")
     public ResponseEntity<?> findAll(@RequestParam(defaultValue = "0") int page) {
-        // 1. 더미데이터 가져와서 페이징하기
-        List<Product> productList = fakeStore.getProductList().stream().skip(page*9).limit(9).collect(Collectors.toList());
+        // 더미 데이터 저장
+        List<ProductRequest.Insert> requests = fakeStore.getProductList().stream().map(product -> ProductRequest.Insert.builder()
+                        .name(product.getProductName())
+                        .description(product.getDescription())
+                        .image(product.getImage())
+                        .price(product.getPrice())
+                        .build())
+                .collect(Collectors.toList());
+        productService.saveAll(requests);
 
-        // 2. DTO 변환
-        List<ProductResponse.FindAllDTO> responseDTOs =
-                productList.stream().map(ProductResponse.FindAllDTO::new).collect(Collectors.toList());
-        
-        // 3. 공통 응답 DTO 만들기
+        PageRequest pageRequest = PageRequest.of(page, 9);
+        List<ProductResponse.FindAllDTO> responseDTOs = productService.getProducts(pageRequest);
+
         return ResponseEntity.ok(ApiUtils.success(responseDTOs));
     }
 
     // (기능5) 개별 상품 상세 조회
     @GetMapping("/products/{id}")
     public ResponseEntity<?> findById(@PathVariable int id) {
-        // 1. 더미데이터 가져와서 상품 찾기
-        Product product = fakeStore.getProductList().stream().filter(p -> p.getId() == id).findFirst().orElse(null);
+        // 더미 데이터 저장
+        List<ProductRequest.Insert> requests = fakeStore.getProductList().stream().map(product -> ProductRequest.Insert.builder()
+                        .name(product.getProductName())
+                        .description(product.getDescription())
+                        .image(product.getImage())
+                        .price(product.getPrice())
+                        .build())
+                .collect(Collectors.toList());
+        productService.saveAll(requests);
 
-        if(product == null){
-            Exception404 ex = new Exception404("해당 상품을 찾을 수 없습니다:"+id);
-            return new ResponseEntity<>(
-                    ex.body(),
-                    ex.status()
-            );
-        }
+        List<OptionRequest.Insert> optionRequests = fakeStore.getOptionList().stream().map(option -> OptionRequest.Insert.builder()
+                        .product(option.getProduct())
+                        .name(option.getOptionName())
+                        .price(option.getPrice())
+                        .build())
+                .collect(Collectors.toList());
+        optionService.saveAll(optionRequests);
 
-        // 2. 더미데이터 가져와서 해당 상품에 옵션 찾기
-        List<Option> optionList = fakeStore.getOptionList().stream().filter(option -> product.getId() == option.getProduct().getId()).collect(Collectors.toList());
-        
-        // 3. DTO 변환
-        ProductResponse.FindByIdDTO responseDTO = new ProductResponse.FindByIdDTO(product, optionList);
+        ProductResponse.FindByIdDTO responseDTO = getProductUsecase.execute(id);
 
-        // 4. 공통 응답 DTO 만들기
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
 }

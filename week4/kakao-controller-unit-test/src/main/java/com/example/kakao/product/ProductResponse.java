@@ -1,6 +1,7 @@
 package com.example.kakao.product;
 
 import com.example.kakao.product.option.Option;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -49,8 +50,17 @@ public class ProductResponse {
             this.options = optionList.stream().map(OptionDTO::new).collect(Collectors.toList());
         }
 
+        public FindByIdDTO(FindAllDTO product, List<OptionDTO> options) {
+            this.productName = product.getProductName();
+            this.description = product.getDescription();
+            this.image = product.getImage();
+            this.price = product.getPrice();
+            this.starCount = 5; // 임시로 추가해둠 (요구사항에는 없음)
+            this.options = options;
+        }
+
         @Getter @Setter
-        public class OptionDTO {
+        public static class OptionDTO {
             private int id;
             private String optionName;
             private int price;
