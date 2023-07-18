@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.api.Assertions;
 import org.hibernate.Hibernate;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import org.springframework.data.domain.PageRequest;
 
 import javax.persistence.EntityManager;
 import java.util.List;
-
+import java.util.stream.Collectors;
 
 @Import(ObjectMapper.class)
 @DataJpaTest
@@ -39,7 +40,6 @@ public class ProductJPARepositoryTest extends DummyEntity {
     @BeforeEach
     public void setUp(){
         em.createNativeQuery("ALTER TABLE product_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
-        em.createNativeQuery("ALTER TABLE option_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
         List<Product> productListPS = productJPARepository.saveAll(productDummyList());
         optionJPARepository.saveAll(optionDummyList(productListPS));
         em.clear();
@@ -70,8 +70,6 @@ public class ProductJPARepositoryTest extends DummyEntity {
         Assertions.assertThat(productPG.getContent().get(0).getPrice()).isEqualTo(1000);
     }
 
-
-
     // ManyToOne 전략을 Eager로 간다면 추천
     @Test
     public void option_findByProductId_eager_test() throws JsonProcessingException {
@@ -79,7 +77,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
         int id = 1;
 
         // when
-        // 충분한 데이터 - product만 0번지에서 빼면 된다
+        // 충분한 데이터 - product만 0번지에서 빼면  된다
         // 조인은 하지만, fetch를 하지 않아서, product를 한번 더 select 했다.
         List<Option> optionListPS = optionJPARepository.findByProductId(id); // Eager
 
@@ -118,7 +116,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
         int id = 1;
 
         // when
-        List<Option> optionListPS = optionJPARepository.mFindByProductId(id); // Fetch Type이 Lazy이기 때문에, 해당 product는 찾지 못 한다.
+        List<Option> optionListPS = optionJPARepository.mFindByProductId(id); // Lazy
 
         System.out.println("json 직렬화 직전========================");
         String responseBody = om.writeValueAsString(optionListPS);
@@ -131,7 +129,6 @@ public class ProductJPARepositoryTest extends DummyEntity {
     // 추천
     @Test
     public void product_findById_and_option_findByProductId_lazy_test() throws JsonProcessingException {
-
         // given
         int id = 1;
 
