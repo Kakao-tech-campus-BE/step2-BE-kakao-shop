@@ -4,11 +4,9 @@ import com.example.kakao._core.errors.GlobalExceptionHandler;
 import com.example.kakao._core.security.JWTProvider;
 import com.example.kakao._core.security.SecurityConfig;
 import com.example.kakao.log.ErrorLogJPARepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +16,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -52,8 +49,9 @@ public class UserRestControllerTest {
     @Test
     public void t1(){}
 
+    @DisplayName("회원가입 테스트")
     @Test
-    public void join_test() throws Exception {
+    public void user_join_test() throws Exception {
         // given
         UserRequest.JoinDTO requestDTO = new UserRequest.JoinDTO();
         requestDTO.setEmail("ssarmango@nate.com");
@@ -76,8 +74,9 @@ public class UserRestControllerTest {
         result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
     }
 
+    @DisplayName("로그인 테스트")
     @Test
-    public void login_test() throws Exception {
+    public void user_login_test() throws Exception {
         // given
         UserRequest.LoginDTO loginDTO = new UserRequest.LoginDTO();
         loginDTO.setEmail("ssar@nate.com");
