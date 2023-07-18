@@ -1,6 +1,6 @@
-package com.example.kakao.order;
+package com.example.kakao.domain.order;
 
-import com.example.kakao.user.User;
+import com.example.kakao.domain.user.User;
 import lombok.*;
 
 import javax.persistence.*;

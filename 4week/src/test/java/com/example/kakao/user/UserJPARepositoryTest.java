@@ -1,6 +1,8 @@
 package com.example.kakao.user;
 
 import com.example.kakao._core.util.DummyEntity;
+import com.example.kakao.domain.user.User;
+import com.example.kakao.domain.user.UserJPARepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

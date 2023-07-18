@@ -1,4 +1,4 @@
-package com.example.kakao.cart;
+package com.example.kakao.domain.cart;
 
 import lombok.Getter;
 import lombok.Setter;

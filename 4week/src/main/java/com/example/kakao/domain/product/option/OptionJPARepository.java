@@ -1,4 +1,4 @@
-package com.example.kakao.product.option;
+package com.example.kakao.domain.product.option;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

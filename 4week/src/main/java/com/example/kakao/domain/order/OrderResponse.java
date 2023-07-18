@@ -1,7 +1,7 @@
-package com.example.kakao.order;
+package com.example.kakao.domain.order;
 
-import com.example.kakao.order.item.Item;
-import com.example.kakao.product.Product;
+import com.example.kakao.domain.order.item.Item;
+import com.example.kakao.domain.product.Product;
 import lombok.Getter;
 import lombok.Setter;
 

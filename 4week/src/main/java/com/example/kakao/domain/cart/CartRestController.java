@@ -1,4 +1,4 @@
-package com.example.kakao.cart;
+package com.example.kakao.domain.cart;
 
 import com.example.kakao._core.security.CustomUserDetails;
 import com.example.kakao._core.utils.ApiResponse;

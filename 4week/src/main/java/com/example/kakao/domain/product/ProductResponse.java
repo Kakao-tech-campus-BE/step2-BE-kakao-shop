@@ -1,6 +1,6 @@
-package com.example.kakao.product;
+package com.example.kakao.domain.product;
 
-import com.example.kakao.product.option.Option;
+import com.example.kakao.domain.product.option.Option;
 import lombok.Getter;
 import lombok.Setter;
 

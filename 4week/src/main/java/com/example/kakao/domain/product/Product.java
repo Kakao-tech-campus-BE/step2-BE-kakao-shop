@@ -1,4 +1,4 @@
-package com.example.kakao.product;
+package com.example.kakao.domain.product;
 
 import lombok.*;
 

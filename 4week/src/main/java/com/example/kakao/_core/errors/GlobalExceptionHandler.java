@@ -79,6 +79,7 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler(NoHandlerFoundException.class)
   public ResponseEntity<ApiResponse> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpServletRequest request) {
+    log.error("No Handler Found: 404", ex);
     return this.handleNotFoundException(new NotFoundException(ex.getMessage()), request);
   }
 

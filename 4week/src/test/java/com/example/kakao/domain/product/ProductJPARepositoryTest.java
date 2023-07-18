@@ -1,4 +1,4 @@
-package com.example.kakao.product;
+package com.example.kakao.domain.product;
 
 import com.example.kakao._core.util.DummyEntity;
 import com.example.kakao.domain.product.Product;

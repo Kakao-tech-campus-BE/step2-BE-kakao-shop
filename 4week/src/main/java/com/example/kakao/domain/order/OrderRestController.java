@@ -1,10 +1,10 @@
-package com.example.kakao.order;
+package com.example.kakao.domain.order;
 
 import com.example.kakao._core.security.CustomUserDetails;
 import com.example.kakao._core.utils.ApiResponse;
 import com.example.kakao._core.utils.ApiUtils;
 import com.example.kakao._core.utils.FakeStore;
-import com.example.kakao.order.item.Item;
+import com.example.kakao.domain.order.item.Item;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

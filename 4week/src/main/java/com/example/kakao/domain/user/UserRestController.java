@@ -4,7 +4,6 @@ import com.example.kakao._core.security.CustomUserDetails;
 import com.example.kakao._core.security.JWTProvider;
 import com.example.kakao._core.utils.ApiResponse;
 import com.example.kakao._core.utils.ApiUtils;
-import com.example.kakao.domain.user.dto.UserResponse;
 import com.example.kakao.domain.user.dto.request.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

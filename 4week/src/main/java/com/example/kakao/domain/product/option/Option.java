@@ -1,6 +1,6 @@
-package com.example.kakao.product.option;
+package com.example.kakao.domain.product.option;
 
-import com.example.kakao.product.Product;
+import com.example.kakao.domain.product.Product;
 import lombok.*;
 
 import javax.persistence.*;
