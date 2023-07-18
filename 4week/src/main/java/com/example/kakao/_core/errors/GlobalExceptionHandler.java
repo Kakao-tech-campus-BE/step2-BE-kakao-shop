@@ -15,9 +15,11 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Objects;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -41,6 +43,18 @@ public class GlobalExceptionHandler {
 
     return new ResponseEntity<>(
       ApiUtils.error("Argument Not Valid: "+ fieldError.getDefaultMessage(), HttpStatus.BAD_REQUEST),
+      HttpStatus.BAD_REQUEST
+    );
+  }
+
+  @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+  public ResponseEntity<ApiResponse> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex) {
+    log.error("Method Argument Type Mismatch", ex);
+    return new ResponseEntity<>(
+      ApiUtils.error(
+        "Argument Type Mismatch: " + ex.getName() + " should be " + Objects.requireNonNull(ex.getRequiredType()).getSimpleName(),
+        HttpStatus.BAD_REQUEST
+      ),
       HttpStatus.BAD_REQUEST
     );
   }
