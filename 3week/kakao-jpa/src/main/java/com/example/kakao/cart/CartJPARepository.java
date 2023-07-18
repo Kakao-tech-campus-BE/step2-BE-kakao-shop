@@ -1,8 +1,4 @@
 package com.example.kakao.cart;
-
-import com.example.kakao.product.option.Option;
-import com.example.kakao.user.User;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

@@ -34,7 +34,6 @@ public class UserRestController {
                 .username(joinDTO.getUsername())
                 .roles("ROLE_USER,ROLE_ADMIN")
                 .build();
-
         userRepository.save(user);
 
         return ResponseEntity.ok().body(ApiUtils.success(null));
