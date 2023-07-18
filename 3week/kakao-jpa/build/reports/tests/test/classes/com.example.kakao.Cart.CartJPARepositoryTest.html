@@ -1,0 +1,1628 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - 장바구니 관련 JPA 테스트</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>장바구니 관련 JPA 테스트</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.example.kakao.Cart.html">com.example.kakao.Cart</a> &gt; CartJPARepositoryTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">1</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.429s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Method name</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">주문하기(장바구니 수정) 테스트- 업데이트후 조회(처음 조회시 fetch join)</td>
+<td class="success">cartUpdate1_test()</td>
+<td class="success">0.429s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>23:40:38.318 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
+23:40:38.326 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
+23:40:38.360 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [com.example.kakao.Cart.CartJPARepositoryTest] from class [org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTestContextBootstrapper]
+23:40:38.371 [Test worker] INFO org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.example.kakao.Cart.CartJPARepositoryTest], using SpringBootContextLoader
+23:40:38.375 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.example.kakao.Cart.CartJPARepositoryTest]: class path resource [com/example/kakao/Cart/CartJPARepositoryTest-context.xml] does not exist
+23:40:38.375 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.example.kakao.Cart.CartJPARepositoryTest]: class path resource [com/example/kakao/Cart/CartJPARepositoryTestContext.groovy] does not exist
+23:40:38.375 [Test worker] INFO org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [com.example.kakao.Cart.CartJPARepositoryTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+23:40:38.376 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.example.kakao.Cart.CartJPARepositoryTest]: CartJPARepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+23:40:38.423 [Test worker] DEBUG org.springframework.test.context.support.ActiveProfilesUtils - Could not find an 'annotation declaring class' for annotation type [org.springframework.test.context.ActiveProfiles] and class [com.example.kakao.Cart.CartJPARepositoryTest]
+23:40:38.472 [Test worker] DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider - Identified candidate component class: file [/Users/zae/Desktop/kakaoshopping/step2-BE-kakao-shop/3week/kakao-jpa/build/classes/java/main/com/example/kakao/KakaoApplication.class]
+23:40:38.473 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.example.kakao.KakaoApplication for test class com.example.kakao.Cart.CartJPARepositoryTest
+23:40:38.475 [Test worker] DEBUG org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTestContextBootstrapper - @TestExecutionListeners is not present for class [com.example.kakao.Cart.CartJPARepositoryTest]: using defaults.
+23:40:38.475 [Test worker] INFO org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener, org.springframework.security.test.context.support.ReactorContextTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+23:40:38.488 [Test worker] INFO org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@2a2c13a8, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@b6b1987, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@6b44435b, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@2ccca26f, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@66b7550d, org.springframework.test.context.support.DirtiesContextTestExecutionListener@3543df7d, org.springframework.test.context.transaction.TransactionalTestExecutionListener@7c541c15, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@3542162a, org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener@698122b2, org.springframework.test.context.event.EventPublishingTestExecutionListener@4212a0c8, org.springframework.security.test.context.support.ReactorContextTestExecutionListener@1e7aa82b, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@3b2c0e88, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@5bd82fed, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@c1bd0be, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@476b0ae6, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@1c6804cd, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@655f7ea]
+23:40:38.491 [Test worker] DEBUG org.springframework.test.context.support.AbstractDirtiesContextTestExecutionListener - Before test class: context [DefaultTestContext@1021f6c9 testClass = CartJPARepositoryTest, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [MergedContextConfiguration@7516e4e5 testClass = CartJPARepositoryTest, locations = '{}', classes = '{class com.example.kakao.KakaoApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.OverrideAutoConfigurationContextCustomizerFactory$DisableAutoConfigurationContextCustomizer@1b955cac, org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@32a68f4f, org.springframework.boot.test.autoconfigure.filter.TypeExcludeFiltersContextCustomizer@351584c0, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@bada54dc, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@6155d082, [ImportsContextCustomizer@488eb7f2 key = [com.fasterxml.jackson.databind.ObjectMapper, org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration, org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration, org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration, org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration, org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration, org.springframework.boot.autoconfigure.sql.init.SqlInitializationAutoConfiguration, org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration, org.springframework.boot.test.autoconfigure.jdbc.TestDatabaseAutoConfiguration, org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManagerAutoConfiguration]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@6aa3a905, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@59b38691, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@0], contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map[[empty]]], class annotated with @DirtiesContext [false] with mode [null].
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v2.7.6)
+
+2023-07-14 23:40:38.841  INFO 26563 --- [    Test worker] c.e.kakao.Cart.CartJPARepositoryTest     : Starting CartJPARepositoryTest using Java 18.0.2.1 on Yunjaeui-MacBookPro.local with PID 26563 (started by zae in /Users/zae/Desktop/kakaoshopping/step2-BE-kakao-shop/3week/kakao-jpa)
+2023-07-14 23:40:38.842 DEBUG 26563 --- [    Test worker] c.e.kakao.Cart.CartJPARepositoryTest     : Running with Spring Boot v2.7.6, Spring v5.3.24
+2023-07-14 23:40:38.842  INFO 26563 --- [    Test worker] c.e.kakao.Cart.CartJPARepositoryTest     : The following 1 profile is active: &quot;local&quot;
+2023-07-14 23:40:39.122  INFO 26563 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-07-14 23:40:39.176  INFO 26563 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 47 ms. Found 6 JPA repository interfaces.
+2023-07-14 23:40:39.216  INFO 26563 --- [    Test worker] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2023-07-14 23:40:39.357  INFO 26563 --- [    Test worker] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:1676f8a6-c4b7-4f36-b41a-2f725206ae42;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2023-07-14 23:40:39.613  INFO 26563 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-07-14 23:40:39.660  INFO 26563 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.14.Final
+2023-07-14 23:40:39.813  INFO 26563 --- [    Test worker] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-07-14 23:40:39.836 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration boolean -&gt; org.hibernate.type.BooleanType@30a9e3db
+2023-07-14 23:40:39.837 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration boolean -&gt; org.hibernate.type.BooleanType@30a9e3db
+2023-07-14 23:40:39.837 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Boolean -&gt; org.hibernate.type.BooleanType@30a9e3db
+2023-07-14 23:40:39.837 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration numeric_boolean -&gt; org.hibernate.type.NumericBooleanType@696b52bc
+2023-07-14 23:40:39.838 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration true_false -&gt; org.hibernate.type.TrueFalseType@740a0d5e
+2023-07-14 23:40:39.838 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration yes_no -&gt; org.hibernate.type.YesNoType@7fef0b40
+2023-07-14 23:40:39.839 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration byte -&gt; org.hibernate.type.ByteType@6f930e0
+2023-07-14 23:40:39.839 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration byte -&gt; org.hibernate.type.ByteType@6f930e0
+2023-07-14 23:40:39.839 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Byte -&gt; org.hibernate.type.ByteType@6f930e0
+2023-07-14 23:40:39.840 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration character -&gt; org.hibernate.type.CharacterType@7d2c345d
+2023-07-14 23:40:39.840 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration char -&gt; org.hibernate.type.CharacterType@7d2c345d
+2023-07-14 23:40:39.840 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Character -&gt; org.hibernate.type.CharacterType@7d2c345d
+2023-07-14 23:40:39.841 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration short -&gt; org.hibernate.type.ShortType@32507479
+2023-07-14 23:40:39.841 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration short -&gt; org.hibernate.type.ShortType@32507479
+2023-07-14 23:40:39.841 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Short -&gt; org.hibernate.type.ShortType@32507479
+2023-07-14 23:40:39.842 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration integer -&gt; org.hibernate.type.IntegerType@6a98f353
+2023-07-14 23:40:39.842 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration int -&gt; org.hibernate.type.IntegerType@6a98f353
+2023-07-14 23:40:39.843 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Integer -&gt; org.hibernate.type.IntegerType@6a98f353
+2023-07-14 23:40:39.843 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration long -&gt; org.hibernate.type.LongType@3830b06c
+2023-07-14 23:40:39.843 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration long -&gt; org.hibernate.type.LongType@3830b06c
+2023-07-14 23:40:39.844 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Long -&gt; org.hibernate.type.LongType@3830b06c
+2023-07-14 23:40:39.844 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration float -&gt; org.hibernate.type.FloatType@7c7e73c5
+2023-07-14 23:40:39.844 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration float -&gt; org.hibernate.type.FloatType@7c7e73c5
+2023-07-14 23:40:39.844 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Float -&gt; org.hibernate.type.FloatType@7c7e73c5
+2023-07-14 23:40:39.845 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration double -&gt; org.hibernate.type.DoubleType@42fc4ac4
+2023-07-14 23:40:39.845 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration double -&gt; org.hibernate.type.DoubleType@42fc4ac4
+2023-07-14 23:40:39.845 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Double -&gt; org.hibernate.type.DoubleType@42fc4ac4
+2023-07-14 23:40:39.846 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration big_decimal -&gt; org.hibernate.type.BigDecimalType@764fffa0
+2023-07-14 23:40:39.847 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.math.BigDecimal -&gt; org.hibernate.type.BigDecimalType@764fffa0
+2023-07-14 23:40:39.847 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration big_integer -&gt; org.hibernate.type.BigIntegerType@280fafd
+2023-07-14 23:40:39.848 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.math.BigInteger -&gt; org.hibernate.type.BigIntegerType@280fafd
+2023-07-14 23:40:39.848 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration string -&gt; org.hibernate.type.StringType@1e1e837d
+2023-07-14 23:40:39.848 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.String -&gt; org.hibernate.type.StringType@1e1e837d
+2023-07-14 23:40:39.849 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration nstring -&gt; org.hibernate.type.StringNVarcharType@626b639e
+2023-07-14 23:40:39.849 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration ncharacter -&gt; org.hibernate.type.CharacterNCharType@437c4b25
+2023-07-14 23:40:39.850 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration url -&gt; org.hibernate.type.UrlType@679d0be8
+2023-07-14 23:40:39.850 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.net.URL -&gt; org.hibernate.type.UrlType@679d0be8
+2023-07-14 23:40:39.850 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration Duration -&gt; org.hibernate.type.DurationType@361cd35c
+2023-07-14 23:40:39.850 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.Duration -&gt; org.hibernate.type.DurationType@361cd35c
+2023-07-14 23:40:39.851 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration Instant -&gt; org.hibernate.type.InstantType@69ed5ea2
+2023-07-14 23:40:39.852 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.Instant -&gt; org.hibernate.type.InstantType@69ed5ea2
+2023-07-14 23:40:39.853 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration LocalDateTime -&gt; org.hibernate.type.LocalDateTimeType@40d848f9
+2023-07-14 23:40:39.853 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.LocalDateTime -&gt; org.hibernate.type.LocalDateTimeType@40d848f9
+2023-07-14 23:40:39.853 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration LocalDate -&gt; org.hibernate.type.LocalDateType@3a296107
+2023-07-14 23:40:39.853 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.LocalDate -&gt; org.hibernate.type.LocalDateType@3a296107
+2023-07-14 23:40:39.854 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration LocalTime -&gt; org.hibernate.type.LocalTimeType@501957bf
+2023-07-14 23:40:39.854 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.LocalTime -&gt; org.hibernate.type.LocalTimeType@501957bf
+2023-07-14 23:40:39.855 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration OffsetDateTime -&gt; org.hibernate.type.OffsetDateTimeType@74ba6ff5
+2023-07-14 23:40:39.855 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.OffsetDateTime -&gt; org.hibernate.type.OffsetDateTimeType@74ba6ff5
+2023-07-14 23:40:39.856 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration OffsetTime -&gt; org.hibernate.type.OffsetTimeType@2bebd114
+2023-07-14 23:40:39.856 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.OffsetTime -&gt; org.hibernate.type.OffsetTimeType@2bebd114
+2023-07-14 23:40:39.857 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration ZonedDateTime -&gt; org.hibernate.type.ZonedDateTimeType@72ecbcb3
+2023-07-14 23:40:39.857 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.ZonedDateTime -&gt; org.hibernate.type.ZonedDateTimeType@72ecbcb3
+2023-07-14 23:40:39.858 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration date -&gt; org.hibernate.type.DateType@7f0f84d4
+2023-07-14 23:40:39.858 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.sql.Date -&gt; org.hibernate.type.DateType@7f0f84d4
+2023-07-14 23:40:39.859 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration time -&gt; org.hibernate.type.TimeType@17c0274c
+2023-07-14 23:40:39.859 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.sql.Time -&gt; org.hibernate.type.TimeType@17c0274c
+2023-07-14 23:40:39.860 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration timestamp -&gt; org.hibernate.type.TimestampType@5a4dda2
+2023-07-14 23:40:39.860 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.sql.Timestamp -&gt; org.hibernate.type.TimestampType@5a4dda2
+2023-07-14 23:40:39.860 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.util.Date -&gt; org.hibernate.type.TimestampType@5a4dda2
+2023-07-14 23:40:39.861 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration dbtimestamp -&gt; org.hibernate.type.DbTimestampType@1edccfd4
+2023-07-14 23:40:39.862 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration calendar -&gt; org.hibernate.type.CalendarType@26c8b296
+2023-07-14 23:40:39.862 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.util.Calendar -&gt; org.hibernate.type.CalendarType@26c8b296
+2023-07-14 23:40:39.863 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.util.GregorianCalendar -&gt; org.hibernate.type.CalendarType@26c8b296
+2023-07-14 23:40:39.863 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration calendar_date -&gt; org.hibernate.type.CalendarDateType@45801322
+2023-07-14 23:40:39.864 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration calendar_time -&gt; org.hibernate.type.CalendarTimeType@6a1568d6
+2023-07-14 23:40:39.865 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration locale -&gt; org.hibernate.type.LocaleType@3b11620a
+2023-07-14 23:40:39.865 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.util.Locale -&gt; org.hibernate.type.LocaleType@3b11620a
+2023-07-14 23:40:39.865 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration currency -&gt; org.hibernate.type.CurrencyType@21edd891
+2023-07-14 23:40:39.866 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.util.Currency -&gt; org.hibernate.type.CurrencyType@21edd891
+2023-07-14 23:40:39.866 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration timezone -&gt; org.hibernate.type.TimeZoneType@26be9a6
+2023-07-14 23:40:39.866 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.util.TimeZone -&gt; org.hibernate.type.TimeZoneType@26be9a6
+2023-07-14 23:40:39.867 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration class -&gt; org.hibernate.type.ClassType@4b9dbf07
+2023-07-14 23:40:39.867 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Class -&gt; org.hibernate.type.ClassType@4b9dbf07
+2023-07-14 23:40:39.868 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration uuid-binary -&gt; org.hibernate.type.UUIDBinaryType@6b27b2d0
+2023-07-14 23:40:39.868 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.util.UUID -&gt; org.hibernate.type.UUIDBinaryType@6b27b2d0
+2023-07-14 23:40:39.868 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration uuid-char -&gt; org.hibernate.type.UUIDCharType@5c4cc644
+2023-07-14 23:40:39.869 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration binary -&gt; org.hibernate.type.BinaryType@3af2f846
+2023-07-14 23:40:39.869 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration byte[] -&gt; org.hibernate.type.BinaryType@3af2f846
+2023-07-14 23:40:39.869 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration [B -&gt; org.hibernate.type.BinaryType@3af2f846
+2023-07-14 23:40:39.870 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration wrapper-binary -&gt; org.hibernate.type.WrapperBinaryType@284bdeed
+2023-07-14 23:40:39.870 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration Byte[] -&gt; org.hibernate.type.WrapperBinaryType@284bdeed
+2023-07-14 23:40:39.870 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration [Ljava.lang.Byte; -&gt; org.hibernate.type.WrapperBinaryType@284bdeed
+2023-07-14 23:40:39.871 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration row_version -&gt; org.hibernate.type.RowVersionType@4aed311e
+2023-07-14 23:40:39.871 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration image -&gt; org.hibernate.type.ImageType@2c1d57bc
+2023-07-14 23:40:39.872 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration characters -&gt; org.hibernate.type.CharArrayType@1e3f86d5
+2023-07-14 23:40:39.872 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration char[] -&gt; org.hibernate.type.CharArrayType@1e3f86d5
+2023-07-14 23:40:39.872 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration [C -&gt; org.hibernate.type.CharArrayType@1e3f86d5
+2023-07-14 23:40:39.873 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration wrapper-characters -&gt; org.hibernate.type.CharacterArrayType@19fec3d6
+2023-07-14 23:40:39.873 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration [Ljava.lang.Character; -&gt; org.hibernate.type.CharacterArrayType@19fec3d6
+2023-07-14 23:40:39.873 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration Character[] -&gt; org.hibernate.type.CharacterArrayType@19fec3d6
+2023-07-14 23:40:39.873 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration text -&gt; org.hibernate.type.TextType@6986f93e
+2023-07-14 23:40:39.874 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration ntext -&gt; org.hibernate.type.NTextType@2aa14ae6
+2023-07-14 23:40:39.875 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration blob -&gt; org.hibernate.type.BlobType@68631b1d
+2023-07-14 23:40:39.875 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.sql.Blob -&gt; org.hibernate.type.BlobType@68631b1d
+2023-07-14 23:40:39.875 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration materialized_blob -&gt; org.hibernate.type.MaterializedBlobType@14efa279
+2023-07-14 23:40:39.876 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration clob -&gt; org.hibernate.type.ClobType@2c2c3947
+2023-07-14 23:40:39.876 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.sql.Clob -&gt; org.hibernate.type.ClobType@2c2c3947
+2023-07-14 23:40:39.877 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration nclob -&gt; org.hibernate.type.NClobType@418f890f
+2023-07-14 23:40:39.878 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.sql.NClob -&gt; org.hibernate.type.NClobType@418f890f
+2023-07-14 23:40:39.878 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration materialized_clob -&gt; org.hibernate.type.MaterializedClobType@5b1c32e4
+2023-07-14 23:40:39.878 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration materialized_nclob -&gt; org.hibernate.type.MaterializedNClobType@24fba488
+2023-07-14 23:40:39.879 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration serializable -&gt; org.hibernate.type.SerializableType@6d5f4900
+2023-07-14 23:40:39.882 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration object -&gt; org.hibernate.type.ObjectType@634f58d2
+2023-07-14 23:40:39.882 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Object -&gt; org.hibernate.type.ObjectType@634f58d2
+2023-07-14 23:40:39.883 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration imm_date -&gt; org.hibernate.type.AdaptedImmutableType@1a1f79ce
+2023-07-14 23:40:39.883 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration imm_time -&gt; org.hibernate.type.AdaptedImmutableType@6aa7e176
+2023-07-14 23:40:39.883 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration imm_timestamp -&gt; org.hibernate.type.AdaptedImmutableType@52abed9d
+2023-07-14 23:40:39.883 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration imm_dbtimestamp -&gt; org.hibernate.type.AdaptedImmutableType@281b2dfd
+2023-07-14 23:40:39.883 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration imm_calendar -&gt; org.hibernate.type.AdaptedImmutableType@492be039
+2023-07-14 23:40:39.883 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration imm_calendar_date -&gt; org.hibernate.type.AdaptedImmutableType@1cd2143b
+2023-07-14 23:40:39.883 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration imm_binary -&gt; org.hibernate.type.AdaptedImmutableType@1118d539
+2023-07-14 23:40:39.883 DEBUG 26563 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration imm_serializable -&gt; org.hibernate.type.AdaptedImmutableType@601d6622
+2023-07-14 23:40:39.942  INFO 26563 --- [    Test worker] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2023-07-14 23:40:39.974 DEBUG 26563 --- [    Test worker] o.h.type.spi.TypeConfiguration$Scope     : Scoping TypeConfiguration [org.hibernate.type.spi.TypeConfiguration@437281c5] to MetadataBuildingContext [org.hibernate.boot.internal.MetadataBuildingContextRootImpl@787178b1]
+2023-07-14 23:40:40.190 DEBUG 26563 --- [    Test worker] o.h.type.spi.TypeConfiguration$Scope     : Scoping TypeConfiguration [org.hibernate.type.spi.TypeConfiguration@437281c5] to SessionFactoryImpl [org.hibernate.internal.SessionFactoryImpl@2d913116]
+Hibernate: 
+    
+    drop table if exists cart_tb CASCADE 
+Hibernate: 
+    
+    drop table if exists item_tb CASCADE 
+Hibernate: 
+    
+    drop table if exists option_tb CASCADE 
+Hibernate: 
+    
+    drop table if exists order_tb CASCADE 
+Hibernate: 
+    
+    drop table if exists product_tb CASCADE 
+Hibernate: 
+    
+    drop table if exists user_tb CASCADE 
+Hibernate: 
+    
+    create table cart_tb (
+       id integer generated by default as identity,
+        price integer not null,
+        quantity integer not null,
+        option_id integer,
+        user_id integer,
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table item_tb (
+       id integer generated by default as identity,
+        price integer not null,
+        quantity integer not null,
+        option_id integer,
+        order_id integer,
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table option_tb (
+       id integer generated by default as identity,
+        option_name varchar(100) not null,
+        price integer not null,
+        product_id integer,
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table order_tb (
+       id integer generated by default as identity,
+        user_id integer,
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table product_tb (
+       id integer generated by default as identity,
+        description varchar(1000) not null,
+        image varchar(500),
+        price integer not null,
+        product_name varchar(100) not null,
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table user_tb (
+       id integer generated by default as identity,
+        email varchar(100) not null,
+        password varchar(256) not null,
+        roles varchar(30),
+        username varchar(45) not null,
+        primary key (id)
+    )
+Hibernate: create index cart_user_id_idx on cart_tb (user_id)
+Hibernate: create index cart_option_id_idx on cart_tb (option_id)
+Hibernate: 
+    
+    alter table cart_tb 
+       add constraint uk_cart_option_user unique (user_id, option_id)
+Hibernate: create index item_option_id_idx on item_tb (option_id)
+Hibernate: create index item_order_id_idx on item_tb (order_id)
+Hibernate: create index option_product_id_idx on option_tb (product_id)
+Hibernate: create index order_user_id_idx on order_tb (user_id)
+Hibernate: 
+    
+    alter table user_tb 
+       add constraint UK_2dlfg6wvnxboknkp9d1h75icb unique (email)
+Hibernate: 
+    
+    alter table cart_tb 
+       add constraint FKjv34r03v7eauvpfhwsci0deyp 
+       foreign key (option_id) 
+       references option_tb
+Hibernate: 
+    
+    alter table cart_tb 
+       add constraint FKi00yw2m90df70t3igqyjbbf91 
+       foreign key (user_id) 
+       references user_tb
+Hibernate: 
+    
+    alter table item_tb 
+       add constraint FKbgcgxbitac3tct8kqsvyqm85f 
+       foreign key (option_id) 
+       references option_tb
+Hibernate: 
+    
+    alter table item_tb 
+       add constraint FKofe121qxhn816wo07qr9jr0hb 
+       foreign key (order_id) 
+       references order_tb
+Hibernate: 
+    
+    alter table option_tb 
+       add constraint FK6j02px4ow9xxw0o3rc59buyew 
+       foreign key (product_id) 
+       references product_tb
+Hibernate: 
+    
+    alter table order_tb 
+       add constraint FK9wkv8x8yfgaaquhn4vquq4aps 
+       foreign key (user_id) 
+       references user_tb
+2023-07-14 23:40:40.526  INFO 26563 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-07-14 23:40:40.533 TRACE 26563 --- [    Test worker] o.h.type.spi.TypeConfiguration$Scope     : Handling #sessionFactoryCreated from [org.hibernate.internal.SessionFactoryImpl@2d913116] for TypeConfiguration
+2023-07-14 23:40:40.534  INFO 26563 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-07-14 23:40:41.151  INFO 26563 --- [    Test worker] c.e.kakao.Cart.CartJPARepositoryTest     : Started CartJPARepositoryTest in 2.634 seconds (JVM running for 3.465)
+2023-07-14 23:40:41.176  INFO 26563 --- [    Test worker] o.s.t.c.transaction.TransactionContext   : Began transaction (1) for test context [DefaultTestContext@1021f6c9 testClass = CartJPARepositoryTest, testInstance = com.example.kakao.Cart.CartJPARepositoryTest@451a4187, testMethod = cartUpdate1_test@CartJPARepositoryTest, testException = [null], mergedContextConfiguration = [MergedContextConfiguration@7516e4e5 testClass = CartJPARepositoryTest, locations = '{}', classes = '{class com.example.kakao.KakaoApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.OverrideAutoConfigurationContextCustomizerFactory$DisableAutoConfigurationContextCustomizer@1b955cac, org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@32a68f4f, org.springframework.boot.test.autoconfigure.filter.TypeExcludeFiltersContextCustomizer@351584c0, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@bada54dc, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@6155d082, [ImportsContextCustomizer@488eb7f2 key = [com.fasterxml.jackson.databind.ObjectMapper, org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration, org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration, org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration, org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration, org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration, org.springframework.boot.autoconfigure.sql.init.SqlInitializationAutoConfiguration, org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration, org.springframework.boot.test.autoconfigure.jdbc.TestDatabaseAutoConfiguration, org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManagerAutoConfiguration]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@6aa3a905, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@59b38691, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@0], contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -&gt; false]]; transaction manager [org.springframework.orm.jpa.JpaTransactionManager@19e2db7c]; rollback [true]
+Hibernate: 
+    insert 
+    into
+        user_tb
+        (id, email, password, roles, username) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.410 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [user@nate.com]
+2023-07-14 23:40:41.410 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [$2a$10$0eKUBqCDHP5tI9Fpx4942.Y8RAyQpR1kGXqDur7avhAgn4Nf8N7mW]
+2023-07-14 23:40:41.410 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - [ROLE_USER]
+2023-07-14 23:40:41.410 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [user]
+Hibernate: 
+    insert 
+    into
+        product_tb
+        (id, description, image, price, product_name) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.425 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - []
+2023-07-14 23:40:41.426 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [/images/1.jpg]
+2023-07-14 23:40:41.426 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [1000]
+2023-07-14 23:40:41.426 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전]
+Hibernate: 
+    insert 
+    into
+        product_tb
+        (id, description, image, price, product_name) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.427 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - []
+2023-07-14 23:40:41.427 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [/images/2.jpg]
+2023-07-14 23:40:41.428 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2000]
+2023-07-14 23:40:41.428 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율]
+Hibernate: 
+    insert 
+    into
+        product_tb
+        (id, description, image, price, product_name) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.429 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - []
+2023-07-14 23:40:41.429 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [/images/3.jpg]
+2023-07-14 23:40:41.429 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [30000]
+2023-07-14 23:40:41.429 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [삼성전자 JBL JR310 외 어린이용/성인용 헤드셋 3종!]
+Hibernate: 
+    insert 
+    into
+        product_tb
+        (id, description, image, price, product_name) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.430 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - []
+2023-07-14 23:40:41.430 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [/images/4.jpg]
+2023-07-14 23:40:41.430 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [4000]
+2023-07-14 23:40:41.430 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종]
+Hibernate: 
+    insert 
+    into
+        product_tb
+        (id, description, image, price, product_name) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.430 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - []
+2023-07-14 23:40:41.430 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [/images/5.jpg]
+2023-07-14 23:40:41.430 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [5000]
+2023-07-14 23:40:41.430 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [[더주] 컷팅말랑장족, 숏다리 100g/300g 외 주전부리 모음 /중독성 최고/마른안주]
+Hibernate: 
+    insert 
+    into
+        product_tb
+        (id, description, image, price, product_name) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.431 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - []
+2023-07-14 23:40:41.431 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [/images/6.jpg]
+2023-07-14 23:40:41.431 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [15900]
+2023-07-14 23:40:41.431 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [굳지않는 앙금절편 1,050g 2팩 외 우리쌀떡 모음전]
+Hibernate: 
+    insert 
+    into
+        product_tb
+        (id, description, image, price, product_name) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.432 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - []
+2023-07-14 23:40:41.432 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [/images/7.jpg]
+2023-07-14 23:40:41.432 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [26800]
+2023-07-14 23:40:41.432 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [eoe 이너딜리티 30포, 오렌지맛 고 식이섬유 보충제]
+Hibernate: 
+    insert 
+    into
+        product_tb
+        (id, description, image, price, product_name) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.432 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - []
+2023-07-14 23:40:41.432 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [/images/8.jpg]
+2023-07-14 23:40:41.433 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [25900]
+2023-07-14 23:40:41.433 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [제나벨 PDRN 크림 2개. 피부보습/진정 케어]
+Hibernate: 
+    insert 
+    into
+        product_tb
+        (id, description, image, price, product_name) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.433 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - []
+2023-07-14 23:40:41.433 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [/images/9.jpg]
+2023-07-14 23:40:41.433 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [797000]
+2023-07-14 23:40:41.433 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [플레이스테이션 VR2 호라이즌 번들. 생생한 몰입감]
+Hibernate: 
+    insert 
+    into
+        product_tb
+        (id, description, image, price, product_name) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.434 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - []
+2023-07-14 23:40:41.434 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [/images/10.jpg]
+2023-07-14 23:40:41.434 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [8900]
+2023-07-14 23:40:41.434 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [통영 홍 가리비 2kg, 2세트 구매시 1kg 추가증정]
+Hibernate: 
+    insert 
+    into
+        product_tb
+        (id, description, image, price, product_name) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.435 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - []
+2023-07-14 23:40:41.435 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [/images/11.jpg]
+2023-07-14 23:40:41.435 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [6900]
+2023-07-14 23:40:41.435 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [아삭한 궁채 장아찌 1kg 외 인기 반찬 모음전]
+Hibernate: 
+    insert 
+    into
+        product_tb
+        (id, description, image, price, product_name) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.435 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - []
+2023-07-14 23:40:41.435 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [/images/12.jpg]
+2023-07-14 23:40:41.435 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [28900]
+2023-07-14 23:40:41.435 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [깨끗한나라 순수소프트 30롤 2팩. 무형광, 도톰 3겹]
+Hibernate: 
+    insert 
+    into
+        product_tb
+        (id, description, image, price, product_name) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.436 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - []
+2023-07-14 23:40:41.436 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [/images/13.jpg]
+2023-07-14 23:40:41.436 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [9900]
+2023-07-14 23:40:41.436 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [생활공작소 초미세모 칫솔 12입 2개+가글 증정]
+Hibernate: 
+    insert 
+    into
+        product_tb
+        (id, description, image, price, product_name) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.437 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - []
+2023-07-14 23:40:41.437 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [/images/14.jpg]
+2023-07-14 23:40:41.437 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [9900]
+2023-07-14 23:40:41.437 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [경북 영천 샤인머스켓 가정용 1kg 2수 내외]
+Hibernate: 
+    insert 
+    into
+        product_tb
+        (id, description, image, price, product_name) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.437 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - []
+2023-07-14 23:40:41.437 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [/images/15.jpg]
+2023-07-14 23:40:41.437 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [148000]
+2023-07-14 23:40:41.437 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [[LIVE][5%쿠폰] 홈카페 Y3.3 캡슐머신 베이직 세트]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.440 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [01. 슬라이딩 지퍼백 크리스마스에디션 4종]
+2023-07-14 23:40:41.440 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [10000]
+2023-07-14 23:40:41.440 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.441 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [02. 슬라이딩 지퍼백 플라워에디션 5종]
+2023-07-14 23:40:41.441 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [10900]
+2023-07-14 23:40:41.441 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.442 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [고무장갑 베이지 S(소형) 6팩]
+2023-07-14 23:40:41.442 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [9900]
+2023-07-14 23:40:41.442 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.443 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [뽑아쓰는 키친타올 130매 12팩]
+2023-07-14 23:40:41.443 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [16900]
+2023-07-14 23:40:41.443 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.443 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [2겹 식빵수세미 6매]
+2023-07-14 23:40:41.444 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [8900]
+2023-07-14 23:40:41.444 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.444 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [22년산 햇단밤 700g(한정판매)]
+2023-07-14 23:40:41.444 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [9900]
+2023-07-14 23:40:41.445 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.446 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [22년산 햇단밤 1kg(한정판매)]
+2023-07-14 23:40:41.446 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [14500]
+2023-07-14 23:40:41.446 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.446 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [밤깎기+다회용 구이판 세트]
+2023-07-14 23:40:41.446 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [5500]
+2023-07-14 23:40:41.446 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.447 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [JR310 (유선 전용) - 블루]
+2023-07-14 23:40:41.447 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [29900]
+2023-07-14 23:40:41.447 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [3]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.448 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [JR310BT (무선 전용) - 레드]
+2023-07-14 23:40:41.448 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [49900]
+2023-07-14 23:40:41.448 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [3]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.448 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [JR310BT (무선 전용) - 그린]
+2023-07-14 23:40:41.448 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [49900]
+2023-07-14 23:40:41.448 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [3]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.449 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [JR310BT (무선 전용) - 블루]
+2023-07-14 23:40:41.449 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [49900]
+2023-07-14 23:40:41.449 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [3]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.449 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [T510BT (무선 전용) - 블랙]
+2023-07-14 23:40:41.450 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [52900]
+2023-07-14 23:40:41.450 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [3]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.450 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [T510BT (무선 전용) - 화이트]
+2023-07-14 23:40:41.450 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [52900]
+2023-07-14 23:40:41.450 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [3]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.451 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [선택01_바른곡물효소 누룽지맛 2박스]
+2023-07-14 23:40:41.451 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [17900]
+2023-07-14 23:40:41.451 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [4]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.451 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [선택02_바른곡물효소누룽지맛 6박스]
+2023-07-14 23:40:41.452 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [50000]
+2023-07-14 23:40:41.452 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [4]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.452 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [선택03_바른곡물효소3박스+유산균효소3박스]
+2023-07-14 23:40:41.452 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [50000]
+2023-07-14 23:40:41.452 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [4]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.453 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [선택04_바른곡물효소3박스+19종유산균3박스]
+2023-07-14 23:40:41.453 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [50000]
+2023-07-14 23:40:41.453 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [4]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.454 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [01. 말랑컷팅장족 100g]
+2023-07-14 23:40:41.454 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [4900]
+2023-07-14 23:40:41.454 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [5]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.454 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [02. 말랑컷팅장족 300g]
+2023-07-14 23:40:41.454 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [12800]
+2023-07-14 23:40:41.454 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [5]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.455 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [03. 눌린장족 100g]
+2023-07-14 23:40:41.455 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [4900]
+2023-07-14 23:40:41.455 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [5]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.456 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [굳지않는 쑥 앙금 절편 1050g]
+2023-07-14 23:40:41.456 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [15900]
+2023-07-14 23:40:41.456 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [6]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.456 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [굳지않는 흑미 앙금 절편 1050g]
+2023-07-14 23:40:41.457 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [15900]
+2023-07-14 23:40:41.457 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [6]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.457 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [굳지않는 흰 가래떡 1050g]
+2023-07-14 23:40:41.457 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [15900]
+2023-07-14 23:40:41.457 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [6]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.458 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [이너딜리티 1박스]
+2023-07-14 23:40:41.458 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [26800]
+2023-07-14 23:40:41.458 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [7]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.459 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [이너딜리티 2박스+사은품 2종]
+2023-07-14 23:40:41.459 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [49800]
+2023-07-14 23:40:41.459 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [7]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.459 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [제나벨 PDRN 자생크림 1+1]
+2023-07-14 23:40:41.460 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [25900]
+2023-07-14 23:40:41.460 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [8]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.460 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [플레이스테이션 VR2 호라이즌 번들]
+2023-07-14 23:40:41.460 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [839000]
+2023-07-14 23:40:41.460 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [9]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.461 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [플레이스테이션 VR2]
+2023-07-14 23:40:41.461 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [797000]
+2023-07-14 23:40:41.461 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [9]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.462 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [홍가리비2kg(50미이내)]
+2023-07-14 23:40:41.462 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [8900]
+2023-07-14 23:40:41.462 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [10]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.462 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [궁채 절임 1kg]
+2023-07-14 23:40:41.462 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [6900]
+2023-07-14 23:40:41.462 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [11]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.463 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [양념 깻잎 1kg]
+2023-07-14 23:40:41.463 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [8900]
+2023-07-14 23:40:41.463 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [11]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.464 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [된장 깻잎 1kg]
+2023-07-14 23:40:41.465 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [8900]
+2023-07-14 23:40:41.465 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [11]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.465 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [간장 깻잎 1kg]
+2023-07-14 23:40:41.465 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [7900]
+2023-07-14 23:40:41.466 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [11]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.466 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [고추 무침 1kg]
+2023-07-14 23:40:41.466 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [8900]
+2023-07-14 23:40:41.466 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [11]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.467 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [파래 무침 1kg]
+2023-07-14 23:40:41.467 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [9900]
+2023-07-14 23:40:41.467 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [11]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.467 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [01_순수소프트 27m 30롤 2팩]
+2023-07-14 23:40:41.467 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [28900]
+2023-07-14 23:40:41.467 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [12]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.468 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [02_벚꽃 프리미엄 27m 30롤 2팩]
+2023-07-14 23:40:41.468 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [32900]
+2023-07-14 23:40:41.468 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [12]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.468 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [(증정) 초미세모 칫솔 12개 x 2개]
+2023-07-14 23:40:41.468 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [11900]
+2023-07-14 23:40:41.469 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [13]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.469 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [(증정) 잇몸케어 치약 100G 3개 x 2개]
+2023-07-14 23:40:41.469 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [16900]
+2023-07-14 23:40:41.469 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [13]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.470 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [(증정) 구취케어 치약 100G 3개 x 2개]
+2023-07-14 23:40:41.471 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [16900]
+2023-07-14 23:40:41.471 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [13]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.471 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [(증정)화이트케어 치약 100G 3개 x 2개]
+2023-07-14 23:40:41.471 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [19900]
+2023-07-14 23:40:41.471 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [13]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.472 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [(증정) 어린이 칫솔 12EA]
+2023-07-14 23:40:41.472 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [9900]
+2023-07-14 23:40:41.472 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [13]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.472 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [[가정용] 샤인머스켓 1kg 2수내외]
+2023-07-14 23:40:41.472 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [9900]
+2023-07-14 23:40:41.473 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [14]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.473 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [[특품] 샤인머스켓 1kg 1-2수]
+2023-07-14 23:40:41.473 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [12900]
+2023-07-14 23:40:41.473 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [14]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.474 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [[특품] 샤인머스켓 2kg 2-3수]
+2023-07-14 23:40:41.474 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [23900]
+2023-07-14 23:40:41.474 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [14]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.474 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [화이트]
+2023-07-14 23:40:41.475 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [148000]
+2023-07-14 23:40:41.475 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [15]
+Hibernate: 
+    insert 
+    into
+        option_tb
+        (id, option_name, price, product_id) 
+    values
+        (default, ?, ?, ?)
+2023-07-14 23:40:41.475 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [블랙]
+2023-07-14 23:40:41.475 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [148000]
+2023-07-14 23:40:41.475 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [15]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.478 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [1]
+2023-07-14 23:40:41.478 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [20000]
+2023-07-14 23:40:41.478 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.478 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.480 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [2]
+2023-07-14 23:40:41.480 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [21800]
+2023-07-14 23:40:41.480 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.480 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.480 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [3]
+2023-07-14 23:40:41.480 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [19800]
+2023-07-14 23:40:41.480 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.480 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.481 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [4]
+2023-07-14 23:40:41.481 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [33800]
+2023-07-14 23:40:41.481 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.481 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.482 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [5]
+2023-07-14 23:40:41.482 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [17800]
+2023-07-14 23:40:41.482 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.482 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.482 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [6]
+2023-07-14 23:40:41.482 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [19800]
+2023-07-14 23:40:41.482 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.482 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.483 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [7]
+2023-07-14 23:40:41.483 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [29000]
+2023-07-14 23:40:41.483 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.483 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.483 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [8]
+2023-07-14 23:40:41.484 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [11000]
+2023-07-14 23:40:41.484 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.484 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.485 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [9]
+2023-07-14 23:40:41.485 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [59800]
+2023-07-14 23:40:41.485 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.485 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.486 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [10]
+2023-07-14 23:40:41.486 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [99800]
+2023-07-14 23:40:41.486 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.486 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.486 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [11]
+2023-07-14 23:40:41.487 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [99800]
+2023-07-14 23:40:41.487 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.487 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.487 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [12]
+2023-07-14 23:40:41.487 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [99800]
+2023-07-14 23:40:41.487 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.487 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.488 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [13]
+2023-07-14 23:40:41.488 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [105800]
+2023-07-14 23:40:41.488 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.488 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.489 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [14]
+2023-07-14 23:40:41.489 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [105800]
+2023-07-14 23:40:41.489 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.489 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.489 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [15]
+2023-07-14 23:40:41.489 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [35800]
+2023-07-14 23:40:41.489 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.489 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.490 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [16]
+2023-07-14 23:40:41.490 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [100000]
+2023-07-14 23:40:41.490 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.490 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.491 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [17]
+2023-07-14 23:40:41.491 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [100000]
+2023-07-14 23:40:41.491 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.491 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.491 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [18]
+2023-07-14 23:40:41.491 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [100000]
+2023-07-14 23:40:41.491 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.491 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.492 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [19]
+2023-07-14 23:40:41.492 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [9800]
+2023-07-14 23:40:41.492 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.492 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.492 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [20]
+2023-07-14 23:40:41.492 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [25600]
+2023-07-14 23:40:41.493 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.493 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.493 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [21]
+2023-07-14 23:40:41.493 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [9800]
+2023-07-14 23:40:41.493 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.493 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.494 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [22]
+2023-07-14 23:40:41.494 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [31800]
+2023-07-14 23:40:41.494 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.494 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.494 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [23]
+2023-07-14 23:40:41.495 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [31800]
+2023-07-14 23:40:41.495 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.495 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.495 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [24]
+2023-07-14 23:40:41.496 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [31800]
+2023-07-14 23:40:41.496 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.496 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.496 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [25]
+2023-07-14 23:40:41.497 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [53600]
+2023-07-14 23:40:41.497 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.497 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.497 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [26]
+2023-07-14 23:40:41.497 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [99600]
+2023-07-14 23:40:41.497 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.497 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.498 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [27]
+2023-07-14 23:40:41.498 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [51800]
+2023-07-14 23:40:41.498 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.498 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.498 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [28]
+2023-07-14 23:40:41.498 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [1678000]
+2023-07-14 23:40:41.498 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.498 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.499 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [29]
+2023-07-14 23:40:41.499 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [1594000]
+2023-07-14 23:40:41.499 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.499 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.499 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [30]
+2023-07-14 23:40:41.499 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [17800]
+2023-07-14 23:40:41.499 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.500 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.500 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [31]
+2023-07-14 23:40:41.500 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [13800]
+2023-07-14 23:40:41.500 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.500 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.500 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [32]
+2023-07-14 23:40:41.500 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [17800]
+2023-07-14 23:40:41.500 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.500 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.501 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [33]
+2023-07-14 23:40:41.501 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [17800]
+2023-07-14 23:40:41.501 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.501 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.502 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [34]
+2023-07-14 23:40:41.502 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [15800]
+2023-07-14 23:40:41.502 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.502 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.503 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [35]
+2023-07-14 23:40:41.503 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [17800]
+2023-07-14 23:40:41.503 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.503 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.503 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [36]
+2023-07-14 23:40:41.503 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [19800]
+2023-07-14 23:40:41.503 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.503 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.504 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [37]
+2023-07-14 23:40:41.504 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [57800]
+2023-07-14 23:40:41.504 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.504 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.504 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [38]
+2023-07-14 23:40:41.505 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [65800]
+2023-07-14 23:40:41.505 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.505 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.505 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [39]
+2023-07-14 23:40:41.505 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [23800]
+2023-07-14 23:40:41.505 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.505 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.506 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [40]
+2023-07-14 23:40:41.506 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [33800]
+2023-07-14 23:40:41.506 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.506 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.506 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [41]
+2023-07-14 23:40:41.506 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [33800]
+2023-07-14 23:40:41.506 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.506 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.507 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [42]
+2023-07-14 23:40:41.507 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [39800]
+2023-07-14 23:40:41.507 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.507 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.507 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [43]
+2023-07-14 23:40:41.507 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [19800]
+2023-07-14 23:40:41.507 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.507 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.508 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [44]
+2023-07-14 23:40:41.508 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [19800]
+2023-07-14 23:40:41.508 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.508 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.509 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [45]
+2023-07-14 23:40:41.509 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [25800]
+2023-07-14 23:40:41.509 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.509 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.509 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [46]
+2023-07-14 23:40:41.509 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [47800]
+2023-07-14 23:40:41.509 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.509 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.510 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [47]
+2023-07-14 23:40:41.510 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [296000]
+2023-07-14 23:40:41.510 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.510 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        cart_tb
+        (id, option_id, price, quantity, user_id) 
+    values
+        (default, ?, ?, ?, ?)
+2023-07-14 23:40:41.511 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [48]
+2023-07-14 23:40:41.511 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [296000]
+2023-07-14 23:40:41.511 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [2]
+2023-07-14 23:40:41.511 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+====================start===================
+Hibernate: 
+    select
+        cart0_.id as id1_0_0_,
+        option1_.id as id1_2_1_,
+        product2_.id as id1_4_2_,
+        cart0_.option_id as option_i4_0_0_,
+        cart0_.price as price2_0_0_,
+        cart0_.quantity as quantity3_0_0_,
+        cart0_.user_id as user_id5_0_0_,
+        option1_.option_name as option_n2_2_1_,
+        option1_.price as price3_2_1_,
+        option1_.product_id as product_4_2_1_,
+        product2_.description as descript2_4_2_,
+        product2_.image as image3_4_2_,
+        product2_.price as price4_4_2_,
+        product2_.product_name as product_5_4_2_ 
+    from
+        cart_tb cart0_ 
+    inner join
+        option_tb option1_ 
+            on cart0_.option_id=option1_.id 
+    inner join
+        product_tb product2_ 
+            on option1_.product_id=product2_.id 
+    where
+        cart0_.id=?
+2023-07-14 23:40:41.525 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [1]
+2023-07-14 23:40:41.527 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_0_0_] : [INTEGER]) - [1]
+2023-07-14 23:40:41.527 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_2_1_] : [INTEGER]) - [1]
+2023-07-14 23:40:41.527 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_4_2_] : [INTEGER]) - [1]
+2023-07-14 23:40:41.529 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_i4_0_0_] : [INTEGER]) - [1]
+2023-07-14 23:40:41.529 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price2_0_0_] : [INTEGER]) - [20000]
+2023-07-14 23:40:41.529 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([quantity3_0_0_] : [INTEGER]) - [2]
+2023-07-14 23:40:41.529 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([user_id5_0_0_] : [INTEGER]) - [1]
+2023-07-14 23:40:41.530 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_n2_2_1_] : [VARCHAR]) - [01. 슬라이딩 지퍼백 크리스마스에디션 4종]
+2023-07-14 23:40:41.530 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price3_2_1_] : [INTEGER]) - [10000]
+2023-07-14 23:40:41.530 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_4_2_1_] : [INTEGER]) - [1]
+2023-07-14 23:40:41.530 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([descript2_4_2_] : [VARCHAR]) - []
+2023-07-14 23:40:41.530 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([image3_4_2_] : [VARCHAR]) - [/images/1.jpg]
+2023-07-14 23:40:41.530 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price4_4_2_] : [INTEGER]) - [1000]
+2023-07-14 23:40:41.530 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_5_4_2_] : [VARCHAR]) - [기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전]
+Hibernate: 
+    update
+        cart_tb 
+    set
+        option_id=?,
+        price=?,
+        quantity=?,
+        user_id=? 
+    where
+        id=?
+2023-07-14 23:40:41.548 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [1]
+2023-07-14 23:40:41.548 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [900000]
+2023-07-14 23:40:41.548 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [30]
+2023-07-14 23:40:41.548 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+2023-07-14 23:40:41.548 TRACE 26563 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [5] as [INTEGER] - [1]
+2023-07-14 23:40:41.593  INFO 26563 --- [    Test worker] o.s.t.c.transaction.TransactionContext   : Rolled back transaction for test: [DefaultTestContext@1021f6c9 testClass = CartJPARepositoryTest, testInstance = com.example.kakao.Cart.CartJPARepositoryTest@451a4187, testMethod = cartUpdate1_test@CartJPARepositoryTest, testException = [null], mergedContextConfiguration = [MergedContextConfiguration@7516e4e5 testClass = CartJPARepositoryTest, locations = '{}', classes = '{class com.example.kakao.KakaoApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.OverrideAutoConfigurationContextCustomizerFactory$DisableAutoConfigurationContextCustomizer@1b955cac, org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@32a68f4f, org.springframework.boot.test.autoconfigure.filter.TypeExcludeFiltersContextCustomizer@351584c0, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@bada54dc, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@6155d082, [ImportsContextCustomizer@488eb7f2 key = [com.fasterxml.jackson.databind.ObjectMapper, org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration, org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration, org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration, org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration, org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration, org.springframework.boot.autoconfigure.sql.init.SqlInitializationAutoConfiguration, org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration, org.springframework.boot.test.autoconfigure.jdbc.TestDatabaseAutoConfiguration, org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManagerAutoConfiguration]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@6aa3a905, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@59b38691, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@0], contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.event.ApplicationEventsTestExecutionListener.recordApplicationEvents' -&gt; false]]
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 7.5.1</a> at 2023. 7. 14. 오후 11:40:41</p>
+</div>
+</div>
+</body>
+</html>

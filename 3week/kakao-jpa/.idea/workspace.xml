@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="236102dd-6c59-4dce-8bbd-c4856c3bc003" name="Changes" comment="test: Update RepositoryTest&#10;&#10;refactor some codes">
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/kakao/cart/CartJPARepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/kakao/cart/CartJPARepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/kakao/user/UserRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/kakao/user/UserRestController.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
+  <component name="ProjectId" id="2SPMAHYrM7jsfyxFoZbhNNI0h4d" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/zae/Desktop/kakaoshopping/step2-BE-kakao-shop/3week/kakao-jpa&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;3fcb6ad08501ea2e40c61ba5f4596338&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager" selected="Gradle.CartJPARepositoryTest.cartUpdate1_test">
+    <configuration name="CartJPARepositoryTest.cartUpdate1_test" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.example.kakao.Cart.CartJPARepositoryTest.cartUpdate1_test&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="CartJPARepositoryTest.cartUpdate_test" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.example.kakao.Cart.CartJPARepositoryTest.cartUpdate_test&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="OrderJPARepositoryTest.itemProductOption_findByOrderId_lazy_error_test" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.example.kakao.Order.OrderJPARepositoryTest.itemProductOption_findByOrderId_lazy_error_test&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="OrderJPARepositoryTest.itemProductOption_findByOrderId_lazy_test1" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.example.kakao.Order.OrderJPARepositoryTest.itemProductOption_findByOrderId_lazy_test1&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="OrderJPARepositoryTest.orderAndItemSave_test" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.example.kakao.Order.OrderJPARepositoryTest.orderAndItemSave_test&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="KakaoApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="kakao.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.kakao.KakaoApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.CartJPARepositoryTest.cartUpdate1_test" />
+        <item itemvalue="Gradle.CartJPARepositoryTest.cartUpdate_test" />
+        <item itemvalue="Gradle.OrderJPARepositoryTest.orderAndItemSave_test" />
+        <item itemvalue="Gradle.OrderJPARepositoryTest.itemProductOption_findByOrderId_lazy_test1" />
+        <item itemvalue="Gradle.OrderJPARepositoryTest.itemProductOption_findByOrderId_lazy_error_test" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="236102dd-6c59-4dce-8bbd-c4856c3bc003" name="Changes" comment="" />
+      <created>1689043618237</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1689043618237</updated>
+      <workItem from="1689043619936" duration="236000" />
+      <workItem from="1689043876674" duration="3986000" />
+      <workItem from="1689124187421" duration="19974000" />
+      <workItem from="1689320805607" duration="25555000" />
+      <workItem from="1689347370804" duration="719000" />
+      <workItem from="1689392948233" duration="63000" />
+      <workItem from="1689397372644" duration="9790000" />
+      <workItem from="1689505550255" duration="1850000" />
+      <workItem from="1689571548348" duration="131000" />
+      <workItem from="1689595820812" duration="679000" />
+      <workItem from="1689644916338" duration="578000" />
+    </task>
+    <task id="LOCAL-00001" summary="feat: add Custom Query method">
+      <created>1689345727712</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1689345727712</updated>
+    </task>
+    <task id="LOCAL-00002" summary="test: Cart query test&#10;&#10;영속성 관련 테스트, API 요청,반환 최적 쿼리 테스트">
+      <created>1689345868236</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1689345868236</updated>
+    </task>
+    <task id="LOCAL-00003" summary="test: Order query test&#10;&#10;영속성 관련 테스트, API 요청,반환 최적 쿼리 테스트">
+      <created>1689345880679</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1689345880679</updated>
+    </task>
+    <task id="LOCAL-00004" summary="test: Product query test">
+      <created>1689345896033</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1689345896033</updated>
+    </task>
+    <task id="LOCAL-00005" summary="test: Order query test&#10;&#10;영속성 관련 테스트, API 요청,반환 최적 쿼리 테스트">
+      <created>1689345907519</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1689345907519</updated>
+    </task>
+    <task id="LOCAL-00006" summary="feat: Update Entity">
+      <created>1689345937014</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1689345937014</updated>
+    </task>
+    <task id="LOCAL-00007" summary="feat: add itemDummy,cartDummy">
+      <created>1689345965932</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1689345965932</updated>
+    </task>
+    <task id="LOCAL-00008" summary="test: item query test&#10;&#10;영속성 관련 테스트, API 요청,반환 최적 쿼리 테스트">
+      <created>1689345996432</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1689345996432</updated>
+    </task>
+    <task id="LOCAL-00009" summary="test: Update UserRepositoryTest">
+      <created>1689346032410</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1689346032410</updated>
+    </task>
+    <task id="LOCAL-00010" summary="test: Update RepositoryTest&#10;&#10;refactor some codes">
+      <created>1689348069399</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1689348069399</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat: add Custom Query method" />
+    <MESSAGE value="test: Cart query test&#10;&#10;영속성 관련 테스트, API 요청,반환 최적 쿼리 테스트" />
+    <MESSAGE value="test: Product query test" />
+    <MESSAGE value="test: Order query test&#10;&#10;영속성 관련 테스트, API 요청,반환 최적 쿼리 테스트" />
+    <MESSAGE value="feat: Update Entity" />
+    <MESSAGE value="feat: add itemDummy,cartDummy" />
+    <MESSAGE value="test: item query test&#10;&#10;영속성 관련 테스트, API 요청,반환 최적 쿼리 테스트" />
+    <MESSAGE value="test: Update UserRepositoryTest" />
+    <MESSAGE value="test: Update RepositoryTest&#10;&#10;refactor some codes" />
+    <option name="LAST_COMMIT_MESSAGE" value="test: Update RepositoryTest&#10;&#10;refactor some codes" />
+  </component>
+</project>
