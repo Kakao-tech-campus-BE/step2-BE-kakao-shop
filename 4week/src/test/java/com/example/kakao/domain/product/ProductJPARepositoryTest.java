@@ -1,29 +1,27 @@
 package com.example.kakao.product;
 
 import com.example.kakao._core.util.DummyEntity;
-import com.example.kakao.product.option.Option;
-import com.example.kakao.product.option.OptionJPARepository;
+import com.example.kakao.domain.product.Product;
+import com.example.kakao.domain.product.ProductJPARepository;
+import com.example.kakao.domain.product.option.Option;
+import com.example.kakao.domain.product.option.OptionJPARepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.api.Assertions;
-import org.hibernate.Hibernate;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 import javax.persistence.EntityManager;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Import(ObjectMapper.class)
 @DataJpaTest
-public class ProductJPARepositoryTest extends DummyEntity {
+class ProductJPARepositoryTest extends DummyEntity {
 
     @Autowired
     private EntityManager em;
@@ -38,7 +36,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
     private ObjectMapper om;
 
     @BeforeEach
-    public void setUp(){
+    void setUp(){
         em.createNativeQuery("ALTER TABLE product_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
         List<Product> productListPS = productJPARepository.saveAll(productDummyList());
         optionJPARepository.saveAll(optionDummyList(productListPS));
@@ -46,7 +44,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
     }
 
     @Test
-    public void product_findAll_test() throws JsonProcessingException {
+    void product_findAll_test() throws JsonProcessingException {
         // given
         int page = 0;
         int size = 9;
@@ -72,7 +70,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
 
     // ManyToOne 전략을 Eager로 간다면 추천
     @Test
-    public void option_findByProductId_eager_test() throws JsonProcessingException {
+    void option_findByProductId_eager_test() throws JsonProcessingException {
         // given
         int id = 1;
 
@@ -89,7 +87,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
     }
 
     @Test
-    public void option_findByProductId_lazy_error_test() throws JsonProcessingException {
+    void option_findByProductId_lazy_error_test() throws JsonProcessingException {
         // given
         int id = 1;
 
@@ -111,7 +109,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
     // 추천
     // 조인쿼리 직접 만들어서 사용하기
     @Test
-    public void option_mFindByProductId_lazy_test() throws JsonProcessingException {
+    void option_mFindByProductId_lazy_test() throws JsonProcessingException {
         // given
         int id = 1;
 
@@ -128,7 +126,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
 
     // 추천
     @Test
-    public void product_findById_and_option_findByProductId_lazy_test() throws JsonProcessingException {
+    void product_findById_and_option_findByProductId_lazy_test() throws JsonProcessingException {
         // given
         int id = 1;
 
