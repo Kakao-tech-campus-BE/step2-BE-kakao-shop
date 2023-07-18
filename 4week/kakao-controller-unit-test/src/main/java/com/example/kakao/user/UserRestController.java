@@ -24,14 +24,15 @@ import java.util.Map;
 public class UserRestController {
 
     private final GlobalExceptionHandler globalExceptionHandler;
-    private final UserService userService;
+    private final UserService userService; //서비스 의존성 주입
 
     @PostMapping("/join")
     public ResponseEntity<?> join(@RequestBody @Valid UserRequest.JoinDTO requestDTO, Errors errors,
                                   HttpServletRequest request) {
 
+        //나중에 따로 빼낼 예정
         if (errors.hasErrors()) {
-            List<FieldError> fieldErrors = errors.getFieldErrors();
+            List<FieldError> fieldErrors = errors.getFieldErrors(); //에러 필드를 List에 저장
             Exception400 ex = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
             return new ResponseEntity<>(
                     ex.body(),
@@ -52,7 +53,7 @@ public class UserRestController {
         if (errors.hasErrors()) {
             List<FieldError> fieldErrors = errors.getFieldErrors();
             Exception400 ex = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
-            return new ResponseEntity<>(
+            return new ResponseEntity<>( //execption 400을 만들어서 응답
                     ex.body(),
                     ex.status()
             );
@@ -66,7 +67,7 @@ public class UserRestController {
         }
     }
 
-    @PostMapping("/users/{id}/update-password")
+    @PostMapping("/users/{id}/update-password") //PutMapping 이라면 /user/{id}로만 해도 읽을 수 있다.
     public ResponseEntity<?> updatePassword(
             @PathVariable Integer id,
             @RequestBody @Valid UserRequest.UpdatePasswordDTO requestDTO, Errors errors,

@@ -41,8 +41,8 @@ public class ProductRestController {
         // 1. 더미데이터 가져와서 상품 찾기
         Product product = fakeStore.getProductList().stream().filter(p -> p.getId() == id).findFirst().orElse(null);
 
-        if(product == null){
-            Exception404 ex = new Exception404("해당 상품을 찾을 수 없습니다:"+id);
+        if(product == null){ //product가 null일때
+            Exception404 ex = new Exception404("해당 상품을 찾을 수 없습니다:"+id); //컨트롤러에서 404 에러 잡기
             return new ResponseEntity<>(
                     ex.body(),
                     ex.status()

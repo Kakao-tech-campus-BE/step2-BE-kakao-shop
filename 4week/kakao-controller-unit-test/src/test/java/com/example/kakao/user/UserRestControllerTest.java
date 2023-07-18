@@ -82,12 +82,13 @@ public class UserRestControllerTest {
         UserRequest.LoginDTO loginDTO = new UserRequest.LoginDTO();
         loginDTO.setEmail("ssar@nate.com");
         loginDTO.setPassword("meta1234!");
-        User user = User.builder().id(1).roles("ROLE_USER").build();
-        String requestBody = om.writeValueAsString(loginDTO);
 
         // stub
-        String jwt = JWTProvider.create(user);
-        Mockito.when(userService.login(any())).thenReturn(jwt);
+        User user = User.builder().id(1).roles("ROLE_USER").build(); //user 객체 만듬
+        String requestBody = om.writeValueAsString(loginDTO);
+        String jwt = JWTProvider.create(user); //jwt 토큰 생성 (더미 생성)
+
+        Mockito.when(userService.login(any())).thenReturn(jwt); //만약에 userService의 login()이 실행되면 무엇을 넣던 jwt가 리턴되게 내부구현
 
         // when
         ResultActions result = mvc.perform(

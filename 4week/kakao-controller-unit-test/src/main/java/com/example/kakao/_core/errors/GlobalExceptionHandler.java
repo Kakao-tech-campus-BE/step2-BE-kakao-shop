@@ -18,7 +18,7 @@ public class GlobalExceptionHandler {
 
     public ResponseEntity<?> handle(RuntimeException e, HttpServletRequest request){
         if(e instanceof Exception400){
-            Exception400 ex = (Exception400) e;
+            Exception400 ex = (Exception400) e; //다운캐스팅
             return new ResponseEntity<>(
                     ex.body(),
                     ex.status()
@@ -41,7 +41,7 @@ public class GlobalExceptionHandler {
                     ex.body(),
                     ex.status()
             );
-        }else if(e instanceof Exception500){
+        }else if(e instanceof Exception500){ //500이 터질땐 에러 로그를 남김
             ErrorLog errorLog = ErrorLog.builder()
                     .message(e.getMessage())
                     .userAgent(request.getHeader("User-Agent"))
@@ -53,7 +53,7 @@ public class GlobalExceptionHandler {
                     ex.body(),
                     ex.status()
             );
-        }else{
+        }else{ //위 에러로도 못 잡은 에러
             ErrorLog errorLog = ErrorLog.builder()
                     .message(e.getMessage())
                     .userAgent(request.getHeader("User-Agent"))
