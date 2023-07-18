@@ -23,6 +23,7 @@ import org.springframework.context.annotation.Import;
 import javax.persistence.EntityManager;
 import java.util.List;
 
+
 @Import(ObjectMapper.class)
 @DataJpaTest
 public class OrderJPARRepositoryTest extends DummyEntity {
@@ -48,7 +49,7 @@ public class OrderJPARRepositoryTest extends DummyEntity {
     @Autowired
     private ItemJPARepository itemJPARepository;
 
-
+    //
     @Autowired
     private ObjectMapper om;
 
