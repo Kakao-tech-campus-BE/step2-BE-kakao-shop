@@ -13,6 +13,10 @@ import javax.persistence.*;
         indexes = {
                 @Index(name = "option_product_id_idx", columnList = "product_id")
         })
+@NamedEntityGraph(
+        name = "OptionWithProduct",
+        attributeNodes = @NamedAttributeNode("product")
+)
 public class Option {
 
     @Id

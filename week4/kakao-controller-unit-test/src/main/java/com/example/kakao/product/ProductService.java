@@ -1,5 +1,7 @@
 package com.example.kakao.product;
 
+import com.example.kakao.product.option.Option;
+import com.example.kakao.product.option.OptionJPARepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -11,8 +13,9 @@ import java.util.stream.Collectors;
 @Service
 public class ProductService {
     private final ProductJPARepository productJPARepository;
+    private final OptionJPARepository optionJPARepository;
 
-    public List<ProductResponse.FindAllDTO> getProducts(PageRequest pageRequest) {
+    public List<ProductResponse.FindAllDTO> findAllProducts(PageRequest pageRequest) {
         return productJPARepository.findAll(pageRequest)
                 .getContent()
                 .stream()
@@ -20,25 +23,13 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    public ProductResponse.FindAllDTO getProduct(int id) {
-        Product product = productJPARepository.findById(id).orElseThrow();
+    public ProductResponse.FindByIdDTO findProductById(int id) {
+        List<Option> options = optionJPARepository.findByProductId(id);
 
-        return new ProductResponse.FindAllDTO(product);
+        return new ProductResponse.FindByIdDTO(options.get(0).getProduct(), options);
     }
 
-    public ProductResponse.FindAllDTO save(ProductRequest.Insert request) {
-        Product product = Product.builder()
-                .productName(request.getName())
-                .description(request.getDescription())
-                .image(request.getImage())
-                .price(request.getPrice())
-                .build();
-        Product savedProduct = productJPARepository.save(product);
-
-        return new ProductResponse.FindAllDTO(savedProduct);
-    }
-
-    public List<ProductResponse.FindAllDTO> saveAll(List<ProductRequest.Insert> requests) {
+    public void saveAll(List<ProductRequest.Insert> requests) {
         List<Product> products = requests
                 .stream()
                 .map(request -> Product.builder()
@@ -49,9 +40,6 @@ public class ProductService {
                         .build())
                 .collect(Collectors.toList());
 
-        return productJPARepository.saveAll(products)
-                .stream()
-                .map(ProductResponse.FindAllDTO::new)
-                .collect(Collectors.toList());
+        productJPARepository.saveAll(products);
     }
 }

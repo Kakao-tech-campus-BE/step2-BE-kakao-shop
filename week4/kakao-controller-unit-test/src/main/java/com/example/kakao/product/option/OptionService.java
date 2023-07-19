@@ -12,25 +12,7 @@ import java.util.stream.Collectors;
 public class OptionService {
     private final OptionJPARepository optionJPARepository;
 
-    public List<ProductResponse.FindByIdDTO.OptionDTO> findAllByProductId(int id) {
-        return optionJPARepository.findByProductId(id)
-                .stream()
-                .map(ProductResponse.FindByIdDTO.OptionDTO::new)
-                .collect(Collectors.toList());
-    }
-
-    public ProductResponse.FindByIdDTO.OptionDTO save(OptionRequest.Insert request) {
-        Option option = Option.builder()
-                .product(request.getProduct())
-                .optionName(request.getName())
-                .price(request.getPrice())
-                .build();
-        Option savedOption = optionJPARepository.save(option);
-
-        return new ProductResponse.FindByIdDTO.OptionDTO(savedOption);
-    }
-
-    public List<ProductResponse.FindByIdDTO.OptionDTO> saveAll(List<OptionRequest.Insert> requests) {
+    public void saveAll(List<OptionRequest.Insert> requests) {
         List<Option> options = requests
                 .stream()
                 .map(request -> Option.builder()
@@ -40,9 +22,6 @@ public class OptionService {
                         .build())
                 .collect(Collectors.toList());
 
-        return optionJPARepository.saveAll(options)
-                .stream()
-                .map(ProductResponse.FindByIdDTO.OptionDTO::new)
-                .collect(Collectors.toList());
+        optionJPARepository.saveAll(options);
     }
 }
