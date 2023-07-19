@@ -114,4 +114,26 @@ public class UserRestControllerTest {
         System.out.println(value.substring(0,6));
     }
 
+    @Test // 이메일 중복 테스트
+    public void checkEmail_test() throws Exception {
+        //given
+        UserRequest.EmailCheckDTO emailCheckDTO = new UserRequest.EmailCheckDTO();
+        emailCheckDTO.setEmail("dlwlsgur@naver.com");
+        String requestBody = om.writeValueAsString(emailCheckDTO);
+
+        // when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .post("/check")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+
+        // then
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
+    }
+
 }
