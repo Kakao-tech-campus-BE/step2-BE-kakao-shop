@@ -38,7 +38,7 @@ public class CartRestController {
 // ]
     // (기능8) 장바구니 담기
     @PostMapping("/carts/add")
-    public ResponseEntity<?> addCartList(@RequestBody @Valid List<CartRequest.SaveDTO> requestDTOs, Errors errors, HttpServletRequest request, @AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ResponseEntity<?> addCartList(@RequestBody @Valid List<CartRequest.SaveDTO> saveDTOs, Errors errors, HttpServletRequest request, @AuthenticationPrincipal CustomUserDetails userDetails) {
         if (errors.hasErrors()) {
             List<FieldError> fieldErrors = errors.getFieldErrors();
             Exception400 ex = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
@@ -48,7 +48,7 @@ public class CartRestController {
             );
         }
         try {
-            cartService.addCartList(requestDTOs,userDetails.getUser().getId());
+            cartService.addCartList(saveDTOs,userDetails.getUser().getId());
             return ResponseEntity.ok().body(ApiUtils.success(null));
         } catch (RuntimeException e) {
             return globalExceptionHandler.handle(e, request);
@@ -86,7 +86,7 @@ public class CartRestController {
 // ]
     // (기능11) 주문하기 - (장바구니 업데이트)
     @PostMapping("/carts/update")
-    public ResponseEntity<?> update(@RequestBody @Valid List<CartRequest.UpdateDTO> requestDTOs, Errors errors, HttpServletRequest request,@AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ResponseEntity<?> update(@RequestBody @Valid List<CartRequest.UpdateDTO> updateDTOs, Errors errors, HttpServletRequest request,@AuthenticationPrincipal CustomUserDetails userDetails) {
         if (errors.hasErrors()) {
             List<FieldError> fieldErrors = errors.getFieldErrors();
             Exception400 ex = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
@@ -99,7 +99,7 @@ public class CartRestController {
 
 
         try {
-            return ResponseEntity.ok().body(ApiUtils.success(cartService.update(requestDTOs,userDetails.getUser().getId())));
+            return ResponseEntity.ok().body(ApiUtils.success(cartService.update(updateDTOs,userDetails.getUser().getId())));
         } catch (RuntimeException e) {
             return globalExceptionHandler.handle(e, request);
         }
