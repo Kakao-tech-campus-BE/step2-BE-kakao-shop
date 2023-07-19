@@ -6,12 +6,8 @@ import com.example.kakao._core.utils.FakeStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.stream.Collectors;
-
 import javax.validation.Valid;
 
 @RequiredArgsConstructor
@@ -19,6 +15,7 @@ import javax.validation.Valid;
 public class CartRestController {
 
     private final FakeStore fakeStore;
+    private final CartService cartService;
 
 // [
 //     {
@@ -42,8 +39,7 @@ public class CartRestController {
     // (기능9) 장바구니 보기 - (주문화면, 결재화면)
     @GetMapping("/carts")
     public ResponseEntity<?> findAll(@AuthenticationPrincipal CustomUserDetails userDetails) {
-        List<Cart> cartList = fakeStore.getCartList();
-        CartResponse.FindAllDTO responseDTO = new CartResponse.FindAllDTO(cartList);
+        CartResponse.FindAllDTO responseDTO = cartService.findAll(userDetails);
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
 
@@ -59,25 +55,25 @@ public class CartRestController {
 //     }
 // ]
     // (기능11) 주문하기 - (장바구니 업데이트)
-    @PostMapping("/carts/update")
-    public ResponseEntity<?> update(@RequestBody @Valid List<CartRequest.UpdateDTO> requestDTOs, @AuthenticationPrincipal CustomUserDetails userDetails) {
-        requestDTOs.forEach(
-                updateDTO -> System.out.println("요청 받은 장바구니 수정 내역 : "+updateDTO.toString())
-        );
+@PostMapping("/carts/update")
+public ResponseEntity<?> update(@RequestBody @Valid List<CartRequest.UpdateDTO> requestDTOs, @AuthenticationPrincipal CustomUserDetails userDetails) {
+    requestDTOs.forEach(
+            updateDTO -> System.out.println("요청 받은 장바구니 수정 내역 : "+updateDTO.toString())
+    );
 
-        // 가짜 저장소의 값을 변경한다.
-        for (CartRequest.UpdateDTO updateDTO : requestDTOs) {
-            for (Cart cart : fakeStore.getCartList()) {
-                if(cart.getId() == updateDTO.getCartId()){
-                    cart.update(updateDTO.getQuantity(), cart.getPrice() * updateDTO.getQuantity());
-                }
+    // 가짜 저장소의 값을 변경한다.
+    for (CartRequest.UpdateDTO updateDTO : requestDTOs) {
+        for (Cart cart : fakeStore.getCartList()) {
+            if(cart.getId() == updateDTO.getCartId()){
+                cart.update(updateDTO.getQuantity(), cart.getPrice() * updateDTO.getQuantity());
             }
         }
-
-        // DTO를 만들어서 응답한다.
-        CartResponse.UpdateDTO responseDTO = new CartResponse.UpdateDTO(fakeStore.getCartList());
-        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
+
+    // DTO를 만들어서 응답한다.
+    CartResponse.UpdateDTO responseDTO = new CartResponse.UpdateDTO(fakeStore.getCartList());
+    return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
+}
 
 
     @PostMapping("/carts/clear")
