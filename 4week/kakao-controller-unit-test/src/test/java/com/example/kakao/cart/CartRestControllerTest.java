@@ -56,15 +56,27 @@ public class CartRestControllerTest {
         List<CartRequest.UpdateDTO> requestDTOs = new ArrayList<>();
         CartRequest.UpdateDTO d1 = new CartRequest.UpdateDTO();
         d1.setCartId(1);
-        d1.setQuantity(10);
+        d1.setQuantity(25);
         CartRequest.UpdateDTO d2 = new CartRequest.UpdateDTO();
         d2.setCartId(2);
-        d2.setQuantity(10);
+        d2.setQuantity(25);
         requestDTOs.add(d1);
         requestDTOs.add(d2);
         String requestBody = om.writeValueAsString(requestDTOs);
         System.out.println("테스트 : "+requestBody);
 
+        //stub
+        for (CartRequest.UpdateDTO updateDTO : requestDTOs) {
+            for (Cart cart : mockCartList) {
+                if(cart.getId() == updateDTO.getCartId()){
+                    cart.update(updateDTO.getQuantity(), cart.getPrice() * updateDTO.getQuantity());
+                }
+            }
+        }
+        
+        CartResponse.UpdateDTO updateResponseDTO = new CartResponse.UpdateDTO(mockCartList);
+
+        Mockito.when(cartService.updateCart(any(),any())).thenReturn(updateResponseDTO);
         // when
         ResultActions result = mvc.perform(
                 MockMvcRequestBuilders
@@ -80,8 +92,8 @@ public class CartRestControllerTest {
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].cartId").value(1));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].optionId").value(1));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].quantity").value(10));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].price").value(100000));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].quantity").value(25));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].price").value(250000));
     }
 
     @WithMockUser(username = "ssar@nate.com", roles = "USER")
@@ -111,4 +123,5 @@ public class CartRestControllerTest {
         //then
         result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
     }
+
 }
