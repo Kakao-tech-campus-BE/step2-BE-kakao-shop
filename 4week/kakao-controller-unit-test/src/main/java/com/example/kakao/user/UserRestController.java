@@ -128,8 +128,22 @@ public class UserRestController {
 
     // 이메일 중복체크 (기능에는 없지만 사용중)
     @PostMapping("/check")
-    public ResponseEntity<?> check(@RequestBody UserRequest.EmailCheckDTO emailCheckDTO) {
-        return ResponseEntity.ok().body(ApiUtils.success(null));
+    public ResponseEntity<?> check(@RequestBody @Valid UserRequest.EmailCheckDTO emailCheckDTO, Errors errors, HttpServletRequest request) {
+        if (errors.hasErrors()) {
+            List<FieldError> fieldErrors = errors.getFieldErrors();
+            Exception400 ex = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
+            return new ResponseEntity<>(
+                    ex.body(),
+                    ex.status()
+            );
+        }
+       try {
+           userService.sameCheckEmail(emailCheckDTO.getEmail());
+           return ResponseEntity.ok().body(ApiUtils.success(null));
+       }catch (RuntimeException e) {
+           return globalExceptionHandler.handle(e,request);
+       }
+
     }
 
     // (기능3) - 로그아웃

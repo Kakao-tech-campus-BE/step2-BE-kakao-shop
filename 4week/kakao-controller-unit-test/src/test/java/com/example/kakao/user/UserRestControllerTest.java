@@ -57,7 +57,7 @@ public class UserRestControllerTest {
     public void join_test() throws Exception {
         // given
         UserRequest.JoinDTO requestDTO = new UserRequest.JoinDTO();
-        requestDTO.setEmail("ssarmango@nate.com");
+        requestDTO.setEmail("ssarmangonate.com");
         requestDTO.setPassword("meta1234!");
         requestDTO.setUsername("ssarmango");
         String requestBody = om.writeValueAsString(requestDTO);
@@ -118,7 +118,7 @@ public class UserRestControllerTest {
     public void checkEmail_test() throws Exception {
         //given
         UserRequest.EmailCheckDTO emailCheckDTO = new UserRequest.EmailCheckDTO();
-        emailCheckDTO.setEmail("dlwlsgur@naver.com");
+        emailCheckDTO.setEmail("dlwlsgurnaver.com");
         String requestBody = om.writeValueAsString(emailCheckDTO);
 
         // when
