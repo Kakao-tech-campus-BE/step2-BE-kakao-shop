@@ -38,6 +38,12 @@ public class CartService {
                         .build();
                 cartJPARepository.save(cart);
             }
+        }catch (Exception400 e){
+            ErrorLog errorLog = ErrorLog.builder()
+                    .message(e.getMessage())
+                    .build();
+            errorLogJPARepository.save(errorLog);
+            throw e;
         }catch (Exception e){
             ErrorLog errorLog = ErrorLog.builder()
                     .message(e.getMessage())
@@ -78,9 +84,13 @@ public class CartService {
 
                 carts.add(findCart);
             }
-
             return new CartResponse.UpdateDTO(carts);
-
+        }catch (Exception400 e){
+            ErrorLog errorLog = ErrorLog.builder()
+                    .message(e.getMessage())
+                    .build();
+            errorLogJPARepository.save(errorLog);
+            throw e;
         }catch (Exception e){
             ErrorLog errorLog = ErrorLog.builder()
                     .message(e.getMessage())
@@ -89,4 +99,17 @@ public class CartService {
             throw new Exception500("unknown server error");
         }
     }
+
+//    @Transactional
+//    public void clear(){
+//        try{
+//            cartJPARepository.deleteAll();
+//        }catch (Exception e){
+//            ErrorLog errorLog = ErrorLog.builder()
+//                    .message(e.getMessage())
+//                    .build();
+//            errorLogJPARepository.save(errorLog);
+//            throw new Exception500("unknown server error");
+//        }
+//    }
 }

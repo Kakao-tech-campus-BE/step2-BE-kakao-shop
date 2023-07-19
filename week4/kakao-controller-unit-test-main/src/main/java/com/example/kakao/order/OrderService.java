@@ -10,6 +10,7 @@ import com.example.kakao.log.ErrorLogJPARepository;
 import com.example.kakao.order.item.Item;
 import com.example.kakao.order.item.ItemJPARepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,11 +30,17 @@ public class OrderService {
     @Transactional
     public OrderResponse.FindByIdDTO save(@AuthenticationPrincipal CustomUserDetails userDetails){
         try{
+            List<Cart> cartList = cartJPARepository.findByUserId(userDetails.getUser().getId());
+
+            if(cartList.isEmpty()){
+                throw new Exception400("장바구니에 상품이 없습니다.");
+            }
+
             Order order = Order.builder()
                     .user(userDetails.getUser())
                     .build();
             orderJPARepository.save(order);
-            List<Cart> cartList = cartJPARepository.findByUserId(userDetails.getUser().getId());
+
             for (Cart cart : cartList) {
                 Item item = Item.builder()
                         .option(cart.getOption())
@@ -45,10 +52,19 @@ public class OrderService {
             }
 
             Order findOrder = orderJPARepository.findById(order.getId()).orElseThrow(
-                    () -> new Exception400("옵션을 찾을 수 없습니다. : " + order.getId())
+                    () -> new Exception400("주문을 찾을 수 없습니다. : " + order.getId())
             );
             List<Item> itemList = itemJPARepository.mFindByOrderId(findOrder.getId());
+
+            cartJPARepository.deleteAll();
+
             return new OrderResponse.FindByIdDTO(order, itemList);
+        }catch (Exception400 e){
+            ErrorLog errorLog = ErrorLog.builder()
+                    .message(e.getMessage())
+                    .build();
+            errorLogJPARepository.save(errorLog);
+            throw e;
         }catch (Exception e){
             ErrorLog errorLog = ErrorLog.builder()
                     .message(e.getMessage())
@@ -61,10 +77,16 @@ public class OrderService {
     public OrderResponse.FindByIdDTO findById(int id){
         try{
             Order order = orderJPARepository.findById(id).orElseThrow(
-                    () -> new Exception400("옵션을 찾을 수 없습니다. : " + id)
+                    () -> new Exception400("주문을 찾을 수 없습니다. : " + id)
             );
             List<Item> itemList = itemJPARepository.mFindByOrderId(order.getId());
             return new OrderResponse.FindByIdDTO(order, itemList);
+        }catch (Exception400 e){
+            ErrorLog errorLog = ErrorLog.builder()
+                    .message(e.getMessage())
+                    .build();
+            errorLogJPARepository.save(errorLog);
+            throw e;
         }catch (Exception e){
             ErrorLog errorLog = ErrorLog.builder()
                     .message(e.getMessage())

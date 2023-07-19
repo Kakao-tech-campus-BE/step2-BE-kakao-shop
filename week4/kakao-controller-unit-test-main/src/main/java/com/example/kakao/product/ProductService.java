@@ -41,6 +41,12 @@ public class ProductService {
             );
             List<Option> optionList = optionJPARepository.mFindByProductId(product.getId());
             return new ProductResponse.FindByIdDTO(product, optionList);
+        }catch (Exception400 e){
+            ErrorLog errorLog = ErrorLog.builder()
+                    .message(e.getMessage())
+                    .build();
+            errorLogJPARepository.save(errorLog);
+            throw e;
         }catch (Exception e){
             ErrorLog errorLog = ErrorLog.builder()
                     .message(e.getMessage())

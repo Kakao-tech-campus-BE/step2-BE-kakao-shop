@@ -1,8 +1,10 @@
 package com.example.kakao.order;
 
 import com.example.kakao._core.errors.GlobalExceptionHandler;
+import com.example.kakao._core.errors.exception.Exception400;
 import com.example.kakao._core.security.CustomUserDetails;
 import com.example.kakao._core.utils.ApiUtils;
+import com.example.kakao.cart.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,7 +25,8 @@ public class OrderRestController {
         try{
             OrderResponse.FindByIdDTO responseDTO = orderService.save(userDetails);
             return ResponseEntity.ok(ApiUtils.success(responseDTO));
-        }catch(RuntimeException e){
+        }
+        catch(RuntimeException e){
             return globalExceptionHandler.handle(e, request);
         }
     }
@@ -34,6 +37,11 @@ public class OrderRestController {
         try{
             OrderResponse.FindByIdDTO responseDTO = orderService.findById(id);
             return ResponseEntity.ok(ApiUtils.success(responseDTO));
+        }catch(Exception400 e){
+            return new ResponseEntity<>(
+                    e.body(),
+                    e.status()
+            );
         }catch(RuntimeException e){
             return globalExceptionHandler.handle(e, request);
         }
