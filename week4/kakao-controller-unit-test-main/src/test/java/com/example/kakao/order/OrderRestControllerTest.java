@@ -1,18 +1,25 @@
 package com.example.kakao.order;
 
+import com.example.kakao._core.security.JWTProvider;
 import com.example.kakao._core.security.SecurityConfig;
 import com.example.kakao._core.utils.FakeStore;
+import com.example.kakao.user.User;
+import com.example.kakao.user.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import static org.mockito.ArgumentMatchers.any;
 
 @Import({
         SecurityConfig.class,
@@ -27,17 +34,23 @@ public class OrderRestControllerTest {
     @Autowired
     private ObjectMapper om;
 
-    // get orders/{id}
+    @MockBean
+    private UserService userService;
+
     @DisplayName("결재 테스트")
-    @WithMockUser(username = "ssar@nate.com", roles = "USER")
     @Test
     public void order_save_test() throws Exception {
         // given
+        User user = User.builder().id(1).username("ssar").email("ssar@nate.com").roles("ROLE_USER").build();
 
-        // when
+        // stub
+        String jwt = JWTProvider.create(user);
+        Mockito.when(userService.login(any())).thenReturn(jwt);
+
         ResultActions result = mvc.perform(
                 MockMvcRequestBuilders
                         .post("/orders/save")
+                        .header("Authorization", "Bearer " + jwt)
         );
         String responseBody = result.andReturn().getResponse().getContentAsString();
         System.out.println("결재 테스트 : "+responseBody);

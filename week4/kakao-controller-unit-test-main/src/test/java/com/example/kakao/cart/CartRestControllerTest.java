@@ -1,11 +1,16 @@
 package com.example.kakao.cart;
 
+import com.example.kakao._core.security.JWTProvider;
 import com.example.kakao._core.security.SecurityConfig;
 import com.example.kakao._core.utils.FakeStore;
+import com.example.kakao.user.User;
+import com.example.kakao.user.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -16,6 +21,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.mockito.ArgumentMatchers.any;
 
 @Import({
         FakeStore.class,
@@ -31,18 +38,25 @@ public class CartRestControllerTest {
     @Autowired
     private ObjectMapper om;
 
+    @MockBean
+    private UserService userService;
+
     @Order(1)
     @DisplayName("카트 조회 테스트")
-    @WithMockUser(username = "ssar@nate.com", roles = "USER")
     @Test
     public void cart_find_test() throws Exception {
         // given
+        User user = User.builder().id(1).username("ssar").email("ssar@nate.com").roles("ROLE_USER").build();
+
+        // stub
+        String jwt = JWTProvider.create(user);
+        Mockito.when(userService.login(any())).thenReturn(jwt);
 
         // when
-        // 일단 user도 가짜임 나중에 stub 필요할 듯
         ResultActions result = mvc.perform(
                 MockMvcRequestBuilders
                         .get("/carts")
+                        .header("Authorization", "Bearer " + jwt)
         );
         String responseBody = result.andReturn().getResponse().getContentAsString();
         System.out.println("카트 조회 테스트 : "+responseBody);
