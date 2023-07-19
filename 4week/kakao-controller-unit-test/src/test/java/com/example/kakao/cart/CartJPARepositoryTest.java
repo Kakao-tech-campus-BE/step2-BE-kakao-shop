@@ -84,6 +84,36 @@ public class CartJPARepositoryTest extends DummyEntity {
         Assertions.assertThat(savedCart.getOption().getId()).isEqualTo(optionid);
     }
 
+
+    @Test
+    @DisplayName("장바구니 담기 테스트 - 이미 동일 물건이 장바구니에 있을 경우 갯수 추가")
+    public void cartSaveDuplicated_test() {
+        // given
+        User testuser = newUser("testuser");
+        userJPARepository.save(testuser);
+        Integer userid = testuser.getId();
+        Integer optionid=1;
+        Option testoption =optionJPARepository.findById(optionid).orElseThrow(
+                () -> new RuntimeException("해당 옵션을 찾을 수 없습니다.")
+        );
+        Integer optionPrice = testoption.getPrice();
+        int quantity=3;
+        Cart cart = newCart(testuser,testoption,quantity);
+        cartJPARepository.save(cart);
+        long previousCount = cartJPARepository.count();
+        // when
+        System.out.println("======================start===================");
+        Cart savedCart = cartJPARepository.findByOption_IdAndUserId(1,userid).orElseThrow(
+                ()-> new RuntimeException("해당 cart를 찾을 수 없습니다."));
+        savedCart.update(quantity+4,savedCart.getPrice()/quantity*(quantity+4));
+        em.flush();
+        System.out.println("======================end======================");
+        // then
+        Assertions.assertThat(cartJPARepository.count()).isEqualTo(previousCount);
+        Assertions.assertThat(savedCart.getOption().getId()).isEqualTo(optionid);
+        Assertions.assertThat(savedCart.getQuantity()).isEqualTo(quantity+4);
+        Assertions.assertThat(savedCart.getPrice()).isEqualTo(70000);
+    }
     @Test
     @DisplayName("장바구니 조회 테스트-lazy시 에러")
     public void cartOptionUser_findByUserId_lazy_error_test() {
@@ -163,5 +193,24 @@ public class CartJPARepositoryTest extends DummyEntity {
         Assertions.assertThat(updatedCart.getPrice()).isEqualTo(900000);
         Assertions.assertThat(updatedCart.getOption().getId()).isEqualTo(1);
         Assertions.assertThat(updatedCart.getOption().getProduct().getId()).isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("주문하기(장바구니 수정) 테스트- 업데이트후 조회(처음 조회시 fetch join)")
+    public void cartClearByUserID_test(){
+        // given
+        Integer userid = 1;
+        List<Cart> carts = cartJPARepository.findAllByUserId(userid);
+        int beforeCount = carts.size();
+        System.out.println(beforeCount);
+        // when
+        System.out.println("====================start===================");
+        cartJPARepository.deleteAllByUserId(userid);
+        System.out.println("====================end===================");
+        // then
+        List<Cart> updatedCarts = cartJPARepository.findAllByUserId(userid);
+        Assertions.assertThat(beforeCount).isEqualTo(48);
+        Assertions.assertThat(updatedCarts.size()).isLessThan(beforeCount);
+        Assertions.assertThat(updatedCarts.size()).isEqualTo(0);
     }
 }
