@@ -3,6 +3,8 @@ package com.example.kakao.product;
 import com.example.kakao.product.option.Option;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Service
@@ -10,6 +12,7 @@ import java.util.List;
 public class ProductOptionService {
     private final ProductService productService;
 
+    @Transactional
     public ProductResponse.FindByIdDTO findById(int productId) {
         // 1. 상품 찾기
         Product product = productService.findById(productId);

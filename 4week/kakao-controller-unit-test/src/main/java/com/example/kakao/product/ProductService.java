@@ -15,10 +15,12 @@ import java.util.stream.Collectors;
 public class ProductService {
     private final ProductJPARepository productJPARepository;
     private final OptionJPARepository optionJPARepository;
+    @Transactional
     public List<Product> findAllPaging(int page) {
         return productJPARepository.findAll().stream().skip(page*9).limit(9).collect(Collectors.toList());
     }
 
+    @Transactional
     public List<ProductResponse.FindAllDTO> toFindAllDTO(List<Product> productList) {
         return productList.stream().map(ProductResponse.FindAllDTO::new).collect(Collectors.toList());
     }
