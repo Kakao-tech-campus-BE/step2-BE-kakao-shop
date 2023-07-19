@@ -50,7 +50,7 @@ public class GlobalExceptionHandler {
         }
     }
 
-    private static ResponseEntity<?> getApiResultResponseEntity(HttpAbstractException ex) {
+    public static ResponseEntity<?> getApiResultResponseEntity(HttpAbstractException ex) {
         return new ResponseEntity<>(
                 ex.body(),
                 ex.status()

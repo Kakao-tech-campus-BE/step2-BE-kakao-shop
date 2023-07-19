@@ -3,6 +3,7 @@ package com.example.kakao.user;
 import com.example.kakao._core.errors.GlobalExceptionHandler;
 import com.example.kakao._core.errors.exception.Exception400;
 import com.example.kakao._core.errors.exception.Exception403;
+import com.example.kakao._core.errors.exception.Exception500;
 import com.example.kakao._core.security.CustomUserDetails;
 import com.example.kakao._core.security.JWTProvider;
 import com.example.kakao._core.utils.ApiUtils;
@@ -18,6 +19,8 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
+import static com.example.kakao._core.errors.GlobalExceptionHandler.getApiResultResponseEntity;
+
 
 @RequiredArgsConstructor
 @RestController
@@ -29,14 +32,16 @@ public class UserRestController {
     @PostMapping("/join")
     public ResponseEntity<?> join(@RequestBody @Valid UserRequest.JoinDTO requestDTO, Errors errors,
                                   HttpServletRequest request) {
-
         if (errors.hasErrors()) {
             List<FieldError> fieldErrors = errors.getFieldErrors();
-            Exception400 ex = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
-            return new ResponseEntity<>(
-                    ex.body(),
-                    ex.status()
-            );
+            if (!fieldErrors.isEmpty()) {
+                FieldError fieldError = fieldErrors.get(0);
+                Exception400 e = new Exception400(fieldError.getDefaultMessage() + ":" + fieldError.getField());
+                return getApiResultResponseEntity(e);
+            } else{
+                Exception500 e = new Exception500("cannot find fieldErrors");
+                return getApiResultResponseEntity(e);
+            }
         }
         try {
             userService.join(requestDTO);
@@ -48,14 +53,16 @@ public class UserRestController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid UserRequest.LoginDTO requestDTO, Errors errors, HttpServletRequest request) {
-
         if (errors.hasErrors()) {
             List<FieldError> fieldErrors = errors.getFieldErrors();
-            Exception400 ex = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
-            return new ResponseEntity<>(
-                    ex.body(),
-                    ex.status()
-            );
+            if (!fieldErrors.isEmpty()) {
+                FieldError fieldError = fieldErrors.get(0);
+                Exception400 e = new Exception400(fieldError.getDefaultMessage() + ":" + fieldError.getField());
+                return getApiResultResponseEntity(e);
+            } else{
+                Exception500 e = new Exception500("cannot find fieldErrors");
+                return getApiResultResponseEntity(e);
+            }
         }
 
         try {
@@ -72,24 +79,23 @@ public class UserRestController {
             @RequestBody @Valid UserRequest.UpdatePasswordDTO requestDTO, Errors errors,
             @AuthenticationPrincipal CustomUserDetails userDetails,
             HttpServletRequest request) {
-
         // 유효성 검사
         if (errors.hasErrors()) {
             List<FieldError> fieldErrors = errors.getFieldErrors();
-            Exception400 e = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
-            return new ResponseEntity<>(
-                    e.body(),
-                    e.status()
-            );
+            if (!fieldErrors.isEmpty()) {
+                FieldError fieldError = fieldErrors.get(0);
+                Exception400 e = new Exception400(fieldError.getDefaultMessage() + ":" + fieldError.getField());
+                return getApiResultResponseEntity(e);
+            } else{
+                Exception500 e = new Exception500("cannot find fieldErrors");
+                return getApiResultResponseEntity(e);
+            }
         }
 
         // 권한 체크 (디비를 조회하지 않아도 체크할 수 있는 것)
         if (id != userDetails.getUser().getId()) {
             Exception403 e = new Exception403("인증된 user는 해당 id로 접근할 권한이 없습니다" + id);
-            return new ResponseEntity<>(
-                    e.body(),
-                    e.status()
-            );
+            getApiResultResponseEntity(e);
         }
 
         // 서비스 실행 : 내부에서 터지는 모든 익셉션은 예외 핸들러로 던지기
@@ -111,10 +117,7 @@ public class UserRestController {
         // 권한 체크 (디비를 조회하지 않아도 체크할 수 있는 것)
         if (id != userDetails.getUser().getId()) {
             Exception403 e = new Exception403("인증된 user는 해당 id로 접근할 권한이 없습니다:" + id);
-            return new ResponseEntity<>(
-                    e.body(),
-                    e.status()
-            );
+            getApiResultResponseEntity(e);
         }
 
         // 서비스 실행 : 내부에서 터지는 모든 익셉션은 예외 핸들러로 던지기
