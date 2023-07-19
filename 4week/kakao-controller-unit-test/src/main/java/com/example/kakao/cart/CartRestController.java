@@ -73,6 +73,7 @@ public ResponseEntity<?> update(@RequestBody @Valid List<CartRequest.UpdateDTO> 
 
     @PostMapping("/carts/clear")
     public ResponseEntity<?> clear(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        cartService.clearCart(userDetails);
         return ResponseEntity.ok(ApiUtils.success(null));
     }
 }

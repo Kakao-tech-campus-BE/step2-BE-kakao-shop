@@ -4,11 +4,13 @@ import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao._core.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class CartService {
     private final CartJPARepository cartJPARepository;
 
@@ -19,7 +21,7 @@ public class CartService {
         }
         return new CartResponse.FindAllDTO(cartList);
     }
-
+    @Transactional
     public CartResponse.UpdateDTO updateCart(List<CartRequest.UpdateDTO> requestDTOs, CustomUserDetails userDetails) {
         int userId = userDetails.getUser().getId();
         List<Cart> cartList = cartJPARepository.findByUserId(userId);
@@ -34,5 +36,10 @@ public class CartService {
             }
         }
         return new CartResponse.UpdateDTO(cartList);
+    }
+    @Transactional
+    public void clearCart(CustomUserDetails userDetails) {
+        int userId = userDetails.getUser().getId();
+        cartJPARepository.deleteByUserId(userId);
     }
 }
