@@ -1,19 +1,21 @@
 package com.example.kakao.cart;
 
+import com.example.kakao._core.errors.GlobalExceptionHandler;
 import com.example.kakao._core.security.JWTProvider;
 import com.example.kakao._core.security.SecurityConfig;
 import com.example.kakao._core.utils.FakeStore;
+import com.example.kakao.log.ErrorLogJPARepository;
 import com.example.kakao.user.User;
 import com.example.kakao.user.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -26,11 +28,15 @@ import static org.mockito.ArgumentMatchers.any;
 
 @Import({
         FakeStore.class,
-        SecurityConfig.class
+        SecurityConfig.class,
+        GlobalExceptionHandler.class
 })
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @WebMvcTest(controllers = {CartRestController.class})
 public class CartRestControllerTest {
+
+    @MockBean
+    private ErrorLogJPARepository errorLogJPARepository;
 
     @Autowired
     private MockMvc mvc;
@@ -41,22 +47,37 @@ public class CartRestControllerTest {
     @MockBean
     private UserService userService;
 
+    @MockBean
+    private CartService cartService;
+
+    @Autowired
+    private FakeStore fakeStore;
+
+    String jwt = "";
+
+    @BeforeEach
+    public void setup(){
+        User user = User.builder().id(1).username("ssar").email("ssar@nate.com").roles("ROLE_USER").build();
+        jwt = JWTProvider.create(user);
+    }
+
     @Order(1)
     @DisplayName("카트 조회 테스트")
     @Test
     public void cart_find_test() throws Exception {
         // given
-        User user = User.builder().id(1).username("ssar").email("ssar@nate.com").roles("ROLE_USER").build();
+        CartResponse.FindAllDTO expectedCart = new CartResponse.FindAllDTO(fakeStore.getCartList());
 
         // stub
-        String jwt = JWTProvider.create(user);
         Mockito.when(userService.login(any())).thenReturn(jwt);
-
+        Mockito.when(cartService.findAll()).thenReturn(expectedCart);
+        System.out.println(expectedCart.getTotalPrice());
         // when
         ResultActions result = mvc.perform(
                 MockMvcRequestBuilders
                         .get("/carts")
                         .header("Authorization", "Bearer " + jwt)
+                        .accept(MediaType.APPLICATION_JSON)
         );
         String responseBody = result.andReturn().getResponse().getContentAsString();
         System.out.println("카트 조회 테스트 : "+responseBody);
@@ -72,7 +93,6 @@ public class CartRestControllerTest {
 
     @Order(2)
     @DisplayName("카트 추가 테스트")
-    @WithMockUser(username = "ssar@nate.com", roles = "USER")
     @Test
     public void cart_add_test() throws Exception {
         // given
@@ -94,6 +114,7 @@ public class CartRestControllerTest {
         ResultActions result = mvc.perform(
                 MockMvcRequestBuilders
                         .post("/carts/add")
+                        .header("Authorization", "Bearer " + jwt)
                         .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON)
         );
@@ -106,15 +127,18 @@ public class CartRestControllerTest {
 
     @Order(3)
     @DisplayName("카트 삭제 테스트")
-    @WithMockUser(username = "ssar@nate.com", roles = "USER")
     @Test
     public void cart_delete_test() throws Exception {
         // given
+
+        // stub
+        Mockito.when(userService.login(any())).thenReturn(jwt);
 
         // when
         ResultActions result = mvc.perform(
                 MockMvcRequestBuilders
                         .post("/carts/clear")
+                        .header("Authorization", "Bearer " + jwt)
         );
         String responseBody = result.andReturn().getResponse().getContentAsString();
         System.out.println("카트 삭제 테스트 : "+responseBody);
@@ -125,7 +149,6 @@ public class CartRestControllerTest {
 
     @Order(4)
     @DisplayName("카트 업데이트 테스트")
-    @WithMockUser(username = "ssar@nate.com", roles = "USER")
     @Test
     public void cart_update_test() throws Exception {
         // given
@@ -141,10 +164,21 @@ public class CartRestControllerTest {
         String requestBody = om.writeValueAsString(requestDTOs);
         System.out.println("카트 업데이트 테스트 : "+requestBody);
 
+        // stub
+        List<Cart> cartList = new ArrayList<>(fakeStore.getCartList());
+        cartList.get(0).update(10, 1000000);
+        cartList.get(1).update(10, 1000000);
+
+        CartResponse.UpdateDTO responseDTOs = new CartResponse.UpdateDTO(cartList);
+
+        Mockito.when(cartService.update(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(responseDTOs);
+        Mockito.when(userService.login(any())).thenReturn(jwt);
+
         // when
         ResultActions result = mvc.perform(
                 MockMvcRequestBuilders
                         .post("/carts/update")
+                        .header("Authorization", "Bearer " + jwt)
                         .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON)
         );
