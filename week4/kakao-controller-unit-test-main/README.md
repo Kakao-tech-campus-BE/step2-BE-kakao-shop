@@ -1,13 +1,25 @@
 # JPA Repository Test
 
+## 작성하면서 어려웠던 점
+- 예외 케이스에 대한 테스트 코드
+    - 로그를 찍어가면서 테스트를 진행했는데 Controller에서 Service로 넘어가지 않아서 Service에서 Repository를 통해 동작하는 부분은 구현하지 않았습니다.(어차피 Mock을 사용하기 때문에 테스트에서의 Service는 가짜기 때문)
+- 400, 404가 헷갈립니다. 클라이언트가 잘못요청했는데 존재하지 않을 경우 404, 나머지는 400으로 생각했는데 이게 맞는지 잘 모르겠습니다.
+- 카트 테스트에서 순서에 따라 테스트 결과가 달라지는 문제가 생겨서 Order Annotation을 이용해서 구현했는데 테스트 간 의존성 문제가 생길 수 있다고 생각합니다.
+- 카트 추가, 업데이트 서비스 로직: 현재 상태에서 JPARepository를 이용해서 만들기는 어려울 것 같아 생략했습니다.
+
+## 중점적으로 봐주셨으면 하는 부분
+- 카트 Controller에서 예외 처리 부분
+- 카트 Test에서 stub 구현 부분 (이렇게 모든 응답에 대해 stub를 거는게 맞나요?)
+- 참고: 추후 사용자를 확인할 일이 생길 것 같아서 사용자 인증이 필요한 부분엔 @WithMockUser가 아닌 새로운 객체를 stub로 구현하여 jwt를 넣어주었습니다.
+
 ## Todo-List
 
 ---
 - [x] Controller에 대한 TestCode 짜기
 - [x] RestController에서 에러 케이스 잡기
-- [ ] Service 구현하기
-- [ ] Repository와 Service 엮기
-- [ ] TestCode 잘 돌아가는지 확인하기
+- [x] Service 구현하기
+- [x] Repository와 Service 엮기
+- [x] TestCode 잘 돌아가는지 확인하기
 - [ ] 예외 케이스에 대한 TestCode 짜기
 
 ## 상태 코드 정리
