@@ -2,13 +2,11 @@ package com.example.kakao.product;
 
 import com.example.kakao._core.errors.exception.Exception400;
 import com.example.kakao._core.errors.exception.Exception500;
-import com.example.kakao._core.utils.ApiUtils;
 import com.example.kakao.log.ErrorLog;
 import com.example.kakao.log.ErrorLogJPARepository;
 import com.example.kakao.product.option.Option;
 import com.example.kakao.product.option.OptionJPARepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
