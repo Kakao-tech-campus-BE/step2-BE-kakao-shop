@@ -32,17 +32,9 @@ public class UserRestController {
     @PostMapping("/join")
     public ResponseEntity<?> join(@RequestBody @Valid UserRequest.JoinDTO requestDTO, Errors errors,
                                   HttpServletRequest request) {
-        if (errors.hasErrors()) {
-            List<FieldError> fieldErrors = errors.getFieldErrors();
-            if (!fieldErrors.isEmpty()) {
-                FieldError fieldError = fieldErrors.get(0);
-                Exception400 e = new Exception400(fieldError.getDefaultMessage() + ":" + fieldError.getField());
-                return getApiResultResponseEntity(e);
-            } else{
-                Exception500 e = new Exception500("cannot find fieldErrors");
-                return getApiResultResponseEntity(e);
-            }
-        }
+        ResponseEntity<?> ex = checkValidation(errors);
+        if (ex != null) return ex;
+
         try {
             userService.join(requestDTO);
             return ResponseEntity.ok().body(ApiUtils.success(null));
@@ -53,17 +45,8 @@ public class UserRestController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid UserRequest.LoginDTO requestDTO, Errors errors, HttpServletRequest request) {
-        if (errors.hasErrors()) {
-            List<FieldError> fieldErrors = errors.getFieldErrors();
-            if (!fieldErrors.isEmpty()) {
-                FieldError fieldError = fieldErrors.get(0);
-                Exception400 e = new Exception400(fieldError.getDefaultMessage() + ":" + fieldError.getField());
-                return getApiResultResponseEntity(e);
-            } else{
-                Exception500 e = new Exception500("cannot find fieldErrors");
-                return getApiResultResponseEntity(e);
-            }
-        }
+        ResponseEntity<?> ex = checkValidation(errors);
+        if (ex != null) return ex;
 
         try {
             String jwt = userService.login(requestDTO);
@@ -80,17 +63,8 @@ public class UserRestController {
             @AuthenticationPrincipal CustomUserDetails userDetails,
             HttpServletRequest request) {
         // 유효성 검사
-        if (errors.hasErrors()) {
-            List<FieldError> fieldErrors = errors.getFieldErrors();
-            if (!fieldErrors.isEmpty()) {
-                FieldError fieldError = fieldErrors.get(0);
-                Exception400 e = new Exception400(fieldError.getDefaultMessage() + ":" + fieldError.getField());
-                return getApiResultResponseEntity(e);
-            } else{
-                Exception500 e = new Exception500("cannot find fieldErrors");
-                return getApiResultResponseEntity(e);
-            }
-        }
+        ResponseEntity<?> ex = checkValidation(errors);
+        if (ex != null) return ex;
 
         // 권한 체크 (디비를 조회하지 않아도 체크할 수 있는 것)
         if (id != userDetails.getUser().getId()) {
@@ -105,6 +79,21 @@ public class UserRestController {
         } catch (RuntimeException e) {
             return globalExceptionHandler.handle(e, request);
         }
+    }
+
+    private ResponseEntity<?> checkValidation(Errors errors) {
+        if (errors.hasErrors()) {
+            List<FieldError> fieldErrors = errors.getFieldErrors();
+            if (!fieldErrors.isEmpty()) {
+                FieldError fieldError = fieldErrors.get(0);
+                Exception400 e = new Exception400(fieldError.getDefaultMessage() + ":" + fieldError.getField());
+                return getApiResultResponseEntity(e);
+            } else{
+                Exception500 e = new Exception500("cannot find fieldErrors");
+                return getApiResultResponseEntity(e);
+            }
+        }
+        return null;
     }
 
     // 클라이언트로 부터 전달된 데이터는 신뢰할 수 없다.
