@@ -6,20 +6,17 @@ import com.example.kakao.product.option.OptionJPARepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.api.Assertions;
-import org.hibernate.Hibernate;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 import javax.persistence.EntityManager;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Import(ObjectMapper.class)
 @DataJpaTest
@@ -43,6 +40,16 @@ public class ProductJPARepositoryTest extends DummyEntity {
         List<Product> productListPS = productJPARepository.saveAll(productDummyList());
         optionJPARepository.saveAll(optionDummyList(productListPS));
         em.clear();
+    }
+
+    @AfterEach
+    public void reset() {
+        productJPARepository.deleteAll();
+        optionJPARepository.deleteAll();
+        em.createNativeQuery("ALTER TABLE product_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        em.createNativeQuery("ALTER TABLE option_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        em.clear();
+        em.flush();
     }
 
     @Test
@@ -147,5 +154,4 @@ public class ProductJPARepositoryTest extends DummyEntity {
 
         // then
     }
-
 }
