@@ -22,7 +22,10 @@ public interface CartJPARepository extends JpaRepository<Cart, Integer> {
     Optional<Cart> mfindById(@Param("cartId") int cartId);
 
 
-    // 한번에 두 컬럼을 업데이트는 못하나..?
+    Optional<Cart> findByOption_IdAndUserId(int optionId, int userId);
+
+    void deleteAllByUserId(int userId);
+
     @Modifying
     @Query("update Cart c set c.quantity = :quantity where c.id = :cartId")
     void updateQuantityById(@Param("cartId") int cartId,@Param("quantity") int quantity);
