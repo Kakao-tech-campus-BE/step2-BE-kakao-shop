@@ -10,7 +10,7 @@ import java.util.List;
 public class ProductOptionService {
     private final ProductService productService;
 
-    public ProductResponse.FindByIdDTO findbyId(int productId) {
+    public ProductResponse.FindByIdDTO findById(int productId) {
         // 1. 상품 찾기
         Product product = productService.findById(productId);
         // 2. 상품에 옵션 찾기

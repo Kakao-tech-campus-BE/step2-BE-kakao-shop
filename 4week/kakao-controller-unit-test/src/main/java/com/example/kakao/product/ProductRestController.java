@@ -35,7 +35,7 @@ public class ProductRestController {
     @GetMapping("/products/{id}")
     public ResponseEntity<?> findById(@PathVariable int id, HttpServletRequest request) {
         try {
-            ProductResponse.FindByIdDTO responseDTO = productOptionService.findbyId(id);
+            ProductResponse.FindByIdDTO responseDTO = productOptionService.findById(id);
             return ResponseEntity.ok(ApiUtils.success(responseDTO));
         } catch (RuntimeException e) {
             return globalExceptionHandler.handle(e,request);

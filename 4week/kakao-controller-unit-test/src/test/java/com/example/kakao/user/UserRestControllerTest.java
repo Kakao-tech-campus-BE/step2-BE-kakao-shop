@@ -1,6 +1,7 @@
 package com.example.kakao.user;
 
 import com.example.kakao._core.errors.GlobalExceptionHandler;
+import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao._core.security.JWTProvider;
 import com.example.kakao._core.security.SecurityConfig;
 import com.example.kakao.log.ErrorLogJPARepository;
@@ -61,6 +62,7 @@ public class UserRestControllerTest {
         requestDTO.setUsername("ssarmango");
         String requestBody = om.writeValueAsString(requestDTO);
 
+
         // when
         ResultActions result = mvc.perform(
                 MockMvcRequestBuilders
@@ -82,10 +84,10 @@ public class UserRestControllerTest {
         UserRequest.LoginDTO loginDTO = new UserRequest.LoginDTO();
         loginDTO.setEmail("ssar@nate.com");
         loginDTO.setPassword("meta1234!");
-        User user = User.builder().id(1).roles("ROLE_USER").build();
         String requestBody = om.writeValueAsString(loginDTO);
 
         // stub
+        User user = User.builder().id(1).roles("ROLE_USER").build();
         String jwt = JWTProvider.create(user);
         Mockito.when(userService.login(any())).thenReturn(jwt);
 
