@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,7 +30,7 @@ import java.util.stream.Collectors;
         GlobalExceptionHandler.class,
         FakeStore.class
 })
-@WebMvcTest(controllers = {ProductRestControllerTest.class})
+@WebMvcTest(controllers = {ProductRestController.class})
 public class ProductRestControllerTest extends DummyEntity {
 
     @MockBean
@@ -49,22 +50,26 @@ public class ProductRestControllerTest extends DummyEntity {
 
     @Test
     public void findAll_test() throws Exception {
-
         //given
 
         int limit = 9;
         int page = 0;
 
         //when
-        Mockito.doReturn(productDummyList().stream().limit(9).map(ProductResponse.FindAllDTO::new).collect(Collectors.toList())).when(productService).findAll(page,limit);
+
+        List<ProductResponse.FindAllDTO> dtos = productDummyList().stream().limit(9).map(ProductResponse.FindAllDTO::new).collect(Collectors.toList());
+
+
+        Mockito.when(productService.findAll(page,limit)).thenReturn(dtos);
 
         ResultActions result = mvc.perform(
                 MockMvcRequestBuilders
                         .get("/products")
                         .contentType(MediaType.APPLICATION_JSON)
         );
+
         String responseBody = result.andReturn().getResponse().getContentAsString();
-        System.out.println("테스트 : "+responseBody);
+        System.out.println("테스트 : "+ responseBody);
 
         //then
         result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
