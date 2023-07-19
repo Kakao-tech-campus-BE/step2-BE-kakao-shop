@@ -1,11 +1,13 @@
 package com.example.kakao.user;
 
 import com.example.kakao._core.errors.GlobalExceptionHandler;
+import com.example.kakao._core.security.CustomUserDetails;
 import com.example.kakao._core.security.JWTProvider;
 import com.example.kakao._core.security.SecurityConfig;
 import com.example.kakao.log.ErrorLogJPARepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,6 +18,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.ResultMatcher;
@@ -50,8 +54,6 @@ public class UserRestControllerTest {
     @Autowired
     private ObjectMapper om;
 
-    @Test
-    public void t1(){}
 
     @Test
     public void join_test() throws Exception {
@@ -106,11 +108,32 @@ public class UserRestControllerTest {
         result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
         Assertions.assertTrue(jwt.startsWith(JWTProvider.TOKEN_PREFIX));
     }
-
     @Test
-    public void length_test(){
-        String value = "Bearer eyJ0eX";
-        System.out.println(value.substring(0,6));
+    public void findById_test() throws Exception {
+        // given
+        User user = User.builder().id(1).roles("ROLE_USER").build();
+        UserResponse.FindById responseDTO = new UserResponse.FindById(user);
+        Mockito.when(userService.findById(1)).thenReturn(responseDTO);
+
+        // stub
+        String jwt = JWTProvider.create(user);
+        Mockito.when(userService.login(any())).thenReturn(jwt);
+
+        // when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .get("/users/{id}", 1)
+                        .header(JWTProvider.HEADER, jwt)
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+
+        // then
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
+        Assertions.assertTrue(jwt.startsWith(JWTProvider.TOKEN_PREFIX));
     }
+
 
 }
