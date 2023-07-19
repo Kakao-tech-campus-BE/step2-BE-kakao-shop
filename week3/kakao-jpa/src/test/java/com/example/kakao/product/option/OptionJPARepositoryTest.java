@@ -35,8 +35,7 @@ class OptionJPARepositoryTest {
 
     @BeforeAll
     void setUp() {
-        List<Product> products = dummyEntity.productDummyList();
-        productJPARepository.saveAll(products);
+        List<Product> products =  productJPARepository.saveAll(dummyEntity.productDummyList());
         optionJPARepository.saveAll(dummyEntity.optionDummyList(products));
         em.clear();
     }

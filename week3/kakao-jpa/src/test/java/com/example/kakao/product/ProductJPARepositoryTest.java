@@ -37,8 +37,8 @@ class ProductJPARepositoryTest {
 
     @BeforeAll
     void setUp() {
-        List<Product> productListPS = productJPARepository.saveAll(dummyEntity.productDummyList());
-        optionJPARepository.saveAll(dummyEntity.optionDummyList(productListPS));
+        List<Product> productDummyList = productJPARepository.saveAll(dummyEntity.productDummyList());
+        optionJPARepository.saveAll(dummyEntity.optionDummyList(productDummyList));
         em.clear();
     }
 
@@ -100,6 +100,7 @@ class ProductJPARepositoryTest {
             System.out.println("json 직렬화 직전========================");
             String responseBody = om.writeValueAsString(optionListPS);
             System.out.println("json 직렬화");
+            System.out.println(responseBody);
         });
     }
 
