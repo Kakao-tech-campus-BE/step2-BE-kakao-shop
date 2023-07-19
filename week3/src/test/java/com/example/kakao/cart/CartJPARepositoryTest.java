@@ -22,6 +22,7 @@ import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Import(ObjectMapper.class)
@@ -48,6 +49,7 @@ public class CartJPARepositoryTest extends DummyEntity {
     @BeforeEach
     public void setUp(){
         em.createNativeQuery("Alter TABLE option_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        em.createNativeQuery("Alter TABLE user_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
         em.createNativeQuery("Alter TABLE cart_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
         User user = userJPARepository.save(newUser("ssal"));
         List<Product> productListPS = productJPARepository.saveAll(productDummyList());
@@ -63,9 +65,10 @@ public class CartJPARepositoryTest extends DummyEntity {
     public void save(){
         //given
         int quantity = 5;
-        String username = "ssal";
-
-        User user = userJPARepository.findByUsername(username);
+        int id=1;
+        User user = userJPARepository.findById(id).orElseThrow(
+                () -> new RuntimeException(userJPARepository.findByUsername("ssal").get().getId()+"해당 유저를 찾을 수 없습니다.")
+        );
 
         List<Integer> optionIds = Arrays.asList(1, 2);
 
@@ -88,7 +91,7 @@ public class CartJPARepositoryTest extends DummyEntity {
         //then
         for (int i = 0; i < savedCarts.size(); i++) {
             Cart savedCart = savedCarts.get(i);
-            Assertions.assertThat(savedCart.getUser().getUsername()).isEqualTo(username);
+            Assertions.assertThat(savedCart.getUser().getUsername()).isEqualTo(user.getUsername());
             Assertions.assertThat(savedCart.getOption().getId()).isEqualTo(optionIds.get(i));
             Assertions.assertThat(savedCart.getQuantity()).isEqualTo(quantity);
         };
