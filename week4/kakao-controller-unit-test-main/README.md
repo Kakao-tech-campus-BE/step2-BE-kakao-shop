@@ -3,8 +3,8 @@
 ## Todo-List
 
 ---
-- [ ] Controller에 대한 TestCode 짜기
-- [ ] RestController에서 에러 케이스 잡기
+- [x] Controller에 대한 TestCode 짜기
+- [x] RestController에서 에러 케이스 잡기
 - [ ] Service 구현하기
 - [ ] Repository와 Service 엮기
 - [ ] TestCode 잘 돌아가는지 확인하기
@@ -35,18 +35,18 @@
 
 ### 전체 상품 조회
 ### 개별 상품 조회
-> 해당 상품이 존재하지 않는 경우(400)
+> 해당 상품이 존재하지 않는 경우(404)
 
 ### 장바구니, 주문 공통
 > 주인이 아닌 사람이 접근하는 경우(403 Forbidden)
 
 ### 장바구니 조회
 ### 장바구니 추가
-> - optionId가 잘못된 경우(존재하지 않음) - 400
+> - optionId가 잘못된 경우(존재하지 않음) - 404
 > - optionId가 중복된 경우 - 400
 > - quantity = 0인 경우- 400
 ### 장바구니 업데이트
-> - cartId가 잘못된 경우 (존재하지 않음) - 400
+> - cartId가 잘못된 경우 (존재하지 않음) - 404
 > - cartId가 중복된 경우 - 400
 > - quantity = 0인 경우 - 400
 ### 장바구니 삭제
