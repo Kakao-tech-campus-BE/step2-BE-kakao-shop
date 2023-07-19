@@ -1,12 +1,16 @@
 package com.example.kakao.cart;
 
-import com.example.kakao._core.security.JWTProvider;
+import com.example.kakao._core.errors.GlobalExceptionHandler;
 import com.example.kakao._core.security.SecurityConfig;
 import com.example.kakao._core.utils.FakeStore;
+import com.example.kakao.log.ErrorLogJPARepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -17,19 +21,33 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.mockito.ArgumentMatchers.any;
 
 @Import({
         FakeStore.class,
+        GlobalExceptionHandler.class,
         SecurityConfig.class
 })
 @WebMvcTest(controllers = {CartRestController.class})
 public class CartRestControllerTest {
+    @MockBean
+    private CartService cartService;
+    @MockBean
+    private ErrorLogJPARepository errorLogJPARepository;
 
     @Autowired
     private MockMvc mvc;
 
     @Autowired
     private ObjectMapper om;
+    private List<Cart> mockCartList;
+    @BeforeEach
+    public void setUp() {
+        FakeStore fakeStore = new FakeStore();
+        mockCartList = fakeStore.getCartList();
+    }
 
     @WithMockUser(username = "ssar@nate.com", roles = "USER")
     @Test
@@ -64,5 +82,33 @@ public class CartRestControllerTest {
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].quantity").value(10));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].price").value(100000));
+    }
+
+    @WithMockUser(username = "ssar@nate.com", roles = "USER")
+    @Test
+    public void findAll_test() throws Exception{
+        //given
+        int userId = 1;
+
+        //stub
+        List<Cart>mockCartFindByUserId = mockCartList.stream()
+                        .filter(x -> x.getUser().getId() == userId)
+                                .collect(Collectors.toList());
+
+        CartResponse.FindAllDTO findAllDTO = new CartResponse.FindAllDTO(mockCartFindByUserId);
+
+        Mockito.when(cartService.findAll(any())).thenReturn(findAllDTO);
+
+        //when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .get("/carts")
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+
+        //then
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
     }
 }
