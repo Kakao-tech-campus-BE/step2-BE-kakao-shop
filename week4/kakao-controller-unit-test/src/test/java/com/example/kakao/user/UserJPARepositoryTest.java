@@ -25,7 +25,7 @@ public class UserJPARepositoryTest extends DummyEntity {
     @BeforeEach
     public void setUp(){
         em.createNativeQuery("ALTER TABLE user_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
-        userJPARepository.save(newUser("ssar"));
+        userJPARepository.save(newUser(1, "ssar"));
     }
 
     // 1. 눈으로 findByEmail() 쿼리 확인
