@@ -1,20 +1,51 @@
 package com.example.kakao._core.errors;
 
 import com.example.kakao._core.errors.exception.*;
+import com.example.kakao._core.utils.ApiUtils;
 import com.example.kakao.log.ErrorLog;
 import com.example.kakao.log.ErrorLogJPARepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
+@ControllerAdvice
 @RequiredArgsConstructor
 @Component
 public class GlobalExceptionHandler {
 
     private final ErrorLogJPARepository errorLogJPARepository;
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<?> handleConstraintViolationException(ConstraintViolationException e, HttpServletRequest request) {
+        List<String> errors = new ArrayList<>();
+        for (ConstraintViolation<?> violation : e.getConstraintViolations()) {
+            errors.add(violation.getMessage());
+        }
+
+        ErrorLog errorLog = ErrorLog.builder()
+                .message(errors.toString())
+                .userAgent(request.getHeader("User-Agent"))
+                .userIp(request.getRemoteAddr())
+                .build();
+        errorLogJPARepository.save(errorLog);
+
+        return new ResponseEntity<>(
+                errors,
+                HttpStatus.BAD_REQUEST
+        );
+    }
 
     public ResponseEntity<?> handle(RuntimeException e, HttpServletRequest request){
         if(e instanceof Exception400){
