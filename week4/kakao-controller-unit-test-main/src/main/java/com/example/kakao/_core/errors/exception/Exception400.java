@@ -9,6 +9,6 @@ import org.springframework.http.HttpStatus;
 @Getter
 public class Exception400 extends HttpAbstractException {
     public Exception400(String message) {
-        super(message, HttpStatus.NOT_FOUND);
+        super(message, HttpStatus.BAD_REQUEST);
     }
 }
