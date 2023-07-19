@@ -1,15 +1,14 @@
 package com.example.kakao.user;
 
 import com.example.kakao._core.errors.GlobalExceptionHandler;
+import com.example.kakao._core.errors.exception.Exception400;
 import com.example.kakao._core.security.JWTProvider;
 import com.example.kakao._core.security.SecurityConfig;
 import com.example.kakao.log.ErrorLogJPARepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.CoreMatchers;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -51,6 +50,8 @@ public class UserRestControllerTest {
 
     @Test
     public void t1(){}
+
+
 
     @Test
     public void join_test() throws Exception {
@@ -104,6 +105,136 @@ public class UserRestControllerTest {
         // then
         result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
         Assertions.assertTrue(jwt.startsWith(JWTProvider.TOKEN_PREFIX));
+    }
+
+    @Nested
+    @DisplayName("실패 케이스")
+    public class FailCases {
+        @Nested
+        @DisplayName("[/join]회원 가입")
+        public class JoinTest {
+            @Test
+            @DisplayName("회원가입 시 올바르지 않은 이메일 양식")
+            public void join_email_form_fail_test() throws Exception {
+                UserRequest.JoinDTO requestDTO = new UserRequest.JoinDTO();
+                requestDTO.setEmail("metanate.com");
+                requestDTO.setPassword("meta1234!");
+                requestDTO.setUsername("meta");
+                String requestBody = om.writeValueAsString(requestDTO);
+
+                // when
+                ResultActions result = mvc.perform(
+                        MockMvcRequestBuilders
+                                .post("/join")
+                                .content(requestBody)
+                                .contentType(MediaType.APPLICATION_JSON)
+                );
+
+                String responseBody = result.andReturn().getResponse().getContentAsString();
+                System.out.println("테스트 : "+responseBody);
+
+                // then
+                result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("false"));
+                result.andExpect(MockMvcResultMatchers.jsonPath("$.response").isEmpty());
+                result.andExpect(MockMvcResultMatchers.jsonPath("$.error.message").value("이메일 형식으로 작성해주세요:email"));
+                result.andExpect(MockMvcResultMatchers.jsonPath("$.error.status").value(400));
+            }
+
+            @Test
+            @DisplayName("회원가입 시 올바르지 않은 비밀번호 양식")
+            public void join_password_form_fail_test() throws Exception {
+                UserRequest.JoinDTO requestDTO = new UserRequest.JoinDTO();
+                requestDTO.setEmail("meta@nate.com");
+                requestDTO.setPassword("meta1234");
+                requestDTO.setUsername("metameta");
+                String requestBody = om.writeValueAsString(requestDTO);
+
+                // when
+                ResultActions result = mvc.perform(
+                        MockMvcRequestBuilders
+                                .post("/join")
+                                .content(requestBody)
+                                .contentType(MediaType.APPLICATION_JSON)
+                );
+
+                String responseBody = result.andReturn().getResponse().getContentAsString();
+                System.out.println("테스트 : "+responseBody);
+
+                // then
+                result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("false"));
+                result.andExpect(MockMvcResultMatchers.jsonPath("$.response").isEmpty());
+                result.andExpect(MockMvcResultMatchers.jsonPath("$.error.message").value("영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니다.:password"));
+                result.andExpect(MockMvcResultMatchers.jsonPath("$.error.status").value(400));
+            }
+        }
+
+        @Nested
+        @DisplayName("[/login]로그인")
+        public class login{
+            @Test
+            @DisplayName("등록되지 않은 이메일로 로그인하는 경우")
+            public void login_authenticated_fail_test() throws Exception {
+                // given
+                UserRequest.LoginDTO loginDTO = new UserRequest.LoginDTO();
+                loginDTO.setEmail("ssar@nate.com");
+                loginDTO.setPassword("meta1234!");
+                User user = User.builder().id(1).roles("ROLE_USER").build();
+                String requestBody = om.writeValueAsString(loginDTO);
+
+                // stub
+                Mockito.when(userService.login(any())).thenThrow(new Exception400("이메일을 찾을 수 없습니다 : "+loginDTO.getEmail()));
+
+                // when
+                ResultActions result = mvc.perform(
+                        MockMvcRequestBuilders
+                                .post("/login")
+                                .content(requestBody)
+                                .contentType(MediaType.APPLICATION_JSON)
+                );
+                String responseBody = result.andReturn().getResponse().getContentAsString();
+                String responseHeader = result.andReturn().getResponse().getHeader(JWTProvider.HEADER);
+                System.out.println("테스트 : "+responseBody);
+                System.out.println("테스트 : "+responseHeader);
+
+                // then
+                result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("false"));
+                result.andExpect(MockMvcResultMatchers.jsonPath("$.response").isEmpty());
+                result.andExpect(MockMvcResultMatchers.jsonPath("$.error.message").value("이메일을 찾을 수 없습니다 : ssar@nate.com"));
+                result.andExpect(MockMvcResultMatchers.jsonPath("$.error.status").value(400));
+            }
+
+            @Test
+            @DisplayName("로그인 시 비밀번호가 잘못된 경우")
+            public void login_password_fail_test() throws Exception {
+                // given
+                UserRequest.LoginDTO loginDTO = new UserRequest.LoginDTO();
+                loginDTO.setEmail("ssar@nate.com");
+                loginDTO.setPassword("meta1234!");
+                User user = User.builder().id(1).roles("ROLE_USER").build();
+                String requestBody = om.writeValueAsString(loginDTO);
+
+                // stub
+                Mockito.when(userService.login(any())).thenThrow(new Exception400("패스워드가 잘못입력되었습니다."));
+
+                // when
+                ResultActions result = mvc.perform(
+                        MockMvcRequestBuilders
+                                .post("/login")
+                                .content(requestBody)
+                                .contentType(MediaType.APPLICATION_JSON)
+                );
+                String responseBody = result.andReturn().getResponse().getContentAsString();
+                String responseHeader = result.andReturn().getResponse().getHeader(JWTProvider.HEADER);
+                System.out.println("테스트 : "+responseBody);
+                System.out.println("테스트 : "+responseHeader);
+
+                // then
+                result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("false"));
+                result.andExpect(MockMvcResultMatchers.jsonPath("$.response").isEmpty());
+                result.andExpect(MockMvcResultMatchers.jsonPath("$.error.message").value("패스워드가 잘못입력되었습니다."));
+                result.andExpect(MockMvcResultMatchers.jsonPath("$.error.status").value(400));
+            }
+        }
     }
 
     @Test
