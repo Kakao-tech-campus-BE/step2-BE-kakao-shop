@@ -19,28 +19,16 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> handle(RuntimeException e, HttpServletRequest request){
         if(e instanceof Exception400){
             Exception400 ex = (Exception400) e;
-            return new ResponseEntity<>(
-                    ex.body(),
-                    ex.status()
-            );
+            return getApiResultResponseEntity(ex);
         }else if(e instanceof Exception401){
             Exception401 ex = (Exception401) e;
-            return new ResponseEntity<>(
-                    ex.body(),
-                    ex.status()
-            );
+            return getApiResultResponseEntity(ex);
         }else if(e instanceof Exception403){
             Exception403 ex = (Exception403) e;
-            return new ResponseEntity<>(
-                    ex.body(),
-                    ex.status()
-            );
+            return getApiResultResponseEntity(ex);
         }else if(e instanceof Exception404){
             Exception404 ex = (Exception404) e;
-            return new ResponseEntity<>(
-                    ex.body(),
-                    ex.status()
-            );
+            return getApiResultResponseEntity(ex);
         }else if(e instanceof Exception500){
             ErrorLog errorLog = ErrorLog.builder()
                     .message(e.getMessage())
@@ -49,10 +37,7 @@ public class GlobalExceptionHandler {
                     .build();
             errorLogJPARepository.save(errorLog);
             Exception500 ex = (Exception500) e;
-            return new ResponseEntity<>(
-                    ex.body(),
-                    ex.status()
-            );
+            return getApiResultResponseEntity(ex);
         }else{
             ErrorLog errorLog = ErrorLog.builder()
                     .message(e.getMessage())
@@ -60,10 +45,15 @@ public class GlobalExceptionHandler {
                     .userIp(request.getRemoteAddr())
                     .build();
             errorLogJPARepository.save(errorLog);
-            return new ResponseEntity<>(
-                    "unknown server error",
-                    HttpStatus.INTERNAL_SERVER_ERROR
-            );
+            Exception500 ex = new Exception500("unknown server error");
+            return getApiResultResponseEntity(ex);
         }
+    }
+
+    private static ResponseEntity<?> getApiResultResponseEntity(HttpAbstractException ex) {
+        return new ResponseEntity<>(
+                ex.body(),
+                ex.status()
+        );
     }
 }
