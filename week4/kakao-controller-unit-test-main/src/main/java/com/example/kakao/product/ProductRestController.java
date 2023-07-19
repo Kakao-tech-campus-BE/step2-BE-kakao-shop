@@ -7,22 +7,20 @@ import com.example.kakao._core.utils.FakeStore;
 import com.example.kakao.product.option.Option;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/products")
 public class ProductRestController {
 
     private final FakeStore fakeStore;
 
     // (기능4) 전체 상품 목록 조회 (페이징 9개씩)
-    @GetMapping("/products")
+    @GetMapping("")
     public ResponseEntity<?> findAll(@RequestParam(defaultValue = "0") int page) {
         // 1. 더미데이터 가져와서 페이징하기
         List<Product> productList = fakeStore.getProductList().stream().skip(page*9).limit(9).collect(Collectors.toList());
@@ -36,7 +34,7 @@ public class ProductRestController {
     }
 
     // (기능5) 개별 상품 상세 조회
-    @GetMapping("/products/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable int id) {
         // 1. 더미데이터 가져와서 상품 찾기
         Product product = fakeStore.getProductList().stream().filter(p -> p.getId() == id).findFirst().orElse(null);

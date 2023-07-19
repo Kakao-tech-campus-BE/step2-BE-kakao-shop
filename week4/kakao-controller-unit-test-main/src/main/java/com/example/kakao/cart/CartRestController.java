@@ -16,6 +16,7 @@ import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/carts")
 public class CartRestController {
 
     private final FakeStore fakeStore;
@@ -31,7 +32,7 @@ public class CartRestController {
 //     }
 // ]
     // (기능8) 장바구니 담기
-    @PostMapping("/carts/add")
+    @PostMapping("/add")
     public ResponseEntity<?> addCartList(@RequestBody List<CartRequest.SaveDTO> requestDTOs, @AuthenticationPrincipal CustomUserDetails userDetails) {
         requestDTOs.forEach(
                 saveDTO -> System.out.println("요청 받은 장바구니 옵션 : "+saveDTO.toString())
@@ -40,7 +41,7 @@ public class CartRestController {
     }
 
     // (기능9) 장바구니 보기 - (주문화면, 결재화면)
-    @GetMapping("/carts")
+    @GetMapping("")
     public ResponseEntity<?> findAll(@AuthenticationPrincipal CustomUserDetails userDetails) {
         List<Cart> cartList = fakeStore.getCartList();
         CartResponse.FindAllDTO responseDTO = new CartResponse.FindAllDTO(cartList);
@@ -59,7 +60,7 @@ public class CartRestController {
 //     }
 // ]
     // (기능11) 주문하기 - (장바구니 업데이트)
-    @PostMapping("/carts/update")
+    @PostMapping("/update")
     public ResponseEntity<?> update(@RequestBody @Valid List<CartRequest.UpdateDTO> requestDTOs, @AuthenticationPrincipal CustomUserDetails userDetails) {
         requestDTOs.forEach(
                 updateDTO -> System.out.println("요청 받은 장바구니 수정 내역 : "+updateDTO.toString())
@@ -80,7 +81,7 @@ public class CartRestController {
     }
 
 
-    @PostMapping("/carts/clear")
+    @PostMapping("/clear")
     public ResponseEntity<?> clear(@AuthenticationPrincipal CustomUserDetails userDetails) {
         return ResponseEntity.ok(ApiUtils.success(null));
     }

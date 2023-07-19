@@ -16,12 +16,13 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/orders")
 public class OrderRestController {
 
     private final FakeStore fakeStore;
 
     // (기능12) 결재
-    @PostMapping("/orders/save")
+    @PostMapping("/save")
     public ResponseEntity<?> save(@AuthenticationPrincipal CustomUserDetails userDetails) {
         Order order = fakeStore.getOrderList().get(0);
         List<Item> itemList = fakeStore.getItemList();
@@ -30,7 +31,7 @@ public class OrderRestController {
     }
 
     // (기능13) 주문 결과 확인
-    @GetMapping("/orders/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable int id) {
         Order order = fakeStore.getOrderList().get(id-1);
         List<Item> itemList = fakeStore.getItemList();
