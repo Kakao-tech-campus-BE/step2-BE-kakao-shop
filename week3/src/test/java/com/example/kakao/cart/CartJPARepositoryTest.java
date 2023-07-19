@@ -67,7 +67,7 @@ public class CartJPARepositoryTest extends DummyEntity {
         int quantity = 5;
         int id=1;
         User user = userJPARepository.findById(id).orElseThrow(
-                () -> new RuntimeException(userJPARepository.findByUsername("해당 유저를 찾을 수 없습니다.")
+                () -> new RuntimeException("해당 유저를 찾을 수 없습니다.")
         );
 
         List<Integer> optionIds = Arrays.asList(1, 2);
