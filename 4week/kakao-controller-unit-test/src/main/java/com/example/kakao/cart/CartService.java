@@ -19,4 +19,20 @@ public class CartService {
         }
         return new CartResponse.FindAllDTO(cartList);
     }
+
+    public CartResponse.UpdateDTO updateCart(List<CartRequest.UpdateDTO> requestDTOs, CustomUserDetails userDetails) {
+        int userId = userDetails.getUser().getId();
+        List<Cart> cartList = cartJPARepository.findByUserId(userId);
+        if(cartList.isEmpty()) {
+            throw new Exception404("해당 유저에 대한 장바구니를 찾을 수 없습니다 : "+userId);
+        }
+        for (CartRequest.UpdateDTO updateDTO : requestDTOs) {
+            for (Cart cart : cartList) {
+                if(cart.getId() == updateDTO.getCartId()){
+                    cart.update(updateDTO.getQuantity(), cart.getPrice() * updateDTO.getQuantity());
+                }
+            }
+        }
+        return new CartResponse.UpdateDTO(cartList);
+    }
 }
