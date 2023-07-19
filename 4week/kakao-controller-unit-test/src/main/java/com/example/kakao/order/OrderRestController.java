@@ -5,13 +5,9 @@ import com.example.kakao._core.utils.ApiUtils;
 import com.example.kakao._core.utils.FakeStore;
 import com.example.kakao.order.item.Item;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -19,13 +15,12 @@ import java.util.List;
 public class OrderRestController {
 
     private final FakeStore fakeStore;
+    private final OrderItemService orderItemService;
 
     // (기능12) 결재
     @PostMapping("/orders/save")
     public ResponseEntity<?> save(@AuthenticationPrincipal CustomUserDetails userDetails) {
-        Order order = fakeStore.getOrderList().get(0);
-        List<Item> itemList = fakeStore.getItemList();
-        OrderResponse.FindByIdDTO responseDTO = new OrderResponse.FindByIdDTO(order, itemList);
+        OrderResponse.FindByIdDTO responseDTO = orderItemService.saveOrder(userDetails);
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
 
