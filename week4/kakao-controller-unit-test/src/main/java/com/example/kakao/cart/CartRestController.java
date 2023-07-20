@@ -2,7 +2,6 @@ package com.example.kakao.cart;
 
 import com.example.kakao._core.security.CustomUserDetails;
 import com.example.kakao._core.utils.ApiUtils;
-import com.example.kakao._core.utils.FakeStore;
 import com.example.kakao.product.option.Option;
 import com.example.kakao.product.option.OptionService;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +10,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
