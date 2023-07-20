@@ -12,10 +12,8 @@ import javax.persistence.EntityManager;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-
 @DataJpaTest
 public class UserJPARepositoryTest extends DummyEntity {
-
     @Autowired
     private UserJPARepository userJPARepository;
 
@@ -23,7 +21,7 @@ public class UserJPARepositoryTest extends DummyEntity {
     private EntityManager em;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         em.createNativeQuery("ALTER TABLE user_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
         userJPARepository.save(newUser("ssar"));
     }
@@ -52,7 +50,5 @@ public class UserJPARepositoryTest extends DummyEntity {
     }
 
     @Test
-    public void save(){}
-
-
+    public void save() { }
 }

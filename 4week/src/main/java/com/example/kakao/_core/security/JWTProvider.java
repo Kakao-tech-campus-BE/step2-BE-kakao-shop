@@ -1,6 +1,5 @@
 package com.example.kakao._core.security;
 
-
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
@@ -11,10 +10,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-
 @Component
 public class JWTProvider {
-    public static final Long EXP = 1000L * 60 * 60 * 48; // 48시간 - 테스트 하기 편함.
+    public static final Long EXP = 1000L * 60 * 60 * 48; // 48시간 - 테스트 하기 편함
     public static final String TOKEN_PREFIX = "Bearer "; // 스페이스 필요함
     public static final String HEADER = "Authorization";
     public static final String SECRET = "MySecretKey";
@@ -35,5 +33,4 @@ public class JWTProvider {
                 .build().verify(jwt);
         return decodedJWT;
     }
-
 }

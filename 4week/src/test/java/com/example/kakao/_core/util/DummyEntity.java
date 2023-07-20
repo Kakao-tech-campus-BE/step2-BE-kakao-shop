@@ -13,10 +13,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class DummyEntity {
-    protected User newUser(String username){
+    protected User newUser(String username) {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return User.builder()
-                .email(username+"@nate.com")
+                .email(username + "@nate.com")
                 .password(passwordEncoder.encode("meta1234!"))
                 .username(username)
                 .roles(username.equals("admin") ? "ROLE_ADMIN" : "ROLE_USER")
@@ -40,21 +40,12 @@ public class DummyEntity {
                 .build();
     }
 
-    protected Cart newCart(User user, Option option, Integer quantity){
+    protected Cart newCart(User user, Option option, Integer quantity) {
         return Cart.builder()
                 .user(user)
                 .option(option)
                 .quantity(quantity)
                 .price(option.getPrice() * quantity)
-                .build();
-    }
-
-    protected Item newItem(Cart cart, Order order){
-        return Item.builder()
-                .order(order)
-                .option(cart.getOption())
-                .quantity(cart.getQuantity())
-                .price(cart.getOption().getPrice() * cart.getQuantity())
                 .build();
     }
 
@@ -65,14 +56,23 @@ public class DummyEntity {
                 .build();
     }
 
+    protected Item newItem(Cart cart, Order order) {
+        return Item.builder()
+                .order(order)
+                .option(cart.getOption())
+                .quantity(cart.getQuantity())
+                .price(cart.getOption().getPrice() * cart.getQuantity())
+                .build();
+    }
+
     // product repository 테스트할 때 가져옴
-    protected List<Product> productDummyList(){
+    protected List<Product> productDummyList() {
         return Arrays.asList(
                 newProduct("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전", 1, 1000),
                 newProduct("[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율", 2, 2000),
                 newProduct("삼성전자 JBL JR310 외 어린이용/성인용 헤드셋 3종!", 3, 30000),
-                newProduct("바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종", 4, 4000),
-                newProduct("[더주] 컷팅말랑장족, 숏다리 100g/300g 외 주전부리 모음 /중독성 최고/마른안주", 5, 5000),
+                newProduct("바른 누룽지맛 발효효소 2박스 역가수치보장/외 7종", 4, 4000),
+                newProduct("[더주] 컷팅말랑장족, 숏다리 100g/300g 외 주전부리 모음/중독성 최고/마른안주", 5, 5000),
                 newProduct("굳지않는 앙금절편 1,050g 2팩 외 우리쌀떡 모음전", 6, 15900),
                 newProduct("eoe 이너딜리티 30포, 오렌지맛 고 식이섬유 보충제", 7, 26800),
                 newProduct("제나벨 PDRN 크림 2개. 피부보습/진정 케어", 8, 25900),
@@ -102,7 +102,7 @@ public class DummyEntity {
                 newOption(productListPS.get(2), "JR310BT (무선 전용) - 블루", 49900),
                 newOption(productListPS.get(2), "T510BT (무선 전용) - 블랙", 52900),
                 newOption(productListPS.get(2), "T510BT (무선 전용) - 화이트", 52900),
-                newOption(productListPS.get(3), "선택01_바른곡물효소 누룽지맛 2박스", 17900), //15
+                newOption(productListPS.get(3), "선택01_바른곡물효소 누룽지맛 2박스", 17900),
                 newOption(productListPS.get(3), "선택02_바른곡물효소누룽지맛 6박스", 50000),
                 newOption(productListPS.get(3), "선택03_바른곡물효소3박스+유산균효소3박스", 50000),
                 newOption(productListPS.get(3), "선택04_바른곡물효소3박스+19종유산균3박스", 50000),
@@ -112,12 +112,12 @@ public class DummyEntity {
                 newOption(productListPS.get(5), "굳지않는 쑥 앙금 절편 1050g", 15900),
                 newOption(productListPS.get(5), "굳지않는 흑미 앙금 절편 1050g", 15900),
                 newOption(productListPS.get(5), "굳지않는 흰 가래떡 1050g", 15900),
-                newOption(productListPS.get(6), "이너딜리티 1박스", 26800), //25
+                newOption(productListPS.get(6), "이너딜리티 1박스", 26800),
                 newOption(productListPS.get(6), "이너딜리티 2박스+사은품 2종", 49800),
                 newOption(productListPS.get(7), "제나벨 PDRN 자생크림 1+1", 25900),
                 newOption(productListPS.get(8), "플레이스테이션 VR2 호라이즌 번들", 839000),
                 newOption(productListPS.get(8), "플레이스테이션 VR2", 797000),
-                newOption(productListPS.get(9),"홍가리비2kg(50미이내)", 8900), //30
+                newOption(productListPS.get(9), "홍가리비2kg(50미이내)", 8900),
                 newOption(productListPS.get(10), "궁채 절임 1kg", 6900),
                 newOption(productListPS.get(10), "양념 깻잎 1kg", 8900),
                 newOption(productListPS.get(10), "된장 깻잎 1kg", 8900),
@@ -132,7 +132,7 @@ public class DummyEntity {
                 newOption(productListPS.get(12), "(증정)화이트케어 치약 100G 3개 x 2개", 19900),
                 newOption(productListPS.get(12), "(증정) 어린이 칫솔 12EA", 9900),
                 newOption(productListPS.get(13), "[가정용] 샤인머스켓 1kg 2수내외", 9900),
-                newOption(productListPS.get(13), "[특품] 샤인머스켓 1kg 1-2수", 12900), //45
+                newOption(productListPS.get(13), "[특품] 샤인머스켓 1kg 1-2수", 12900),
                 newOption(productListPS.get(13), "[특품] 샤인머스켓 2kg 2-3수", 23900),
                 newOption(productListPS.get(14), "화이트", 148000),
                 newOption(productListPS.get(14), "블랙", 148000)

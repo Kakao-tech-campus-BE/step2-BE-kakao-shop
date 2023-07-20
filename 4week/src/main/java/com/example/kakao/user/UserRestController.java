@@ -18,18 +18,15 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
-
 @RequiredArgsConstructor
 @RestController
 public class UserRestController {
-
     private final GlobalExceptionHandler globalExceptionHandler;
     private final UserService userService;
 
     @PostMapping("/join")
     public ResponseEntity<?> join(@RequestBody @Valid UserRequest.JoinDTO requestDTO, Errors errors,
                                   HttpServletRequest request) {
-
         if (errors.hasErrors()) {
             List<FieldError> fieldErrors = errors.getFieldErrors();
             Exception400 ex = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
@@ -48,7 +45,6 @@ public class UserRestController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid UserRequest.LoginDTO requestDTO, Errors errors, HttpServletRequest request) {
-
         if (errors.hasErrors()) {
             List<FieldError> fieldErrors = errors.getFieldErrors();
             Exception400 ex = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
@@ -61,7 +57,7 @@ public class UserRestController {
         try {
             String jwt = userService.login(requestDTO);
             return ResponseEntity.ok().header(JWTProvider.HEADER, jwt).body(ApiUtils.success(null));
-        }catch (RuntimeException e){
+        } catch (RuntimeException e) {
             return globalExceptionHandler.handle(e, request);
         }
     }

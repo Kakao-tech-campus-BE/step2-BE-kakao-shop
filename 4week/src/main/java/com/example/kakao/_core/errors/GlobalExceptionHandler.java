@@ -13,35 +13,34 @@ import javax.servlet.http.HttpServletRequest;
 @RequiredArgsConstructor
 @Component
 public class GlobalExceptionHandler {
-
     private final ErrorLogJPARepository errorLogJPARepository;
 
-    public ResponseEntity<?> handle(RuntimeException e, HttpServletRequest request){
-        if(e instanceof Exception400){
+    public ResponseEntity<?> handle(RuntimeException e, HttpServletRequest request) {
+        if (e instanceof Exception400) {
             Exception400 ex = (Exception400) e;
             return new ResponseEntity<>(
                     ex.body(),
                     ex.status()
             );
-        }else if(e instanceof Exception401){
+        } else if (e instanceof Exception401) {
             Exception401 ex = (Exception401) e;
             return new ResponseEntity<>(
                     ex.body(),
                     ex.status()
             );
-        }else if(e instanceof Exception403){
+        } else if (e instanceof Exception403) {
             Exception403 ex = (Exception403) e;
             return new ResponseEntity<>(
                     ex.body(),
                     ex.status()
             );
-        }else if(e instanceof Exception404){
+        } else if (e instanceof Exception404) {
             Exception404 ex = (Exception404) e;
             return new ResponseEntity<>(
                     ex.body(),
                     ex.status()
             );
-        }else if(e instanceof Exception500){
+        } else if (e instanceof Exception500) {
             ErrorLog errorLog = ErrorLog.builder()
                     .message(e.getMessage())
                     .userAgent(request.getHeader("User-Agent"))
@@ -53,7 +52,7 @@ public class GlobalExceptionHandler {
                     ex.body(),
                     ex.status()
             );
-        }else{
+        } else {
             ErrorLog errorLog = ErrorLog.builder()
                     .message(e.getMessage())
                     .userAgent(request.getHeader("User-Agent"))

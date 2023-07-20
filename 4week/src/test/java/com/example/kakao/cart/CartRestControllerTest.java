@@ -1,6 +1,5 @@
 package com.example.kakao.cart;
 
-import com.example.kakao._core.security.JWTProvider;
 import com.example.kakao._core.security.SecurityConfig;
 import com.example.kakao._core.utils.FakeStore;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,7 +23,6 @@ import java.util.List;
 })
 @WebMvcTest(controllers = {CartRestController.class})
 public class CartRestControllerTest {
-
     @Autowired
     private MockMvc mvc;
 
@@ -55,7 +53,7 @@ public class CartRestControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
         );
         String responseBody = result.andReturn().getResponse().getContentAsString();
-        System.out.println("테스트 : "+responseBody);
+        System.out.println("테스트 : " + responseBody);
 
         // then
         result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));

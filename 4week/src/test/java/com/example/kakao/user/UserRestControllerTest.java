@@ -4,11 +4,8 @@ import com.example.kakao._core.errors.GlobalExceptionHandler;
 import com.example.kakao._core.security.JWTProvider;
 import com.example.kakao._core.security.SecurityConfig;
 import com.example.kakao.log.ErrorLogJPARepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,21 +15,18 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.mockito.ArgumentMatchers.any;
 
 // GlobalExceptionHandler 와 UserRestController를 SpringContext에 등록합니다.
-
 @Import({
         SecurityConfig.class,
         GlobalExceptionHandler.class
 })
 @WebMvcTest(controllers = {UserRestController.class})
 public class UserRestControllerTest {
-
     // 객체의 모든 메서드는 추상메서드로 구현됩니다. (가짜로 만들면)
     // 해당 객체는 SpringContext에 등록됩니다.
     @MockBean
@@ -50,7 +44,7 @@ public class UserRestControllerTest {
     private ObjectMapper om;
 
     @Test
-    public void t1(){}
+    public void t1() { }
 
     @Test
     public void join_test() throws Exception {
@@ -70,7 +64,7 @@ public class UserRestControllerTest {
         );
 
         String responseBody = result.andReturn().getResponse().getContentAsString();
-        System.out.println("테스트 : "+responseBody);
+        System.out.println("테스트 : " + responseBody);
 
         // then
         result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
@@ -98,8 +92,8 @@ public class UserRestControllerTest {
         );
         String responseBody = result.andReturn().getResponse().getContentAsString();
         String responseHeader = result.andReturn().getResponse().getHeader(JWTProvider.HEADER);
-        System.out.println("테스트 : "+responseBody);
-        System.out.println("테스트 : "+responseHeader);
+        System.out.println("테스트 : " + responseBody);
+        System.out.println("테스트 : "+ responseHeader);
 
         // then
         result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
@@ -107,9 +101,8 @@ public class UserRestControllerTest {
     }
 
     @Test
-    public void length_test(){
+    public void length_test() {
         String value = "Bearer eyJ0eX";
         System.out.println(value.substring(0,6));
     }
-
 }
