@@ -19,9 +19,6 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
-import static com.example.kakao._core.errors.GlobalExceptionHandler.getApiResultResponseEntity;
-
-
 @RequiredArgsConstructor
 @RestController
 public class UserRestController {
@@ -69,7 +66,7 @@ public class UserRestController {
         // 권한 체크 (디비를 조회하지 않아도 체크할 수 있는 것)
         if (id != userDetails.getUser().getId()) {
             Exception403 e = new Exception403("인증된 user는 해당 id로 접근할 권한이 없습니다" + id);
-            getApiResultResponseEntity(e);
+            globalExceptionHandler.getApiErrorResultResponseEntity(e);
         }
 
         // 서비스 실행 : 내부에서 터지는 모든 익셉션은 예외 핸들러로 던지기
@@ -87,10 +84,10 @@ public class UserRestController {
             if (!fieldErrors.isEmpty()) {
                 FieldError fieldError = fieldErrors.get(0);
                 Exception400 e = new Exception400(fieldError.getDefaultMessage() + ":" + fieldError.getField());
-                return getApiResultResponseEntity(e);
+                return globalExceptionHandler.getApiErrorResultResponseEntity(e);
             } else{
                 Exception500 e = new Exception500("cannot find fieldErrors");
-                return getApiResultResponseEntity(e);
+                return globalExceptionHandler.getApiErrorResultResponseEntity(e);
             }
         }
         return null;
@@ -106,7 +103,7 @@ public class UserRestController {
         // 권한 체크 (디비를 조회하지 않아도 체크할 수 있는 것)
         if (id != userDetails.getUser().getId()) {
             Exception403 e = new Exception403("인증된 user는 해당 id로 접근할 권한이 없습니다:" + id);
-            getApiResultResponseEntity(e);
+            globalExceptionHandler.getApiErrorResultResponseEntity(e);
         }
 
         // 서비스 실행 : 내부에서 터지는 모든 익셉션은 예외 핸들러로 던지기
