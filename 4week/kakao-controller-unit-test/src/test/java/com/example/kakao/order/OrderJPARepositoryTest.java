@@ -1,10 +1,7 @@
 package com.example.kakao.order;
-
 import com.example.kakao._core.util.DummyEntity;
 import com.example.kakao.cart.Cart;
 import com.example.kakao.cart.CartJPARepository;
-import com.example.kakao.order.Order;
-import com.example.kakao.order.OrderJPARepository;
 import com.example.kakao.order.item.Item;
 import com.example.kakao.order.item.ItemJPARepository;
 import com.example.kakao.product.Product;
@@ -23,13 +20,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 
 @Import(ObjectMapper.class)
 @DisplayName("주문 관련 JPA 테스트")
 @DataJpaTest
-public class OrderJPARepositoryTest extends DummyEntity {
+public class   OrderJPARepositoryTest extends DummyEntity {
 
 
     private EntityManager em;
@@ -61,6 +57,13 @@ public class OrderJPARepositoryTest extends DummyEntity {
 
     @BeforeEach
     public void setUp(){
+        em.createNativeQuery("ALTER TABLE user_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        em.createNativeQuery("ALTER TABLE product_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        em.createNativeQuery("ALTER TABLE item_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        em.createNativeQuery("ALTER TABLE option_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        em.createNativeQuery("ALTER TABLE order_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        em.createNativeQuery("ALTER TABLE cart_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        // 데이터를 날아 가지만 저장되는 id sequence는 초기화되지 않는다.
         User user = newUser("user");
         userJPARepository.save(user);
         List<Product> productList = productJPARepository.saveAll(productDummyList());
@@ -90,8 +93,8 @@ public class OrderJPARepositoryTest extends DummyEntity {
         // when
         System.out.println("====================start===================");
         Order testorder = newOrder(testuser);
-        Integer orderid= testorder.getId();
         orderJPARepository.save(testorder);
+        int orderid= testorder.getId();
         Item item = newItem(cart,testorder);
         itemJPARepository.save(item);
         System.out.println("========================end=====================");

@@ -74,7 +74,6 @@ public class CartService {
             cart.update(u.getQuantity(),cart.getPrice()/ cart.getQuantity()*u.getQuantity()); //옵션을 안가져온 이유는 쿼리를 최소한으로 하기 위함
         }
 
-        //todo 카트번호가 본인의 것이 맞는지 체크해야함(서비스에서)
 
         return null;
     }

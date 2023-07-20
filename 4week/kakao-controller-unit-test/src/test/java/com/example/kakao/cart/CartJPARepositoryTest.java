@@ -49,6 +49,13 @@ public class CartJPARepositoryTest extends DummyEntity {
 
     @BeforeEach
     public void setUp(){
+
+
+        em.createNativeQuery("ALTER TABLE user_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        em.createNativeQuery("ALTER TABLE product_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        em.createNativeQuery("ALTER TABLE option_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        em.createNativeQuery("ALTER TABLE cart_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
+        // 데이터를 날아 가지만 저장되는 id sequence는 초기화되지 않는다.
         User user = newUser("user");
         userJPARepository.save(user);
         List<Product> productList = productJPARepository.saveAll(productDummyList());

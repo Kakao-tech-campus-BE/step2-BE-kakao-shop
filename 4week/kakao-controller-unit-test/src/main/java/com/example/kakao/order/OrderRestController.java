@@ -2,7 +2,6 @@ package com.example.kakao.order;
 
 import com.example.kakao._core.errors.GlobalExceptionHandler;
 import com.example.kakao._core.utils.ApiUtils;
-import com.example.kakao._core.utils.FakeStore;
 import com.example.kakao.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 @RequiredArgsConstructor
 @RestController
 public class OrderRestController {
-
-    private final FakeStore fakeStore;
     private final OrderService orderService;
     private final GlobalExceptionHandler globalExceptionHandler;
 
@@ -28,24 +25,16 @@ public class OrderRestController {
         } catch (RuntimeException e) {
             return globalExceptionHandler.handle(e, request);
         }
-//        Order order = fakeStore.getOrderList().get(0);
-//        List<Item> itemList = fakeStore.getItemList();
-//        OrderResponse.FindByIdDTO responseDTO = new OrderResponse.FindByIdDTO(order, itemList);
-//        return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
 
     // (기능13) 주문 결과 확인
-    @GetMapping("/orders/{id}")
+    @GetMapping("/orders/{orderId}")
     public ResponseEntity<?> findById(@PathVariable int orderId,HttpServletRequest request,@AuthenticationPrincipal User user) {
         try {
             return ResponseEntity.ok().body(ApiUtils.success(orderService.findById(orderId,user.getId())));
         } catch (RuntimeException e) {
             return globalExceptionHandler.handle(e, request);
         }
-//        Order order = fakeStore.getOrderList().get(id-1);
-//        List<Item> itemList = fakeStore.getItemList();
-//        OrderResponse.FindByIdDTO responseDTO = new OrderResponse.FindByIdDTO(order, itemList);
-//        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 
 }

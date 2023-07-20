@@ -12,6 +12,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -20,20 +21,9 @@ import javax.validation.Valid;
 @RestController
 public class CartRestController {
 
-//    private final FakeStore fakeStore;
     private final GlobalExceptionHandler globalExceptionHandler;
     private final CartService cartService;
 
-// [
-//     {
-//         "optionId":1,
-//         "quantity":5
-//     },
-//     {
-//         "optionId":2,
-//         "quantity":5
-//     }
-// ]
     // (기능8) 장바구니 담기
     @PostMapping("/carts/add")
     public ResponseEntity<?> addCartList(@RequestBody @Valid List<CartRequest.SaveDTO> saveDTOs, Errors errors, HttpServletRequest request, @AuthenticationPrincipal User user) {
@@ -51,11 +41,6 @@ public class CartRestController {
         } catch (RuntimeException e) {
             return globalExceptionHandler.handle(e, request);
         }
-//
-//        requestDTOs.forEach(
-//                saveDTO -> System.out.println("요청 받은 장바구니 옵션 : "+saveDTO.toString())
-//        );
-//        return ResponseEntity.ok(ApiUtils.success(null));
     }
 
     // (기능9) 장바구니 보기 - (주문화면, 결재화면)
@@ -66,22 +51,9 @@ public class CartRestController {
         } catch (RuntimeException e) {
             return globalExceptionHandler.handle(e, request);
         }
-//        List<Cart> cartList = fakeStore.getCartList();
-//        CartResponse.FindAllDTO responseDTO = new CartResponse.FindAllDTO(cartList);
-//        return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
 
 
-// [
-//     {
-//         "cartId":1,
-//         "quantity":10
-//     },
-//     {
-//         "cartId":2,
-//         "quantity":10
-//     }
-// ]
     // (기능11) 주문하기 - (장바구니 업데이트)
     @PostMapping("/carts/update")
     public ResponseEntity<?> update(@RequestBody @Valid List<CartRequest.UpdateDTO> updateDTOs, Errors errors, HttpServletRequest request,@AuthenticationPrincipal User user) {
@@ -93,8 +65,16 @@ public class CartRestController {
                     ex.status()
             );
         }
-
-
+        // 변경 갯수가 0일 때
+        for(CartRequest.UpdateDTO u :updateDTOs) {
+            if (Objects.equals(u.getQuantity(), 0)) {
+                Exception400 ex = new Exception400("갯수가 0이 될 수 없습니다.");
+                return new ResponseEntity<>(
+                        ex.body(),
+                        ex.status()
+                );
+            }
+        }
 
         try {
             return ResponseEntity.ok().body(ApiUtils.success(cartService.update(updateDTOs,user.getId())));
@@ -102,23 +82,6 @@ public class CartRestController {
             return globalExceptionHandler.handle(e, request);
         }
 
-
-//        requestDTOs.forEach(
-//                updateDTO -> System.out.println("요청 받은 장바구니 수정 내역 : "+updateDTO.toString())
-//        );
-
-//        // 가짜 저장소의 값을 변경한다.
-//        for (CartRequest.UpdateDTO updateDTO : requestDTOs) {
-//            for (Cart cart : fakeStore.getCartList()) {
-//                if(cart.getId() == updateDTO.getCartId()){
-//                    cart.update(updateDTO.getQuantity(), cart.getPrice() * updateDTO.getQuantity());
-//                }
-//            }
-//        }
-//
-//        // DTO를 만들어서 응답한다.
-//        CartResponse.UpdateDTO responseDTO = new CartResponse.UpdateDTO(fakeStore.getCartList());
-//        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 
 
