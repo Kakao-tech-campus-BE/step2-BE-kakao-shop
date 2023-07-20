@@ -49,6 +49,14 @@ public class DummyEntity {
                 .build();
     }
 
+    protected List<Cart> newCarts(User user, List<Option> options) {
+        return Arrays.asList(
+                newCart(user, options.get(0), 5),
+                newCart(user, options.get(1), 5),
+                newCart(user, options.get(2), 10)
+        );
+    }
+
     protected Item newItem(Cart cart, Order order){
         return Item.builder()
                 .order(order)
