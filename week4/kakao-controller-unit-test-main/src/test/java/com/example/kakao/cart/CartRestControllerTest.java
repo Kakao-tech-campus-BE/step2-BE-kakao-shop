@@ -262,7 +262,7 @@ class CartRestControllerTest extends DummyEntity {
         System.out.println("responseBody=" + responseBody);
 
         // then
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].cartId").value(1));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].optionId").value(1));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"));

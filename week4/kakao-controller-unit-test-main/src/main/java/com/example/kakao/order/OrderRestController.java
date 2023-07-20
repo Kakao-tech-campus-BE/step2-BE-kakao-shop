@@ -19,7 +19,7 @@ public class OrderRestController {
     private final GlobalExceptionHandler globalExceptionHandler;
     private final OrderService orderService;
 
-    // (기능12) 결재
+    // (기능12) 결제
     @PostMapping("/orders/save")
     public ResponseEntity<?> save(@AuthenticationPrincipal CustomUserDetails userDetails, HttpServletRequest request) {
         try{
