@@ -78,6 +78,22 @@ public class OrderService {
         return new OrderResponse.FindByIdDTO(order, itemList);
     }
 
+    public Order findById(int id){
+        return orderJPARepository.findById(id).orElseThrow(
+                () -> new Exception400("주문 번호를 찾을 수 없습니다")
+        );
+    }
 
+    public List<Item> findByOrderId(int orderId){
+        List<Item> itemList;
+
+        try {
+            itemList = itemJPARepository.mFindByOrderId(orderId);
+        }catch (Exception e){
+            throw new Exception500("unknown server error");
+        }
+
+        return itemList;
+    }
 }
 

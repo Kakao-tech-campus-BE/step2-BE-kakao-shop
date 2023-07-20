@@ -48,10 +48,17 @@ public class OrderRestController {
 
     // (기능13) 주문 결과 확인
     @GetMapping("/orders/{id}")
-    public ResponseEntity<?> findById(@PathVariable int id) {
-        Order order = fakeStore.getOrderList().get(id-1);
-        List<Item> itemList = fakeStore.getItemList();
-        OrderResponse.FindByIdDTO responseDTO = new OrderResponse.FindByIdDTO(order, itemList);
+    public ResponseEntity<?> findById(@PathVariable int id, HttpServletRequest request) {
+        Order order;
+        List<Item> itemList;
+
+        try {
+            order = orderService.findById(id);
+            itemList = orderService.findByOrderId(order.getId());
+        }catch (RuntimeException e){
+            return globalExceptionHandler.handle(e, request);
+        }
+        OrderResponse.FindByIdDTO responseDTO = orderService.findByIdDTO(order, itemList);
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 
