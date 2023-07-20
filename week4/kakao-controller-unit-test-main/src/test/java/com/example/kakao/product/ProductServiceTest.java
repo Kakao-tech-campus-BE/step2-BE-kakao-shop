@@ -1,9 +1,12 @@
 package com.example.kakao.product;
 
 import com.example.kakao._core.util.DummyEntity;
+import com.example.kakao.product.option.Option;
 import com.example.kakao.product.option.OptionJPARepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +77,40 @@ class ProductServiceTest extends DummyEntity {
         List<Product> products = productService.findAll(page, size);
 
         // then
-        products.stream().forEach(System.out::println);
+        Assertions.assertEquals(products.size(), size);
+    }
+
+    @Test
+    public void findById_test() throws JsonProcessingException {
+        // given
+        int id = 1;
+
+        // when
+        Product product = productService.findById(id).orElseThrow(
+                () -> new RuntimeException("제품을 찾을 수 없습니다.")
+        );
+
+        // then
+        String result = om.writeValueAsString(product);
+        System.out.println(result);
+    }
+
+    @Test
+    public void option_findByProductId_test() throws JsonProcessingException {
+        // given
+        int id = 1;
+        Product product = productService.findById(id).orElseThrow(
+                () -> new RuntimeException("제품을 찾을 수 없습니다.")
+        );
+
+        // when
+//        List<Option> options = optionJPARepository.findByProductId(product.getId());
+        List<Option> options = productService.findOptionByProductId(product.getId());
+
+        Assertions.assertFalse(options.isEmpty());
+
+        // then
+        String result = om.writeValueAsString(options);
+        System.out.println(result);
     }
 }
