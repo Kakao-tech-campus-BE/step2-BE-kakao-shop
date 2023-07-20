@@ -41,6 +41,18 @@ public class GlobalExceptionHandler {
                     ex.body(),
                     ex.status()
             );
+        } else if(e instanceof Exception405){
+            Exception405 ex = (Exception405) e;
+            return new ResponseEntity<>(
+                    ex.body(),
+                    ex.status()
+            );
+        } else if(e instanceof Exception409){
+            Exception409 ex = (Exception409) e;
+            return new ResponseEntity<>(
+                    ex.body(),
+                    ex.status()
+            );
         }else if(e instanceof Exception500){
             ErrorLog errorLog = ErrorLog.builder()
                     .message(e.getMessage())
