@@ -1,6 +1,7 @@
 package com.example.kakao.cart;
 
 import com.example.kakao._core.errors.exception.Exception403;
+import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class CartService {
         List<Cart> carts = requests
                 .stream()
                 .map(request -> {
-                    Cart cart = cartJPARepository.findById(request.getCartId()).orElseThrow();
+                    Cart cart = cartJPARepository.findById(request.getCartId()).orElseThrow(() -> new Exception404("해당 장바구니 아이템을 찾을 수 없습니다."));
 
                     if (cart.getUser().getId() != user.getId()) {
                         throw new Exception403("현재 계정으로 해당 장바구니를 업데이트 할 수 없습니다.");

@@ -1,5 +1,6 @@
 package com.example.kakao.product;
 
+import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao.product.option.Option;
 import com.example.kakao.product.option.OptionJPARepository;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,10 @@ public class ProductService {
 
     public ProductResponse.FindByIdDTO findProductById(int id) {
         List<Option> options = optionJPARepository.findByProductId(id);
+
+        if (options.isEmpty()) {
+            throw new Exception404("존재하지 않는 상품입니다.");
+        }
 
         return new ProductResponse.FindByIdDTO(options.get(0).getProduct(), options);
     }

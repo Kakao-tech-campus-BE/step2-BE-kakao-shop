@@ -1,10 +1,13 @@
 package com.example.kakao.cart;
 
+import com.example.kakao._core.errors.exception.Exception403;
+import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao._core.security.CustomUserDetails;
 import com.example.kakao._core.utils.ApiUtils;
 import com.example.kakao.product.option.Option;
 import com.example.kakao.product.option.OptionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -73,7 +76,18 @@ public class CartRestController {
     // (기능11) 주문하기 - (장바구니 업데이트)
     @PostMapping("/carts/update")
     public ResponseEntity<?> update(@RequestBody @Valid List<CartRequest.UpdateDTO> requestDTOs, @AuthenticationPrincipal CustomUserDetails userDetails) {
-        CartResponse.UpdateDTO responseDTO = cartService.update(userDetails.getUser(), requestDTOs);
+        CartResponse.UpdateDTO responseDTO;
+
+        try {
+            responseDTO = cartService.update(userDetails.getUser(), requestDTOs);
+        }
+        catch (Exception403 exception403) {
+            return ResponseEntity.ok().body(ApiUtils.error("현재 계정으로 접근할 수 없습니다.", HttpStatus.FORBIDDEN));
+        }
+        catch (Exception404 exception404) {
+            return ResponseEntity.ok().body(ApiUtils.error("존재하지 않는 장바구니 아이템 입니다.", HttpStatus.NOT_FOUND));
+        }
+
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 

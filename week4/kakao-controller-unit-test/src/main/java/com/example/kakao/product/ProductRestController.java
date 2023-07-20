@@ -1,5 +1,6 @@
 package com.example.kakao.product;
 
+import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao._core.utils.ApiUtils;
 import com.example.kakao._core.utils.FakeStore;
 import com.example.kakao.product.option.OptionService;
@@ -17,10 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 public class ProductRestController {
-
-    private final FakeStore fakeStore;
     private final ProductService productService;
-    private final OptionService optionService;
 
     // (기능4) 전체 상품 목록 조회 (페이징 9개씩)
     @GetMapping("/products")
@@ -38,8 +36,15 @@ public class ProductRestController {
     // (기능5) 개별 상품 상세 조회
     @GetMapping("/products/{id}")
     public ResponseEntity<?> findById(@PathVariable int id) {
-        ProductResponse.FindByIdDTO responseDTO = productService.findProductById(id);
+        ProductResponse.FindByIdDTO responseDTO;
 
+        try {
+            responseDTO = productService.findProductById(id);
+        }
+        catch (Exception404 exception404) {
+            return ResponseEntity.ok().body(ApiUtils.error("존재하지 않는 상품입니다.", HttpStatus.NOT_FOUND));
+        }
+        
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
 }
