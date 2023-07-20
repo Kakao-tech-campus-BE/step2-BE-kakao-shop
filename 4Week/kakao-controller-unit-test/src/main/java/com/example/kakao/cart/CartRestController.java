@@ -60,4 +60,27 @@ public ResponseEntity<?> addCartList(@RequestBody List<CartRequest.SaveDTO> requ
             return globalExceptionHandler.handle(e, request);
         }
     }
+
+    @PostMapping("/carts/update")
+    public ResponseEntity<?> update(@RequestBody @Valid List<CartRequest.UpdateDTO> requestDTOs, @AuthenticationPrincipal CustomUserDetails userDetails,
+                                    HttpServletRequest request) {
+        try {
+            requestDTOs.forEach(
+                    updateDTO -> {
+                        System.out.println("요청 받은 장바구니 수정 내역 : "+updateDTO.toString());
+                        cartService.updateCart(updateDTO);
+                    }
+            );
+        }catch (RuntimeException e){
+            return globalExceptionHandler.handle(e, request);
+        }
+
+        try {
+            CartResponse.UpdateDTO responseDTO = new CartResponse.UpdateDTO(cartService.checkCart(userDetails));
+            // DTO를 만들어서 응답한다.
+            return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
+        }catch (RuntimeException e){
+            return globalExceptionHandler.handle(e, request);
+        }
+    }
 }

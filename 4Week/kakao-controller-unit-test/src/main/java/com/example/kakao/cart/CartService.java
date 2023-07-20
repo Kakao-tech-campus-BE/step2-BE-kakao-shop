@@ -1,5 +1,6 @@
 package com.example.kakao.cart;
 
+import com.example.kakao._core.errors.exception.Exception400;
 import com.example.kakao._core.errors.exception.Exception500;
 import com.example.kakao._core.security.CustomUserDetails;
 import com.example.kakao._core.utils.ApiUtils;
@@ -47,5 +48,14 @@ public class CartService {
         }
 
         return cartList;
+    }
+
+    @Transactional
+    public void updateCart(CartRequest.UpdateDTO updateDTO){
+        Cart cartPS = cartJPARepository.findById(updateDTO.getCartId()).orElseThrow(
+                () -> new Exception400("장바구니를 찾을 수 없습니다")
+        );
+
+        cartPS.update(updateDTO.getQuantity(), updateDTO.getQuantity() * cartPS.getOption().getPrice());
     }
 }
