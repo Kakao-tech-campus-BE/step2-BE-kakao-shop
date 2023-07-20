@@ -1006,6 +1006,29 @@ Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzc2FyQG5hdGUuY29tIiwicm9s
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
+# 3주차 과제
+
+## 수정 사항
+
+Rest API에 맞게 설계하기 위해 몇 가지 API 주소를 변경하였습니다. 
+
+**장바구니 담기**
+
+POST /carts
+
+**장바구니 수정**
+
+PUT /carts
+
+**장바구니 삭제**
+
+DELETE /carts
+
+**주문하기**
+
+POST /orders
+
+
 # 4주차
 
 카카오 테크 캠퍼스 2단계 - BE - 4주차 클론 과제
