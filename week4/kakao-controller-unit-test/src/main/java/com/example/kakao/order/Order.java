@@ -11,6 +11,10 @@ import javax.persistence.*;
 @Table(name="order_tb", indexes = {
         @Index(name = "order_user_id_idx", columnList = "user_id")
 })
+@NamedEntityGraph(
+        name = "OrderWithUser",
+        attributeNodes = @NamedAttributeNode("user")
+)
 public class Order {
 
     @Id
