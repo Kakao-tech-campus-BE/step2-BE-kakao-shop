@@ -9,6 +9,7 @@ import org.assertj.core.api.Assertions;
 import org.hibernate.Hibernate;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -38,6 +39,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
     private ObjectMapper om;
 
     @BeforeEach
+    @DisplayName("초기 세팅 - 상품 및 옵션 등록")
     public void setUp(){
         em.createNativeQuery("ALTER TABLE product_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
         List<Product> productListPS = productJPARepository.saveAll(productDummyList());
@@ -46,6 +48,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
     }
 
     @Test
+    @DisplayName("상품 전체 조회")
     public void product_findAll_test() throws JsonProcessingException {
         // given
         int page = 0;
@@ -72,6 +75,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
 
     // ManyToOne 전략을 Eager로 간다면 추천
     @Test
+    @DisplayName("eager test")
     public void option_findByProductId_eager_test() throws JsonProcessingException {
         // given
         int id = 1;
@@ -89,6 +93,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
     }
 
     @Test
+    @DisplayName("상품아이디로 옵션 조회, lazy 영속화 에러 테스트")
     public void option_findByProductId_lazy_error_test() throws JsonProcessingException {
         // given
         int id = 1;
@@ -111,6 +116,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
     // 추천
     // 조인쿼리 직접 만들어서 사용하기
     @Test
+    @DisplayName("상품아이디로 옵션 조회 , fetch join")
     public void option_mFindByProductId_lazy_test() throws JsonProcessingException {
         // given
         int id = 1;
@@ -128,6 +134,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
 
     // 추천
     @Test
+    @DisplayName("상품아이디로 상품 조회, 상품 아이디로 옵션 찾기 각각")
     public void product_findById_and_option_findByProductId_lazy_test() throws JsonProcessingException {
         // given
         int id = 1;
