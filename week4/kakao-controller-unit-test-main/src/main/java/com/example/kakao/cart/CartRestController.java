@@ -1,16 +1,16 @@
 package com.example.kakao.cart;
 
+import com.example.kakao._core.errors.GlobalExceptionHandler;
+import com.example.kakao._core.errors.exception.Exception400;
 import com.example.kakao._core.security.CustomUserDetails;
 import com.example.kakao._core.utils.ApiUtils;
 import com.example.kakao._core.utils.FakeStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -19,6 +19,7 @@ import javax.validation.Valid;
 @RequestMapping("/carts")
 public class CartRestController {
 
+    private final GlobalExceptionHandler globalExceptionHandler;
     private final FakeStore fakeStore;
 
 // [
@@ -34,6 +35,9 @@ public class CartRestController {
     // (기능8) 장바구니 담기
     @PostMapping("/add")
     public ResponseEntity<?> addCartList(@RequestBody List<CartRequest.SaveDTO> requestDTOs, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        if (requestDTOs.isEmpty()) {
+            return globalExceptionHandler.getApiErrorResultResponseEntity(new Exception400("잘못된 요청입니다."));
+        }
         requestDTOs.forEach(
                 saveDTO -> System.out.println("요청 받은 장바구니 옵션 : "+saveDTO.toString())
         );
@@ -62,6 +66,9 @@ public class CartRestController {
     // (기능11) 주문하기 - (장바구니 업데이트)
     @PostMapping("/update")
     public ResponseEntity<?> update(@RequestBody @Valid List<CartRequest.UpdateDTO> requestDTOs, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        if (requestDTOs.isEmpty()) {
+            return globalExceptionHandler.getApiErrorResultResponseEntity(new Exception400("잘못된 요청입니다."));
+        }
         requestDTOs.forEach(
                 updateDTO -> System.out.println("요청 받은 장바구니 수정 내역 : "+updateDTO.toString())
         );
@@ -71,6 +78,8 @@ public class CartRestController {
             for (Cart cart : fakeStore.getCartList()) {
                 if(cart.getId() == updateDTO.getCartId()){
                     cart.update(updateDTO.getQuantity(), cart.getPrice() * updateDTO.getQuantity());
+                } else {
+                    return globalExceptionHandler.getApiErrorResultResponseEntity(new Exception400("유효하지 않은 요청입니다."));
                 }
             }
         }
