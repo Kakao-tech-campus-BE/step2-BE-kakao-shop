@@ -1371,11 +1371,17 @@
 
 </br>
 
+<details>
+<summary>Assignment 1</summary>
+
 ## **Assignment 1**
 
 - [API Reference](https://app.gitbook.com/s/o1E7yDwyPFukxZ8B4jd3/introduction/kakao-shop-documentation)는 RESTAPI로 설계된 API 문서입니다.
 
-</br>
+</details>
+
+<details>
+<summary>Assignment 2</summary>
 
 ## **Assignment 2**
 
@@ -1472,6 +1478,8 @@
 
 - User, Product, ProductOption, Cart, Order, OrderItem
 
+</details>
+
 </br>
 </br>
 
@@ -1518,6 +1526,97 @@
 
 > - 코드 작성하면서 어려웠던 점
 > - 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
+
+## **Assignment 1**
+
+### **CartJPARepositoryTest 구현**
+
+user를 두 명 저장하고 각 user에 따른 cart를 저장합니다.
+
+- clear()
+  - @AfterEach로 각 테스트를 격리하기 위해 테스트가 끝나면 id를 1로 설정합니다.
+- cart_findAll_test()
+  - 장바구니 전체 조회
+  - fetch=FetchType.EAGER로 설정할 경우 필요한 추가 쿼리가 모두 발생합니다.
+  - fetch=FetchType.LAZY로 설정할 경우 assertion에서 검증한 필드에 대해서만 추가 쿼리가 발생합니다.
+  - N+1 문제
+- cart_findAll_joinFetch_test()
+  - 장바구니 전체 조회 - fetch join
+  - ManyToOne, OneToOne 관계에 있는 엔티티를 join fetch 합니다.
+  - join fetch를 사용할 경우 모두 영속성 컨텍스트에서 관리되어 N+1 문제가 발생하지 않습니다.
+  - 여러 join fetch 쿼리를 테스트합니다.
+- cart_findAll_messageConverter_fail_test()
+  - 장바구니 전체 조회 - 메시지 컨버터 실패
+  - 예외를 잡아서 검증합니다.
+- cart_findAll_messageConverter_dto_test()
+  - 장바구니 전체 조회 - 메시지 컨버터 dto
+  - fetch=FetchType.LAZY로 설정할 경우 엔티티의 프록시 객체로 인해 직렬화가 안되는 것을 방지하기 위해 FindAllDTO를 사용합니다.
+- cart_findAll_messageConverter_joinFetch_test()
+  - 장바구니 전체 조회 - 메시지 컨버터 fetch join
+  - fetch join은 fetch=FetchType.LAZY보다 우선시 됩니다.
+  - cart_findAll_joinFetch_test()와 동일하지만 메시지 컨버터 기능이 추가됩니다.
+- cart_findById_test()
+  - 장바구니 아이디로 조회 성공
+  - fetch=FetchType.LAZY로 설정할 경우 user 쿼리가 추가 발생합니다.
+- cart_findById_fail_test()
+  - 장바구니 아이디로 조회 실패
+- cart_findByUserId_test()
+  - 사용자의 장바구니 조회 성공
+- cart_findByUserId_fail_test()
+  - 사용자의 장바구니 조회 실패
+- cart_update_test()
+  - 장바구니 수정 성공
+  - Cart의 update()를 사용해서 수량과 가격을 업데이트합니다.
+  - update 쿼리를 날리고 바로 반영하기 위해 em.flush()를 합니다.
+- cart_update_fail_test()
+  - 장바구니 수정 실패
+- cart_deleteAll_test()
+  - 장바구니 전체 삭제
+- cart_deleteById_test()
+  - 장바구니 개별 삭제
+
+</br>
+
+### **OrderJPARepositoryTest 구현**
+
+user를 두 명 저장하고 각 user에 따른 cart, order, item을 생성해서 저장합니다.
+
+- clear()
+  - @AfterEach로 각 테스트를 격리하기 위해 테스트가 끝나면 id를 1로 설정합니다.
+- order_findAll_test()
+  - 전체 주문 내역 조회
+  - fetch=FetchType.EAGER로 설정할 경우 필요한 추가 쿼리가 모두 발생합니다.
+  - fetch=FetchType.LAZY로 설정할 경우 assertion에서 검증한 필드에 대해서만 추가 쿼리가 발생합니다.
+- item_findByOrderId_test()
+  - 주문 번호로 주문 아이템 조회 성공
+- item_findByOrderId_fail_test()
+  - 주문 번호로 주문 아이템 조회 실패
+- item_findByOrderId_joinFetch_test()
+  - 주문 번호로 주문 아이템 조회 - fetch join
+  - 여러 join fetch 쿼리를 테스트합니다.
+
+</br>
+
+### **ProductJPARepositoryTest 구현**
+
+- clear()
+  - @AfterEach로 각 테스트를 격리하기 위해 테스트가 끝나면 id를 1로 설정합니다.
+- product_findAll_test()
+  - 전체 상품 조회
+  - fetch=FetchType.EAGER로 설정할 경우 필요한 추가 쿼리가 모두 발생합니다.
+  - fetch=FetchType.LAZY로 설정할 경우 assertion에서 검증한 필드에 대해서만 추가 쿼리가 발생합니다.
+- option_findByProductId_test()
+  - 개별 상품 조회 성공
+- option_findByProductId_fail_test()
+  - 개별 상품 조회 실패
+- option_findByProductId_joinFetch_test()
+  - 개별 상품 조회 - fetch join
+- product_findById_option_findByProductId_test()
+  - 개별 상품 조회 - 상품, 옵션 각각 조회
+  - 상품을 찾는 쿼리와 옵션을 가져오는 쿼리를 두 번 사용한다.
+  - 상품을 찾는 쿼리를 보냄으로써 product는 영속화되므로 옵션을 가져오는 쿼리에서 조인되지 않아도 됩니다.
+
+</br>
 
 # 4주차
 
