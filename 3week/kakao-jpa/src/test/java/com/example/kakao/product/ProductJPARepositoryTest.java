@@ -113,7 +113,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
 
     // 추천
     // 조인쿼리 직접 만들어서 사용하기
-    @DisplayName("옵션들 가져오기 테스트")
+    @DisplayName("상품 중 옵션들 가져오기 테스트")
     @Test
     public void option_mFindByProductId_lazy_test() throws JsonProcessingException {
         // given
@@ -150,6 +150,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
 
 
     // 추천
+    @DisplayName("옵션을 포함한 상품 조회 테스트")
     @Test
     public void product_findById_and_option_findByProductId_lazy_test() throws JsonProcessingException {
         // given
@@ -165,10 +166,35 @@ public class ProductJPARepositoryTest extends DummyEntity {
 
         String responseBody1 = om.writeValueAsString(productPS);
         String responseBody2 = om.writeValueAsString(optionListPS);
-        System.out.println("테스트 : "+responseBody1);
-        System.out.println("테스트 : "+responseBody2);
+        System.out.println("테스트 : " + responseBody1);
+        System.out.println("테스트 : " + responseBody2);
 
         // then
+        Assertions.assertThat(productPS.getId()).isEqualTo(1);
+        Assertions.assertThat(productPS.getProductName()).isEqualTo("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전");
+        Assertions.assertThat(productPS.getDescription()).isEqualTo("");
+        Assertions.assertThat(productPS.getImage()).isEqualTo("/images/1.jpg");
+        Assertions.assertThat(productPS.getPrice()).isEqualTo(1000);
+
+        Assertions.assertThat(optionListPS.get(0).getId()).isEqualTo(1);
+        Assertions.assertThat(optionListPS.get(0).getOptionName()).isEqualTo("01. 슬라이딩 지퍼백 크리스마스에디션 4종");
+        Assertions.assertThat(optionListPS.get(0).getPrice()).isEqualTo(10000);
+
+        Assertions.assertThat(optionListPS.get(1).getId()).isEqualTo(2);
+        Assertions.assertThat(optionListPS.get(1).getOptionName()).isEqualTo("02. 슬라이딩 지퍼백 플라워에디션 5종");
+        Assertions.assertThat(optionListPS.get(1).getPrice()).isEqualTo(10900);
+
+        Assertions.assertThat(optionListPS.get(2).getId()).isEqualTo(3);
+        Assertions.assertThat(optionListPS.get(2).getOptionName()).isEqualTo("고무장갑 베이지 S(소형) 6팩");
+        Assertions.assertThat(optionListPS.get(2).getPrice()).isEqualTo(9900);
+
+        Assertions.assertThat(optionListPS.get(3).getId()).isEqualTo(4);
+        Assertions.assertThat(optionListPS.get(3).getOptionName()).isEqualTo("뽑아쓰는 키친타올 130매 12팩");
+        Assertions.assertThat(optionListPS.get(3).getPrice()).isEqualTo(16900);
+
+        Assertions.assertThat(optionListPS.get(4).getId()).isEqualTo(5);
+        Assertions.assertThat(optionListPS.get(4).getOptionName()).isEqualTo("2겹 식빵수세미 6매");
+        Assertions.assertThat(optionListPS.get(4).getPrice()).isEqualTo(8900);
     }
 
 }
