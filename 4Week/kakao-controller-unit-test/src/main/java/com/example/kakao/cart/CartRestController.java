@@ -61,6 +61,17 @@ public ResponseEntity<?> addCartList(@RequestBody List<CartRequest.SaveDTO> requ
         }
     }
 
+    // [
+//     {
+//         "cartId":1,
+//         "quantity":10
+//     },
+//     {
+//         "cartId":2,
+//         "quantity":10
+//     }
+// ]
+    // (기능11) 주문하기 - (장바구니 업데이트)
     @PostMapping("/carts/update")
     public ResponseEntity<?> update(@RequestBody @Valid List<CartRequest.UpdateDTO> requestDTOs, @AuthenticationPrincipal CustomUserDetails userDetails,
                                     HttpServletRequest request) {
@@ -82,5 +93,15 @@ public ResponseEntity<?> addCartList(@RequestBody List<CartRequest.SaveDTO> requ
         }catch (RuntimeException e){
             return globalExceptionHandler.handle(e, request);
         }
+    }
+
+    @PostMapping("/carts/clear")
+    public ResponseEntity<?> clear(@AuthenticationPrincipal CustomUserDetails userDetails, HttpServletRequest request) {
+        try {
+            cartService.deleteCart(userDetails);
+        }catch (RuntimeException e){
+            return globalExceptionHandler.handle(e, request);
+        }
+        return ResponseEntity.ok(ApiUtils.success(null));
     }
 }
