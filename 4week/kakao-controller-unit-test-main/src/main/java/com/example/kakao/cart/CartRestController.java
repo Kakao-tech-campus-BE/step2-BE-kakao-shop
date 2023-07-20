@@ -1,5 +1,7 @@
 package com.example.kakao.cart;
 
+import com.example.kakao._core.errors.GlobalExceptionHandler;
+import com.example.kakao._core.errors.exception.Exception400;
 import com.example.kakao._core.security.CustomUserDetails;
 import com.example.kakao._core.utils.ApiUtils;
 import com.example.kakao._core.utils.FakeStore;
@@ -7,11 +9,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RequiredArgsConstructor
@@ -19,8 +22,10 @@ import javax.validation.Valid;
 public class CartRestController {
 
     private final FakeStore fakeStore;
+    private final GlobalExceptionHandler globalExceptionHandler;
+    private final CartService cartService;
 
-// [
+    // [
 //     {
 //         "optionId":1,
 //         "quantity":5
@@ -32,11 +37,30 @@ public class CartRestController {
 // ]
     // (기능8) 장바구니 담기
     @PostMapping("/carts/add")
-    public ResponseEntity<?> addCartList(@RequestBody List<CartRequest.SaveDTO> requestDTOs, @AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ResponseEntity<?> addCartList(@RequestBody @Valid List<CartRequest.SaveDTO> requestDTOs, Errors errors, @AuthenticationPrincipal CustomUserDetails userDetails,
+                                         HttpServletRequest request) {
+
+        // 유효성 검사
+        if (errors.hasErrors()) {
+            List<FieldError> fieldErrors = errors.getFieldErrors();
+            Exception400 e = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
+            return new ResponseEntity<>(
+                    e.body(),
+                    e.status()
+            );
+        }
+
         requestDTOs.forEach(
                 saveDTO -> System.out.println("요청 받은 장바구니 옵션 : "+saveDTO.toString())
         );
-        return ResponseEntity.ok(ApiUtils.success(null));
+
+        // 서비스 실행 : 내부에서 터지는 모든 익셉션은 예외 핸들러로 던지기
+        try {
+            cartService.checkQuantity(requestDTOs);
+            return ResponseEntity.ok().body(ApiUtils.success(null));
+        } catch (RuntimeException e) {
+            return globalExceptionHandler.handle(e, request);
+        }
     }
 
     // (기능9) 장바구니 보기 - (주문화면, 결재화면)
@@ -48,7 +72,7 @@ public class CartRestController {
     }
 
 
-// [
+    // [
 //     {
 //         "cartId":1,
 //         "quantity":10
@@ -60,7 +84,18 @@ public class CartRestController {
 // ]
     // (기능11) 주문하기 - (장바구니 업데이트)
     @PostMapping("/carts/update")
-    public ResponseEntity<?> update(@RequestBody @Valid List<CartRequest.UpdateDTO> requestDTOs, @AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ResponseEntity<?> update(@RequestBody @Valid List<CartRequest.UpdateDTO> requestDTOs, Errors errors, @AuthenticationPrincipal CustomUserDetails userDetails) {
+
+        // 유효성 검사
+        if (errors.hasErrors()) {
+            List<FieldError> fieldErrors = errors.getFieldErrors();
+            Exception400 e = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
+            return new ResponseEntity<>(
+                    e.body(),
+                    e.status()
+            );
+        }
+
         requestDTOs.forEach(
                 updateDTO -> System.out.println("요청 받은 장바구니 수정 내역 : "+updateDTO.toString())
         );
