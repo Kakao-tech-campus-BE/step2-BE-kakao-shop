@@ -1,5 +1,6 @@
 package com.example.kakao.product;
 
+import com.example.kakao._core.errors.GlobalExceptionHandler;
 import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao._core.errors.exception.Exception500;
 import com.example.kakao._core.utils.ApiUtils;
@@ -12,27 +13,26 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
 public class ProductRestController {
-
     private final FakeStore fakeStore;
+    private final ProductService productService;
+    private final GlobalExceptionHandler globalExceptionHandler;
 
     // (기능4) 전체 상품 목록 조회 (페이징 9개씩)
     @GetMapping("/products")
-    public ResponseEntity<?> findAll(@RequestParam(defaultValue = "0") int page) {
-        // 1. 더미데이터 가져와서 페이징하기
-        List<Product> productList = fakeStore.getProductList().stream().skip(page*9).limit(9).collect(Collectors.toList());
-
-        // 2. DTO 변환
-        List<ProductResponse.FindAllDTO> responseDTOs =
-                productList.stream().map(ProductResponse.FindAllDTO::new).collect(Collectors.toList());
-        
-        // 3. 공통 응답 DTO 만들기
-        return ResponseEntity.ok(ApiUtils.success(responseDTOs));
+    public ResponseEntity<?> findAll(@RequestParam(defaultValue = "0") int page, HttpServletRequest request) {
+        try {
+            List<ProductResponse.FindAllDTO> responseDTOs = productService.findAll(productService.findAllProduct(page));
+            return ResponseEntity.ok(ApiUtils.success(responseDTOs));
+        }catch (RuntimeException e){
+            return globalExceptionHandler.handle(e, request);
+        }
     }
 
     // (기능5) 개별 상품 상세 조회
