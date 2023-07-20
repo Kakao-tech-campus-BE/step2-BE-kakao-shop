@@ -35,7 +35,6 @@ import static org.mockito.Mockito.when;
 @Import({
         SecurityConfig.class,
         GlobalExceptionHandler.class,
-        FakeStore.class,
 })
 @WebMvcTest(controllers = {ProductRestController.class})
 public class ProductRestControllerTest  {
@@ -155,7 +154,7 @@ public class ProductRestControllerTest  {
         ).andExpect(
                 MockMvcResultMatchers.content().json(responseBody)
         );
-
+        System.out.println(result.andReturn().getResponse().getContentAsString());
     }
 
 }

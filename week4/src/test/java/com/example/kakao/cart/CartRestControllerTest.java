@@ -4,9 +4,13 @@ import com.example.kakao._core.security.JWTProvider;
 import com.example.kakao._core.security.SecurityConfig;
 import com.example.kakao._core.utils.FakeStore;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -20,7 +24,8 @@ import java.util.List;
 
 @Import({
         FakeStore.class,
-        SecurityConfig.class
+        SecurityConfig.class,
+        FakeStore.class
 })
 @WebMvcTest(controllers = {CartRestController.class})
 public class CartRestControllerTest {
@@ -30,6 +35,58 @@ public class CartRestControllerTest {
 
     @Autowired
     private ObjectMapper om;
+
+
+    @DisplayName("장바구니 추가")
+    @WithMockUser(username = "ssar@nate.com", roles = "USER")
+    @Test
+    public void add_test() throws Exception{
+        // given
+        List<CartRequest.SaveDTO> requestDTOs = new ArrayList<>();
+        CartRequest.SaveDTO d1 = new CartRequest.SaveDTO();
+        d1.setOptionId(1);
+        d1.setQuantity(10);
+        CartRequest.SaveDTO d2 = new CartRequest.SaveDTO();
+        d2.setOptionId(2);
+        d2.setQuantity(10);
+        requestDTOs.add(d1);
+        requestDTOs.add(d2);
+        String requestBody = om.writeValueAsString(requestDTOs);
+        System.out.println("테스트 : "+requestBody);
+
+        // when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .post("/carts/add")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+
+        // then
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
+    }
+
+    @DisplayName("장바구니 조회")
+    @WithMockUser(username = "ssar@nate.com", roles = "USER")
+    @Test
+    public void findAll_test() throws Exception {
+        // given
+        // when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .get("/carts")
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+        // then
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].id").value(1));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"));
+
+    }
 
     @WithMockUser(username = "ssar@nate.com", roles = "USER")
     @Test
@@ -65,4 +122,5 @@ public class CartRestControllerTest {
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].quantity").value(10));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].price").value(100000));
     }
+
 }

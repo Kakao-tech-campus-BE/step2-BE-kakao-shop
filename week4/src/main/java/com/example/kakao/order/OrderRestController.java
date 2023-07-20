@@ -26,6 +26,7 @@ public class OrderRestController {
         Order order = fakeStore.getOrderList().get(0);
         List<Item> itemList = fakeStore.getItemList();
         OrderResponse.FindByIdDTO responseDTO = new OrderResponse.FindByIdDTO(order, itemList);
+        System.out.println("responseDTO = " + responseDTO);
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
 
