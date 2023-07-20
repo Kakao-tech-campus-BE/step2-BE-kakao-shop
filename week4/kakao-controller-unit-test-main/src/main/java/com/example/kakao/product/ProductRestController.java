@@ -43,20 +43,22 @@ public class ProductRestController {
     // (기능5) 개별 상품 상세 조회
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable int id) {
+        if (id<0) {
+            return getApiErrorResultResponseEntity(new Exception400("잘못된 요청입니다."));
+        }
         // 1. 더미데이터 가져와서 상품 찾기
         Product product = fakeStore.getProductList().stream().filter(p -> p.getId() == id).findFirst().orElse(null);
 
         if(product == null){
-            Exception404 ex = new Exception404("해당 상품을 찾을 수 없습니다:"+id);
-            return new ResponseEntity<>(
-                    ex.body(),
-                    ex.status()
-            );
+            return getApiErrorResultResponseEntity(new Exception404("해당 상품을 찾을 수 없습니다:"+id));
         }
 
         // 2. 더미데이터 가져와서 해당 상품에 옵션 찾기
         List<Option> optionList = fakeStore.getOptionList().stream().filter(option -> product.getId() == option.getProduct().getId()).collect(Collectors.toList());
-        
+        if(optionList.isEmpty()){
+            return getApiErrorResultResponseEntity(new Exception404("해당 옵션을 찾을 수 없습니다:"+product.getProductName()));
+        }
+
         // 3. DTO 변환
         ProductResponse.FindByIdDTO responseDTO = new ProductResponse.FindByIdDTO(product, optionList);
 
