@@ -17,34 +17,34 @@ import java.util.List;
 @RestController
 public class OrderRestController {
 
-  OrderRespFindByIdDTO responseDTO = null;
-
+  OrderRespFindByIdDTO responseDTO = null; // 강의 시간에 예시로 보여주셨던 코드에서 이러한 형태로 되어있어서, 작성해보았습니다!
+  // *참고* ProductRestController.java의 57~58 line
   @PostMapping("/orders/save")
   public ResponseEntity<?> saveOrder() {
     List<OrderItemDTO> orderItemDTOList = new ArrayList<>();
     List<ProductDTO> productDTOList = new ArrayList<>();
 
-    ProductDTO productDTO_1 = ProductDTO.builder()
+    ProductDTO productDTO1 = ProductDTO.builder()
         .productName("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전")
         .items(orderItemDTOList)
         .build();
-    productDTOList.add(productDTO_1);
+    productDTOList.add(productDTO1);
 
-    OrderItemDTO orderItemDTO_1 = OrderItemDTO.builder()
+    OrderItemDTO orderItemDTO1 = OrderItemDTO.builder()
         .id(4)
         .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
         .quantity(10)
         .price(100000)
         .build();
-    orderItemDTOList.add(orderItemDTO_1);
+    orderItemDTOList.add(orderItemDTO1);
 
-    OrderItemDTO orderItemDTO_2 = OrderItemDTO.builder()
+    OrderItemDTO orderItemDTO2 = OrderItemDTO.builder()
         .id(5)
         .optionName("02. 슬라이딩 지퍼백 플라워에디션 5종")
         .quantity(10)
         .price(109000)
         .build();
-    orderItemDTOList.add(orderItemDTO_2);
+    orderItemDTOList.add(orderItemDTO2);
 
     responseDTO = new OrderRespFindByIdDTO(1, productDTOList, 209000);
 
@@ -59,29 +59,29 @@ public class OrderRestController {
     if (id == 1) {
       List<OrderItemDTO> orderItemDTOList = new ArrayList<>();
 
-      OrderItemDTO orderItemDTO_1 = OrderItemDTO.builder()
+      OrderItemDTO orderItemDTO1 = OrderItemDTO.builder()
           .id(4)
           .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
           .quantity(10)
           .price(100000)
           .build();
-      orderItemDTOList.add(orderItemDTO_1);
+      orderItemDTOList.add(orderItemDTO1);
 
-      OrderItemDTO orderItemDTO_2 = OrderItemDTO.builder()
+      OrderItemDTO orderItemDTO2 = OrderItemDTO.builder()
           .id(5)
           .optionName("02. 슬라이딩 지퍼백 플라워에디션 5종")
           .quantity(10)
           .price(109000)
           .build();
-      orderItemDTOList.add(orderItemDTO_2);
+      orderItemDTOList.add(orderItemDTO2);
 
       List<ProductDTO> productDTOList = new ArrayList<>();
 
-      ProductDTO productDTO_1 = ProductDTO.builder()
+      ProductDTO productDTO1 = ProductDTO.builder()
           .productName("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전")
           .items(orderItemDTOList)
           .build();
-      productDTOList.add(productDTO_1);
+      productDTOList.add(productDTO1);
 
       responseDTO = new OrderRespFindByIdDTO(id, productDTOList, 209000);
 

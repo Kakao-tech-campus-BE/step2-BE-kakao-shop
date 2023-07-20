@@ -12,12 +12,16 @@ public class ProductDTO {
 
   private int id;
   private String productName;
-  private List<CartItemDTO> cartItems;
+  private String description;
+  private String image;
+  private int price;
 
   @Builder
-  public ProductDTO(int id, String productName, List<CartItemDTO> cartItems) {
+  public ProductDTO(int id, String productName, String description, String image, int price) {
     this.id = id;
     this.productName = productName;
-    this.cartItems = cartItems;
+    this.description = description;
+    this.image = image;
+    this.price = price;
   }
 }
