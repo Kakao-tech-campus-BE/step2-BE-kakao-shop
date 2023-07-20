@@ -1,5 +1,7 @@
 package com.example.kakao.cart;
 
+import com.example.kakao._core.errors.GlobalExceptionHandler;
+import com.example.kakao._core.errors.exception.Exception400;
 import com.example.kakao._core.security.CustomUserDetails;
 import com.example.kakao._core.utils.ApiUtils;
 import com.example.kakao._core.utils.FakeStore;
@@ -61,16 +63,29 @@ public class CartRestController {
     // (기능11) 주문하기 - (장바구니 업데이트)
     @PostMapping("/carts/update")
     public ResponseEntity<?> update(@RequestBody @Valid List<CartRequest.UpdateDTO> requestDTOs, @AuthenticationPrincipal CustomUserDetails userDetails) {
+
         requestDTOs.forEach(
                 updateDTO -> System.out.println("요청 받은 장바구니 수정 내역 : "+updateDTO.toString())
         );
 
         // 가짜 저장소의 값을 변경한다.
         for (CartRequest.UpdateDTO updateDTO : requestDTOs) {
+            int count=0;
             for (Cart cart : fakeStore.getCartList()) {
                 if(cart.getId() == updateDTO.getCartId()){
+                    System.out.println("원래 있던 카트의 id " + cart.getId());
+                    System.out.println("업데이트 요청받은 카트의 id "+ updateDTO.getCartId());
                     cart.update(updateDTO.getQuantity(), cart.getPrice() * updateDTO.getQuantity());
+                }else{
+                    count++;
                 }
+            }
+            if(count != requestDTOs.size()-1){
+                Exception400 ex = new Exception400("장바구니에 없는 상품은 주문할 수 없습니다 : " + updateDTO.getCartId());
+                return new ResponseEntity<>(
+                        ex.body(),
+                        ex.status()
+                );
             }
         }
 
