@@ -5,6 +5,7 @@ import com.example.kakao._core.security.SecurityConfig;
 import com.example.kakao._core.util.DummyEntity;
 import com.example.kakao._core.utils.FakeStore;
 import com.example.kakao.product.option.Option;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -33,6 +34,7 @@ class ProductRestControllerTest extends DummyEntity {
     @MockBean
     private FakeStore fakeStore;
 
+    @DisplayName("메인페이지 상품 조회")
     @Test
     void findAll_test() throws Exception {
 
@@ -65,6 +67,7 @@ class ProductRestControllerTest extends DummyEntity {
                 );
     }
 
+    @DisplayName("해당 페이지의 상품 조회")
     @Test
     void findAll_with_param_test() throws Exception {
 
@@ -77,7 +80,6 @@ class ProductRestControllerTest extends DummyEntity {
         when(fakeStore.getProductList()).thenReturn(
                 mockProducts.stream().skip(page * limit).limit(limit).collect(Collectors.toList())
         );
-
 
         // when
         ResultActions result = mockMvc.perform(
@@ -99,8 +101,10 @@ class ProductRestControllerTest extends DummyEntity {
                 MockMvcResultMatchers.jsonPath("$.response[0].price").value(mockProducts.get(page * limit).getPrice()),
                 MockMvcResultMatchers.jsonPath("$.error").isEmpty()
         );
+
     }
 
+    @DisplayName("id로 상품 조회")
     @Test
     void findById_test() throws Exception {
 
@@ -108,11 +112,6 @@ class ProductRestControllerTest extends DummyEntity {
         int id = 1;
         List<Product> products = productList;
         List<Option> options = optionList;
-
-        // mock
-        when(fakeStore.getProductList()).thenReturn(products);
-        when(fakeStore.getOptionList()).thenReturn(options);
-
         Product product = products.stream()
                 .filter(p -> p.getId() == id)
                 .findFirst()
@@ -122,6 +121,9 @@ class ProductRestControllerTest extends DummyEntity {
                 .filter(option -> product.getId() == option.getProduct().getId())
                 .collect(Collectors.toList());
 
+        // mock
+        when(fakeStore.getProductList()).thenReturn(products);
+        when(fakeStore.getOptionList()).thenReturn(options);
 
         // when
         ResultActions result = mockMvc.perform(MockMvcRequestBuilders
@@ -143,5 +145,31 @@ class ProductRestControllerTest extends DummyEntity {
                 MockMvcResultMatchers.jsonPath("$.response.options[0].price").value(productOptions.get(0).getPrice()),
                 MockMvcResultMatchers.jsonPath("$.error").isEmpty()
         );
+
+    }
+
+    @DisplayName("id로 상품 조회 실패: 존재하지 않는 id")
+    @Test
+    void findById_fail_test() throws Exception {
+
+        // given
+        int id = 10000;
+        List<Product> products = productList;
+        List<Option> options = optionList;
+
+        // mock
+        when(fakeStore.getProductList()).thenReturn(products);
+        when(fakeStore.getOptionList()).thenReturn(options);
+
+        // when
+        ResultActions result = mockMvc.perform(MockMvcRequestBuilders
+                .get("/products/" + id)
+                .contentType(MediaType.APPLICATION_JSON));
+
+        result.andDo(print());
+
+        // then
+        result.andExpectAll(MockMvcResultMatchers.status().isNotFound());
+
     }
 }

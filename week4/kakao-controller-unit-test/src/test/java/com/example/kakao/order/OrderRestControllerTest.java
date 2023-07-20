@@ -8,6 +8,7 @@ import com.example.kakao.cart.CartRequest;
 import com.example.kakao.order.item.Item;
 import com.example.kakao.user.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -38,6 +39,7 @@ class OrderRestControllerTest extends DummyEntity {
     @MockBean
     private FakeStore fakeStore;
 
+    @DisplayName("주문 저장")
     @WithMockUser(username = "ssar@nate.com", roles = "USER")
     @Test
     void save_test() throws Exception {
@@ -81,6 +83,24 @@ class OrderRestControllerTest extends DummyEntity {
         );
      }
 
+    @DisplayName("주문 저장 실패: 인증되지 않은 사용자")
+    @Test
+    void save_fail_test() throws Exception {
+
+        // when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .post("/orders/save")
+                        .accept(MediaType.APPLICATION_JSON)
+        );
+
+        result.andDo(print());
+
+        // then
+        result.andExpect(MockMvcResultMatchers.status().isUnauthorized());
+    }
+
+    @DisplayName("주문 조회")
     @WithMockUser(username = "ssar@nate.com", roles = "USER")
     @Test
     void findById_test() throws Exception {
