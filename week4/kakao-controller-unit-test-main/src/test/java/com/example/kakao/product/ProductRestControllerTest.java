@@ -34,6 +34,22 @@ class ProductRestControllerTest {
     private ObjectMapper om;
 
     @Test
+    void findAll_default_test() throws Exception {
+        // given
+
+        // when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .get("/products")
+        );
+
+        // then
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response").isArray());
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty());
+    }
+
+    @Test
     void findAll_test() throws Exception {
         // given
         int page = 0;
@@ -49,6 +65,42 @@ class ProductRestControllerTest {
         result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response").isArray());
         result.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty());
+    }
+
+    @Test
+    void findAll_error_test() throws Exception {
+        // given
+        int page = 1000;
+
+        // when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .get("/products")
+                        .param("page",String.valueOf(page))
+        );
+
+        // then
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response").isArray());
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty());
+    }
+
+    @Test
+    void findAll_minus_error_test() throws Exception {
+        // given
+        int page = -1;
+
+        // when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .get("/products")
+                        .param("page",String.valueOf(page))
+        );
+
+        // then
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value(false));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response").isEmpty());
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error").isNotEmpty());
     }
 
     @Test
