@@ -1000,6 +1000,20 @@ API 명세서 기준으로 응답데이터를 똑같이 만들어 구현
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
+## Cart test
+
+![image](./image/task3/cart_CRUD_test.png)
+
+## Order test
+
+![image](./image/task3/order_test.png)
+
+## Item test
+
+![image](./image/task3/item_test.png)
+
+
+
 # 4주차
 
 카카오 테크 캠퍼스 2단계 - BE - 4주차 클론 과제
