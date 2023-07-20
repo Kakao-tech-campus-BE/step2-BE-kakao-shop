@@ -183,6 +183,21 @@ Link : [OrderRestController](week2/src/main/java/com/example/kakaoshop/order/Ord
 
 <br>
 
+---
+
+<br>
+
+## 3주차 과제  
+
+Link : [Week3 폴더](C:\myWorkspace\kakao_tech_campus_2\Assignment\step2-BE-kakao-shop\week3\src)
+ 
+<br>
+
+### ~ Week3_Assignment_END
+
+---
+<br>
+
 # 3주차
 
 카카오 테크 캠퍼스 2단계 - BE - 3주차 클론 과제
