@@ -123,8 +123,8 @@ public class CartJPARepositoryTest extends DummyEntity {
 //      만약 쓰지 않는다면 아래의 주석 코드와 같이 Lazy Loading으로 통해 proxy 객체에 담아 assertEquals 메서드를 통해
 //      하나씩 꺼내어 비교하는 방법이 있을 것 같다 대신 데이터가 많아졌을 시, select문이 대량으로 발생하는 단점이 있을 것 같다
         int userId = 1;
-        List<Cart> carts = cartJPARepository.mFindAllByUserId(userId);
 
+        List<Cart> carts = cartJPARepository.mFindAllByUserId(userId);
         String result = om.writeValueAsString(carts);
         System.out.println(result);
 
