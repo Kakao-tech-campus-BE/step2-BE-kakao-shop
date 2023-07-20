@@ -769,6 +769,8 @@
 
 + 그 외에 강사님이 작성하신 코드는 주석으로 표시해 두었습니다. 참고 부탁드립니다. 
 
++ 해당 과제는 1번 과제에서 작성한 Http Method를 따르지 않고 1주차에 제공받은 API 문서를 기준으로 작성되었습니다. API 문서는 2week 폴더에 함께 업로드 했습니다.
+
 + **Postman을 이용한 TEST 결과 값**
 
     + **/carts/add**
@@ -815,6 +817,187 @@
 >- Persistene Context를 clear하여서 테스트가 구현되었는가? (더미데이터를 JPA를 이용해서 insert 할 예정인데, 레포지토리 테스트시에 영속화된 데이터 때문에 쿼리를 제대로 보지 못할 수 있기 때문에)
 >- 테스트 코드의 쿼리 관련된 메서드가 너무 많은 select를 유발하지 않는지? (적절한 한방쿼리, 효율적인 in query, N+1 문제 등이 해결된 쿼리)
 >- BDD 패턴으로 구현되었는가? given, when, then
+
+</br>
+
+# **3주차 과제 제출**
+
+### **1. 레포지토리 단위테스트를 구현하여 소스코드를 제출하시오.**
+
++ 3week 폴더에 업로드 했습니다.
+
++ UserJPARepositoryTest의 경우 강사님이 작성하셨고 수정하지 말라고 하셔서 추가 구현은 하지 않았습니다.
+
++ 그 외에 강사님이 작성하신 코드는 주석으로 표시해 두었습니다. 참고 부탁드립니다.
+
++ 즉시로딩과 지연로딩을 고려하여 테스트 케이스를 짰습니다. 다만 PR 내용에서도 말씀 드렸듯 연속적인 연관 관계(ex. cart - option - product)에 대한 처리가 미숙해서 코드가 복잡할 수 있습니다.
+
+</br>
+
+### **2. 쿼리를 테스트하면서 가장 좋은 쿼리를 작성해보시오.**
+
++ 장바구니 조회
+
+    두 번의 select 쿼리만을 사용하는 cart_mFindByUserId_lazy_test 함수가 제일 효율적인 것으로 추측된다.
+
+    ```sql
+        select
+            product0_.id as id1_4_0_,
+            product0_.description as descript2_4_0_,
+            product0_.image as image3_4_0_,
+            product0_.price as price4_4_0_,
+            product0_.product_name as product_5_4_0_ 
+        from
+            product_tb product0_ 
+        where
+            product0_.id=?
+
+        select
+            cart0_.id as id1_0_0_,
+            option1_.id as id1_2_1_,
+            user2_.id as id1_5_2_,
+            cart0_.option_id as option_i4_0_0_,
+            cart0_.price as price2_0_0_,
+            cart0_.quantity as quantity3_0_0_,
+            cart0_.user_id as user_id5_0_0_,
+            option1_.option_name as option_n2_2_1_,
+            option1_.price as price3_2_1_,
+            option1_.product_id as product_4_2_1_,
+            user2_.email as email2_5_2_,
+            user2_.password as password3_5_2_,
+            user2_.roles as roles4_5_2_,
+            user2_.username as username5_5_2_ 
+        from
+            cart_tb cart0_ 
+        inner join
+            option_tb option1_ 
+                on cart0_.option_id=option1_.id 
+        inner join
+            user_tb user2_ 
+                on cart0_.user_id=user2_.id 
+        where
+            cart0_.user_id=?
+    ```
+</br>
+
++ 장바구니 업데이트
+
+    장바구니 물건 각각을 수정해야하므로 업데이트 해야할 상품의 개수만큼 update 쿼리를 실행해야한다. 
+
+    ```sql
+        update
+            cart_tb 
+        set
+            option_id=?,
+            price=?,
+            quantity=?,
+            user_id=? 
+        where
+            id=?
+
+        .
+        .
+        .
+    ```
+</br>
+
++ 주문 상품 조회
+
+    세 번의 select 쿼리와 2번의 inner join만을 사용하는 item_mFindByOrderId_lazy_test 함수가 제일 효율적인 것으로 추측된다.
+
+    ```sql
+        select
+            product0_.id as id1_4_0_,
+            product0_.description as descript2_4_0_,
+            product0_.image as image3_4_0_,
+            product0_.price as price4_4_0_,
+            product0_.product_name as product_5_4_0_ 
+        from
+            product_tb product0_ 
+        where
+            product0_.id=?
+
+        select
+            user0_.id as id1_5_0_,
+            user0_.email as email2_5_0_,
+            user0_.password as password3_5_0_,
+            user0_.roles as roles4_5_0_,
+            user0_.username as username5_5_0_ 
+        from
+            user_tb user0_ 
+        where
+            user0_.id=?
+
+        select
+            item0_.id as id1_1_0_,
+            option1_.id as id1_2_1_,
+            order2_.id as id1_3_2_,
+            item0_.option_id as option_i4_1_0_,
+            item0_.order_id as order_id5_1_0_,
+            item0_.price as price2_1_0_,
+            item0_.quantity as quantity3_1_0_,
+            option1_.option_name as option_n2_2_1_,
+            option1_.price as price3_2_1_,
+            option1_.product_id as product_4_2_1_,
+            order2_.user_id as user_id2_3_2_ 
+        from
+            item_tb item0_ 
+        inner join
+            option_tb option1_ 
+                on item0_.option_id=option1_.id 
+        inner join
+            order_tb order2_ 
+                on item0_.order_id=order2_.id 
+        where
+            item0_.order_id=?
+    ```
+</br>
+
++ 주문 조회
+
+    한 번의 select 쿼리를 사용하는 order_mFindByOrderId_lazy_test 함수가 제일 효율적인 것으로 추측된다.
+
+    ```sql
+        select
+            order0_.id as id1_3_0_,
+            user1_.id as id1_5_1_,
+            order0_.user_id as user_id2_3_0_,
+            user1_.email as email2_5_1_,
+            user1_.password as password3_5_1_,
+            user1_.roles as roles4_5_1_,
+            user1_.username as username5_5_1_ 
+        from
+            order_tb order0_ 
+        inner join
+            user_tb user1_ 
+                on order0_.user_id=user1_.id 
+        where
+            order0_.user_id=?
+    ```
+</br>
+
++ 주문 생성
+
+    주문 물건 각각을 생성해야하므로 주문한 상품 종류의 수만큼 insert 쿼리를 실행해야한다. 장바구니에서 주문한 제품을 삭제할 때는 deleteAllInBatch를 사용하여 한번의 delete 쿼리를 실행한다. 
+
+    ```sql
+        insert 
+        into
+            order_tb
+            (id, user_id) 
+        values
+            (default, ?)
+        .
+        .
+        .
+        delete 
+        from
+            cart_tb 
+        where
+            id=? 
+            or id=?
+    ```
+
 </br>
 
 ## **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
