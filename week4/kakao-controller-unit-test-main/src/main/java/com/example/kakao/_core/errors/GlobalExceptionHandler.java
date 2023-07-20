@@ -49,7 +49,7 @@ public class GlobalExceptionHandler {
         }
     }
 
-    public static ResponseEntity<?> getApiErrorResultResponseEntity(HttpAbstractException ex) {
+    public ResponseEntity<?> getApiErrorResultResponseEntity(HttpAbstractException ex) {
         return new ResponseEntity<>(
                 ex.body(),
                 ex.status()
