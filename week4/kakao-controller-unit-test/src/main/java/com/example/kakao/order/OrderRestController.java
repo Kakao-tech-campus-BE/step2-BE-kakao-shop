@@ -31,7 +31,7 @@ public class OrderRestController {
             return ResponseEntity.ok().body(ApiUtils.error("장바구니가 비어있습니다.", HttpStatus.FORBIDDEN));
         }
 
-        OrderResponse.FindByIdDTO responseDTO;responseDTO = orderService.save(userDetails.getUser(), carts);
+        OrderResponse.FindByIdDTO responseDTO = orderService.save(userDetails.getUser(), carts);
         cartService.deleteAllByUser(userDetails.getUser());
 
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
