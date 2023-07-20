@@ -76,17 +76,8 @@ public class CartRestController {
     // (기능9) 장바구니 보기 - (주문화면, 결재화면)
     @GetMapping("/carts")
     public ResponseEntity<?> findAll(@AuthenticationPrincipal CustomUserDetails userDetails, HttpServletRequest request) {
-        int id = userDetails.getUser().getId();
-        boolean isValid = true;
-        if (!isValid){
-            Exception403 e = new Exception403("인증된 user는 해당 장바구니로 접근할 권한이 없습니다" + id);
-            return new ResponseEntity<>(
-                    e.body(),
-                    e.status()
-            );
-        }
         try {
-            CartResponse.FindAllDTO cartList = cartService.findAll();
+            CartResponse.FindAllDTO cartList = cartService.findAll(userDetails.getUser());
             return ResponseEntity.ok(ApiUtils.success(cartList));
         } catch (RuntimeException e) {
             return globalExceptionHandler.handle(e, request);

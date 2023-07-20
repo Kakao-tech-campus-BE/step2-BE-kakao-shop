@@ -30,7 +30,7 @@ public class OrderService {
     @Transactional
     public OrderResponse.FindByIdDTO findByOrderId(int id){
         // fake
-        if (fakeStore.getOrderList().size() <= id)
+        if (id < 0 || fakeStore.getOrderList().size() <= id)
             throw new Exception404("존재하지 않는 주문 id입니다:" +  id);
         Order order = fakeStore.getOrderList().get(id - 1);
         List<Item> itemList = fakeStore.getItemList();
