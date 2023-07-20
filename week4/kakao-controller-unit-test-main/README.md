@@ -20,7 +20,7 @@
 - [x] Service 구현하기
 - [x] Repository와 Service 엮기
 - [x] TestCode 잘 돌아가는지 확인하기
-- [ ] 예외 케이스에 대한 TestCode 짜기
+- [x] 예외 케이스에 대한 TestCode 짜기
 
 ## 상태 코드 정리
 - `200 OK`: 클라이언트의 요청을 서버가 정상적으로 처리했을 경우
