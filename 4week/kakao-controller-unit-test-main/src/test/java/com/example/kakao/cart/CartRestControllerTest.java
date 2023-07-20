@@ -112,8 +112,41 @@ public class CartRestControllerTest {
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response").value(nullValue()));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.error.message").value("수량은 0 이상이어야 합니다. quantity : -1"));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.error.status").value(400));
+    }
 
+    @WithMockUser(username = "ssar@nate.com", roles = "USER")
+    @Test
+    // 동일한 optionId 값이 들어갔을 경우
+    public void add_test3() throws Exception {
+        // given
+        List<CartRequest.SaveDTO> requestDTOs = new ArrayList<>();
+        CartRequest.SaveDTO d1 = new CartRequest.SaveDTO();
+        d1.setOptionId(1);
+        d1.setQuantity(5);
+        CartRequest.SaveDTO d2 = new CartRequest.SaveDTO();
+        // 동일한 optionId
+        d2.setOptionId(1);
+        d2.setQuantity(5);
+        requestDTOs.add(d1);
+        requestDTOs.add(d2);
+        String requestBody = om.writeValueAsString(requestDTOs);
+        System.out.println("테스트 : "+requestBody);
 
+        // when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .post("/carts/add")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+
+        // then
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("false"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response").value(nullValue()));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error.message").value("동일한 옵션을 추가할 수 없습니다. optionId : 1"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error.status").value(400));
 
     }
 
