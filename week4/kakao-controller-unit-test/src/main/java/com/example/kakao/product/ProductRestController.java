@@ -24,6 +24,14 @@ public class ProductRestController {
     // (기능4) 전체 상품 목록 조회 (페이징 9개씩)
     @GetMapping("/products")
     public ResponseEntity<?> findAll(@RequestParam(defaultValue = "0") int page) {
+        if(page > 2 || page < 0) {
+            Exception404 ex = new Exception404("해당 페이지는 상품이 존재하지 않습니다. page : " + page);
+            return new ResponseEntity<>(
+                    ex.body(),
+                    ex.status()
+            );
+        }
+
         // 1. 더미데이터 가져와서 페이징하기
         List<Product> productList = fakeStore.getProductList().stream().skip(page*9).limit(9).collect(Collectors.toList());
 
