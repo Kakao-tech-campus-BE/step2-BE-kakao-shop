@@ -49,4 +49,15 @@ public ResponseEntity<?> addCartList(@RequestBody List<CartRequest.SaveDTO> requ
 
     return ResponseEntity.ok(ApiUtils.success(null));
     }
+
+    @GetMapping("/carts")
+    public ResponseEntity<?> findAll(@AuthenticationPrincipal CustomUserDetails userDetails,
+                                     HttpServletRequest request) {
+        try {
+            CartResponse.FindAllDTO responseDTO = new CartResponse.FindAllDTO(cartService.checkCart(userDetails));
+            return ResponseEntity.ok(ApiUtils.success(responseDTO));
+        }catch (RuntimeException e){
+            return globalExceptionHandler.handle(e, request);
+        }
+    }
 }
