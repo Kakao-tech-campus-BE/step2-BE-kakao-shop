@@ -105,6 +105,14 @@ public class CartRestController {
         // 서비스 실행 : 내부에서 터지는 모든 익셉션은 예외 핸들러로 던지기
         try {
             cartService.updateQuantity(requestDTOs);
+            // 업데이트
+            for (CartRequest.UpdateDTO updateDTO : requestDTOs) {
+                for (Cart cart : fakeStore.getCartList()) {
+                    if (cart.getId() == updateDTO.getCartId()) {
+                        cart.update(updateDTO.getQuantity(), cart.getPrice() * updateDTO.getQuantity());
+                    }
+                }
+            }
             // DTO를 만들어서 응답한다.
             CartResponse.UpdateDTO responseDTO = new CartResponse.UpdateDTO(fakeStore.getCartList());
             return ResponseEntity.ok().body(ApiUtils.success(responseDTO));

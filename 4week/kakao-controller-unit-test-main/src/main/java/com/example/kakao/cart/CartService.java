@@ -15,26 +15,11 @@ import java.util.Set;
 @Service
 public class CartService {
 
-    // 수량 변경을 위해 가져옴
-    private CartJPARepository cartJPARepository;
-    private final FakeStore fakeStore;
-
-    // carts/update 코드를 service 레이어로 옮기기
-    @Transactional
     public void updateQuantity(List<CartRequest.UpdateDTO> requestDTOs) {
         // 음수가 들어오는지 체크 
         validateQuantityForCartIds(requestDTOs);
         // 동일한 cartId 가 들어오는지 체크
         validateDuplicateCartIds(requestDTOs);
-        
-        // 업데이트
-        for (CartRequest.UpdateDTO updateDTO : requestDTOs) {
-            for (Cart cart : fakeStore.getCartList()) {
-                if (cart.getId() == updateDTO.getCartId()) {
-                    cart.update(updateDTO.getQuantity(), cart.getPrice() * updateDTO.getQuantity());
-                }
-            }
-        }
 
     }
 

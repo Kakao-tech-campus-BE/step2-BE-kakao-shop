@@ -1,12 +1,15 @@
 package com.example.kakao.cart;
 
+import com.example.kakao._core.errors.GlobalExceptionHandler;
 import com.example.kakao._core.security.JWTProvider;
 import com.example.kakao._core.security.SecurityConfig;
 import com.example.kakao._core.utils.FakeStore;
+import com.example.kakao.log.ErrorLogJPARepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -20,10 +23,17 @@ import java.util.List;
 
 @Import({
         FakeStore.class,
-        SecurityConfig.class
+        SecurityConfig.class,
+        GlobalExceptionHandler.class
 })
 @WebMvcTest(controllers = {CartRestController.class})
 public class CartRestControllerTest {
+
+    @MockBean
+    private ErrorLogJPARepository errorLogJPARepository;
+
+    @MockBean // CartService
+    private CartService cartService;
 
     @Autowired
     private MockMvc mvc;
