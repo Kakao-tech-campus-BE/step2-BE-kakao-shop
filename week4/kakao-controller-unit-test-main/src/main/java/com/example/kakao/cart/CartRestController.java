@@ -2,6 +2,7 @@ package com.example.kakao.cart;
 
 import com.example.kakao._core.errors.GlobalExceptionHandler;
 import com.example.kakao._core.errors.exception.Exception400;
+import com.example.kakao._core.errors.exception.Exception403;
 import com.example.kakao._core.security.CustomUserDetails;
 import com.example.kakao._core.utils.ApiUtils;
 import com.example.kakao._core.utils.FakeStore;
@@ -36,7 +37,7 @@ public class CartRestController {
     @PostMapping("/add")
     public ResponseEntity<?> addCartList(@RequestBody List<CartRequest.SaveDTO> requestDTOs, @AuthenticationPrincipal CustomUserDetails userDetails) {
         if (requestDTOs.isEmpty()) {
-            return globalExceptionHandler.getApiErrorResultResponseEntity(new Exception400("잘못된 요청입니다."));
+            return globalExceptionHandler.getApiErrorResultResponseEntity(new Exception403("잘못된 요청입니다."));
         }
         requestDTOs.forEach(
                 saveDTO -> System.out.println("요청 받은 장바구니 옵션 : "+saveDTO.toString())
@@ -67,7 +68,7 @@ public class CartRestController {
     @PostMapping("/update")
     public ResponseEntity<?> update(@RequestBody @Valid List<CartRequest.UpdateDTO> requestDTOs, @AuthenticationPrincipal CustomUserDetails userDetails) {
         if (requestDTOs.isEmpty()) {
-            return globalExceptionHandler.getApiErrorResultResponseEntity(new Exception400("잘못된 요청입니다."));
+            return globalExceptionHandler.getApiErrorResultResponseEntity(new Exception403("잘못된 요청입니다."));
         }
         requestDTOs.forEach(
                 updateDTO -> System.out.println("요청 받은 장바구니 수정 내역 : "+updateDTO.toString())
@@ -79,7 +80,7 @@ public class CartRestController {
                 if(cart.getId() == updateDTO.getCartId()){
                     cart.update(updateDTO.getQuantity(), cart.getPrice() * updateDTO.getQuantity());
                 } else {
-                    return globalExceptionHandler.getApiErrorResultResponseEntity(new Exception400("유효하지 않은 요청입니다."));
+                    return globalExceptionHandler.getApiErrorResultResponseEntity(new Exception403("유효하지 않은 요청입니다."));
                 }
             }
         }

@@ -2,6 +2,7 @@ package com.example.kakao.product;
 
 import com.example.kakao._core.errors.GlobalExceptionHandler;
 import com.example.kakao._core.errors.exception.Exception400;
+import com.example.kakao._core.errors.exception.Exception403;
 import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao._core.utils.ApiUtils;
 import com.example.kakao._core.utils.FakeStore;
@@ -25,7 +26,7 @@ public class ProductRestController {
     @GetMapping("")
     public ResponseEntity<?> findAll(@RequestParam(defaultValue = "0") int page) {
         if (page<0) {
-            return globalExceptionHandler.getApiErrorResultResponseEntity(new Exception400("잘못된 요청입니다."));
+            return globalExceptionHandler.getApiErrorResultResponseEntity(new Exception403("잘못된 요청입니다."));
         }
         // 1. 더미데이터 가져와서 페이징하기
         List<Product> productList = fakeStore.getProductList().stream().skip(page*9).limit(9).collect(Collectors.toList());
@@ -42,7 +43,7 @@ public class ProductRestController {
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable int id) {
         if (id<0) {
-            return globalExceptionHandler.getApiErrorResultResponseEntity(new Exception400("잘못된 요청입니다."));
+            return globalExceptionHandler.getApiErrorResultResponseEntity(new Exception403("잘못된 요청입니다."));
         }
         // 1. 더미데이터 가져와서 상품 찾기
         Product product = fakeStore.getProductList().stream().filter(p -> p.getId() == id).findFirst().orElse(null);
