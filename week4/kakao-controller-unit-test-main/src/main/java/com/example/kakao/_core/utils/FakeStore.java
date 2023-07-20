@@ -30,7 +30,7 @@ public class FakeStore {
     private List<Order> orderList = orderDummyList();
     private List<Item> itemList = itemDummyList(cartList);
 
-    private User newUser(Integer id, String username){
+    public User newUser(Integer id, String username){
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return User.builder()
                 .id(id)
@@ -41,7 +41,7 @@ public class FakeStore {
                 .build();
     }
 
-    private Product newProduct(Integer id, String productName, int imageNumber, int price) {
+    public Product newProduct(Integer id, String productName, int imageNumber, int price) {
         return Product.builder()
                 .id(id)
                 .productName(productName)
@@ -51,7 +51,7 @@ public class FakeStore {
                 .build();
     }
 
-    private Option newOption(Product product, Integer id, String optionName, int price) {
+    public Option newOption(Product product, Integer id, String optionName, int price) {
         return Option.builder()
                 .product(product)
                 .id(id)
@@ -60,7 +60,7 @@ public class FakeStore {
                 .build();
     }
 
-    private Cart newCart(Option option, Integer id, Integer quantity){
+    public Cart newCart(Option option, Integer id, Integer quantity){
         return Cart.builder()
                 .id(id)
                 .user(newUser(1, "ssar"))
