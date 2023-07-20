@@ -4,13 +4,16 @@ import com.example.kakao.product.option.Option;
 import com.example.kakao.product.Product;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class CartResponse {
 
-    @Getter @Setter
+    @Getter
+    @Setter
+    @ToString
     public static class UpdateDTO{
         private List<CartDTO> carts;
         private int totalPrice;
@@ -23,6 +26,7 @@ public class CartResponse {
 
         @Getter
         @Setter
+        @ToString
         public class CartDTO {
             private int cartId;
             private int optionId;
@@ -41,7 +45,9 @@ public class CartResponse {
     }
 
 
-    @Getter @Setter
+    @Getter
+    @Setter
+    @ToString
     public static class FindAllDTO{
         private List<ProductDTO> products;
         private int totalPrice;
@@ -56,6 +62,7 @@ public class CartResponse {
 
         @Getter
         @Setter
+        @ToString
         public class ProductDTO {
             private int id;
             private String productName;
@@ -70,7 +77,9 @@ public class CartResponse {
                         .collect(Collectors.toList());
             }
 
-            @Getter @Setter
+            @Getter
+            @Setter
+            @ToString
             public class CartDTO {
                 private int id;
                 private OptionDTO option;
@@ -84,7 +93,9 @@ public class CartResponse {
                     this.price = cart.getOption().getPrice()*cart.getQuantity();
                 }
 
-                @Getter @Setter
+                @Getter
+                @Setter
+                @ToString
                 public class OptionDTO {
                     private int id;
                     private String optionName;

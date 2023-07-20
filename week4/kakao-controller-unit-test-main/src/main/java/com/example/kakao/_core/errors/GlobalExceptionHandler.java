@@ -41,9 +41,10 @@ public class GlobalExceptionHandler {
                 .build();
         errorLogJPARepository.save(errorLog);
 
+        Exception400 ex = new Exception400(errors.get(0));
         return new ResponseEntity<>(
-                errors,
-                HttpStatus.BAD_REQUEST
+                ex.body(),
+                ex.status()
         );
     }
 

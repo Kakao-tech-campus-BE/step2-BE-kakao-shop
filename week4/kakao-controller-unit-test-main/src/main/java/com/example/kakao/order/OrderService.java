@@ -30,7 +30,7 @@ public class OrderService {
     @Transactional
     public OrderResponse.FindByIdDTO save(@AuthenticationPrincipal CustomUserDetails userDetails){
         try{
-            List<Cart> cartList = cartJPARepository.findByUserId(userDetails.getUser().getId());
+            List<Cart> cartList = cartJPARepository.mFindByUserId(userDetails.getUser().getId());
 
             if(cartList.isEmpty()){
                 throw new Exception400("장바구니에 상품이 없습니다.");

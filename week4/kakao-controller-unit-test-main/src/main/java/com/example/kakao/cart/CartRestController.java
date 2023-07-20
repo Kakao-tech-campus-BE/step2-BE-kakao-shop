@@ -20,6 +20,7 @@ import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
 
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 @Validated
@@ -60,7 +61,7 @@ public class CartRestController {
     @GetMapping("/carts")
     public ResponseEntity<?> findAll(@AuthenticationPrincipal CustomUserDetails userDetails, HttpServletRequest request) {
         try{
-            CartResponse.FindAllDTO responseDTO = cartService.findAll(userDetails.getUser().getId());
+            CartResponse.FindAllDTO responseDTO = cartService.findAll();
             return ResponseEntity.ok(ApiUtils.success(responseDTO));
         }catch(RuntimeException e){
             return globalExceptionHandler.handle(e, request);
@@ -84,7 +85,7 @@ public class CartRestController {
 //        }
 
         try{
-            CartResponse.UpdateDTO responseDTO = cartService.update(requestDTOs, userDetails);
+            CartResponse.UpdateDTO responseDTO = cartService.update(requestDTOs);
             requestDTOs.forEach(
                     updateDTO -> System.out.println("요청 받은 장바구니 수정 내역 : " + updateDTO.toString())
             );

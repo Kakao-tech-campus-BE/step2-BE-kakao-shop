@@ -53,9 +53,10 @@ public class CartService {
         }
     }
 
-    public CartResponse.FindAllDTO findAll(Integer id){
+    public CartResponse.FindAllDTO findAll(){
         try{
-            List<Cart> findAllList = cartJPARepository.findByUserId(id);
+            //List<Cart> findAllList = cartJPARepository.mFindByUserId(id);
+            List<Cart> findAllList = cartJPARepository.findAll();
             return new CartResponse.FindAllDTO(findAllList);
         }catch (Exception e){
             ErrorLog errorLog = ErrorLog.builder()
@@ -67,7 +68,7 @@ public class CartService {
     }
 
     @Transactional
-    public CartResponse.UpdateDTO update(List<CartRequest.UpdateDTO> requestDTOs, @AuthenticationPrincipal CustomUserDetails userDetails){
+    public CartResponse.UpdateDTO update(List<CartRequest.UpdateDTO> requestDTOs){
         try{
             List<Cart> carts = new ArrayList<>();
             for (CartRequest.UpdateDTO requestDTO : requestDTOs) {
