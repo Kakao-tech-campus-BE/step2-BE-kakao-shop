@@ -20,7 +20,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @Import({
         FakeStore.class,
         SecurityConfig.class,
-
 })
 @WebMvcTest(controllers = {OrderRestController.class})
 public class OrderRestControllerTest {
