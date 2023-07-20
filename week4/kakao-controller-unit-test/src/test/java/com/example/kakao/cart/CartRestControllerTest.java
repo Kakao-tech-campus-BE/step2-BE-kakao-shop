@@ -16,7 +16,6 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,12 +24,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-@Import({
-        FakeStore.class,
-        SecurityConfig.class
-})
+@Import({SecurityConfig.class})
 @WebMvcTest(controllers = {CartRestController.class})
-public class CartRestControllerTest extends DummyEntity {
+class CartRestControllerTest extends DummyEntity {
 
     @Autowired
     private MockMvc mvc;
@@ -43,37 +39,50 @@ public class CartRestControllerTest extends DummyEntity {
 
     @WithMockUser(username = "ssar@nate.com", roles = "USER")
     @Test
-    public void update_test() throws Exception {
+    void update_test() throws Exception {
+
         // given
-        List<CartRequest.UpdateDTO> requestDTOs = new ArrayList<>();
-        CartRequest.UpdateDTO d1 = new CartRequest.UpdateDTO();
-        d1.setCartId(1);
-        d1.setQuantity(10);
-        CartRequest.UpdateDTO d2 = new CartRequest.UpdateDTO();
-        d2.setCartId(2);
-        d2.setQuantity(10);
-        requestDTOs.add(d1);
-        requestDTOs.add(d2);
+        List<Cart> mockCarts = cartList;
+        int cartId1 = 1;
+        int quantity1 = 10;
+        int cartId2 = 2;
+        int quantity2 = 10;
+
+        CartRequest.UpdateDTO d1 = new CartRequest.UpdateDTO(cartId1, quantity1);
+        CartRequest.UpdateDTO d2 = new CartRequest.UpdateDTO(cartId2, quantity2);
+        List<CartRequest.UpdateDTO> requestDTOs = List.of(d1, d2);
         String requestBody = om.writeValueAsString(requestDTOs);
-        System.out.println("테스트 : "+requestBody);
+
+        // stub
+        when(fakeStore.getCartList()).thenReturn(mockCarts);
+        /* stub을 이용하여 mockCart를 이용하게 하였음.
+         이를 통하여, main 코드의 getCartList() 메서드를 낚아채고, test용 DummyEntity를 이용하도록 하였음.
+         main의 DummyEntity를 이용하게 된다면, 만약 main의 entity가 변경되거나 삭제된다면,
+         기존에 작성했던 테스트코드에서는 직접 main의 DummyEntity값들을 넣어줬기 때문에
+         테스트코드까지 실패하게 되는 상황이 발생할 것이라고 생각하여 이렇게 구현했음.
+         또한, 이렇게 함으로써 기존 테스트코드에서의 테스트 순서가 무작위인 상황에서 [조회 -> 수정]을 했을 때 조회 결과와,
+         [수정 -> 조회]를 수행했을 때 조회 결과가 달라지는 문제를 해결할 수 있었음.
+         (테스트의 결과가 다른 테스트의 결과에 의존하는 현상을 해결하였음)
+        */
 
         // when
         ResultActions result = mvc.perform(
                 MockMvcRequestBuilders
                         .post("/carts/update")
+                        .accept(MediaType.APPLICATION_JSON)
                         .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON)
         );
-        String responseBody = result.andReturn().getResponse().getContentAsString();
-        System.out.println("테스트 : "+responseBody);
+
+        result.andDo(print());
 
         // then
         result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].cartId").value(1));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].optionId").value(1));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].quantity").value(10));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].price").value(100000));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].cartId").value(mockCarts.get(0).getId()));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].optionId").value(mockCarts.get(0).getOption().getId()));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].optionName").value(mockCarts.get(0).getOption().getOptionName()));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].quantity").value(quantity1));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].price").value(mockCarts.get(0).getOption().getPrice() * quantity1));
     }
 
     @WithMockUser(username = "ssar@nate.com", roles = "USER")
@@ -81,11 +90,15 @@ public class CartRestControllerTest extends DummyEntity {
     void addCartList_test() throws Exception { // addCartList()를 수행해도, 어떻게하든 sout만 실행하고, success가 뜬다.
 
         // given
-        CartRequest.SaveDTO s1 = new CartRequest.SaveDTO(1, 5);
-        CartRequest.SaveDTO s2 = new CartRequest.SaveDTO(2, 5);
+        int optionId1 = 1;
+        int quantity1 = 5;
+        int optionId2 = 2;
+        int quantity2 = 5;
+
+        CartRequest.SaveDTO s1 = new CartRequest.SaveDTO(optionId1, quantity1);
+        CartRequest.SaveDTO s2 = new CartRequest.SaveDTO(optionId2, quantity2);
         List<CartRequest.SaveDTO> saveDTOS = Arrays.asList(s1, s2);
         String requestBody = om.writeValueAsString(saveDTOS);
-        System.out.println("테스트 : " + requestBody);
 
         // when
         ResultActions result = mvc.perform(
@@ -113,10 +126,10 @@ public class CartRestControllerTest extends DummyEntity {
     void findAll_test() throws Exception {
 
         // given
-        List<Cart> mockCartList = cartDummyList(optionList);
+        List<Cart> mockCarts = cartList;
 
         // stub
-        when(fakeStore.getCartList()).thenReturn(mockCartList);
+        when(fakeStore.getCartList()).thenReturn(mockCarts);
 
         // when
         ResultActions result = mvc.perform(
@@ -130,21 +143,23 @@ public class CartRestControllerTest extends DummyEntity {
         result.andExpectAll(
                 status().isOk(),
                 MockMvcResultMatchers.jsonPath("$.success").value("true"),
-                MockMvcResultMatchers.jsonPath("$.response.products[0].id").value(1),
-                MockMvcResultMatchers.jsonPath("$.response.products[0].productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"),
-                MockMvcResultMatchers.jsonPath("$.response.products[0].carts[0].id").value(1),
-                MockMvcResultMatchers.jsonPath("$.response.products[0].carts[0].option.id").value(1),
-                MockMvcResultMatchers.jsonPath("$.response.products[0].carts[0].option.optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"),
-                MockMvcResultMatchers.jsonPath("$.response.products[0].carts[0].option.price").value(10000),
-                MockMvcResultMatchers.jsonPath("$.response.products[0].carts[0].quantity").value(5),
-                MockMvcResultMatchers.jsonPath("$.response.products[0].carts[0].price").value(50000),
-                MockMvcResultMatchers.jsonPath("$.response.products[0].carts[1].id").value(2),
-                MockMvcResultMatchers.jsonPath("$.response.products[0].carts[1].option.id").value(2),
-                MockMvcResultMatchers.jsonPath("$.response.products[0].carts[1].option.optionName").value("02. 슬라이딩 지퍼백 플라워에디션 5종"),
-                MockMvcResultMatchers.jsonPath("$.response.products[0].carts[1].option.price").value(10900),
-                MockMvcResultMatchers.jsonPath("$.response.products[0].carts[1].quantity").value(5),
-                MockMvcResultMatchers.jsonPath("$.response.products[0].carts[1].price").value(54500),
-                MockMvcResultMatchers.jsonPath("$.response.totalPrice").value(104500),
+                MockMvcResultMatchers.jsonPath("$.response.products[0].id").value(mockCarts.get(0).getOption().getProduct().getId()),
+                MockMvcResultMatchers.jsonPath("$.response.products[0].productName").value(mockCarts.get(0).getOption().getProduct().getProductName()),
+                MockMvcResultMatchers.jsonPath("$.response.products[0].carts[0].id").value(mockCarts.get(0).getId()),
+                MockMvcResultMatchers.jsonPath("$.response.products[0].carts[0].option.id").value(mockCarts.get(0).getOption().getId()),
+                MockMvcResultMatchers.jsonPath("$.response.products[0].carts[0].option.optionName").value(mockCarts.get(0).getOption().getOptionName()),
+                MockMvcResultMatchers.jsonPath("$.response.products[0].carts[0].option.price").value(mockCarts.get(0).getOption().getPrice()),
+                MockMvcResultMatchers.jsonPath("$.response.products[0].carts[0].quantity").value(mockCarts.get(0).getQuantity()),
+                MockMvcResultMatchers.jsonPath("$.response.products[0].carts[0].price").value(mockCarts.get(0).getPrice()),
+                MockMvcResultMatchers.jsonPath("$.response.products[0].carts[1].id").value(mockCarts.get(1).getId()),
+                MockMvcResultMatchers.jsonPath("$.response.products[0].carts[1].option.id").value(mockCarts.get(1).getOption().getId()),
+                MockMvcResultMatchers.jsonPath("$.response.products[0].carts[1].option.optionName").value(mockCarts.get(1).getOption().getOptionName()),
+                MockMvcResultMatchers.jsonPath("$.response.products[0].carts[1].option.price").value(mockCarts.get(1).getOption().getPrice()),
+                MockMvcResultMatchers.jsonPath("$.response.products[0].carts[1].quantity").value(mockCarts.get(1).getQuantity()),
+                MockMvcResultMatchers.jsonPath("$.response.products[0].carts[1].price").value(mockCarts.get(1).getPrice()),
+                MockMvcResultMatchers.jsonPath("$.response.totalPrice").value(
+                        mockCarts.stream().map(Cart::getPrice).mapToInt(Integer::intValue).sum()
+                ),
                 MockMvcResultMatchers.jsonPath("$.error").isEmpty()
         );
     }

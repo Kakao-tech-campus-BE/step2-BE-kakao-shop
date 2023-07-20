@@ -5,11 +5,13 @@ import com.example.kakao._core.security.SecurityConfig;
 import com.example.kakao._core.util.DummyEntity;
 import com.example.kakao._core.utils.FakeStore;
 import com.example.kakao.cart.CartRequest;
+import com.example.kakao.order.item.Item;
 import com.example.kakao.user.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -22,28 +24,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Import({
-        FakeStore.class,
-        SecurityConfig.class
-})
+@Import({SecurityConfig.class})
 @WebMvcTest(controllers = {OrderRestController.class})
 class OrderRestControllerTest extends DummyEntity {
 
     @Autowired
     private MockMvc mvc;
 
-    @Autowired
-    private ObjectMapper om;
-
+    @MockBean
+    private FakeStore fakeStore;
 
     @WithMockUser(username = "ssar@nate.com", roles = "USER")
     @Test
     void save_test() throws Exception {
 
         // given
+        List<Order> mockOrders = orderList;
+        List<Item> items = itemList;
+
+        // mock
+        when(fakeStore.getOrderList()).thenReturn(mockOrders);
+        when(fakeStore.getItemList()).thenReturn(items);
 
         // when
         ResultActions result = mvc.perform(
@@ -58,18 +63,20 @@ class OrderRestControllerTest extends DummyEntity {
         result.andExpectAll(
                 status().isOk(),
                 MockMvcResultMatchers.jsonPath("$.success").value("true"),
-                MockMvcResultMatchers.jsonPath("$.response.id").value(1),
-                MockMvcResultMatchers.jsonPath("$.response.products[0].id").value(1),
-                MockMvcResultMatchers.jsonPath("$.response.products[0].productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"),
-                MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].id").value(1),
-                MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"),
-                MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].quantity").value(5),
-                MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].price").value(50000),
-                MockMvcResultMatchers.jsonPath("$.response.products[0].items[1].id").value(2),
-                MockMvcResultMatchers.jsonPath("$.response.products[0].items[1].optionName").value("02. 슬라이딩 지퍼백 플라워에디션 5종"),
-                MockMvcResultMatchers.jsonPath("$.response.products[0].items[1].quantity").value(5),
-                MockMvcResultMatchers.jsonPath("$.response.products[0].items[1].price").value(54500),
-                MockMvcResultMatchers.jsonPath("$.response.totalPrice").value(104500),
+                MockMvcResultMatchers.jsonPath("$.response.id").value(mockOrders.get(0).getId()),
+                MockMvcResultMatchers.jsonPath("$.response.products[0].id").value(items.get(0).getOption().getProduct().getId()),
+                MockMvcResultMatchers.jsonPath("$.response.products[0].productName").value(items.get(0).getOption().getProduct().getProductName()),
+                MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].id").value(items.get(0).getId()),
+                MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].optionName").value(items.get(0).getOption().getOptionName()),
+                MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].quantity").value(items.get(0).getQuantity()),
+                MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].price").value(items.get(0).getPrice()),
+                MockMvcResultMatchers.jsonPath("$.response.products[0].items[1].id").value(items.get(1).getId()),
+                MockMvcResultMatchers.jsonPath("$.response.products[0].items[1].optionName").value(items.get(1).getOption().getOptionName()),
+                MockMvcResultMatchers.jsonPath("$.response.products[0].items[1].quantity").value(items.get(1).getQuantity()),
+                MockMvcResultMatchers.jsonPath("$.response.products[0].items[1].price").value(items.get(1).getPrice()),
+                MockMvcResultMatchers.jsonPath("$.response.totalPrice").value(
+                        items.stream().map(Item::getPrice).mapToInt(Integer::intValue).sum()
+                ),
                 MockMvcResultMatchers.jsonPath("$.error").isEmpty()
         );
      }
@@ -80,6 +87,12 @@ class OrderRestControllerTest extends DummyEntity {
 
         // given
         int orderId = 1;
+        List<Order> orders = orderList;
+        List<Item> items = itemList;
+
+        // mock
+        when(fakeStore.getOrderList()).thenReturn(orders);
+        when(fakeStore.getItemList()).thenReturn(items);
 
         // when
         ResultActions result = mvc.perform(
@@ -94,18 +107,19 @@ class OrderRestControllerTest extends DummyEntity {
         result.andExpectAll(
                 status().isOk(),
                 MockMvcResultMatchers.jsonPath("$.success").value("true"),
-                MockMvcResultMatchers.jsonPath("$.response.id").value(1),
+                MockMvcResultMatchers.jsonPath("$.response.id").value(orderId),
                 MockMvcResultMatchers.jsonPath("$.response.products[0].id").value(1),
-                MockMvcResultMatchers.jsonPath("$.response.products[0].productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"),
-                MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].id").value(1),
-                MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"),
-                MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].quantity").value(5),
-                MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].price").value(50000),
-                MockMvcResultMatchers.jsonPath("$.response.products[0].items[1].id").value(2),
-                MockMvcResultMatchers.jsonPath("$.response.products[0].items[1].optionName").value("02. 슬라이딩 지퍼백 플라워에디션 5종"),
-                MockMvcResultMatchers.jsonPath("$.response.products[0].items[1].quantity").value(5),
-                MockMvcResultMatchers.jsonPath("$.response.products[0].items[1].price").value(54500),
-                MockMvcResultMatchers.jsonPath("$.response.totalPrice").value(104500),
+                MockMvcResultMatchers.jsonPath("$.response.products[0].productName").value(items.get(0).getOption().getProduct().getProductName()),
+                MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].id").value(items.get(0).getId()),
+                MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].optionName").value(items.get(0).getOption().getOptionName()),
+                MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].quantity").value(items.get(0).getQuantity()),
+                MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].price").value(items.get(0).getPrice()),
+                MockMvcResultMatchers.jsonPath("$.response.products[0].items[1].id").value(items.get(1).getId()),
+                MockMvcResultMatchers.jsonPath("$.response.products[0].items[1].optionName").value(items.get(1).getOption().getOptionName()),
+                MockMvcResultMatchers.jsonPath("$.response.products[0].items[1].quantity").value(items.get(1).getQuantity()),
+                MockMvcResultMatchers.jsonPath("$.response.products[0].items[1].price").value(items.get(1).getPrice()),
+                MockMvcResultMatchers.jsonPath("$.response.totalPrice").value(
+                        items.stream().map(Item::getPrice).mapToInt(Integer::intValue).sum()),
                 MockMvcResultMatchers.jsonPath("$.error").isEmpty()
         );
     }
