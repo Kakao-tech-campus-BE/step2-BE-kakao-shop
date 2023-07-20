@@ -49,6 +49,26 @@ public class CartRestControllerTest {
 
     @WithMockUser(username = "ssar@name.com", roles = "USER")
     @Test
+    public void clear_test() throws Exception {
+        // given
+
+        // when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .post("/carts/clear")
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+
+        // then
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response").value(nullValue()));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error").value(nullValue()));
+    }
+
+    @WithMockUser(username = "ssar@name.com", roles = "USER")
+    @Test
     // 정상적인 상황 테스트
     public void add_test1() throws Exception {
         // given
