@@ -144,13 +144,6 @@ public class CartRestControllerTest {
         String requestBody = om.writeValueAsString(requests);
         System.out.println("테스트 : "+ requestBody);
 
-        /*
-        장바구니에 아이템을 추가하지 않은 상태이니
-        update를 테스트하기 위해서는 장바구니에 상품이 있다는 가정이 필요합니다.
-         */
-        // stub
-
-
         // when
         ResultActions result = mvc.perform(
                 MockMvcRequestBuilders
