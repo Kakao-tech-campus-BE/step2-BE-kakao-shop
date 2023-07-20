@@ -72,4 +72,11 @@ public class UserService {
                 passwordEncoder.encode(requestDTO.getPassword());
         userPS.updatePassword(encPassword);
     } // 더티체킹 flush
+
+    public void checkEmailDuplicated(String email) {
+        userJPARepository.findByEmail(email).ifPresent(
+                user -> {
+                    throw new Exception400("동일한 이메일의 회원이 존재합니다. : " + email);
+                });
+    }
 }
