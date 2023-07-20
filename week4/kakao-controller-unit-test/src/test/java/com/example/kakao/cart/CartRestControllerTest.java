@@ -33,7 +33,6 @@ public class CartRestControllerTest {
     @Autowired
     private ObjectMapper om;
 
-
     @WithMockUser(username = "ssar@nate.com", roles = "USER")
     @Test
     public void update_test() throws Exception {
@@ -73,11 +72,12 @@ public class CartRestControllerTest {
     @Test
     @DisplayName("장바구니 조회")
     void findAll_test() throws  Exception{
+        //when
         ResultActions resultActions = mvc.perform(MockMvcRequestBuilders.get("/carts"));
 
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
-        System.out.println("responseBody : " + responseBody);
-
+        System.out.println("테스트 : "+responseBody);
+        //then
         resultActions.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
     }
 }
