@@ -1,15 +1,12 @@
 package com.example.kakao.user;
 
 import com.example.kakao._core.errors.exception.Exception400;
-import com.example.kakao._core.errors.exception.Exception401;
 import com.example.kakao._core.errors.exception.Exception500;
-import com.example.kakao._core.security.CustomUserDetails;
 import com.example.kakao._core.security.JWTProvider;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +16,7 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
     private final UserJPARepository userJPARepository;
 
@@ -72,4 +69,10 @@ public class UserService {
                 passwordEncoder.encode(requestDTO.getPassword());
         userPS.updatePassword(encPassword);
     } // 더티체킹 flush
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = userJPARepository.findByEmail(email).orElse(null);
+        return user;
+    }
 }

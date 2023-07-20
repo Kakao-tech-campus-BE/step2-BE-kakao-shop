@@ -3,7 +3,6 @@ package com.example.kakao.user;
 import com.example.kakao._core.errors.GlobalExceptionHandler;
 import com.example.kakao._core.errors.exception.Exception400;
 import com.example.kakao._core.errors.exception.Exception403;
-import com.example.kakao._core.security.CustomUserDetails;
 import com.example.kakao._core.security.JWTProvider;
 import com.example.kakao._core.utils.ApiUtils;
 import lombok.RequiredArgsConstructor;
@@ -70,7 +69,7 @@ public class UserRestController {
     public ResponseEntity<?> updatePassword(
             @PathVariable Integer id,
             @RequestBody @Valid UserRequest.UpdatePasswordDTO requestDTO, Errors errors,
-            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @AuthenticationPrincipal User user,
             HttpServletRequest request) {
 
         // 유효성 검사
@@ -84,7 +83,7 @@ public class UserRestController {
         }
 
         // 권한 체크 (디비를 조회하지 않아도 체크할 수 있는 것)
-        if (id != userDetails.getUser().getId()) {
+        if (id != user.getId()) {
             Exception403 e = new Exception403("인증된 user는 해당 id로 접근할 권한이 없습니다" + id);
             return new ResponseEntity<>(
                     e.body(),
@@ -105,11 +104,11 @@ public class UserRestController {
     @GetMapping("/users/{id}")
     public ResponseEntity<?> findById(
             @PathVariable Integer id,
-            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @AuthenticationPrincipal User user,
             HttpServletRequest request
     ) {
         // 권한 체크 (디비를 조회하지 않아도 체크할 수 있는 것)
-        if (id != userDetails.getUser().getId()) {
+        if (id != user.getId()) {
             Exception403 e = new Exception403("인증된 user는 해당 id로 접근할 권한이 없습니다:" + id);
             return new ResponseEntity<>(
                     e.body(),

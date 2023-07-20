@@ -2,9 +2,8 @@ package com.example.kakao.cart;
 
 import com.example.kakao._core.errors.GlobalExceptionHandler;
 import com.example.kakao._core.errors.exception.Exception400;
-import com.example.kakao._core.security.CustomUserDetails;
 import com.example.kakao._core.utils.ApiUtils;
-import com.example.kakao._core.utils.FakeStore;
+import com.example.kakao.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -13,7 +12,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -38,7 +36,7 @@ public class CartRestController {
 // ]
     // (기능8) 장바구니 담기
     @PostMapping("/carts/add")
-    public ResponseEntity<?> addCartList(@RequestBody @Valid List<CartRequest.SaveDTO> saveDTOs, Errors errors, HttpServletRequest request, @AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ResponseEntity<?> addCartList(@RequestBody @Valid List<CartRequest.SaveDTO> saveDTOs, Errors errors, HttpServletRequest request, @AuthenticationPrincipal User user) {
         if (errors.hasErrors()) {
             List<FieldError> fieldErrors = errors.getFieldErrors();
             Exception400 ex = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
@@ -48,7 +46,7 @@ public class CartRestController {
             );
         }
         try {
-            cartService.addCartList(saveDTOs,userDetails.getUser().getId());
+            cartService.addCartList(saveDTOs,user.getId());
             return ResponseEntity.ok().body(ApiUtils.success(null));
         } catch (RuntimeException e) {
             return globalExceptionHandler.handle(e, request);
@@ -62,9 +60,9 @@ public class CartRestController {
 
     // (기능9) 장바구니 보기 - (주문화면, 결재화면)
     @GetMapping("/carts")
-    public ResponseEntity<?> findAll(@AuthenticationPrincipal CustomUserDetails userDetails, HttpServletRequest request) {
+    public ResponseEntity<?> findAll(@AuthenticationPrincipal User user, HttpServletRequest request) {
         try {
-            return ResponseEntity.ok().body(ApiUtils.success(cartService.findAll(userDetails.getUser().getId())));
+            return ResponseEntity.ok().body(ApiUtils.success(cartService.findAll(user.getId())));
         } catch (RuntimeException e) {
             return globalExceptionHandler.handle(e, request);
         }
@@ -86,7 +84,7 @@ public class CartRestController {
 // ]
     // (기능11) 주문하기 - (장바구니 업데이트)
     @PostMapping("/carts/update")
-    public ResponseEntity<?> update(@RequestBody @Valid List<CartRequest.UpdateDTO> updateDTOs, Errors errors, HttpServletRequest request,@AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ResponseEntity<?> update(@RequestBody @Valid List<CartRequest.UpdateDTO> updateDTOs, Errors errors, HttpServletRequest request,@AuthenticationPrincipal User user) {
         if (errors.hasErrors()) {
             List<FieldError> fieldErrors = errors.getFieldErrors();
             Exception400 ex = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
@@ -99,7 +97,7 @@ public class CartRestController {
 
 
         try {
-            return ResponseEntity.ok().body(ApiUtils.success(cartService.update(updateDTOs,userDetails.getUser().getId())));
+            return ResponseEntity.ok().body(ApiUtils.success(cartService.update(updateDTOs,user.getId())));
         } catch (RuntimeException e) {
             return globalExceptionHandler.handle(e, request);
         }
@@ -125,9 +123,9 @@ public class CartRestController {
 
 
     @PostMapping("/carts/clear")
-    public ResponseEntity<?> clear(@AuthenticationPrincipal CustomUserDetails userDetails, HttpServletRequest request) {
+    public ResponseEntity<?> clear(@AuthenticationPrincipal User user, HttpServletRequest request) {
         try {
-            cartService.clear(userDetails.getUser().getId());
+            cartService.clear(user.getId());
             return ResponseEntity.ok().body(ApiUtils.success(null));
         } catch (RuntimeException e) {
             return globalExceptionHandler.handle(e, request);

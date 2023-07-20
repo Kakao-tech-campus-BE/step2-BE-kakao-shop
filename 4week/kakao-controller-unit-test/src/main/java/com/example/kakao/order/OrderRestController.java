@@ -1,21 +1,15 @@
 package com.example.kakao.order;
 
 import com.example.kakao._core.errors.GlobalExceptionHandler;
-import com.example.kakao._core.security.CustomUserDetails;
 import com.example.kakao._core.utils.ApiUtils;
 import com.example.kakao._core.utils.FakeStore;
-import com.example.kakao.order.item.Item;
+import com.example.kakao.user.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -27,9 +21,9 @@ public class OrderRestController {
 
     // (기능12) 결재
     @PostMapping("/orders/save")
-    public ResponseEntity<?> save(@AuthenticationPrincipal CustomUserDetails userDetails, HttpServletRequest request) {
+    public ResponseEntity<?> save(@AuthenticationPrincipal User user, HttpServletRequest request) {
         try {
-            orderService.save(userDetails.getUser().getId());
+            orderService.save(user.getId());
             return ResponseEntity.ok().body(ApiUtils.success(null));
         } catch (RuntimeException e) {
             return globalExceptionHandler.handle(e, request);
@@ -42,9 +36,9 @@ public class OrderRestController {
 
     // (기능13) 주문 결과 확인
     @GetMapping("/orders/{id}")
-    public ResponseEntity<?> findById(@PathVariable int orderId,HttpServletRequest request,@AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ResponseEntity<?> findById(@PathVariable int orderId,HttpServletRequest request,@AuthenticationPrincipal User user) {
         try {
-            return ResponseEntity.ok().body(ApiUtils.success(orderService.findById(orderId,userDetails.getUser().getId())));
+            return ResponseEntity.ok().body(ApiUtils.success(orderService.findById(orderId,user.getId())));
         } catch (RuntimeException e) {
             return globalExceptionHandler.handle(e, request);
         }

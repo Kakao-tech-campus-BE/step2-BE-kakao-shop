@@ -61,7 +61,7 @@ public class GlobalExceptionHandler {
                     .build();
             errorLogJPARepository.save(errorLog);
             return new ResponseEntity<>(
-                    "unknown server error",
+                    "unknown server error"+errorLog.getMessage(),
                     HttpStatus.INTERNAL_SERVER_ERROR
             );
         }

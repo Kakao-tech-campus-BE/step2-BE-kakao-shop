@@ -40,12 +40,11 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
             String roles = decodedJWT.getClaim("role").asString();
             System.out.println("roles : "+roles);
             User user = User.builder().id(id).roles(roles).build();
-            CustomUserDetails myUserDetails = new CustomUserDetails(user);
             Authentication authentication =
                     new UsernamePasswordAuthenticationToken(
-                            myUserDetails,
-                            myUserDetails.getPassword(),
-                            myUserDetails.getAuthorities()
+                            user,
+                            user.getPassword(),
+                            user.getAuthorities()
                     );
             SecurityContextHolder.getContext().setAuthentication(authentication);
             log.debug("디버그 : 인증 객체 만들어짐");
