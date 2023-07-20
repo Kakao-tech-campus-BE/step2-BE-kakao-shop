@@ -73,7 +73,7 @@ public class SecurityConfig {
             log.warn("권한이 없는 사용자가 자원에 접근하려 합니다 : "+accessDeniedException.getMessage());
         });
 
-        // 11. 인증, 권한 필터 설정
+         // 11. 인증, 권한 필터 설정
         http.authorizeRequests(
                 authorize -> authorize.antMatchers("/carts/**", "/options/**", "/orders/**").authenticated()
                         .antMatchers("/admin/**")
