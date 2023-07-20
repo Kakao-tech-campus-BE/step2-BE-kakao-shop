@@ -1,7 +1,8 @@
 package com.example.kakao.product;
 
+import com.example.kakao._core.errors.GlobalExceptionHandler;
+import com.example.kakao._core.errors.exception.Exception400;
 import com.example.kakao._core.errors.exception.Exception404;
-import com.example.kakao._core.errors.exception.Exception500;
 import com.example.kakao._core.utils.ApiUtils;
 import com.example.kakao._core.utils.FakeStore;
 import com.example.kakao.product.option.Option;
@@ -12,23 +13,29 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.example.kakao._core.errors.GlobalExceptionHandler.getApiErrorResultResponseEntity;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/products")
 public class ProductRestController {
 
+    private final GlobalExceptionHandler globalExceptionHandler;
     private final FakeStore fakeStore;
 
     // (기능4) 전체 상품 목록 조회 (페이징 9개씩)
     @GetMapping("")
     public ResponseEntity<?> findAll(@RequestParam(defaultValue = "0") int page) {
+        if (page<0) {
+            return getApiErrorResultResponseEntity(new Exception400("잘못된 요청입니다."));
+        }
         // 1. 더미데이터 가져와서 페이징하기
         List<Product> productList = fakeStore.getProductList().stream().skip(page*9).limit(9).collect(Collectors.toList());
 
         // 2. DTO 변환
         List<ProductResponse.FindAllDTO> responseDTOs =
                 productList.stream().map(ProductResponse.FindAllDTO::new).collect(Collectors.toList());
-        
+        responseDTOs.forEach(System.out::println);
         // 3. 공통 응답 DTO 만들기
         return ResponseEntity.ok(ApiUtils.success(responseDTOs));
     }
