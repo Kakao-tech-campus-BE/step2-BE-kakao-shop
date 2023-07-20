@@ -18,6 +18,13 @@ import javax.persistence.*;
         uniqueConstraints = {
                 @UniqueConstraint(name = "uk_cart_option_user", columnNames = {"user_id", "option_id"})
         })
+@NamedEntityGraph(
+        name = "CartWithUserAndOption",
+        attributeNodes = {
+                @NamedAttributeNode("user"),
+                @NamedAttributeNode("option")
+        }
+)
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

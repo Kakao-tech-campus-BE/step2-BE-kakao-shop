@@ -12,6 +12,10 @@ import java.util.stream.Collectors;
 public class OptionService {
     private final OptionJPARepository optionJPARepository;
 
+    public Option findById(int id) {
+        return optionJPARepository.findById(id).orElseThrow();
+    }
+
     public void saveAll(List<OptionRequest.Insert> requests) {
         List<Option> options = requests
                 .stream()

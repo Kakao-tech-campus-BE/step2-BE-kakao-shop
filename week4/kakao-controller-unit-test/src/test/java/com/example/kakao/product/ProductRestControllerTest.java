@@ -8,7 +8,8 @@ import com.example.kakao.log.ErrorLogJPARepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
@@ -21,13 +22,12 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
         FakeStore.class,
         GlobalExceptionHandler.class
 })
-@WebMvcTest(controllers = {ProductRestController.class})
+@AutoConfigureMockMvc
+@SpringBootTest
 public class ProductRestControllerTest extends DummyEntity {
     private final MockMvc mockMvc;
     @MockBean
     private ErrorLogJPARepository errorLogJPARepository;
-    @MockBean
-    private ProductService productService;
 
     public ProductRestControllerTest(
             @Autowired MockMvc mockMvc

@@ -5,6 +5,7 @@ import com.example.kakao._core.utils.FakeStore;
 import com.example.kakao.product.option.OptionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +27,10 @@ public class ProductRestController {
     public ResponseEntity<?> findAll(@RequestParam(defaultValue = "0") int page) {
         PageRequest pageRequest = PageRequest.of(page, 9);
         List<ProductResponse.FindAllDTO> responseDTOs = productService.findAllProducts(pageRequest);
+
+        if (responseDTOs.isEmpty()) {
+            return ResponseEntity.ok(ApiUtils.error("페이지 범위를 초과하였습니다.", HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE));
+        }
 
         return ResponseEntity.ok(ApiUtils.success(responseDTOs));
     }

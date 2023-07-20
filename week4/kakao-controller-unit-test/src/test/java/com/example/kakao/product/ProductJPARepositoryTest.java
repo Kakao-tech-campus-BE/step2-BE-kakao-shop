@@ -116,7 +116,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
         int id = 1;
 
         // when
-        List<Option> optionListPS = optionJPARepository.mFindByProductId(id); // Lazy
+        List<Option> optionListPS = optionJPARepository.findByProductId(id); // Lazy
 
         System.out.println("json 직렬화 직전========================");
         String responseBody = om.writeValueAsString(optionListPS);
