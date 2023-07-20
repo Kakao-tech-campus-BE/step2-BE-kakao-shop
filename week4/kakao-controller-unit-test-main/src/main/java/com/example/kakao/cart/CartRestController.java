@@ -121,14 +121,6 @@ public class CartRestController {
                     e.status()
             );
         }
-        // 가짜 저장소의 값을 변경한다.
-        for (CartRequest.UpdateDTO updateDTO : requestDTOs) {
-            for (Cart cart : fakeStore.getCartList()) {
-                if(cart.getId() == updateDTO.getCartId()){
-                    cart.update(updateDTO.getQuantity(), cart.getPrice() * updateDTO.getQuantity());
-                }
-            }
-        }
         try {
             CartResponse.UpdateDTO responseDTO = cartService.update(requestDTOs, userDetails.getUser());
             return ResponseEntity.ok().body(ApiUtils.success(responseDTO));

@@ -34,6 +34,13 @@ public class CartService {
     @Transactional
     public CartResponse.UpdateDTO update(List<CartRequest.UpdateDTO> updateDTOS, User user){
         // TODO: update cart
+        for (CartRequest.UpdateDTO updateDTO : updateDTOS) {
+            for (Cart cart : fakeStore.getCartList()) {
+                if(cart.getId() == updateDTO.getCartId()){
+                    cart.update(updateDTO.getQuantity(), cart.getPrice() * updateDTO.getQuantity());
+                }
+            }
+        }
         List<Cart> cartList = fakeStore.getCartList();
         return new CartResponse.UpdateDTO(cartList);
     }
