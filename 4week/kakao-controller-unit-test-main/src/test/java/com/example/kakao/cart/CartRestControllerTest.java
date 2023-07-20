@@ -21,6 +21,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hamcrest.Matchers.nullValue;
+
 @Import({
         FakeStore.class,
         SecurityConfig.class,
@@ -40,6 +42,39 @@ public class CartRestControllerTest {
 
     @Autowired
     private ObjectMapper om;
+
+    @WithMockUser(username = "ssar@name.com", roles = "USER")
+    @Test
+    // 정상적인 상황 테스트
+    public void add_test1() throws Exception {
+        // given
+        List<CartRequest.SaveDTO> requestDTOs = new ArrayList<>();
+        CartRequest.SaveDTO d1 = new CartRequest.SaveDTO();
+        d1.setOptionId(1);
+        d1.setQuantity(5);
+        CartRequest.SaveDTO d2 = new CartRequest.SaveDTO();
+        d2.setOptionId(2);
+        d2.setQuantity(5);
+        requestDTOs.add(d1);
+        requestDTOs.add(d2);
+        String requestBody = om.writeValueAsString(requestDTOs);
+        System.out.println("테스트 : "+requestBody);
+
+        // when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .post("/carts/add")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+
+        // then
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response").value(nullValue()));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error").value(nullValue()));
+    }
 
     @WithMockUser(username = "ssar@nate.com", roles = "USER")
     @Test
