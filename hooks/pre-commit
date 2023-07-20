@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-RELEASE=1.15.0
+RELEASE=1.17.0
 JAR_NAME="google-java-format-${RELEASE}-all-deps.jar"
 RELEASES_URL=https://repo1.maven.org/maven2/com/google/googlejavaformat/google-java-format
 JAR_URL="${RELEASES_URL}/${RELEASE}/${JAR_NAME}"
@@ -21,19 +21,19 @@ then
     cat >"$JAR_PGP_ASC_FILE" <<EOF
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEE7gyocwdAkvgG9Ztl02SrqjmkcyAFAmImOGEACgkQ02Srqjmk
-cyCSXQ//f5cRQNbJhLmHASjRCRFMIe4+dcNd8l+Wy4izsfWctNs+Wj+p/Fnog3y6
-J0gY6B/BXB0Y/xZ7xeHhZU2xgWsgCwsTpOyWQw2sCmZV6Bnhvtjw0mxFfuJt1PRk
-UMfL8FvalF51rJUBpVcQeRojouccAFnOCMY4KwclWMOwWG1adfjUjrakEbkbHUpB
-ohxEYdTvwWkG72A/i0fSS2C0pQybzDWzvv/CweFaIB37cavwOuA2iDYZZC1400it
-lofa+zwvpey6CbPZzhESyDycFwriCE5v5txbGmkdNFWMnisDyTnprxVewnm2LHI7
-uFenMmT66G7ASNYqbdFWsMtyBhTGRlWWMb0ldxVhZkA6GN2diJHime/iHXR9GS1u
-S/uPkbTvp5HnSZjutV6z2X2smN+jJm3GBHNgp+prko8eg5n7wHudh5s616yCzE/L
-6ca7en1oH5TbH/9bLLVRNUw5DDlm51wf/pbRuecLYo27LbUjTUKZbhwHK0wV8F0d
-vDdno+j2U8KJ4rpifTHJAEnsUcrHvI8siJ7ADnEBnDl9xH+BTKZdS7rKe/vq96LG
-NilQ5b4qku7K1VhP1d+/sqXS2UKZmWLWaeJfvI+hj7R619Sn3xNM97sv5c5BYjv8
-FPXpXxWWHJ2T0iM4y+yRVRXFyP+owOFCc1jmVXlEgSErZbqHTCA=
-=oWka
+iQIzBAABCgAdFiEE7gyocwdAkvgG9Ztl02SrqjmkcyAFAmRQI1MACgkQ02Srqjmk
+cyDvSA//QceHrVsA9ztoeOBMu1xOMzMzVF8qR7s9bTIH94knvmNb9ivbcs8s9EiN
+/0qsbDevEgr8WuWh3QrsmWLTO/+dFePt8/R5EQQohL01B2KMCnRkrYnt03NJsNe+
+D1dl1u4e3VCtyQZTpszd9OVAWdBp48xhdeQZxOdgPf/G6ZZuNxs9j/lOoGb5YnKI
+AJUDelu5x6YfD3qKG5LOKAe0K/jLmAeDy2Q7bt9xjEMMF2iEboFR8lt7LiE+VK4O
+/wzirknMvkoiyR9xJzeZDubQLgmFveDXFn/jtktZJNKtKw9RHLF0keDT4yHcPove
+ni4e69FJAdXtrwpWTDcVTYU+XdFZVwUUHfx1UErC57A7Gc0X5uWE8gxruQDJdPEB
+mFWeUMEyycje7bPKr5fXLfeCJrW/KGqUPfu14usvj3sbuqKiogyMCzS92dprpkAM
+GmBfvCM6KqykEVpUuop4yca4Ny3RIpat+Lu7pr3vEcQ+LtX5b1FiRK5kgmEtwVAL
+QuxLCcTmg3UKfp+hCNZin19KtoDgvL4bgSc2FZCx0pWr02xn8Y3PYZgYHMNf7a7u
+9FwcbnDp7VYsE1wpnT62X6BDjlEWKrDYqOZNWPC7z/s87BNIvk0AbusMLWQ7PBWH
+XKq/N0u18L4n9Kclk4JJcnO2McIFwuzfliTjPND+wJXt5xwW6l4=
+=yeSJ
 -----END PGP SIGNATURE-----
 EOF
 
@@ -54,7 +54,7 @@ then
                 --add-exports jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED \
                 --add-exports jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED \
                 --add-exports jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED \
-                -jar "$JAR_FILE" --replace --set-exit-if-changed $changed_java_files
+                -jar "$JAR_FILE" --skip-sorting-imports --replace --set-exit-if-changed $changed_java_files
     then
         git add "$changed_java_files"
         echo "An error occurred, aborting commit!" >&2
@@ -64,4 +64,4 @@ else
     echo "No Java files changes found."
 fi
 
-cd ./2week/Kakao-Backend-Second-DTO && ./gradlew build
+cd ./3week/kakao-jpa && ./gradlew build
