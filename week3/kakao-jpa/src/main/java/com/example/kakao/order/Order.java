@@ -12,7 +12,6 @@ import javax.persistence.*;
         @Index(name = "order_user_id_idx", columnList = "user_id")
 })
 public class Order {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

@@ -1,7 +1,7 @@
 package com.example.kakao.product;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 public interface ProductJPARepository extends JpaRepository<Product, Integer> {
-    
 }

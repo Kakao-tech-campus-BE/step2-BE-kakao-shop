@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -19,7 +21,7 @@ public class UserJPARepositoryTest extends DummyEntity {
 
     @BeforeEach
     public void setUp(){
-        userJPARepository.save(newUser("ssar"));
+        userJPARepository.save(newUser("rhalstjr1999"));
     }
 
     // 1. 눈으로 findByEmail() 쿼리 확인
@@ -28,7 +30,7 @@ public class UserJPARepositoryTest extends DummyEntity {
     @Test
     public void findByEmail_test() {
         // given
-        String email = "ssar@nate.com";
+        String email = "rhalstjr1999@naver.com";
 
         // when
         User userPS = userJPARepository.findByEmail(email).orElseThrow(
@@ -39,14 +41,9 @@ public class UserJPARepositoryTest extends DummyEntity {
 
         // then (상태 검사)
         Assertions.assertThat(userPS.getId()).isEqualTo(1);
-        Assertions.assertThat(userPS.getEmail()).isEqualTo("ssar@nate.com");
+        Assertions.assertThat(userPS.getEmail()).isEqualTo("rhalstjr1999@naver.com");
         assertTrue(BCrypt.checkpw("meta1234!", userPS.getPassword()));
-        Assertions.assertThat(userPS.getUsername()).isEqualTo("ssar");
+        Assertions.assertThat(userPS.getUsername()).isEqualTo("rhalstjr1999");
         Assertions.assertThat(userPS.getRoles()).isEqualTo("ROLE_USER");
     }
-
-    @Test
-    public void save(){}
-
-
 }

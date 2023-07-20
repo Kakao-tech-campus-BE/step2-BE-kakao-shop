@@ -16,8 +16,8 @@ public class DummyEntity {
     protected User newUser(String username){
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return User.builder()
-                .email(username+"@nate.com")
-                .password(passwordEncoder.encode("meta1234!"))
+                .email(username+"@naver.com")
+                .password(passwordEncoder.encode("@@alstjr12"))
                 .username(username)
                 .roles(username.equals("admin") ? "ROLE_ADMIN" : "ROLE_USER")
                 .build();
@@ -61,7 +61,6 @@ public class DummyEntity {
     protected Order newOrder(User user){
         return Order.builder()
                 .user(user)
-                .id(1)
                 .build();
     }
 
@@ -137,5 +136,23 @@ public class DummyEntity {
                 newOption(productListPS.get(14), "화이트", 148000),
                 newOption(productListPS.get(14), "블랙", 148000)
         );
+    }
+
+    protected List<Cart> cartDummys(User user, List<Option> options) {
+        List<Cart> carts = Arrays.asList(
+                newCart(user, options.get(0), 5),
+                newCart(user, options.get(1), 5)
+        );
+
+        return carts;
+    }
+
+    protected List<Item> itemDummys(List<Cart> carts, Order order) {
+        List<Item> items = Arrays.asList(
+                newItem(carts.get(0), order),
+                newItem(carts.get(1), order)
+        );
+
+        return items;
     }
 }

@@ -34,8 +34,8 @@ public class FakeStore {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return User.builder()
                 .id(id)
-                .email(username+"@nate.com")
-                .password(passwordEncoder.encode("meta1234!"))
+                .email(username+"@naver.com")
+                .password(passwordEncoder.encode("@@alstjr12"))
                 .username(username)
                 .roles(username.equals("admin") ? "ROLE_ADMIN" : "ROLE_USER")
                 .build();
@@ -63,7 +63,7 @@ public class FakeStore {
     private Cart newCart(Option option, Integer id, Integer quantity){
         return Cart.builder()
                 .id(id)
-                .user(newUser(1, "ssar"))
+                .user(newUser(1, "rhalstjr1999"))
                 .option(option)
                 .quantity(quantity)
                 .price(option.getPrice() * quantity)
@@ -82,7 +82,7 @@ public class FakeStore {
 
     private Order newOrder(){
         return Order.builder()
-                .user(newUser(1, "ssar"))
+                .user(newUser(1, "rhalstjr1999"))
                 .id(1)
                 .build();
     }
