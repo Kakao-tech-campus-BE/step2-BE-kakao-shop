@@ -24,3 +24,7 @@ hs_err_pid*
 replay_pid*
 
 .idea/
+
+week3/kakao-jpa-main/.settings/
+
+week3/kakao-jpa-main/.vscode/
