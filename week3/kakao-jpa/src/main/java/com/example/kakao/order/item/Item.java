@@ -24,7 +24,7 @@ public class Item {
     private Option option;
 
     // 여러 item을 1개 order가 가진다
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Order order;
 
     @Column(nullable = false)

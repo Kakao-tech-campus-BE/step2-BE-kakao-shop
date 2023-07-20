@@ -18,7 +18,7 @@ public class Order {
     private int id;
 
     // 여러 order를 1개 user가 가진다
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
     @Builder

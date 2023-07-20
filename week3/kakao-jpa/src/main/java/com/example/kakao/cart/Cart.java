@@ -24,7 +24,7 @@ public class Cart {
     private int id;
 
     // 여러 cart를 1개 user가 가진다
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
     // 1개 cart는 1개 option이다

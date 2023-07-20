@@ -9,6 +9,7 @@ import com.example.kakao.user.User;
 import com.example.kakao.user.UserJPARepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,8 +20,8 @@ import org.springframework.context.annotation.Import;
 
 import javax.persistence.EntityManager;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.example.kakao._core.utils.PrintUtils.getPrettyString;
 
@@ -52,7 +53,8 @@ public class CartJPARepositoryTest extends DummyEntity {
         // user 더미데이터 생성
         List<User> userPS = userJPARepository.saveAll(Arrays.asList(
                         newUser("eunjin"),
-                        newUser("ssal")
+                        newUser("ssal"),
+                        newUser("no")
                 )
         );
         // product 더미데이터 생성
@@ -94,10 +96,11 @@ public class CartJPARepositoryTest extends DummyEntity {
 
     @DisplayName("장바구니아이템 추가 테스트")
     @Test
-    public void cart_add_test() {
+    public void cart_add_test() throws JsonProcessingException {
         // given
         int userId = 2;
-        int optionId = 3;
+        List<Integer> optionIds = Arrays.asList(100, 101);
+        int q = 5;
 
         // when
         System.out.println("========================================테스트 시작=========================================");
@@ -106,15 +109,40 @@ public class CartJPARepositoryTest extends DummyEntity {
                 () -> new RuntimeException("장바구니아이템 추가 테스트 실패 : 사용자를 찾을 수 없습니다")
         );
         // 옵션 유효성 검사
-        Option optionPS = optionJPARepository.findById(optionId).orElseThrow(
-                () -> new RuntimeException("장바구니아이템 추가 테스트 실패 : 옵션을 찾을 수 없습니다")
-        );
+        optionIds.forEach(x-> {
+            if (optionJPARepository.findById(x) == null) {
+                throw new RuntimeException("장바구니아이템 추가 테스트 실패 : 옵션을 찾을 수 없습니다");
+            }
+        });
+        // 장바구니아이템 유효성 검사
+        List<Cart> cartListPS = cartJPARepository.mFindByUserId(userId);
+        cartListPS.forEach(x-> {
+            optionIds.forEach(y-> {
+                if (x.getOption().getId() == y) {
+                    throw new RuntimeException("장바구니아이템 추가 테스트 실패 : 이미 장바구니에 담았습니다");
+                }
+            });
+        });
         // 장바구니아이템 추가
-        Cart cartPS = cartJPARepository.save(newCart(userPS, optionPS, 5));
+//        cartJPARepository.saveAll(optionListPS.stream()
+//                        .map(x->newCart(userPS, x, q))
+//                        .collect(Collectors.toList())
+//        );
 
         em.flush(); // PC 지우지 않고 DB에 반영
 
         // then
+        System.out.println("========================================테스트 결과=========================================");
+        Cart cartPS = cartJPARepository.findById(6).orElseThrow();
+
+        Assertions.assertThat(cartPS.getOption().getProduct().getId()).isEqualTo(1);
+        Assertions.assertThat(cartPS.getOption().getProduct().getProductName()).isEqualTo("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전");
+        Assertions.assertThat(cartPS.getId()).isEqualTo(6);
+        Assertions.assertThat(cartPS.getOption().getId()).isEqualTo(3);
+        Assertions.assertThat(cartPS.getOption().getOptionName()).isEqualTo("고무장갑 베이지 S(소형) 6팩");
+        Assertions.assertThat(cartPS.getOption().getPrice()).isEqualTo(9900);
+        Assertions.assertThat(cartPS.getQuantity()).isEqualTo(5);
+        Assertions.assertThat(cartPS.getPrice()).isEqualTo(49500);
     }
 
     @DisplayName("전체 장바구니아이템 조회 테스트")
@@ -126,17 +154,29 @@ public class CartJPARepositoryTest extends DummyEntity {
         // when
         System.out.println("========================================테스트 시작=========================================");
         // 사용자 유효성 검사
-        User userPS = userJPARepository.findById(userId).orElseThrow(
+        userJPARepository.findById(userId).orElseThrow(
                 () -> new RuntimeException("전체 장바구니아이템 조회 테스트 실패 : 사용자를 찾을 수 없습니다")
         );
-        // 장바구니아이템 조회 : empty일 수도 있음
-        List<Cart> cartListPS = cartJPARepository.mfindByUserId(userId);
+        // 장바구니아이템 유효성 조회
+        List<Cart> cartListPS = cartJPARepository.mFindByUserId(userId);
+        // 장바구니아이템 유효성 검사
+        if (cartListPS.isEmpty()) {
+             throw new RuntimeException("전체 장바구니아이템 조회 테스트 실패 : 장바구니가 비어있습니다");
+        }
 
+        // then
         System.out.println("========================================테스트 결과=========================================");
         String responseBody = om.writeValueAsString(cartListPS);
         System.out.println(getPrettyString(responseBody));
 
-        // then
+        Assertions.assertThat(cartListPS.get(0).getOption().getProduct().getId()).isEqualTo(1);
+        Assertions.assertThat(cartListPS.get(0).getOption().getProduct().getProductName()).isEqualTo("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전");
+        Assertions.assertThat(cartListPS.get(0).getId()).isEqualTo(4);
+        Assertions.assertThat(cartListPS.get(0).getOption().getId()).isEqualTo(1);
+        Assertions.assertThat(cartListPS.get(0).getOption().getOptionName()).isEqualTo("01. 슬라이딩 지퍼백 크리스마스에디션 4종");
+        Assertions.assertThat(cartListPS.get(0).getOption().getPrice()).isEqualTo(10000);
+        Assertions.assertThat(cartListPS.get(0).getQuantity()).isEqualTo(5);
+        Assertions.assertThat(cartListPS.get(0).getPrice()).isEqualTo(50000);
     }
 
     @DisplayName("장바구니아이템 수량 수정 테스트")
@@ -145,23 +185,32 @@ public class CartJPARepositoryTest extends DummyEntity {
         // given
         int userId = 2;
         int id = 4;
+        int q = 10;
 
         // when
         System.out.println("========================================테스트 시작=========================================");
         // 사용자 유효성 검사
-        User userPS = userJPARepository.findById(userId).orElseThrow(
+        userJPARepository.findById(userId).orElseThrow(
                 () -> new RuntimeException("장바구니아이템 수량 수정 테스트 실패 : 사용자를 찾을 수 없습니다")
         );
         // 장바구니아이템 유효성 검사
         Cart cartPS = cartJPARepository.findById(id).orElseThrow(
                 () -> new RuntimeException("장바구니아이템 수량 수정 테스트 실패 : 장바구니아이템을 찾을 수 없습니다")
         );
-        // 장바구니아이템 수정
-        cartPS.update(10, 10*cartPS.getPrice());
+        // 장바구니아이템 수량 수정
+        cartPS.update(q, cartPS.getOption().getPrice()*q);
 
         em.flush(); // PC 지우지 않고 DB에 반영
 
         // then
+        System.out.println("========================================테스트 결과=========================================");
+        Cart updatedCart = cartJPARepository.findById(4).orElseThrow();
+
+        Assertions.assertThat(updatedCart.getId()).isEqualTo(4);
+        Assertions.assertThat(updatedCart.getOption().getId()).isEqualTo(1);
+        Assertions.assertThat(updatedCart.getOption().getOptionName()).isEqualTo("01. 슬라이딩 지퍼백 크리스마스에디션 4종");
+        Assertions.assertThat(updatedCart.getQuantity()).isEqualTo(10);
+        Assertions.assertThat(updatedCart.getPrice()).isEqualTo(100000);
     }
 
 }

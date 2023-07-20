@@ -20,7 +20,7 @@ public class Option {
     private int id;
 
     // 여러 option을 1개 product가 가진다
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Product product;
 
     @Column(length = 100, nullable = false)

@@ -13,6 +13,7 @@ import com.example.kakao.user.UserJPARepository;
 import com.example.kakao.cart.Cart;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -25,6 +26,7 @@ import javax.persistence.EntityManager;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.example.kakao._core.utils.PrintUtils.getPrettyString;
 
@@ -61,7 +63,8 @@ public class OrderJPARepositoryTest extends DummyEntity {
         // user 더미데이터 생성
         List<User> userPS = userJPARepository.saveAll(Arrays.asList(
                         newUser("eunjin"),
-                        newUser("ssal")
+                        newUser("ssal"),
+                        newUser("no")
                 )
         );
         // product 더미데이터 생성
@@ -74,18 +77,28 @@ public class OrderJPARepositoryTest extends DummyEntity {
                         newCart(userPS.get(0), optionListPS.get(1), 5),
                         newCart(userPS.get(0), optionListPS.get(2), 5),
                         newCart(userPS.get(1), optionListPS.get(0), 10),
-                        newCart(userPS.get(1), optionListPS.get(1), 10)
+                        newCart(userPS.get(1), optionListPS.get(1), 10),
+                        newCart(userPS.get(2), optionListPS.get(0), 10),
+                        newCart(userPS.get(2), optionListPS.get(1), 10)
                 )
         );
         // order 더미데이터 생성
-        Order orderPS = orderJPARepository.save(newOrder(userPS.get(1)));
-        // item 더미데이터 생성
-        itemJPARepository.saveAll(Arrays.asList(
-                        newItem(cartListPS.get(3), orderPS),
-                        newItem(cartListPS.get(4), orderPS)
+        List<Order> orderListPS = orderJPARepository.saveAll(Arrays.asList(
+                newOrder(userPS.get(1)),
+                newOrder(userPS.get(0))
                 )
         );
-        // cart 삭제?
+        // item 더미데이터 생성
+        itemJPARepository.saveAll(Arrays.asList(
+                        newItem(cartListPS.get(0), orderListPS.get(1)),
+                        newItem(cartListPS.get(1), orderListPS.get(1)),
+                        newItem(cartListPS.get(2), orderListPS.get(1)),
+                        newItem(cartListPS.get(3), orderListPS.get(0)),
+                        newItem(cartListPS.get(4), orderListPS.get(0))
+                )
+        );
+        // cart 더미데이터 삭제
+        cartJPARepository.deleteAll();
 
         em.clear(); // PC 지우고 DB에 반영
     }
@@ -124,30 +137,40 @@ public class OrderJPARepositoryTest extends DummyEntity {
 
         // when
         System.out.println("========================================테스트 시작=========================================");
-        // 사용자 유효성 검증
+        // 사용자 유효성 검사
         User userPS = userJPARepository.findById(userId).orElseThrow(
                 () -> new RuntimeException("주문 추가 테스트 실패 : 사용자를 찾을 수 없습니다")
         );
-        // 장바구니아이템 유효성 검증
-        List<Cart> cartListPS = cartJPARepository.mfindByUserId(userId);
+        // 장바구니아이템 조회
+        List<Cart> cartListPS = cartJPARepository.mFindByUserId(userId);
+        // 장바구니아이템 유효성 검사(사용자아이디에 해당하는 장바구니아이템이 없다면 => 장바구니가 비어있는 것)
         if (cartListPS.isEmpty()) {
-            throw new RuntimeException("주문 추가 테스트 실패 : 장바구니아이템을 찾을 수 없습니다");
+            throw new RuntimeException("주문 추가 테스트 실패 : 장바구니가 비어있습니다");
         }
         // 주문 추가
         Order orderPS = orderJPARepository.save(newOrder(userPS));
         // 주문아이템 추가
-        itemJPARepository.saveAll(Arrays.asList(
-                        newItem(cartListPS.get(0), orderPS),
-                        newItem(cartListPS.get(1), orderPS),
-                        newItem(cartListPS.get(2), orderPS)
-                )
+        itemJPARepository.saveAll(cartListPS.stream()
+                .map(x->newItem(x, orderPS))
+                .collect(Collectors.toList())
         );
-
-        // 카트 비우기 진행?
+        // 장바구니아이템 삭제
+        cartJPARepository.deleteAllById(cartListPS.stream()
+                .map(x->x.getId())
+                .collect(Collectors.toList())
+        );
 
         em.flush(); // PC 지우지 않고 DB에 반영
 
         // then
+        List<Item> itemListPS = itemJPARepository.mFindByOrderId(3);
+
+        Assertions.assertThat(itemListPS.get(0).getOrder().getUser().getId()).isEqualTo(3);
+        Assertions.assertThat(itemListPS.get(0).getOption().getProduct().getProductName()).isEqualTo("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전");
+        Assertions.assertThat(itemListPS.get(0).getId()).isEqualTo(6);
+        Assertions.assertThat(itemListPS.get(0).getOption().getOptionName()).isEqualTo("01. 슬라이딩 지퍼백 크리스마스에디션 4종");
+        Assertions.assertThat(itemListPS.get(0).getQuantity()).isEqualTo(10);
+        Assertions.assertThat(itemListPS.get(0).getPrice()).isEqualTo(100000);
     }
 
     @DisplayName("특정 주문 조회 테스트")
@@ -160,20 +183,26 @@ public class OrderJPARepositoryTest extends DummyEntity {
         // when
         System.out.println("========================================테스트 시작=========================================");
         // 사용자 유효성 검사
-        User userPS = userJPARepository.findById(userId).orElseThrow(
+        userJPARepository.findById(userId).orElseThrow(
                 () -> new RuntimeException("특정 주문 조회 테스트 실패 : 사용자를 찾을 수 없습니다")
         );
         // 주문 유효성 검사
-        Order orderPS = orderJPARepository.findById(orderId).orElseThrow(
+        orderJPARepository.findById(orderId).orElseThrow(
                 () -> new RuntimeException("특정 주문 조회 테스트 실패 : 주문을 찾을 수 없습니다")
         );
         // 주문아이템 조회
-        List<Item> itemListPS = itemJPARepository.mfindByOrderId(orderId);
+        List<Item> itemListPS = itemJPARepository.mFindByOrderId(orderId);
 
+        // then
         System.out.println("========================================테스트 결과=========================================");
         String responseBody = om.writeValueAsString(itemListPS);
         System.out.println(getPrettyString(responseBody));
 
-        // then
+        Assertions.assertThat(itemListPS.get(0).getOrder().getUser().getId()).isEqualTo(2);
+        Assertions.assertThat(itemListPS.get(0).getOption().getProduct().getProductName()).isEqualTo("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전");
+        Assertions.assertThat(itemListPS.get(0).getId()).isEqualTo(4);
+        Assertions.assertThat(itemListPS.get(0).getOption().getOptionName()).isEqualTo("01. 슬라이딩 지퍼백 크리스마스에디션 4종");
+        Assertions.assertThat(itemListPS.get(0).getQuantity()).isEqualTo(10);
+        Assertions.assertThat(itemListPS.get(0).getPrice()).isEqualTo(100000);
     }
 }
