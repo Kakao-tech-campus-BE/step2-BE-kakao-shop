@@ -20,7 +20,6 @@ import java.util.List;
 @RestController
 public class OrderRestController {
 
-    private final FakeStore fakeStore;
     private final OrderService orderService;
     private final GlobalExceptionHandler globalExceptionHandler;
 
@@ -32,11 +31,6 @@ public class OrderRestController {
 
         try {
             order = orderService.saveOrder(userDetails);
-        }catch (RuntimeException e){
-            return globalExceptionHandler.handle(e, request);
-        }
-
-        try {
             itemList = orderService.saveItemByOrder(order);
         }catch (RuntimeException e){
             return globalExceptionHandler.handle(e, request);

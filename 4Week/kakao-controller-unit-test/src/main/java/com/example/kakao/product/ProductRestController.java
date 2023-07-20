@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @RestController
 public class ProductRestController {
-    private final FakeStore fakeStore;
+
     private final ProductService productService;
     private final GlobalExceptionHandler globalExceptionHandler;
 
