@@ -14,8 +14,7 @@ import java.util.List;
 public class CartService {
     private final FakeStore fakeStore;
     private final CartJPARepository cartJPARepository;
-    private User user;
-    private int id ;
+ 
     public void save(List<CartRequest.SaveDTO> requestDTOs){
         cartJPARepository.saveAll(fakeStore.getCartList());
     }
