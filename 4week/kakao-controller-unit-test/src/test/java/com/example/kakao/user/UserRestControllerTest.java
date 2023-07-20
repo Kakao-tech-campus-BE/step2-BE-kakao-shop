@@ -116,7 +116,7 @@ public class UserRestControllerTest {
                 UserRequest.JoinDTO requestDTO = new UserRequest.JoinDTO();
                 requestDTO.setEmail("metanate.com");
                 requestDTO.setPassword("meta1234!");
-                requestDTO.setUsername("meta");
+                requestDTO.setUsername("metameta");
                 String requestBody = om.writeValueAsString(requestDTO);
 
                 // when
