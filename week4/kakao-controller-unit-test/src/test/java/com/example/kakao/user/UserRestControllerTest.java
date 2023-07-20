@@ -4,11 +4,8 @@ import com.example.kakao._core.errors.GlobalExceptionHandler;
 import com.example.kakao._core.security.JWTProvider;
 import com.example.kakao._core.security.SecurityConfig;
 import com.example.kakao.log.ErrorLogJPARepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +15,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -82,10 +78,10 @@ public class UserRestControllerTest {
         UserRequest.LoginDTO loginDTO = new UserRequest.LoginDTO();
         loginDTO.setEmail("ssar@nate.com");
         loginDTO.setPassword("meta1234!");
-        User user = User.builder().id(1).roles("ROLE_USER").build();
         String requestBody = om.writeValueAsString(loginDTO);
 
         // stub
+        User user = User.builder().id(1).roles("ROLE_USER").build();
         String jwt = JWTProvider.create(user);
         Mockito.when(userService.login(any())).thenReturn(jwt);
 
@@ -103,7 +99,8 @@ public class UserRestControllerTest {
 
         // then
         result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
-        Assertions.assertTrue(jwt.startsWith(JWTProvider.TOKEN_PREFIX));
+        Assertions.assertNotNull(responseHeader);
+        Assertions.assertTrue(responseHeader.startsWith(JWTProvider.TOKEN_PREFIX));
     }
 
     @Test
