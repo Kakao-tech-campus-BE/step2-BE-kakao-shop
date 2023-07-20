@@ -35,7 +35,7 @@ import java.util.List;
         GlobalExceptionHandler.class
 })
 @WebMvcTest(controllers = {OrderRestController.class})
-public class OrderRestControllerTest extends DummyEntity {
+public class OrderRestControllerTest extends DummyEntity{
     // stub 구현을 위해
     @MockBean
     private FakeStore fakeStore;
@@ -54,27 +54,49 @@ public class OrderRestControllerTest extends DummyEntity {
     List<Order> orderList = new ArrayList<>();
 
     @BeforeEach
+    // id가 0 으로 나오는 문제점 발생
+    // 권해님의 코드 참고해서 setUp 함수 다시 작성했습니다.
     public void setUp() {
-        User user = newUser("ssar");
+        User user = User.builder().id(1).username("ssar@nate.com").roles("USER").build();
+        Order order = Order.builder().user(user).id(2).build();
 
-        Product product = newProduct("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전", 1, 1000);
+        orderList.add(order);
 
-        Option option1 = newOption(product, "01. 슬라이딩 지퍼백 크리스마스에디션 4종", 10000);
-        Option option2 = newOption(product, "02. 슬라이딩 지퍼백 플라워에디션 5종", 10900);
+        Product product = Product.builder()
+                .productName("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전")
+                .build();
 
-        Cart cart1 = newCart(user, option1, 10);
-        Cart cart2 = newCart(user, option2, 10);
+        Option option1 = Option.builder()
+                        .product(product)
+                        .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
+                        .price(10000)
+                        .build();
 
-        Order order = newOrder(user);
+        Option option2 = Option.builder()
+                .product(product)
+                .optionName("02. 슬라이딩 지퍼백 플라워에디션 5종")
+                .price(10900)
+                .build();
 
-        Item item1 = newItem(cart1, order);
+        Item item1 = Item.builder()
+                .id(4)
+                .order(order)
+                .option(option1)
+                .quantity(10)
+                .price(100000)
+                .build();
 
-        Item item2 = newItem(cart2, order);
+        Item item2 = Item.builder()
+                    .id(5)
+                    .order(order)
+                    .option(option2)
+                    .quantity(10)
+                    .price(109000)
+                    .build();
 
         itemList.add(item1);
         itemList.add(item2);
 
-        orderList.add(order);
     }
 
     // 결재
