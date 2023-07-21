@@ -65,12 +65,10 @@ public class ProductRestControllerTest {
     public void product_findById_test() throws Exception {
         // given
         int productId = 1;
-        Product product = new Product(1, "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전", "", "/images/1.jpg", 1000);
 
         // stub
-        BDDMockito.given(fakeStore.getProductList()).willReturn(Arrays.asList(
-                new Product(1, "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전", "", "/images/1.jpg", 1000)
-        ));
+        Product product = new Product(1, "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전", "", "/images/1.jpg", 1000);
+        BDDMockito.given(fakeStore.getProductList()).willReturn(Arrays.asList(product));
         BDDMockito.given(fakeStore.getOptionList()).willReturn(Arrays.asList(
                 new Option(1, product, "01. 슬라이딩 지퍼백 크리스마스에디션 4종", 10000),
                 new Option(2, product, "02. 슬라이딩 지퍼백 플라워에디션 5종", 10900),
