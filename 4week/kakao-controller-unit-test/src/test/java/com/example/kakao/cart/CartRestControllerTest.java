@@ -4,6 +4,7 @@ import com.example.kakao._core.security.JWTProvider;
 import com.example.kakao._core.security.SecurityConfig;
 import com.example.kakao._core.utils.FakeStore;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -17,6 +18,9 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Import({
         FakeStore.class,
@@ -33,6 +37,7 @@ public class CartRestControllerTest {
     // 가짜 객체를 만들어서 인증이 된 상태로 실행 가능
     @WithMockUser(username = "ssar@nate.com", roles = "USER")
     @Test
+    @DisplayName("장바구니 업데이트 테스트")
     public void update_test() throws Exception {
         // given
         List<CartRequest.UpdateDTO> requestDTOs = new ArrayList<>();
@@ -65,4 +70,73 @@ public class CartRestControllerTest {
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].quantity").value(10));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].price").value(100000));
     }
+
+    @WithMockUser(username = "ssar@nate.com", roles = "USER")
+    @Test
+    @DisplayName("장바구니 조회 테스트")
+    public void cart_findAll_test() throws Exception {
+        //given
+        //when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .get("/carts")
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+        //then - fakestore의 cart Dummy List 값이 잘 들어오고 있음을 확인...
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
+    }
+
+    @WithMockUser(username = "ssar@nate.com", roles = "USER")
+    @Test
+    @DisplayName("장바구니 담기 테스트")
+    void carts_add_test() throws Exception {
+        //given
+        List<CartRequest.SaveDTO> requestDTOs = new ArrayList<>();
+
+        CartRequest.SaveDTO saveDTO1 = new CartRequest.SaveDTO();
+        saveDTO1.setOptionId(1);
+        saveDTO1.setQuantity(7);
+        requestDTOs.add(saveDTO1);
+
+        CartRequest.SaveDTO saveDTO2 = new CartRequest.SaveDTO();
+        saveDTO2.setOptionId(3);
+        saveDTO2.setQuantity(11);
+        requestDTOs.add(saveDTO2);
+
+        String requestBody = om.writeValueAsString(requestDTOs);
+        System.out.println("테스트 : "+requestBody);
+
+        //when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .post("/carts/add")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+
+        // then
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
+    }
+
+    @Test
+    @DisplayName("401 에러 테스트")
+    void cart_test_401() throws Exception {
+        //given
+
+        //when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .get("/carts")
+        );
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+
+        //then
+        result.andExpect(status().is4xxClientError()).andDo(print());
+    }
+
 }

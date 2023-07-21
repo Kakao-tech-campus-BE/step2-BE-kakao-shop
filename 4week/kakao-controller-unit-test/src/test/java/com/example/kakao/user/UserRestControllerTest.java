@@ -35,7 +35,7 @@ public class UserRestControllerTest {
 
     // 객체의 모든 메서드는 추상메서드로 구현됩니다. (가짜로 만들면)
     // 해당 객체는 SpringContext에 등록됩니다.
-    @MockBean // 까짜를 스프링 컨텍스트ㅡ에 띄운다.
+    @MockBean // 까짜를 스프링 컨텍스트에 띄운다.
     private UserService userService;
 
     @MockBean
@@ -111,5 +111,5 @@ public class UserRestControllerTest {
         String value = "Bearer eyJ0eX";
         System.out.println(value.substring(0,6));
     }
-
+    //결과로 Bearer 반환
 }
