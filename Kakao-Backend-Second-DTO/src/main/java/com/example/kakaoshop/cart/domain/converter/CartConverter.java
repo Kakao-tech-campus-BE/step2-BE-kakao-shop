@@ -2,9 +2,7 @@ package com.example.kakaoshop.cart.domain.converter;
 
 import com.example.kakaoshop.cart.domain.model.Cart;
 import com.example.kakaoshop.cart.entity.CartEntity;
-import com.example.kakaoshop.cart.web.request.CartReqeust;
 import com.example.kakaoshop.product.domain.converter.ProductOptionConverter;
-import com.example.kakaoshop.product.domain.model.ProductOption;
 import com.example.kakaoshop.product.entity.ProductOptionEntity;
 import com.example.kakaoshop.user.User;
 import lombok.experimental.UtilityClass;
@@ -18,7 +16,7 @@ public class CartConverter {
         }
 
         return Cart.builder()
-                .id(entity.getId())
+                .id(entity.getCartId())
                 .user(entity.getUser())
                 .productOption(ProductOptionConverter.from(entity.getProductOption()))
                 .quantity(entity.getQuantity())

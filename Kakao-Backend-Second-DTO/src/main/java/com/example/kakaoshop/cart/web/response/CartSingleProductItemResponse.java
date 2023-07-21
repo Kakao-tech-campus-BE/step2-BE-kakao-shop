@@ -10,7 +10,7 @@ import java.util.List;
 @Builder(toBuilder = true)
 public class CartSingleProductItemResponse {
 
-    private int productId;
+    private Long productId;
     private String productName;
     private List<CartSingleOptionResponse> cartItems;
 

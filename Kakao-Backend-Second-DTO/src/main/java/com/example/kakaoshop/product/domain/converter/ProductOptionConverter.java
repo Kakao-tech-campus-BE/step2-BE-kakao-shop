@@ -1,8 +1,6 @@
 package com.example.kakaoshop.product.domain.converter;
 
-import com.example.kakaoshop.product.domain.model.Product;
 import com.example.kakaoshop.product.domain.model.ProductOption;
-import com.example.kakaoshop.product.entity.ProductEntity;
 import com.example.kakaoshop.product.entity.ProductOptionEntity;
 import lombok.experimental.UtilityClass;
 
@@ -14,7 +12,7 @@ public class ProductOptionConverter {
         }
 
         return ProductOption.builder()
-                .id(entity.getId())
+                .id(entity.getProductOptionId())
                 .price(entity.getPrice())
                 .optionName(entity.getOptionName())
                 .product(ProductConverter.from(entity.getProduct()))
@@ -26,7 +24,7 @@ public class ProductOptionConverter {
             return null;
         }
         return ProductOptionEntity.builder()
-                .id(productOption.getId())
+                .productOptionId(productOption.getId())
                 .price(productOption.getPrice())
                 .optionName(productOption.getOptionName())
                 .product(ProductConverter.to(productOption.getProduct()))

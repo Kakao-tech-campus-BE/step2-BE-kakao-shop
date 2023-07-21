@@ -8,12 +8,12 @@ import java.util.Objects;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name="user_tb")
+@Table(name="user_entity")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long userId;
     @Column(length = 100, nullable = false, unique = true)
     private String email; // 인증시 필요한 필드
     @Column(length = 256, nullable = false)
@@ -25,8 +25,8 @@ public class User {
     private String roles; // role은 한 개 이상
 
     @Builder
-    public User(Long id, String email, String password, String username, String roles) {
-        this.id = id;
+    public User(Long userId, String email, String password, String username, String roles) {
+        this.userId = userId;
         this.email = email;
         this.password = password;
         this.username = username;
@@ -38,11 +38,11 @@ public class User {
         if (this == o) return true;
         if (!(o instanceof User)) return false;
         User user = (User) o;
-        return Objects.equals(getId(), user.getId());
+        return Objects.equals(getUserId(), user.getUserId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId());
+        return Objects.hash(getUserId());
     }
 }

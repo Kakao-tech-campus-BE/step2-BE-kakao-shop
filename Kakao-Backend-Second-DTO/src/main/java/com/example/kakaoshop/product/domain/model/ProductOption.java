@@ -1,6 +1,5 @@
 package com.example.kakaoshop.product.domain.model;
 
-import com.example.kakaoshop.product.entity.ProductEntity;
 import lombok.*;
 
 
@@ -11,7 +10,7 @@ import lombok.*;
 @EqualsAndHashCode
 @ToString
 public class ProductOption {
-    private int id;
+    private Long id;
     private Product product;
     private String optionName;
     private int price;

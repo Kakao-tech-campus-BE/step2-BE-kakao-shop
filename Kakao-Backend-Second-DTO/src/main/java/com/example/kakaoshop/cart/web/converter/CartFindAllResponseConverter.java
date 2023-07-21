@@ -30,7 +30,7 @@ public class CartFindAllResponseConverter {
 
     private CartSingleProductItemResponse toCartSingleProductItemResponse(Map.Entry<Product, List<Cart>> groupByProduct) {
         return CartSingleProductItemResponse.builder()
-                .productId(groupByProduct.getKey().getId())
+                .productId(groupByProduct.getKey().getProductId())
                 .productName(groupByProduct.getKey().getProductName())
                 .cartItems(
                         groupByProduct.getValue().stream()

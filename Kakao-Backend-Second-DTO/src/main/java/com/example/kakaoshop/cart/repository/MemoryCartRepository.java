@@ -24,10 +24,10 @@ public class MemoryCartRepository{
     }
 
     public CartEntity save(CartEntity entity) {
-        if(entity.getId()==null) {
+        if(entity.getCartId()==null) {
             return cartEntities.put(count++, entity);
         }
-        return cartEntities.put(entity.getId(), entity);
+        return cartEntities.put(entity.getCartId(), entity);
     }
 
     public List<CartEntity> findByUser(User user) {

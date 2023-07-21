@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "product_option_tb",
+@Table(name = "product_option_entity",
         indexes = {
                 @Index(name = "product_option_product_id_idx", columnList = "product_id")
         }
@@ -19,9 +19,10 @@ import javax.persistence.*;
 public class ProductOptionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long productOptionId;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
     private ProductEntity product;
 
     @Column(length = 100, nullable = false)
@@ -29,8 +30,8 @@ public class ProductOptionEntity {
     private int price;
 
     @Builder
-    public ProductOptionEntity(int id, ProductEntity product, String optionName, int price) {
-        this.id = id;
+    public ProductOptionEntity(Long productOptionId, ProductEntity product, String optionName, int price) {
+        this.productOptionId = productOptionId;
         this.product = product;
         this.optionName = optionName;
         this.price = price;
