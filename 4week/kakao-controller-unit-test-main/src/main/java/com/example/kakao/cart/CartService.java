@@ -15,9 +15,22 @@ import java.util.Set;
 @Service
 public class CartService {
 
+    private final FakeStore fakeStore;
+
+    @Transactional
     public void updateQuantity(List<CartRequest.UpdateDTO> requestDTOs) {
         // 음수가 들어오는지 체크 
         validateQuantityForCartIds(requestDTOs);
+        // 업데이트
+        for (CartRequest.UpdateDTO updateDTO : requestDTOs) {
+            System.out.println("updateDTO : " + updateDTO.getCartId());
+            for (Cart cart : fakeStore.getCartList()) {
+                System.out.println("cart : " + cart.getId());
+                if (cart.getId() == updateDTO.getCartId()) {
+                    cart.update(updateDTO.getQuantity(), cart.getPrice() * updateDTO.getQuantity());
+                }
+            }
+        }
         // 동일한 cartId 가 들어오는지 체크
         validateDuplicateCartIds(requestDTOs);
 
