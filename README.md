@@ -21,6 +21,10 @@
     - [OrderJPARepositoryTest](#orderjparepositorytest)
 
 - [4주차](#week4)
+  - [과제](#task4)
+    - [UserRestControllerTest](#userrestcontrollertest)
+    - [CartRestControllerTest](#cartrestcontrollertest)
+    - [OrderRestControllerTest](#orderrestcontrollertest)
 
 - [5주차](#week5)
 
@@ -817,6 +821,50 @@ CREATE INDEX `idx_oi_option_id` ON `order_item_tb` (`optionId`);
 
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
+
+
+## Task4
+
+---
+
+### UserRestControllerTest
+
+- 회원가입 테스트
+  - 성공
+  - 실패
+    - 이메일 형식
+    - 비밀번호 형식
+    - 비밀번호 길이
+
+- 로그인 테스트
+  - 성공
+  - 실패
+    - 이메일 형식
+
+- 비밀번호 변경 테스트
+- 이메일 중복체크 테스트
+  - 성공
+  - 실패
+
+- 로그아웃 테스트
+
+### CartRestControllerTest
+
+- 장바구니 담기 테스트
+  - 성공
+  - 실패
+    - 너무 적은 수량
+
+- 장바구니 업데이트 테스트
+- 장바구니 조회 테스트
+- 
+### OrderRestControllerTest
+
+- 결재 테스트
+- 주문 내역 조회 테스트
+  - 성공
+  - 실패
+
 
 # Week5
 

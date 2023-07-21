@@ -87,16 +87,11 @@ public class CartRestControllerTest {
         // given
         List<CartRequest.SaveDTO> requestDTO = new ArrayList<>();
         CartRequest.SaveDTO saveDTO = new CartRequest.SaveDTO();
-
         saveDTO.setOptionId(1);
         saveDTO.setQuantity(0);
         requestDTO.add(saveDTO);
 
         String requestBody = om.writeValueAsString(requestDTO);
-        System.out.println("테스트 : " + requestBody);
-
-        // stub
-        BDDMockito.willThrow(new Exception400("1개 이상의 상품을 선택해주십시오.")).given(cartService).addCart(Mockito.any());
 
         // when
         ResultActions result = mvc.perform(
@@ -108,11 +103,11 @@ public class CartRestControllerTest {
 
         // then
         String responseBody = result.andReturn().getResponse().getContentAsString();
-        System.out.println("테스트 : " + responseBody);
+        System.out.println("테스트 : "+responseBody);
 
-        result.andExpect(MockMvcResultMatchers.status().isBadRequest());
+        result.andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.success").value("false"));
     }
-
 
     @Test
     @DisplayName("장바구니 업데이트 테스트")

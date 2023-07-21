@@ -6,6 +6,7 @@ import com.example.kakao._core.security.CustomUserDetails;
 import com.example.kakao._core.utils.ApiUtils;
 import com.example.kakao._core.utils.FakeStore;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.Errors;
@@ -43,7 +44,11 @@ public class CartRestController {
         );
 
         try {
-
+            for (CartRequest.SaveDTO saveDTO : requestDTOs) {
+                if (saveDTO.getQuantity() < 1) {
+                    throw new Exception400("1개 이상의 상품을 선택해주십시오.");
+                }
+            }
             cartService.addCart(requestDTOs);
 
             return ResponseEntity.ok(ApiUtils.success(null));
