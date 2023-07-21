@@ -155,4 +155,93 @@ public class CartRestControllerTest {
         result.andExpect(MockMvcResultMatchers.jsonPath("$.error").value(nullValue()));
     }
 
+    @DisplayName("인증없이 장바구니 조희 테스트")
+    @Test
+    public void findAll_Exception_test() throws Exception {
+
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .get("/carts")
+        );
+
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("false"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response").value(nullValue()));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error.message").value("인증되지 않았습니다"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error.status").value(401));
+    }
+
+    @DisplayName("인증없이 장바구니 담기 테스트")
+    @Test
+    public void add_Exception_test() throws Exception {
+
+        //given
+        List<CartRequest.SaveDTO> requestDTOs = new ArrayList<>();
+        CartRequest.SaveDTO saveDTO1 = new CartRequest.SaveDTO();
+        saveDTO1.setOptionId(1);
+        saveDTO1.setQuantity(5);
+
+        CartRequest.SaveDTO saveDTO2 = new CartRequest.SaveDTO();
+        saveDTO2.setOptionId(2);
+        saveDTO2.setQuantity(5);
+
+        requestDTOs.add(saveDTO1);
+        requestDTOs.add(saveDTO2);
+
+        String requestBody = om.writeValueAsString(requestDTOs);
+        //System.out.println("테스트 : "+requestBody);
+
+        //when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .post("/carts/add")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+
+        //then
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("false"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response").value(nullValue()));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error.message").value("인증되지 않았습니다"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error.status").value(401));
+    }
+
+    @DisplayName("인증없이 장바구니 수정 테스트")
+    @Test
+    public void update_Exception_test() throws Exception {
+        // given
+        List<CartRequest.UpdateDTO> requestDTOs = new ArrayList<>();
+        CartRequest.UpdateDTO d1 = new CartRequest.UpdateDTO();
+        d1.setCartId(1);
+        d1.setQuantity(10);
+        CartRequest.UpdateDTO d2 = new CartRequest.UpdateDTO();
+        d2.setCartId(2);
+        d2.setQuantity(10);
+        requestDTOs.add(d1);
+        requestDTOs.add(d2);
+        String requestBody = om.writeValueAsString(requestDTOs);
+        //System.out.println("테스트 : "+requestBody);
+
+        // when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .post("/carts/update")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+
+        // then
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("false"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response").value(nullValue()));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error.message").value("인증되지 않았습니다"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error.status").value(401));
+    }
+
 }

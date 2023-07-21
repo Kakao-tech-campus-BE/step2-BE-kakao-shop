@@ -121,4 +121,50 @@ public class OrderRestControllerTest {
 
     }
 
+    @DisplayName("주문 확인 - 401Exception 테스트")
+    @Test
+    public void findById_401_test() throws Exception {
+        //given
+        int id = 1;
+
+        //when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .get("/orders/"+id)
+        );
+
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        //then
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("false"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response").value(nullValue()));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error.message").value("인증되지 않았습니다"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error.status").value(401));
+
+    }
+
+    @DisplayName("결제 주문 인서트 - 401Exception 테스트")
+    @Test
+    public void save_401_test() throws Exception {
+
+
+        //when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .post("/orders/save")
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+
+
+        //then
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("false"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response").value(nullValue()));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error.message").value("인증되지 않았습니다"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error.status").value(401));
+
+    }
 }
