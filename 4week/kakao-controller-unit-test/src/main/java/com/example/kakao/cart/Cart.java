@@ -37,8 +37,8 @@ public class Cart {
     private int price;
 
     @Builder
-    public Cart(int id, User user, Option option, int quantity, int price) {
-        this.id = id;
+    public Cart( int id,User user, Option option, int quantity, int price) {
+        this.id=id;
         this.user = user;
         this.option = option;
         this.quantity = quantity;

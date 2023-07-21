@@ -42,6 +42,7 @@ public class GlobalExceptionHandler {
                     ex.status()
             );
         }else if(e instanceof Exception500){
+
             ErrorLog errorLog = ErrorLog.builder()
                     .message(e.getMessage())
                     .userAgent(request.getHeader("User-Agent"))
