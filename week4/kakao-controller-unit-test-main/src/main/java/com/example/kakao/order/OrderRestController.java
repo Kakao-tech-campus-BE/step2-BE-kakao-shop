@@ -1,5 +1,7 @@
 package com.example.kakao.order;
 
+import com.example.kakao._core.errors.GlobalExceptionHandler;
+import com.example.kakao._core.errors.exception.Exception400;
 import com.example.kakao._core.security.CustomUserDetails;
 import com.example.kakao._core.utils.ApiUtils;
 import com.example.kakao._core.utils.FakeStore;
@@ -15,12 +17,16 @@ import java.util.List;
 @RestController
 @RequestMapping("/orders")
 public class OrderRestController {
+    private final GlobalExceptionHandler globalExceptionHandler;
 
     private final FakeStore fakeStore;
 
     // (기능12) 결재
     @PostMapping("/save")
     public ResponseEntity<?> save(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        if (fakeStore.getOrderList().isEmpty()) {
+            return globalExceptionHandler.getApiErrorResultResponseEntity(new Exception400("주문목록이 비어있습니다."));
+        }
         Order order = fakeStore.getOrderList().get(0);
         List<Item> itemList = fakeStore.getItemList();
         OrderResponse.FindByIdDTO responseDTO = new OrderResponse.FindByIdDTO(order, itemList);
