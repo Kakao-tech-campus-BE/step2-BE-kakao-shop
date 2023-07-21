@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-@Transactional(readOnly = true)
+@Transactional(readOnly = true) // 읽기 전용이 아니라 dirty checking을 하지 않겠다는 말?
 @RequiredArgsConstructor
 @Service
 public class UserService {
@@ -30,7 +30,7 @@ public class UserService {
         return new UserResponse.FindById(userPS);
     }
 
-    @Transactional
+    @Transactional // 메소드 단위 트랜잭션은 덮어씌워진다. 해당 어노테이션을 뺸다고 user의 save가 사라지진 않음
     public void join(UserRequest.JoinDTO requestDTO) {
         sameCheckEmail(requestDTO.getEmail());
 
@@ -61,7 +61,7 @@ public class UserService {
     }
 
 
-    @Transactional
+    // @Transactional // 해당 어노테이션을 빼면 flush가 일어나지 않음을 확인(password변경이 통하지 않음) select 쿼리만 날아감
     public void updatePassword(UserRequest.UpdatePasswordDTO requestDTO, Integer id) {
         User userPS = userJPARepository.findById(id).orElseThrow(
                 () -> new Exception400("회원 아이디를 찾을 수 없습니다. : "+id)

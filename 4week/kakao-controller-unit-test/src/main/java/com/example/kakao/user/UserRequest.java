@@ -1,5 +1,6 @@
 package com.example.kakao.user;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +12,7 @@ import javax.validation.constraints.Size;
 public class UserRequest {
     @Getter
     @Setter
+    @EqualsAndHashCode
     public static class JoinDTO {
 
         @NotEmpty

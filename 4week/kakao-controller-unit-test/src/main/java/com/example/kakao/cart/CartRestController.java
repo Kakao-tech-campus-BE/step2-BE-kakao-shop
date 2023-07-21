@@ -9,6 +9,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,7 +21,7 @@ public class CartRestController {
 
     private final FakeStore fakeStore;
 
-// [
+    // [
 //     {
 //         "optionId":1,
 //         "quantity":5
@@ -33,6 +34,7 @@ public class CartRestController {
     // (기능8) 장바구니 담기
     @PostMapping("/carts/add")
     public ResponseEntity<?> addCartList(@RequestBody List<CartRequest.SaveDTO> requestDTOs, @AuthenticationPrincipal CustomUserDetails userDetails) {
+
         requestDTOs.forEach(
                 saveDTO -> System.out.println("요청 받은 장바구니 옵션 : "+saveDTO.toString())
         );
@@ -44,11 +46,12 @@ public class CartRestController {
     public ResponseEntity<?> findAll(@AuthenticationPrincipal CustomUserDetails userDetails) {
         List<Cart> cartList = fakeStore.getCartList();
         CartResponse.FindAllDTO responseDTO = new CartResponse.FindAllDTO(cartList);
+        System.out.println(">>>>>>>>>>>>>>>findAll");
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
 
 
-// [
+    // [
 //     {
 //         "cartId":1,
 //         "quantity":10
@@ -64,10 +67,23 @@ public class CartRestController {
         requestDTOs.forEach(
                 updateDTO -> System.out.println("요청 받은 장바구니 수정 내역 : "+updateDTO.toString())
         );
+        List<Cart> dummyCartList = new ArrayList<>();
+        for(Cart cart : fakeStore.getCartList()){
+            Cart dummy = new Cart(
+                    cart.getId(),
+                    cart.getUser(),
+                    cart.getOption(),
+                    cart.getQuantity(),
+                    cart.getPrice()
+            );
+            dummyCartList.add(dummy);
+        }
+        // fakeStore의 원본을 훼손하지 않기 위해 한 조치이다.
+        //이 문제 역시도 고민이 된다. 테스트를 위해 코드 원본을 수정하는 게 과연 옳은 일일까?
 
         // 가짜 저장소의 값을 변경한다.
         for (CartRequest.UpdateDTO updateDTO : requestDTOs) {
-            for (Cart cart : fakeStore.getCartList()) {
+            for (Cart cart : dummyCartList) {
                 if(cart.getId() == updateDTO.getCartId()){
                     cart.update(updateDTO.getQuantity(), cart.getPrice() * updateDTO.getQuantity());
                 }
@@ -75,7 +91,10 @@ public class CartRestController {
         }
 
         // DTO를 만들어서 응답한다.
-        CartResponse.UpdateDTO responseDTO = new CartResponse.UpdateDTO(fakeStore.getCartList());
+        CartResponse.UpdateDTO responseDTO = new CartResponse.UpdateDTO(dummyCartList);
+
+        System.out.println(">>>>>>>>>>update");
+
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 

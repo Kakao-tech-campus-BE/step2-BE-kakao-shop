@@ -16,6 +16,7 @@ public class DummyEntity {
     protected User newUser(String username){
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return User.builder()
+                .id(1)
                 .email(username+"@nate.com")
                 .password(passwordEncoder.encode("meta1234!"))
                 .username(username)

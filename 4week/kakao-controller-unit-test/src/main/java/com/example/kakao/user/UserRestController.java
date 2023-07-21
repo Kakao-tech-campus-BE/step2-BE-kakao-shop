@@ -85,7 +85,7 @@ public class UserRestController {
 
         // 권한 체크 (디비를 조회하지 않아도 체크할 수 있는 것)
         if (id != userDetails.getUser().getId()) {
-            Exception403 e = new Exception403("인증된 user는 해당 id로 접근할 권한이 없습니다" + id);
+            Exception403 e = new Exception403("인증된 user는 해당 id로 접근할 권한이 없습니다:" + id);
             return new ResponseEntity<>(
                     e.body(),
                     e.status()
