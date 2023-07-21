@@ -1,6 +1,7 @@
 package com.example.kakao._core.errors;
 
 import com.example.kakao._core.errors.exception.*;
+import com.example.kakao._core.utils.ApiUtils;
 import com.example.kakao.log.ErrorLog;
 import com.example.kakao.log.ErrorLogJPARepository;
 import lombok.RequiredArgsConstructor;
