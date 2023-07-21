@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -37,38 +38,14 @@ public class OrderService {
 
 
     public List<Item> saveItemByOrder(Order order) {
-        List<Cart> cartList;
-        List<Item> itemList;
+        List<Cart> cartList = findAllCarts();
+        validateCartList(cartList);
 
-        try {
-            cartList = cartJPARepository.findAll();
-        }catch (Exception e){
-            throw new Exception500("unknown server error");
-        }
-
-        if(cartList.isEmpty()){
-            throw new Exception400("장바구니의 상품을 조회할 수 없습니다");
-        }else{
-            for (Cart cart : cartList) {
-                Item item = Item.builder()
-                        .option(cart.getOption())
-                        .quantity(cart.getQuantity())
-                        .order(order)
-                        .price(cart.getOption().getPrice() * cart.getQuantity())
-                        .build();
-
-                try {
-                    itemJPARepository.save(item);
-                }catch (Exception e){
-                    throw new Exception500("unknown server error");
-                }
-            }
-        }
-
-        try {
-            itemList = itemJPARepository.mFindByOrderId(order.getId());
-        }catch (Exception e){
-            throw new Exception500("unknown server error");
+        List<Item> itemList = new ArrayList<>();
+        for (Cart cart : cartList) {
+            Item item = createItemFromCart(cart, order);
+            saveItem(item);
+            itemList.add(item);
         }
 
         return itemList;
@@ -88,12 +65,46 @@ public class OrderService {
         List<Item> itemList;
 
         try {
-            itemList = itemJPARepository.mFindByOrderId(orderId);
+            itemList = itemJPARepository.FindByOrderId(orderId);
         }catch (Exception e){
             throw new Exception500("unknown server error");
         }
 
         return itemList;
+    }
+
+    private List<Cart> findAllCarts(){
+        try {
+            return cartJPARepository.findAll();
+        }catch (Exception e){
+            throw new Exception500("unknown server error");
+        }
+    }
+
+    private Item createItemFromCart(Cart cart, Order order) {
+        int quantity = cart.getQuantity();
+        int price = cart.getOption().getPrice() * quantity;
+
+        return Item.builder()
+                .option(cart.getOption())
+                .quantity(quantity)
+                .order(order)
+                .price(price)
+                .build();
+    }
+
+    private void saveItem(Item item) {
+        try {
+            itemJPARepository.save(item);
+        } catch (Exception e) {
+            throw new Exception500("unknown server error");
+        }
+    }
+
+    private void validateCartList(List<Cart> cartList){
+        if(cartList.isEmpty()){
+            throw new Exception400("장바구니의 상품을 조회할 수 없습니다");
+        }
     }
 }
 

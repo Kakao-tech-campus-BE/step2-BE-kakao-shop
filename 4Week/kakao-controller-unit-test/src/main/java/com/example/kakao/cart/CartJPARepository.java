@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface CartJPARepository extends JpaRepository<Cart, Integer> {
     @Query("select c from Cart c join fetch c.user join fetch c.option o join fetch o.product where c.user.id = :userId")
-    List<Cart> mFindAllByUserId(@Param("userId") int userId);
+    List<Cart> FindAllByUserId(@Param("userId") int userId);
 
     @Modifying
     @Query("delete from Cart c where c.id in :ids")

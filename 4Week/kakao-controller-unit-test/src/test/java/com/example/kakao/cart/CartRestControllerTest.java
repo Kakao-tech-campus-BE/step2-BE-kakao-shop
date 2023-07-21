@@ -7,7 +7,6 @@ import com.example.kakao.product.Product;
 import com.example.kakao.product.option.Option;
 import com.example.kakao.user.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,7 +81,7 @@ public class CartRestControllerTest {
         Product product = new Product(1, "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전", "description", "/image/path", 1000);
         Option option1 = new Option(1, product, "01. 슬라이딩 지퍼백 크리스마스에디션 4종", 10000);
         Option option2 = new Option(2, product,"02. 슬라이딩 지퍼백 플라워에디션 5종", 10900);
-        given(cartService.checkCart(any())).willReturn(
+        given(cartService.findAllCart(any())).willReturn(
                 Arrays.asList(
                         new Cart(1, user, option1, 5, 50000),
                         new Cart(2, user, option2, 5, 5*10900)
@@ -135,7 +134,7 @@ public class CartRestControllerTest {
         Product product = new Product(1, "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전", "description", "/image/path", 1000);
         Option option1 = new Option(1, product, "01. 슬라이딩 지퍼백 크리스마스에디션 4종", 10000);
         Option option2 = new Option(2, product,"02. 슬라이딩 지퍼백 플라워에디션 5종", 10900);
-        given(cartService.checkCart(any())).willReturn(
+        given(cartService.findAllCart(any())).willReturn(
                 Arrays.asList(
                         new Cart(1, user, option1, 10, 50000),
                         new Cart(2, user, option2, 10, 5*10900)

@@ -3,15 +3,12 @@ package com.example.kakao.cart;
 import com.example.kakao._core.errors.GlobalExceptionHandler;
 import com.example.kakao._core.security.CustomUserDetails;
 import com.example.kakao._core.utils.ApiUtils;
-import com.example.kakao._core.utils.FakeStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -28,7 +25,7 @@ public class CartRestController {
 //         "optionId":1,
 //         "quantity":5
 //     },
-//     {
+// {
 //         "optionId":2,
 //         "quantity":5
 //     }
@@ -54,7 +51,7 @@ public ResponseEntity<?> addCartList(@RequestBody List<CartRequest.SaveDTO> requ
     public ResponseEntity<?> findAll(@AuthenticationPrincipal CustomUserDetails userDetails,
                                      HttpServletRequest request) {
         try {
-            CartResponse.FindAllDTO responseDTO = new CartResponse.FindAllDTO(cartService.checkCart(userDetails));
+            CartResponse.FindAllDTO responseDTO = new CartResponse.FindAllDTO(cartService.findAllCart(userDetails));
             return ResponseEntity.ok(ApiUtils.success(responseDTO));
         }catch (RuntimeException e){
             return globalExceptionHandler.handle(e, request);
@@ -82,12 +79,8 @@ public ResponseEntity<?> addCartList(@RequestBody List<CartRequest.SaveDTO> requ
                         cartService.updateCart(updateDTO);
                     }
             );
-        }catch (RuntimeException e){
-            return globalExceptionHandler.handle(e, request);
-        }
 
-        try {
-            CartResponse.UpdateDTO responseDTO = new CartResponse.UpdateDTO(cartService.checkCart(userDetails));
+            CartResponse.UpdateDTO responseDTO = new CartResponse.UpdateDTO(cartService.findAllCart(userDetails));
             // DTO를 만들어서 응답한다.
             return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
         }catch (RuntimeException e){
