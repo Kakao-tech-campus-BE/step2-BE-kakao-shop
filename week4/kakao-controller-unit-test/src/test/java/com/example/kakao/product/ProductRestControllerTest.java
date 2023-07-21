@@ -29,7 +29,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.springframework.http.ResponseEntity.status;
 
 
 @Import({
@@ -38,9 +37,6 @@ import static org.springframework.http.ResponseEntity.status;
 })
 @WebMvcTest(controllers = {ProductRestController.class})
 class ProductRestControllerTest extends DummyEntity {
-
-    @MockBean
-    private ErrorLogJPARepository errorLogJPARepository;
 
     @MockBean
     private FakeStore fakeStore;
