@@ -6,6 +6,7 @@ import com.example.kakao._core.utils.FakeStore;
 import com.example.kakao.cart.CartRestController;
 import com.example.kakao.cart.CartService;
 import com.example.kakao.log.ErrorLogJPARepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 
 @Import({
         FakeStore.class,
@@ -31,6 +33,9 @@ public class OrderRestControllerTest {
 
     @Autowired
     private MockMvc mvc;
+
+    @Autowired
+    private FakeStore fakeStore;
 
     @MockBean
     private OrderService orderService;
@@ -62,6 +67,8 @@ public class OrderRestControllerTest {
         int id = 1;
 
         // stub
+        Order order = fakeStore.getOrderList().get(0);
+        Mockito.when(orderService.findById(anyInt())).thenReturn(order);
 
         // when
         ResultActions result = mvc.perform(
@@ -73,5 +80,6 @@ public class OrderRestControllerTest {
 
         // then
         result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
+        Assertions.assertNotNull(order);
     }
 }

@@ -5,8 +5,10 @@ import com.example.kakao._core.security.JWTProvider;
 import com.example.kakao._core.security.SecurityConfig;
 import com.example.kakao._core.utils.FakeStore;
 import com.example.kakao.log.ErrorLogJPARepository;
+import com.example.kakao.product.option.Option;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 
 @Import({
         FakeStore.class,
@@ -37,6 +40,9 @@ public class CartRestControllerTest {
 
     @Autowired
     private ObjectMapper om;
+
+    @Autowired
+    private FakeStore fakeStore;
 
     @MockBean
     private CartService cartService;
@@ -96,7 +102,8 @@ public class CartRestControllerTest {
         System.out.println("테스트 : "+requestBody);
 
         // stub
-//        Mockito.when(cartService.findOptionId(1)).thenReturn();
+        Option option = fakeStore.getOptionList().get(0);
+        Mockito.when(cartService.findOptionId(anyInt())).thenReturn(option);
 
         // when
         ResultActions result = mvc.perform(
@@ -110,6 +117,7 @@ public class CartRestControllerTest {
 
         // then
         result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
+        Assertions.assertNotNull(option);
     }
 
     @WithMockUser(username = "ssar@nate.com", roles = "USER")

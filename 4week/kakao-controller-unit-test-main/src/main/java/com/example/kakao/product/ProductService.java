@@ -1,4 +1,4 @@
-package com.example.kakao.order;
+package com.example.kakao.product;
 
 import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao._core.utils.FakeStore;
@@ -9,15 +9,19 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
-public class OrderService {
+public class ProductService {
 
     private final FakeStore fakeStore;
 
-    public Order findById(int id){
+    public boolean findAll(){
+        return true;
+    }
+
+    public Product findById(int id){
         try {
-            return fakeStore.getOrderList().get(id - 1);
+            return fakeStore.getProductList().get(id-1);
         }catch (RuntimeException e){
-            throw new Exception404("해당 주문을 찾을 수 없습니다:"+id);
+            throw new Exception404("해당 상품을 찾을 수 없습니다:"+id);
         }
     }
 }
