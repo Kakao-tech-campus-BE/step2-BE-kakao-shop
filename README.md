@@ -277,7 +277,9 @@ total_price: 주문 총액
 ## **과제 1**
 ```
 초반에 API 문서를 수정해서 설계를 요구하는 것이 의도인지 햇갈렸었다. 
-그러나 합의된 API 문서는 대게 수정하지 않는 것이 원칙이기 때문에 1주차 자료인 'API 문서'를 거의 그대로 참조하였음!
+
+그러나 합의된 API 문서는 수정하지 않는 것이 원칙이기 때문에 1주차 자료인 'API 문서'를 거의 그대로 참조하였다.   
+
 
 (1) 전체 상품 목록 조회
 >- HTTP 메서드 : GET
@@ -285,6 +287,7 @@ total_price: 주문 총액
 
 (2) 개별 상품 상세 조회
 >- HTTP 메서드 : GET
+<<<<<<< HEAD
 >- 주소 : /products/{id}
 
 (3) 이메일 중복 체크
@@ -323,13 +326,14 @@ total_price: 주문 총액
 
 ## **과제 2**
 ```
-이 문제의 경우 가짜 데이터를 가지고 응답하는 controller를 만들어야 하고, 이 controller에서 사용 할 DTO를 설계해야 한다. 
+
+가짜 데이터를 가지고 응답하는 controller를 만들어야 하고, 이 controller에서 사용 할 DTO를 설계해야 한다. 
 Postman에서 API 주소에 대해 GET 메서드를 실행했을 때, API 문서에 제시된 response 값과 같은 형식이 나오도록 만들면 된다!
-(cart, product의 경우 구현되어 있음을 Postman을 통해 확인했고, order를 구현하면 된다)
+(cart, product의 경우 구현되어 있고, order를 구현하면 된다)
 
 Mock API 구현을 위한 controller의 가짜 데이터의 경우, API 문서에 제시된 데이터를 사용했다.
-또 order의 DTO 이름을 설계할 때, cart, product의 DTO 이름과 일관성을 유지하도록 이름을 지었고, 
-cart, product, order가 동일한 코드의 DTO가 필요하더라도, 이를 공유하지 않고 분리시켜서 DTO를 구성하였다! (중요)
+또 order의 DTO 이름을 설계할 때 cart, product의 DTO 이름과 일관성 있도록 이름을 지었고, 
+cart, product, order가 동일한 코드의 DTO가 필요하더라도, 이를 공유하지 않고 분리시켜서 DTO를 구성하였다.
 
 코드는 2_week_hw 파일에 첨부하였다.  
 
