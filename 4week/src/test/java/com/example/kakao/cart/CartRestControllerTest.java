@@ -3,6 +3,7 @@ package com.example.kakao.cart;
 import com.example.kakao._core.security.SecurityConfig;
 import com.example.kakao._core.utils.FakeStore;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -31,6 +32,68 @@ public class CartRestControllerTest {
 
     @WithMockUser(username = "ssar@nate.com", roles = "USER")
     @Test
+    @DisplayName("(기능 8) 장바구니 담기")
+    public void cart_add_test() throws Exception {
+        // given
+        List<CartRequest.AddDTO> requestDTOs = new ArrayList<>();
+        CartRequest.AddDTO d1 = new CartRequest.AddDTO();
+        d1.setOptionId(1);
+        d1.setQuantity(5);
+        CartRequest.AddDTO d2 = new CartRequest.AddDTO();
+        d2.setOptionId(2);
+        d2.setQuantity(5);
+        requestDTOs.add(d1);
+        requestDTOs.add(d2);
+        String requestBody = om.writeValueAsString(requestDTOs);
+        System.out.println("테스트 : " + requestBody);
+
+        // when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .post("/carts/add")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // then
+        result.andExpect(MockMvcResultMatchers.status().isOk());
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response").isEmpty());
+    }
+
+    @WithMockUser(username = "ssar@nate.com", roles = "USER")
+    @Test
+    @DisplayName("(기능 9) 장바구니 조회")
+    public void cart_findAll_test() throws Exception {
+        // given
+
+        // when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .get("/carts")
+        );
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // then
+        result.andExpect(MockMvcResultMatchers.status().isOk());
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].id").value(1));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].carts[0].id").value(1));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].carts[0].option.id").value(1));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].carts[0].option.optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].carts[0].option.price").value(10000));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].carts[0].quantity").value(5));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].carts[0].price").value(50000));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.totalPrice").value(104500));
+    }
+
+    @WithMockUser(username = "ssar@nate.com", roles = "USER")
+    @Test
+    @DisplayName("(기능 11) 주문")
     public void update_test() throws Exception {
         // given
         List<CartRequest.UpdateDTO> requestDTOs = new ArrayList<>();
@@ -56,11 +119,13 @@ public class CartRestControllerTest {
         System.out.println("테스트 : " + responseBody);
 
         // then
+        result.andExpect(MockMvcResultMatchers.status().isOk());
         result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].cartId").value(1));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].optionId").value(1));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].quantity").value(10));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].price").value(100000));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.totalPrice").value(209000));
     }
 }
