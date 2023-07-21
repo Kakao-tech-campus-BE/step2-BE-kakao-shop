@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -78,7 +78,7 @@ public class UserRestControllerTest {
 
         // stub
         String jwt = JWTProvider.create(user);
-        Mockito.when(userService.login(any())).thenReturn(jwt);
+        BDDMockito.given(userService.login(any())).willReturn(jwt);
 
         // when
         ResultActions result = mvc.perform(
