@@ -53,10 +53,10 @@ public class CartRestControllerTest extends DummyEntity{
     @MockBean
     private FakeStore fakeStore;
 
-    @DisplayName("장바구니_추가_컨트롤러_테스트_성공")
+    @DisplayName("장바구니_추가_mock_컨트롤러_테스트_성공")
     @WithMockUser(username = "ssar@nate.com", roles = "USER")
     @Test
-    public void add_test() throws Exception {
+    public void add_mock_test() throws Exception {
         // given
         List<CartRequest.SaveDTO> requestDtos = new ArrayList<>();
         CartRequest.SaveDTO c1 = new CartRequest.SaveDTO();
@@ -88,10 +88,10 @@ public class CartRestControllerTest extends DummyEntity{
     }
 
 
-    @DisplayName("장바구니_조회_테스트_성공")
+    @DisplayName("장바구니_조회_mock_컨트롤러_테스트_성공")
     @WithMockUser(username = "ssar@nate.com", roles = "USER")
     @Test
-    public void findAll_test() throws Exception {
+    public void findAll_mock_test() throws Exception {
         // given
 
         // when
@@ -99,6 +99,142 @@ public class CartRestControllerTest extends DummyEntity{
         ResultActions resultActions = mvc.perform(
                 MockMvcRequestBuilders
                         .get("/carts-mock")
+        );
+        resultActions.andDo(print());
+
+        // then
+        resultActions.andExpectAll(
+            status().isOk(),
+            jsonPath("$.success").value("true"),
+            jsonPath("$.response.products[0].id").value(1),
+            jsonPath("$.response.products[0].productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"),
+            jsonPath("$.response.products[0].carts[0].id").value(1),
+            jsonPath("$.response.products[0].carts[0].option.id").value(1),
+            jsonPath("$.response.products[0].carts[0].option.optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"),
+            jsonPath("$.response.products[0].carts[0].option.price").value(10000),
+            jsonPath("$.response.products[0].carts[0].quantity").value(5),
+            jsonPath("$.response.products[0].carts[0].price").value(50000),
+            jsonPath("$.response.products[0].carts[1].id").value(2),
+            jsonPath("$.response.products[0].carts[1].option.id").value(2),
+            jsonPath("$.response.products[0].carts[1].option.optionName").value("02. 슬라이딩 지퍼백 플라워에디션 5종"),
+            jsonPath("$.response.products[0].carts[1].option.price").value(10900),
+            jsonPath("$.response.products[0].carts[1].quantity").value(5),
+            jsonPath("$.response.products[0].carts[1].price").value(54500),
+            jsonPath("$.response.totalPrice").value(104500),
+            jsonPath("$.error").value(Matchers.nullValue())
+        );
+    }
+
+    @DisplayName("장바구니_수정_mock_컨트롤러_테스트_성공")
+    @WithMockUser(username = "ssar@nate.com", roles = "USER")
+    @Test
+    public void update_mock_test() throws Exception {
+        // given
+        List<CartRequest.UpdateDTO> requestDTOs = new ArrayList<>();
+        CartRequest.UpdateDTO d1 = new CartRequest.UpdateDTO();
+        d1.setCartId(1);
+        d1.setQuantity(10);
+        CartRequest.UpdateDTO d2 = new CartRequest.UpdateDTO();
+        d2.setCartId(2);
+        d2.setQuantity(10);
+        requestDTOs.add(d1);
+        requestDTOs.add(d2);
+        String requestBody = om.writeValueAsString(requestDTOs);
+        System.out.println("테스트 : "+requestBody);
+
+        // when
+        Mockito.when(fakeStore.getCartList()).thenReturn(cartList);
+
+        ResultActions resultActions = mvc.perform(
+                MockMvcRequestBuilders
+                        .post("/carts-mock/update")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+        resultActions.andDo(print());
+
+        // then
+        resultActions.andExpectAll(
+            status().isOk(),
+            jsonPath("$.success").value("true"),
+            jsonPath("$.response.carts[0].cartId").value(1),
+            jsonPath("$.response.carts[0].optionId").value(1),
+            jsonPath("$.response.carts[0].optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"),
+            jsonPath("$.response.carts[0].quantity").value(10),
+            jsonPath("$.response.carts[0].price").value(100000),
+            jsonPath("$.error").value(Matchers.nullValue())
+        );
+    }
+
+    @DisplayName("장바구니_초기화_mock_테스트_성공")
+    @WithMockUser(username = "ssar@nate.com", roles = "USER")
+    @Test
+    public void clear_mock_test() throws Exception {
+        // given
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                MockMvcRequestBuilders
+                        .post("/carts-mock/clear")
+        );
+        resultActions.andDo(print());
+
+        // then
+        resultActions.andExpectAll(
+                jsonPath("$.success").value("true"),
+                jsonPath("$.response").value(Matchers.nullValue()),
+                jsonPath("$.error").value(Matchers.nullValue())
+        );
+    }
+
+    // ========================== real ==========================
+    // 장바구니 추가의 경우 반환하는 데이터가 없으므로 추가 구현이 불필요하다.
+
+    @DisplayName("장바구니_추가_컨트롤러_테스트_성공")
+    @WithMockUser(username = "ssar@nate.com", roles = "USER")
+    @Test
+    public void add_test() throws Exception {
+        // given
+        List<CartRequest.SaveDTO> requestDtos = new ArrayList<>();
+        CartRequest.SaveDTO c1 = new CartRequest.SaveDTO();
+        c1.setOptionId(3);
+        c1.setQuantity(5);
+        CartRequest.SaveDTO c2 = new CartRequest.SaveDTO();
+        c2.setOptionId(4);
+        c2.setQuantity(3);
+        requestDtos.add(c1);
+        requestDtos.add(c2);
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                MockMvcRequestBuilders
+                        .post("/carts/add")
+                        .content(om.writeValueAsString(requestDtos))
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+        resultActions.andDo(print());
+
+        // then
+        resultActions.andExpectAll(
+                status().isOk(),
+                jsonPath("$.success").value("true"),
+                jsonPath("$.response").value(Matchers.nullValue()),
+                jsonPath("$.error").value(Matchers.nullValue())
+        );
+    }
+
+    @DisplayName("장바구니_조회_테스트_성공")
+    @WithMockUser(username = "ssar@nate.com", roles = "USER")
+    @Test
+    public void findAll_test() throws Exception {
+        // given
+
+        // when
+        CartResponse.FindAllDTO findAllDTO = new CartResponse.FindAllDTO(cartList);
+        Mockito.when(cartService.getCartLists(any())).thenReturn(findAllDTO);
+        ResultActions resultActions = mvc.perform(
+                MockMvcRequestBuilders
+                        .get("/carts")
         );
         resultActions.andDo(print());
 
@@ -143,88 +279,6 @@ public class CartRestControllerTest extends DummyEntity{
         System.out.println("테스트 : "+requestBody);
 
         // when
-        Mockito.when(fakeStore.getCartList()).thenReturn(cartList);
-
-        ResultActions resultActions = mvc.perform(
-                MockMvcRequestBuilders
-                        .post("/carts-mock/update")
-                        .content(requestBody)
-                        .contentType(MediaType.APPLICATION_JSON)
-        );
-        resultActions.andDo(print());
-
-        // then
-        resultActions.andExpectAll(
-            status().isOk(),
-            jsonPath("$.success").value("true"),
-            jsonPath("$.response.carts[0].cartId").value(1),
-            jsonPath("$.response.carts[0].optionId").value(1),
-            jsonPath("$.response.carts[0].optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"),
-            jsonPath("$.response.carts[0].quantity").value(10),
-            jsonPath("$.response.carts[0].price").value(100000),
-            jsonPath("$.error").value(Matchers.nullValue())
-        );
-    }
-
-    // ========================== real ==========================
-    // 장바구니 추가의 경우 반환하는 데이터가 없으므로 추가 구현이 불필요하다.
-
-    @DisplayName("장바구니_조회_실제_테스트_성공")
-    @WithMockUser(username = "ssar@nate.com", roles = "USER")
-    @Test
-    public void findAll_stub_test() throws Exception {
-        // given
-
-        // when
-        CartResponse.FindAllDTO findAllDTO = new CartResponse.FindAllDTO(cartList);
-        Mockito.when(cartService.getCartLists(any())).thenReturn(findAllDTO);
-        ResultActions resultActions = mvc.perform(
-                MockMvcRequestBuilders
-                        .get("/carts")
-        );
-        resultActions.andDo(print());
-
-        // then
-        resultActions.andExpectAll(
-            status().isOk(),
-            jsonPath("$.success").value("true"),
-            jsonPath("$.response.products[0].id").value(1),
-            jsonPath("$.response.products[0].productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"),
-            jsonPath("$.response.products[0].carts[0].id").value(1),
-            jsonPath("$.response.products[0].carts[0].option.id").value(1),
-            jsonPath("$.response.products[0].carts[0].option.optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"),
-            jsonPath("$.response.products[0].carts[0].option.price").value(10000),
-            jsonPath("$.response.products[0].carts[0].quantity").value(5),
-            jsonPath("$.response.products[0].carts[0].price").value(50000),
-            jsonPath("$.response.products[0].carts[1].id").value(2),
-            jsonPath("$.response.products[0].carts[1].option.id").value(2),
-            jsonPath("$.response.products[0].carts[1].option.optionName").value("02. 슬라이딩 지퍼백 플라워에디션 5종"),
-            jsonPath("$.response.products[0].carts[1].option.price").value(10900),
-            jsonPath("$.response.products[0].carts[1].quantity").value(5),
-            jsonPath("$.response.products[0].carts[1].price").value(54500),
-            jsonPath("$.response.totalPrice").value(104500),
-            jsonPath("$.error").value(Matchers.nullValue())
-        );
-    }
-
-    @DisplayName("장바구니_수정_컨트롤러_stub_테스트_성공")
-    @WithMockUser(username = "ssar@nate.com", roles = "USER")
-    @Test
-    public void update_stub_test() throws Exception {
-        // given
-        List<CartRequest.UpdateDTO> requestDTOs = new ArrayList<>();
-        CartRequest.UpdateDTO d1 = new CartRequest.UpdateDTO();
-        d1.setCartId(1);
-        d1.setQuantity(10);
-        CartRequest.UpdateDTO d2 = new CartRequest.UpdateDTO();
-        d2.setCartId(2);
-        d2.setQuantity(10);
-        requestDTOs.add(d1);
-        requestDTOs.add(d2);
-        String requestBody = om.writeValueAsString(requestDTOs);
-        System.out.println("테스트 : "+requestBody);
-
-        // when
         cartList.get(0).update(10, 10*10000);
         cartList.get(1).update(10, 10*10900);
         CartResponse.UpdateDTO updateDTO = new CartResponse.UpdateDTO(cartList);
@@ -254,6 +308,27 @@ public class CartRestControllerTest extends DummyEntity{
                 jsonPath("$.response.carts[1].quantity").value(10),
                 jsonPath("$.response.carts[1].price").value(109000),
                 jsonPath("$.response.totalPrice").value(209000),
+                jsonPath("$.error").value(Matchers.nullValue())
+        );
+    }
+
+    @DisplayName("장바구니_초기화_테스트_성공")
+    @WithMockUser(username = "ssar@nate.com", roles = "USER")
+    @Test
+    public void clear_test() throws Exception {
+        // given
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                MockMvcRequestBuilders
+                        .post("/carts/clear")
+        );
+        resultActions.andDo(print());
+
+        // then
+        resultActions.andExpectAll(
+                jsonPath("$.success").value("true"),
+                jsonPath("$.response").value(Matchers.nullValue()),
                 jsonPath("$.error").value(Matchers.nullValue())
         );
     }

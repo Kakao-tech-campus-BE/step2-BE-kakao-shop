@@ -63,7 +63,7 @@ public class CartRestController {
 // ]
     // (기능11) 주문하기 - (장바구니 업데이트)
     @PostMapping("/carts-mock/update")
-    public ResponseEntity<?> update(@RequestBody List<CartRequest.UpdateDTO> requestDTOs, @AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ResponseEntity<?> updateMock(@RequestBody List<CartRequest.UpdateDTO> requestDTOs, @AuthenticationPrincipal CustomUserDetails userDetails) {
         requestDTOs.forEach(
                 updateDTO -> System.out.println("요청 받은 장바구니 수정 내역 : "+updateDTO.toString())
         );
@@ -84,7 +84,7 @@ public class CartRestController {
 
 
     @PostMapping("/carts-mock/clear")
-    public ResponseEntity<?> clear(@AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ResponseEntity<?> clearMock(@AuthenticationPrincipal CustomUserDetails userDetails) {
         return ResponseEntity.ok(ApiUtils.success(null));
     }
 
@@ -116,6 +116,17 @@ public class CartRestController {
         try{
             CartResponse.UpdateDTO responseDTO = cartService.update(requestDTOs);
             return ResponseEntity.ok(ApiUtils.success(responseDTO));
+        }catch (RuntimeException e) {
+            return globalExceptionHandler.handle(e, request);
+        }
+    }
+
+    @PostMapping("/carts/clear")
+    public ResponseEntity<?> clear(@AuthenticationPrincipal CustomUserDetails userDetails,
+                                   HttpServletRequest request) {
+        try{
+            cartService.clear(userDetails);
+            return ResponseEntity.ok(ApiUtils.success(null));
         }catch (RuntimeException e) {
             return globalExceptionHandler.handle(e, request);
         }

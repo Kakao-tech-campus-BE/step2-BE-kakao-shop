@@ -114,8 +114,22 @@ public class CartService {
         return new CartResponse.FindAllDTO(cartList);
     }
 
+    public void clear(CustomUserDetails userDetails) {
+        User user = userDetails.getUser();
+
+        List<Cart> cartList = findByUserId(user.getId());
+
+        if(cartList.isEmpty()) return;
+
+        try {
+            cartJPARepository.deleteAllInBatch(cartList);
+        } catch(Exception e) {
+            throw new Exception500("장바구니 삭제 중 오류가 발생했습니다."+e.getMessage());
+        }
+    }
+
     private List<Cart> findByUserId(int userId) {
-         return cartJPARepository.findByUserId(userId);
+        return cartJPARepository.findByUserId(userId);
     }
 
     private List<Cart> findByUserIdAndOptionIdIn(List<Integer> optionIds, int userId) {
