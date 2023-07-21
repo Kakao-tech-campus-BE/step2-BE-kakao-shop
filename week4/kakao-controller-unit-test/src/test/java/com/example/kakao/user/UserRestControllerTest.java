@@ -4,11 +4,8 @@ import com.example.kakao._core.errors.GlobalExceptionHandler;
 import com.example.kakao._core.security.JWTProvider;
 import com.example.kakao._core.security.SecurityConfig;
 import com.example.kakao.log.ErrorLogJPARepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +15,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -48,9 +44,6 @@ public class UserRestControllerTest {
     // @WebMvcTest를 하면 ObjectMapper가 SpringContext에 등록되기 때문에 DI할 수 있습니다.
     @Autowired
     private ObjectMapper om;
-
-    @Test
-    public void t1(){}
 
     @Test
     public void join_test() throws Exception {
@@ -105,11 +98,4 @@ public class UserRestControllerTest {
         result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
         Assertions.assertTrue(jwt.startsWith(JWTProvider.TOKEN_PREFIX));
     }
-
-    @Test
-    public void length_test(){
-        String value = "Bearer eyJ0eX";
-        System.out.println(value.substring(0,6));
-    }
-
 }

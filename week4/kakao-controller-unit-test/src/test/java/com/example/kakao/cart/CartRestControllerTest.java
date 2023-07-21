@@ -1,6 +1,5 @@
 package com.example.kakao.cart;
 
-import com.example.kakao._core.security.JWTProvider;
 import com.example.kakao._core.security.SecurityConfig;
 import com.example.kakao._core.util.DummyEntity;
 import com.example.kakao._core.utils.FakeStore;

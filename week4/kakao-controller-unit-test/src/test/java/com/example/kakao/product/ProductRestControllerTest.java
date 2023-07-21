@@ -17,7 +17,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.Arrays;
-import java.util.List;
 
 @Import({
         // 인증이 필요없어서 미포함시키고 실행시켰는데 이게 없다면 responseBody 출력이 안된다. 왜????
@@ -117,5 +116,6 @@ public class ProductRestControllerTest extends DummyEntity {
 
         // then
         result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("false"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error.status").value("404"));
     }
 }
