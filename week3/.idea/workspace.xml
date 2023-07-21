@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="212f15c1-9eab-4699-bea5-8cf13f814bea" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kakao-jpa/src/main/java/com/example/kakao/cart/CartJPARepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/kakao-jpa/src/main/java/com/example/kakao/cart/CartJPARepository.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,6 +79,8 @@
       <workItem from="1689301913236" duration="390000" />
       <workItem from="1689302328822" duration="8896000" />
       <workItem from="1689323224108" duration="12000" />
+      <workItem from="1689379586696" duration="66000" />
+      <workItem from="1689665120150" duration="92000" />
     </task>
     <servers />
   </component>
