@@ -115,7 +115,7 @@ public class UserRestControllerTest {
 
     @Test
     @DisplayName("비밀번호 변경 테스트")
-    public void updatePassword_test() throws Exception {
+    public void update_password_test() throws Exception {
         // given
         String new_password = "new_password1";
         UserRequest.UpdatePasswordDTO requestDTO = new UserRequest.UpdatePasswordDTO();
@@ -123,6 +123,7 @@ public class UserRestControllerTest {
 
         User user = User.builder().id(1).roles("ROLE_USER").build();
         String requestBody = om.writeValueAsString(requestDTO);
+        System.out.println("테스트 : "+requestBody);
 
         // stub
         String jwt = JWTProvider.create(user);
@@ -138,6 +139,9 @@ public class UserRestControllerTest {
         );
 
         // then
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+
         result.andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true));
     }
@@ -152,6 +156,7 @@ public class UserRestControllerTest {
         emailCheckDTO.setEmail(email);
 
         String requestBody = om.writeValueAsString(emailCheckDTO);
+        System.out.println("테스트 : "+requestBody);
 
         // stub
         BDDMockito.willDoNothing().given(userService).sameCheckEmail(email);
@@ -165,6 +170,9 @@ public class UserRestControllerTest {
         );
 
         // then
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+
         result.andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true));
     }
@@ -176,7 +184,9 @@ public class UserRestControllerTest {
         String email = "existing@email.com";
         UserRequest.EmailCheckDTO emailCheckDTO = new UserRequest.EmailCheckDTO();
         emailCheckDTO.setEmail(email);
+
         String requestBody = om.writeValueAsString(emailCheckDTO);
+        System.out.println("테스트 : "+requestBody);
 
         // stub
         BDDMockito.willThrow(new Exception400("동일한 이메일의 회원이 존재합니다"))
@@ -191,6 +201,9 @@ public class UserRestControllerTest {
         );
 
         // then
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+
         result.andExpect(MockMvcResultMatchers.status().is4xxClientError())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(false));
     }
@@ -204,6 +217,9 @@ public class UserRestControllerTest {
                         .get("/logout")
                         .contentType(MediaType.APPLICATION_JSON)
         );
+
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
 
         result.andExpect(MockMvcResultMatchers.status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.header().doesNotExist(JWTProvider.HEADER));
