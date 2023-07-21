@@ -4,8 +4,7 @@ import com.example.kakao._core.security.JWTProvider;
 import com.example.kakao._core.security.SecurityConfig;
 import com.example.kakao._core.utils.FakeStore;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
@@ -26,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         FakeStore.class,
         SecurityConfig.class
 })
-
+@TestMethodOrder(value = MethodOrderer.OrderAnnotation.class)
 @WebMvcTest(controllers = {CartRestController.class})
 public class CartRestControllerTest {
     @Autowired
@@ -34,11 +33,17 @@ public class CartRestControllerTest {
 
     @Autowired
     private ObjectMapper om;
+
+    @Autowired
+    private FakeStore fakeStore;
+
     // 가짜 객체를 만들어서 인증이 된 상태로 실행 가능
+
 
     @Test
     @DisplayName("장바구니 조회 테스트")
     @WithMockUser(username = "ssar@nate.com", roles = "USER")
+    @Order(1)
     public void find_test() throws Exception {
         //given
         //when
@@ -153,6 +158,7 @@ public class CartRestControllerTest {
 
     @Test
     @DisplayName("장바구니 업데이트 테스트")
+    @Order(10)
     @WithMockUser(username = "ssar@nate.com", roles = "USER")
     public void update_test() throws Exception {
         // given
