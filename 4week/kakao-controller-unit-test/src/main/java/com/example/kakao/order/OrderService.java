@@ -38,6 +38,7 @@ public class OrderService {
             items.add(item);
         }
         itemJPARepository.saveAll(items);
+        cartJPARepository.deleteAllByUserId(userId); // 주문 후 장바구니 비워주기
         return new OrderResponse.FindByIdDTO(order,items);
     }
 
