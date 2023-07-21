@@ -35,9 +35,6 @@ public class OrderRestControllerMockTest {
     @Autowired
     private FakeStore fakeStore;
 
-    @Autowired
-    private ObjectMapper om;
-
     @MockBean
     private OrderService orderService;
 

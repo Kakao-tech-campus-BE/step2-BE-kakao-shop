@@ -15,8 +15,10 @@ import java.util.Optional;
 @Transactional
 @RequiredArgsConstructor
 public class OrderService {
+
     private final FakeStore fakeStore;
     private final OrderJPARepository orderJPARepository;
+
     public OrderResponse.FindByIdDTO save() {
         Order order = fakeStore.getOrderList().get(0);
         List<Item> itemList = fakeStore.getItemList();
