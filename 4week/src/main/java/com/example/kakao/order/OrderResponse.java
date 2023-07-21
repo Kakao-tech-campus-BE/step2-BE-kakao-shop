@@ -19,7 +19,7 @@ public class OrderResponse {
             this.id = order.getId();
             this.products = itemList.stream()
                     .map(item -> item.getOption().getProduct()).distinct()
-                    .map(product -> new ProductDTO(itemList, product)).collect(Collectors.toList());
+                    .map(product -> new ProductDTO(product, itemList)).collect(Collectors.toList());
             this.totalPrice = itemList.stream().mapToInt(item -> item.getOption().getPrice() * item.getQuantity()).sum();
         }
 
@@ -29,7 +29,7 @@ public class OrderResponse {
             private String productName;
             private List<ItemDTO> items;
 
-            public ProductDTO(List<Item> itemList, Product product) {
+            public ProductDTO(Product product, List<Item> itemList) {
                 this.id = product.getId();
                 this.productName = product.getProductName();
                 this.items = itemList.stream()

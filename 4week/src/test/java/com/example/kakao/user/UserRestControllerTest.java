@@ -93,7 +93,7 @@ public class UserRestControllerTest {
         String responseBody = result.andReturn().getResponse().getContentAsString();
         String responseHeader = result.andReturn().getResponse().getHeader(JWTProvider.HEADER);
         System.out.println("테스트 : " + responseBody);
-        System.out.println("테스트 : "+ responseHeader);
+        System.out.println("테스트 : " + responseHeader);
 
         // then
         result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));

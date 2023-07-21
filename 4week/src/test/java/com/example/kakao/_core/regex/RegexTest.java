@@ -26,7 +26,7 @@ public class RegexTest {
 
     // chatgpt
     @Test
-    public void 이메일형식만된다_test(){
+    public void 이메일형식만된다_test() {
         String value = "ssar@nate.com";
         boolean result = Pattern.matches("^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$", value);
         System.out.println("테스트 : " + result);
@@ -35,7 +35,7 @@ public class RegexTest {
     }
 
     @Test
-    public void 영문숫자특수문자포함_공백안됨_test(){
+    public void 영문숫자특수문자포함_공백안됨_test() {
         String value = "s6!안";
         boolean result = Pattern.matches("^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@#$%^&+=!~`<>,./?;:'\"\\[\\]{}\\\\()|_-])\\S*$", value);
         System.out.println("테스트 : " + result);

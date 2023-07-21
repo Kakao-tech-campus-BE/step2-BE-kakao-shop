@@ -65,15 +65,12 @@ public class ProductJPARepositoryTest extends DummyEntity {
         Assertions.assertThat(productPG.getContent().get(0).getPrice()).isEqualTo(1000);
     }
 
-    // ManyToOne 전략을 Eager로 간다면 추천
     @Test
     public void option_findByProductId_eager_test() throws JsonProcessingException {
         // given
         int id = 1;
 
         // when
-        // 충분한 데이터 - product만 0번지에서 빼면 된다
-        // 조인은 하지만, fetch를 하지 않아서, product를 한번 더 select 했다.
         List<Option> optionListPS = optionJPARepository.findByProductId(id); // Eager
 
         System.out.println("json 직렬화 직전========================");

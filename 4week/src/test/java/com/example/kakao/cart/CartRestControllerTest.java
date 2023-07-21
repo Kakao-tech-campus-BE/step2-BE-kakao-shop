@@ -29,7 +29,7 @@ public class CartRestControllerTest {
     @Autowired
     private ObjectMapper om;
 
-    @WithMockUser(username = "ssar@nate.com", roles = "USER")
+    @WithMockUser(username = "ssar@nate.com", roles = "ROLE_USER")
     @Test
     public void update_test() throws Exception {
         // given
@@ -43,7 +43,7 @@ public class CartRestControllerTest {
         requestDTOs.add(d1);
         requestDTOs.add(d2);
         String requestBody = om.writeValueAsString(requestDTOs);
-        System.out.println("테스트 : "+requestBody);
+        System.out.println("테스트 : " + requestBody);
 
         // when
         ResultActions result = mvc.perform(

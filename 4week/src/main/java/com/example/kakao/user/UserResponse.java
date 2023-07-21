@@ -5,7 +5,7 @@ import lombok.Setter;
 
 public class UserResponse {
     @Getter @Setter
-    public static class FindById{
+    public static class FindById {
         private int id;
         private String username;
         private String email;

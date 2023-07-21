@@ -45,7 +45,7 @@ public class CartResponse {
         public FindAllDTO(List<Cart> cartList) {
             this.products = cartList.stream()
                     .map(cart -> cart.getOption().getProduct()).distinct() // 여러 옵션의 상품이 동일하면 중복을 제거한다.
-                    .map(product -> new ProductDTO(cartList, product)).collect(Collectors.toList()); // 중복이 제거된 상품과 장바구니 상품으로 DTO를 만든다.
+                    .map(product -> new ProductDTO(product, cartList)).collect(Collectors.toList()); // 중복이 제거된 상품과 장바구니 상품으로 DTO를 만든다.
             this.totalPrice = cartList.stream().mapToInt(cart -> cart.getOption().getPrice() * cart.getQuantity()).sum();
         }
 
@@ -55,7 +55,7 @@ public class CartResponse {
             private String productName;
             private List<CartDTO> carts;
 
-            public ProductDTO(List<Cart> cartList, Product product) {
+            public ProductDTO(Product product, List<Cart> cartList) {
                 this.id = product.getId();
                 this.productName = product.getProductName();
                 this.carts = cartList.stream()
@@ -75,7 +75,7 @@ public class CartResponse {
                     this.id = cart.getId();
                     this.option = new OptionDTO(cart.getOption());
                     this.quantity = cart.getQuantity();
-                    this.price = cart.getOption().getPrice()*cart.getQuantity();
+                    this.price = cart.getOption().getPrice() * cart.getQuantity();
                 }
 
                 @Getter @Setter
