@@ -61,6 +61,7 @@ public class CartRestControllerTest {
         result.andExpect(MockMvcResultMatchers.status().isOk());
         result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response").isEmpty());
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty());
     }
 
     @WithMockUser(username = "ssar@nate.com", roles = "USER")
@@ -89,6 +90,7 @@ public class CartRestControllerTest {
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].carts[0].quantity").value(5));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].carts[0].price").value(50000));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.totalPrice").value(104500));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty());
     }
 
     @WithMockUser(username = "ssar@nate.com", roles = "USER")
@@ -127,5 +129,6 @@ public class CartRestControllerTest {
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].quantity").value(10));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].price").value(100000));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.totalPrice").value(209000));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty());
     }
 }

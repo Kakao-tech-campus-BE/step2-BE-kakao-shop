@@ -63,6 +63,7 @@ public class UserRestControllerTest {
         result.andExpect(MockMvcResultMatchers.status().isOk());
         result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response").isEmpty());
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty());
     }
 
     @Test
@@ -96,5 +97,6 @@ public class UserRestControllerTest {
         result.andExpect(MockMvcResultMatchers.status().isOk());
         result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response").isEmpty());
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty());
     }
 }

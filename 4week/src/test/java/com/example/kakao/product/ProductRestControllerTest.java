@@ -57,6 +57,7 @@ public class ProductRestControllerTest {
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response[0].description").value(""));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response[0].image").value("/images/1.jpg"));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response[0].price").value(1000));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty());
     }
 
     @Test
@@ -95,5 +96,6 @@ public class ProductRestControllerTest {
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.options[0].id").value(1));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.options[0].optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.options[0].price").value(10000));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty());
     }
 }

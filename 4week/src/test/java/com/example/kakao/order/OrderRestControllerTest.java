@@ -48,6 +48,7 @@ public class OrderRestControllerTest {
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].quantity").value(5));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].price").value(50000));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.totalPrice").value(104500));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty());
     }
 
     @WithMockUser(username = "ssar@nate.com", roles = "USER")
@@ -75,5 +76,6 @@ public class OrderRestControllerTest {
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].quantity").value(5));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].price").value(50000));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.totalPrice").value(104500));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty());
     }
 }
