@@ -1,16 +1,19 @@
 package com.example.kakao.product;
 
 import com.example.kakao._core.errors.GlobalExceptionHandler;
+import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao._core.security.SecurityConfig;
 import com.example.kakao._core.util.DummyEntity;
 import com.example.kakao._core.utils.FakeStore;
 import com.example.kakao.log.ErrorLogJPARepository;
+import com.example.kakao.order.OrderResponse;
 import com.example.kakao.product.option.Option;
 import com.example.kakao.product.option.OptionJPARepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -49,6 +52,9 @@ public class ProductRestControllerTest extends DummyEntity {
     @Autowired
     private OptionJPARepository optionJPARepository;
 
+    @MockBean
+    private ProductService productService;
+
     @Autowired
     private MockMvc mvc;
 
@@ -80,17 +86,17 @@ public class ProductRestControllerTest extends DummyEntity {
         //given
         id = options.get(0).getId(); //Repository에 저장했던 id 값을 불러왔습니다.
 
-        // Json 직렬화로 responseBody를 관찰하기 위한 코드
         Product product = fakeStore.getProductList().stream().filter(p -> p.getId() == id).findFirst().orElse(null);
         List<Option> optionList = fakeStore.getOptionList().stream().filter(option -> product.getId() == option.getProduct().getId()).collect(Collectors.toList());
-        ProductResponse.FindByIdDTO responseDTO = new ProductResponse.FindByIdDTO(product, optionList);
-        String requestBody = om.writeValueAsString(responseDTO);
+
+
+        //stub
+        Mockito.when(productService.findById(id)).thenReturn(new ProductResponse.FindByIdDTO(product, optionList));
 
         //when
         ResultActions result = mvc.perform(
                 MockMvcRequestBuilders
                         .get("/products/" + id)
-                        .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON)
 
         );
@@ -104,6 +110,9 @@ public class ProductRestControllerTest extends DummyEntity {
     void findById_product_null_test() throws Exception{
         //given
         id = 1000; // product에 없는 id 값
+
+        //stub
+        Mockito.when(productService.findById(id)).thenThrow(new Exception404("해당 상품을 찾을 수 없습니다"));
 
         //when
         ResultActions result = mvc.perform(
