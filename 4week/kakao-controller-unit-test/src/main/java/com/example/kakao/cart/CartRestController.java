@@ -43,6 +43,7 @@ public class CartRestController {
 //         "quantity":5
 //     }
 // ]
+
     // (기능8) 장바구니 담기
     @PostMapping("/carts/add")
     public ResponseEntity<?> addCartList(@RequestBody List<CartRequest.SaveDTO> requestDTOs, HttpServletRequest request, @AuthenticationPrincipal CustomUserDetails userDetails) {
@@ -75,7 +76,6 @@ public class CartRestController {
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
 
-
 // [
 //     {
 //         "cartId":1,
@@ -102,7 +102,6 @@ public class CartRestController {
         CartResponse.UpdateDTO responseDTO = new CartResponse.UpdateDTO(fakeStore.getCartList());
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
-
 
     @PostMapping("/carts/clear")
     public ResponseEntity<?> clear(@AuthenticationPrincipal CustomUserDetails userDetails) {

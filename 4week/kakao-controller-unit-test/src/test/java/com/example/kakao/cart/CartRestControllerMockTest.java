@@ -114,14 +114,11 @@ public class CartRestControllerMockTest {
         saveDTO2.setQuantity(-1);
         requestDTOs.add(saveDTO1);
         requestDTOs.add(saveDTO2);
-        String requestBody = om.writeValueAsString(requestDTOs);
-        System.out.println("테스트 : "+requestBody);
 
         //when
         ResultActions result = mvc.perform(
                 MockMvcRequestBuilders
                         .post("/carts/add")
-                        .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON)
         );
         String responseBody = result.andReturn().getResponse().getContentAsString();
@@ -147,14 +144,11 @@ public class CartRestControllerMockTest {
         d2.setQuantity(10);
         requestDTOs.add(d1);
         requestDTOs.add(d2);
-        String requestBody = om.writeValueAsString(requestDTOs);
-        System.out.println("테스트 : "+requestBody);
 
         // when
         ResultActions result = mvc.perform(
                 MockMvcRequestBuilders
                         .post("/carts/update")
-                        .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON)
         );
         String responseBody = result.andReturn().getResponse().getContentAsString();
