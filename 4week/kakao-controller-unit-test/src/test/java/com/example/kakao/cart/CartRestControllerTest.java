@@ -1,12 +1,18 @@
 package com.example.kakao.cart;
 
+import com.example.kakao._core.errors.GlobalExceptionHandler;
 import com.example.kakao._core.security.JWTProvider;
 import com.example.kakao._core.security.SecurityConfig;
 import com.example.kakao._core.utils.FakeStore;
+import com.example.kakao.log.ErrorLogJPARepository;
+import com.example.kakao.user.UserRequest;
+import com.example.kakao.user.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -18,110 +24,50 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.doAnswer;
+
 @Import({
         FakeStore.class,
-        SecurityConfig.class
+        SecurityConfig.class,
+        GlobalExceptionHandler.class
 })
 @WebMvcTest(controllers = {CartRestController.class})
 public class CartRestControllerTest {
 
 
-    //여기는 안해줘도 되는 이윳가
 
+    //CartService 나 Error로그남기는 repo는 테스트해보고싶은게 아니므로 가짜로 준다.
+    @MockBean
+    private CartService cartService;
+
+    @MockBean
+    private ErrorLogJPARepository errorLogJPARepository;
+
+    // @WebMvcTest를 하면 MockMvc가 SpringContext에 등록되기 때문에 DI할 수 있습니다.
     @Autowired
     private MockMvc mvc;
 
+    // @WebMvcTest를 하면 ObjectMapper가 SpringContext에 등록되기 때문에 DI할 수 있습니다.
     @Autowired
     private ObjectMapper om;
 
-    @WithMockUser(username = "ssar@nate.com", roles = "USER")
-    //가짜 UserDetail하나 만들어서 세션에 꼽아주는거임 => 유저가 인증되지않았따는 401을 통과시키기위해서
-    @Test
-    public void update_test() throws Exception {
-        // given
-        List<CartRequest.UpdateDTO> requestDTOs = new ArrayList<>();
-        CartRequest.UpdateDTO d1 = new CartRequest.UpdateDTO();
-        d1.setCartId(1);
-        d1.setQuantity(10);
-        CartRequest.UpdateDTO d2 = new CartRequest.UpdateDTO();
-        d2.setCartId(2);
-        d2.setQuantity(10);
-        requestDTOs.add(d1);
-        requestDTOs.add(d2);
-        String requestBody = om.writeValueAsString(requestDTOs);
-        System.out.println("테스트 : "+requestBody);
-
-        // when
-        ResultActions result = mvc.perform(
-                MockMvcRequestBuilders
-                        .post("/carts/update")
-                        .content(requestBody)
-                        .contentType(MediaType.APPLICATION_JSON)
-        );
-        String responseBody = result.andReturn().getResponse().getContentAsString();
-        System.out.println("테스트 : "+responseBody);
-
-        // then
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].cartId").value(1));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].optionId").value(1));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].quantity").value(10));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].price").value(100000));
-    }
-
-    @WithMockUser(username = "ssar@nate.com", roles = "USER")
-    @Test
-    public void find_all_test() throws Exception {
-        // given
-
-
-        // when
-        ResultActions result = mvc.perform(
-                MockMvcRequestBuilders
-                        .get("/carts")
-                        .contentType(MediaType.APPLICATION_JSON)
-        );
-        String responseBody = result.andReturn().getResponse().getContentAsString();
-        System.out.println("테스트 : "+responseBody);
-
-
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].carts[0].id").value(1));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].carts[0].option.id").value(1));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].carts[0].option.optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].carts[0].option.price").value(10000));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].carts[0].quantity").value(5));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].carts[0].price").value(50000));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].carts[1].id").value(2));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].carts[1].option.id").value(2));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].carts[1].option.optionName").value("02. 슬라이딩 지퍼백 플라워에디션 5종"));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].carts[1].option.price").value(10900));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].carts[1].quantity").value(5));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].carts[1].price").value(54500));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.totalPrice").value(104500));
-
-
-    }
 
     @WithMockUser(username = "ssar@nate.com", roles = "USER")
     //가짜 UserDetail하나 만들어서 세션에 꼽아주는거임 => 유저가 인증되지않았따는 401을 통과시키기위해서
     @Test
     public void add_test() throws Exception {
         // given
-        List<CartRequest.SaveDTO> requestDTOs = new ArrayList<>();
-        CartRequest.SaveDTO d1 = new CartRequest.SaveDTO();
-        d1.setOptionId(1);
-        d1.setQuantity(10);
-        CartRequest.SaveDTO d2 = new CartRequest.SaveDTO();
-        d2.setOptionId(2);
-        d2.setQuantity(10);
-        requestDTOs.add(d1);
-        requestDTOs.add(d2);
+        List<CartRequest.SaveDTO> requestDTOs =new ArrayList<>();
+        CartRequest.SaveDTO saveDTO=new CartRequest.SaveDTO();
+        saveDTO.setOptionId(1);
+        saveDTO.setQuantity(33);
+        requestDTOs.add(saveDTO);
         String requestBody = om.writeValueAsString(requestDTOs);
-        System.out.println("테스트 : "+requestBody);
 
+        //stub
+        Mockito.doNothing().when(cartService).add(Mockito.any());
         // when
         ResultActions result = mvc.perform(
                 MockMvcRequestBuilders
@@ -133,16 +79,92 @@ public class CartRestControllerTest {
         System.out.println("테스트 : "+responseBody);
 
         // then
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
+        //사실 추가한게 잘들어갔는지도 확인해야 하는데, 그러진 못했습니다...
+        result.andExpect(MockMvcResultMatchers.jsonPath("success").value("true"));
+    }
+
+    @WithMockUser(username = "ssar@nate.com", roles = "USER")
+    @Test
+    public void find_all_test() throws Exception {
+        // given
+
+        //stub
+        FakeStore fakeStore=new FakeStore();
+        List<Cart> cartList = fakeStore.getCartList();
+        CartResponse.FindAllDTO responseDTO = new CartResponse.FindAllDTO(cartList);
+        doAnswer(invocation -> responseDTO).when(cartService).findAll();
+
+        // when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .get("/carts")
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+
+        //then
+        //요청이 성공했는지, 원하는대로 잘들어왔는 key값과 총 가격으로확인
+        result.andExpect(MockMvcResultMatchers.jsonPath("success").value("true"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("response.products[0].id").value(1));
+        result.andExpect(MockMvcResultMatchers.jsonPath("response.products[0].carts[0].id").value(1));
+        result.andExpect(MockMvcResultMatchers.jsonPath("response.products[0].carts[0].option.id").value(1));
+        result.andExpect(MockMvcResultMatchers.jsonPath("response.products[0].carts[1].id").value(2));
+        result.andExpect(MockMvcResultMatchers.jsonPath("response.products[0].carts[1].option.id").value(2));
+        result.andExpect(MockMvcResultMatchers.jsonPath("response.totalPrice").value(104500));
 
     }
 
     @WithMockUser(username = "ssar@nate.com", roles = "USER")
     //가짜 UserDetail하나 만들어서 세션에 꼽아주는거임 => 유저가 인증되지않았따는 401을 통과시키기위해서
     @Test
+    public void update_test() throws Exception {
+        // given
+        List<CartRequest.UpdateDTO> requestDTOs =new ArrayList<>();
+        CartRequest.UpdateDTO updateDTO=new CartRequest.UpdateDTO();
+        updateDTO.setCartId(1);
+        updateDTO.setQuantity(33);
+        requestDTOs.add(updateDTO);
+        String requestBody = om.writeValueAsString(requestDTOs);
+
+        //stub
+        FakeStore fakeStore=new FakeStore();
+        for (CartRequest.UpdateDTO uptDTO : requestDTOs) {
+            for (Cart cart : fakeStore.getCartList()) {
+                if(cart.getId() == uptDTO.getCartId()){
+                    cart.update(uptDTO.getQuantity(), cart.getPrice() * uptDTO.getQuantity());
+                }
+            }
+        }
+        CartResponse.UpdateDTO responseDTO = new CartResponse.UpdateDTO(fakeStore.getCartList());
+        Mockito.when(cartService.update(any())).thenReturn(responseDTO);
+        // when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .post("/carts/update")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+
+        // then
+        //성공인지 확인하고, 바꾼 cart의 id가 맞는지, 갯수와 가격이 의도한 대로 바꼈는지 확인
+        result.andExpect(MockMvcResultMatchers.jsonPath("success").value("true"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("response.carts[0].cartId").value(1));
+        result.andExpect(MockMvcResultMatchers.jsonPath("response.carts[0].quantity").value(33));
+        result.andExpect(MockMvcResultMatchers.jsonPath("response.carts[0].price").value(330000));
+    }
+
+
+
+    @WithMockUser(username = "ssar@nate.com", roles = "USER")
+    //가짜 UserDetail하나 만들어서 세션에 꼽아주는거임 => 유저가 인증되지않았따는 401을 통과시키기위해서
+    @Test
     public void clear_test() throws Exception {
         // given
-
+        //stub
+        Mockito.doNothing().when(cartService).clear();
         // when
         ResultActions result = mvc.perform(
                 MockMvcRequestBuilders
@@ -153,10 +175,10 @@ public class CartRestControllerTest {
         System.out.println("테스트 : "+responseBody);
 
         // then
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
-
+        //성공인지만 확인
+        result.andExpect(MockMvcResultMatchers.jsonPath("success").value("true"));
+   
     }
-
 }
 
 
