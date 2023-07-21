@@ -29,7 +29,7 @@ public class CartRestControllerTest {
     @Autowired
     private ObjectMapper om;
 
-    @WithMockUser(username = "ssar@nate.com", roles = "ROLE_USER")
+    @WithMockUser(username = "ssar@nate.com", roles = "USER")
     @Test
     public void update_test() throws Exception {
         // given
