@@ -80,7 +80,6 @@ public class ProductRestControllerTest {
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response[0].productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response[0].price").value(1000));
     }
-
     @DisplayName("상품 옵션 조회 테스트")
     @Test
     public void findById_test() throws Exception {

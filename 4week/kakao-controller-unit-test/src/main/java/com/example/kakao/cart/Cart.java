@@ -44,6 +44,14 @@ public class Cart {
         this.price = price;
     }
 
+    public Cart(User user, Option option, int quantity, int price) {
+        this.user = user;
+        this.option = option;
+        this.quantity = quantity;
+        this.price = price;
+    }
+
+
     // 장바구니 업데이트
     public void update(int quantity, int price){
         this.quantity = quantity;

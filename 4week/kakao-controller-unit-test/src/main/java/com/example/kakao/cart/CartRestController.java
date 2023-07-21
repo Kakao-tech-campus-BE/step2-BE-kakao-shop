@@ -54,7 +54,7 @@ public class CartRestController {
                 saveDTO -> System.out.println("요청 받은 장바구니 옵션 : "+saveDTO.toString())
         );
         try {
-            cartService.addCartList(requestDTOs);
+            cartService.addCartList(requestDTOs, userDetails.getUser());
             return ResponseEntity.ok().body(ApiUtils.success(null));
         } catch (RuntimeException e) {
             return globalExceptionHandler.handle(e, request);
@@ -66,7 +66,7 @@ public class CartRestController {
     public ResponseEntity<?> findAll(@AuthenticationPrincipal CustomUserDetails userDetails, HttpServletRequest request) {
         // List<Cart> cartList = fakeStore.getCartList();
         try {
-            CartResponse.FindAllDTO responseDTO = cartService.findAll();
+            CartResponse.FindAllDTO responseDTO = cartService.findAll(userDetails.getUser());
             return ResponseEntity.ok(ApiUtils.success(responseDTO));
         } catch (RuntimeException e) {
             return globalExceptionHandler.handle(e, request);
@@ -87,7 +87,6 @@ public class CartRestController {
     // (기능11) 주문하기 - (장바구니 업데이트)
     @PostMapping("/carts/update")
     public ResponseEntity<?> update(@RequestBody @Valid List<CartRequest.UpdateDTO> requestDTOs, Errors errors, @AuthenticationPrincipal CustomUserDetails userDetails, HttpServletRequest request) {
-
         if (errors.hasErrors()) {
             List<FieldError> fieldErrors = errors.getFieldErrors();
             Exception400 ex = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
@@ -113,7 +112,7 @@ public class CartRestController {
     @PostMapping("/carts/clear")
     public ResponseEntity<?> clear(@AuthenticationPrincipal CustomUserDetails userDetails, HttpServletRequest request) {
         try {
-            cartService.clear();
+            cartService.clear(userDetails.getUser());
             return ResponseEntity.ok(ApiUtils.success(null));
         } catch (RuntimeException e) {
             return globalExceptionHandler.handle(e, request);

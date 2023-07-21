@@ -28,7 +28,7 @@ public class OrderRestController {
     @PostMapping("/orders/save")
     public ResponseEntity<?> save(@AuthenticationPrincipal CustomUserDetails userDetails, HttpServletRequest request) {
         try {
-            OrderResponse.FindByIdDTO responseDTO = orderService.save();
+            OrderResponse.FindByIdDTO responseDTO = orderService.save(userDetails.getUser());
             return ResponseEntity.ok(ApiUtils.success(responseDTO));
         } catch (RuntimeException e) {
             return globalExceptionHandler.handle(e, request);

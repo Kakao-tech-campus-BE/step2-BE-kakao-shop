@@ -25,4 +25,8 @@ public class Order {
         this.id = id;
         this.user = user;
     }
+
+    public Order(User user) {
+        this.user = user;
+    }
 }

@@ -2,6 +2,7 @@ package com.example.kakao.order;
 
 import com.example.kakao._core.errors.GlobalExceptionHandler;
 import com.example.kakao._core.errors.exception.Exception404;
+import com.example.kakao._core.security.JWTProvider;
 import com.example.kakao._core.security.SecurityConfig;
 import com.example.kakao._core.utils.ApiUtils;
 import com.example.kakao._core.utils.FakeStore;
@@ -9,7 +10,9 @@ import com.example.kakao.log.ErrorLogJPARepository;
 import com.example.kakao.order.item.Item;
 import com.example.kakao.product.ProductRestController;
 import com.example.kakao.product.ProductService;
+import com.example.kakao.user.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -52,8 +55,14 @@ public class OrderRestControllerTest {
     @Autowired
     private ObjectMapper om;
 
+    String jwt = null;
+    @BeforeEach
+    void SetUp() {
+        User user = User.builder().id(1).email("ssar@nate.com").username("ssar").roles("ROLE_USER").build();
+        jwt = JWTProvider.create(user);
+    }
+
     @DisplayName("주문 조회 테스트")
-    @WithMockUser(username = "ssar@nate.com", roles = "USER")
     @Test
     public void findById_test() throws Exception {
         // given
@@ -74,6 +83,7 @@ public class OrderRestControllerTest {
         ResultActions result = mvc.perform(
                 MockMvcRequestBuilders
                         .get("/orders/"+id)
+                        .header("Authorization", "Bearer " + jwt)
                         .contentType(MediaType.APPLICATION_JSON)
         );
         String responseBody = result.andReturn().getResponse().getContentAsString();
@@ -87,11 +97,9 @@ public class OrderRestControllerTest {
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].quantity").value(5));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].price").value(50000));
-
     }
 
     @DisplayName("주문 저장 테스트")
-    @WithMockUser(username = "ssar@nate.com", roles = "USER")
     @Test
     public void save_test() throws Exception {
         // given
@@ -100,12 +108,13 @@ public class OrderRestControllerTest {
         Order order = fakeStore.getOrderList().get(0);
         List<Item> itemList = fakeStore.getItemList();
         OrderResponse.FindByIdDTO responseDTO = new OrderResponse.FindByIdDTO(order, itemList);
-        Mockito.when(orderService.save()).thenReturn(responseDTO);
+        Mockito.when(orderService.save(any())).thenReturn(responseDTO);
 
         // when
         ResultActions result = mvc.perform(
                 MockMvcRequestBuilders
                         .post("/orders/save")
+                        .header("Authorization", "Bearer " + jwt)
                         .contentType(MediaType.APPLICATION_JSON)
         );
         String responseBody = result.andReturn().getResponse().getContentAsString();
@@ -119,8 +128,6 @@ public class OrderRestControllerTest {
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].quantity").value(5));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].price").value(50000));
-
-
     }
 
 }

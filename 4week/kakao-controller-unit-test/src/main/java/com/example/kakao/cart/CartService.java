@@ -5,6 +5,7 @@ import com.example.kakao._core.errors.exception.Exception500;
 import com.example.kakao._core.utils.FakeStore;
 import com.example.kakao.product.option.Option;
 import com.example.kakao.product.option.OptionJPARepository;
+import com.example.kakao.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,12 +23,12 @@ public class CartService {
     private final OptionJPARepository optionJPARepository;
 
     @Transactional
-    public void addCartList(List<CartRequest.SaveDTO> requestDTOs) {
+    public void addCartList(List<CartRequest.SaveDTO> requestDTOs, User user) {
         for (CartRequest.SaveDTO saveDTO : requestDTOs) {
             Option option = optionJPARepository.findById(saveDTO.getOptionId()).orElseThrow(
                     () -> new Exception400("상품 옵션을 찾을 수 없습니다. : "));
             try {
-                cartJPARepository.save(new Cart(1, null, option, saveDTO.getQuantity(), option.getPrice()*saveDTO.getQuantity()));
+                cartJPARepository.save(new Cart(user, option, saveDTO.getQuantity(), option.getPrice()*saveDTO.getQuantity()));
             } catch (Exception e) {
                 throw new Exception500("unknown server error");
             }
@@ -35,9 +36,9 @@ public class CartService {
     }
 
     @Transactional
-    public CartResponse.FindAllDTO findAll() {
+    public CartResponse.FindAllDTO findAll(User user) {
         try {
-            return new CartResponse.FindAllDTO(cartJPARepository.findAll());
+            return new CartResponse.FindAllDTO(cartJPARepository.findAllByUser(user));
         } catch (Exception e) {
             throw new Exception500("unknown server error");
         }
@@ -58,9 +59,9 @@ public class CartService {
     }
 
     @Transactional
-    public void clear() {
+    public void clear(User user) {
         try {
-            cartJPARepository.deleteAll();
+            cartJPARepository.deleteAllByUser(user);
         } catch (Exception e) {
             throw new Exception500("unknown server error");
         }

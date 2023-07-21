@@ -30,11 +30,10 @@ public class OrderService {
     }
 
     @Transactional
-    public OrderResponse.FindByIdDTO save() {
-        User user = new User(1, "ssar@nate.com", null, null, "USER");
-        Order order = new Order(1, user);
+    public OrderResponse.FindByIdDTO save(User user) {
+        Order order = new Order(user);
         order = orderJPARepository.save(order);
-        List<Cart> carts = cartJPARepository.findByUser(user);
+        List<Cart> carts = cartJPARepository.findAllByUser(user);
         List<Item> itemList = new ArrayList<>();
         for (Cart cart : carts) {
             Item item = new Item(cart.getId(), cart.getOption(), order, cart.getQuantity(), cart.getPrice());
