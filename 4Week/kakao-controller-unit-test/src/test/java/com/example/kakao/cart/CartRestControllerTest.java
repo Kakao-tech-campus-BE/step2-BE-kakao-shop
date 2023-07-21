@@ -37,11 +37,14 @@ public class CartRestControllerTest {
     @MockBean
     private ErrorLogJPARepository errorLogJPARepository;
 
-    @Autowired
-    private MockMvc mvc;
+    private final MockMvc mvc;
 
+    private final ObjectMapper om;
     @Autowired
-    private ObjectMapper om;
+    public CartRestControllerTest(MockMvc mvc, ObjectMapper om) {
+        this.mvc = mvc;
+        this.om = om;
+    }
 
     @DisplayName("장바구니 담기 테스트")
     @WithMockUser(username = "ssar@nate.com", roles = "USER")
