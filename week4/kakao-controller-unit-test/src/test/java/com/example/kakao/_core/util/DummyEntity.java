@@ -52,8 +52,9 @@ public class DummyEntity {
                 .build();
     }
 
-    protected Item newItem(Cart cart, Order order){
+    protected Item newItem(int id, Cart cart, Order order){
         return Item.builder()
+                .id(id)
                 .order(order)
                 .option(cart.getOption())
                 .quantity(cart.getQuantity())

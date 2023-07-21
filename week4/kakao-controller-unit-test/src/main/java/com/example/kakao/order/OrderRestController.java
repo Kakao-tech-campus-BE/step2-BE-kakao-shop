@@ -1,5 +1,6 @@
 package com.example.kakao.order;
 
+import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao._core.security.CustomUserDetails;
 import com.example.kakao._core.utils.ApiUtils;
 import com.example.kakao._core.utils.FakeStore;
@@ -32,7 +33,16 @@ public class OrderRestController {
     // (기능13) 주문 결과 확인
     @GetMapping("/orders/{id}")
     public ResponseEntity<?> findById(@PathVariable int id) {
-        Order order = fakeStore.getOrderList().get(id-1);
+        Order order = null;
+        try {
+            order = fakeStore.getOrderList().get(id-1);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            Exception404 ex = new Exception404("주문번호를 확인하세요.");
+            return new ResponseEntity<>(
+                    ex.body(),
+                    ex.status()
+            );
+        }
         List<Item> itemList = fakeStore.getItemList();
         OrderResponse.FindByIdDTO responseDTO = new OrderResponse.FindByIdDTO(order, itemList);
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
