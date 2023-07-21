@@ -7,6 +7,7 @@ import com.example.kakao.product.Product;
 import com.example.kakao.product.option.Option;
 import com.example.kakao.user.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,7 @@ public class CartRestControllerTest {
     @DisplayName("장바구니 담기 테스트")
     @WithMockUser(username = "ssar@nate.com", roles = "USER")
     @Test
-    public void add_test() throws Exception {
+    public void addCartList_test() throws Exception {
         List<CartRequest.SaveDTO> requestDTOs = new ArrayList<>();
         CartRequest.SaveDTO d1 = new CartRequest.SaveDTO();
         d1.setOptionId(1);
@@ -76,7 +77,7 @@ public class CartRestControllerTest {
     @DisplayName("장바구니 조회 테스트")
     @WithMockUser(username = "ssar@nate.com", roles = "USER")
     @Test
-    public void check_test() throws Exception{
+    public void findAll_test() throws Exception{
         User user = new User(1,"ssarmeta@nate.com", "meta1234!@", "ssarmeta", "ROLE_USER");
         Product product = new Product(1, "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전", "description", "/image/path", 1000);
         Option option1 = new Option(1, product, "01. 슬라이딩 지퍼백 크리스마스에디션 4종", 10000);
