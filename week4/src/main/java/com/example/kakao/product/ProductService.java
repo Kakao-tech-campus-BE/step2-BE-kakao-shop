@@ -1,14 +1,18 @@
 package com.example.kakao.product;
 
 import com.example.kakao._core.errors.exception.Exception400;
+import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao._core.errors.exception.Exception500;
 import com.example.kakao._core.security.JWTProvider;
 import com.example.kakao._core.utils.FakeStore;
+import com.example.kakao.product.option.Option;
+import com.example.kakao.product.option.OptionJPARepository;
 import com.example.kakao.user.User;
 import com.example.kakao.user.UserJPARepository;
 import com.example.kakao.user.UserRequest;
 import com.example.kakao.user.UserResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,69 +26,33 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class ProductService {
-    private final PasswordEncoder passwordEncoder;
     private final ProductJPARepository productJPARepository;
-    private final FakeStore fakeStore;
+    private final OptionJPARepository optionJPARepository;
 
-//    public List<ProductResponse.FindAllDTO> findAll() {
-//        // 1. 더미데이터 가져와서 페이징하기
-//        List<Product> productList =
-//                productJPARepository.findAll().stream().skip(page * 9).limit(9).collect(Collectors.toList());
-//        ;
-//
-//        // 2. DTO 변환
-//        List<ProductResponse.FindAllDTO> responseDTOs =
-//                productList.stream().map(ProductResponse.FindAllDTO::new).collect(Collectors.toList());
-//
-//        return responseDTOs;
-//    }
-//    public UserResponse.FindById findById(Integer id){
-//        User userPS = userJPARepository.findById(id).orElseThrow(
-//                () -> new Exception400("회원 아이디를 찾을 수 없습니다. : "+id)
-//        );
-//        return new UserResponse.FindById(userPS);
-//    }
+    public List<ProductResponse.FindAllDTO> findAll(int page) {
+        // 1. 데이터 가져와서 페이징하기
+        List<Product> productList =
+                productJPARepository.findAll().stream().skip(page * 9).limit(9).collect(Collectors.toList());
+        ;
 
-//    @Transactional
-//    public void join(UserRequest.JoinDTO requestDTO) {
-//        sameCheckEmail(requestDTO.getEmail());
-//
-//        requestDTO.setPassword(passwordEncoder.encode(requestDTO.getPassword()));
-//        try {
-//            userJPARepository.save(requestDTO.toEntity());
-//        } catch (Exception e) {
-//            throw new Exception500("unknown server error");
-//        }
-//    }
-//
-//    public String login(UserRequest.LoginDTO requestDTO) {
-//        User userPS = userJPARepository.findByEmail(requestDTO.getEmail()).orElseThrow(
-//                () -> new Exception400("이메일을 찾을 수 없습니다 : "+requestDTO.getEmail())
-//        );
-//
-//        if(!passwordEncoder.matches(requestDTO.getPassword(), userPS.getPassword())){
-//            throw new Exception400("패스워드가 잘못입력되었습니다 ");
-//        }
-//        return JWTProvider.create(userPS);
-//    }
-//
-//    public void sameCheckEmail(String email) {
-//        Optional<User> userOP = userJPARepository.findByEmail(email);
-//        if (userOP.isPresent()) {
-//            throw new Exception400("동일한 이메일이 존재합니다 : " + email);
-//        }
-//    }
-//
-//
-//    @Transactional
-//    public void updatePassword(UserRequest.UpdatePasswordDTO requestDTO, Integer id) {
-//        User userPS = userJPARepository.findById(id).orElseThrow(
-//                () -> new Exception400("회원 아이디를 찾을 수 없습니다. : "+id)
-//        );
-//
-//        // 의미 있는 setter 추가
-//        String encPassword =
-//                passwordEncoder.encode(requestDTO.getPassword());
-//        userPS.updatePassword(encPassword);
-//    } // 더티체킹 flush
+        // 2. DTO 변환
+        List<ProductResponse.FindAllDTO> responseDTOs =
+                productList.stream().map(ProductResponse.FindAllDTO::new).collect(Collectors.toList());
+
+        return responseDTOs;
+    }
+
+    public ProductResponse.FindByIdDTO findById(Integer id){
+        // 1. 상품 찾기
+        Product product = productJPARepository.findById(id).stream().filter(p -> p.getId() == id).findFirst().orElseThrow(
+                () -> new Exception400("상품을 찾을 수 없습니다. : "+id));
+
+        // 2. 해당 상품의 옵션 찾기
+        List<Option> optionList = optionJPARepository.findAll().stream().filter(option -> product.getId() == option.getProduct().getId()).collect(Collectors.toList());
+
+        // 3. DTO 변환
+        ProductResponse.FindByIdDTO responseDTO = new ProductResponse.FindByIdDTO(product, optionList);
+        return responseDTO;
+    }
+
 }

@@ -31,6 +31,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -53,9 +54,6 @@ public class ProductRestControllerTest {
     private ProductService productService;
 
     @MockBean
-    private OptionService optionService;
-
-    @MockBean
     private ErrorLogJPARepository errorLogJPARepository;
 
     // @WebMvcTest를 하면 MockMvc가 SpringContext에 등록되기 때문에 DI할 수 있습니다.
@@ -66,16 +64,11 @@ public class ProductRestControllerTest {
     @Autowired
     private ObjectMapper om; //직렬화
 
-    @MockBean
-    private FakeStore fakeStore;
-
-
     @Test
     @DisplayName("전체 상품 조회 테스트")
     public void findAll_test() throws Exception{
         //given
-        given(fakeStore.getProductList()).willReturn( //굳이 fakeStore(가짜 DB)의 의존성 주입 안해도 됨
-        Arrays.asList(
+        List<Product> productList = Arrays.asList(
                 new Product(1, "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전", "", "/images/1.jpg", 1000),
                 new Product(2, "[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율", "", "/images/2.jpg", 2000),
                 new Product(3, "삼성전자 JBL JR310 외 어린이용/성인용 헤드셋 3종!", "", "/images/3.jpg", 30000),
@@ -85,7 +78,14 @@ public class ProductRestControllerTest {
                 new Product(7, "eoe 이너딜리티 30포, 오렌지맛 고 식이섬유 보충제", "", "/images/7.jpg", 26800),
                 new Product(8, "제나벨 PDRN 크림 2개. 피부보습/진정 케어", "", "/images/8.jpg", 25900),
                 new Product(9, "플레이스테이션 VR2 호라이즌 번들. 생생한 몰입감", "", "/images/9.jpg", 797000)
-        ));
+        );
+        List<ProductResponse.FindAllDTO> list = new ArrayList<>();
+        for (Product product : productList) {
+            ProductResponse.FindAllDTO dto = new ProductResponse.FindAllDTO(product);
+            list.add(dto);
+        }
+        given(productService.findAll(0)).willReturn(list);
+
         //when
         ResultActions result = mvc.perform(
                 MockMvcRequestBuilders
@@ -114,15 +114,15 @@ public class ProductRestControllerTest {
     public void findById_test() throws Exception{
         //given
         Product product1 = new Product(1, "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전", "", "/images/1.jpg", 1000);
-        given(fakeStore.getProductList()).willReturn(
-                Arrays.asList(product1));
-        given(fakeStore.getOptionList()).willReturn(
-                Arrays.asList(
-                new Option(1, product1,"01. 슬라이딩 지퍼백 크리스마스에디션 4종", 10000),
-                new Option(2, product1,"02. 슬라이딩 지퍼백 플라워에디션 5종", 10900),
-                new Option(3, product1,"고무장갑 베이지 S(소형) 6팩", 9900),
-                new Option(4, product1,"뽑아쓰는 키친타올 130매 12팩", 16900),
-                new Option(5, product1, "2겹 식빵수세미 6매", 8900)));
+        List<Option> optionList = Arrays.asList(
+                new Option(1, product1, "01. 슬라이딩 지퍼백 크리스마스에디션 4종", 10000),
+                new Option(2, product1, "02. 슬라이딩 지퍼백 플라워에디션 5종", 10900),
+                new Option(3, product1, "고무장갑 베이지 S(소형) 6팩", 9900),
+                new Option(4, product1, "뽑아쓰는 키친타올 130매 12팩", 16900),
+                new Option(5, product1, "2겹 식빵수세미 6매", 8900));
+        given(productService.findById(1)).willReturn(
+                (new ProductResponse.FindByIdDTO(product1, optionList)));
+
         //when
         ResultActions result = mvc.perform(
                 MockMvcRequestBuilders

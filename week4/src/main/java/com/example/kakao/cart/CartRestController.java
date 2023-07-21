@@ -2,10 +2,12 @@ package com.example.kakao.cart;
 
 import com.example.kakao._core.errors.GlobalExceptionHandler;
 import com.example.kakao._core.errors.exception.Exception400;
+import com.example.kakao._core.errors.exception.Exception500;
 import com.example.kakao._core.security.CustomUserDetails;
 import com.example.kakao._core.utils.ApiUtils;
 import com.example.kakao._core.utils.CustomCollectionValidator;
 import com.example.kakao._core.utils.FakeStore;
+import com.example.kakao.product.ProductResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +26,9 @@ import javax.validation.Valid;
 @RestController
 public class CartRestController {
 
-    private final FakeStore fakeStore;
+
     private final GlobalExceptionHandler globalExceptionHandler;
+    private final CartService cartService;
 
     @Autowired
     CustomCollectionValidator customCollectionValidator;
@@ -42,7 +45,8 @@ public class CartRestController {
 // ]
     // (기능8) 장바구니 담기
     @PostMapping("/carts/add")
-    public ResponseEntity<?> addCartList(@RequestBody @Valid List<CartRequest.SaveDTO> requestDTOs, Errors errors, @AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ResponseEntity<?> addCartList(@RequestBody @Valid List<CartRequest.SaveDTO> requestDTOs, Errors errors,
+                                         @AuthenticationPrincipal CustomUserDetails userDetails, HttpServletRequest request) {
         customCollectionValidator.validate(requestDTOs, errors);
         //유효성 검증 예외 처리
         if (errors.hasErrors()) {
@@ -53,19 +57,26 @@ public class CartRestController {
                     ex.status()
             );
         }
+        //서비스 호출
+        try {
+            cartService.save(requestDTOs, userDetails);
+            return ResponseEntity.ok().body(ApiUtils.success(null));
+        } catch (RuntimeException e) {
+            return globalExceptionHandler.handle(e, request);
+        }
 
-        requestDTOs.forEach(
-                saveDTO -> System.out.println("요청 받은 장바구니 옵션 : "+saveDTO.toString())
-        );
-        return ResponseEntity.ok(ApiUtils.success(null));
     }
 
     // (기능9) 장바구니 보기 - (주문화면, 결재화면)
     @GetMapping("/carts")
-    public ResponseEntity<?> findAll(@AuthenticationPrincipal CustomUserDetails userDetails) {
-        List<Cart> cartList = fakeStore.getCartList();
-        CartResponse.FindAllDTO responseDTO = new CartResponse.FindAllDTO(cartList);
-        return ResponseEntity.ok(ApiUtils.success(responseDTO));
+    public ResponseEntity<?> findAll(@AuthenticationPrincipal CustomUserDetails userDetails, HttpServletRequest request) {
+        System.out.println("findAll 실행");
+        try {
+            CartResponse.FindAllDTO dto = cartService.findAll();
+            return ResponseEntity.ok().body(ApiUtils.success(dto));
+        } catch (RuntimeException e) {
+            return globalExceptionHandler.handle(e, request);
+        }
     }
 
 
@@ -93,26 +104,13 @@ public class CartRestController {
                     ex.status()
             );
         }
-
-        requestDTOs.forEach(
-                updateDTO -> System.out.println("요청 받은 장바구니 수정 내역 : "+updateDTO.toString())
-        );
+        //서비스 호출
         try {
-            // 가짜 저장소의 값을 변경한다.
-            for (CartRequest.UpdateDTO updateDTO : requestDTOs) {
-                for (Cart cart : fakeStore.getCartList()) {
-                    if(cart.getId() == updateDTO.getCartId()){
-                        cart.update(updateDTO.getQuantity(), cart.getPrice() * updateDTO.getQuantity());
-                    }
-                }
-            }
-            // DTO를 만들어서 응답한다.
-            CartResponse.UpdateDTO responseDTO = new CartResponse.UpdateDTO(fakeStore.getCartList());
-            return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
+            CartResponse.UpdateDTO dto = cartService.update(requestDTOs);
+            return ResponseEntity.ok().body(ApiUtils.success(dto));
         } catch (RuntimeException e) {
             return globalExceptionHandler.handle(e, request);
         }
-
     }
 
 

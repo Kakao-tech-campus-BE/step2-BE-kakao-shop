@@ -50,9 +50,6 @@ public class UserRestControllerTest {
     private ObjectMapper om; //직렬화
 
     @Test
-    public void t1(){}
-
-    @Test
     public void join_test() throws Exception {
         // given
         UserRequest.JoinDTO requestDTO = new UserRequest.JoinDTO();
@@ -79,15 +76,15 @@ public class UserRestControllerTest {
     @Test
     public void login_test() throws Exception {
         // given
-        UserRequest.LoginDTO loginDTO = new UserRequest.LoginDTO();
-        loginDTO.setEmail("ssar@nate.com");
-        loginDTO.setPassword("meta1234!");
-        String requestBody = om.writeValueAsString(loginDTO); //직렬화
-
         // stub
         User user = User.builder().id(1).roles("ROLE_USER").build(); //유저 생성
         String jwt = JWTProvider.create(user); //토큰 생성
         Mockito.when(userService.login(any())).thenReturn(jwt); //가짜 객체가 로그인 요청시 생성한 jwt 반환
+        //DTO
+        UserRequest.LoginDTO loginDTO = new UserRequest.LoginDTO();
+        loginDTO.setEmail("ssar@nate.com");
+        loginDTO.setPassword("meta1234!");
+        String requestBody = om.writeValueAsString(loginDTO); //직렬화
 
         // when
         ResultActions result = mvc.perform(

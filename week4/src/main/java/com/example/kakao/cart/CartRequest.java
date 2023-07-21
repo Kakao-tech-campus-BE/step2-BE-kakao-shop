@@ -1,5 +1,7 @@
 package com.example.kakao.cart;
 
+import com.example.kakao.product.option.Option;
+import com.example.kakao.user.User;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -15,6 +17,8 @@ public class CartRequest {
 
         @Min(value = 1, message = "quantity must be greater than or equal to 1")
         private int quantity;
+
+
     }
 
     @Getter @Setter @ToString
