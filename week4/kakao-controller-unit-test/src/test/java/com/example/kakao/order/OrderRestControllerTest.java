@@ -39,6 +39,8 @@ class OrderRestControllerTest {
                 MockMvcRequestBuilders
                         .post("/orders/save")
         );
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
 
         //then
         result.andExpect(status().is2xxSuccessful()).andDo(print());
@@ -56,6 +58,8 @@ class OrderRestControllerTest {
                 MockMvcRequestBuilders
                         .get("/orders/{id}", id)
         );
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
 
         //then
         result.andExpect(status().is2xxSuccessful()).andDo(print());
