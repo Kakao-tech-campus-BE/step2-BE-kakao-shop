@@ -22,18 +22,18 @@ import java.util.List;
 public class CartRestController {
     private final CartService cartService;
 
-    @GetMapping("")
+    @GetMapping
     public ResponseEntity<ApiUtils.ApiResult<CartFindAllResponse>> findAll(@AuthenticationPrincipal CustomUserDetails user) {
         return ResponseEntity.ok(ApiUtils.success(cartService.getCartsByUser(user.getUser())));
     }
 
-    @PostMapping("")
+    @PostMapping
     public ResponseEntity<ApiUtils.ApiResult> saveCarts(@AuthenticationPrincipal CustomUserDetails user, @Valid @RequestBody CartSaveRequest cartSaveRequest) {
         cartService.addCarts(user.getUser(), cartSaveRequest);
         return ResponseEntity.ok(ApiUtils.successWithoutData());
     }
 
-    @PutMapping("")
+    @PutMapping
     public ResponseEntity<ApiUtils.ApiResult<CartUpdateResponse>> updateCarts(@AuthenticationPrincipal CustomUserDetails user, @Valid @RequestBody CartUpdateRequest cartUpdateRequest) {
 
         List<CartChangedOptionResponse> changedOptions = new ArrayList<>();
