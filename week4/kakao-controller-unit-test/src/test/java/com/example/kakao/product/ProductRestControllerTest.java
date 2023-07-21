@@ -58,9 +58,9 @@ public class ProductRestControllerTest extends DummyEntity {
         this.om = om;
     }
 
-    @DisplayName("전체_상품_목록_조회_Controller_테스트")
+    @DisplayName("전체_상품_목록_조회_mock_Controller_테스트")
     @Test
-    public void product_findAll_test() throws Exception {
+    public void product_findAll_mock_test() throws Exception {
         // given
 
         // when
@@ -89,7 +89,7 @@ public class ProductRestControllerTest extends DummyEntity {
 
     }
 
-    @DisplayName("전체_상품_목록_조회_2페이지_Controller_테스트")
+    @DisplayName("전체_상품_목록_조회_2페이지_mock_Controller_테스트")
     @Test
     public void product_findAll_page_2_test() throws Exception {
         // given
@@ -121,7 +121,7 @@ public class ProductRestControllerTest extends DummyEntity {
 
     }
 
-    @DisplayName("전체_상품_목록_조회_3페이지_Controller_테스트_빈값")
+    @DisplayName("전체_상품_목록_조회_3페이지_mock_Controller_테스트_빈값")
     @Test
     public void product_findAll_page_3_test() throws Exception {
         // given
@@ -144,9 +144,9 @@ public class ProductRestControllerTest extends DummyEntity {
 
     }
 
-    @DisplayName("상세_상품_목록_조회_Controller_테스트")
+    @DisplayName("상세_상품_목록_조회_mock_Controller_테스트")
     @Test
-    public void product_findById_test() throws Exception {
+    public void product_findById_mock_test() throws Exception {
         // given
         int id = 1;
 
@@ -185,9 +185,9 @@ public class ProductRestControllerTest extends DummyEntity {
         resultActions.andExpect(jsonPath("$.error").value(Matchers.nullValue()));
     }
 
-    @DisplayName("상세_상품_목록_조회_Controller_실패_테스트_자료없음")
+    @DisplayName("상세_상품_목록_조회_mock_Controller_실패_테스트_자료없음")
     @Test
-    public void product_findById_fail_test_no_data() throws Exception {
+    public void product_findById_mock_fail_test_no_data() throws Exception {
         // given
         int id = 100;
 
@@ -210,9 +210,9 @@ public class ProductRestControllerTest extends DummyEntity {
 
     // ========================== real ==========================
 
-    @DisplayName("전체_상품_목록_조회_Controller_stub_테스트")
+    @DisplayName("전체_상품_목록_조회_Controller_테스트")
     @Test
-    public void product_findAll_stub_test() throws Exception {
+    public void product_findAll_test() throws Exception {
         // given
 
         // when
@@ -244,9 +244,9 @@ public class ProductRestControllerTest extends DummyEntity {
         resultActions.andExpect(jsonPath("$.error").value(Matchers.nullValue()));
     }
 
-    @DisplayName("전체_상품_목록_조회_2페이지_Controller_stub_테스트")
+    @DisplayName("전체_상품_목록_조회_2페이지_Controller_테스트")
     @Test
-    public void product_findAll_page2_stub_test() throws Exception {
+    public void product_findAll_page2_test() throws Exception {
         // given
         int page = 1;
         // when
@@ -280,9 +280,9 @@ public class ProductRestControllerTest extends DummyEntity {
         resultActions.andExpect(jsonPath("$.error").value(Matchers.nullValue()));
     }
 
-    @DisplayName("전체_상품_목록_조회_3페이지_Controller_stub_테스트")
+    @DisplayName("전체_상품_목록_조회_3페이지_Controller_테스트")
     @Test
-    public void product_findAll_page3_stub_test() throws Exception {
+    public void product_findAll_page3_test() throws Exception {
         // given
         int page = 2;
 
@@ -308,9 +308,9 @@ public class ProductRestControllerTest extends DummyEntity {
         resultActions.andExpect(jsonPath("$.error").value(Matchers.nullValue()));
     }
 
-    @DisplayName("상세_상품_목록_조회_Controller_stub_테스트")
+    @DisplayName("상세_상품_목록_조회_Controller_테스트")
     @Test
-    public void product_findById_stub_test() throws Exception {
+    public void product_findById_test() throws Exception {
         // given
         int id = 1;
 
@@ -353,9 +353,9 @@ public class ProductRestControllerTest extends DummyEntity {
         resultActions.andExpect(jsonPath("$.error").value(Matchers.nullValue()));
     }
 
-    @DisplayName("상세_상품_목록_조회_Controller_stub_실패_테스트_데이터_없음")
+    @DisplayName("상세_상품_목록_조회_Controller_실패_테스트_데이터_없음")
     @Test
-    public void product_findById_stub_fail_test_no_data() throws Exception {
+    public void product_findById_fail_test_no_data() throws Exception {
         // given
         int id = 100;
 
