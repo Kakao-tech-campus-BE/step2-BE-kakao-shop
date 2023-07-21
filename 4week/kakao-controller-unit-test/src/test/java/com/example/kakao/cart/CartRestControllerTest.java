@@ -117,7 +117,7 @@ public class CartRestControllerTest {
 
     @WithMockUser(username = "ssar@nate.com", roles = "USER")
     @Test
-    public void add_test() throws Exception {
+    public void addCartList_test() throws Exception {
         // given
         List<CartRequest.SaveDTO> requestDTOs = new ArrayList<>();
         CartRequest.SaveDTO d1 = new CartRequest.SaveDTO();
@@ -150,7 +150,6 @@ public class CartRestControllerTest {
     public void findAll_test() throws Exception {
         // given
 
-
         // when
         ResultActions result = mvc.perform(
                 MockMvcRequestBuilders.get("/carts")
@@ -180,7 +179,6 @@ public class CartRestControllerTest {
     public void clear_test() throws Exception {
         // given
 
-
         // when
         ResultActions result = mvc.perform(
                 MockMvcRequestBuilders
@@ -190,6 +188,7 @@ public class CartRestControllerTest {
 
         // then
         result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response").value(nullValue()));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.error").value(nullValue()));
     }
 }
