@@ -29,7 +29,16 @@ public class FakeStore {
     private List<Cart> cartList = cartDummyList(optionList);
     private List<Order> orderList = orderDummyList();
     private List<Item> itemList = itemDummyList(cartList);
+    //이메일 중복 체크를 위해 만들어보았다.
+    private List<User> userList  = userDummyList();
 
+    private List<User> userDummyList(){
+        return Arrays.asList(
+            newUser(1,"dummy1"),
+            newUser(2,"dummy2"),
+            newUser(2,"dummy3")
+        );
+    }
     private User newUser(Integer id, String username){
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         return User.builder()
