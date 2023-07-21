@@ -5,6 +5,7 @@ import com.example.kakao._core.security.SecurityConfig;
 import com.example.kakao._core.utils.FakeStore;
 import com.example.kakao.user.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,7 @@ public class CartRestControllerTest {
     @MockBean
     private CartService cartService;
 
+    @DisplayName("(기능8) 장바구니 담기 테스트")
     @Test
     @WithMockUser(username = "ssar@nate.com", roles = "USER")
     public void add_test() throws Exception {
@@ -62,10 +64,11 @@ public class CartRestControllerTest {
                         .contentType(MediaType.APPLICATION_JSON));
 
         // then
-        result.andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
+        result.andExpect(status().isOk());
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
     }
 
+    @DisplayName("(기능9) 장바구니 보기(주문화면, 결재화면) 테스트")
     @Test
     @WithMockUser(username = "ssar@nate.com", roles = "USER")
     public void findAll_test() throws Exception {
@@ -78,12 +81,13 @@ public class CartRestControllerTest {
                         .contentType(MediaType.APPLICATION_JSON));
 
         // then
-        result.andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].id").value("1"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"));
+        result.andExpect(status().isOk());
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].id").value("1"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"));
     }
 
+    @DisplayName("(기능11) 주문하기(장바구니 업데이트) 테스트")
     @WithMockUser(username = "ssar@nate.com", roles = "USER")
     @Test
     public void update_test() throws Exception {
@@ -97,8 +101,8 @@ public class CartRestControllerTest {
         d2.setQuantity(10);
         requestDTOs.add(d1);
         requestDTOs.add(d2);
+
         String requestBody = om.writeValueAsString(requestDTOs);
-        System.out.println("테스트 : "+requestBody);
 
         // when
         ResultActions result = mvc.perform(
@@ -107,8 +111,6 @@ public class CartRestControllerTest {
                         .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON)
         );
-        String responseBody = result.andReturn().getResponse().getContentAsString();
-        System.out.println("테스트 : "+responseBody);
 
         // then
         result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
@@ -119,6 +121,7 @@ public class CartRestControllerTest {
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].price").value(100000));
     }
 
+    @DisplayName("장바구니 비우기 테스트")
     @Test
     public void clear_test() throws Exception {
         // given
@@ -139,7 +142,7 @@ public class CartRestControllerTest {
         );
 
         // then
-        result.andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
+        result.andExpect(status().isOk());
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
     }
 }
