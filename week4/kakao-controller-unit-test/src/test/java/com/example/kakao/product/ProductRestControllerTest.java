@@ -25,6 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -122,7 +123,20 @@ class ProductRestControllerTest extends DummyEntity {
         String responseBody = result.andReturn().getResponse().getContentAsString();
         System.out.println("responseBody = " + responseBody);
 
+        List<Option> findOptionList = new ArrayList<>();
+        findOptionList.add(optionList.get(0));
+        findOptionList.add(optionList.get(1));
+        findOptionList.add(optionList.get(2));
+        findOptionList.add(optionList.get(3));
+        findOptionList.add(optionList.get(4));
+
+        Product findProduct = productList.get(0);
+        ProductResponse.FindByIdDTO findByIdDTO = new ProductResponse.FindByIdDTO(findProduct,findOptionList);
+        String findProductString = om.writeValueAsString(ApiUtils.success(findByIdDTO));
+
         //then
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
+        Assertions.assertThat(responseBody).isEqualTo(findProductString);
 
     }
 
