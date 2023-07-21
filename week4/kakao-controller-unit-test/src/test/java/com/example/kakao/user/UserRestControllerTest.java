@@ -41,6 +41,7 @@ public class UserRestControllerTest {
     @MockBean
     private ErrorLogJPARepository errorLogJPARepository;
 
+
     // @WebMvcTest를 하면 MockMvc가 SpringContext에 등록되기 때문에 DI할 수 있습니다.
     @Autowired
     private MockMvc mvc;
@@ -82,10 +83,11 @@ public class UserRestControllerTest {
         UserRequest.LoginDTO loginDTO = new UserRequest.LoginDTO();
         loginDTO.setEmail("ssar@nate.com");
         loginDTO.setPassword("meta1234!");
-        User user = User.builder().id(1).roles("ROLE_USER").build();
         String requestBody = om.writeValueAsString(loginDTO);
 
         // stub
+        User user = User.builder().id(1).roles("ROLE_USER").build();
+
         String jwt = JWTProvider.create(user);
         Mockito.when(userService.login(any())).thenReturn(jwt);
 
