@@ -49,9 +49,6 @@ public class UserRestControllerTest {
     @Autowired
     private ObjectMapper om;
 
-    @Test //1번
-    public void t1(){}
-
     @Test
     public void join_test() throws Exception {
         // given

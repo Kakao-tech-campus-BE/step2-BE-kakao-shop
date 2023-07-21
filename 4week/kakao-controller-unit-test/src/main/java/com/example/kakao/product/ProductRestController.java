@@ -27,6 +27,13 @@ public class ProductRestController {
         // 1. 더미데이터 가져와서 페이징하기
         List<Product> productList = fakeStore.getProductList().stream().skip(page*9).limit(9).collect(Collectors.toList());
 
+        if(productList.isEmpty()){
+            Exception404 ex = new Exception404("해당 상품 페이지를 찾을 수 없습니다:"+page);
+            return new ResponseEntity<>(
+                    ex.body(),
+                    ex.status()
+            );
+        }
         // 2. DTO 변환
         List<ProductResponse.FindAllDTO> responseDTOs =
                 productList.stream().map(ProductResponse.FindAllDTO::new).collect(Collectors.toList());

@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-
+//import com.example.kakao._core.errors.GlobalExceptionHandler;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,6 +19,8 @@ import javax.validation.Valid;
 public class CartRestController {
 
     private final FakeStore fakeStore;
+    //private final GlobalExceptionHandler globalExceptionHandler;
+    //private final CartService cartService;
 
 // [
 //     {
