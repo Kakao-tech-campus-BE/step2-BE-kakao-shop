@@ -73,7 +73,6 @@ public class ProductRestControllerTest {
     public void findByAll_test() throws Exception {
         // given
 
-
         // when
         ResultActions result = mvc.perform(
                 MockMvcRequestBuilders
@@ -86,9 +85,14 @@ public class ProductRestControllerTest {
 
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response[0].id").value(1));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response[0].productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response[0].description").value(""));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response[0].image").value("/images/1.jpg"));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response[0].price").value(1000));
+
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response[1].id").value(2));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response[1].productName").value("[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response[1].description").value(""));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response[1].image").value("/images/2.jpg"));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response[1].price").value(2000));
 
         result.andExpect(MockMvcResultMatchers.jsonPath("$.error").value(nullValue()));
@@ -97,16 +101,19 @@ public class ProductRestControllerTest {
     @Test
     public void findById_test() throws Exception {
         // given
+        int product_id = 1;
+
         // when
         ResultActions result = mvc.perform(
                 MockMvcRequestBuilders
-                        .get("/products/{id}", 1)
+                        .get("/products/{id}", product_id)
         );
         result.andDo(print());
 
         // then
         result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.id").value(1));
+
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.id").value(product_id));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.description").value(""));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.image").value("/images/1.jpg"));
@@ -115,9 +122,14 @@ public class ProductRestControllerTest {
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.options[0].id").value(1));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.options[0].optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.options[0].price").value(10000));
+
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.options[1].id").value(2));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.options[1].optionName").value("02. 슬라이딩 지퍼백 플라워에디션 5종"));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.options[1].price").value(10900));
+
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.options[2].id").value(3));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.options[3].id").value(4));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.options[4].id").value(5));
 
         result.andExpect(MockMvcResultMatchers.jsonPath("$.error").value(nullValue()));
     }
