@@ -103,6 +103,7 @@ public class CartRestControllerTest {
         );
 
         // then
+        result.andExpect(MockMvcResultMatchers.status().is(200));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response").isEmpty());
         result.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty());
@@ -120,6 +121,7 @@ public class CartRestControllerTest {
         );
 
         // then
+        result.andExpect(MockMvcResultMatchers.status().is(200));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response").isNotEmpty());
         result.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty());
@@ -137,6 +139,7 @@ public class CartRestControllerTest {
         );
 
         // then
+        result.andExpect(MockMvcResultMatchers.status().is(200));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response").isEmpty());
         result.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty());

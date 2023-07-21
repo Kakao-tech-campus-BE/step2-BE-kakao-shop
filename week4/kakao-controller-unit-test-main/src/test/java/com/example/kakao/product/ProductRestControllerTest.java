@@ -44,6 +44,7 @@ class ProductRestControllerTest {
         );
 
         // then
+        result.andExpect(MockMvcResultMatchers.status().is(200));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response").isArray());
         result.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty());
@@ -62,31 +63,14 @@ class ProductRestControllerTest {
         );
 
         // then
+        result.andExpect(MockMvcResultMatchers.status().is(200));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response").isArray());
         result.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty());
     }
 
     @Test
-    void findAll_error_test() throws Exception {
-        // given
-        int page = 1000;
-
-        // when
-        ResultActions result = mvc.perform(
-                MockMvcRequestBuilders
-                        .get("/products")
-                        .param("page",String.valueOf(page))
-        );
-
-        // then
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.response").isArray());
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty());
-    }
-
-    @Test
-    void findAll_minus_error_test() throws Exception {
+    void findAll_403error_test() throws Exception {
         // given
         int page = -1;
 
@@ -98,6 +82,7 @@ class ProductRestControllerTest {
         );
 
         // then
+        result.andExpect(MockMvcResultMatchers.status().is(403));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value(false));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response").isEmpty());
         result.andExpect(MockMvcResultMatchers.jsonPath("$.error").isNotEmpty());
@@ -120,7 +105,7 @@ class ProductRestControllerTest {
     }
 
     @Test
-    void findById_error_test() throws Exception {
+    void findById_403error_test() throws Exception {
         // given
         int id=-1;
 
@@ -131,6 +116,24 @@ class ProductRestControllerTest {
         );
 
         // then
+        result.andExpect(MockMvcResultMatchers.status().is(403));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value(false));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error").isNotEmpty());
+    }
+
+    @Test
+    void findById_404error_test() throws Exception {
+        // given
+        int id=40;
+
+        // when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .get(String.format("/products/%d", id))
+        );
+
+        // then
+        result.andExpect(MockMvcResultMatchers.status().is(404));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value(false));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.error").isNotEmpty());
     }
