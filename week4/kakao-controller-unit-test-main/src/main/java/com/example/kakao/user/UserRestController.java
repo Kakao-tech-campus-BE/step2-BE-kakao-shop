@@ -18,7 +18,6 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
-
 @RequiredArgsConstructor
 @RestController
 public class UserRestController {
@@ -73,7 +72,6 @@ public class UserRestController {
             @AuthenticationPrincipal CustomUserDetails userDetails,
             HttpServletRequest request) {
 
-        // 유효성 검사
         if (errors.hasErrors()) {
             List<FieldError> fieldErrors = errors.getFieldErrors();
             Exception400 e = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
@@ -83,7 +81,6 @@ public class UserRestController {
             );
         }
 
-        // 권한 체크 (디비를 조회하지 않아도 체크할 수 있는 것)
         if (id != userDetails.getUser().getId()) {
             Exception403 e = new Exception403("인증된 user는 해당 id로 접근할 권한이 없습니다" + id);
             return new ResponseEntity<>(
@@ -92,7 +89,6 @@ public class UserRestController {
             );
         }
 
-        // 서비스 실행 : 내부에서 터지는 모든 익셉션은 예외 핸들러로 던지기
         try {
             userService.updatePassword(requestDTO, id);
             return ResponseEntity.ok().body(ApiUtils.success(null));
@@ -101,14 +97,12 @@ public class UserRestController {
         }
     }
 
-    // 클라이언트로 부터 전달된 데이터는 신뢰할 수 없다.
     @GetMapping("/users/{id}")
     public ResponseEntity<?> findById(
             @PathVariable Integer id,
             @AuthenticationPrincipal CustomUserDetails userDetails,
             HttpServletRequest request
     ) {
-        // 권한 체크 (디비를 조회하지 않아도 체크할 수 있는 것)
         if (id != userDetails.getUser().getId()) {
             Exception403 e = new Exception403("인증된 user는 해당 id로 접근할 권한이 없습니다:" + id);
             return new ResponseEntity<>(
@@ -117,7 +111,6 @@ public class UserRestController {
             );
         }
 
-        // 서비스 실행 : 내부에서 터지는 모든 익셉션은 예외 핸들러로 던지기
         try {
             UserResponse.FindById responseDTO = userService.findById(id);
             return ResponseEntity.ok().body(ApiUtils.success(responseDTO));

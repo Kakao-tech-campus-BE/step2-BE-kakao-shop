@@ -19,9 +19,9 @@ public class ErrorLog {
 
     @Column(nullable = true)
     private Integer userId;
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String userIp;
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String userAgent;
     @Column(nullable = false, length = 1000)
     private String message;

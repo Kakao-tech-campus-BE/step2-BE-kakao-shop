@@ -7,7 +7,6 @@ import com.example.kakao.product.Product;
 import com.example.kakao.product.option.Option;
 import com.example.kakao.user.User;
 import lombok.Getter;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -18,7 +17,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
- * 예상 시나리오를 생각해보고, 시나리오에 맞춰서 더미데이터 만들기
+ * 예상 시나리오를 생각해보고, 시나리오에 맞춰서 더미데이터 만들기 -> 사용X
  */
 @Getter
 @Component

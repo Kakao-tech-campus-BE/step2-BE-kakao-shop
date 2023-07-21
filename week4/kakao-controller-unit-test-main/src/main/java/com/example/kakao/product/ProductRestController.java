@@ -1,7 +1,6 @@
 package com.example.kakao.product;
 
 import com.example.kakao._core.errors.GlobalExceptionHandler;
-import com.example.kakao._core.errors.exception.Exception403;
 import com.example.kakao._core.utils.ApiUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

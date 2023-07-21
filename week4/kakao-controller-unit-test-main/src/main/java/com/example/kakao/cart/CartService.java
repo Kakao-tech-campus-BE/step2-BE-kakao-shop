@@ -87,6 +87,7 @@ public class CartService {
             }
             return new CartResponse.UpdateDTO(carts);
         }catch (Exception400 e){
+            System.out.println("cart update 400 error");
             ErrorLog errorLog = ErrorLog.builder()
                     .message(e.getMessage())
                     .build();
