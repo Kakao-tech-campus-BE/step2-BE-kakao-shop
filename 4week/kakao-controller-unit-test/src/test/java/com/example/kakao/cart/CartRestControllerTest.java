@@ -167,7 +167,7 @@ public class CartRestControllerTest extends DummyEntity {
 
     @Test
     @WithMockCustomUser
-    @DisplayName("post - /carts/cleat 장바구니 비우기")
+    @DisplayName("post - /carts/clear 장바구니 비우기")
     void clear_tset() throws Exception {
         // given
         // when
