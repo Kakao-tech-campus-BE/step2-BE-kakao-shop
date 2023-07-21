@@ -136,7 +136,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
         );
 
         // product 상품은 영속화 되어 있어서, 아래에서 조인해서 데이터를 가져오지 않아도 된다.
-        List<Option> optionListPS = optionJPARepository.findByProductId(id); // Lazy
+        List<Option> optionListPS = optionJPARepository.findByProductId(id); // Lazy // 조인하면 안됨!!
 
         String responseBody1 = om.writeValueAsString(productPS);
         String responseBody2 = om.writeValueAsString(optionListPS);
@@ -144,6 +144,34 @@ public class ProductJPARepositoryTest extends DummyEntity {
         System.out.println("테스트 : "+responseBody2);
 
         // then
+    }
+    // 4주차 강의
+    @Test
+    public void findAll() throws JsonProcessingException{
+        // 화면으로 응답되는 데이터가 있는데, 그 데이터를 만들기 위해서 findAll() 충분한가?
+
+        //given
+        int page = 0;
+        int size =9;
+
+        //when
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<Product> productPage = productJPARepository.findAll(pageRequest);
+        String responseBody = om.writeValueAsString(productPage);
+        System.out.println("테스트 : " + responseBody);
+
+        //then
+        // 상태검사
+        Assertions.assertThat(productPage.getTotalPages()).isEqualTo(2);
+        Assertions.assertThat(productPage.getSize()).isEqualTo(9);
+        Assertions.assertThat(productPage.getNumber()).isEqualTo(0);
+        Assertions.assertThat(productPage.getTotalElements()).isEqualTo(15);
+        Assertions.assertThat(productPage.isFirst()).isEqualTo(true);
+        Assertions.assertThat(productPage.getContent().get(0).getId()).isEqualTo(1);
+        Assertions.assertThat(productPage.getContent().get(0).getProductName()).isEqualTo("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전");
+        Assertions.assertThat(productPage.getContent().get(0).getDescription()).isEqualTo("");
+        Assertions.assertThat(productPage.getContent().get(0).getImage()).isEqualTo("/images/1.jpg");
+        Assertions.assertThat(productPage.getContent().get(0).getPrice()).isEqualTo(1000);
     }
 
 }
