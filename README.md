@@ -246,18 +246,8 @@ CREATE TABLE OrderItem (
 >- 테스트 코드의 쿼리 관련된 메서드가 너무 많은 select를 유발하지 않는지? (적절한 한방쿼리, 효율적인 in query, N+1 문제 등이 해결된 쿼리)
 >- BDD 패턴으로 구현되었는가? given, when, then
 </br>
-
-## **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
-**1. PR 제목과 내용을 아래와 같이 작성 해주세요.**
-
->- PR 제목 : 부산대BE_라이언_3주차 과제
-
 </br>
 
-**2. PR 내용 :**
-
->- 코드 작성하면서 어려웠던 점
->- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
 # 4주차
 
@@ -287,17 +277,33 @@ CREATE TABLE OrderItem (
 >- 모든 요청과 응답이 json으로 처리되어 있는가?
 </br>
 
-## **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
-**1. PR 제목과 내용을 아래와 같이 작성 해주세요.**
+## **과제 내용**
 
->- PR 제목 : 부산대BE_라이언_4주차 과제 
+### controller 단위 테스트 ###
+
+- **ProductRestControllerTest**
+   - findAll_test: 전체 상품 목록 조회 test
+   - findAll_page_test: 페이지로 전체 상품 목록 조회 test
+   - findAll_page_fail_test: 페이지로 전체 상품 목록 조회 실패 test (존재하지 않는 페이지 조회 시 404 에러)
+   - findById_test: 개별 상품 상세 조회 test
+   - findById_fail_test: 개별 상품 상세 조회 실패 test (존재하지 않는 상품 조회 시 404 에러)
+
+- **CartRestControllerTest**  
+인증된 상태로 테스트 진행하기 위해 @WithMockUser 사용
+  - add_test: 장바구니 추가 test
+  - findAll_test: 장바구니 보기 test
+  - update_test: 주문하기(장바구니 업데이트) test
+  - clear_test: 장바구니 비우기 test
+
+- **OrderRestControllerTest**  
+인증된 상태로 테스트 진행하기 위해 @WithMockUser 사용
+  - save_test: 결제 test
+  - findById_test: 주문 결과 확인 test
+  - findById_fail_test: 주문 결과 확인 실패 test (존재하지 않는 주문 조회 시 404 에러)
 
 </br>
+</br>
 
-**2. PR 내용 :**
-
->- 코드 작성하면서 어려웠던 점
->- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
 # 5주차
 
