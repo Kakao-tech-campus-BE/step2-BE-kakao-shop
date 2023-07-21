@@ -61,7 +61,7 @@ public class UserService {
     }
 
 
-    // @Transactional // 해당 어노테이션을 빼면 flush가 일어나지 않음을 확인(password변경이 통하지 않음) select 쿼리만 날아감
+    @Transactional // 해당 어노테이션을 빼면 flush가 일어나지 않음을 확인(password변경이 통하지 않음) select 쿼리만 날아감
     public void updatePassword(UserRequest.UpdatePasswordDTO requestDTO, Integer id) {
         User userPS = userJPARepository.findById(id).orElseThrow(
                 () -> new Exception400("회원 아이디를 찾을 수 없습니다. : "+id)
