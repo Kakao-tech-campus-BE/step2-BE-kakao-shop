@@ -45,8 +45,11 @@ public class ProductJPARepositoryTest extends DummyEntity {
         em.clear();
     }
 
+    //메서드 자체를 테스트하기보다는 더 좋은 코드를 찾아내기 위한 과정!
     @Test
     public void product_findAll_test() throws JsonProcessingException {
+        // 화면으로 응답되는 데이터기 있는데, 그 데이터를 만들기 위해 이 메서드가 충분한가
+
         // given
         int page = 0;
         int size = 9;
