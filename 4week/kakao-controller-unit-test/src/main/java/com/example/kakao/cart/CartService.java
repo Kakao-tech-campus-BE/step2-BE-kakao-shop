@@ -28,34 +28,19 @@ public class CartService {
 
 
     public void addCartList(List<CartRequest.SaveDTO> saveDTOs, int userId) {
-        saveDTOs.stream().forEach(s -> {
-            cartJPARepository.findByOption_IdAndUserId(s.getOptionId(), userId)
-                    .ifPresentOrElse(
-                            cart -> {
-                                cart.update(cart.getQuantity() + s.getQuantity(), cart.getPrice() / cart.getQuantity() * (cart.getQuantity() + s.getQuantity()));
-                            },
-                            () -> {
-                                Option option = optionJPARepository.findById(s.getOptionId()).orElseThrow(() -> new Exception400("해당 옵션 번호는 없는 번호입니다."));
-                                User user = userJPARepository.findById(userId).orElseThrow(() -> new Exception400("현재 접속중인 유저는 없는 유저입니다."));
-                                Cart cart = Cart.builder().option(option).price(option.getPrice() * s.getQuantity()).user(user).quantity(s.getQuantity()).build();
-                                cartJPARepository.save(cart);
-                            }
-                    );
-        });
-
-//        for(CartRequest.SaveDTO s:saveDTOs){
-//            Optional<Cart> opCart = cartJPARepository.findByOption_IdAndUserId(s.getOptionId(),userId);
-//            if (opCart.isPresent()){
-//                Cart cart = opCart.get();
-//                cart.update(cart.getQuantity()+s.getQuantity(), cart.getPrice()/cart.getQuantity()*(cart.getQuantity()+s.getQuantity()));
-//            }
-//            else{
-//                Option option = optionJPARepository.findById(s.getOptionId()).orElseThrow(()->new Exception400("해당 옵션 번호는 없는 번호입니다."));
-//                User user =  userJPARepository.findById(userId).orElseThrow(()->new Exception400("현재 접속중인 유저는 없는 유저입니다."));
-//                Cart cart = Cart.builder().option(option).price(option.getPrice()*s.getQuantity()).user(user).quantity(s.getQuantity()).build();
-//                cartJPARepository.save(cart);
-//            }
-//        }
+        for(CartRequest.SaveDTO s:saveDTOs){
+            Optional<Cart> opCart = cartJPARepository.findByOption_IdAndUserId(s.getOptionId(),userId);
+            if (opCart.isPresent()){
+                Cart cart = opCart.get();
+                cart.update(cart.getQuantity()+s.getQuantity(), cart.getPrice()/cart.getQuantity()*(cart.getQuantity()+s.getQuantity()));
+            }
+            else{
+                Option option = optionJPARepository.findById(s.getOptionId()).orElseThrow(()->new Exception400("해당 옵션 번호는 없는 번호입니다."));
+                User user =  userJPARepository.findById(userId).orElseThrow(()->new Exception400("현재 접속중인 유저는 없는 유저입니다."));
+                Cart cart = Cart.builder().option(option).price(option.getPrice()*s.getQuantity()).user(user).quantity(s.getQuantity()).build();
+                cartJPARepository.save(cart);
+            }
+        }
 
         //todo 옵션이 이미 있다면 수량추가
     }
