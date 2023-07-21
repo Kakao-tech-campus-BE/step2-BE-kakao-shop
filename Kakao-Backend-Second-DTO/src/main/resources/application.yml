@@ -19,7 +19,7 @@ spring:
       enabled: always
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
     show-sql: true
     properties:
       hibernate:
@@ -30,6 +30,9 @@ spring:
     user:
       name: ssar
       password: 1234
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
 
 logging:
   level:

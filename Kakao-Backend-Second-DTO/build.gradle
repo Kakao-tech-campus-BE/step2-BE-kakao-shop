@@ -2,6 +2,7 @@ plugins { // Gradle 빌드 스크립트에서 플러그인을 설정하는 부�
 	id 'java' // 자바 프로젝트
 	id 'org.springframework.boot' version '2.7.12' // 스프링부트 프로젝트 2.7.12 버전
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE' // 스프링 부트와 관련된 종속성 관리
+	id "org.flywaydb.flyway" version "7.2.0"
 }
 
 group = 'com.example'
@@ -35,6 +36,13 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security' // 스프링 시큐리티 제공
 	implementation group: 'com.auth0', name: 'java-jwt', version: '4.3.0'
 	testImplementation 'org.springframework.security:spring-security-test' // 테스트시 시큐리티 관련 편의 기능 제공
+	implementation 'org.flywaydb:flyway-core'
+}
+
+flyway {  // 3)
+	url = 'jdbc:mysql://localhost:13304/shop?useSSL=false&serverTimezone=UTC&characterEncoding=utf8'
+	user = 'root'
+	password = '1234'
 }
 
 tasks.named('test') {
