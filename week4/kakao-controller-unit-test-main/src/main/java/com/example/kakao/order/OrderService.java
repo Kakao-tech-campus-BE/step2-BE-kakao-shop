@@ -6,7 +6,7 @@ public class OrderService {
 
     }
 
-    public Object getOrder(int i) {
+    public OrderResponse.FindByIdDTO findOrderById(int i) {
         return null;
     }
 }

@@ -1,11 +1,14 @@
 package com.example.kakao.cart;
 
-import com.example.kakao._core.security.JWTProvider;
+import com.example.kakao._core.errors.GlobalExceptionHandler;
+import com.example.kakao._core.errors.exception.Exception400;
 import com.example.kakao._core.security.SecurityConfig;
 import com.example.kakao._core.utils.FakeStore;
+import com.example.kakao.log.ErrorLogJPARepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.BDDMockito;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -21,26 +24,31 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.mockito.ArgumentMatchers.refEq;
+
 @Import({
         FakeStore.class,
-        SecurityConfig.class
+        SecurityConfig.class,
+        GlobalExceptionHandler.class
 })
 @WebMvcTest(controllers = {CartRestController.class})
 public class CartRestControllerTest {
 
+    @MockBean
+    private CartService cartService;
+    @MockBean
+    private ErrorLogJPARepository errorLogJPARepository;
     @Autowired
     private MockMvc mvc;
     @Autowired
     private ObjectMapper om;
     @Autowired
     private FakeStore fakeStore;
-    @MockBean
-    private CartService cartService;
 
     @Test
     @DisplayName("장바구니 담기 테스트")
     @WithMockUser
-    public void add_cart_test() throws Exception {
+    public void cart_add_test() throws Exception {
         // given
         List<CartRequest.SaveDTO> requestDTOs = new ArrayList<>();
 
@@ -72,9 +80,44 @@ public class CartRestControllerTest {
         result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
     }
 
-    @WithMockUser(username = "ssar@nate.com", roles = "USER")
     @Test
-    public void update_test() throws Exception {
+    @DisplayName("장바구니 담기 실패 테스트 - 수량")
+    @WithMockUser(username = "ssar@nate.com", roles = "USER")
+    public void add_cart_fail_test_invalid_quantity() throws Exception {
+        // given
+        List<CartRequest.SaveDTO> requestDTO = new ArrayList<>();
+        CartRequest.SaveDTO saveDTO = new CartRequest.SaveDTO();
+
+        saveDTO.setOptionId(1);
+        saveDTO.setQuantity(0);
+        requestDTO.add(saveDTO);
+
+        String requestBody = om.writeValueAsString(requestDTO);
+        System.out.println("테스트 : " + requestBody);
+
+        // stub
+        BDDMockito.willThrow(new Exception400("1개 이상의 상품을 선택해주십시오.")).given(cartService).addCart(Mockito.any());
+
+        // when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .post("/carts/add")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        // then
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        result.andExpect(MockMvcResultMatchers.status().isBadRequest());
+    }
+
+
+    @Test
+    @DisplayName("장바구니 업데이트 테스트")
+    @WithMockUser
+    public void cart_update_test() throws Exception {
         // given
         List<CartRequest.UpdateDTO> requestDTOs = new ArrayList<>();
         CartRequest.UpdateDTO d1 = new CartRequest.UpdateDTO();
