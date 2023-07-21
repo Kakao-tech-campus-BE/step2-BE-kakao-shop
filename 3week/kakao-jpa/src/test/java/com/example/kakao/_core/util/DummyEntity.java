@@ -86,7 +86,7 @@ public class DummyEntity {
         ArrayList<Cart> cartList = new ArrayList<>();
 
         for (Option option : options) {
-            Cart cart = newCart(user, option, 0);
+            Cart cart = newCart(user, option, 5);
             cartList.add(cart);
         }
         return cartList;
