@@ -19,9 +19,9 @@ public class CartRestController {
 
     // (기능8) 장바구니 담기
     @PostMapping("/carts/add")
-    public ResponseEntity<?> addCartList(@RequestBody List<CartRequest.SaveDTO> requestDTOs, @AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ResponseEntity<?> addCartList(@RequestBody List<CartRequest.AddDTO> requestDTOs, @AuthenticationPrincipal CustomUserDetails userDetails) {
         requestDTOs.forEach(
-                saveDTO -> System.out.println("요청 받은 장바구니 옵션 : " + saveDTO.toString())
+                addDTO -> System.out.println("요청 받은 장바구니 옵션 : " + addDTO.toString())
         );
         return ResponseEntity.ok(ApiUtils.success(null));
     }

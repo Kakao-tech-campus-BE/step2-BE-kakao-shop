@@ -6,7 +6,7 @@ import lombok.ToString;
 
 public class CartRequest {
     @Getter @Setter @ToString
-    public static class SaveDTO {
+    public static class AddDTO {
         private int optionId;
         private int quantity;
     }
