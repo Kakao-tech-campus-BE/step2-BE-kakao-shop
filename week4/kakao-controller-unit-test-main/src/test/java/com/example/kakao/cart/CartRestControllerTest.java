@@ -183,6 +183,39 @@ class CartRestControllerTest extends DummyEntity {
         result.andExpect(MockMvcResultMatchers.jsonPath("$.error.status").value(400));
     }
 
+    //@WithMockUser(username = "gihae0805@nate.com", roles = "USER")
+    @Test
+    @DisplayName("장바구니 저장 실패 - 인증 실패")
+    void add_fail_test4() throws Exception {
+        //given
+        List<CartRequest.SaveDTO> requestDTOs = new ArrayList<>();
+        CartRequest.SaveDTO d1 = new CartRequest.SaveDTO();
+        d1.setQuantity(1); //option id 정보 누락
+
+        requestDTOs.add(d1);
+        String requestBody = om.writeValueAsString(requestDTOs);
+        System.out.println("requestBody=" + requestBody);
+
+        //stub - 필요하지 않음
+
+        //when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .post("/carts/add")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("responseBody=" + responseBody);
+
+        //then
+        result.andExpect(MockMvcResultMatchers.status().isUnauthorized());
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value(false));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response").isEmpty());
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error.message").value("인증되지 않았습니다"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error.status").value(401));
+    }
+
     @WithMockUser(username = "gihae0805@nate.com", roles = "USER")
     @Test
     @DisplayName("장바구니 조회")
@@ -387,5 +420,45 @@ class CartRestControllerTest extends DummyEntity {
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response").isEmpty());
         result.andExpect(MockMvcResultMatchers.jsonPath("$.error.message").value("장바구니 아이디는 필수 입력 값입니다."));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.error.status").value(400));
+    }
+
+    //@WithMockUser(username = "gihae0805@nate.com", roles = "USER")
+    @Test
+    @DisplayName("장바구니 수정 실패 - 인증 실패")
+    void update_fail_test4() throws Exception {
+        // given
+        List<CartRequest.UpdateDTO> requestDTOs = new ArrayList<>();
+        CartRequest.UpdateDTO req1 = new CartRequest.UpdateDTO();
+        req1.setCartId(1);
+        req1.setQuantity(1000); //10에서 1000으로 수정
+
+        CartRequest.UpdateDTO req2 = new CartRequest.UpdateDTO();
+        req2.setCartId(2);
+        req2.setQuantity(10);
+
+        requestDTOs.add(req1);
+        requestDTOs.add(req2);
+
+        String requestBody = om.writeValueAsString(requestDTOs);
+        System.out.println("requestBody=" + requestBody);
+
+        //stub - 필요하지 않음
+
+        // when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .post("/carts/update")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("responseBody=" + responseBody);
+
+        // then
+        result.andExpect(MockMvcResultMatchers.status().isUnauthorized());
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value(false));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response").isEmpty());
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error.message").value("인증되지 않았습니다"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error.status").value(401));
     }
 }

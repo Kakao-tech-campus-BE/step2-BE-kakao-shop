@@ -42,7 +42,7 @@ class OrderRestControllerTest extends DummyEntity {
 
     @WithMockUser(username = "gihae0805@nate.com", roles = "USER")
     @Test
-    @DisplayName("주문 생성")
+    @DisplayName("주문 생성 성공")
     void save_test() throws Exception {
         //given
 
@@ -73,6 +73,30 @@ class OrderRestControllerTest extends DummyEntity {
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].quantity").value(10));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].price").value(100000));
+    }
+
+    //@WithMockUser(username = "gihae0805@nate.com", roles = "USER")
+    @Test
+    @DisplayName("주문 생성 실패 - 인증 실패")
+    void save_fail_test() throws Exception {
+        //given
+
+        //stub - 필요하지 않음
+
+        //when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .post("/orders/save")
+        );
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("responseBody=" + responseBody);
+
+        //then
+        result.andExpect(MockMvcResultMatchers.status().isUnauthorized());
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value(false));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response").isEmpty());
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error.message").value("인증되지 않았습니다"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error.status").value(401));
     }
 
     @WithMockUser(username = "gihae0805@nate.com", roles = "USER")
