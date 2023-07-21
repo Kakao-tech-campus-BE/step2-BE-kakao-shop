@@ -45,6 +45,7 @@ public class OrderRestControllerTest {
 
     @BeforeEach
     public void setUp() {
+        // stub
         User user = new User(1, "ssar@nate.com", "1234", "ssar", "USER");
         Product product = new Product(1, "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전", "", "/images/1.jpg", 1000);
         List<Option> options = Arrays.asList(
