@@ -28,18 +28,14 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.mockito.ArgumentMatchers.any;
 
-// GlobalExceptionHandler 와 UserRestController를 SpringContext에 등록합니다.
-
-// Import를 하는 이유 : @WebMvcTest는 @Controller, @ControllerAdvice, @JsonComponent, Converter, GenericConverter, Filter, WebMvcConfigurer, HandlerMethodArgumentResolver를 스캔합니다.
 @Import({
         SecurityConfig.class,
         GlobalExceptionHandler.class
 })
-@WebMvcTest(controllers = {UserRestController.class})// UserRestController를 SpringContext에 등록합니다.
+@WebMvcTest(controllers = {UserRestController.class})
 public class UserRestControllerTest {
 
-    // 객체의 모든 메서드는 추상메서드로 구현됩니다. (가짜로 만들면)
-    // 해당 객체는 SpringContext에 등록됩니다.
+
     @MockBean
     private UserService userService;
 

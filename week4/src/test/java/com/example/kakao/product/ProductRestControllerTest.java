@@ -54,56 +54,28 @@ public class ProductRestControllerTest  {
     private List<Product> productList;
     private List<Option> optionList;
 
-    private int id;
     @BeforeEach
     public void init(){
         productList = new ArrayList<>();
-         id =1;
-        Product product = Product.builder()
-                .id(id)
+
+        Product product = Product.builder().id(1)
                 .productName("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전")
                 .description("")
                 .image("/images/" + 1 + ".jpg")
                 .price(10000)
                 .build();
         optionList = Arrays.asList(
-                Option.builder()
-                        .product(product)
-                        .id(1)
-                        .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
-                        .price(10000)
-                        .build(),
-                Option.builder()
-                        .product(product)
-                        .id(2)
-                        .optionName("02. 슬라이딩 지퍼백 플라워에디션 5종")
-                        .price(10900)
-                        .build(),
-                Option.builder()
-                        .product(product)
-                        .id(3)
-                        .optionName("고무장갑 베이지 S(소형) 6팩")
-                        .price(9900)
-                        .build(),
-                Option.builder()
-                        .product(product)
-                        .id(4)
-                        .optionName("뽑아쓰는 키친타올 130매 12팩")
-                        .price(16900)
-                        .build(),
-                Option.builder()
-                        .product(product)
-                        .id(5)
-                        .optionName("2겹 식빵수세미 6매")
-                        .price(8900)
-                        .build()
+                createOption(product, 1, "01. 슬라이딩 지퍼백 크리스마스에디션 4종", 10000),
+                createOption(product, 2, "02. 슬라이딩 지퍼백 플라워에디션 5종", 10900),
+                createOption(product, 3, "고무장갑 베이지 S(소형) 6팩", 9900),
+                createOption(product, 4, "뽑아쓰는 키친타올 130매 12팩", 16900),
+                createOption(product, 5, "2겹 식빵수세미 6매", 8900)
         );
-        productList.add(product);
 
+        productList.add(product);
     }
     @Test
     public void findAll_test() throws Exception {
-        // FakeStore의 getProductList 메서드가 호출되면 더미 데이터를 반환하도록 설정합니다.
 
         // give
         when(fakeStore.getProductList()).thenReturn(productList);
@@ -115,7 +87,6 @@ public class ProductRestControllerTest  {
 
 
         String responseBody = om.writeValueAsString(ApiUtils.success(responseDTOs));
-        System.out.println("FindALl : "+responseBody);
         ResultActions result = mvc.perform(
                 MockMvcRequestBuilders
                         .get("/products")
@@ -131,7 +102,7 @@ public class ProductRestControllerTest  {
     @Test
     public void findById_test() throws Exception {
         //given
-
+        int id= 1;
         // FakeStore의 getProductList()와 getOptionList() 메서드의 반환값 설정
         when(fakeStore.getProductList()).thenReturn(productList);
         when(fakeStore.getOptionList()).thenReturn(optionList);
@@ -155,6 +126,14 @@ public class ProductRestControllerTest  {
                 MockMvcResultMatchers.content().json(responseBody)
         );
         System.out.println(result.andReturn().getResponse().getContentAsString());
+    }
+    private Option createOption(Product product, int id, String optionName, int price) {
+        return Option.builder()
+                .product(product)
+                .id(id)
+                .optionName(optionName)
+                .price(price)
+                .build();
     }
 
 }

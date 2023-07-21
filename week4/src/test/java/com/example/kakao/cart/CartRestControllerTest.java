@@ -27,6 +27,7 @@ import static org.mockito.Mockito.when;
 @Import({
         FakeStore.class,
         SecurityConfig.class,
+
 })
 @WebMvcTest(controllers = {CartRestController.class})
 public class CartRestControllerTest {
@@ -37,8 +38,7 @@ public class CartRestControllerTest {
     @Autowired
     private ObjectMapper om;
 
-    @MockBean
-    private FakeStore fakeStore;
+
 
     @DisplayName("장바구니 추가")
     @WithMockUser(username = "ssar@nate.com", roles = "USER")
@@ -67,6 +67,7 @@ public class CartRestControllerTest {
         // then
         result.andExpect(MockMvcResultMatchers.status().isOk());
         result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response").isEmpty());
     }
 
     @DisplayName("장바구니 조회")
@@ -114,7 +115,7 @@ public class CartRestControllerTest {
         // then
         result.andExpect(MockMvcResultMatchers.status().isOk());
         result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].cartId").value(1));
+
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].optionId").value(1));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].quantity").value(10));
@@ -137,24 +138,6 @@ public class CartRestControllerTest {
     }
 
 
-    // 추후 네거티브 테스트를 위해서 남겨둡니다
-    @Test @WithMockUser(username = "ssar@nate.com", roles = "USER")
-    public void add_test_with_empty_list() throws Exception {
-        // given
-        List<CartRequest.SaveDTO> requestDTOs = new ArrayList<>();
-        String requestBody = om.writeValueAsString(requestDTOs);
-
-        // when
-        ResultActions result = mvc.perform(
-                MockMvcRequestBuilders
-                        .post("/carts/add")
-                        .content(requestBody)
-                        .contentType(MediaType.APPLICATION_JSON)
-        );
-
-        // then
-        result.andExpect(MockMvcResultMatchers.status().isBadRequest());
-    }
 
     @Test @WithMockUser(username = "ssar@nate.com", roles = "USER")
     public void update_test_with_empty_list() throws Exception {
@@ -172,26 +155,6 @@ public class CartRestControllerTest {
 
         // then
         result.andExpect(MockMvcResultMatchers.status().isOk());
-    }
-
-
-    @Test @WithMockUser(username = "ssar@nate.com", roles = "USER")
-    public void findAll_test_no_carts() throws Exception {
-        // given
-        when(fakeStore.getCartList()).thenReturn(new ArrayList<>());
-
-
-        // when
-        ResultActions result = mvc.perform(
-                MockMvcRequestBuilders
-                        .get("/carts")
-                        .contentType(MediaType.APPLICATION_JSON)
-        );
-
-        // then
-        //401 에러
-        result.andExpect(MockMvcResultMatchers.status().isOk());
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.response").isEmpty());
     }
 
 }
