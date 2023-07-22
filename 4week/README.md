@@ -86,8 +86,8 @@ public class UserRestControllerTest {
       // then
       result.andExpect(MockMvcResultMatchers.status().isOk());
       result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
-      result.andExpect(MockMvcResultMatchers.jsonPath("$.response").isEmpty());
-      result.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty());
+      result.andExpect(MockMvcResultMatchers.jsonPath("$.response").value(IsNull.nullValue()));
+      result.andExpect(MockMvcResultMatchers.jsonPath("$.error").value(IsNull.nullValue()));
   }
   ```
   
@@ -129,8 +129,8 @@ public class UserRestControllerTest {
       Assertions.assertTrue(jwt.startsWith(JWTProvider.TOKEN_PREFIX));
       result.andExpect(MockMvcResultMatchers.status().isOk());
       result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
-      result.andExpect(MockMvcResultMatchers.jsonPath("$.response").isEmpty());
-      result.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty());
+      result.andExpect(MockMvcResultMatchers.jsonPath("$.response").value(IsNull.nullValue()));
+      result.andExpect(MockMvcResultMatchers.jsonPath("$.error").value(IsNull.nullValue()));
   }
   ```
     
@@ -191,7 +191,7 @@ public class ProductRestControllerTest {
       result.andExpect(MockMvcResultMatchers.jsonPath("$.response[0].description").value(""));
       result.andExpect(MockMvcResultMatchers.jsonPath("$.response[0].image").value("/images/1.jpg"));
       result.andExpect(MockMvcResultMatchers.jsonPath("$.response[0].price").value(1000));
-      result.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty());
+      result.andExpect(MockMvcResultMatchers.jsonPath("$.error").value(IsNull.nullValue()));
   }
   ```
   
@@ -237,7 +237,7 @@ public class ProductRestControllerTest {
       result.andExpect(MockMvcResultMatchers.jsonPath("$.response.options[0].id").value(1));
       result.andExpect(MockMvcResultMatchers.jsonPath("$.response.options[0].optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"));
       result.andExpect(MockMvcResultMatchers.jsonPath("$.response.options[0].price").value(10000));
-      result.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty());
+      result.andExpect(MockMvcResultMatchers.jsonPath("$.error").value(IsNull.nullValue()));
   }
   ```
     
@@ -299,8 +299,8 @@ public class CartRestControllerTest {
       // then
       result.andExpect(MockMvcResultMatchers.status().isOk());
       result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
-      result.andExpect(MockMvcResultMatchers.jsonPath("$.response").isEmpty());
-      result.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty());
+      result.andExpect(MockMvcResultMatchers.jsonPath("$.response").value(IsNull.nullValue()));
+      result.andExpect(MockMvcResultMatchers.jsonPath("$.error").value(IsNull.nullValue()));
   }
   ```
   
@@ -338,7 +338,7 @@ public class CartRestControllerTest {
       result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].carts[0].quantity").value(5));
       result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].carts[0].price").value(50000));
       result.andExpect(MockMvcResultMatchers.jsonPath("$.response.totalPrice").value(104500));
-      result.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty());
+      result.andExpect(MockMvcResultMatchers.jsonPath("$.error").value(IsNull.nullValue()));
   }
   ```
   
@@ -386,7 +386,7 @@ public class CartRestControllerTest {
       result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].quantity").value(10));
       result.andExpect(MockMvcResultMatchers.jsonPath("$.response.carts[0].price").value(100000));
       result.andExpect(MockMvcResultMatchers.jsonPath("$.response.totalPrice").value(209000));
-      result.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty());
+      result.andExpect(MockMvcResultMatchers.jsonPath("$.error").value(IsNull.nullValue()));
   }
   ```
     
@@ -440,7 +440,7 @@ public class OrderRestControllerTest {
       result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].quantity").value(5));
       result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].price").value(50000));
       result.andExpect(MockMvcResultMatchers.jsonPath("$.response.totalPrice").value(104500));
-      result.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty());
+      result.andExpect(MockMvcResultMatchers.jsonPath("$.error").value(IsNull.nullValue()));
   }
   ```
   
@@ -477,7 +477,7 @@ public class OrderRestControllerTest {
       result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].quantity").value(5));
       result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].price").value(50000));
       result.andExpect(MockMvcResultMatchers.jsonPath("$.response.totalPrice").value(104500));
-      result.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty());
+      result.andExpect(MockMvcResultMatchers.jsonPath("$.error").value(IsNull.nullValue()));
   }
   ```
     

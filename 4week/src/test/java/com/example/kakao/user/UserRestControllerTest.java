@@ -5,6 +5,7 @@ import com.example.kakao._core.security.JWTProvider;
 import com.example.kakao._core.security.SecurityConfig;
 import com.example.kakao.log.ErrorLogJPARepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -62,8 +63,8 @@ public class UserRestControllerTest {
         // then
         result.andExpect(MockMvcResultMatchers.status().isOk());
         result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.response").isEmpty());
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty());
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response").value(IsNull.nullValue()));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error").value(IsNull.nullValue()));
     }
 
     @Test
@@ -96,7 +97,7 @@ public class UserRestControllerTest {
         Assertions.assertTrue(jwt.startsWith(JWTProvider.TOKEN_PREFIX));
         result.andExpect(MockMvcResultMatchers.status().isOk());
         result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.response").isEmpty());
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty());
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response").value(IsNull.nullValue()));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error").value(IsNull.nullValue()));
     }
 }

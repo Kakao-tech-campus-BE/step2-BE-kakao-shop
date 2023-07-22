@@ -3,6 +3,7 @@ package com.example.kakao.product;
 import com.example.kakao._core.security.SecurityConfig;
 import com.example.kakao._core.utils.FakeStore;
 import com.example.kakao.product.option.Option;
+import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
@@ -57,7 +58,7 @@ public class ProductRestControllerTest {
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response[0].description").value(""));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response[0].image").value("/images/1.jpg"));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response[0].price").value(1000));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty());
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error").value(IsNull.nullValue()));
     }
 
     @Test
@@ -94,6 +95,6 @@ public class ProductRestControllerTest {
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.options[0].id").value(1));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.options[0].optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.options[0].price").value(10000));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty());
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error").value(IsNull.nullValue()));
     }
 }

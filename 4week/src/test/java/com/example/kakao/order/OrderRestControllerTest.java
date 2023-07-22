@@ -2,6 +2,7 @@ package com.example.kakao.order;
 
 import com.example.kakao._core.security.SecurityConfig;
 import com.example.kakao._core.utils.FakeStore;
+import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,7 @@ public class OrderRestControllerTest {
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].quantity").value(5));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].price").value(50000));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.totalPrice").value(104500));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty());
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error").value(IsNull.nullValue()));
     }
 
     @WithMockUser(username = "ssar@nate.com", roles = "USER")
@@ -76,6 +77,6 @@ public class OrderRestControllerTest {
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].quantity").value(5));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].price").value(50000));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.totalPrice").value(104500));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.error").isEmpty());
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error").value(IsNull.nullValue()));
     }
 }
