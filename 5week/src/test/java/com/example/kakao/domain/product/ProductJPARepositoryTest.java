@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest // 현재 앱 시작시 Bean 으로 DummyData 가 Insert 되는 중이라서 그것을 지우지않고 활용하기로 했습니다.
+@Transactional(readOnly = true)
 class ProductJPARepositoryTest {
 
   @Autowired

@@ -33,7 +33,7 @@ public class Cart {
     private int quantity;
 
     @Column(nullable = false)
-    private int price;
+    private int price; // total price
 
     @Builder
     public Cart(int id, User user, Option option, int quantity, int price) {
