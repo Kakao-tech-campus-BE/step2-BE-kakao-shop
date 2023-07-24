@@ -11,7 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -74,16 +76,22 @@ public class CartRestController {
                 updateDTO -> System.out.println("요청 받은 장바구니 수정 내역 : "+updateDTO.toString())
         );
 
-        // 가짜 저장소의 값을 변경한다.
-        for (CartRequest.UpdateDTO updateDTO : requestDTOs) {
-            for (Cart cart : fakeStore.getCartList()) {
-                if(cart.getId() == updateDTO.getCartId()){
-                    cart.update(updateDTO.getQuantity(), cart.getPrice() * updateDTO.getQuantity());
-                } else {
-                    return globalExceptionHandler.getApiErrorResultResponseEntity(new Exception403("유효하지 않은 요청입니다."));
+        // 기존 장바구니에 없는 요청인지 확인한다
+        List<Integer> cartIds = fakeStore.getCartList().stream().map(x->x.getId()).collect(Collectors.toList());
+        if (requestDTOs.stream().filter(x->!cartIds.contains(x.getCartId())).collect(Collectors.toList()).isEmpty()){
+            // 가짜 저장소의 값을 변경한다.
+            for (CartRequest.UpdateDTO updateDTO : requestDTOs) {
+                for (Cart cart : fakeStore.getCartList()) {
+                    if(cart.getId() == updateDTO.getCartId()){
+                        cart.update(updateDTO.getQuantity(), cart.getPrice() * updateDTO.getQuantity());
+                    }
                 }
             }
         }
+        else {
+            return globalExceptionHandler.getApiErrorResultResponseEntity(new Exception403("유효하지 않은 요청입니다."));
+        }
+
 
         // DTO를 만들어서 응답한다.
         CartResponse.UpdateDTO responseDTO = new CartResponse.UpdateDTO(fakeStore.getCartList());

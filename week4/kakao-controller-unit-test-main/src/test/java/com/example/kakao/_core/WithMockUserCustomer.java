@@ -1,0 +1,12 @@
+package com.example.kakao._core;
+
+import org.springframework.security.test.context.support.WithSecurityContext;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+@Retention(RetentionPolicy.RUNTIME)
+@WithSecurityContext(factory = WithMockUserCustomerSecurityContextFactory.class)
+public @interface WithMockUserCustomer {
+    String username() default "ssar";
+}
