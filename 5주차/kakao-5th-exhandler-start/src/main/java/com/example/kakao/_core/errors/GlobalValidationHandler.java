@@ -17,17 +17,17 @@ public class GlobalValidationHandler {
 
     @Before("postMapping()")
     public void validationAdvice(JoinPoint jp) {
-        Object[] args = jp.getArgs();
-        for (Object arg : args) {
-            if (arg instanceof Errors) {
-                Errors errors = (Errors) arg;
+       Object[] args = jp.getArgs();
+       for(Object arg : args){
+           if(arg instanceof Error){
+               Errors errors = (Errors) arg;
 
-                if (errors.hasErrors()) {
-                    throw new Exception400(
-                            errors.getFieldErrors().get(0).getDefaultMessage()+":"+errors.getFieldErrors().get(0).getField()
-                    );
-                }
-            }
-        }
+               if(errors.hasErrors()){
+                   throw new Exception400(
+                           errors.getFieldErrors().get(0).getDefaultMessage()+":"+errors.getFieldErrors().get(0).getField()
+                   );
+               }
+           }
+       }
     }
 }

@@ -37,40 +37,38 @@ public class UserRestController {
         userService.sameCheckEmail(emailCheckDTO.getEmail());
         return ResponseEntity.ok(ApiUtils.success(null));
     }
-
-    // (기능4) 회원가입
-    @PostMapping("/join")
-    public ResponseEntity<?> join(@RequestBody @Valid UserRequest.JoinDTO requestDTO, Errors errors, HttpServletRequest request) {
-        if (errors.hasErrors()) {
-            List<FieldError> fieldErrors = errors.getFieldErrors();
-            Exception400 ex = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
-            return new ResponseEntity<>(
-                    ex.body(),
-                    ex.status()
-            );
-        }
-        userService.join(requestDTO);
-        return ResponseEntity.ok().body(ApiUtils.success(null));
+    
+// (기능4) 회원가입
+@PostMapping("/join")
+public ResponseEntity<?> join(@RequestBody @Valid UserRequest.JoinDTO requestDTO, Errors errors, HttpServletRequest request) {
+    if (errors.hasErrors()) {
+        List<FieldError> fieldErrors = errors.getFieldErrors();
+        Exception400 ex = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
+        return new ResponseEntity<>(
+                ex.body(),
+                ex.status()
+        );
     }
-
+    userService.join(requestDTO);
+    return ResponseEntity.ok().body(ApiUtils.success(null));
 }
 
-    // (기능5) 로그인
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody @Valid UserRequest.LoginDTO requestDTO, Errors errors, HttpServletRequest request) {
+// (기능5) 로그인
+@PostMapping("/login")
+public ResponseEntity<?> login(@RequestBody @Valid UserRequest.LoginDTO requestDTO, Errors errors, HttpServletRequest request) {
 
-        if (errors.hasErrors()) {
-            List<FieldError> fieldErrors = errors.getFieldErrors();
-            Exception400 ex = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
-            return new ResponseEntity<>(
-                    ex.body(),
-                    ex.status()
-            );
-        }
-        String jwt = userService.login(requestDTO);
-        return ResponseEntity.ok().header(JWTProvider.HEADER, jwt).body(ApiUtils.success(null));
+    if (errors.hasErrors()) {
+        List<FieldError> fieldErrors = errors.getFieldErrors();
+        Exception400 ex = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
+        return new ResponseEntity<>(
+                ex.body(),
+                ex.status()
+        );
     }
+
+    String jwt = userService.login(requestDTO);
+    return ResponseEntity.ok().header(JWTProvider.HEADER, jwt).body(ApiUtils.success(null));
 }
 
-// 로그아웃 사용안함 - 프론트에서 JWT 토큰을 브라우저의 localstorage에서 삭제하면 됨.
+    // 로그아웃 사용안함 - 프론트에서 JWT 토큰을 브라우저의 localstorage에서 삭제하면 됨.
 }
