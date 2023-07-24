@@ -165,7 +165,7 @@ public class UserRestControllerTest {
 
     @Test
     @DisplayName("로그인 테스트 - 성공")
-    public void login_fail_test_invalid_email() throws Exception {
+    public void login_test() throws Exception {
         // given
         UserRequest.LoginDTO loginDTO = new UserRequest.LoginDTO();
         loginDTO.setEmail("ssar@nate.com");
@@ -196,7 +196,7 @@ public class UserRestControllerTest {
 
     @Test
     @DisplayName("로그인 실패 테스트 - 이메일 형식")
-    public void login_test() throws Exception {
+    public void login_test_invalid_email() throws Exception {
         // given
         UserRequest.LoginDTO loginDTO = new UserRequest.LoginDTO();
         loginDTO.setEmail("ssarnate.com");
