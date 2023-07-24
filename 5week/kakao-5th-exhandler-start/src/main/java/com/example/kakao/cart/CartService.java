@@ -15,6 +15,12 @@ import java.util.List;
 public class CartService {
     private final OptionJPARepository optionJPARepository;
     private final CartJPARepository cartJPARepository;
+
+    public CartResponse.FindAllDTOv2 findAllv2(User user) {
+        List<Cart> cartList = cartJPARepository.findByUserIdOrderByOptionIdAsc(user.getId());
+        return new CartResponse.FindAllDTOv2(cartList);
+    }
+
     @Transactional
     public void addCartList(List<CartRequest.SaveDTO> requestDTOs, User sessionUser) {
         // TODO: 1. 동일한 옵션이 들어오면 예외처리
