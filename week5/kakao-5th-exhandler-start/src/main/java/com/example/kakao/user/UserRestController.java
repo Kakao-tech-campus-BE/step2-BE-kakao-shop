@@ -37,7 +37,7 @@ public class UserRestController {
 
     // (기능5) 로그인
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody @Valid UserRequest.LoginDTO requestDTO, Errors errors, HttpServletRequest request) {
+    public ResponseEntity<?> login(@RequestBody @Valid UserRequest.LoginDTO requestDTO, Errors errors) {
 
         String jwt = userService.login(requestDTO);
         return ResponseEntity.ok().header(JWTProvider.HEADER, jwt).body(ApiUtils.success(null));
