@@ -20,6 +20,7 @@ public class   Product {
     @Column(length = 500)
     private String image;
     private int price; // 톡딜가
+    // Product 에 price 가 있다는 것은, Option 없이 Product 만으로도 판매가 가능하다는 의미로 일단 결론지었습니다.
 
     @Builder
     public Product(int id, String productName, String description, String image, int price) {

@@ -45,6 +45,8 @@ public class CartRestController {
      *      }
      *  ]
      */
+    // 수량 추가가 아닌, 해당 값으로 수정. 명시되지 않은 값은 삭제(덮어쓰기)가 아닌 유지.
+
     // (기능8) 주문하기 - (주문화면에서 장바구니 수정하기)
     // /carts/update
     public void update() {
