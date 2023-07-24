@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,12 +41,19 @@ public class CartRestController {
         return ResponseEntity.ok(apiResult);
     }
 
-    // (기능7) 장바구니 조회 - (주문화면) GET
-    // /carts
-    public void findAll() {
-
+    @GetMapping("/carts")
+    public ResponseEntity<?> findAll(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        CartResponse.FindAllDTO responseDTO = cartService.findAll(userDetails.getUser());
+        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(responseDTO);
+        return ResponseEntity.ok(apiResult);
     }
 
+    @GetMapping("/carts/v2")
+    public ResponseEntity<?> findAllv2(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        CartResponse.FindAllDTOv2 responseDTO = cartService.findAllv2(userDetails.getUser());
+
+        return ResponseEntity.ok(ApiUtils.success(responseDTO));
+    }
 
     /**
      * [
