@@ -54,19 +54,23 @@ public class CartRestController {
     }
 
     /**
-     *  [
-     *      {
-     *          "cartId":1,
-     *          "quantity":10
-     *      },
-     *      {
-     *          "cartId":2,
-     *          "quantity":10
-     *      }
-     *  ]
+     * [
+     * {
+     * "cartId":1,
+     * "quantity":10
+     * },
+     * {
+     * "cartId":2,
+     * "quantity":10
+     * }
+     * ]
      */
+
     // (기능8) 주문하기 - (주문화면에서 장바구니 수정하기)
     // /carts/update
-    public void update() {
+    @PostMapping("/carts/update")
+    public ResponseEntity<?> update(@RequestBody @Valid List<CartRequest.UpdateDTO> requestDTOs, Errors errors, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        CartResponse.UpdateDTO responseDTO = cartService.update(requestDTOs, userDetails.getUser());
+        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 }
