@@ -1,11 +1,11 @@
 package com.example.kakao._core.util;
 
-import com.example.kakao.cart.Cart;
-import com.example.kakao.order.Order;
-import com.example.kakao.order.item.Item;
-import com.example.kakao.product.Product;
-import com.example.kakao.product.option.Option;
-import com.example.kakao.user.User;
+import com.example.kakao.domain.cart.Cart;
+import com.example.kakao.domain.order.Order;
+import com.example.kakao.domain.order.item.Item;
+import com.example.kakao.domain.product.Product;
+import com.example.kakao.domain.product.option.Option;
+import com.example.kakao.domain.user.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
