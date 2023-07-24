@@ -20,7 +20,7 @@ public class   Product {
     @Column(length = 500)
     private String image;
     private int price; // 톡딜가
-    // Product 에 price 가 있다는 것은, Option 없이 Product 만으로도 판매가 가능하다는 의미로 일단 결론지었습니다.
+    // 수정: 현재 이 price 는 비즈니스 상 아무런 의미를 갖지 않는 값이다. Product 는 반드시 1개 이상의 Option 을 가져야하고 그렇지않으면 오류로 간주한다.
 
     @Builder
     public Product(int id, String productName, String description, String image, int price) {

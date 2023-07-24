@@ -70,7 +70,7 @@ class ProductJPARepositoryTest {
   }
 
   @Test
-  @DisplayName("옵션 없는 상품 상세 조회")
+  @DisplayName("옵션 없는 상품 상세 조회 : 현재 약속된 명세로는 정합성이 깨진 케이스")
   void findProductWithoutOption() {
     // given
     int id = 16;

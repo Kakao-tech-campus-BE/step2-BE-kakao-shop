@@ -32,8 +32,10 @@ public class ProductService {
       .collect(Collectors.toList());
   }
 
+
+  // 현재는 Option 이 없는 Product 가 존재하면 예외에 해당한다고 봐야함.
   public ProductResponse.FindByIdDTO findById(int id) {
-    // Option 이 없는 Product 도 존재할 수 있고 판매가 가능하다. -> Product 가 price 를 가지고 있기 때문.
+
     Product product = productRepository.findById(id).orElseThrow(
       () -> new BadRequestException("해당 상품이 존재하지 않습니다.")
     );
