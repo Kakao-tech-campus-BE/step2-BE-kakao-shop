@@ -37,14 +37,24 @@ public class CartRestController {
     @PostMapping("/carts/add")
     public ResponseEntity<?> addCartList(@RequestBody @Valid List<CartRequest.SaveDTO> requestDTOs, Errors errors, @AuthenticationPrincipal CustomUserDetails userDetails) {
         cartService.addCartList(requestDTOs, userDetails.getUser());
-        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(null);
-        return ResponseEntity.ok(apiResult);
+
+        return ResponseEntity.ok(ApiUtils.success(null));
     }
 
     // (기능7) 장바구니 조회 - (주문화면) GET
     // /carts
-    public void findAll() {
+    @GetMapping("/carts")
+    public ResponseEntity<?> findAll(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        CartResponse.FindAllDTO responseDTO = cartService.findAll(userDetails.getUser());
+        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(responseDTO);
+        return ResponseEntity.ok(apiResult);
+    }
 
+    @GetMapping("/carts/v2")
+    public ResponseEntity<?> findAllv2(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        CartResponse.FindAllDTOv2 responseDTO = cartService.findAllv2(userDetails.getUser());
+
+        return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
 
 
