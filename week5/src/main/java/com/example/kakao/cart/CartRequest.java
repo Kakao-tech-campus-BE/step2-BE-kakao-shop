@@ -10,6 +10,7 @@ public class CartRequest {
     public static class SaveDTO {
         private int optionId;
         private int quantity;
+        //private int price;
     }
 
     @Getter @Setter @ToString
