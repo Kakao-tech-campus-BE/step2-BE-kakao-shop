@@ -80,3 +80,39 @@ public class CartRestController {
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
 }
+
+/*
+@Transactional
+public CartResponse.UpdateDTO update(List<CartRequest.UpdateDTO> requestDTOs, User user) {
+    List<Cart> cartList = cartJPARepository.findAllByUserId(user.getId());
+    Set<Integer> checkCartId = new HashSet<>();
+
+    for (CartRequest.UpdateDTO updateDTO : requestDTOs) {
+        int cartId = updateDTO.getCartId();
+
+        // cartId가 중복되어 requestDTOs에 두 번 이상 들어오면 예외 처리
+        if (checkCartId.contains(cartId)) {
+            throw new Exception400("잘못된 요청입니다. - 장바구니 아이디 중첩");
+        }
+
+        checkCartId.add(cartId);
+
+        boolean cartExists = false;
+        for (Cart cart : cartList) {
+            if (cart.getId() == cartId) {
+                cart.update(updateDTO.getQuantity(), cart.getOption().getPrice() * updateDTO.getQuantity());
+                cartExists = true;
+                break;
+            }
+        }
+
+        // 유저 장바구니에 없는 cartId가 requestDTOs에 들어오면 예외처리
+        if (!cartExists) {
+            throw new RuntimeException("유저의 장바구니에 존재하지 않는 아이디입니다: " + cartId);
+        }
+    }
+
+    return new CartResponse.UpdateDTO(cartList);
+}
+
+ */
