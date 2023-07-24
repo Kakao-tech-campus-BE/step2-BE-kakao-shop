@@ -1,5 +1,8 @@
 package com.example.kakao.product;
 
+import com.example.kakao._core.errors.exception.Exception404;
+import com.example.kakao.product.option.Option;
+import com.example.kakao.product.option.OptionJPARepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,6 +18,7 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true) // 변경 감지를 하지 않음
 public class ProductService {
     private final ProductJPARepository productJPARepository;
+    private final OptionJPARepository optionJPARepository;
     public List<ProductResponse.FindAllDTO> findAll(int page) {
         // 1. 페이지 객체 만들기
         Pageable pageable = PageRequest.of(page,9);
@@ -31,5 +35,21 @@ public class ProductService {
                 .map(product -> new ProductResponse.FindAllDTO(product))
                 .collect(Collectors.toList());
         return responseDTOs;
+    }
+
+    public ProductResponse.FindByIdDTOv2 findByIdv2(int id) {
+        List<Option> optionListPS = optionJPARepository.findByProductIdJoinProduct(id);
+        if(optionListPS.size() == 0){
+            throw new Exception404("해당 상품을 찾을 수 없습니다 : "+id);
+        }
+        return new ProductResponse.FindByIdDTOv2(optionListPS);
+    }
+
+    public ProductResponse.FindByIdDTO findById(int id) {
+        Product productPS = productJPARepository.findById(id).orElseThrow(
+                () -> new Exception404("해당 상품을 찾을 수 없습니다 : "+id)
+        );
+        List<Option> optionListPS = optionJPARepository.findByProductId(productPS.getId());
+        return new ProductResponse.FindByIdDTO(productPS, optionListPS);
     }
 }
