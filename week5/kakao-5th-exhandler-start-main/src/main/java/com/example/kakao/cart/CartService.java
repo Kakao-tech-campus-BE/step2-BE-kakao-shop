@@ -24,7 +24,6 @@ public class CartService {
 
             Set<Integer> checkOptionId = new HashSet<>();
 
-            // 3. [2번이 아니라면] 유저의 장바구니에 담기
             for (CartRequest.SaveDTO requestDTO : requestDTOs) {
                 int optionId = requestDTO.getOptionId();
                 int quantity = requestDTO.getQuantity();
