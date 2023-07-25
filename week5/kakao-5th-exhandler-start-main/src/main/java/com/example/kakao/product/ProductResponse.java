@@ -29,13 +29,13 @@ public class ProductResponse {
     @Getter
     @Builder
     public static class FindByIdDTO {
-        int id;
-        String productName;
-        String description;
-        String image;
-        int price;
-        int starCount; // 0~5
-        List<OptionDTO> options;
+        private int id;
+        private String productName;
+        private String description;
+        private String image;
+        private int price;
+        private int starCount; // 0~5
+        private List<OptionDTO> options;
 
         public FindByIdDTO(Product product, List<Option> optionsList) {
             this.id = product.getId();
