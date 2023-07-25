@@ -21,6 +21,7 @@ public class CartService {
     private final OptionJPARepository optionJPARepository;
     private final CartJPARepository cartJPARepository;
 
+    @Transactional
     public void addCartList(List<CartRequest.SaveDTO> requestDTOs, User sessionUser) {
         List<Integer> numList = requestDTOs.stream()
                 .map(x->x.getOptionId())
@@ -37,14 +38,25 @@ public class CartService {
             int quantity = requestDTO.getQuantity();
             Option option = optionJPARepository.findById(optionId)
                     .orElseThrow(() -> new Exception404("해당 옵션을 찾을 수 없습니다. : "+optionId));
-            int price = option.getPrice() * quantity;
-            Cart cart = Cart.builder()
-                    .user(sessionUser)
-                    .option(option)
-                    .quantity(quantity)
-                    .price(price)
-                    .build();
-            cartJPARepository.save(cart);
+
+            // 장바구니에 담겼는지 확인하는 로직
+            Cart prevCart = cartJPARepository.findById(optionId).orElse(null);
+            if (prevCart==null) {
+                int price = option.getPrice() * quantity;
+                Cart cart = Cart.builder()
+                        .user(sessionUser)
+                        .option(option)
+                        .quantity(quantity)
+                        .price(price)
+                        .build();
+                cartJPARepository.save(cart);
+            } else {
+                int updatedQuantity = quantity+ prevCart.getQuantity();
+                int price = option.getPrice() * updatedQuantity;
+
+                prevCart.update(updatedQuantity, price);
+                cartJPARepository.save(prevCart);
+            }
         });
     }
 }
