@@ -39,16 +39,7 @@ public class ProductService {
         return responseDTOs;
     }
 
-    public ProductResponse.FindByIdDTO findById(int id) {
-        Product product = productJPARepository.findById(id).orElseThrow(
-                () -> new Exception404("해당 상품을 찾을 수 없습니다. : " + id)
-        );
-
-        List<Option> optionList = optionJPARepository.findByProductId(product.getId());
-        return new ProductResponse.FindByIdDTO(product, optionList);
-    }
-
-    public ProductResponse.FindByIdDTOv2 findByIdv2(int id) {
+    public ProductResponse.FindByIdDTOv2 findById(int id) {
         List<Option> optionList = optionJPARepository.findByProductIdJoinProduct(id);
         if (optionList.isEmpty()) {
             throw new Exception404("해당 상품을 찾을 수 없습니다. : " + id);
