@@ -59,4 +59,9 @@ public class CartService {
             }
         });
     }
+
+    public CartResponse.FindAllDTO findAll(User user) {
+        List<Cart> carts = cartJPARepository.findByUserIdOrderByOptionIdAsc(user.getId());
+        return new CartResponse.FindAllDTO(carts);
+    }
 }

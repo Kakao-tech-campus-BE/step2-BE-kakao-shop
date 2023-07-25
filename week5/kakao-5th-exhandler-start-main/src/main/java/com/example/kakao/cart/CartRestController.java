@@ -43,8 +43,11 @@ public class CartRestController {
 
     // (기능7) 장바구니 조회 - (주문화면) GET
     // /carts
-    public void findAll() {
-
+    @GetMapping("/carts")
+    public ResponseEntity<?> findAll(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        CartResponse.FindAllDTO responseDTO = cartService.findAll(userDetails.getUser());
+        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(responseDTO);
+        return ResponseEntity.ok(apiResult);
     }
 
 
