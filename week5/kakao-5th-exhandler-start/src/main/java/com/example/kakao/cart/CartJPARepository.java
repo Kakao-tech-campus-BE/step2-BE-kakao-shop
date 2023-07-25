@@ -18,6 +18,6 @@ public interface CartJPARepository extends JpaRepository<Cart, Integer> {
     @Query("delete from Cart c where c.user.id = :userId")
     void deleteByUserId(int userId);
 
-    @Query("select c from Cart c where c.option.id = :optionId and c.user.id = :userId")
-    Optional<Cart> findByOptionIdAndUserId(@Param("optionId") int optionId, @Param("userId") int userId);
+    @Query("select c from Cart c join fetch c.option o where (c.option.id in :optionIds) and c.user.id = :userId")
+    List<Cart> findByOptionIdInAndUserId(@Param("optionIds") List<Integer> optionIds, @Param("userId") int userId);
 }

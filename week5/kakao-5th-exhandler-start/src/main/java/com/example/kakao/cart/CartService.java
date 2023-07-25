@@ -1,5 +1,6 @@
 package com.example.kakao.cart;
 
+import com.example.kakao._core.errors.exception.Exception400;
 import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao.product.option.Option;
 import com.example.kakao.product.option.OptionJPARepository;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -21,18 +24,35 @@ public class CartService {
 
     @Transactional
     public void addCartList(List<CartRequest.SaveDTO> requestDTOs, User sessionUser) {
-        // TODO: 1. 동일한 옵션이 들어오면 예외처리
+        // 동일한 옵션이 들어오면 예외처리
         //  [ { optionId:1, quantity:5 }, { optionId:1, quantity:10 } ]
-        requestDT
+        List<Integer> requestOptionIds = requestDTOs.stream()
+                .map(CartRequest.SaveDTO::getOptionId)
+                .distinct()
+                .collect(Collectors.toList());
 
-        // TODO: 2. cartJPARepository.findByOptionIdAndUserId() 조회 -> 존재하면 장바구니에 수량을 추가하는 업데이트를 해야함. (더티체킹하기)
+        if (requestDTOs.size() != requestOptionIds.size()) {
+            throw new Exception400("동일한 옵션이 여러개 들어올 수 없습니다.");
+        }
+
+        // 2. 이미 존재하면 장바구니에 수량을 추가하는 업데이트(더티체킹)
         //  { cartId:1, optionId:1, quantity:3, userId: 1 } -> [ { optionId:1, quantity:5 } ]
-        //  save가 아닌 update 시키기
 
-        // 3. [2번이 아니라면] 유저의 장바구니에 담기
-        for (CartRequest.SaveDTO requestDTO : requestDTOs) {
-            int optionId = requestDTO.getOptionId();
-            int quantity = requestDTO.getQuantity();
+        List<Cart> needToUpdateCarts = cartJPARepository.findByOptionIdInAndUserId(requestOptionIds, sessionUser.getId());
+        Map<Integer, Integer> requestMap = requestDTOs.stream()
+                        .collect(Collectors.toMap(
+                                CartRequest.SaveDTO::getOptionId,
+                                CartRequest.SaveDTO::getQuantity
+                        ));
+        needToUpdateCarts.forEach(cart -> {
+            int quantity = cart.getQuantity() + requestMap.get(cart.getOption().getId());
+            cart.update(quantity, cart.getOption().getPrice() * quantity);
+            requestMap.remove(cart.getOption().getId());
+        });
+
+        // 3. [2번이 아니라면] 유저의 장바구니에 담기(Map에서 제거한 것만 save)
+        for (int optionId : requestMap.keySet()) {
+            int quantity = requestMap.get(optionId);
             Option optionPS = optionJPARepository.findById(optionId)
                     .orElseThrow(() -> new Exception404("해당 옵션을 찾을 수 없습니다 : " + optionId));
             int price = optionPS.getPrice() * quantity;
