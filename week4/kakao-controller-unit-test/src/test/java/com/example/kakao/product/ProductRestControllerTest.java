@@ -4,7 +4,9 @@ import com.example.kakao._core.errors.GlobalExceptionHandler;
 import com.example.kakao._core.security.SecurityConfig;
 import com.example.kakao._core.utils.FakeStore;
 import com.example.kakao.log.ErrorLogJPARepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -51,7 +53,7 @@ class ProductRestControllerTest {
     }
 
     @Test
-    void 상품_자세히보기() throws Exception {
+    void 상품_자세히보기_성공_테스트() throws Exception {
         mockMvc.perform(
                         MockMvcRequestBuilders.get("/products/1")
                                 .accept(MediaType.APPLICATION_JSON)
@@ -71,5 +73,19 @@ class ProductRestControllerTest {
                 .andExpect(jsonPath("$.response.options[0].optionName").hasJsonPath())
                 .andExpect(jsonPath("$.response.options[0].price").hasJsonPath())
                 .andExpect(jsonPath("$.error").isEmpty());
+    }
+
+    @Test
+    void 상품_자세히보기_실패_테스트() throws Exception {
+        mockMvc.perform(
+                        MockMvcRequestBuilders.get("/products/100")
+                                .accept(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(jsonPath("$.success").isBoolean())
+                .andExpect(jsonPath("$.response").isEmpty())
+                .andExpect(jsonPath("$.error").hasJsonPath())
+                .andExpect(jsonPath("$.error.message").value("해당 상품을 찾을 수 없습니다:100"))
+                .andExpect(jsonPath("$.error.status").value(404));
     }
 }
