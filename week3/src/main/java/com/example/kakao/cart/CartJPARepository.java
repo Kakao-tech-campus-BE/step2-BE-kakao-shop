@@ -8,6 +8,8 @@ import java.util.List;
 
 
 public interface CartJPARepository extends JpaRepository<Cart, Integer> {
+
+
 	List<Cart> findByUserId(@Param("userId") int userId);
 
 	// 한 방 쿼리를 사용한 방법
