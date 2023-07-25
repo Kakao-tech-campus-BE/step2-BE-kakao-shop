@@ -1,5 +1,6 @@
 package com.example.kakao.cart;
 
+import com.example.kakao._core.errors.exception.Exception400;
 import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao.product.option.Option;
 import com.example.kakao.product.option.OptionJPARepository;
@@ -8,7 +9,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -18,6 +22,16 @@ public class CartService {
     private final CartJPARepository cartJPARepository;
 
     public void addCartList(List<CartRequest.SaveDTO> requestDTOs, User sessionUser) {
+        List<Integer> numList = requestDTOs.stream()
+                .map(x->x.getOptionId())
+                .collect(Collectors.toList());
+        // Set 으로 변환
+        Set<Integer> numSet = new HashSet<>(numList);
+
+        if(numSet.size()!= numList.size()){
+            throw new Exception400("잘못된 요청입니다.");
+        }
+
         requestDTOs.forEach(requestDTO -> {
             int optionId = requestDTO.getOptionId();
             int quantity = requestDTO.getQuantity();
