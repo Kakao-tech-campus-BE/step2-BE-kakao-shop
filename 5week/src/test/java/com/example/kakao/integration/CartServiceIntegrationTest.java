@@ -1,7 +1,11 @@
 package com.example.kakao.integration;
 
-import com.example.kakao.domain.cart.*;
-import com.example.kakao.domain.product.Product;
+import com.example.kakao.domain.cart.Cart;
+import com.example.kakao.domain.cart.CartJPARepository;
+import com.example.kakao.domain.cart.CartService;
+import com.example.kakao.domain.cart.dto.request.SaveRequestDTO;
+import com.example.kakao.domain.cart.dto.request.UpdateRequestDTO;
+import com.example.kakao.domain.cart.dto.response.FindAllResponseDTO;
 import com.example.kakao.domain.product.option.OptionJPARepository;
 import com.example.kakao.domain.user.User;
 import com.example.kakao.domain.user.UserJPARepository;
@@ -15,7 +19,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -52,10 +55,10 @@ class CartServiceIntegrationTest {
   void addCartList() {
     // given
     User user = userRepository.findByEmail("ssarmango@nate.com").get();
-    List<CartRequest.SaveDTO> requestDTOs = List.of(
-        CartRequest.SaveDTO.builder().optionId(1).quantity(2).build(),
-        CartRequest.SaveDTO.builder().optionId(2).quantity(2).build(),
-        CartRequest.SaveDTO.builder().optionId(3).quantity(2).build()
+    List<SaveRequestDTO> requestDTOs = List.of(
+        SaveRequestDTO.builder().optionId(1).quantity(2).build(),
+        SaveRequestDTO.builder().optionId(2).quantity(2).build(),
+        SaveRequestDTO.builder().optionId(3).quantity(2).build()
     );
 
     // when
@@ -77,15 +80,15 @@ class CartServiceIntegrationTest {
   void addCartListWithUpdate() {
     // given
     User user = userRepository.findByEmail("ssarmango@nate.com").get();
-    List<CartRequest.SaveDTO> requestDTOs = List.of(
-      CartRequest.SaveDTO.builder().optionId(1).quantity(3).build(),
-      CartRequest.SaveDTO.builder().optionId(2).quantity(2).build(),
-      CartRequest.SaveDTO.builder().optionId(3).quantity(2).build()
+    List<SaveRequestDTO> requestDTOs = List.of(
+      SaveRequestDTO.builder().optionId(1).quantity(3).build(),
+      SaveRequestDTO.builder().optionId(2).quantity(2).build(),
+      SaveRequestDTO.builder().optionId(3).quantity(2).build()
     );
-    List<CartRequest.SaveDTO> requestDTOs2 = List.of(
-      CartRequest.SaveDTO.builder().optionId(2).quantity(2).build(),
-      CartRequest.SaveDTO.builder().optionId(3).quantity(2).build(),
-      CartRequest.SaveDTO.builder().optionId(4).quantity(4).build()
+    List<SaveRequestDTO> requestDTOs2 = List.of(
+      SaveRequestDTO.builder().optionId(2).quantity(2).build(),
+      SaveRequestDTO.builder().optionId(3).quantity(2).build(),
+      SaveRequestDTO.builder().optionId(4).quantity(4).build()
     );
 
     // when
@@ -113,20 +116,20 @@ class CartServiceIntegrationTest {
   void findCartItems() throws JsonProcessingException {
     // given
     User user = userRepository.findByEmail("ssarmango@nate.com").get();
-    List<CartRequest.SaveDTO> requestDTOs = List.of(
-      CartRequest.SaveDTO.builder().optionId(1).quantity(3).build(),
-      CartRequest.SaveDTO.builder().optionId(2).quantity(2).build(),
-      CartRequest.SaveDTO.builder().optionId(6).quantity(2).build(),
-      CartRequest.SaveDTO.builder().optionId(7).quantity(2).build(),
-      CartRequest.SaveDTO.builder().optionId(9).quantity(2).build(),
-      CartRequest.SaveDTO.builder().optionId(10).quantity(2).build()
+    List<SaveRequestDTO> requestDTOs = List.of(
+      SaveRequestDTO.builder().optionId(1).quantity(3).build(),
+      SaveRequestDTO.builder().optionId(2).quantity(2).build(),
+      SaveRequestDTO.builder().optionId(6).quantity(2).build(),
+      SaveRequestDTO.builder().optionId(7).quantity(2).build(),
+      SaveRequestDTO.builder().optionId(9).quantity(2).build(),
+      SaveRequestDTO.builder().optionId(10).quantity(2).build()
     );
 
 
     // when
     cartService.addCartList(requestDTOs, user);
     List<Cart> cartList = cartRepository.findAllByUserId(user.getId());
-    CartResponse.FindAllDTO responseDTO = new CartResponse.FindAllDTO(cartList);
+    FindAllResponseDTO responseDTO = new FindAllResponseDTO(cartList);
 
 
     // then
@@ -139,18 +142,18 @@ class CartServiceIntegrationTest {
   void updateCart() {
     // given
     User user = userRepository.findByEmail("ssarmango@nate.com").get();
-    List<CartRequest.SaveDTO> saveDTOs = List.of(
-      CartRequest.SaveDTO.builder().optionId(1).quantity(3).build(),
-      CartRequest.SaveDTO.builder().optionId(2).quantity(2).build(),
-      CartRequest.SaveDTO.builder().optionId(6).quantity(2).build(), // 삭제될 예정
-      CartRequest.SaveDTO.builder().optionId(7).quantity(2).build(),
-      CartRequest.SaveDTO.builder().optionId(9).quantity(2).build(),
-      CartRequest.SaveDTO.builder().optionId(10).quantity(2).build()
+    List<SaveRequestDTO> saveDTOs = List.of(
+      SaveRequestDTO.builder().optionId(1).quantity(3).build(),
+      SaveRequestDTO.builder().optionId(2).quantity(2).build(),
+      SaveRequestDTO.builder().optionId(6).quantity(2).build(), // 삭제될 예정
+      SaveRequestDTO.builder().optionId(7).quantity(2).build(),
+      SaveRequestDTO.builder().optionId(9).quantity(2).build(),
+      SaveRequestDTO.builder().optionId(10).quantity(2).build()
     );
-    List<CartRequest.UpdateDTO> updateDTOs = List.of(
-      CartRequest.UpdateDTO.builder().cartId(1).quantity(4).build(),
-      CartRequest.UpdateDTO.builder().cartId(2).quantity(4).build(),
-      CartRequest.UpdateDTO.builder().cartId(3).quantity(0).build() // 삭제
+    List<UpdateRequestDTO> updateDTOs = List.of(
+      UpdateRequestDTO.builder().cartId(1).quantity(4).build(),
+      UpdateRequestDTO.builder().cartId(2).quantity(4).build(),
+      UpdateRequestDTO.builder().cartId(3).quantity(0).build() // 삭제
     );
 
     // when

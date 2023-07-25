@@ -2,6 +2,10 @@ package com.example.kakao.domain.cart;
 
 import com.example.kakao._core.errors.exception.BadRequestException;
 import com.example.kakao._core.errors.exception.NotFoundException;
+import com.example.kakao.domain.cart.dto.request.SaveRequestDTO;
+import com.example.kakao.domain.cart.dto.request.UpdateRequestDTO;
+import com.example.kakao.domain.cart.dto.response.FindAllResponseDTO;
+import com.example.kakao.domain.cart.dto.response.UpdateResponseDTO;
 import com.example.kakao.domain.product.option.Option;
 import com.example.kakao.domain.product.option.OptionJPARepository;
 import com.example.kakao.domain.user.User;
@@ -20,10 +24,10 @@ public class CartService {
   private final OptionJPARepository optionRepository;
 
   @Transactional
-  public void addCartList(List<CartRequest.SaveDTO> requestDTOs, User sessionUser) {
+  public void addCartList(List<SaveRequestDTO> requestDTOs, User sessionUser) {
     validateUniqueOptionsInSaveDTO(requestDTOs); // Dto 에 동일한 옵션이 2개 이상 존재하면 예외처리
 
-    for (CartRequest.SaveDTO requestDTO : requestDTOs) {
+    for (SaveRequestDTO requestDTO : requestDTOs) {
       int optionId = requestDTO.getOptionId();
       int quantity = requestDTO.getQuantity();
       Option option = findValidOption(optionId);
@@ -39,17 +43,17 @@ public class CartService {
   }
 
 
-  public CartResponse.FindAllDTO findAll(User user) {
+  public FindAllResponseDTO findAll(User user) {
     List<Cart> cartList = cartRepository.findAllByUserIdOrderByOptionIdAsc(user.getId());
     // Cart에 담긴 옵션이 3개이면, 2개는 바나나 상품, 1개는 딸기 상품이면 Product는 2개인 것이다. -> 투박하지만 짧고 효과적인 설명.
-    return new CartResponse.FindAllDTO(cartList);
+    return new FindAllResponseDTO(cartList);
   }
 
 
 
   // TODO : 너무 복잡함.
   @Transactional
-  public CartResponse.UpdateDTO update(List<CartRequest.UpdateDTO> requestDTOs, User user) {
+  public UpdateResponseDTO update(List<UpdateRequestDTO> requestDTOs, User user) {
     List<Cart> cartList = cartRepository.findAllByUserId(user.getId());
 
     if(cartList.isEmpty()) throw new BadRequestException("장바구니에 담긴 상품이 없습니다.");
@@ -59,7 +63,7 @@ public class CartService {
     validateExistingCartItem(requestDTOs, cartList);
 
     for (Cart cart : cartList) {
-      for (CartRequest.UpdateDTO updateDTO : requestDTOs) {
+      for (UpdateRequestDTO updateDTO : requestDTOs) {
         if (cart.getId() == updateDTO.getCartId()) {
           if(updateDTO.getQuantity() == 0){
             cartRepository.delete(cart);
@@ -71,7 +75,7 @@ public class CartService {
       }
     }
 
-    return new CartResponse.UpdateDTO(cartList);
+    return new UpdateResponseDTO(cartList);
   } // 더티체킹
 
 
@@ -95,8 +99,8 @@ public class CartService {
     cart.update(cart.getQuantity() + quantity, cart.getPrice() + option.getPrice() * quantity);
   }
 
-  private static void validateExistingCartItem(List<CartRequest.UpdateDTO> requestDTOs, List<Cart> cartList) {
-    for (CartRequest.UpdateDTO updateDTO : requestDTOs) {
+  private static void validateExistingCartItem(List<UpdateRequestDTO> requestDTOs, List<Cart> cartList) {
+    for (UpdateRequestDTO updateDTO : requestDTOs) {
       if(cartList.stream().noneMatch(cart -> cart.getId() == updateDTO.getCartId())){
         throw new BadRequestException("유저의 장바구니에 없는 cartId가 들어왔습니다 : "+updateDTO.getCartId());
       }
@@ -107,15 +111,15 @@ public class CartService {
       .orElseThrow(() -> new NotFoundException("해당 옵션을 찾을 수 없습니다 : " + optionId));
   }
 
-  private void validateUniqueOptionsInSaveDTO(List<CartRequest.SaveDTO> requestDTOs) {
-    if (requestDTOs.size() != requestDTOs.stream().mapToInt(CartRequest.SaveDTO::getOptionId).distinct().count() ) {
+  private void validateUniqueOptionsInSaveDTO(List<SaveRequestDTO> requestDTOs) {
+    if (requestDTOs.size() != requestDTOs.stream().mapToInt(SaveRequestDTO::getOptionId).distinct().count() ) {
       throw new BadRequestException("요청 명세에 동일한 옵션이 2개 이상 존재합니다.");
     }
   }
 
   // 우발적 중복
-  private static void validateUniqueCartsInUpdateDTO(List<CartRequest.UpdateDTO> requestDTOs) {
-    if(requestDTOs.size() != requestDTOs.stream().mapToInt(CartRequest.UpdateDTO::getCartId).distinct().count()){
+  private static void validateUniqueCartsInUpdateDTO(List<UpdateRequestDTO> requestDTOs) {
+    if(requestDTOs.size() != requestDTOs.stream().mapToInt(UpdateRequestDTO::getCartId).distinct().count()){
       throw new BadRequestException("요청 명세에 동일한 장바구니 아이디가 2개 이상 존재합니다.");
     }
   }
