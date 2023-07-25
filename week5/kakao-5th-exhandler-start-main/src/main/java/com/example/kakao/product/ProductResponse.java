@@ -37,42 +37,7 @@ public class ProductResponse {
         private List<OptionDTO> options;
 
         @Builder
-        public FindByIdDTO(Product product, List<Option> optionsList) {
-            this.id = product.getId();
-            this.productName = product.getProductName();
-            this.description = product.getDescription();
-            this.image = product.getImage();
-            this.price = product.getPrice();
-            this.starCount = 5;
-            this.options = optionsList.stream().map(OptionDTO::new).collect(Collectors.toList());
-        }
-
-        @Getter
-        public class OptionDTO {
-            int id;
-            String optionName;
-            int price;
-
-            public OptionDTO(Option option) {
-                this.id = option.getId();
-                this.optionName = option.getOptionName();
-                this.price = option.getPrice();
-            }
-        }
-    }
-
-    @Getter
-    public static class FindByIdDTOv2 {
-        private int id;
-        private String productName;
-        private String description;
-        private String image;
-        private int price;
-        private int starCount; // 0~5
-        private List<OptionDTO> options;
-
-        @Builder
-        public FindByIdDTOv2(List<Option> optionsList) {
+        public FindByIdDTO(List<Option> optionsList) {
             this.id = optionsList.get(0).getProduct().getId();
             this.productName = optionsList.get(0).getProduct().getProductName();
             this.description = optionsList.get(0).getProduct().getDescription();
