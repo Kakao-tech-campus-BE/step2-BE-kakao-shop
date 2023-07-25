@@ -60,19 +60,61 @@ public class CartService {
 //        }
     }
 
+    // productDTO 중복 제거
     public CartResponse.FindAllDTO findAll(User user) {
         List<Cart> cartList = cartJPARepository.findByUserIdOrderByOptionIdAsc(user.getId());
         // Cart에 담긴 옵션이 3개이면, 2개는 바나나 상품, 1개는 딸기 상품이면 Product는 2개인 것이다.
         return new CartResponse.FindAllDTO(cartList);
     }
 
+    // productDTo 중복 제거 X
     public CartResponse.FindAllDTOv2 findAllv2(User user) {
         List<Cart> cartList = cartJPARepository.findByUserIdOrderByOptionIdAsc(user.getId());
         return new CartResponse.FindAllDTOv2(cartList);
     }
 
+    // c join fetch option
     @Transactional
     public CartResponse.UpdateDTO update(List<CartRequest.UpdateDTO> requestDTOs, User user) {
+        List<Cart> cartList = cartJPARepository.mFindAllByUserId(user.getId());
+
+        // 1. 유저 장바구니에 아무것도 없으면 예외처리
+        if(cartList.isEmpty()) {
+            throw new Exception400("장바구니가 비어있습니다.");
+        }
+
+        Set<Integer> checkCartId = new HashSet<>();
+
+        for(CartRequest.UpdateDTO updateDTO : requestDTOs) {
+            // 2. cartId:1, cartId:1 이렇게 requestDTOs에 동일한 장바구니 아이디가 두번 들어오면 예외처리
+            int cartId = updateDTO.getCartId();
+
+            if (!checkCartId.add(cartId)) {
+                throw new Exception400("동일한 상품이 중복으로 담겨있습니다 : " + cartId);
+            }
+
+            // 3. 유저 장바구니에 없는 cartId가 들어오면 예외처리
+            boolean cartExist = false;
+
+            for(Cart cart : cartList) {
+                if(cart.getId() == cartId) {
+                    cart.update(updateDTO.getQuantity(), cart.getOption().getPrice() * updateDTO.getQuantity());
+                    cartExist = true;
+                    break;
+                }
+            }
+
+            if(!cartExist) {
+                throw new Exception400("해당 상품은 장바구니에 존재하지 않습니다 : " + cartId);
+            }
+        }
+
+        return new CartResponse.UpdateDTO(cartList);
+    }
+
+    // join fetch X
+    @Transactional
+    public CartResponse.UpdateDTO updateV2(List<CartRequest.UpdateDTO> requestDTOs, User user) {
         List<Cart> cartList = cartJPARepository.findAllByUserId(user.getId());
 
         // 1. 유저 장바구니에 아무것도 없으면 예외처리
@@ -107,5 +149,5 @@ public class CartService {
         }
 
         return new CartResponse.UpdateDTO(cartList);
-    } // 더티체킹
+    }
 }

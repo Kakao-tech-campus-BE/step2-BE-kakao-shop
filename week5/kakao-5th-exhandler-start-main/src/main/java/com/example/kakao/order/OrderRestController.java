@@ -24,7 +24,14 @@ public class OrderRestController {
     // /orders/save
     @PostMapping("/orders/save")
     public ResponseEntity<?> save(@AuthenticationPrincipal CustomUserDetails userDetails) {
-        OrderResponse.FindByIdDTO responseDTO = orderService.save(userDetails.getUser());
+        OrderResponse.FindByIdDTO responseDTO = orderService.mSave(userDetails.getUser());
+
+        return ResponseEntity.ok(ApiUtils.success(responseDTO));
+    }
+
+    @PostMapping("/orders/save/v2")
+    public ResponseEntity<?> saveV2(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        OrderResponse.FindByIdDTO responseDTO = orderService.saveV2(userDetails.getUser());
 
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
@@ -34,6 +41,13 @@ public class OrderRestController {
     @GetMapping("/orders/{id}")
     public ResponseEntity<?> findById(@PathVariable int id, @AuthenticationPrincipal CustomUserDetails userDetails) {
         OrderResponse.FindByIdDTO responseDTO = orderService.findById(id, userDetails.getUser());
+
+        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
+    }
+
+    @GetMapping("/orders/{id}/v2")
+    public ResponseEntity<?> findByIdV2(@PathVariable int id, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        OrderResponse.FindByIdDTO responseDTO = orderService.findByIdV2(id, userDetails.getUser());
 
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }

@@ -17,10 +17,17 @@ public interface CartJPARepository extends JpaRepository<Cart, Integer> {
     @Query("select c from Cart c where c.user.id = :userId")
     List<Cart> findAllByUserId(int userId);
 
+    @Query("select c from Cart c join fetch c.option o where c.user.id = :userId")
+    List<Cart> mFindAllByUserId(int userId);
+
     @Query("select c from Cart c join fetch c.option o join fetch o.product p where c.user.id = :userId order by c.option.id asc")
     List<Cart> findByUserIdOrderByOptionIdAsc(int userId);
 
     void deleteByUserId(@Param("userId") int userId);
+
+    @Modifying(clearAutomatically = false)
+    @Query("delete from Cart c where c.user.id = :userId")
+    void mDeleteByUserId(@Param("userId") int userId);
 
     @Query("select c from Cart c where c.option.id = :optionId and c.user.id = :userId")
     Optional<Cart> findByOptionIdAndUserId(@Param("optionId") int optionId, @Param("userId") int userId);

@@ -33,7 +33,7 @@ public class CartRestController {
      * ]
      */
     // (기능6) 장바구니 담기 POST
-// /carts/add
+    // /carts/add
     @PostMapping("/carts/add")
     public ResponseEntity<?> addCartList(@RequestBody @Valid List<CartRequest.SaveDTO> requestDTOs, Errors errors, @AuthenticationPrincipal CustomUserDetails userDetails) {
         cartService.addCartList(requestDTOs, userDetails.getUser());
@@ -76,6 +76,13 @@ public class CartRestController {
     @PostMapping("/carts/update")
     public ResponseEntity<?> update(@RequestBody @Valid List<CartRequest.UpdateDTO> requestDTOs, Errors errors, @AuthenticationPrincipal CustomUserDetails userDetails) {
         CartResponse.UpdateDTO responseDTO = cartService.update(requestDTOs,userDetails.getUser());
+
+        return ResponseEntity.ok(ApiUtils.success(responseDTO));
+    }
+
+    @PostMapping("/carts/update/v2")
+    public ResponseEntity<?> updateV2(@RequestBody @Valid List<CartRequest.UpdateDTO> requestDTOs, Errors errors, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        CartResponse.UpdateDTO responseDTO = cartService.updateV2(requestDTOs,userDetails.getUser());
 
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
