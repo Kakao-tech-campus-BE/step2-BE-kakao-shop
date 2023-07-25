@@ -22,8 +22,12 @@ public interface CartJPARepository extends JpaRepository<Cart, Integer> {
 
 //    @Query("select c from Cart c join fetch c.option.o join fetch o.product p where c.user.id = :userId order by c.option.id asc")
 //    List<Cart> findByUserIdOrderByOptionIdAsc(int userId);
-//    join 해서 땡길 수 있는 것은 다 땡겨버린다!
 
+    @Query("SELECT DISTINCT C FROM Cart C JOIN FETCH C.option WHERE C.user.id = :userId")
+    public List<Cart> findAllWithOptionsUsingFetchJoinByUserId(@Param("userId") int userId);
+
+    @Query("SELECT DISTINCT C FROM Cart C JOIN fETCH C.option WHERE C.id = :cartId")
+    public Optional<Cart> findCartWithOptionUsingFetchJoinById(@Param("cartId") Integer cartId);
 
     void deleteByUserId(int userId);
 

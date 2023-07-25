@@ -1,10 +1,14 @@
 package com.example.kakao.order.item;
 
+import com.example.kakao.cart.Cart;
 import com.example.kakao.product.option.Option;
 import com.example.kakao.order.Order;
 import lombok.*;
+import org.aspectj.weaver.ast.Or;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -21,7 +25,7 @@ public class Item {
 
     @OneToOne(fetch = FetchType.LAZY)
     private Option option;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Order order;
 
     @Column(nullable = false)
@@ -38,4 +42,23 @@ public class Item {
         this.quantity = quantity;
         this.price = price;
     }
+
+    private static Item createItem(Cart cart, Order order){
+        return Item.builder()
+                .order(order)
+                .option(cart.getOption())
+                .quantity(cart.getQuantity())
+                .price(cart.getOption().getPrice() * cart.getQuantity())
+                .build();
+    }
+    public static List<Item> createItems(List<Cart> carts, Order order){
+        List<Item> items = new ArrayList<>();
+        for(Cart cart : carts){
+            Item item = createItem(cart, order);
+            items.add(item);
+        }
+        return items;
+    }
+
+
 }

@@ -2,6 +2,7 @@ package com.example.kakao.order;
 
 import com.example.kakao.user.User;
 import lombok.*;
+import org.aspectj.weaver.ast.Or;
 
 import javax.persistence.*;
 
@@ -24,5 +25,11 @@ public class Order {
     public Order(int id, User user) {
         this.id = id;
         this.user = user;
+    }
+
+    public static Order createOrder(User user){
+        return Order.builder()
+                .user(user)
+                .build();
     }
 }
