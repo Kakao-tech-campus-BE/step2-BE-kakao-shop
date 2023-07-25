@@ -47,4 +47,9 @@ public class ProductService {
         List<Option> optionList = optionJPARepository.findByProductId(product.getId());
         return new ProductResponse.FindByIdDTO(product, optionList);
     }
+
+    public ProductResponse.FindByIdDTOv2 findByIdv2(int id) {
+        List<Option> optionList = optionJPARepository.findByProductId(id);
+        return new ProductResponse.FindByIdDTOv2(optionList);
+    }
 }
