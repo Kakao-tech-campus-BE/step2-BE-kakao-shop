@@ -48,7 +48,6 @@ public class ProductResponse {
         }
 
         @Getter
-        @Builder
         public class OptionDTO {
             int id;
             String optionName;
@@ -84,7 +83,6 @@ public class ProductResponse {
         }
 
         @Getter
-        @Builder
         public class OptionDTO {
             int id;
             String optionName;
