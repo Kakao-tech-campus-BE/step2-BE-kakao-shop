@@ -15,7 +15,11 @@ public class OrderItemEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderItemId;
-    private Long orderId;
+
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private OrderEntity orderEntity;
+    private Long optionId;
     private Long productId;
     @Column(length = 30, nullable = false)
     private String optionName;
@@ -25,9 +29,10 @@ public class OrderItemEntity {
     private int quantity;
 
     @Builder
-    public OrderItemEntity(Long orderItemId, Long orderId, Long productId, String optionName, String productName, int price, int quantity) {
+    public OrderItemEntity(Long orderItemId, OrderEntity orderEntity, Long optionId, Long productId, String optionName, String productName, int price, int quantity) {
         this.orderItemId = orderItemId;
-        this.orderId = orderId;
+        this.orderEntity = orderEntity;
+        this.optionId = optionId;
         this.productId = productId;
         this.optionName = optionName;
         this.productName = productName;

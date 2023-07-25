@@ -24,10 +24,11 @@ public class OrderEntity {
     private int totalPrice;
 
     @Builder
-    public OrderEntity(Long orderId, User user, Long orderDate, boolean isCancel) {
+    public OrderEntity(Long orderId, User user, Long orderDate, boolean isCancel, int totalPrice) {
         this.orderId = orderId;
         this.user = user;
         this.orderDate = orderDate;
         this.isCancel = isCancel;
+        this.totalPrice = totalPrice;
     }
 }
