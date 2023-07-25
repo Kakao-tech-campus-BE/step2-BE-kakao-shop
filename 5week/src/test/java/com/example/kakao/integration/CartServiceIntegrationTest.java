@@ -1,5 +1,6 @@
 package com.example.kakao.integration;
 
+import com.example.kakao._core.errors.exception.BadRequestException;
 import com.example.kakao.domain.cart.Cart;
 import com.example.kakao.domain.cart.CartJPARepository;
 import com.example.kakao.domain.cart.CartService;
@@ -22,6 +23,7 @@ import javax.persistence.EntityManager;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @Transactional
@@ -169,6 +171,34 @@ class CartServiceIntegrationTest {
     assertThat(cartList.get(1).getOption().getOptionName()).isEqualTo("02. 슬라이딩 지퍼백 플라워에디션 5종");
     assertThat(cartList.stream().anyMatch(cart -> cart.getOption().getId() == 6)).isFalse(); // optionId 6 이 존재하지 않는가?
     assertThat(cartList.get(4).getOption().getId()).isEqualTo(10); // 명시하지 않은 요소는 그대로 유지되었는가 ?
+
+  }
+
+  @Test
+  @DisplayName("예외: 장바구니 수정요청 - 유저의 장바구니에 들어있지 않은 Id가 수정요청에 포함된 경우")
+  void updateCartWithInvalidCartId() {
+    // given
+    User user = userRepository.findByEmail("ssarmango@nate.com").get();
+    List<SaveRequestDTO> saveDTOs = List.of(
+      SaveRequestDTO.builder().optionId(1).quantity(3).build(),
+      SaveRequestDTO.builder().optionId(2).quantity(2).build(),
+      SaveRequestDTO.builder().optionId(7).quantity(2).build(),
+      SaveRequestDTO.builder().optionId(9).quantity(2).build(),
+      SaveRequestDTO.builder().optionId(10).quantity(2).build()
+    );
+    List<UpdateRequestDTO> updateDTOs = List.of(
+      UpdateRequestDTO.builder().cartId(1).quantity(4).build(),
+      UpdateRequestDTO.builder().cartId(2).quantity(4).build(),
+      // 3, 4, 5
+      UpdateRequestDTO.builder().cartId(6).quantity(5).build() // 장바구니에 없는 ID
+    );
+
+    cartService.addCartList(saveDTOs, user);
+
+    // when - then
+    BadRequestException exception =
+      assertThrows(BadRequestException.class, () -> cartService.update(updateDTOs, user));
+    assertThat(exception.getMessage()).isEqualTo("유저의 장바구니에 존재하지 않는 cartId가 들어왔습니다 : 6");
 
   }
 }
