@@ -36,45 +36,22 @@ public class ProductRestController {
 
     private final GlobalExceptionHandler globalExceptionHandler;
 
-    private final FakeStore fakeStore;
+    private final ProductService productService;
 
     // (기능4) 전체 상품 목록 조회 (페이징 9개씩)
     @GetMapping("/products")
     public ResponseEntity<?> findAll(@RequestParam(defaultValue = "0") int page) {
-        // 1. 더미데이터 가져와서 페이징하기
-        List<Product> productList = fakeStore.getProductList().stream().skip(page*9).limit(9).collect(Collectors.toList());
 
-        // 2. DTO 변환
-        List<ProductResponse.FindAllDTO> responseDTOs =
-                productList.stream().map(ProductResponse.FindAllDTO::new).collect(Collectors.toList());
-        
-        // 3. 공통 응답 DTO 만들기
+        List<ProductResponse.FindAllDTO> responseDTOs = productService.findAll(page);
+
         return ResponseEntity.ok(ApiUtils.success(responseDTOs));
     }
 
     // (기능5) 개별 상품 상세 조회
     @GetMapping("/products/{id}")
     public ResponseEntity<?> findById(@PathVariable int id, HttpServletRequest request) {
-        // 1. 더미데이터 가져와서 상품 찾기
-        Product product = fakeStore.getProductList().stream().filter(p -> p.getId() == id).findFirst().orElse(null);
-
-        if(product == null){
-            Exception404 ex = new Exception404("해당 상품을 찾을 수 없습니다:"+id);
-            return new ResponseEntity<>(
-                    ex.body(),
-                    ex.status()
-            );
-        }
-
-        // 2. 더미데이터 가져와서 해당 상품에 옵션 찾기
-        List<Option> optionList = fakeStore.getOptionList().stream().filter(option -> product.getId() == option.getProduct().getId()).collect(Collectors.toList());
-        
-        // 3. DTO 변환
-        ProductResponse.FindByIdDTO responseDTO = new ProductResponse.FindByIdDTO(product, optionList);
-
-        // 4. 공통 응답 DTO 만들기
-        // 공통 에러 처리
         try {
+            ProductResponse.FindByIdDTO responseDTO = productService.findById(id);
             return ResponseEntity.ok(ApiUtils.success(responseDTO));
         } catch (RuntimeException e) {
             return globalExceptionHandler.handle(e, request);

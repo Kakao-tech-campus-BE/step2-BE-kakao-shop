@@ -18,7 +18,6 @@ public class CartService {
     public void save(List<CartRequest.SaveDTO> requestDTOs){
         cartJPARepository.saveAll(fakeStore.getCartList());
     }
-
     public CartResponse.FindAllDTO findAll() {
         List<Cart> cartList = fakeStore.getCartList();
         CartResponse.FindAllDTO responseDTO = new CartResponse.FindAllDTO(cartList);
