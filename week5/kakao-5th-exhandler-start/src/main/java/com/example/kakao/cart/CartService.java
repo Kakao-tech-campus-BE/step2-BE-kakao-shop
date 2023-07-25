@@ -23,6 +23,7 @@ public class CartService {
     public void addCartList(List<CartRequest.SaveDTO> requestDTOs, User sessionUser) {
         // TODO: 1. 동일한 옵션이 들어오면 예외처리
         //  [ { optionId:1, quantity:5 }, { optionId:1, quantity:10 } ]
+        requestDT
 
         // TODO: 2. cartJPARepository.findByOptionIdAndUserId() 조회 -> 존재하면 장바구니에 수량을 추가하는 업데이트를 해야함. (더티체킹하기)
         //  { cartId:1, optionId:1, quantity:3, userId: 1 } -> [ { optionId:1, quantity:5 } ]

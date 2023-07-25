@@ -2,6 +2,7 @@ package com.example.kakao.cart;
 
 import com.example.kakao._core.security.CustomUserDetails;
 import com.example.kakao._core.utils.ApiUtils;
+import com.example.kakao._core.utils.ValidList;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -35,7 +36,7 @@ public class CartRestController {
 // (기능6) 장바구니 담기 POST
 // /carts/add
     @PostMapping("/carts/add")
-    public ResponseEntity<?> addCartList(@RequestBody @Valid List<CartRequest.SaveDTO> requestDTOs, Errors errors, @AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ResponseEntity<?> addCartList(@RequestBody @Valid ValidList<CartRequest.SaveDTO> requestDTOs, Errors errors, @AuthenticationPrincipal CustomUserDetails userDetails) {
         cartService.addCartList(requestDTOs, userDetails.getUser());
         ApiUtils.ApiResult<?> apiResult = ApiUtils.success(null);
         return ResponseEntity.ok(apiResult);
@@ -65,7 +66,7 @@ public class CartRestController {
     // (기능8) 주문하기 - (주문화면에서 장바구니 수정하기)
     // /carts/update
     @PostMapping("/carts/update")
-    public ResponseEntity<?> update(@RequestBody @Valid List<CartRequest.UpdateDTO>
+    public ResponseEntity<?> update(@RequestBody @Valid ValidList<CartRequest.UpdateDTO>
                                             requestDTOs, Errors errors, @AuthenticationPrincipal CustomUserDetails
                                             userDetails) {
         CartResponse.UpdateDTO responseDTO = cartService.update(requestDTOs,userDetails.getUser());
