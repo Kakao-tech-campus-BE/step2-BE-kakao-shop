@@ -14,6 +14,7 @@ import java.util.List;
 @Service
 public class CartService {
     private final OptionJPARepository optionJPARepository;
+    private final CartJPARepository cartJPARepository;
     @Transactional
     public void addCartList(List<CartRequest.SaveDTO> requestDTOs, User sessionUser) {
         // 1. 동일한 옵션이 들어오면 예외처리
@@ -31,5 +32,5 @@ public class CartService {
             Cart cart = Cart.builder().user(sessionUser).option(optionPS).quantity(quantity).price(price).build();
             cartJPARepository.save(cart);
         }
-    }
+    } // 변경 감지, 더티체킹, flush, 트랜잭션 완료
 }
