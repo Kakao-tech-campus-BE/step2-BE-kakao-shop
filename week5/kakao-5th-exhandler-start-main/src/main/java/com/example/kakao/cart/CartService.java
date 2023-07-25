@@ -64,4 +64,19 @@ public class CartService {
         List<Cart> carts = cartJPARepository.findByUserIdOrderByOptionIdAsc(user.getId());
         return new CartResponse.FindAllDTO(carts);
     }
+
+    @Transactional
+    public CartResponse.UpdateDTO update(List<CartRequest.UpdateDTO> requestDTOs, User user) {
+        List<Cart> carts = cartJPARepository.findAllByUserId(user.getId());
+
+        carts.forEach(cart -> {
+            requestDTOs.forEach(requestDTO -> {
+                if (cart.getId() == requestDTO.getCartId()) {
+                    cart.update(requestDTO.getQuantity(), cart.getOption().getPrice() * requestDTO.getQuantity());
+                }
+            });
+        });
+        
+        return new CartResponse.UpdateDTO(carts);
+    }
 }
