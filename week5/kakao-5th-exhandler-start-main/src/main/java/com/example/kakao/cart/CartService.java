@@ -67,8 +67,37 @@ public class CartService {
 
     @Transactional
     public CartResponse.UpdateDTO update(List<CartRequest.UpdateDTO> requestDTOs, User user) {
-        List<Cart> carts = cartJPARepository.findAllByUserId(user.getId());
+        // 빈 요청 검사
+        if (requestDTOs.isEmpty()) {
+            throw new Exception400("잘못된 요청입니다.");
+        }
 
+        // 중복 데이터 검사
+        Set<Integer> requestIds = requestDTOs.stream()
+                .map(x->x.getCartId())
+                .collect(Collectors.toSet());
+        if (requestDTOs.size() != requestIds.size()) {
+            throw new Exception400("잘못된 요청입니다.");
+        }
+
+        // 기존 장바구니와 다른 요청이 있는지 검사(under + over 모두 검사)
+        List<Cart> carts = cartJPARepository.findAllByUserId(user.getId());
+        if (carts.isEmpty()) {
+            throw new Exception400("잘못된 요청입니다.");
+        }
+        Set<Integer> cartIds = carts.stream()
+                .map(x->x.getId())
+                .collect(Collectors.toSet());
+        Set<Integer> intersection = new HashSet<>(requestIds);
+        intersection.retainAll(cartIds);
+        requestIds.removeAll(intersection);
+        cartIds.removeAll(intersection);
+
+        if (!requestIds.isEmpty() | !cartIds.isEmpty()){
+            throw new Exception400("잘못된 요청입니다.");
+        }
+        
+        // 메인 로직
         carts.forEach(cart -> {
             requestDTOs.forEach(requestDTO -> {
                 if (cart.getId() == requestDTO.getCartId()) {
@@ -76,7 +105,7 @@ public class CartService {
                 }
             });
         });
-        
+
         return new CartResponse.UpdateDTO(carts);
     }
 }
