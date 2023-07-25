@@ -30,10 +30,10 @@ public class MemoryProductOptionRepository {
                 .collect(Collectors.toList());
     }
 
-    public Optional<ProductOptionEntity> findById(int productOptionId) {
+    public Optional<ProductOptionEntity> findById(Long productOptionId) {
         return productOptionEntities.values()
                 .stream()
-                .filter(x -> x.getProductOptionId() == productOptionId)
+                .filter(x -> x.getProductOptionId().equals(productOptionId))
                 .findAny();
     }
 }

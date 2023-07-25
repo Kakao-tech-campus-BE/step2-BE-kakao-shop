@@ -20,7 +20,7 @@ public class ProductOptionRepositoryImpl implements ProductOptionRepository {
     }
 
     @Override
-    public Optional<ProductOptionEntity> findById(int productOptionId) {
+    public Optional<ProductOptionEntity> findById(Long productOptionId) {
         return productOptionRepository.findById(productOptionId);
     }
 }
