@@ -76,21 +76,27 @@ public class OrderJPARepositoryTest extends DummyEntity {
         //아래 문장 추가하니 HibernateLAZYInitializer 오류 해결
         List<Option> optionListPS = optionJPARepository.findAll();
         Order order = newOrder(user);
-        orderJPARepository.save(order);
+
+        // 아래 코드 추가 후 전체 테스트 시 Referential integrity constraint violation 에러 해결 됨
+        Order orderPS = orderJPARepository.save(order);
+
+        //Order orderPS = orderJPARepository.findById(2).orElseThrow(() -> new RuntimeException("Order not found"));
 
         List<Cart> cartList = cartJPARepository.findAll();
 
         List<Item> itemList = Arrays.asList(
-                newItem(cartList.get(0), order),
-                newItem(cartList.get(1), order)
+                newItem(cartList.get(0), orderPS), // order -> orderPS로 변경
+                newItem(cartList.get(1), orderPS)
         );
+
+        // 원래 전체 테스트시 saveAll 에서 Referential integrity constraint violation 에러 발생
         List<Item> itemListPS = itemJPARepository.saveAll(itemList);
 
         String responseBody = om.writeValueAsString(itemListPS);
         System.out.println("테스트 : "+responseBody);
 
         //then
-        Assertions.assertThat(itemListPS.get(0).getOrder().getId()).isEqualTo(1);
+        Assertions.assertThat(itemListPS.get(0).getOrder().getId()).isEqualTo(2);
         Assertions.assertThat(itemListPS.get(0).getOption().getOptionName()).isEqualTo("01. 슬라이딩 지퍼백 크리스마스에디션 4종");
         Assertions.assertThat(itemListPS.get(0).getQuantity()).isEqualTo(5);
     }
@@ -124,7 +130,6 @@ public class OrderJPARepositoryTest extends DummyEntity {
         Assertions.assertThat(itemListPS.get(0).getOrder().getId()).isEqualTo(1);
         Assertions.assertThat(itemListPS.get(0).getOption().getOptionName()).isEqualTo("01. 슬라이딩 지퍼백 크리스마스에디션 4종");
         Assertions.assertThat(itemListPS.get(0).getQuantity()).isEqualTo(5);
-
     }
 
 }
