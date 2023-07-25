@@ -21,8 +21,7 @@ public class Order {
     private User user;
 
     @Builder
-    public Order(int id, User user) {
-        this.id = id;
+    public Order(User user) {
         this.user = user;
     }
 }

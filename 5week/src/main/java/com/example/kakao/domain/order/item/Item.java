@@ -27,7 +27,7 @@ public class Item {
     @Column(nullable = false)
     private int quantity;
     @Column(nullable = false)
-    private int price;
+    private int price; // total Price
 
 
     @Builder

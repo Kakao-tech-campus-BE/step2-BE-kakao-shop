@@ -37,7 +37,7 @@ class OrderServiceTest {
   void findByIdWithUnAuthorized() {
     // given
     BDDMockito.given(orderRepository.findById(1)).willReturn(
-      Optional.of(new Order(1, new User(2, "user2", "password", "name", "ROLE")))
+      Optional.of(new Order(new User(2, "user2", "password", "name", "ROLE")))
     );
 
     // when - then

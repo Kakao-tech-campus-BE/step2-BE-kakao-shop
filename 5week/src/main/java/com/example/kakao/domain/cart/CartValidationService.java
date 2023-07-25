@@ -28,7 +28,7 @@ public class CartValidationService {
   public void validateExistingCartItem(List<UpdateRequestDTO> requestDTOs, List<Cart> cartList) {
     for (UpdateRequestDTO updateDTO : requestDTOs) {
       if (cartList.stream().noneMatch(cart -> cart.getId() == updateDTO.getCartId())) {
-        throw new BadRequestException("유저의 장바구니에 없는 cartId가 들어왔습니다 : " + updateDTO.getCartId());
+        throw new BadRequestException("유저의 장바구니에 존재하지 않는 cartId가 들어왔습니다 : " + updateDTO.getCartId());
       }
     }
   }

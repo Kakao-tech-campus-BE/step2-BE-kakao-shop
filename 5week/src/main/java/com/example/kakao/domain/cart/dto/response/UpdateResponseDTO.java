@@ -28,7 +28,7 @@ public class UpdateResponseDTO {
     private int quantity;
     private int price;
 
-    public CartDTO(Cart cart) {
+    private CartDTO(Cart cart) {
       this.cartId = cart.getId();
       this.optionId = cart.getOption().getId();
       this.optionName = cart.getOption().getOptionName();

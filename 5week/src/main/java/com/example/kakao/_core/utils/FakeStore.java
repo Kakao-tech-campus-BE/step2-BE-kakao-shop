@@ -82,7 +82,6 @@ public class FakeStore {
     private Order newOrder(){
         return Order.builder()
                 .user(newUser(1, "ssar"))
-                .id(1)
                 .build();
     }
 

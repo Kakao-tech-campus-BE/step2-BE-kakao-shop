@@ -87,7 +87,7 @@ public class CartService {
     if (isDeleteRequest(updateDTO)) {
       cartRepository.delete(cart);
     } else {
-      cart.update(updateDTO.getQuantity(), calcTotalPrice(cart, updateDTO));
+      cart.update(updateDTO.getQuantity(), calcTotalPrice(cart.getOption(), updateDTO.getQuantity()));
     }
   }
   private Option findValidOptionById(int optionId) {
@@ -103,17 +103,16 @@ public class CartService {
     return cart.getId() == updateDTO.getCartId();
   }
 
-  private int calcTotalPrice(Cart cart, UpdateRequestDTO updateDTO) {
-    return cart.getOption().getPrice() * updateDTO.getQuantity();
+  private int calcTotalPrice(Option option, int quantity) {
+    return option.getPrice() * quantity;
   }
 
   private void createNewCartItem(User sessionUser, int quantity, Option option) {
-    int price = option.getPrice() * quantity;
     Cart cart = Cart.builder()
       .user(sessionUser)
       .option(option)
       .quantity(quantity)
-      .price(price)
+      .price( calcTotalPrice(option, quantity) )
       .build();
     cartRepository.save(cart);
   }

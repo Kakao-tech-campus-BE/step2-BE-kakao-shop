@@ -24,8 +24,9 @@ public class OrderRestController {
 
   // (기능9) 결재하기 - (주문 인서트) POST
   @PostMapping("/orders/save")
-  public void save(@AuthenticationPrincipal CustomUserDetails userDetails) {
+  public ResponseEntity<ApiResponse> save(@AuthenticationPrincipal CustomUserDetails userDetails) {
 
+    return ResponseEntity.ok(ApiUtils.success( orderService.save(userDetails.getUser().getId()) ));
   }
 
   // (기능10) 주문 결과 확인 GET
@@ -35,7 +36,5 @@ public class OrderRestController {
     @AuthenticationPrincipal CustomUserDetails userDetails) {
 
     return ResponseEntity.ok(ApiUtils.success( orderService.findById( id, userDetails.getUser().getId()) ));
-
   }
-
 }
