@@ -49,7 +49,7 @@ public class ProductService {
     }
 
     public ProductResponse.FindByIdDTOv2 findByIdv2(int id) {
-        List<Option> optionList = optionJPARepository.findByProductId(id);
+        List<Option> optionList = optionJPARepository.findByProductIdJoinProduct(id);
         if (optionList.isEmpty()) {
             throw new Exception404("해당 상품을 찾을 수 없습니다. : " + id);
         }
