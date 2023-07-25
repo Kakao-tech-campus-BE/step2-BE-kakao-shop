@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 
 public class ProductResponse {
     @Getter
-    @Builder
     public static class FindAllDTO {
         private int id;
         private String productName;
@@ -17,6 +16,7 @@ public class ProductResponse {
         private String image;
         private int price;
 
+        @Builder
         public FindAllDTO(Product product) {
             this.id = product.getId();
             this.productName = product.getProductName();
@@ -27,7 +27,6 @@ public class ProductResponse {
     }
 
     @Getter
-    @Builder
     public static class FindByIdDTO {
         private int id;
         private String productName;
@@ -37,6 +36,7 @@ public class ProductResponse {
         private int starCount; // 0~5
         private List<OptionDTO> options;
 
+        @Builder
         public FindByIdDTO(Product product, List<Option> optionsList) {
             this.id = product.getId();
             this.productName = product.getProductName();
@@ -62,7 +62,6 @@ public class ProductResponse {
     }
 
     @Getter
-    @Builder
     public static class FindByIdDTOv2 {
         private int id;
         private String productName;
@@ -72,6 +71,7 @@ public class ProductResponse {
         private int starCount; // 0~5
         private List<OptionDTO> options;
 
+        @Builder
         public FindByIdDTOv2(List<Option> optionsList) {
             this.id = optionsList.get(0).getProduct().getId();
             this.productName = optionsList.get(0).getProduct().getProductName();
