@@ -1,5 +1,6 @@
 package com.example.kakao.cart;
 
+import com.example.kakao._core.errors.exception.Exception400;
 import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao.product.option.Option;
 import com.example.kakao.product.option.OptionJPARepository;
@@ -8,7 +9,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -22,17 +26,27 @@ public class CartService {
     public void addCartList(List<CartRequest.SaveDTO> requestDTOs, User sessionUser) {
         // 1. 동일한 옵션이 들어오면 예외처리
         // [ { optionId:1, quantity:5 }, { optionId:1, quantity:10 } ]
+        HashSet<CartRequest.SaveDTO> removeDistinct = new HashSet<>(requestDTOs);
+        if (removeDistinct.size() != requestDTOs.size()) {
+            throw new Exception400("동일한 옵션을 처리할 수 없습니다");
+        }
 
-        // 2. cartJPARepository.findByOptionIdAndUserId() 조회 -> 존재하면 장바구니에 수량을 추가하는 업데이트를 해야함. (더티체킹하기)
-
+        // 2. cartJPARepository.findByOptionIdAndUserId() 조회
         // 3. [2번이 아니라면] 유저의 장바구니에 담기
+        int userId = sessionUser.getId();
         for (CartRequest.SaveDTO requestDTO : requestDTOs) {
             int optionId = requestDTO.getOptionId();
-            int quantity = requestDTO.getQuantity();
+            int inputQuantity = requestDTO.getQuantity();
             Option optionPS = optionJPARepository.findById(optionId)
                     .orElseThrow(() -> new Exception404("해당 옵션을 찾을 수 없습니다 : " + optionId));
-            int price = optionPS.getPrice() * quantity;
-            Cart cart = Cart.builder().user(sessionUser).option(optionPS).quantity(quantity).price(price).build();
+
+            Optional<Cart> cartOP = cartJPARepository.findByOptionIdAndUserId(optionId, userId);
+            Cart cart = cartOP.orElse(Cart.builder().user(sessionUser).option(optionPS).build());
+            int UpdatedQuantity = inputQuantity + cartOP.map(Cart::getQuantity).orElse(0);
+            int price = optionPS.getPrice() * UpdatedQuantity;
+
+           cart.update(UpdatedQuantity, price);
+
             cartJPARepository.save(cart);
         }
     }
