@@ -18,7 +18,7 @@ public class CartService {
     private final CartJPARepository cartJPARepository;
 
     public void addCartList(List<CartRequest.SaveDTO> requestDTOs, User sessionUser) {
-        for (CartRequest.SaveDTO requestDTO:requestDTOs) {
+        requestDTOs.forEach(requestDTO -> {
             int optionId = requestDTO.getOptionId();
             int quantity = requestDTO.getQuantity();
             Option option = optionJPARepository.findById(optionId)
@@ -31,6 +31,6 @@ public class CartService {
                     .price(price)
                     .build();
             cartJPARepository.save(cart);
-        }
+        });
     }
 }
