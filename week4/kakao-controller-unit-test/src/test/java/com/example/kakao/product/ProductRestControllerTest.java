@@ -4,8 +4,6 @@ import com.example.kakao._core.errors.GlobalExceptionHandler;
 import com.example.kakao._core.security.SecurityConfig;
 import com.example.kakao._core.utils.FakeStore;
 import com.example.kakao.log.ErrorLogJPARepository;
-import com.example.kakao.product.option.Option;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -14,9 +12,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-
-import java.util.List;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -52,6 +47,29 @@ class ProductRestControllerTest {
                 .andExpect(jsonPath("$.response[0].description").hasJsonPath())
                 .andExpect(jsonPath("$.response[0].image").hasJsonPath())
                 .andExpect(jsonPath("$.response[0].price").hasJsonPath())
-                .andExpect(jsonPath("$.error").hasJsonPath());
+                .andExpect(jsonPath("$.error").isEmpty());
+    }
+
+    @Test
+    void 상품_자세히보기() throws Exception {
+        mockMvc.perform(
+                        MockMvcRequestBuilders.get("/products/1")
+                                .accept(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.success").value(true))
+                .andExpect(jsonPath("$.response").hasJsonPath())
+                .andExpect(jsonPath("$.response.id").hasJsonPath())
+                .andExpect(jsonPath("$.response.productName").hasJsonPath())
+                .andExpect(jsonPath("$.response.description").isEmpty())
+                .andExpect(jsonPath("$.response.image").hasJsonPath())
+                .andExpect(jsonPath("$.response.price").hasJsonPath())
+                .andExpect(jsonPath("$.response.starCount").hasJsonPath())
+                .andExpect(jsonPath("$.response.options").isArray())
+                .andExpect(jsonPath("$.response.options[0].id").hasJsonPath())
+                .andExpect(jsonPath("$.response.options[0].optionName").hasJsonPath())
+                .andExpect(jsonPath("$.response.options[0].price").hasJsonPath())
+                .andExpect(jsonPath("$.error").isEmpty());
     }
 }
