@@ -19,6 +19,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolationException;
 import java.util.Objects;
 
 @Slf4j
@@ -28,6 +29,18 @@ import java.util.Objects;
 public class GlobalExceptionHandler {
 
   private final ErrorLogJPARepository errorLogJPARepository;
+
+  // TODO: Class Level Validated 는 javax.validation.ConstraintViolationException 으로 처리됨.
+
+
+  @ExceptionHandler(ConstraintViolationException.class)
+  public ResponseEntity<ApiResponse> handleConstraintViolationException(ConstraintViolationException ex) {
+    log.error("Constraint Violation", ex);
+    return new ResponseEntity<>(
+      ApiUtils.error("Constraint Violation: " + ex.getMessage(), HttpStatus.BAD_REQUEST),
+      HttpStatus.BAD_REQUEST
+    );
+  }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)
   public ResponseEntity<ApiResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex){

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 @Getter
@@ -12,8 +13,8 @@ import javax.validation.constraints.Positive;
 @ToString
 @Builder
 public class UpdateRequestDTO {
-  @Positive(message = "카트 아이디는 1 이상이어야 합니다.")
+  @Positive(message = "카트 아이디는 1 이상이어야 합니다.") @NotNull
   private int cartId;
-  @Positive(message = "수량은 1 이상이어야 합니다.")
+  @Positive(message = "수량은 1 이상이어야 합니다.") @NotNull
   private int quantity;
 }
