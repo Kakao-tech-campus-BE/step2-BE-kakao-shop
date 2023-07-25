@@ -1,6 +1,5 @@
 package com.example.kakao.domain.cart;
 
-import com.example.kakao._core.errors.exception.BadRequestException;
 import com.example.kakao._core.errors.exception.NotFoundException;
 import com.example.kakao.domain.cart.dto.request.SaveRequestDTO;
 import com.example.kakao.domain.cart.dto.request.UpdateRequestDTO;
@@ -16,6 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+
+// 현재는 가격이나 수량의 상한 등은 고려하지 않는다.
+
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
@@ -23,66 +25,87 @@ public class CartService {
   private final CartJPARepository cartRepository;
   private final OptionJPARepository optionRepository;
 
+  private final CartValidationService cartValidationService;
+
   @Transactional
   public void addCartList(List<SaveRequestDTO> requestDTOs, User sessionUser) {
-    validateUniqueOptionsInSaveDTO(requestDTOs); // Dto 에 동일한 옵션이 2개 이상 존재하면 예외처리
+    cartValidationService.validateUniqueOptionsInSaveDTO(requestDTOs); // Dto 에 동일한 옵션이 2개 이상 존재하면 예외처리
 
     for (SaveRequestDTO requestDTO : requestDTOs) {
       int optionId = requestDTO.getOptionId();
       int quantity = requestDTO.getQuantity();
-      Option option = findValidOption(optionId);
+      Option option = findValidOptionById(optionId);
 
       Optional<Cart> existingCartItem = cartRepository.findByOptionIdAndUserId(optionId, sessionUser.getId());
       // 이미 장바구니에 존재하면 수량을 추가하는 업데이트를 해야함. (더티체킹하기)
-      if(existingCartItem.isPresent()){
+      if (existingCartItem.isPresent()) {
         updateExistingCartItem(quantity, option, existingCartItem.get());
-        continue;
+      } else {
+        createNewCartItem(sessionUser, quantity, option);
       }
-      createNewCartItem(sessionUser, quantity, option);
     }
   }
 
 
+  // Cart에 담긴 옵션이 3개이면, 2개는 바나나 상품, 1개는 딸기 상품이면 Product는 2개인 것이다. -> 투박하지만 짧고 효과적인 설명.
   public FindAllResponseDTO findAll(User user) {
     List<Cart> cartList = cartRepository.findAllByUserIdOrderByOptionIdAsc(user.getId());
-    // Cart에 담긴 옵션이 3개이면, 2개는 바나나 상품, 1개는 딸기 상품이면 Product는 2개인 것이다. -> 투박하지만 짧고 효과적인 설명.
     return new FindAllResponseDTO(cartList);
   }
 
 
-
-  // TODO : 너무 복잡함.
   @Transactional
   public UpdateResponseDTO update(List<UpdateRequestDTO> requestDTOs, User user) {
     List<Cart> cartList = cartRepository.findAllByUserId(user.getId());
 
-    if(cartList.isEmpty()) throw new BadRequestException("장바구니에 담긴 상품이 없습니다.");
+    cartValidationService.validateNotEmptyCart(cartList); // 장바구니가 비어있지는 않은지 ?
+    cartValidationService.validateUniqueCartsInUpdateDTO(requestDTOs); // 요청 명세에 중복 값이 없는가
+    cartValidationService.validateExistingCartItem(requestDTOs, cartList); // 수정 요청을 받은 아이템이 장바구니에 이미 존재하는지
 
-    validateUniqueCartsInUpdateDTO(requestDTOs);
-
-    validateExistingCartItem(requestDTOs, cartList);
-
-    for (Cart cart : cartList) {
-      for (UpdateRequestDTO updateDTO : requestDTOs) {
-        if (cart.getId() == updateDTO.getCartId()) {
-          if(updateDTO.getQuantity() == 0){
-            cartRepository.delete(cart);
-            continue;
-          }
-
-          cart.update(updateDTO.getQuantity(), cart.getOption().getPrice() * updateDTO.getQuantity());
-        }
-      }
-    }
+    cartList.forEach(cart -> updateCartItemInRequest(requestDTOs, cart));
 
     return new UpdateResponseDTO(cartList);
   } // 더티체킹
 
 
 
-  // 이 부분이 굉장히 불만입니다. Public 과 Private 이 나눠지는 영역을 훨씬 쉽게 관리하고 눈으로 파악하기도 쉬워야 한다고 생각합니다.
-  // 좋은 방법이 있을까요?
   // ----------------- private -----------------
+
+  /**
+   * 요청에 들어있는 아이템만 수정한다.
+   */
+  private void updateCartItemInRequest(List<UpdateRequestDTO> requestDTOs, Cart cart) {
+    requestDTOs.stream()
+      .filter(updateDTO -> isSameItem(cart, updateDTO))
+      .forEach(updateDTO -> updateOrDeleteCartItem(cart, updateDTO));
+  }
+
+  /**
+   * 요청에 수량이 0이면 삭제, 아니면 해당 값으로 덮어쓴다.
+   */
+  private void updateOrDeleteCartItem(Cart cart, UpdateRequestDTO updateDTO) {
+    if (isDeleteRequest(updateDTO)) {
+      cartRepository.delete(cart);
+    } else {
+      cart.update(updateDTO.getQuantity(), calcTotalPrice(cart, updateDTO));
+    }
+  }
+  private Option findValidOptionById(int optionId) {
+    return optionRepository.findById(optionId)
+      .orElseThrow(() -> new NotFoundException("해당 옵션을 찾을 수 없습니다 : " + optionId));
+  }
+
+  private boolean isDeleteRequest(UpdateRequestDTO updateDTO) {
+    return updateDTO.getQuantity() == 0;
+  }
+
+  private boolean isSameItem(Cart cart, UpdateRequestDTO updateDTO) {
+    return cart.getId() == updateDTO.getCartId();
+  }
+
+  private int calcTotalPrice(Cart cart, UpdateRequestDTO updateDTO) {
+    return cart.getOption().getPrice() * updateDTO.getQuantity();
+  }
 
   private void createNewCartItem(User sessionUser, int quantity, Option option) {
     int price = option.getPrice() * quantity;
@@ -99,29 +122,5 @@ public class CartService {
     cart.update(cart.getQuantity() + quantity, cart.getPrice() + option.getPrice() * quantity);
   }
 
-  private static void validateExistingCartItem(List<UpdateRequestDTO> requestDTOs, List<Cart> cartList) {
-    for (UpdateRequestDTO updateDTO : requestDTOs) {
-      if(cartList.stream().noneMatch(cart -> cart.getId() == updateDTO.getCartId())){
-        throw new BadRequestException("유저의 장바구니에 없는 cartId가 들어왔습니다 : "+updateDTO.getCartId());
-      }
-    }
-  }
-  private Option findValidOption(int optionId) {
-    return optionRepository.findById(optionId)
-      .orElseThrow(() -> new NotFoundException("해당 옵션을 찾을 수 없습니다 : " + optionId));
-  }
-
-  private void validateUniqueOptionsInSaveDTO(List<SaveRequestDTO> requestDTOs) {
-    if (requestDTOs.size() != requestDTOs.stream().mapToInt(SaveRequestDTO::getOptionId).distinct().count() ) {
-      throw new BadRequestException("요청 명세에 동일한 옵션이 2개 이상 존재합니다.");
-    }
-  }
-
-  // 우발적 중복
-  private static void validateUniqueCartsInUpdateDTO(List<UpdateRequestDTO> requestDTOs) {
-    if(requestDTOs.size() != requestDTOs.stream().mapToInt(UpdateRequestDTO::getCartId).distinct().count()){
-      throw new BadRequestException("요청 명세에 동일한 장바구니 아이디가 2개 이상 존재합니다.");
-    }
-  }
 
 }
