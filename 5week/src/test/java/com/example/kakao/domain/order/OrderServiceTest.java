@@ -43,4 +43,14 @@ class OrderServiceTest {
     // when - then
     assertThrows(UnAuthorizedException.class, () -> orderService.findById(1, 1));
   }
+
+  @Test
+  @DisplayName("예외 - 존재하지 않는 유저 정보")
+  void saveWithUserNotFound() {
+    // given
+    int userId = 0;
+
+    // when - then
+    assertThrows(NotFoundException.class, () -> orderService.save(userId));
+  }
 }

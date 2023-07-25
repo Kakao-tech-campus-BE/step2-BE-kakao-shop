@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-// TODO : test
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
@@ -36,7 +35,6 @@ public class OrderService {
 
     cartValidationService.validateNotEmptyCart(cartList);
 
-    // 주문
     Order order = new Order(user);
 
     List<Item> items = buildOrderItems(order, cartList);

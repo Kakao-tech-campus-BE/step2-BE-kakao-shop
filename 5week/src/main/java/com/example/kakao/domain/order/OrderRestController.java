@@ -22,7 +22,7 @@ public class OrderRestController {
   private final OrderService orderService;
 
 
-  // (기능9) 결재하기 - (주문 인서트) POST
+  // (기능9) 결제하기 - (주문 인서트) POST
   @PostMapping("/orders/save")
   public ResponseEntity<ApiResponse> save(@AuthenticationPrincipal CustomUserDetails userDetails) {
 

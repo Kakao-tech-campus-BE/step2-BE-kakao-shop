@@ -2,30 +2,21 @@ package com.example.kakao.domain.cart;
 
 import com.example.kakao._core.errors.exception.BadRequestException;
 import com.example.kakao.domain.cart.dto.request.SaveRequestDTO;
-import com.example.kakao.domain.product.option.OptionJPARepository;
 import com.example.kakao.domain.user.User;
 import com.example.kakao.domain.user.UserJPARepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 class CartServiceTest {
   @Autowired
   private CartService cartService;
-
-  @MockBean
-  private CartJPARepository cartRepository;
-
-  @MockBean
-  private OptionJPARepository optionRepository;
 
   @Autowired
   private UserJPARepository userRepository;

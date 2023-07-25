@@ -30,9 +30,6 @@ public class GlobalExceptionHandler {
 
   private final ErrorLogJPARepository errorLogJPARepository;
 
-  // TODO: Class Level Validated 는 javax.validation.ConstraintViolationException 으로 처리됨.
-
-
   @ExceptionHandler(ConstraintViolationException.class)
   public ResponseEntity<ApiResponse> handleConstraintViolationException(ConstraintViolationException ex) {
     log.error("Constraint Violation", ex);
