@@ -29,6 +29,7 @@ public class CartJPARepositoryTest extends DummyEntity {
 
     @Autowired
     private EntityManager em;
+
     @Autowired
     private UserJPARepository userJPARepository;
 
@@ -95,23 +96,18 @@ public class CartJPARepositoryTest extends DummyEntity {
     @DisplayName("3.주문하기 (장바구니 수정)")
     public void update_cart_test() throws JsonProcessingException {
         // given
-
+        Cart c = cartJPARepository.mFindFetchAll().get(0);
+        int id = c.getId();
         // when
         // select 쿼리 2번(join fetch 1번+ option의 Product 조회 1번) + update 쿼리 1번
-        Optional<Cart> cartOptional = cartJPARepository.mFindById(1);
-        if(cartOptional.isPresent()){
-            Cart c = cartOptional.get();
             c.update(10); //장바구니 수정
-            em.flush(); //DB 반영
+
             String responseBody = om.writeValueAsString(c); //직렬화하여 출력
             System.out.println("테스트 : "+responseBody);
 
             //then
-            Assertions.assertThat(c.getId()).isEqualTo(1);
+            Assertions.assertThat(c.getId()).isEqualTo(id);
             Assertions.assertThat(c.getQuantity()).isEqualTo(10);
-
-        }
-
     }
 
 }

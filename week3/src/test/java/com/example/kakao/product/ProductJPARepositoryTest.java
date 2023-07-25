@@ -40,6 +40,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
     @BeforeEach
     public void setUp(){
         List<Product> productListPS = productJPARepository.saveAll(productDummyList()); //상품 리스트 저장
+        em.createNativeQuery("ALTER TABLE product_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
         optionJPARepository.saveAll(optionDummyList(productListPS)); //옵션 리스트 저장
         em.clear(); //쿼리 보기 위해 PC clear
     }
@@ -55,7 +56,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
         PageRequest pageRequest = PageRequest.of(page, size);
         Page<Product> productPG = productJPARepository.findAll(pageRequest);
         String responseBody = om.writeValueAsString(productPG); //직렬화하여 출력
-        System.out.println("테스트 : "+responseBody);
+//        System.out.println("테스트 : "+responseBody);
 
         // then
         Assertions.assertThat(productPG.getTotalPages()).isEqualTo(2); //2페이지
@@ -75,7 +76,8 @@ public class ProductJPARepositoryTest extends DummyEntity {
     @DisplayName("2. 개별 상품 상세 조회 : Eager")
     public void option_findByProductId_eager_test() throws JsonProcessingException {
         // given
-        int id = 1;
+        Option option = optionJPARepository.findAll().get(0);
+        int id = option.getId();
 
         // when
         // 충분한 데이터 - product만 0번지에서 빼면  된다
@@ -116,7 +118,8 @@ public class ProductJPARepositoryTest extends DummyEntity {
     @DisplayName("2. 개별 상품 상세 조회 : Lazy")
     public void option_mFindByProductId_lazy_test() throws JsonProcessingException {
         // given
-        int id = 1;
+        Option option = optionJPARepository.findAll().get(0);
+        int id = option.getId();
 
         // when
         List<Option> optionListPS = optionJPARepository.mFindByProductId(id); // Lazy, join fetch 사용해서 연관관계 객체 가져오기
@@ -134,7 +137,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
     @DisplayName("2. 개별 상품 상세 조회 : Lazy지만 영속화")
     public void product_findById_and_option_findByProductId_lazy_test() throws JsonProcessingException {
         // given
-        int id = 1;
+        int id = productJPARepository.findAll().get(0).getId();
 
         // when
         Product productPS = productJPARepository.findById(id).orElseThrow( //상품 가져오기(영속화)

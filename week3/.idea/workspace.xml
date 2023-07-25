@@ -5,13 +5,49 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="29ae2cb3-f9e4-4321-93a8-e0a413cc6a12" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/out/production/resources/application-local.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/resources/application-prod.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/resources/application.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/resources/static/docs/api-docs.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/example/kakao/cart/CartJPARepositoryTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/com/example/kakao/order/OrderJPARepositoryTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tddbank/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tddbank/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../tddbank/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tddbank/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tddbank/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tddbank/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tddbank/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tddbank/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tddbank/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tddbank/src/main/java/shop/mtcoding/tddbank/TddbankApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tddbank/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tddbank/src/test/java/shop/mtcoding/tddbank/TddbankApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/kakao/cart/CartJPARepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/kakao/cart/CartJPARepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/kakao/product/ProductJPARepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/kakao/product/ProductJPARepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../week4/.gradle/7.5.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/.gradle/7.5.1/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../week4/.gradle/7.5.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/.gradle/7.5.1/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../week4/.gradle/7.5.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/.gradle/7.5.1/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../week4/.gradle/7.5.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/.gradle/7.5.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../week4/.gradle/7.5.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/.gradle/7.5.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../week4/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../week4/build/reports/tests/test/classes/com.example.kakao.cart.CartRestControllerTest.html" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/build/reports/tests/test/classes/com.example.kakao.cart.CartRestControllerTest.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../week4/build/reports/tests/test/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/build/reports/tests/test/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../week4/build/reports/tests/test/packages/com.example.kakao.cart.html" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/build/reports/tests/test/packages/com.example.kakao.cart.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../week4/build/test-results/test/TEST-com.example.kakao.cart.CartRestControllerTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/build/test-results/test/TEST-com.example.kakao.cart.CartRestControllerTest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../week4/build/test-results/test/binary/output.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/build/test-results/test/binary/output.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../week4/build/test-results/test/binary/output.bin.idx" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/build/test-results/test/binary/output.bin.idx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../week4/build/test-results/test/binary/results.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/build/test-results/test/binary/results.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../week4/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../week4/build/tmp/compileTestJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/build/tmp/compileTestJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../week4/src/main/java/com/example/kakao/_core/errors/exception/Exception404.java" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/src/main/java/com/example/kakao/_core/errors/exception/Exception404.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../week4/src/main/java/com/example/kakao/cart/CartRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/src/main/java/com/example/kakao/cart/CartRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../week4/src/main/java/com/example/kakao/cart/CartService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/src/main/java/com/example/kakao/cart/CartService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../week4/src/main/java/com/example/kakao/order/OrderRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/src/main/java/com/example/kakao/order/OrderRestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../week4/src/main/java/com/example/kakao/order/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/src/main/java/com/example/kakao/order/OrderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../week4/src/main/java/com/example/kakao/product/ProductRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/src/main/java/com/example/kakao/product/ProductRestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../week4/src/main/java/com/example/kakao/product/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/src/main/java/com/example/kakao/product/ProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../week4/src/main/java/com/example/kakao/user/UserResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/src/main/java/com/example/kakao/user/UserResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../week4/src/main/java/com/example/kakao/user/UserRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/src/main/java/com/example/kakao/user/UserRestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../week4/src/test/java/com/example/kakao/cart/CartRestControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/src/test/java/com/example/kakao/cart/CartRestControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../week4/src/test/java/com/example/kakao/order/OrderRestControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/src/test/java/com/example/kakao/order/OrderRestControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../week4/src/test/java/com/example/kakao/user/UserRestControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/src/test/java/com/example/kakao/user/UserRestControllerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +58,18 @@
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -36,21 +84,25 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/mae/Desktop/KTC/step2-BE-kakao-shop/week3",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "spring.configuration.checksum": "3fcb6ad08501ea2e40c61ba5f4596338",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/mae/Desktop/KTC/step2-BE-kakao-shop/week3&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;3fcb6ad08501ea2e40c61ba5f4596338&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.example.kakao.order" />
@@ -58,37 +110,52 @@
       <recent name="com.example.kakao.product" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.OrderJPARepositoryTest.order_save_test">
-    <configuration name="CartJPARepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="kakao.test" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.example.kakao.cart.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.example.kakao.cart" />
-      <option name="MAIN_CLASS_NAME" value="com.example.kakao.cart.CartJPARepositoryTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
+  <component name="RunManager" selected="Gradle.CartJPARepositoryTest.update_cart_test">
+    <configuration name="CartJPARepositoryTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.example.kakao.cart.CartJPARepositoryTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
     </configuration>
-    <configuration name="CartJPARepositoryTest.update_cart_test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="kakao.test" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.example.kakao.cart.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.example.kakao.cart" />
-      <option name="MAIN_CLASS_NAME" value="com.example.kakao.cart.CartJPARepositoryTest" />
-      <option name="METHOD_NAME" value="update_cart_test" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
+    <configuration name="CartJPARepositoryTest.update_cart_test" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.example.kakao.cart.CartJPARepositoryTest.update_cart_test&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
     </configuration>
     <configuration name="OrderJPARepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="kakao.test" />
@@ -146,11 +213,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.CartJPARepositoryTest.update_cart_test" />
+        <item itemvalue="Gradle.CartJPARepositoryTest" />
         <item itemvalue="JUnit.OrderJPARepositoryTest.order_save_test" />
         <item itemvalue="JUnit.OrderJPARepositoryTest" />
         <item itemvalue="JUnit.OrderJPARepositoryTest.order_findAll_test" />
-        <item itemvalue="JUnit.CartJPARepositoryTest.update_cart_test" />
-        <item itemvalue="JUnit.CartJPARepositoryTest" />
       </list>
     </recent_temporary>
   </component>
@@ -163,7 +230,10 @@
       <option name="presentableId" value="Default" />
       <updated>1689213162727</updated>
       <workItem from="1689213163907" duration="731000" />
-      <workItem from="1689215624203" duration="36026000" />
+      <workItem from="1689215624203" duration="36846000" />
+      <workItem from="1689569807188" duration="54000" />
+      <workItem from="1689570729348" duration="1588000" />
+      <workItem from="1689933059115" duration="3469000" />
     </task>
     <servers />
   </component>
