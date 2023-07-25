@@ -34,7 +34,7 @@ public class ProductRestController {
         return ResponseEntity.ok(apiResult);
     }
 
-    @GetMapping("/products/{id}")
+    @GetMapping("/products/{id}/v2")
     public ResponseEntity<?> findByIdv2 (@PathVariable int id) {
         ProductResponse.FindByIdDTOv2 responseDTO = productService.findByIdv2(id);
         ApiUtils.ApiResult<?> apiResult = ApiUtils.success(responseDTO);
