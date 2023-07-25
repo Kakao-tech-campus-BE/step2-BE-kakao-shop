@@ -26,14 +26,12 @@ public class CartService {
     public void addCartList(List<CartRequest.SaveDTO> requestDTOs, User sessionUser) {
         // 동일한 옵션이 들어오면 예외처리
         //  [ { optionId:1, quantity:5 }, { optionId:1, quantity:10 } ]
+
         List<Integer> requestOptionIds = requestDTOs.stream()
                 .map(CartRequest.SaveDTO::getOptionId)
-                .distinct()
                 .collect(Collectors.toList());
 
-        if (requestDTOs.size() != requestOptionIds.size()) {
-            throw new Exception400("동일한 옵션이 여러개 들어올 수 없습니다.");
-        }
+        checkDuplication(requestOptionIds);
 
         // 2. 이미 존재하면 장바구니에 수량을 추가하는 업데이트(더티체킹)
         //  { cartId:1, optionId:1, quantity:3, userId: 1 } -> [ { optionId:1, quantity:5 } ]
@@ -59,7 +57,6 @@ public class CartService {
             Cart cart = Cart.builder().user(sessionUser).option(optionPS).quantity(quantity).price(price).build();
             cartJPARepository.save(cart);
         }
-
     }
 
     public CartResponse.FindAllDTO findAll(User user) {
@@ -70,14 +67,28 @@ public class CartService {
 
     @Transactional
     public CartResponse.UpdateDTO update(List<CartRequest.UpdateDTO> requestDTOs, User user) {
-        // TODO: findAllByUserId 개선하기
         List<Cart> cartList = cartJPARepository.findAllByUserId(user.getId());
 
-        // TODO: 1. 유저 장바구니에 아무것도 없으면 예외처리
+        // 1. 유저 장바구니에 아무것도 없으면 예외처리
+        if (cartList.isEmpty()) throw new Exception400("장바구니가 비어 있습니다.");
 
-        // TODO: 2. cartId:1, cartId:1 이렇게 requestDTOs에 동일한 장바구니 아이디가 두번 들어오면 예외처리
+        // 2. cartId:1, cartId:1 이렇게 requestDTOs에 동일한 장바구니 아이디가 두번 들어오면 예외처리
+        List<Integer> requestOptionIds = requestDTOs.stream()
+                .map(CartRequest.UpdateDTO::getCartId)
+                .collect(Collectors.toList());
 
-        // TODO: 3. 유저 장바구니에 없는 cartId가 들어오면 예외처리
+        checkDuplication(requestOptionIds);
+
+        // 3. 유저 장바구니에 없는 cartId가 들어오면 예외처리
+        requestDTOs.forEach(requestDTO -> {
+            int requestCartId = requestDTO.getCartId();
+            List<Integer> cartIds = cartList.stream()
+                    .map(Cart::getId)
+                    .collect(Collectors.toList());
+            if (!cartIds.contains(requestCartId)) {
+                throw new Exception400("장바구니 번호가 잘못되었습니다.:" + requestCartId);
+            }
+        });
 
         // 위에 3개를 처리하지 않아도 프로그램은 잘돌아간다. 예를 들어 1번을 처리하지 않으면 for문을 돌지 않고, cartList가 빈배열 []로 정상응답이 나감.
         for (Cart cart : cartList) {
@@ -90,4 +101,10 @@ public class CartService {
         }
         return new CartResponse.UpdateDTO(cartList);
     } // 더티체킹
+
+    private void checkDuplication(List<?> list) {
+        if (list.size() != list.stream().distinct().count()) {
+            throw new Exception400("동일한 옵션이 여러개 들어올 수 없습니다.");
+        }
+    }
 }
