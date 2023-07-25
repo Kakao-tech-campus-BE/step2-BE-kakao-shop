@@ -8,14 +8,14 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 
-@Aspect
+@Aspect // 부가 기능과 해당 부가 기능을 어디에 적용할 지 정의
 @Component
 public class GlobalValidationHandler {
-    @Pointcut("@annotation(org.springframework.web.bind.annotation.PostMapping)")
-    public void postMapping() {
+    @Pointcut("@annotation(org.springframework.web.bind.annotation.PostMapping)") // 부가 기능을 적용할 곳 정의
+    public void postMapping() { // 별칭
     }
 
-    @Before("postMapping()")
+    @Before("postMapping()") // 부가 기능이 핵심 로직 실행 전에 실행될 지 실행 후에 실행될 지를 결정
     public void validationAdvice(JoinPoint jp) {
         Object[] args = jp.getArgs();
         for (Object arg : args) {
