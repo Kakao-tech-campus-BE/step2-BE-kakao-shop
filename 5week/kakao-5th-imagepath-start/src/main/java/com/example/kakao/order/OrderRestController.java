@@ -29,5 +29,14 @@ public class OrderRestController {
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
 
+    // 5주차 과제 - 주문결과 확인 기능 구현
+    // (기능10) 주문 결과 확인 GET
+    // /orders/{id}
+    @GetMapping({"/orders/{id}"})
+    public ResponseEntity<?> findById(@PathVariable int id) {
+        OrderResponse.FindByIdDTO responseDTO = this.orderService.findById(id);
+        return ResponseEntity.ok(ApiUtils.success(responseDTO));
+    }
+
 
 }

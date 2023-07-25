@@ -28,6 +28,7 @@ public class OrderService {
     private final CartJPARepository cartJPARepository;
 
 
+
     @Transactional
     public OrderResponse.FindByIdDTO saveOrder(User user) {
 
@@ -58,12 +59,26 @@ public class OrderService {
         // 6. 카트에 있던 장바구니 목록 초기화 하기
         this.cartJPARepository.deleteByUserId(user.getId());
 
-        // 7. DTO 만들어서 던져주기
+        // 7. DTO 만들어서 reponse
         OrderResponse.FindByIdDTO response = new OrderResponse.FindByIdDTO(order, itemList);
 
         return response;
 
 
+    }
+
+    public OrderResponse.FindByIdDTO findById(int id) {
+
+        // 1. 해당 OrderId 주문 존재하는 지 확인
+        Order order = orderJPARepository.findById(id).orElseThrow(() -> {
+            throw new Exception404("해당 주문을 찾을 수 없습니다 : " + id);
+        });
+        
+        // 2. OrderId로 itemList 가져오기
+        List<Item> itemList = this.itemJPARepository.findAllByOrderId(id);
+
+        // 3. DTO 만들어서 reponse
+        return new OrderResponse.FindByIdDTO(order, itemList);
     }
 
 
