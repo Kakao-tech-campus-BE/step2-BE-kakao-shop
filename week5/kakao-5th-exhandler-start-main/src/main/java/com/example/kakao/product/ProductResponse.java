@@ -14,12 +14,12 @@ public class ProductResponse {
         private String image;
         private int price;
 
-        public FindAllDTO(int id, String productName, String description, String image, int price) {
-            this.id = id;
-            this.productName = productName;
-            this.description = description;
-            this.image = image;
-            this.price = price;
+        public FindAllDTO(Product product) {
+            this.id = product.getId();
+            this.productName = product.getProductName();
+            this.description = product.getDescription();
+            this.image = product.getImage();
+            this.price = product.getPrice();
         }
     }
 
