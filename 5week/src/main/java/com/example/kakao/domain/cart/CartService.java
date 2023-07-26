@@ -121,7 +121,7 @@ public class CartService {
   }
 
   private long calcTotalPrice(Option option, int quantity, long... additionalPrice) {
-    long totalPrice = option.getPrice() * (long) quantity + Arrays.stream(additionalPrice).sum();
+    long totalPrice = option.getPrice() * quantity + Arrays.stream(additionalPrice).sum();
     cartValidationService.validatePriceOverflow(totalPrice);
     return totalPrice;
   }

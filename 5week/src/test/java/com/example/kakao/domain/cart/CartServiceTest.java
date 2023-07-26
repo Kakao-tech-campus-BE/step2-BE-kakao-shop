@@ -2,6 +2,7 @@ package com.example.kakao.domain.cart;
 
 import com.example.kakao._core.errors.exception.BadRequestException;
 import com.example.kakao.domain.cart.dto.request.SaveRequestDTO;
+import com.example.kakao.domain.cart.dto.request.UpdateRequestDTO;
 import com.example.kakao.domain.user.User;
 import com.example.kakao.domain.user.UserJPARepository;
 import org.junit.jupiter.api.DisplayName;
@@ -32,6 +33,29 @@ class CartServiceTest {
     );
 
     assertThrows(BadRequestException.class, () -> cartService.addCartList(requestDTOs, user));
+  }
+
+  @Test
+  @DisplayName("예외: 비어있는 수정 요청")
+  void updateWithEmptyRequest() {
+    // given
+    User user = userRepository.findByEmail("ssarmango@nate.com").get();
+    List<UpdateRequestDTO> requestDTOs = List.of();
+
+    assertThrows(BadRequestException.class, () -> cartService.update(requestDTOs, user));
+  }
+
+  @Test
+  @DisplayName("예외: 빈 장바구니 수정 시도")
+  void updateEmptyCartError() {
+    // given
+    User user = userRepository.findByEmail("ssarmango@nate.com").get();
+    List<UpdateRequestDTO> requestDTOs = List.of(
+      UpdateRequestDTO.builder().cartId(1).quantity(2).build(),
+      UpdateRequestDTO.builder().cartId(2).quantity(4).build()
+    );
+
+    assertThrows(BadRequestException.class, () -> cartService.update(requestDTOs, user));
   }
 
 }
