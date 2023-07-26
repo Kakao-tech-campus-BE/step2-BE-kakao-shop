@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import javax.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
+@RequiredArgsConstructor
 public class GlobalExceptionHandler {
+    private final ErrorLogJPARepository errorLogJPARepository;
 
     @ExceptionHandler(Exception400.class)
     public ResponseEntity<?> badRequest(Exception400 e) {
@@ -43,7 +45,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> badRequest(Exception e) {
-        ApiUtils.ApiResult<?> apiResult = ApiUtils.error(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        ErrorLog error = ErrorLog.builder()
+                .message(e.getMessage())
+                .build();
+
+        errorLogJPARepository.save(error);
+        ApiUtils.ApiResult<?> apiResult = ApiUtils.error("서버의 오류로 처리할 수 없습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
         return new ResponseEntity<>(apiResult, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

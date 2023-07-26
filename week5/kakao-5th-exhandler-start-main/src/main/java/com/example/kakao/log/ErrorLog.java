@@ -17,12 +17,6 @@ public class ErrorLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(nullable = true)
-    private Integer userId;
-    @Column(nullable = false)
-    private String userIp;
-    @Column(nullable = false)
-    private String userAgent;
     @Column(nullable = false, length = 1000)
     private String message;
 
@@ -34,12 +28,7 @@ public class ErrorLog {
     }
 
     @Builder
-    public ErrorLog(int id, Integer userId, String userIp, String userAgent, String message, LocalDateTime createdAt) {
-        this.id = id;
-        this.userId = userId;
-        this.userIp = userIp;
-        this.userAgent = userAgent;
+    public ErrorLog(String message) {
         this.message = message;
-        this.createdAt = createdAt;
     }
 }
