@@ -1,5 +1,6 @@
 package com.example.kakao.cart;
 
+import com.example.kakao.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,7 +12,22 @@ import java.util.Optional;
 public interface CartJPARepository extends JpaRepository<Cart, Integer> {
     List<Cart> findAllByUserId(int userId);
 
-    @Query("select c from Cart c where c.user.id = :userId order by c.option.id asc")
+    @Query("select c " +
+            "from Cart c " +
+            "join fetch c.user u " +
+            "join fetch c.option o " +
+            "join fetch o.product " +
+            "where u.id = :userId " +
+            "order by c.option.id asc")
+    List<Cart> findAllByUserIdOOrderByOptionIdAsc(int userId);
+
+    @Query("select c " +
+            "from Cart c " +
+            "join fetch c.user " +
+            "join fetch c.option o " +
+            "join fetch o.product " +
+            "where c.user.id = :userId " +
+            "order by c.option.id asc")
     List<Cart> findByUserIdOrderByOptionIdAsc(int userId);
 
     void deleteByUserId(int userId);

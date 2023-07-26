@@ -12,36 +12,6 @@ public class CartResponse {
 
     @Getter
     @Setter
-    public static class FindAllDTOv2 {
-        private List<ProductDTO> products;
-
-        public FindAllDTOv2(List<Cart> cartList) {
-            this.products = cartList.stream().map(cart -> new ProductDTO(cart)).collect(Collectors.toList());
-        }
-
-        @Getter
-        @Setter
-        public class ProductDTO {
-            private int productId;
-            private String productName;
-            private int cartId;
-            private String optionName;
-            private int quantity;
-            private int price;
-
-            public ProductDTO(Cart cart) {
-                this.productId = cart.getOption().getProduct().getId();
-                this.productName = cart.getOption().getProduct().getProductName();
-                this.cartId = cart.getId();
-                this.optionName = cart.getOption().getOptionName();
-                this.quantity = cart.getQuantity();
-                this.price = cart.getPrice();
-            }
-        }
-    }
-
-    @Getter
-    @Setter
     public static class FindAllDTO {
         private List<ProductDTO> products;
         private int totalPrice;
