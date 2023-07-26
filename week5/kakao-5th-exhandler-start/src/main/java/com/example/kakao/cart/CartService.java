@@ -1,6 +1,7 @@
 package com.example.kakao.cart;
 
 import com.example.kakao._core.errors.exception.Exception400;
+import com.example.kakao._core.errors.exception.Exception403;
 import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao.product.option.Option;
 import com.example.kakao.product.option.OptionJPARepository;
@@ -70,7 +71,7 @@ public class CartService {
         List<Cart> cartList = cartJPARepository.findAllByUserId(user.getId());
 
         // 1. 유저 장바구니에 아무것도 없으면 예외처리
-        if (cartList.isEmpty()) throw new Exception400("장바구니가 비어 있습니다.");
+        if (cartList.isEmpty()) throw new Exception403("사용자의 장바구니가 존재하지 않습니다.");
 
         // 2. cartId:1, cartId:1 이렇게 requestDTOs에 동일한 장바구니 아이디가 두번 들어오면 예외처리
         List<Integer> requestOptionIds = requestDTOs.stream()

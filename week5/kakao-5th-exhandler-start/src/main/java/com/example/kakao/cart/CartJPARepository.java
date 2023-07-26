@@ -1,6 +1,7 @@
 package com.example.kakao.cart;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -13,9 +14,13 @@ public interface CartJPARepository extends JpaRepository<Cart, Integer> {
     @Query("SELECT c FROM Cart c WHERE c.user.id=:userId")
     List<Cart> findAllByUserId(int userId);
 
+    @Query("SELECT c FROM Cart c JOIN FETCH c.option o JOIN FETCH o.product p WHERE c.user.id=:userId")
+    List<Cart> findAllByUserIdFetchOptionAndProduct(int userId);
+
     @Query("select c from Cart c join fetch c.option o join fetch o.product p where c.user.id = :userId order by c.option.id asc")
     List<Cart> findByUserIdOrderByOptionIdAsc(int userId);
 
+    @Modifying
     @Query("delete from Cart c where c.user.id = :userId")
     void deleteByUserId(int userId);
 
