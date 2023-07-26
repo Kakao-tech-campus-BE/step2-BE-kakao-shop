@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +24,7 @@ public class CartService {
     private final OptionJPARepository optionJPARepository;
 
     @Transactional
-    public void addCartList(List<CartRequest.SaveDTO> requestDTOs, User sessionUser) {
+    public List<CartRequest.SaveDTO> addCartList(List<CartRequest.SaveDTO> requestDTOs, User sessionUser) {
         // 1. 동일한 옵션이 들어오면 예외처리
         // [ { optionId:1, quantity:5 }, { optionId:1, quantity:10 } ]
         HashSet<CartRequest.SaveDTO> removeDistinct = new HashSet<>(requestDTOs);
@@ -33,6 +34,8 @@ public class CartService {
 
         // 2. cartJPARepository.findByOptionIdAndUserId() 조회
         // 3. [2번이 아니라면] 유저의 장바구니에 담기
+        List<CartRequest.SaveDTO> saveInfos = new ArrayList<>();
+
         int userId = sessionUser.getId();
         for (CartRequest.SaveDTO requestDTO : requestDTOs) {
             int optionId = requestDTO.getOptionId();
@@ -44,11 +47,16 @@ public class CartService {
             Cart cart = cartOP.orElse(Cart.builder().user(sessionUser).option(optionPS).build());
             int UpdatedQuantity = inputQuantity + cartOP.map(Cart::getQuantity).orElse(0);
             int price = optionPS.getPrice() * UpdatedQuantity;
-
-           cart.update(UpdatedQuantity, price);
+            cart.update(UpdatedQuantity, price);
 
             cartJPARepository.save(cart);
+
+            CartRequest.SaveDTO saveInfo = new CartRequest.SaveDTO();
+            saveInfo.setOptionId(cart.getOption().getId());
+            saveInfo.setQuantity(cart.getQuantity());
+            saveInfos.add(saveInfo);
         }
+        return saveInfos;
     }
 
     public CartResponse.FindAllDTO findAll(User user) {
