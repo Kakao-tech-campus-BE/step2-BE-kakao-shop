@@ -105,27 +105,27 @@ public class OrderRestControllerTest {
 
     //아마 시큐리티 관련.. 오류 같은데,, 어떻게 해결할지 잘 모르겠다ㅠ
     //This generated password is for development use only. Your security configuration must be updated before running your application in production.
-//    @Test
-//    @DisplayName("인증된 사용자의 없는 주문 조회 테스트")
-//    @WithMockUser(username = "ssar@nate.com", roles = "USER")
-//    public void findById_404_test() throws Exception {
-//        // given
-//        int id = 10;
-//
-//        // when
-//        ResultActions result = mvc.perform(
-//                MockMvcRequestBuilders
-//                        .get("/orders/" + id)
-//                        .contentType(MediaType.APPLICATION_JSON)
-//        );
-//        String responseBody = result.andReturn().getResponse().getContentAsString();
-//        System.out.println("테스트 : " + responseBody);
-//
-//        // then
-//        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("false"));
-//        result.andExpect(MockMvcResultMatchers.jsonPath("$.response").isEmpty());
-//        result.andExpect(MockMvcResultMatchers.jsonPath("$.error.status").value("404"));
-//    }
+    @Test
+    @DisplayName("인증된 사용자의 없는 주문 조회 테스트")
+    @WithMockUser(username = "ssar@nate.com", roles = "USER")
+    public void findById_404_test() throws Exception {
+        // given
+        int id = 10;
+
+        // when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .get("/orders/" + id)
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // then
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("false"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.response").isEmpty());
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error.status").value("404"));
+    }
 
     @Test
     @DisplayName("인증되지 않은 사용자의 주문 조회 테스트")

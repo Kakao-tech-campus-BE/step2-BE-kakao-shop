@@ -32,10 +32,14 @@ public class OrderRestController {
     // (기능13) 주문 결과 확인
     @GetMapping("/orders/{id}")
     public ResponseEntity<?> findById(@PathVariable int id) {
-        Order order = fakeStore.getOrderList().get(id-1);
-        List<Item> itemList = fakeStore.getItemList();
-        OrderResponse.FindByIdDTO responseDTO = new OrderResponse.FindByIdDTO(order, itemList);
-        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
+        try {
+            Order order = fakeStore.getOrderList().get(id-1);
+            List<Item> itemList = fakeStore.getItemList();
+            OrderResponse.FindByIdDTO responseDTO = new OrderResponse.FindByIdDTO(order, itemList);
+            return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
+        } catch (IndexOutOfBoundsException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ApiUtils.error("주문번호를 찾을 수 없습니다.", HttpStatus.NOT_FOUND));
+        }
     }
 
 }
