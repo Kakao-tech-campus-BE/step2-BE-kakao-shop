@@ -8,16 +8,16 @@ import com.example.kakao.domain.cart.dto.request.UpdateRequestDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @RequiredArgsConstructor
+@RequestMapping("/carts")
 @RestController
+@Validated
 public class CartRestController {
 
   private final CartService cartListService;
@@ -35,15 +35,17 @@ public class CartRestController {
    * ]
    */
   // (기능6) 장바구니 담기 POST
-  @PostMapping("/carts/add")
+  @PostMapping("/add")
   public ResponseEntity<ApiResponse> addCartList(
-    @RequestBody @Valid List<SaveRequestDTO> requestDTOs, @AuthenticationPrincipal CustomUserDetails userDetails) {
+    @RequestBody @Valid List<SaveRequestDTO> requestDTOs,
+    @AuthenticationPrincipal CustomUserDetails userDetails) {
+
     cartListService.addCartList(requestDTOs, userDetails.getUser());
     return ResponseEntity.ok(ApiUtils.success());
   }
 
   // (기능7) 장바구니 조회 - (주문화면) GET
-  @GetMapping("/carts")
+  @GetMapping("")
   public ResponseEntity<ApiResponse> findAll(@AuthenticationPrincipal CustomUserDetails userDetails) {
     return ResponseEntity.ok(ApiUtils.success(
       cartListService.findAll(userDetails.getUser()))
@@ -64,7 +66,7 @@ public class CartRestController {
    * ]
    */
 // (기능8) 주문하기 - (주문화면에서 장바구니 수정하기)
-  @PostMapping("/carts/update")
+  @PostMapping("/update")
   public ResponseEntity<ApiResponse> update(
     @RequestBody @Valid List<UpdateRequestDTO> requestDTOs,
     @AuthenticationPrincipal CustomUserDetails userDetails) {

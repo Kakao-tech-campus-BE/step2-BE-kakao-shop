@@ -12,6 +12,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -19,8 +20,11 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -33,8 +37,13 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(ConstraintViolationException.class)
   public ResponseEntity<ApiResponse> handleConstraintViolationException(ConstraintViolationException ex) {
     log.error("Constraint Violation", ex);
+
+    List<String> errorMessages = ex.getConstraintViolations().stream()
+      .map(ConstraintViolation::getMessage)
+      .collect(Collectors.toList());
+
     return new ResponseEntity<>(
-      ApiUtils.error("Constraint Violation: " + ex.getMessage(), HttpStatus.BAD_REQUEST),
+      ApiUtils.error("Constraint Violation: " + errorMessages, HttpStatus.BAD_REQUEST),
       HttpStatus.BAD_REQUEST
     );
   }
@@ -97,6 +106,14 @@ public class GlobalExceptionHandler {
   public ResponseEntity<ApiResponse> handleNotFoundException(NotFoundException ex, HttpServletRequest request) {
     log.error("Not Found: 404", ex);
     return new ResponseEntity<>(ex.body(), ex.status());
+  }
+
+  @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+  public ResponseEntity<ApiResponse> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException ex, HttpServletRequest request) {
+    log.error("Http Request Method Not Supported: 405", ex);
+    return handleNotFoundException(
+      new NotFoundException("Http Request Method " + ex.getMethod() + " Not Supported"), request);
+    // 405 이지만 400~404까지만 사용하기로 약속됨.
   }
 
   @ExceptionHandler(InternalServerErrorException.class)
