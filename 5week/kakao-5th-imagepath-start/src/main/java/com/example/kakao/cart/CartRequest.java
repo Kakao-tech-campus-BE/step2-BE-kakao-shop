@@ -37,6 +37,21 @@ public class CartRequest {
         private int cartId;
         @NotNull
         private int quantity;
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj instanceof UpdateDTO) {
+                UpdateDTO s = (UpdateDTO) obj;
+                if (this.cartId == s.getCartId()) return true;
+            }
+            return false;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(cartId);
+        }
     }
+
 
 }
