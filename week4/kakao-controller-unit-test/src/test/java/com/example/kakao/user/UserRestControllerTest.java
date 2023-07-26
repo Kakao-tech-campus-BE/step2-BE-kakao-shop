@@ -20,9 +20,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 // GlobalExceptionHandler 와 UserRestController를 SpringContext에 등록합니다.
 
@@ -49,31 +52,47 @@ public class UserRestControllerTest {
     @Autowired
     private ObjectMapper om;
 
-    @Test
-    public void t1(){}
 
     @Test
     public void join_test() throws Exception {
-        // given
         UserRequest.JoinDTO requestDTO = new UserRequest.JoinDTO();
         requestDTO.setEmail("ssarmango@nate.com");
         requestDTO.setPassword("meta1234!");
         requestDTO.setUsername("ssarmango");
         String requestBody = om.writeValueAsString(requestDTO);
 
-        // when
-        ResultActions result = mvc.perform(
-                MockMvcRequestBuilders
-                        .post("/join")
-                        .content(requestBody)
-                        .contentType(MediaType.APPLICATION_JSON)
-        );
+        mvc.perform(
+                        MockMvcRequestBuilders
+                                .post("/join")
+                                .content(requestBody)
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(jsonPath("$.success").value("true"))
+                .andExpect(jsonPath("$.response").isEmpty())
+                .andExpect(jsonPath("$.error").isEmpty());
+    }
 
-        String responseBody = result.andReturn().getResponse().getContentAsString();
-        System.out.println("테스트 : "+responseBody);
+    @Test
+    public void join_fail_email_test() throws Exception {
+        UserRequest.JoinDTO requestDTO = new UserRequest.JoinDTO();
+        requestDTO.setEmail("ssarmangonate.com");
+        requestDTO.setPassword("meta1234!");
+        requestDTO.setUsername("ssarmango");
+        String requestBody = om.writeValueAsString(requestDTO);
 
-        // then
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
+        mvc.perform(
+                        MockMvcRequestBuilders
+                                .post("/join")
+                                .content(requestBody)
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.success").value(false))
+                .andExpect(jsonPath("$.response").isEmpty())
+                .andExpect(jsonPath("$.error.message").value("이메일 형식으로 작성해주세요:email"))
+                .andExpect(jsonPath("$.error.status").value(400));
     }
 
     @Test
@@ -98,18 +117,18 @@ public class UserRestControllerTest {
         );
         String responseBody = result.andReturn().getResponse().getContentAsString();
         String responseHeader = result.andReturn().getResponse().getHeader(JWTProvider.HEADER);
-        System.out.println("테스트 : "+responseBody);
-        System.out.println("테스트 : "+responseHeader);
+        System.out.println("테스트 : " + responseBody);
+        System.out.println("테스트 : " + responseHeader);
 
         // then
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
+        result.andExpect(jsonPath("$.success").value("true"));
         Assertions.assertTrue(jwt.startsWith(JWTProvider.TOKEN_PREFIX));
     }
 
     @Test
-    public void length_test(){
+    public void length_test() {
         String value = "Bearer eyJ0eX";
-        System.out.println(value.substring(0,6));
+        System.out.println(value.substring(0, 6));
     }
 
 }
