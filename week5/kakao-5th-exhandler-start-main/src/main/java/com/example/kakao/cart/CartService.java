@@ -61,7 +61,6 @@ public class CartService {
                 int price = option.getPrice() * updatedQuantity;
 
                 prevCart.update(updatedQuantity, price);
-                cartJPARepository.save(prevCart);
             }
         });
     }
