@@ -14,21 +14,12 @@ public interface CartJPARepository extends JpaRepository<Cart, Integer> {
 
     @Query("select c " +
             "from Cart c " +
-            "join fetch c.user u " +
-            "join fetch c.option o " +
-            "join fetch o.product " +
-            "where u.id = :userId " +
-            "order by c.option.id asc")
-    List<Cart> findAllByUserIdOOrderByOptionIdAsc(int userId);
-
-    @Query("select c " +
-            "from Cart c " +
             "join fetch c.user " +
             "join fetch c.option o " +
             "join fetch o.product " +
             "where c.user.id = :userId " +
             "order by c.option.id asc")
-    List<Cart> findByUserIdOrderByOptionIdAsc(int userId);
+    Optional<List<Cart>> findByUserIdOrderByOptionIdAsc(int userId);
 
     void deleteByUserId(int userId);
 
