@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -31,9 +32,19 @@ public class CartService {
             int quantity = requestDTO.getQuantity();
             Option optionPS = optionJPARepository.findById(optionId)
                     .orElseThrow(() -> new Exception404("해당 옵션을 찾을 수 없습니다 : " + optionId));
-            int price = optionPS.getPrice() * quantity;
-            Cart cart = Cart.builder().user(sessionUser).option(optionPS).quantity(quantity).price(price).build();
-            cartJPARepository.save(cart);
+
+            Optional<Cart> cartPS = cartJPARepository.findByOptionIdAndUserId(optionId, sessionUser.getId());
+            if (cartPS.isPresent()) { //이미 optionId 존재하는 경우
+                int savedQuantity = cartPS.get().getQuantity();
+                int updatedQuantity = savedQuantity + quantity;
+                int updatedPrice = optionPS.getPrice() * updatedQuantity;
+
+                cartPS.get().update(updatedQuantity, updatedPrice);
+            } else {
+                int price = optionPS.getPrice() * quantity;
+                Cart cart = Cart.builder().user(sessionUser).option(optionPS).quantity(quantity).price(price).build();
+                cartJPARepository.save(cart);
+            }
         }
     }
 
