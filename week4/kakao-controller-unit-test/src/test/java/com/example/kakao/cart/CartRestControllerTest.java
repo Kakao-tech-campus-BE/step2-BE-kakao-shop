@@ -14,9 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
-import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Map;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -28,8 +26,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 })
 @WebMvcTest(controllers = {CartRestController.class})
 public class CartRestControllerTest {
-    static String cartId = "cartId";
-    static String quantity = "quantity";
     static LinkedList<CartRequest.SaveDTO> body = new LinkedList<>();
 
     @Autowired
@@ -66,6 +62,33 @@ public class CartRestControllerTest {
                 .andExpect(jsonPath("$.response.carts[0].optionName").hasJsonPath())
                 .andExpect(jsonPath("$.response.carts[0].quantity").hasJsonPath())
                 .andExpect(jsonPath("$.response.carts[0].price").hasJsonPath())
+                .andExpect(jsonPath("$.response.totalPrice").hasJsonPath())
+                .andExpect(jsonPath("$.error").isEmpty());
+    }
+
+    @WithMockUser(username = "ssar@nate.com", roles = "USER")
+    @Test
+    public void show_test() throws Exception {
+        mvc.perform(
+                        MockMvcRequestBuilders
+                                .get("/carts")
+//                                .header("Authorization", "Bearer (accessToken)")
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.success").value(true))
+                .andExpect(jsonPath("$.response").hasJsonPath())
+                .andExpect(jsonPath("$.response.products").isArray())
+                .andExpect(jsonPath("$.response.products[0].id").hasJsonPath())
+                .andExpect(jsonPath("$.response.products[0].productName").hasJsonPath())
+                .andExpect(jsonPath("$.response.products[0].carts").isArray())
+                .andExpect(jsonPath("$.response.products[0].carts[0].id").hasJsonPath())
+                .andExpect(jsonPath("$.response.products[0].carts[0].option").hasJsonPath())
+                .andExpect(jsonPath("$.response.products[0].carts[0].option.id").hasJsonPath())
+                .andExpect(jsonPath("$.response.products[0].carts[0].option.optionName").hasJsonPath())
+                .andExpect(jsonPath("$.response.products[0].carts[0].quantity").hasJsonPath())
+                .andExpect(jsonPath("$.response.products[0].carts[0].price").hasJsonPath())
                 .andExpect(jsonPath("$.response.totalPrice").hasJsonPath())
                 .andExpect(jsonPath("$.error").isEmpty());
     }
