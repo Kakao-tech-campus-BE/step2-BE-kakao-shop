@@ -27,11 +27,11 @@ public class Item {
     @Column(nullable = false)
     private int quantity;
     @Column(nullable = false)
-    private int price; // total Price
+    private long price; // total Price
 
 
     @Builder
-    public Item(int id, Option option, Order order, int quantity, int price) {
+    public Item(int id, Option option, Order order, int quantity, long price) {
         this.id = id;
         this.option = option;
         this.order = order;

@@ -3,10 +3,13 @@ package com.example.kakao.integration;
 import com.example.kakao._core.errors.exception.BadRequestException;
 import com.example.kakao.domain.cart.Cart;
 import com.example.kakao.domain.cart.CartJPARepository;
+import com.example.kakao.domain.cart.CartPolicyManager;
 import com.example.kakao.domain.cart.CartService;
 import com.example.kakao.domain.cart.dto.request.SaveRequestDTO;
 import com.example.kakao.domain.cart.dto.request.UpdateRequestDTO;
 import com.example.kakao.domain.cart.dto.response.FindAllResponseDTO;
+import com.example.kakao.domain.product.Product;
+import com.example.kakao.domain.product.option.Option;
 import com.example.kakao.domain.product.option.OptionJPARepository;
 import com.example.kakao.domain.user.User;
 import com.example.kakao.domain.user.UserJPARepository;
@@ -21,9 +24,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.BDDMockito.given;
 
 @SpringBootTest
 @Transactional
@@ -47,7 +53,7 @@ class CartServiceIntegrationTest {
   private ObjectMapper om;
 
   @BeforeEach
-  void setUp(){
+  void setUp() {
     em.createNativeQuery("ALTER TABLE cart_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
   }
 
@@ -58,9 +64,9 @@ class CartServiceIntegrationTest {
     // given
     User user = userRepository.findByEmail("ssarmango@nate.com").get();
     List<SaveRequestDTO> requestDTOs = List.of(
-        SaveRequestDTO.builder().optionId(1).quantity(2).build(),
-        SaveRequestDTO.builder().optionId(2).quantity(2).build(),
-        SaveRequestDTO.builder().optionId(3).quantity(2).build()
+      SaveRequestDTO.builder().optionId(1).quantity(2).build(),
+      SaveRequestDTO.builder().optionId(2).quantity(2).build(),
+      SaveRequestDTO.builder().optionId(3).quantity(2).build()
     );
 
     // when
@@ -98,7 +104,6 @@ class CartServiceIntegrationTest {
     cartService.addCartList(requestDTOs2, user);
     List<Cart> cartList = cartRepository.findAllByUserId(user.getId());
 
-
     // then
     assertThat(cartList).hasSize(4);
     assertThat(cartList.get(0).getQuantity()).isEqualTo(3);
@@ -127,12 +132,10 @@ class CartServiceIntegrationTest {
       SaveRequestDTO.builder().optionId(10).quantity(2).build()
     );
 
-
     // when
     cartService.addCartList(requestDTOs, user);
     List<Cart> cartList = cartRepository.findAllByUserId(user.getId());
     FindAllResponseDTO responseDTO = new FindAllResponseDTO(cartList);
-
 
     // then
     System.out.println("테스트 : " + om.writeValueAsString(responseDTO)); // 이부분 작성비용이 너무 커서 눈으로 테스트 ? -> 콘솔에서 json pretty print 가 가능해야함.
@@ -200,5 +203,26 @@ class CartServiceIntegrationTest {
       assertThrows(BadRequestException.class, () -> cartService.update(updateDTOs, user));
     assertThat(exception.getMessage()).isEqualTo("유저의 장바구니에 존재하지 않는 cartId가 들어왔습니다 : 6");
 
+  }
+
+  @Test
+  @DisplayName("예외: 가격 범위를 넘어서는 담기 요청 시 예외처리")
+  void addCartListPriceOverflowError() throws JsonProcessingException {
+    // given
+    Option option = Option.builder()
+      .product(Product.builder().id(15).build())
+      .optionName("엄청비싼상품")
+      .price(CartPolicyManager.MAX_PRICE + 1)
+      .build();
+    optionRepository.save(option);
+
+    User user = userRepository.findByEmail("ssarmango@nate.com").get();
+    List<SaveRequestDTO> requestDTOs = List.of(
+      SaveRequestDTO.builder().optionId(option.getId()).quantity(1).build() // price over int max
+    );
+
+    // when
+    BadRequestException exception = assertThrows(BadRequestException.class, () -> cartService.addCartList(requestDTOs, user));
+    assertThat(exception.getMessage()).isEqualTo("장바구니에 담을 수 있는 최대 금액을 초과했습니다.");
   }
 }

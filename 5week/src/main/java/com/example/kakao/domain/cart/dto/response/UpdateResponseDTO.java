@@ -11,11 +11,11 @@ import java.util.stream.Collectors;
 @Setter
 public class UpdateResponseDTO {
   private List<CartDTO> carts;
-  private int totalPrice;
+  private long totalPrice;
 
   public UpdateResponseDTO(List<Cart> cartList) {
     this.carts = cartList.stream().map(CartDTO::new).collect(Collectors.toList());
-    this.totalPrice = cartList.stream().mapToInt(Cart::getPrice).sum();
+    this.totalPrice = cartList.stream().mapToLong(Cart::getPrice).sum();
   }
 
 
@@ -26,7 +26,7 @@ public class UpdateResponseDTO {
     private int optionId;
     private String optionName;
     private int quantity;
-    private int price;
+    private long price;
 
     private CartDTO(Cart cart) {
       this.cartId = cart.getId();

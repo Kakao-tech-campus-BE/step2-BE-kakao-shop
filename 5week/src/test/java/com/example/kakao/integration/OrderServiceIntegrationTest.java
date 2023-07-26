@@ -63,8 +63,8 @@ class OrderServiceIntegrationTest {
     assertThat(findResponseDTO.getProducts().stream()
       .map(product -> product.getItems().stream()
         .map(OrderDetailResponseDTO.ItemDTO::getPrice)
-        .reduce(0, Integer::sum)
-      ).reduce(0, Integer::sum)).isEqualTo(
+        .reduce(0L, Long::sum)
+      ).reduce(0L, Long::sum)).isEqualTo(
         30000 + 21800 + 19800 + 29000 + 59800 + 99800
     );
     

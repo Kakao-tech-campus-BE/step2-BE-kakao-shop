@@ -67,7 +67,7 @@ class CartRestControllerTest {
     // then
     resultActions.andExpect(jsonPath("$.success").value("false"));
     resultActions.andExpect(jsonPath("$.error.status").value(400));
-    resultActions.andExpect(jsonPath("$.error.message").value("수량은 1 이상이어야 합니다."));
+    resultActions.andExpect(jsonPath("$.error.message").value("Constraint Violation: [수량은 1 이상이어야 합니다.]"));
   }
 
 }

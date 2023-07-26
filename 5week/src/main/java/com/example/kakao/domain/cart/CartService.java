@@ -12,11 +12,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 
-// 현재는 가격이나 수량의 상한 등은 고려하지 않는다.
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -103,9 +103,6 @@ public class CartService {
     return cart.getId() == updateDTO.getCartId();
   }
 
-  private int calcTotalPrice(Option option, int quantity) {
-    return option.getPrice() * quantity;
-  }
 
   private void createNewCartItem(User sessionUser, int quantity, Option option) {
     Cart cart = Cart.builder()
@@ -118,8 +115,15 @@ public class CartService {
   }
 
   private void updateExistingCartItem(int quantity, Option option, Cart cart) {
-    cart.update(cart.getQuantity() + quantity, cart.getPrice() + option.getPrice() * quantity);
+    cart.update(
+      cart.getQuantity() + quantity,
+      calcTotalPrice(option, quantity, cart.getPrice() ));
   }
 
+  private long calcTotalPrice(Option option, int quantity, long... additionalPrice) {
+    long totalPrice = option.getPrice() * (long) quantity + Arrays.stream(additionalPrice).sum();
+    cartValidationService.validatePriceOverflow(totalPrice);
+    return totalPrice;
+  }
 
 }

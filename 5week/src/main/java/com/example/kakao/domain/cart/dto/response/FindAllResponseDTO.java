@@ -13,14 +13,14 @@ import java.util.stream.Collectors;
 @Setter
 public class FindAllResponseDTO {
   private List<ProductDTO> products;
-  private int totalPrice;
+  private long totalPrice;
 
   public FindAllResponseDTO(List<Cart> cartList) {
     this.products = cartList.stream()
       // 중복되는 상품 걸러내기
       .map(cart -> cart.getOption().getProduct()).distinct()
       .map(product -> new ProductDTO(product, cartList)).collect(Collectors.toList());
-    this.totalPrice = cartList.stream().mapToInt(cart -> cart.getOption().getPrice() * cart.getQuantity()).sum();
+    this.totalPrice = cartList.stream().mapToLong(cart -> cart.getOption().getPrice() * cart.getQuantity()).sum();
   }
 
 
@@ -47,13 +47,13 @@ public class FindAllResponseDTO {
       private int id;
       private OptionDTO option;
       private int quantity;
-      private int price;
+      private long price;
 
       public CartDTO(Cart cart) {
         this.id = cart.getId();
         this.option = new OptionDTO(cart.getOption());
         this.quantity = cart.getQuantity();
-        this.price = cart.getOption().getPrice() * cart.getQuantity();
+        this.price = cart.getOption().getPrice() * (long) cart.getQuantity();
       }
 
       @Getter
@@ -61,7 +61,7 @@ public class FindAllResponseDTO {
       public static class OptionDTO {
         private int id;
         private String optionName;
-        private int price;
+        private long price;
 
         public OptionDTO(Option option) {
           this.id = option.getId();

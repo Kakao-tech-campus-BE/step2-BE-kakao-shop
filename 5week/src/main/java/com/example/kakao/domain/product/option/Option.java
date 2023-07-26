@@ -24,10 +24,10 @@ public class Option {
 
     @Column(length = 100, nullable = false)
     private String optionName;
-    private int price;
+    private long price;
 
     @Builder
-    public Option(int id, Product product, String optionName, int price) {
+    public Option(int id, Product product, String optionName, long price) {
         this.id = id;
         this.product = product;
         this.optionName = optionName;

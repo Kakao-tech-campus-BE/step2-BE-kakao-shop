@@ -18,14 +18,14 @@ public class OrderDetailResponseDTO {
 
   private List<ProductDTO> products;
 
-  private int totalPrice;
+  private long totalPrice;
 
   public OrderDetailResponseDTO(Order order, List<Item> items) {
     this.id = order.getId();
     this.products = items.stream()
       .map(item -> item.getOption().getProduct()).distinct()
       .map(product -> new ProductDTO(product, items)).collect(Collectors.toList());
-    this.totalPrice = items.stream().mapToInt(Item::getPrice).sum();
+    this.totalPrice = items.stream().mapToLong(Item::getPrice).sum();
   }
 
   @Getter
@@ -49,7 +49,7 @@ public class OrderDetailResponseDTO {
     private int id;
     private String optionName;
     private int quantity;
-    private int price;
+    private long price;
 
     private ItemDTO(Item item) {
       this.id = item.getId();

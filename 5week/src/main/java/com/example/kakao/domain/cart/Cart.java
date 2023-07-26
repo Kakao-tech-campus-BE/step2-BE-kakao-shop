@@ -33,10 +33,10 @@ public class Cart {
     private int quantity;
 
     @Column(nullable = false)
-    private int price; // total price
+    private long price; // total price
 
     @Builder
-    public Cart(int id, User user, Option option, int quantity, int price) {
+    public Cart(int id, User user, Option option, int quantity, long price) {
         this.id = id;
         this.user = user;
         this.option = option;
@@ -45,7 +45,7 @@ public class Cart {
     }
 
     // 장바구니 업데이트
-    public void update(int quantity, int price){
+    public void update(int quantity, long price){
         this.quantity = quantity;
         this.price = price;
     }

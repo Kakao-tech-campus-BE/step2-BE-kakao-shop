@@ -12,6 +12,10 @@ import java.util.List;
 @Service
 public class CartValidationService {
 
+  public void validatePriceOverflow(long price) {
+    if (price > CartPolicyManager.MAX_PRICE) throw new BadRequestException("장바구니에 담을 수 있는 최대 금액을 초과했습니다.");
+  }
+
   public void validateUniqueOptionsInSaveDTO(List<SaveRequestDTO> requestDTOs) {
     if (requestDTOs.size() != requestDTOs.stream().mapToInt(SaveRequestDTO::getOptionId).distinct().count()) {
       throw new BadRequestException("요청 명세에 동일한 옵션이 2개 이상 존재합니다.");

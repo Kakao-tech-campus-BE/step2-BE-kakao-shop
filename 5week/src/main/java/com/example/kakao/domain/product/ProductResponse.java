@@ -15,7 +15,7 @@ public class ProductResponse {
     private String productName;
     private String description;
     private String image;
-    private int price;
+    private long price;
     public FindAllDTO(Product product) {
       this.id = product.getId();
       this.productName = product.getProductName();
@@ -31,7 +31,7 @@ public class ProductResponse {
     private String productName;
     private String description;
     private String image;
-    private int price;
+    private long price;
     private int starCount; // 0~5
     private List<OptionDTO> options;
 
@@ -51,7 +51,7 @@ public class ProductResponse {
   public static class OptionDTO {
     private int id;
     private String optionName;
-    private int price;
+    private long price;
     public OptionDTO(Option option) {
       this.id = option.getId();
       this.optionName = option.getOptionName();
