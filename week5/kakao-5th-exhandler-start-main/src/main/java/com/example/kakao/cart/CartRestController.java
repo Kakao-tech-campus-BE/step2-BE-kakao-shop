@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+@Validated
 public class CartRestController {
     private final CartService cartService;
     /**
@@ -36,6 +38,7 @@ public class CartRestController {
     public ResponseEntity<?> addCartList(@RequestBody @Valid List<CartRequest.SaveDTO> requestDTOs,
                                          Errors errors,
                                          @AuthenticationPrincipal CustomUserDetails userDetails) {
+
         cartService.addCartList(requestDTOs, userDetails.getUser());
         ApiUtils.ApiResult<?> apiResult = ApiUtils.success(null);
         return ResponseEntity.ok(apiResult);
