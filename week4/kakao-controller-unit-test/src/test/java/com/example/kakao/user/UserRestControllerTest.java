@@ -154,26 +154,17 @@ public class UserRestControllerTest {
         Mockito.when(userService.login(any())).thenReturn(jwt);
 
         // when
-        ResultActions result = mvc.perform(
-                MockMvcRequestBuilders
-                        .post("/login")
-                        .content(requestBody)
-                        .contentType(MediaType.APPLICATION_JSON)
-        );
-        String responseBody = result.andReturn().getResponse().getContentAsString();
-        String responseHeader = result.andReturn().getResponse().getHeader(JWTProvider.HEADER);
-        System.out.println("테스트 : " + responseBody);
-        System.out.println("테스트 : " + responseHeader);
-
-        // then
-        result.andExpect(jsonPath("$.success").value("true"));
-        Assertions.assertTrue(jwt.startsWith(JWTProvider.TOKEN_PREFIX));
-    }
-
-    @Test
-    public void length_test() {
-        String value = "Bearer eyJ0eX";
-        System.out.println(value.substring(0, 6));
+        mvc.perform(
+                        MockMvcRequestBuilders
+                                .post("/login")
+                                .content(requestBody)
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk())
+                .andExpect(header().string(JWTProvider.HEADER, jwt))
+                .andExpect(jsonPath("$.success").value("true"))
+                .andExpect(jsonPath("$.response").isEmpty())
+                .andExpect(jsonPath("$.error").isEmpty());
     }
 
 }
