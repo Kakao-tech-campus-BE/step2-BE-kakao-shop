@@ -40,43 +40,38 @@ public class UserRestController {
     
     // (기능4) 회원가입
     @PostMapping("/join")
-    public ResponseEntity<?> join(@RequestBody @Valid UserRequest.JoinDTO requestDTO, Errors errors, HttpServletRequest request) {
+    public ResponseEntity<?> join(@RequestBody @Valid UserRequest.JoinDTO requestDTO,
+                                  Errors errors, HttpServletRequest request) {
         if (errors.hasErrors()) {
             List<FieldError> fieldErrors = errors.getFieldErrors();
-            Exception400 ex = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
+            Exception400 ex = new Exception400(fieldErrors.get(0).getDefaultMessage()
+                    + ":" + fieldErrors.get(0).getField());
             return new ResponseEntity<>(
                     ex.body(),
                     ex.status()
             );
         }
-        try {
-            userService.join(requestDTO);
-            return ResponseEntity.ok().body(ApiUtils.success(null));
-        } catch (RuntimeException e) {
-            return globalExceptionHandler.handle(e, request);
-        }
+        userService.join(requestDTO);
+        return ResponseEntity.ok().body(ApiUtils.success(null));
     }
+
 
     // (기능5) 로그인
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody @Valid UserRequest.LoginDTO requestDTO, Errors errors, HttpServletRequest request) {
-
+    public ResponseEntity<?> login(@RequestBody @Valid UserRequest.LoginDTO
+                                           requestDTO, Errors errors, HttpServletRequest request) {
         if (errors.hasErrors()) {
             List<FieldError> fieldErrors = errors.getFieldErrors();
-            Exception400 ex = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
+            Exception400 ex = new Exception400(fieldErrors.get(0).getDefaultMessage()
+                    + ":" + fieldErrors.get(0).getField());
             return new ResponseEntity<>(
                     ex.body(),
                     ex.status()
             );
         }
-
-        try {
-            String jwt = userService.login(requestDTO);
-            return ResponseEntity.ok().header(JWTProvider.HEADER, jwt).body(ApiUtils.success(null));
-        }catch (RuntimeException e){
-            return globalExceptionHandler.handle(e, request);
-        }
+        String jwt = userService.login(requestDTO);
+        return ResponseEntity.ok().header(JWTProvider.HEADER,
+                jwt).body(ApiUtils.success(null));
     }
-
     // 로그아웃 사용안함 - 프론트에서 JWT 토큰을 브라우저의 localstorage에서 삭제하면 됨.
 }
