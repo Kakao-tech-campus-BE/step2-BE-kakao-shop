@@ -24,7 +24,7 @@ public class OrderService {
 
     // Query delete, Modifying-false
     @Transactional
-    public OrderResponse.FindByIdDTO mSave(User user) {
+    public OrderResponse.FindByIdDTO save(User user) {
         List<Cart> cartList = cartJPARepository.mFindByUserId(user.getId());
 
         if(cartList.isEmpty()) {

@@ -27,6 +27,9 @@
     - [OrderRestControllerTest](#orderrestcontrollertest)
 
 - [5주차](#week5)
+  - [과제](#task5)
+    - [CartService](#cartservice)
+    - [OrderService](#orderservice)
 
 - [6주차](#week6)
 
@@ -902,6 +905,38 @@ CREATE INDEX `idx_oi_option_id` ON `order_item_tb` (`optionId`);
 
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
+
+
+## Task5
+
+---
+
+### CartService
+
+- addCartList
+  - 동일한 옵션 예외 처리
+  - 이미 장바구니에 있는 상품 추가 시 수량 업데이트
+  - 유저 장바구니 담기
+- findAll
+  - FindALLDTO -> pruductDTO 중복 제거
+  - FindAllDTO2 -> pruductDTO 중복 제거 X
+- update
+  - 빈 장바구니 예외 처리
+  - 동일한 장바구니 아이디 입력 예외 처리
+  - 유저 장바구니에 없는 cartId 입력 예외 처리
+  - update -> mFindAllByUserId -> Cart join fetch Option
+  - updateV2 -> findAllByUserId
+
+
+### OrderService
+
+- save
+  - save -> mDeleteByUserId -> Query delete. Modifying-false
+  - saveV2 -> deleteByUserId -> 기본 delete
+- findById
+  - findById -> item join fetch order join fetch option join fetch product
+  - findByIdV2 -> item join fetch order
+
 
 # Week6
 
