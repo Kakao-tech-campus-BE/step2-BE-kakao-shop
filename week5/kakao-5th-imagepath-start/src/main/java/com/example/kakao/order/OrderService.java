@@ -23,11 +23,9 @@ public class OrderService {
 
     @Transactional
     public OrderResponse.FindByIdDTO save(User user) {
-        List<Cart> carts = cartJPARepository.findAllByUserIdOOrderByOptionIdAsc(user.getId());
-
-        if (carts.isEmpty()) {
-            throw new Exception403("장바구니가 비어있습니다.");
-        }
+        List<Cart> carts = cartJPARepository.findByUserIdOrderByOptionIdAsc(user.getId()).orElseThrow(
+                () -> new Exception403("장바구니가 비어있습니다.")
+        );
 
         Order savedOrder = orderJPARepository.save(Order.builder().user(user).build());
         List<Item> items = carts
