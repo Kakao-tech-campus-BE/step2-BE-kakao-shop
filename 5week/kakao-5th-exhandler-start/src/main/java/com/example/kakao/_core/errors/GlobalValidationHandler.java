@@ -8,14 +8,15 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 
-@Aspect
-@Component
+@Aspect // Aspect 등록 (Advice + PointCut)
+@Component // IoC 등록
 public class GlobalValidationHandler {
-    @Pointcut("@annotation(org.springframework.web.bind.annotation.PostMapping)")
-    public void postMapping() {
-    }
+//    @Pointcut("@annotation(org.springframework.web.bind.annotation.PostMapping)")
+//    public void postMapping() {
+//    }
 
-    @Before("postMapping()")
+//    @Before("postMapping()")
+    @Before("@annotation(org.springframework.web.bind.annotation.PostMapping)")
     public void validationAdvice(JoinPoint jp) {
         Object[] args = jp.getArgs();
         for (Object arg : args) {
