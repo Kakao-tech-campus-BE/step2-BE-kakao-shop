@@ -65,10 +65,32 @@ public class CartService {
         List<Cart> cartList = cartJPARepository.findAllByUserId(user.getId());
 
         // 1. 유저 장바구니에 아무것도 없으면 예외처리
+        if (cartList.isEmpty()) {
+            throw new Exception400("장바구니 비어 있음");
+        }
 
         // 2. cartId:1, cartId:1 이렇게 requestDTOs에 동일한 장바구니 아이디가 두번 들어오면 예외처리
+        List<Integer> cartIdList = new ArrayList();
+        for (CartRequest.UpdateDTO requestDTO : requestDTOs) {
+            int cartId = requestDTO.getCartId();
+            if (cartIdList.contains(cartId)) {
+                throw new Exception400("같은 상품 수량을 두번 이상 변경");
+            }
+            cartIdList.add(cartId);
+        }
 
         // 3. 유저 장바구니에 없는 cartId가 들어오면 예외처리
+        for (CartRequest.UpdateDTO requestDTO : requestDTOs) {
+            boolean found = false;
+            for (Cart cart : cartList) {
+                if (requestDTO.getCartId() == cart.getId()) {
+                    found = true;
+                }
+            }
+            if (!found) {
+                throw new Exception400("존재하지 않는 장바구니");
+            }
+        }
 
         // 위에 3개를 처리하지 않아도 프로그램은 잘돌아간다. 예를 들어 1번을 처리하지 않으면 for문을 돌지 않고, cartList가 빈배열 []로 정상응답이 나감.
         for (Cart cart : cartList) {
