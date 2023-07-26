@@ -1,18 +1,20 @@
 package com.example.kakao.cart;
 
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 
 public class CartRequest {
 
-    @Getter @Setter @ToString
+    @Getter @ToString
     public static class SaveDTO {
         private int optionId;
         private int quantity;
     }
 
-    @Getter @Setter @ToString
+    @Getter @ToString
     public static class UpdateDTO {
         private int cartId;
         private int quantity;

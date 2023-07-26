@@ -33,6 +33,12 @@ public class CartService {
             throw new Exception400("잘못된 요청입니다.");
         }
 
+        if (requestDTOs.stream()
+                .filter(x->x.getOptionId()<=0 | x.getQuantity()<=0)
+                .collect(Collectors.toList()).size()!=0) {
+            throw new Exception400("잘못된 요청입니다.");
+        }
+
         requestDTOs.forEach(requestDTO -> {
             int optionId = requestDTO.getOptionId();
             int quantity = requestDTO.getQuantity();
