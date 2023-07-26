@@ -42,6 +42,7 @@ public class CartService {
 
             Option optionPS = optionJPARepository.findById(optionId)
                     .orElseThrow(() -> new Exception404("해당 옵션을 찾을 수 없습니다 : " + optionId));
+
             int price = optionPS.getPrice() * quantity;
 
             // 2. cartJPARepository.findByOptionIdAndUserId() 조회 -> 존재하면 장바구니에 수량을 추가하는 업데이트를 해야함. (더티체킹하기)
@@ -55,6 +56,12 @@ public class CartService {
                 Cart cart = Cart.builder().user(sessionUser).option(optionPS).quantity(quantity).price(price).build();
                 cartJPARepository.save(cart);
             }
+            // 강의 다시 들으면서 추가한 코드, price를 신뢰할 수 없음 price가 DB에서 검증이 안됨, 검증하면 괜찮음
+//            for(CartRequest.SaveDTO requesstDTO : requestDTOs){
+//                int optionId = requestDTO.getOptionId();
+//                int quantity = requestDTO.getQuantity();
+//                int price = requestDTO.getPrice();
+//                cartJPARepository.mSave(sessionUser.getId(), optionId,quantity,price);
         }
     }
 
