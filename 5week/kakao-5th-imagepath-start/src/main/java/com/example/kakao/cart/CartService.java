@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -24,9 +25,6 @@ public class CartService {
 
         // 옵션아이디를 저장할 리스트
         List<Integer> optionIds = new ArrayList<>();
-        // 2. cartJPARepository.findByOptionIdAndUserId() 조회 -> 존재하면 장바구니에 수량을 추가하는 업데이트를 해야함. (더티체킹하기)
-
-
 
         for (CartRequest.SaveDTO requestDTO : requestDTOs) {
             int optionId = requestDTO.getOptionId();
@@ -76,12 +74,26 @@ public class CartService {
     @Transactional
     public CartResponse.UpdateDTO update(List<CartRequest.UpdateDTO> requestDTOs, User user) {
         List<Cart> cartList = cartJPARepository.findAllByUserId(user.getId());
+        List<Integer> cartIds = new ArrayList<>();
+        List<Integer> userCartIds = cartList.stream().map(Cart::getId).collect(Collectors.toList());
 
         // 1. 유저 장바구니에 아무것도 없으면 예외처리
+        if ( requestDTOs.isEmpty() || cartList.isEmpty()) {
+            throw new Exception400("비어있음.");
+        }
 
-        // 2. cartId:1, cartId:1 이렇게 requestDTOs에 동일한 장바구니 아이디가 두번 들어오면 예외처리
-
-        // 3. 유저 장바구니에 없는 cartId가 들어오면 예외처리
+        for (CartRequest.UpdateDTO updateDTO : requestDTOs) {
+            // 2. cartId:1, cartId:1 이렇게 requestDTOs에 동일한 장바구니 아이디가 두번 들어오면 예외처리
+            if (cartIds.contains(updateDTO.getCartId())) {
+                throw new Exception400("동일한 카트가 들어왔습니다.");
+            } else {
+                cartIds.add(updateDTO.getCartId());
+            }
+            // 3. 유저 장바구니에 없는 cartId가 들어오면 예외처리
+            if (!userCartIds.contains(updateDTO.getCartId())) {
+                throw new Exception400("없는 카트 아이디 입니다.");
+            }
+        }
 
         // 위에 3개를 처리하지 않아도 프로그램은 잘돌아간다. 예를 들어 1번을 처리하지 않으면 for문을 돌지 않고, cartList가 빈배열 []로 정상응답이 나감.
         for (Cart cart : cartList) {
