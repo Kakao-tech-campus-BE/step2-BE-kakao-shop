@@ -20,7 +20,6 @@ import java.util.List;
 @RestController
 public class UserRestController {
 
-    private final GlobalExceptionHandler globalExceptionHandler;
     private final UserService userService;
 
     // (기능3) 이메일 중복체크
