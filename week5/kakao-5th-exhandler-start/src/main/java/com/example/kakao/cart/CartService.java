@@ -60,7 +60,6 @@ public class CartService {
     @Transactional
     public CartResponse.UpdateDTO update(List<CartRequest.UpdateDTO> requestDTOs, User user) {
         List<Cart> cartList = cartJPARepository.findAllByUserId(user.getId());
-
         // 1. 유저 장바구니에 아무것도 없으면 예외처리
         if (cartList.size() == 0){
             throw new Exception400("장바구니에 상품이 존재하지 않습니다.");
@@ -77,10 +76,10 @@ public class CartService {
                     validObject = true;
                     break; // 해당 updateDTO에 대한 처리를 완료하고 더 이상 반복할 필요가 없음. 유효한 객체인가?에 true로 변경해놓고 break
                 }
-                //만약에 끝까지 id가 같은 카트를 찾지 못한 경우에 예외처리
-                if(validObject == false){
-                    throw new Exception400("업데이트할 장바구니가 존재하지 않습니다.");
-                }
+            }
+            //만약에 끝까지 id가 같은 카트를 찾지 못한 경우에 예외처리
+            if(validObject == false){
+                throw new Exception400("업데이트할 장바구니가 존재하지 않습니다.");
             }
         }
 
