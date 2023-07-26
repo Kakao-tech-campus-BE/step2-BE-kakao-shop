@@ -90,14 +90,14 @@ public class CartService {
 
         // 3. 유저 장바구니에 없는 cartId가 들어오면 예외처리
         for (Cart cart : cartList) {
-            Set<Integer> cartIds = new HashSet<>();
+            int count = 0;
             for (CartRequest.UpdateDTO updateDTO : requestDTOs) {
                 if (cart.getId() == updateDTO.getCartId()) {
-                    cartIds.add(cart.getId());
+                    count++;
                     cart.update(updateDTO.getQuantity(), cart.getOption().getPrice() * updateDTO.getQuantity());
                 }
             }
-            if(cartIds.size() == 0)
+            if(count == 0)
                 throw new Exception400("장바구니에 없는 아이디 값이 입력되었습니다.");
         }
         return new CartResponse.UpdateDTO(cartList);
