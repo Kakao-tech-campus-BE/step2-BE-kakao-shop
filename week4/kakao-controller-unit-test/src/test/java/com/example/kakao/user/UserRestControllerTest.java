@@ -117,6 +117,28 @@ public class UserRestControllerTest {
                 .andExpect(jsonPath("$.error.status").value(400));
     }
 
+    @Test
+    public void join_fail_username_test() throws Exception {
+        UserRequest.JoinDTO requestDTO = new UserRequest.JoinDTO();
+        requestDTO.setEmail("ssarmango@nate.com");
+        requestDTO.setPassword("meta1234!");
+        requestDTO.setUsername("ssar");
+        String requestBody = om.writeValueAsString(requestDTO);
+
+        mvc.perform(
+                        MockMvcRequestBuilders
+                                .post("/join")
+                                .content(requestBody)
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.success").value(false))
+                .andExpect(jsonPath("$.response").isEmpty())
+                .andExpect(jsonPath("$.error.message").value("8에서 45자 이내여야 합니다.:username"))
+                .andExpect(jsonPath("$.error.status").value(400));
+    }
+
 
     @Test
     public void login_test() throws Exception {
