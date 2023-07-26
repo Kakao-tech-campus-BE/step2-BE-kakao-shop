@@ -26,14 +26,6 @@ public class UserRestController {
     // (기능3) 이메일 중복체크
     @PostMapping("/check")
     public ResponseEntity<?> check(@RequestBody @Valid UserRequest.EmailCheckDTO emailCheckDTO, Errors errors) {
-        if (errors.hasErrors()) {
-            List<FieldError> fieldErrors = errors.getFieldErrors();
-            Exception400 ex = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
-            return new ResponseEntity<>(
-                    ex.body(),
-                    ex.status()
-            );
-        }
         userService.sameCheckEmail(emailCheckDTO.getEmail());
         return ResponseEntity.ok(ApiUtils.success(null));
     }
@@ -41,32 +33,14 @@ public class UserRestController {
     // (기능4) 회원가입
     @PostMapping("/join")
     public ResponseEntity<?> join(@RequestBody @Valid UserRequest.JoinDTO requestDTO, Errors errors) {
-        //부가 기능
-        if (errors.hasErrors()) {
-            List<FieldError> fieldErrors = errors.getFieldErrors();
-            Exception400 ex = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
-            return new ResponseEntity<>(
-                    ex.body(),
-                    ex.status()
-            );
-        }
         //핵심 기능
-        userService.join(requestDTO);
-        return ResponseEntity.ok().body(ApiUtils.success(null));
+        userService.join(requestDTO); //서비스 호출
+        return ResponseEntity.ok().body(ApiUtils.success(null)); //확인
     }
 
     // (기능5) 로그인
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid UserRequest.LoginDTO requestDTO, Errors errors) {
-        //부가 기능
-        if (errors.hasErrors()) {
-            List<FieldError> fieldErrors = errors.getFieldErrors();
-            Exception400 ex = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
-            return new ResponseEntity<>(
-                    ex.body(),
-                    ex.status()
-            );
-        }
         //핵심 기능
         String jwt = userService.login(requestDTO);
         return ResponseEntity.ok().header(JWTProvider.HEADER, jwt).body(ApiUtils.success(null));
