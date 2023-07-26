@@ -96,6 +96,28 @@ public class UserRestControllerTest {
     }
 
     @Test
+    public void join_fail_password_test() throws Exception {
+        UserRequest.JoinDTO requestDTO = new UserRequest.JoinDTO();
+        requestDTO.setEmail("ssarmangonate.com");
+        requestDTO.setPassword("meta");
+        requestDTO.setUsername("ssarmango");
+        String requestBody = om.writeValueAsString(requestDTO);
+
+        mvc.perform(
+                        MockMvcRequestBuilders
+                                .post("/join")
+                                .content(requestBody)
+                                .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.success").value(false))
+                .andExpect(jsonPath("$.response").isEmpty())
+                .andExpect(jsonPath("$.error.message").value("8에서 20자 이내여야 합니다.:password"))
+                .andExpect(jsonPath("$.error.status").value(400));
+    }
+
+    @Test
     public void login_test() throws Exception {
         // given
         UserRequest.LoginDTO loginDTO = new UserRequest.LoginDTO();
