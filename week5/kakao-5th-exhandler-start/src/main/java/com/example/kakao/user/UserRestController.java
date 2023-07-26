@@ -26,7 +26,7 @@ public class UserRestController {
     // (기능3) 이메일 중복체크
     @PostMapping("/check")
     public ResponseEntity<?> check(@RequestBody @Valid UserRequest.EmailCheckDTO emailCheckDTO, Errors errors) {
-        
+
         userService.sameCheckEmail(emailCheckDTO.getEmail());
         return ResponseEntity.ok(ApiUtils.success(null));
     }

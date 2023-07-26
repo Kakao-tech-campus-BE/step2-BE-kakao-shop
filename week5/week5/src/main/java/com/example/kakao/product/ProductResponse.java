@@ -27,37 +27,37 @@ public class ProductResponse {
         }
     }
 
-@Getter @Setter
-public static class FindByIdDTO {
-    private int id;
-    private String productName;
-    private String description;
-    private String image;
-    private int price;
-    private int starCount; // 0~5
-    private List<OptionDTO> options;
-
-    public FindByIdDTO(List<Option> optionList) {
-        this.id = optionList.get(0).getProduct().getId();
-        this.productName = optionList.get(0).getProduct().getProductName();
-        this.description = optionList.get(0).getProduct().getDescription();
-        this.image = optionList.get(0).getProduct().getImage();
-        this.price = optionList.get(0).getProduct().getPrice();
-        this.starCount = 5;
-        this.options = optionList.stream().map(OptionDTO::new).collect(Collectors.toList());
-    }
-
     @Getter @Setter
-    public class OptionDTO {
+    public static class FindByIdDTO {
         private int id;
-        private String optionName;
+        private String productName;
+        private String description;
+        private String image;
         private int price;
+        private int starCount; // 0~5
+        private List<OptionDTO> options;
 
-        public OptionDTO(Option option) {
-            this.id = option.getId();
-            this.optionName = option.getOptionName();
-            this.price = option.getPrice();
+        public FindByIdDTO(List<Option> optionList) {
+            this.id = optionList.get(0).getProduct().getId();
+            this.productName = optionList.get(0).getProduct().getProductName();
+            this.description = optionList.get(0).getProduct().getDescription();
+            this.image = optionList.get(0).getProduct().getImage();
+            this.price = optionList.get(0).getProduct().getPrice();
+            this.starCount = 5;
+            this.options = optionList.stream().map(OptionDTO::new).collect(Collectors.toList());
+        }
+
+        @Getter @Setter
+        public class OptionDTO {
+            private int id;
+            private String optionName;
+            private int price;
+
+            public OptionDTO(Option option) {
+                this.id = option.getId();
+                this.optionName = option.getOptionName();
+                this.price = option.getPrice();
+            }
         }
     }
-}
 }
