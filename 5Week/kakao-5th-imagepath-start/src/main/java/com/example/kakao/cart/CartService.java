@@ -23,7 +23,7 @@ public class CartService {
 
     @Transactional
     public void addCartList(List<CartRequest.SaveDTO> requestDTOs, User sessionUser) {
-        checkSameOptionId(requestDTOs);
+        throwSameOptionIdException(requestDTOs);
 
         for(CartRequest.SaveDTO requestDTO : requestDTOs){
             Cart cart = cartJPARepository.findByOptionIdAndUserId(requestDTO.getOptionId(), sessionUser.getId());
@@ -51,31 +51,51 @@ public class CartService {
     public CartResponse.UpdateDTO update(List<CartRequest.UpdateDTO> requestDTOs, User user) {
         List<Cart> cartList = cartJPARepository.findAllByUserId(user.getId());
 
-        // 1. 유저 장바구니에 아무것도 없으면 예외처리
+        throwEmptyCartException(cartList);
 
-        // 2. cartId:1, cartId:1 이렇게 requestDTOs에 동일한 장바구니 아이디가 두번 들어오면 예외처리
+        throwDuplicateCartIdException(requestDTOs);
 
         // 3. 유저 장바구니에 없는 cartId가 들어오면 예외처리
-
-        // 위에 3개를 처리하지 않아도 프로그램은 잘돌아간다. 예를 들어 1번을 처리하지 않으면 for문을 돌지 않고, cartList가 빈배열 []로 정상응답이 나감.
-        for (Cart cart : cartList) {
-            for (CartRequest.UpdateDTO updateDTO : requestDTOs) {
-                if (cart.getId() == updateDTO.getCartId()) {
+        for(CartRequest.UpdateDTO updateDTO : requestDTOs){
+            boolean found = false;
+            for(Cart cart : cartList){
+                if(updateDTO.getCartId() == cart.getId()){
                     cart.update(updateDTO.getQuantity(), cart.getOption().getPrice() * updateDTO.getQuantity());
+                    found = true;
                 }
+            }
+            if(!found){
+                throw new Exception400("해당 장바구니가 없습니다.");
             }
         }
 
         return new CartResponse.UpdateDTO(cartList);
     } // 더티체킹
 
-    private void checkSameOptionId(List<CartRequest.SaveDTO> requestDTOs){
+    private void throwSameOptionIdException(List<CartRequest.SaveDTO> requestDTOs){
         // 1. 동일한 옵션이 들어오면 예외처리
         // [ { optionId:1, quantity:5 }, { optionId:1, quantity:10 } ]
         Set<Integer> uniqueRequestDTOS = new HashSet<>();
         for(CartRequest.SaveDTO carts : requestDTOs){
             if(!uniqueRequestDTOS.add(carts.getOptionId())){
                 throw new Exception400("동일한 옵션이 존재합니다.");
+            }
+        }
+    }
+
+    private void throwEmptyCartException(List<Cart> cartList){
+        // 1. 유저 장바구니에 아무것도 없으면 예외처리
+        if(cartList.isEmpty()){
+            throw new Exception400("장바구니에 상품이 없습니다.");
+        }
+    }
+
+    private void throwDuplicateCartIdException(List<CartRequest.UpdateDTO> requestDTOs){
+        // 2. cartId:1, cartId:1 이렇게 requestDTOs에 동일한 장바구니 아이디가 두번 들어오면 예외처리
+        Set<Integer> uniqueRequestDTOs = new HashSet<>();
+        for(CartRequest.UpdateDTO requestDTO : requestDTOs){
+            if(!uniqueRequestDTOs.add(requestDTO.getCartId())){
+                throw new Exception400("동일한 장바구니 요청이 있습니다.");
             }
         }
     }
