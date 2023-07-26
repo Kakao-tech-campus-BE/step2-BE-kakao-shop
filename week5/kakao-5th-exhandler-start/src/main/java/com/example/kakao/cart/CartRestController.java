@@ -45,6 +45,20 @@ public class CartRestController {
 
     }
 
+    @GetMapping("/carts")
+    public ResponseEntity<?> findAll(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        CartResponse.FindAllDTO responseDTO = cartService.findAll(userDetails.getUser());
+        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(responseDTO);
+        return ResponseEntity.ok(apiResult);
+    }
+
+    @GetMapping("/carts/v2")
+    public ResponseEntity<?> findAllv2(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        CartResponse.FindAllDTOv2 responseDTO = cartService.findAllv2(userDetails.getUser());
+        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(responseDTO);
+        return ResponseEntity.ok(apiResult);
+    }
+
 
     /**
      *  [
