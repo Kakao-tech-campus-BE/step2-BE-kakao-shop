@@ -11,9 +11,9 @@ public class CartRequest {
     @Getter @Setter @ToString
     public static class SaveDTO {
         @NotNull
-        private int optionId;
+        private Integer optionId;
         @NotNull
-        private int quantity;
+        private Integer quantity;
     }
 
     @Getter @Setter @ToString

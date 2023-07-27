@@ -24,6 +24,7 @@ public class ProductRestController {
         return ResponseEntity.ok(ApiUtils.success(responseDTOs));
     }
 
+/*
     // (기능2) 개별 상품 상세 조회
     // /products/{id}
     @GetMapping("/products/{id}")
@@ -31,10 +32,11 @@ public class ProductRestController {
         ProductResponse.FindByIdDTO responseDTO = productService.findById(id);
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
+*/
 
-    // (기능2) 개별 상품 상세 조회 v2
+    // (기능2) 개별 상품 상세 조회 v2 -> join fetch 이용
     // /products/{id}/v2
-    @GetMapping("/products/{id}/v2")
+    @GetMapping("/products/{id}")
     public ResponseEntity<?> findByIdv2(@PathVariable int id) {
         ProductResponse.FindByIdDTOv2 responseDTO = productService.findByIdv2(id);
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
