@@ -23,7 +23,7 @@ public class KakaoApplication {
 		SpringApplication.run(KakaoApplication.class, args);
 	}
 
-	@Profile("local")
+	@Profile("local")	// resources > application-local.yml
 	@Bean
 	CommandLineRunner localServerStart(UserJPARepository userJPARepository, ProductJPARepository productJPARepository, OptionJPARepository optionJPARepository, PasswordEncoder passwordEncoder){
 		return args -> {
