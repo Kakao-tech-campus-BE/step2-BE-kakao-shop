@@ -43,7 +43,7 @@ public class OrderService {
     }
 
     List<Item> savedItems = itemJPARepository.saveAll(items);
-    cartJPARepository.deleteAllByUserId(user.getId());
+    cartJPARepository.mdeleteAllByUserId(user.getId());
 
     return new OrderResponse.findByIdDTO(order, savedItems);
   }
