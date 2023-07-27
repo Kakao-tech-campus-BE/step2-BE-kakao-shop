@@ -2,6 +2,7 @@ package com.example.kakao.integration;
 
 import com.example.kakao.domain.cart.CartService;
 import com.example.kakao.domain.cart.dto.request.SaveRequestDTO;
+import com.example.kakao.domain.cart.dto.response.FindAllResponseDTO;
 import com.example.kakao.domain.order.OrderService;
 import com.example.kakao.domain.order.dto.OrderDetailResponseDTO;
 import com.example.kakao.domain.user.User;
@@ -67,8 +68,26 @@ class OrderServiceIntegrationTest {
       ).reduce(0L, Long::sum)).isEqualTo(
         30000 + 21800 + 19800 + 29000 + 59800 + 99800
     );
-    
-    // Dto inner class 를 private 으로 두면 접근할 수 없음.
+  }
+
+  @Test
+  @DisplayName("주문 이후 장바구니 초기화 확인")
+  void cartResetAfterOrder() {
+    // given
+    User user = userRepository.findByEmail("ssarmango@nate.com").get();
+    List<SaveRequestDTO> requestDTOs = List.of(
+      SaveRequestDTO.builder().optionId(1).quantity(3).build(),
+      SaveRequestDTO.builder().optionId(2).quantity(2).build()
+    );
+
+    // when
+    cartService.addCartList(requestDTOs, user); // 장바구니 담기
+    orderService.save(user.getId()); // 주문
+    FindAllResponseDTO cartAfterOrder = cartService.findAll(user); // 주문 이후 장바구니 조회
+
+    // then
+    assertThat(cartAfterOrder.getProducts()).isEmpty();
+    assertThat(cartAfterOrder.getTotalPrice()).isZero();
   }
 
 

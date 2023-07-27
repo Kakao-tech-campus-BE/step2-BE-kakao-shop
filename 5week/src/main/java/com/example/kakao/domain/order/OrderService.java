@@ -41,6 +41,9 @@ public class OrderService {
 
     orderRepository.save(order);
     itemRepository.saveAll(items);
+
+    cartRepository.deleteAllByUserId(userId); // 장바구니 초기화
+
     return new OrderDetailResponseDTO(order, items);
   }
 
