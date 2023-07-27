@@ -4,23 +4,24 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 public class CartRequest {
 
     @Getter @Setter @ToString
     public static class SaveDTO {
-        @NotNull
+        @Min(value = 1, message = "옵션 정보가 잘못되었습니다.")
         private int optionId;
-        @NotNull
+        @Min(value = 1, message = "수량이 잘못되었습니다.")
         private int quantity;
     }
 
     @Getter @Setter @ToString
     public static class UpdateDTO {
-        @NotNull
+        @Min(value = 1, message = "장바구니 정보가 잘못되었습니다.")
         private int cartId;
-        @NotNull
+        @Min(value = 1, message = "수량이 잘못되었습니다.")
         private int quantity;
     }
 }
