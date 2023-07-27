@@ -8,6 +8,7 @@ import lombok.Setter;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 public class CartResponse {
 
     @Getter
@@ -18,7 +19,6 @@ public class CartResponse {
         public FindAllDTOv2(List<Cart> cartList) {
             this.products = cartList.stream().map(cart -> new ProductDTO(cart)).collect(Collectors.toList());
         }
-
         @Getter
         @Setter
         public class ProductDTO {
@@ -100,6 +100,72 @@ public class CartResponse {
                         this.price = option.getPrice();
                     }
                 }
+            }
+        }
+    }
+    @Getter @Setter
+    public static class SaveDTO {
+        private int cartId;
+        private List<ProductDTO> products;
+        private int totalPrice;
+
+        public  SaveDTO(List<Cart> cartList) {
+            this.cartId = cartList.get(0).getId();
+            this.products = cartList.stream().map(cart -> new ProductDTO(cart,cartList)).collect(Collectors.toList());
+            this.totalPrice = cartList.stream().mapToInt(Cart::getPrice).sum();
+        }
+
+        public class ProductDTO{
+            private String productName;
+            private List<CartDTO> items;
+            public ProductDTO(Cart product, List<Cart> cartList){
+                this.items = cartList.stream()
+                        .filter(cart -> cart.getOption().getProduct().getId() == product.getId())// 중복되는 상품 걸러내기
+                        .map(CartDTO::new)
+                        .collect(Collectors.toList());
+            }
+        }
+        public class CartDTO {
+            private int id;
+            private String optionName;
+            private int quantity;
+            private int price;
+
+            public CartDTO(Cart cart){
+                this.id = cart.getId();
+                this.optionName = cart.getOption().getOptionName();
+                this.quantity = cart.getQuantity();
+                this.price = cart.getPrice();
+            }
+        }
+    }
+    @Getter
+    @Setter
+    public static class UpdateDTO {
+        private List<CartDTO> carts;
+        private int totalPrice;
+
+        public UpdateDTO(List<Cart> cartList) {
+            this.carts = cartList.stream().map(CartDTO::new).collect(Collectors.toList());
+            this.totalPrice = cartList.stream().mapToInt(cart -> cart.getPrice()).sum();
+        }
+
+
+        @Getter
+        @Setter
+        public class CartDTO {
+            private int cartId;
+            private int optionId;
+            private String optionName;
+            private int quantity;
+            private int price;
+
+            public CartDTO(Cart cart) {
+                this.cartId = cart.getId();
+                this.optionId = cart.getOption().getId();
+                this.optionName = cart.getOption().getOptionName();
+                this.quantity = cart.getQuantity();
+                this.price = cart.getPrice();
             }
         }
     }

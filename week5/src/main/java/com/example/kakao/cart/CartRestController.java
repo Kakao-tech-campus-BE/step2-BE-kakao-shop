@@ -2,6 +2,8 @@ package com.example.kakao.cart;
 
 import com.example.kakao._core.security.CustomUserDetails;
 import com.example.kakao._core.utils.ApiUtils;
+import com.example.kakao.order.OrderResponse;
+import com.example.kakao.order.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,19 +21,7 @@ import java.util.List;
 public class CartRestController {
 
     private final CartService cartService;
-
-    /**
-     * [
-     * {
-     * "optionId":1,
-     * "quantity":5
-     * },
-     * {
-     * "optionId":2,
-     * "quantity":5
-     * }
-     * ]
-     */
+    private final OrderService orderService;
     // (기능6) 장바구니 담기 POST
     // /carts/add
     @PostMapping("/carts/add")
@@ -54,21 +44,18 @@ public class CartRestController {
 
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
+    @PostMapping("/carts/orders/save")
+    public ResponseEntity<?> save(@AuthenticationPrincipal CustomUserDetails userDetails){
+        OrderResponse.SaveDTO responseDTO = orderService.save(userDetails.getUser());
+        return ResponseEntity.ok(ApiUtils.success(responseDTO));
+    }
 
-    /**
-     * [
-     * {
-     * "cartId":1,
-     * "quantity":10
-     * },
-     * {
-     * "cartId":2,
-     * "quantity":10
-     * }
-     * ]
-     */
     // (기능8) 주문하기 - (주문화면에서 장바구니 수정하기)
     // /carts/update
-    public void update() {
+    @PostMapping("/carts/update")
+    public ResponseEntity<?> update(@RequestBody @Valid List<CartRequest.UpdateDTO> requestDTOs, Errors errors, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        CartResponse.UpdateDTO responseDTO = cartService.update(requestDTOs,userDetails.getUser());
+        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(responseDTO);
+        return ResponseEntity.ok(apiResult);
     }
 }
