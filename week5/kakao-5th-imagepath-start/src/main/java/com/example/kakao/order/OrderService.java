@@ -28,22 +28,26 @@ public class OrderService {
     public OrderResponse.SaveDTO saveOrder(User sesssionUser) {
         List<Cart> cartList = cartJPARepository.findAll();
         // 장바구니 비어 있을 때 예외 처리
-
-        // 비어있지 않다면
-        Order order = Order.builder().user(sesssionUser).build();
-        Order orderPS = orderJPARepository.save(order);
-        List<Item> itemList = new ArrayList();
-        for (Cart cart : cartList) {
-            Option optionPS = cart.getOption();
-            int quantity = cart.getQuantity();
-            int price = cart.getPrice();
-            Item item = Item.builder().option(optionPS).order(orderPS).
-                    quantity(quantity).price(price).build();
-            itemList.add(item);
+        if (cartList.isEmpty()) {
+            throw new Exception400("장바구니가 비어있습니다");
         }
-        List<Item> itemListPS = itemJPARepository.saveAll(itemList);
-        cartJPARepository.deleteAll();
-        return new OrderResponse.SaveDTO(orderPS, itemListPS);
+        else {
+            // 비어있지 않다면
+            Order order = Order.builder().user(sesssionUser).build();
+            Order orderPS = orderJPARepository.save(order);
+            List<Item> itemList = new ArrayList();
+            for (Cart cart : cartList) {
+                Option optionPS = cart.getOption();
+                int quantity = cart.getQuantity();
+                int price = cart.getPrice();
+                Item item = Item.builder().option(optionPS).order(orderPS).
+                        quantity(quantity).price(price).build();
+                itemList.add(item);
+            }
+            List<Item> itemListPS = itemJPARepository.saveAll(itemList);
+            cartJPARepository.deleteAll();
+            return new OrderResponse.SaveDTO(orderPS, itemListPS);
+        }
     }
 
     @Transactional
