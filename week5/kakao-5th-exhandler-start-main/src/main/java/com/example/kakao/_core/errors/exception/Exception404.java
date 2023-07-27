@@ -7,16 +7,9 @@ import org.springframework.http.HttpStatus;
 
 // 권한 없음
 @Getter
-public class Exception404 extends RuntimeException {
+public class Exception404 extends HttpStatusException {
     public Exception404(String message) {
-        super(message);
+        super(message, HttpStatus.NOT_FOUND);
     }
 
-    public ApiUtils.ApiResult<?> body(){
-        return ApiUtils.error(getMessage(), HttpStatus.NOT_FOUND);
-    }
-
-    public HttpStatus status(){
-        return HttpStatus.NOT_FOUND;
-    }
 }
