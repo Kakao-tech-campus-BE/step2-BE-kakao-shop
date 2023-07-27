@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,6 +30,7 @@ public class CartService {
         // Set 으로 변환
         Set<Integer> numSet = new HashSet<>(numList);
 
+
         if(numSet.size()!= numList.size()){
             throw new Exception400("잘못된 요청입니다.");
         }
@@ -37,6 +39,20 @@ public class CartService {
                 .filter(x->x.getOptionId()<=0 | x.getQuantity()<=0)
                 .collect(Collectors.toList()).size()!=0) {
             throw new Exception400("잘못된 요청입니다.");
+        }
+
+//        List<Option> options = new ArrayList<>();
+        List<Option> options = requestDTOs.stream().map(x-> {
+            Option option = optionJPARepository.findById(x.getOptionId())
+                    .orElseThrow(() -> new Exception400("잘못된 요청입니다."));
+            return option;
+        }).collect(Collectors.toList());
+        List<Integer> distinctProductIds = options.stream()
+                .map(option -> option.getProduct().getId())
+                .distinct()
+                .collect(Collectors.toList());
+        if (distinctProductIds.size()!=1){
+            throw  new Exception400("중복되지않는 제품입니다.");
         }
 
         requestDTOs.forEach(requestDTO -> {
@@ -57,7 +73,7 @@ public class CartService {
                         .build();
                 cartJPARepository.save(cart);
             } else {
-                int updatedQuantity = quantity+ prevCart.getQuantity();
+                int updatedQuantity = quantity + prevCart.getQuantity();
                 int price = option.getPrice() * updatedQuantity;
 
                 prevCart.update(updatedQuantity, price);
