@@ -5,6 +5,7 @@ import com.example.kakao._core.utils.ApiUtils;
 import com.example.kakao.log.ErrorLog;
 import com.example.kakao.log.ErrorLogJPARepository;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.weaver.ast.Instanceof;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolationException;
 
 @ControllerAdvice
 @RequiredArgsConstructor
@@ -45,12 +47,17 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> badRequest(Exception e) {
-        ErrorLog error = ErrorLog.builder()
-                .message(e.getMessage())
-                .build();
+        if (e instanceof ConstraintViolationException) {
+            ApiUtils.ApiResult<?> apiResult = ApiUtils.error(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(apiResult, HttpStatus.INTERNAL_SERVER_ERROR);
+        } else {
+            ErrorLog error = ErrorLog.builder()
+                    .message(e.getMessage())
+                    .build();
 
-        errorLogJPARepository.save(error);
-        ApiUtils.ApiResult<?> apiResult = ApiUtils.error("서버의 오류로 처리할 수 없습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
-        return new ResponseEntity<>(apiResult, HttpStatus.INTERNAL_SERVER_ERROR);
+            errorLogJPARepository.save(error);
+            ApiUtils.ApiResult<?> apiResult = ApiUtils.error("서버의 오류로 처리할 수 없습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(apiResult, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
