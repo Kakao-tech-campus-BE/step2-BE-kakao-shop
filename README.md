@@ -400,6 +400,17 @@
 <details>
 <summary>4주차 과제 수행</summary>
 
+> 최대한 주어진 Controller 코드를 활용하여 테스트 코드를 작성하였습니다.
+
+## 테스트 내용
+
+![Alt text](week4/img/testcodes.png)
+
+> JPARepositoryTest, RegexTest를 제외하고 구현하였습니다.
+
+> 특이사항으로는, test/java/com/example/kakao/_core/util/DummyEntity.java 에 FakeStore의 내용을 집어넣었습니다. 이렇게 함으로써, main의 FakeStore에 대한 의존성을 사라지게 만들었고, 테스트끼리의 의존성도 사라지게 만들었습니다.
+
+
 </details>
 
 </br>
