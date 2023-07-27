@@ -37,6 +37,11 @@ public class OrderService {
                         .price(cart.getPrice())
                         .build())
                 .collect(Collectors.toList());
+
+        items = items
+                .stream()
+                .filter(item -> item.getQuantity() > 0)
+                .collect(Collectors.toList());
         List<Item> savedItems = itemJPARepository.saveAll(items);
         cartJPARepository.deleteAll(carts);
         return new OrderResponse.FindByIdDTO(savedOrder, savedItems);
