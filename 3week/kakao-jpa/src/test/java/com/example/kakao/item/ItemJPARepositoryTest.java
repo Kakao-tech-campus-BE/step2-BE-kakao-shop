@@ -63,15 +63,23 @@ public class ItemJPARepositoryTest extends DummyEntity {
 
         Product product = productJPARepository.save(newProduct("짱맛", 1, 24000));
 
+<<<<<<< HEAD
+        orderJPARepository.save(newOrder(user1));
+
+=======
         orderJPARepository.save(newOrder(user1)); // 왜 order는 바로 merge로 넘어 가는거야??
 
         // 왜 merge가 되는거지?? 또 다른 save가 아니라?
+>>>>>>> 7d8e539305072c690e109a3bbe40cb73bfbe43e1
         orderJPARepository.save(newOrder(user2));
 
         Option option = optionJPARepository.save(newOption(product, "옵션1", 2000));
 
         cartJPARepository.save(newCart(user1, option, 2));
+<<<<<<< HEAD
+=======
 
+>>>>>>> 7d8e539305072c690e109a3bbe40cb73bfbe43e1
     }
 
     @org.junit.jupiter.api.Order(2)
