@@ -1,5 +1,6 @@
 package com.example.kakao.order;
 
+import com.example.kakao._core.errors.exception.Exception403;
 import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao.cart.Cart;
 import com.example.kakao.cart.CartJPARepository;
@@ -52,5 +53,20 @@ public class OrderService {
         cartJPARepository.deleteByUserId(sessionUser.getId());
 
         return new OrderResponse.SaveDTO(items);
+    }
+
+    public OrderResponse.FindByIdDTO findById(int id, User sessionUser) {
+        Order order = orderJPARepository.findById(id).orElseThrow(
+                () -> new Exception404("해당 주문 내역을 찾을 수 없습니다 :" + id)
+        );
+
+        // 주문의 user와 세션 유저가 일치하지 않는 경우 403에러
+        if (order.getUser().getId() != sessionUser.getId()){
+            throw new Exception403("접근할 수 없는 주문내역입니다 :" + id);
+        }
+
+        List<Item> items = itemJPARepository.findAllByOrderId(order.getId());
+
+        return new OrderResponse.FindByIdDTO(items);
     }
 }
