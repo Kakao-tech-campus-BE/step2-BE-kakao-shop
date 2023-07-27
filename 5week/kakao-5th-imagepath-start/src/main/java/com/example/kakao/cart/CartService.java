@@ -1,5 +1,6 @@
 package com.example.kakao.cart;
 
+import com.example.kakao._core.errors.exception.Exception400;
 import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao.product.option.Option;
 import com.example.kakao.product.option.OptionJPARepository;
@@ -8,7 +9,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -22,20 +26,58 @@ public class CartService {
     public void addCartList(List<CartRequest.SaveDTO> requestDTOs, User sessionUser) {
         // 1. 동일한 옵션이 들어오면 예외처리
         // [ { optionId:1, quantity:5 }, { optionId:1, quantity:10 } ]
+        validateDuplicateOptions(requestDTOs);
 
         // 2. cartJPARepository.findByOptionIdAndUserId() 조회 -> 존재하면 장바구니에 수량을 추가하는 업데이트를 해야함. (더티체킹하기)
+        // userId 와 optionId 를 가져온 후, 만약 현재 존재하는 id 일 경우 업데이트
+        int sessionUserId = sessionUser.getId();
 
-        // 3. [2번이 아니라면] 유저의 장바구니에 담기
-        for (CartRequest.SaveDTO requestDTO : requestDTOs) {
+        for (CartRequest.SaveDTO requestDTO : requestDTOs)
+        {
+            // optionId 가져오기
             int optionId = requestDTO.getOptionId();
+            // 수량
             int quantity = requestDTO.getQuantity();
+            // option
             Option optionPS = optionJPARepository.findById(optionId)
                     .orElseThrow(() -> new Exception404("해당 옵션을 찾을 수 없습니다 : " + optionId));
-            int price = optionPS.getPrice() * quantity;
-            Cart cart = Cart.builder().user(sessionUser).option(optionPS).quantity(quantity).price(price).build();
-            cartJPARepository.save(cart);
+            // 현재 카트에 동일한 옵션 id 가 존재하는지 체크
+            Optional<Cart> cartOptional = cartJPARepository.findByOptionIdAndUserId(optionId, sessionUserId);
+
+            // 값이 존재할 경우 ( 동일한 옵션 id 가 존재할 경우 )
+            if(cartOptional.isPresent()) {
+                Cart cart = cartOptional.get();
+                // 수량 업데이트
+                int updatedQuantity = cart.getQuantity() + requestDTO.getQuantity();
+                // 가격 업데이트
+                int updatedPrice = updatedQuantity * optionPS.getPrice();
+                cart.update(updatedQuantity, updatedPrice);
+
+            }
+            else {
+                // 3. [2번이 아니라면] 유저의 장바구니에 담기
+                int price = optionPS.getPrice() * quantity;
+                Cart cart = Cart.builder().user(sessionUser).option(optionPS).quantity(quantity).price(price).build();
+                cartJPARepository.save(cart);
+            }
+
+        }
+
+    }
+
+    // 같은 옵션 id 가 들어가있는지 체크
+    @Transactional
+    public void validateDuplicateOptions(List<CartRequest.SaveDTO> requestDTOs) {
+        Set<Integer> optionSet = new HashSet<>();
+        for (CartRequest.SaveDTO requestDTO : requestDTOs) {
+            int optionId = requestDTO.getOptionId();
+            if (optionSet.contains(optionId)) {
+                throw new Exception400("동일한 옵션을 추가할 수 없습니다. optionId : " + requestDTO.getOptionId());
+            }
+            optionSet.add(optionId);
         }
     }
+
 
     public CartResponse.FindAllDTO findAll(User user) {
         List<Cart> cartList = cartJPARepository.findByUserIdOrderByOptionIdAsc(user.getId());
