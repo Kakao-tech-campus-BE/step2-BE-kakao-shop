@@ -13,7 +13,7 @@ public class CartRequest {
         private int optionId;
         @NonNull
         private int quantity;
-        private int totalPrice;
+        private int price;
     }
 
     @Getter @Setter @ToString
@@ -22,6 +22,6 @@ public class CartRequest {
         private int cartId;
         @NonNull
         private int quantity;
-        private int totalPrice;
+        private int price;
     }
 }

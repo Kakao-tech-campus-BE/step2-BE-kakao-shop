@@ -31,9 +31,14 @@ public class CartService {
             int quantity = requestDTO.getQuantity();
             Option optionPS = optionJPARepository.findById(optionId)
                     .orElseThrow(() -> new Exception404("해당 옵션을 찾을 수 없습니다 : " + optionId));
-            int price = optionPS.getPrice() * quantity;
-            Cart cart = Cart.builder().user(sessionUser).option(optionPS).quantity(quantity).price(price).build();
-            cartJPARepository.save(cart);
+            int price = requestDTO.getPrice();
+            int priceCheck = optionPS.getPrice() * quantity;
+            if (price == priceCheck) {
+                Cart cart = Cart.builder().user(sessionUser).option(optionPS).quantity(quantity).price(price).build();
+                cartJPARepository.save(cart);
+            } else {
+                // 예외처리 하기
+            }
         }
     } // 여기서 변경 감지, 더티체킹, flush, 트랜잭션 종료
 }
