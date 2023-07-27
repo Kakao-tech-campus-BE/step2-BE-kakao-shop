@@ -37,6 +37,10 @@ public class CartService {
 
         requestDTOs
                 .forEach(request -> {
+                    if (request.getQuantity() < 0) {
+                        throw new Exception400("잘못된 요청입니다. 수량은 음수가 될 수 없습니다.");
+                    }
+
                     Cart cart = savedCarts
                             .stream()
                             .filter(cart1 -> cart1.getOption().getId() == request.getOptionId())
@@ -94,6 +98,11 @@ public class CartService {
 
                     int quantity = request.getQuantity();
                     int price = quantity * cart.getOption().getPrice();
+
+                    if (quantity < 0) {
+                        throw new Exception400("잘못된 요청입니다. 수량은 음수가 될 수 없습니다.");
+                    }
+
                     cart.update(quantity, price);
 
                     return cart;
