@@ -9,6 +9,7 @@ import java.util.Optional;
 
 
 public interface CartJPARepository extends JpaRepository<Cart, Integer> {
+    @Query("select c from Cart c where c.user.id = :userId")
     List<Cart> findAllByUserId(int userId);
 
     @Query(value = "insert into cart_tb(user_id, option_id, quantity, price) values(:userId, :optionId, :quantity, :price)", nativeQuery = true)
