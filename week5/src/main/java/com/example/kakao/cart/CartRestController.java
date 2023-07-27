@@ -44,11 +44,7 @@ public class CartRestController {
 
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
-    @PostMapping("/carts/orders/save")
-    public ResponseEntity<?> save(@AuthenticationPrincipal CustomUserDetails userDetails){
-        OrderResponse.SaveDTO responseDTO = orderService.save(userDetails.getUser());
-        return ResponseEntity.ok(ApiUtils.success(responseDTO));
-    }
+
 
     // (기능8) 주문하기 - (주문화면에서 장바구니 수정하기)
     // /carts/update

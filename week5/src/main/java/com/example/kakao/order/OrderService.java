@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,8 +27,11 @@ public class OrderService {
     @Transactional
     public OrderResponse.FindByIdDTO findById(int id) {
 
+        if( orderRepository.findById(id).isEmpty()) {
+            throw new IllegalArgumentException("해당 주문이 존재하지 않습니다.");
+        }
         // 주문에 해당하는 Item을 가져온다.
-        List<Item> items = itemRepository.findByOrder(id);
+        List<Item> items = itemRepository.findByOrderId(id);
 
         // items의 option에서 product를 추출한다
         return new OrderResponse.FindByIdDTO(id,items);
@@ -35,14 +39,30 @@ public class OrderService {
     }
     @Transactional
     public OrderResponse.SaveDTO save(User user) {
-        // 새로운 주문 생성
+
         Order order = Order.builder().user(user).build();
         orderRepository.save(order);
-        // user로부터 cartList를 가져온다
+
+
         List<Cart> cartList = cartJPARepository.findByUserIdOrderByOptionIdAsc(user.getId());
-        System.out.println("cartList = " + cartList);
 
 
-        return null;
+        List<Item> items = new ArrayList<>();
+
+        for (Cart cart : cartList) {
+            Item item = Item.builder()
+                    .order(order)
+                    .option(cart.getOption())
+                    .quantity(cart.getQuantity())
+                    .price(cart.getPrice())
+                    .build();
+            items.add(item);
+        }
+
+        itemRepository.saveAll(items);
+        cartJPARepository.deleteAll(cartList);
+
+        return new OrderResponse.SaveDTO(order, items);
     }
+
 }

@@ -1,6 +1,5 @@
 package com.example.kakao.order;
 
-import com.example.kakao.cart.Cart;
 import com.example.kakao.order.item.Item;
 import com.example.kakao.product.Product;
 import lombok.Getter;
@@ -21,23 +20,24 @@ public class OrderResponse {
         public FindByIdDTO(int id, List<Item> itemList){
             this.id = id;
             this.products = itemList.stream()
-                    .map(item -> new ProductDTO(item.getOption().getProduct(), item))
+                    .map(item -> new ProductDTO(item.getOption().getProduct().getProductName(), item))
                     .collect(Collectors.toList());
-            this.totalPrice = products.stream()
-                    .mapToInt(product -> product.getItems().stream()
-                            .mapToInt(item -> item.getPrice() * item.getQuantity())
-                            .sum())
+            this.totalPrice = itemList.stream()
+                    .mapToInt(item -> item.getPrice() * item.getQuantity())
                     .sum();
         }
-        @Getter@Setter
-        public static class ProductDTO {
-            private Product product;
-            private List<Item> items;
 
-            public ProductDTO(Product product, Item item){
-                this.product = product;
-                this.items = List.of(item);
+        @Getter
+        @Setter
+        public static class ProductDTO {
+            private String productName;
+            private List<ItemDTO> items;
+
+            public ProductDTO(String productName, Item item){
+                this.productName = productName;
+                this.items = List.of(new ItemDTO(item));
             }
+        }
             @Getter@Setter
             public static class ItemDTO {
                 private int id;
@@ -54,8 +54,51 @@ public class OrderResponse {
             }
         }
 
-    }
+    @Getter
+    @Setter
+    public static class SaveDTO {
+        private int id;
+        private List<ProductDTO> products;
+        private int totalPrice;
 
-    public class SaveDTO {
+        public SaveDTO(Order order, List<Item> itemList) {
+            this.id = order.getId();
+            this.products = itemList.stream()
+                    .map(item -> new ProductDTO(item.getOption().getProduct(), item))
+                    .collect(Collectors.toList());
+            this.totalPrice = itemList.stream()
+                    .mapToInt(item -> item.getPrice() * item.getQuantity())
+                    .sum();
+        }
+
+        @Getter
+        @Setter
+        public static class ProductDTO {
+            private String productName;
+            private List<ItemDTO> items;
+
+            public ProductDTO(Product product, Item item) {
+                this.productName = product.getProductName();
+                this.items = List.of(new ItemDTO(item));
+            }
+
+            @Getter
+            @Setter
+            public static class ItemDTO {
+                private int id;
+                private String optionName;
+                private int quantity;
+                private int price;
+
+                public ItemDTO(Item item) {
+                    this.id = item.getId();
+                    this.optionName = item.getOption().getOptionName();
+                    this.quantity = item.getQuantity();
+                    this.price = item.getPrice();
+                }
+            }
+        }
     }
 }
+
+
