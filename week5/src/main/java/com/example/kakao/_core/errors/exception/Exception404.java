@@ -5,7 +5,7 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 
-// 권한 없음
+// 404
 @Getter
 public class Exception404 extends RuntimeException {
     public Exception404(String message) {

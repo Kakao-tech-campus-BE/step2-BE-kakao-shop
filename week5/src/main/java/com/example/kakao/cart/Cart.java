@@ -3,6 +3,7 @@ package com.example.kakao.cart;
 import com.example.kakao.product.option.Option;
 import com.example.kakao.user.User;
 import lombok.*;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 
