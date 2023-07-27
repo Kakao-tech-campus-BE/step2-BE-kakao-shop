@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface ItemJPARepository extends JpaRepository<Item, Integer> {
     @Query("select i from Item i join fetch i.order join fetch i.option o join fetch o.product where i.order.id = :orderId")
-    List<Item> mFindByOrderId(@Param("orderId") int orderId);
+    List<Item> FindByOrderId(@Param("orderId") int orderId);
 }

@@ -71,9 +71,9 @@ public class ProductRestControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.response.length()").value(3));
     }
 
-    @DisplayName("상품 상세 조회 테스트")
+    @DisplayName("개별 상품 상세 조회 테스트")
     @Test
-    public void findById() throws Exception {
+    public void findById_test() throws Exception {
         Product product = new Product(1, "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전", "description", "/image/path", 1000);
         List<Option> optionList = Arrays.asList(
                 new Option(1, product, "01. 슬라이딩 지퍼백 크리스마스에디션 4종", 10000),
