@@ -1,5 +1,6 @@
 package com.example.kakao.order;
 
+import com.example.kakao._core.errors.exception.Exception400;
 import com.example.kakao.cart.Cart;
 import com.example.kakao.cart.CartJPARepository;
 import com.example.kakao.order.item.Item;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 @RequiredArgsConstructor
@@ -45,7 +47,14 @@ public class OrderService {
     }
 
     @Transactional
-    public void findById() {
-
+    public OrderResponse.findByIdDTO findById(int orderId, User sesssionUser) {
+        Optional<Order> orderPS = orderJPARepository.findById(orderId);
+        if (orderPS.isPresent()) {
+            List<Item> itemListPS = itemJPARepository.mfindByOrderId(orderId);
+            return new OrderResponse.findByIdDTO(orderId, itemListPS);
+        }
+        else {
+            throw new Exception400("존재하지 않는 주문 번호");
+        }
     }
 }
