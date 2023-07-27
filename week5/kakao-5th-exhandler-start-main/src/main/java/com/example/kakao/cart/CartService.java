@@ -59,11 +59,11 @@ public class CartService {
             int optionId = requestDTO.getOptionId();
             int quantity = requestDTO.getQuantity();
             Option option = optionJPARepository.findById(optionId)
-                    .orElseThrow(() -> new Exception404("해당 옵션을 찾을 수 없습니다. : "+optionId));
+                    .orElseThrow(() -> new Exception404("해당 옵션을 찾을 수 없습니다. : " + optionId));
 
             // 장바구니에 담겼는지 확인하는 로직
             Cart prevCart = cartJPARepository.findById(optionId).orElse(null);
-            if (prevCart==null) {
+            if (prevCart == null) {
                 int price = option.getPrice() * quantity;
                 Cart cart = Cart.builder()
                         .user(sessionUser)
