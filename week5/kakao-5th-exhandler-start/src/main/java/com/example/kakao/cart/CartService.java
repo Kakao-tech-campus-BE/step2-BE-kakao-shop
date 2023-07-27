@@ -1,5 +1,6 @@
 package com.example.kakao.cart;
 
+import com.example.kakao._core.errors.exception.Exception400;
 import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao.product.option.Option;
 import com.example.kakao.product.option.OptionJPARepository;
@@ -8,7 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -19,22 +22,38 @@ public class CartService {
     private final OptionJPARepository optionJPARepository;
 
     @Transactional  // 종료될 때, 변경감지+더티체킹+flush+트랜잭션종료
-    public void addCartList(List<CartRequest.SaveDTO> requestDTOs, User sessionUser) {
+    public void addCartList(List<CartRequest.SaveDTO> requestDTOs, User user) {
         // 1. 동일한 옵션이 들어오면 예외처리
         // [ { optionId:1, quantity:5 }, { optionId:1, quantity:10 } ]
+        Set<Integer> optionIdSet = new HashSet<>(); // 해시셋 생성
+        Boolean hasSame = requestDTOs.stream()
+                .map(requestDTO -> requestDTO.getOptionId())
+                .anyMatch(optionId -> !optionIdSet.add(optionId));   // 해시셋에 추가했는데 안 되면(false) -> true를 하나라도 리턴한다면 곧 true가 됨(중복이있다)
+        if (hasSame) {
+            throw new Exception400("동일한 옵션이 입력되었습니다");
+        }
 
-        // 2. cartJPARepository.findByOptionIdAndUserId() 조회 -> 존재하면 장바구니에 수량을 추가하는 업데이트를 해야함. (더티체킹하기)
-        // Cart [ cartId:1, optionId:1, quantity:3, userId:1 ] -> DTO { optionId:1, quantity:5 } => quantity를 8로 만들기
-
-        // 3. [2번이 아니라면] 유저의 장바구니에 담기
         for (CartRequest.SaveDTO requestDTO : requestDTOs) {
             int optionId = requestDTO.getOptionId();
-            int quantity = requestDTO.getQuantity();
             Option optionPS = optionJPARepository.findById(optionId)
                     .orElseThrow(() -> new Exception404("해당 옵션을 찾을 수 없습니다 : " + optionId));
-            int price = optionPS.getPrice() * quantity;
-            Cart cart = Cart.builder().user(sessionUser).option(optionPS).quantity(quantity).price(price).build();
-            cartJPARepository.save(cart);
+
+            Cart cartPS = cartJPARepository.findByOptionIdAndUserId(optionId, user.getId());
+
+            // 2. 유저의 장바구니에 담기
+            if (cartPS == null) {
+                int quantity = requestDTO.getQuantity();
+                int price = optionPS.getPrice() * quantity;
+                Cart cart = Cart.builder().user(user).option(optionPS).quantity(quantity).price(price).build();
+                cartJPARepository.save(cart);
+            }
+            // 3. cartJPARepository.findByOptionIdAndUserId() 조회 -> 존재하면 장바구니에 수량을 추가하는 업데이트를 해야함. (더티체킹하기)
+            // Cart [ cartId:1, optionId:1, quantity:3, userId:1 ] -> DTO { optionId:1, quantity:5 } => quantity를 8로 만들기
+            else {
+                int quantity = cartPS.getQuantity() + requestDTO.getQuantity();
+                int price = optionPS.getPrice() * quantity;
+                cartPS.update(quantity, price);
+            }
         }
     }
 
