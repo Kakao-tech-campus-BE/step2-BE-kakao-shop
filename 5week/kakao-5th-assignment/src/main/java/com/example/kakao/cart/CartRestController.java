@@ -19,7 +19,6 @@ import java.util.List;
 public class CartRestController {
 
     private final CartService cartService;
-
     /**
      * [
      * {
@@ -34,7 +33,8 @@ public class CartRestController {
      */
 // (기능6) 장바구니 담기 POST
 // /carts/add
-    @PostMapping("/carts")
+    // REST API를 고려한다면, @PostMapping("/carts")
+    @PostMapping("/carts/add")
     public ResponseEntity<?> addCartList(@RequestBody @Valid List<CartRequest.SaveDTO> requestDTOs, Errors errors, @AuthenticationPrincipal CustomUserDetails userDetails) {
         cartService.addCartList(requestDTOs, userDetails.getUser());
         return ResponseEntity.ok(ApiUtils.success(null));
@@ -42,8 +42,10 @@ public class CartRestController {
 
     // (기능7) 장바구니 조회 - (주문화면) GET
     // /carts
-    public void findAll() {
-
+    @GetMapping("/carts")
+    public ResponseEntity<?> findAll(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        CartResponse.FindAllDTO responseDTO = cartService.findAll(userDetails.getUser());
+        return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
 
 
