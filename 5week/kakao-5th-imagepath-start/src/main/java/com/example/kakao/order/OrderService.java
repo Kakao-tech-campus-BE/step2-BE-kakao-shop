@@ -60,6 +60,16 @@ public class OrderService {
 
     @Transactional
     public OrderResponse findById(int orderId, int userId) {
+        Order order = orderJPARepository.findById(orderId)
+                .orElseThrow(() -> new Exception400("주문 내역이 존재하지 않습니다. orderId : " + orderId));
+        // 인증
+        if(orderId != userId) {
+            throw new Exception400("권한이 없습니다. orderId : " + orderId);
+        }
+        // itemList 가져오기
+        List<Item> itemList = itemJPARepository.findAllByOrderId(orderId);
+
+        return new OrderResponse(order, itemList);
 
     }
 
