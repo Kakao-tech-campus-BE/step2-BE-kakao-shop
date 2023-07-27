@@ -18,7 +18,6 @@ public class ProductResponse {
         private String image;
         private int price;
 
-        // 깊은 복사 : Lazy Loading 할 때, 메시지 컨버터 작동 할 때 이상한 일이 안생긴다
         public FindAllDTO(Product product) {
             this.id = product.getId();
             this.productName = product.getProductName();
@@ -27,10 +26,9 @@ public class ProductResponse {
             this.price = product.getPrice();
         }
     }
-        @Getter
-        @Setter
 
-        public static class FindByIdDTO {
+@Getter @Setter
+public static class FindByIdDTO {
 
             private int id;
             private String productName;
@@ -50,12 +48,11 @@ public class ProductResponse {
                 this.options = optionList.stream().map(OptionDTO::new).collect(Collectors.toList());
             }
 
-            @Getter
-            @Setter
-            public class OptionDTO {
-                private int id;
-                private String optionName;
-                private int price;
+    @Getter @Setter
+    public class OptionDTO {
+        private int id;
+        private String optionName;
+        private int price;
 
                 public OptionDTO(Option option) {
                     this.id = option.getId();
@@ -65,16 +62,15 @@ public class ProductResponse {
             }
         }
 
-        @Getter
-        @Setter
-        public static class FindByIdDTOv2 {
-            private int id;
-            private String productName;
-            private String description;
-            private String image;
-            private int price;
-            private int starCount; // 0~5
-            private List<OptionDTO> options;
+@Getter @Setter
+public static class FindByIdDTOv2 {
+    private int id;
+    private String productName;
+    private String description;
+    private String image;
+    private int price;
+    private int starCount; // 0~5
+    private List<OptionDTO> options;
 
             public FindByIdDTOv2(List<Option> optionList) {
                 this.id = optionList.get(0).getProduct().getId();
@@ -86,18 +82,17 @@ public class ProductResponse {
                 this.options = optionList.stream().map(OptionDTO::new).collect(Collectors.toList());
             }
 
-            @Getter
-            @Setter
-            public class OptionDTO {
-                private int id;
-                private String optionName;
-                private int price;
+    @Getter @Setter
+    public class OptionDTO {
+        private int id;
+        private String optionName;
+        private int price;
 
-                public OptionDTO(Option option) {
-                    this.id = option.getId();
-                    this.optionName = option.getOptionName();
-                    this.price = option.getPrice();
-                }
-            }
+        public OptionDTO(Option option) {
+            this.id = option.getId();
+            this.optionName = option.getOptionName();
+            this.price = option.getPrice();
         }
     }
+}
+}
