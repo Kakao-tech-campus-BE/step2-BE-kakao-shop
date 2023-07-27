@@ -21,8 +21,7 @@ public class OrderRestController {
     // /orders/save
     @PostMapping("/save")
     public ResponseEntity<?> save(@AuthenticationPrincipal CustomUserDetails userDetails) {
-        Order order = orderService.saveOrder(userDetails.getUser());
-        OrderResponse.FindByIdDTO responseDTO = orderService.saveItemByOrder(order);
+        OrderResponse.FindByIdDTO responseDTO = orderService.saveOrder(userDetails.getUser());
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
 

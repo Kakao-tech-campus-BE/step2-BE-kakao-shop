@@ -2,6 +2,7 @@ package com.example.kakao.cart;
 
 import com.example.kakao.product.option.Option;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -19,5 +20,7 @@ public interface CartJPARepository extends JpaRepository<Cart, Integer> {
     @Query("select c from Cart c where c.option.id = :optionId and c.user.id = :userId")
     Cart findByOptionIdAndUserId(int optionId, int userId);
 
-    void deleteByUserId(int userId);
+    @Modifying
+    @Query("delete from Cart c where c.id in :ids")
+    void deleteAllById(@Param("ids") List<Integer> cartIds);
 }

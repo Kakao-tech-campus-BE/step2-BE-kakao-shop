@@ -1,7 +1,6 @@
 package com.example.kakao.order;
 
 import com.example.kakao._core.errors.exception.Exception400;
-import com.example.kakao._core.errors.exception.Exception500;
 import com.example.kakao.cart.Cart;
 import com.example.kakao.cart.CartJPARepository;
 import com.example.kakao.order.item.Item;
@@ -13,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -22,24 +22,28 @@ public class OrderService {
     private final CartJPARepository cartJPARepository;
     private final ItemJPARepository itemJPARepository;
 
-    public Order saveOrder(User sessionUser){
+    public OrderResponse.FindByIdDTO saveOrder(User sessionUser){
+        List<Cart> cartList = cartJPARepository.findAllByUserId(sessionUser.getId());
+        validateCartList(cartList);
+
         Order order = Order.builder().user(sessionUser).build();
 
         orderJPARepository.save(order);
 
-        return order;
+        return saveItemByOrder(order, cartList);
     }
 
-    public OrderResponse.FindByIdDTO saveItemByOrder(Order order){
-        List<Cart> cartList = cartJPARepository.findAllByUserId(order.getUser().getId());
-        validateCartList(cartList);
-
+    private OrderResponse.FindByIdDTO saveItemByOrder(Order order, List<Cart> cartList){
         List<Item> itemList = new ArrayList<>();
         for (Cart cart : cartList) {
             Item item = createItemFromCart(cart, order);
             itemJPARepository.save(item);
             itemList.add(item);
         }
+
+        cartJPARepository.deleteAllById(
+                cartList.stream().map(Cart::getId).collect(Collectors.toList())
+        );
 
         return new OrderResponse.FindByIdDTO(order, itemList);
     }
