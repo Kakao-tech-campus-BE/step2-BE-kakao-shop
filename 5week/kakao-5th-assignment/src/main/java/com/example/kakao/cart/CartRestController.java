@@ -23,11 +23,13 @@ public class CartRestController {
      * [
      * {
      * "optionId":1,
-     * "quantity":5
+     * "quantity":5,
+     * "price":50000
      * },
      * {
      * "optionId":2,
-     * "quantity":5
+     * "quantity":5,
+     * "price":54500
      * }
      * ]
      */
@@ -53,16 +55,22 @@ public class CartRestController {
      *  [
      *      {
      *          "cartId":1,
-     *          "quantity":10
+     *          "quantity":10,
+     *          "price":100000
      *      },
      *      {
      *          "cartId":2,
-     *          "quantity":10
+     *          "quantity":10,
+     *          "price":109000
      *      }
      *  ]
      */
     // (기능8) 주문하기 - (주문화면에서 장바구니 수정하기)
     // /carts/update
-    public void update() {
+    // REST API를 고려한다면, @PutMapping("/carts")
+    @PostMapping("/carts/update")
+    public ResponseEntity<?> update(@RequestBody @Valid List<CartRequest.UpdateDTO> requestDTOs, Errors errors, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        CartResponse.UpdateDTO responseDTO = cartService.update(requestDTOs,userDetails.getUser());
+        return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
 }
