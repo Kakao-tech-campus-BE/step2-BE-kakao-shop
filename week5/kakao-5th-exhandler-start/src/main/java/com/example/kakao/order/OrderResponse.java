@@ -25,7 +25,7 @@ public class OrderResponse {
                     .map(entry -> new ProductDTO(entry.getKey(), entry.getValue()))
                     .collect(Collectors.toList());
             this.totalPrice = items.stream()
-                    .mapToInt(item -> item.getPrice() * item.getQuantity())
+                    .mapToInt(Item::getPrice)
                     .sum();
         }
 
@@ -77,7 +77,7 @@ public class OrderResponse {
                     .map(entry -> new ProductDTO(entry.getKey(), entry.getValue()))
                     .collect(Collectors.toList());
             this.totalPrice = items.stream()
-                    .mapToInt(item -> item.getPrice() * item.getQuantity())
+                    .mapToInt(Item::getPrice)
                     .sum();
         }
 

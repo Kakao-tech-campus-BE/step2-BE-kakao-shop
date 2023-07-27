@@ -27,7 +27,7 @@ public class CartResponse {
                 ProductDTO productDTO = new ProductDTO(entry.getValue());
                 this.products.add(productDTO);
                 for (ProductDTO.CartDTO cartDTO : productDTO.getCarts()) {
-                    this.totalPrice += (cartDTO.getPrice() * cartDTO.getQuantity());
+                    this.totalPrice += (cartDTO.getPrice());
                 }
             }
         }
