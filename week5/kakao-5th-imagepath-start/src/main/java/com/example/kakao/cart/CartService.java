@@ -36,7 +36,6 @@ public class CartService {
             Cart cart = cartJPARepository.findByOptionIdAndUserId(optionId, userId).orElse(null);
             if (cart != null){
                 // 2. cartJPARepository.findByOptionIdAndUserId() 조회 -> 존재하면 장바구니에 수량을 추가하는 업데이트를 해야함. (더티체킹하기)
-                // TODO : 업데이트 안됨. 오류 수정
                 Option optionPS = optionJPARepository.findById(optionId)
                         .orElseThrow(()->new Exception404("해당 옵션을 찾을 수 없습니다 :"+optionId));
                 cart.update(cart.getQuantity() + quantity, cart.getPrice() + optionPS.getPrice() * quantity);
