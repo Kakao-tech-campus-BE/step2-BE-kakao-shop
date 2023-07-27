@@ -267,7 +267,7 @@ GET /orders/{id}
 
 </details>
 
-<details open>
+<details>
     <summary><h2>3주차</h2></summary>
 
 카카오 테크 캠퍼스 2단계 - BE - 3주차 클론 과제
@@ -339,19 +339,21 @@ fetch join을 사용하여 여러 번의 SELECT query를 유발하지 않고 단
 
 </details>
 
-<details>
+<details open>
     <summary><h2>4주차</h2></summary>
 
 카카오 테크 캠퍼스 2단계 - BE - 4주차 클론 과제
-</br>
-</br>
 
-### **과제명**
+<details>
+    <summary><h3>과제 설명</h3></summary>
+
+#### **과제명**
 ```
 1. 컨트롤러 단위 테스트
 ```
 
-### **과제 설명**
+
+#### **과제 설명**
 ```
 1. 컨트롤러 단위테스트를 작성한뒤 소스코드를 업로드하시오.
 2. stub을 구현하시오.
@@ -359,7 +361,7 @@ fetch join을 사용하여 여러 번의 SELECT query를 유발하지 않고 단
 
 </br>
 
-### **과제 상세 : 수강생들이 과제를 진행할 때, 유념해야할 것**
+#### **과제 상세 : 수강생들이 과제를 진행할 때, 유념해야할 것**
 아래 항목은 반드시 포함하여 과제 수행해주세요!
 >- 컨트롤러 단위테스트가 구현되었는가?
 >- Mockito를 이용하여 stub을 구현하였는가?
@@ -368,7 +370,7 @@ fetch join을 사용하여 여러 번의 SELECT query를 유발하지 않고 단
 >- 모든 요청과 응답이 json으로 처리되어 있는가?
 </br>
 
-### **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
+#### **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
 **1. PR 제목과 내용을 아래와 같이 작성 해주세요.**
 
 >- PR 제목 : 부산대BE_라이언_4주차 과제 
@@ -379,6 +381,16 @@ fetch join을 사용하여 여러 번의 SELECT query를 유발하지 않고 단
 
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
+
+</details>
+
+### 1. 컨트롤러 단위테스트를 작성한뒤 소스코드를 업로드하시오.
+
+`@WebMvcTest`로 각 컨트롤러의 단위테스트(`UserRestControllerTest`, `CartRestControllerTest`, `OrderRestControllerTest`, `ProdcutRestControllerTest`)를 작성하였습니다.
+
+### 2. stub을 구현하시오.
+
+Repository를 사용하지 않는, FakeStore로 구현된 가짜 서비스 로직을 각 Service 클래스로 분리시켰습니다. Service는 MockBean으로 받아 stub으로 알맞은 리턴 값을 부여하여 단위 테스트를 마쳤습니다.
 
 </details>
 
