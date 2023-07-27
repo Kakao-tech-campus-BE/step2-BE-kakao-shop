@@ -1374,16 +1374,12 @@
 <details>
 <summary>Assignment 1</summary>
 
-## **Assignment 1**
-
 - [API Reference](https://app.gitbook.com/s/o1E7yDwyPFukxZ8B4jd3/introduction/kakao-shop-documentation)는 RESTAPI로 설계된 API 문서입니다.
 
 </details>
 
 <details>
 <summary>Assignment 2</summary>
-
-## **Assignment 2**
 
 - Assignment 1에서 설계한 api가 아닌 API 문서를 기반으로 구현했습니다.
 
@@ -1527,7 +1523,10 @@
 > - 코드 작성하면서 어려웠던 점
 > - 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
-## **Assignment 1**
+</br>
+
+<details>
+<summary>Assignment 1</summary>
 
 ### **CartJPARepositoryTest 구현**
 
@@ -1616,6 +1615,9 @@ user를 두 명 저장하고 각 user에 따른 cart, order, item을 생성해�
   - 상품을 찾는 쿼리와 옵션을 가져오는 쿼리를 두 번 사용한다.
   - 상품을 찾는 쿼리를 보냄으로써 product는 영속화되므로 옵션을 가져오는 쿼리에서 조인되지 않아도 됩니다.
 
+</details>
+
+</br>
 </br>
 
 # 4주차
@@ -1661,6 +1663,159 @@ user를 두 명 저장하고 각 user에 따른 cart, order, item을 생성해�
 
 > - 코드 작성하면서 어려웠던 점
 > - 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
+
+</br>
+
+## **작성하면서 어려웠던 점**
+
+- 컨트롤러 테스트에 대해 명확하게 알지 못했었는데 과제를 수행하면서 컨트롤러 테스트의 역할에 대해 깨닫게 되었습니다.
+
+</br>
+
+## **리뷰 시 중점적으로 봐주셨으면 하는 부분**
+
+- 각 컨트롤러 테스트의 종류, 내용, 방식이 적절한지 궁금합니다.
+- 컨트롤러와 서비스의 구현에서 적절하지 못한 부분과 더 좋은 구현 방식이 있는지 봐주셨으면 좋겠습니다.
+
+</br>
+
+## **Assignment**
+
+- DB 사용
+  > - fakeStore에서 DB로 변경했습니다.
+  > - data.sql을 생성해서 더미 데이터로 사용했습니다.
+- ErrorLog 에러
+  > - 서비스에서 ErrorLog를 생성할 경우 몇 개의 데이터가 Null로 들어와서 400이 아닌 500 에러가 발생했습니다.
+  > - ErrorLog의 해당 필드를 nullable = true로 변경했습니다.
+- List 유효성 검사 실패
+  > - List<CartRequest.SaveDTO> requestDTOs로 전달할 경우 List 앞에 @Valid를 걸면 List 내부 요소에 대해 유효성 검사가 적용되지 않았습니다.
+  > - 컨트롤러에 @Validated를 추가하고 GlobalExceptionHandler에 ConstraintViolationException 예외를 처리할 수 있는 handler를 추가했습니다.
+  > - Errors에 유효성 검사 결과 오류가 담기지 않습니다.
+
+</br>
+
+### **[Controller, Service]**
+
+- User를 제외한 Product, Cart, Order를 구현했습니다.
+- 컨트롤러와 서비스의 책임을 분리했습니다.
+
+</br>
+
+### **[CartRestControllerTest]**
+
+- 컨트롤러 테스트에서 컨트롤러가 의존하는 Service, Repository를 호출하지 않고 대체하여 테스트를 수행합니다.
+- Service로부터 격리될 수 있도록 Stub으로 Response를 만들어서 응답합니다.
+- add_success_test()
+  - 장바구니 저장 성공
+  - 200 OK
+  - Response가 null이므로 stub이 필요하지 않습니다.
+- add_fail_test1()
+  - 장바구니 저장 실패 - 최소 수량 미달
+  - Request에서 수량을 -1로 설정합니다.
+  - 400 Bad Request
+  - Response가 null이므로 stub이 필요하지 않습니다.
+- add_fail_test2()
+  - 장바구니 저장 실패 - 최대 수량 초과
+  - Request에서 수량을 1000으로 설정합니다.
+  - 400 Bad Request
+  - Response가 null이므로 stub이 필요하지 않습니다.
+- add_fail_test3()
+  - 장바구니 저장 실패 - 옵션 없음
+  - Request에서 option id 정보를 전달하지 않습니다.
+  - 400 Bad Request
+  - Response가 null이므로 stub이 필요하지 않습니다.
+- add_fail_test4()
+  - 장바구니 저장 실패 - 인증 실패
+  - @WithMockUser를 주석 처리해서 사용자 미인증 상태로 만듭니다.
+  - 401 Unauthorized
+  - Response가 null이므로 stub이 필요하지 않습니다.
+- findAll_test()
+  - 장바구니 조회
+  - 200 OK
+  - Response로 장바구니 조회 응답 결과를 전달하기 위해 Stub을 사용합니다.
+- update_success_test()
+  - 장바구니 수정 성공
+  - 200 OK
+  - Response로 장바구니 수정 응답 결과를 전달하기 위해 Stub을 사용합니다.
+- update_fail_test1()
+  - 장바구니 수정 실패 - 최소 수량 미달
+  - Request에서 수량을 -1로 설정합니다.
+  - 400 Bad Request
+  - Response가 null이므로 stub이 필요하지 않습니다.
+- update_fail_test2()
+  - 장바구니 수정 실패 - 최대 수량 초과
+  - Request에서 수량을 1000으로 설정합니다.
+  - 400 Bad Request
+  - Response가 null이므로 stub이 필요하지 않습니다.
+- update_fail_test3()
+  - 장바구니 수정 실패 - 카트 없음
+  - Request에서 cart id 정보를 전달하지 않습니다.
+  - 400 Bad Request
+  - Response가 null이므로 stub이 필요하지 않습니다.
+- update_fail_test4()
+  - 장바구니 수정 실패 - 인증 실패
+  - @WithMockUser를 주석 처리해서 사용자 미인증 상태로 만듭니다.
+  - 401 Unauthorized
+  - Response가 null이므로 stub이 필요하지 않습니다.
+
+</br>
+
+### **[OrderRestControllerTest]**
+
+- save_test()
+  - 주문 생성
+  - 200 OK
+  - Response로 주문 생성 응답 결과를 전달하기 위해 Stub을 사용합니다.
+- save_fail_test()
+  - 주문 생성 실패 - 인증 실패
+  - @WithMockUser를 주석 처리해서 사용자 미인증 상태로 만듭니다.
+  - 401 Unauthorized
+  - Response가 null이므로 stub이 필요하지 않습니다.
+- findById_test()
+  - 주문 결과 조회
+  - 200 OK
+  - Response로 주문 결과 조회 응답 결과를 전달하기 위해 Stub을 사용합니다.
+
+</br>
+
+### **[ProductRestControllerTest]**
+
+- findAll_test()
+  - 전체 상품 조회
+  - 200 OK
+  - Response로 전체 상품 조회 응답 결과를 전달하기 위해 Stub을 사용합니다.
+- findById_test()
+  - 상품 상세 조회
+  - 200 OK
+  - Response로 상품 상세 조회 응답 결과를 전달하기 위해 Stub을 사용합니다.
+
+</br>
+
+### **[UserRestControllerTest]**
+
+- join_success_test()
+  - 회원가입 성공
+  - 200 OK
+- join_fail_test1()
+  - 회원가입 실패 - 이메일 형식 오류
+  - 400 Bad Request
+- join_fail_test2()
+  - 회원가입 실패 - 비밀번호 형식 오류
+  - 400 Bad Request
+- join_fail_test3()
+  - 회원가입 실패 - 이름 길이 오류
+  - 400 Bad Request
+- login_success_test()
+  - 로그인 성공
+  - 200 OK
+- login_fail_test1()
+  - 로그인 실패 - 이메일 형식 오류
+  - 400 Bad Request
+- login_fail_test2()
+  - 로그인 실패 - 비밀번호 형식 오류
+  - 400 Bad Request
+
+</br>
 
 # 5주차
 
