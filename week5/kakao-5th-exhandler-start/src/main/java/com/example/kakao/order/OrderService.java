@@ -29,7 +29,7 @@ public class OrderService {
     public OrderResponse.SaveDTO save(User user) {
         List<Cart> carts = cartJPARepository.findAllByUserIdFetchOptionAndProduct(user.getId());
 
-        if (carts.isEmpty()) throw new Exception403("사용자의 장바구니가 존재하지 않습니다.");
+        if (carts.isEmpty()) throw new Exception404("사용자의 장바구니가 존재하지 않습니다.");
 
         Order order = Order.builder()
                 .user(user)
@@ -48,7 +48,7 @@ public class OrderService {
         orderJPARepository.save(order);
         itemJPARepository.saveAll(orderItems);
 
-        cartJPARepository.deleteByUserId(user.getId());
+        cartJPARepository.deleteAllInBatch(carts);
 
         return new OrderResponse.SaveDTO(orderItems);
     }

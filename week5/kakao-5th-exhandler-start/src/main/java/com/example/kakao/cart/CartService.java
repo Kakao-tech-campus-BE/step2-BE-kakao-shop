@@ -71,7 +71,7 @@ public class CartService {
         List<Cart> cartList = cartJPARepository.findAllByUserId(user.getId());
 
         // 1. 유저 장바구니에 아무것도 없으면 예외처리
-        if (cartList.isEmpty()) throw new Exception403("사용자의 장바구니가 존재하지 않습니다.");
+        if (cartList.isEmpty()) throw new Exception404("사용자의 장바구니가 존재하지 않습니다.");
 
         // 2. cartId:1, cartId:1 이렇게 requestDTOs에 동일한 장바구니 아이디가 두번 들어오면 예외처리
         List<Integer> requestOptionIds = requestDTOs.stream()
@@ -81,11 +81,12 @@ public class CartService {
         checkDuplication(requestOptionIds);
 
         // 3. 유저 장바구니에 없는 cartId가 들어오면 예외처리
+        List<Integer> cartIds = cartList.stream()
+                .map(Cart::getId)
+                .collect(Collectors.toList());
+
         requestDTOs.forEach(requestDTO -> {
             int requestCartId = requestDTO.getCartId();
-            List<Integer> cartIds = cartList.stream()
-                    .map(Cart::getId)
-                    .collect(Collectors.toList());
             if (!cartIds.contains(requestCartId)) {
                 throw new Exception400("장바구니 번호가 잘못되었습니다.:" + requestCartId);
             }
