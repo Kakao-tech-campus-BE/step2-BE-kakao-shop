@@ -16,7 +16,9 @@ public class CartRequest {
         private int quantity;
     }
 
-    @Getter @Setter @ToString
+    @Getter
+    @Setter
+    @ToString
     public static class UpdateDTO {
         @NotNull
         private int cartId;

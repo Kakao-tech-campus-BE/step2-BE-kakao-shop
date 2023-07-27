@@ -10,43 +10,44 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name="cart_tb",
-        indexes = {
-                @Index(name = "cart_user_id_idx", columnList = "user_id"),
-                @Index(name = "cart_option_id_idx", columnList = "option_id")
-        },
-        uniqueConstraints = {
-                @UniqueConstraint(name = "uk_cart_option_user", columnNames = {"user_id", "option_id"})
-        })
+@Table(name = "cart_tb",
+    indexes = {
+        @Index(name = "cart_user_id_idx", columnList = "user_id"),
+        @Index(name = "cart_option_id_idx", columnList = "option_id")
+    },
+    uniqueConstraints = {
+        @UniqueConstraint(name = "uk_cart_option_user", columnNames = {"user_id", "option_id"})
+    })
 public class Cart {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private User user; // user별로 장바구니에 묶여 있음.
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private Option option;
+  @ManyToOne(fetch = FetchType.LAZY)
+  private User user; // user별로 장바구니에 묶여 있음.
 
-    @Column(nullable = false)
-    private int quantity;
+  @OneToOne(fetch = FetchType.LAZY)
+  private Option option;
 
-    @Column(nullable = false)
-    private int price;
+  @Column(nullable = false)
+  private int quantity;
 
-    @Builder
-    public Cart(int id, User user, Option option, int quantity, int price) {
-        this.id = id;
-        this.user = user;
-        this.option = option;
-        this.quantity = quantity;
-        this.price = price;
-    }
+  @Column(nullable = false)
+  private int price;
 
-    // 장바구니 업데이트
-    public void update(int quantity, int price){
-        this.quantity = quantity;
-        this.price = price;
-    }
+  @Builder
+  public Cart(int id, User user, Option option, int quantity, int price) {
+    this.id = id;
+    this.user = user;
+    this.option = option;
+    this.quantity = quantity;
+    this.price = price;
+  }
+
+  // 장바구니 업데이트
+  public void update(int quantity, int price) {
+    this.quantity = quantity;
+    this.price = price;
+  }
 }

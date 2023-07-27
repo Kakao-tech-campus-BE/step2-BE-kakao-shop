@@ -18,60 +18,44 @@ import java.util.List;
 @RestController
 public class CartRestController {
 
-    private final CartService cartListService;
+  private final CartService cartListService;
 
-    /**
-     * [
-     * {
-     * "optionId":1,
-     * "quantity":5
-     * },
-     * {
-     * "optionId":2,
-     * "quantity":5
-     * }
-     * ]
-     */
-    // (기능6) 장바구니 담기 POST
-    // /carts/add
-    @PostMapping("/carts/add")
-    public ResponseEntity<?> addCartList(@RequestBody @Valid List<CartRequest.SaveDTO> requestDTOs, Errors errors, @AuthenticationPrincipal CustomUserDetails userDetails) {
-        cartListService.addCartList(requestDTOs, userDetails.getUser());
-        return ResponseEntity.ok(ApiUtils.success(null));
-    }
+  /**
+   * [ { "optionId":1, "quantity":5 }, { "optionId":2, "quantity":5 } ]
+   */
+  // (기능6) 장바구니 담기 POST
+  // /carts/add
+  @PostMapping("/carts/add")
+  public ResponseEntity<?> addCartList(@RequestBody @Valid List<CartRequest.SaveDTO> requestDTOs,
+      Errors errors, @AuthenticationPrincipal CustomUserDetails userDetails) {
+    cartListService.addCartList(requestDTOs, userDetails.getUser());
+    return ResponseEntity.ok(ApiUtils.success(null));
+  }
 
-    // (기능7) 장바구니 조회 - (주문화면) GET
-    // /carts
-    @GetMapping("/carts")
-    public ResponseEntity<?> findAll(@AuthenticationPrincipal CustomUserDetails userDetails) {
-        CartResponse.FindAllDTO responseDTO = cartListService.findAll(userDetails.getUser());
-        return ResponseEntity.ok(ApiUtils.success(responseDTO));
-    }
+  // (기능7) 장바구니 조회 - (주문화면) GET
+  // /carts
+  @GetMapping("/carts")
+  public ResponseEntity<?> findAll(@AuthenticationPrincipal CustomUserDetails userDetails) {
+    CartResponse.FindAllDTO responseDTO = cartListService.findAll(userDetails.getUser());
+    return ResponseEntity.ok(ApiUtils.success(responseDTO));
+  }
 
-    @GetMapping("/carts/v2")
-    public ResponseEntity<?> findAllv2(@AuthenticationPrincipal CustomUserDetails userDetails) {
-        CartResponse.FindAllDTOv2 responseDTO = cartListService.findAllv2(userDetails.getUser());
-        return ResponseEntity.ok(ApiUtils.success(responseDTO));
-    }
+  @GetMapping("/carts/v2")
+  public ResponseEntity<?> findAllv2(@AuthenticationPrincipal CustomUserDetails userDetails) {
+    CartResponse.FindAllDTOv2 responseDTO = cartListService.findAllv2(userDetails.getUser());
+    return ResponseEntity.ok(ApiUtils.success(responseDTO));
+  }
 
 
-    /**
-     * [
-     * {
-     * "cartId":1,
-     * "quantity":10
-     * },
-     * {
-     * "cartId":2,
-     * "quantity":10
-     * }
-     * ]
-     */
+  /**
+   * [ { "cartId":1, "quantity":10 }, { "cartId":2, "quantity":10 } ]
+   */
 // (기능8) 주문하기 - (주문화면에서 장바구니 수정하기)
 // /carts/update
-@PostMapping("/carts/update")
-public ResponseEntity<?> update(@RequestBody @Valid List<CartRequest.UpdateDTO> requestDTOs, Errors errors, @AuthenticationPrincipal CustomUserDetails userDetails) {
-    CartResponse.UpdateDTO responseDTO = cartListService.update(requestDTOs,userDetails.getUser());
+  @PostMapping("/carts/update")
+  public ResponseEntity<?> update(@RequestBody @Valid List<CartRequest.UpdateDTO> requestDTOs,
+      Errors errors, @AuthenticationPrincipal CustomUserDetails userDetails) {
+    CartResponse.UpdateDTO responseDTO = cartListService.update(requestDTOs, userDetails.getUser());
     return ResponseEntity.ok(ApiUtils.success(responseDTO));
-}
+  }
 }
