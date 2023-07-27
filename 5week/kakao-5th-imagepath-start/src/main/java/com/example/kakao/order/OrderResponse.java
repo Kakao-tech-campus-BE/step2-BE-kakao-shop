@@ -1,16 +1,14 @@
 package com.example.kakao.order;
 
-import com.example.kakao.cart.Cart;
 import com.example.kakao.order.item.Item;
 import com.example.kakao.product.Product;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Getter @Setter
 public class OrderResponse {
     private int id;
     private List<ProductDTO> products;
@@ -27,7 +25,7 @@ public class OrderResponse {
         this.totalPrice = items.stream()
                 .mapToInt(Item::getPrice).sum(); // Price 만 가져와서 더하기
     }
-
+    @Getter @Setter
     public static class ProductDTO {
         private String productName;
         private List<ItemDTO> items;
@@ -41,7 +39,7 @@ public class OrderResponse {
                     .map(ItemDTO::new)
                     .collect(Collectors.toList());
         }
-
+        @Getter @Setter
         public class ItemDTO {
             private int id;
             private String optionName;
