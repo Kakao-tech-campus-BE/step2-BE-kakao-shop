@@ -61,23 +61,40 @@ public class OrderResponse {
         private List<ProductDTO> products;
         private int totalPrice;
 
-        public FindByIdDTO() {
+        public FindByIdDTO(Order order, List<Item> itemList) {
+            this.id = order.getId();
+            this.products = itemList.stream()
+                    .map(item -> item.getOption().getProduct()).distinct()
+                    .map(product -> new ProductDTO(product, itemList))
+                    .collect(Collectors.toList());
+            this.totalPrice = itemList.stream().mapToInt(item -> item.getPrice()).sum();
 
         }
-
+        @Getter @Setter
         public class ProductDTO {
             private String productName;
             private List<ItemDTO> items;
 
-            public ProductDTO() {
-
+            public ProductDTO(Product product, List<Item> items) {
+                this.productName = product.getProductName();
+                this.items = items.stream()
+                        .filter(item -> item.getOption().getProduct().getId() == product.getId())
+                        .map(ItemDTO::new).collect(Collectors.toList());
             }
 
+            @Getter @Setter
             public class ItemDTO {
                 private int id;
                 private String optionName;
                 private int quantity;
                 private int price;
+
+                public ItemDTO(Item item) {
+                    this.id = item.getId();
+                    this.optionName = item.getOption().getOptionName();
+                    this.quantity = item.getQuantity();
+                    this.price = item.getPrice();
+                }
 
             }
         }

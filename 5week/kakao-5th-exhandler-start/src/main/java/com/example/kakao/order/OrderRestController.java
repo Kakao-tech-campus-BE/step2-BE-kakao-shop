@@ -33,8 +33,9 @@ public class OrderRestController {
     // (기능10) 주문 결과 확인 GET
     // /orders/{id}
     @GetMapping("orders/{id}")
-    public void findById() {
-
+    public ResponseEntity<?> findById(Error errors, @AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable int id) {
+        OrderResponse.FindByIdDTO responseDTO = orderService.findById(userDetails.getUser(), id);
+        return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
 
 }

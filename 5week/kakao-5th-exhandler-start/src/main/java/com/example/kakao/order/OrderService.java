@@ -1,5 +1,6 @@
 package com.example.kakao.order;
 
+import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao.cart.Cart;
 import com.example.kakao.cart.CartJPARepository;
 import com.example.kakao.order.item.Item;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -46,4 +48,9 @@ public class OrderService {
         return new OrderResponse.SaveDTO(order, items);
     }
 
+    public OrderResponse.FindByIdDTO findById(User user, int id) {
+        List<Item> items = itemJPARepository.findByOrderId(id);
+        Order order = orderJPARepository.findById(id).orElseThrow(() -> new Exception404("해당 주문을 찾을 수 없습니다."));
+        return new OrderResponse.FindByIdDTO(order, items);
+    }
 }
