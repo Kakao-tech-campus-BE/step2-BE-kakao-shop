@@ -1,6 +1,7 @@
 package com.example.kakao.cart;
 
 import com.example.kakao._core.errors.exception.Exception400;
+import com.example.kakao._core.errors.exception.Exception403;
 import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao.product.option.Option;
 import com.example.kakao.product.option.OptionJPARepository;
@@ -77,18 +78,27 @@ public class CartService {
         List<Cart> cartList = cartJPARepository.findAllByUserId(user.getId());
 
         // 1. 유저 장바구니에 아무것도 없으면 예외처리
+        if(requestDTOs.isEmpty()) throw new Exception400("장바구니가 비어있습니다.");
 
         // 2. cartId:1, cartId:1 이렇게 requestDTOs에 동일한 장바구니 아이디가 두번 들어오면 예외처리
-
-        // 3. 유저 장바구니에 없는 cartId가 들어오면 예외처리
-
-        // 위에 3개를 처리하지 않아도 프로그램은 잘돌아간다. 예를 들어 1번을 처리하지 않으면 for문을 돌지 않고, cartList가 빈배열 []로 정상응답이 나감.
+        Map<Integer, Boolean> cartMap = new HashMap<>();
+        for(CartRequest.UpdateDTO updateDTO : requestDTOs){
+            int cartId=updateDTO.getCartId();
+            if(cartMap.containsKey(cartId)){
+                throw new Exception400("중복 상품 항목이 있습니다 : "+cartId);
+            }
+            else cartMap.put(cartId,true);
+        }
+        // 3. 유저 장바구니에 없는 cartId가 들어오면 예외처리 & 장바구니 수정
         for (Cart cart : cartList) {
+            boolean matchCart=false;
             for (CartRequest.UpdateDTO updateDTO : requestDTOs) {
                 if (cart.getId() == updateDTO.getCartId()) {
+                    matchCart=true;
                     cart.update(updateDTO.getQuantity(), cart.getOption().getPrice() * updateDTO.getQuantity());
                 }
             }
+            if(!matchCart) throw new Exception403("올바르지 않은 항목이 추가되었습니다");
         }
 
         return new CartResponse.UpdateDTO(cartList);
