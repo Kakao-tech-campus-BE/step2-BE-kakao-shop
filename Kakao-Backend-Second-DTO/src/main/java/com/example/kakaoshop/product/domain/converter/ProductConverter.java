@@ -12,7 +12,7 @@ public class ProductConverter {
         }
 
         return Product.builder()
-                .id(entity.getId())
+                .productId(entity.getProductId())
                 .price(entity.getPrice())
                 .productName(entity.getProductName())
                 .image(entity.getImage())
@@ -25,7 +25,7 @@ public class ProductConverter {
         }
 
         return ProductEntity.builder()
-                .id(product.getId())
+                .productId(product.getProductId())
                 .price(product.getPrice())
                 .productName(product.getProductName())
                 .image(product.getImage())

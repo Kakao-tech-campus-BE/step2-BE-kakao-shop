@@ -15,7 +15,7 @@ public class ProductReponse {
     @Builder(toBuilder = true)
     public static class ProductFindAllResponse {
 
-        private int id;
+        private Long id;
         private String productName;
         private String description;
         private String image;
@@ -28,7 +28,7 @@ public class ProductReponse {
     @Builder(toBuilder = true)
     public static class ProductOptionResponse {
 
-        private int id;
+        private Long id;
         private String optionName;
         private int price;
     }
@@ -39,7 +39,7 @@ public class ProductReponse {
     @Builder(toBuilder = true)
     public static class ProductFindByIdResponse {
 
-        private int id;
+        private Long id;
         private String productName;
         private String description;
         private String image;

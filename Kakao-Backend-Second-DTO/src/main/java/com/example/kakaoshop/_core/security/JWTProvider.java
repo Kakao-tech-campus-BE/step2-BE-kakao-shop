@@ -21,7 +21,7 @@ public class JWTProvider {
         String jwt = JWT.create()
                 .withSubject(user.getEmail())
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXP))
-                .withClaim("id", user.getId())
+                .withClaim("id", user.getUserId())
                 .withClaim("role", user.getRoles())
                 .sign(Algorithm.HMAC512(SECRET));
         return TOKEN_PREFIX + jwt;

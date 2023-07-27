@@ -11,5 +11,5 @@ import java.util.Optional;
 public interface ProductOptionRepository {
     public List<ProductOptionEntity> findByProductEntity(ProductEntity productEntity);
 
-    public Optional<ProductOptionEntity> findById(int productOptionId);
+    public Optional<ProductOptionEntity> findById(Long productOptionId);
 }

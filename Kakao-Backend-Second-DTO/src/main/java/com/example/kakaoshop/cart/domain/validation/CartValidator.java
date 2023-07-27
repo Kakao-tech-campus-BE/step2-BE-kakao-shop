@@ -18,13 +18,12 @@ public class CartValidator {
         validateSamePrice(cartReqeust.getOptionId(), cartReqeust.getPrice());
     }
 
-    private void validateExistsPrice(int optionId) {
-        // TODO : 추후 custom exception 추가
-        ProductOptionEntity productOptionEntity = productOptionRepository.findById(optionId)
+    private void validateExistsPrice(Long optionId) {
+        productOptionRepository.findById(optionId)
                 .orElseThrow(() -> new IllegalArgumentException("가격이 없다."));
     }
 
-    private void validateSamePrice(int optionId, int priceByCustomer) {
+    private void validateSamePrice(Long optionId, int priceByCustomer) {
         int savedPrice = productOptionRepository.findById(optionId)
                 .get()
                 .getPrice();

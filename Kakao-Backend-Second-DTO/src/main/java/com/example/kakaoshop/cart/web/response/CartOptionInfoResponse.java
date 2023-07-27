@@ -8,7 +8,7 @@ import lombok.*;
 @Builder(toBuilder = true)
 public class CartOptionInfoResponse {
 
-    private int id;
+    private Long id;
     private String optionName;
     private int price;
 

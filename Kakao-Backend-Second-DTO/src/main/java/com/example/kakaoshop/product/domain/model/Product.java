@@ -9,7 +9,7 @@ import lombok.*;
 @EqualsAndHashCode
 @ToString
 public class Product {
-    private int id;
+    private Long productId;
     private String productName;
     private String description;
     private String image;

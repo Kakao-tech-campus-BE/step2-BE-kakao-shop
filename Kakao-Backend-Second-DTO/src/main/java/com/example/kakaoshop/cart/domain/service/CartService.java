@@ -4,6 +4,7 @@ import com.example.kakaoshop.cart.domain.converter.CartConverter;
 import com.example.kakaoshop.cart.domain.converter.CashierConverter;
 import com.example.kakaoshop.cart.domain.model.Cart;
 import com.example.kakaoshop.cart.domain.model.Cashier;
+import com.example.kakaoshop.cart.domain.model.OrderDetail;
 import com.example.kakaoshop.cart.domain.validation.CartValidator;
 import com.example.kakaoshop.cart.entity.CartEntity;
 import com.example.kakaoshop.cart.web.converter.CartFindAllResponseConverter;
@@ -32,7 +33,8 @@ public class CartService {
 
     public CartFindAllResponse getCartsByUser(User user) {
         List<Cart> carts = cartRepository.findByUser(user)
-                .stream().map(CartConverter::from)
+                .stream()
+                .map(CartConverter::from)
                 .collect(Collectors.toList());
 
         Cashier cashier = CashierConverter.from(carts);
@@ -53,7 +55,7 @@ public class CartService {
 
         cartRepository.saveAll(collect);
     }
-    private ProductOptionEntity getProductOptionById(int optionId) {
+    private ProductOptionEntity getProductOptionById(Long optionId) {
         return productOptionRepository.findById(optionId).get();
     }
 }

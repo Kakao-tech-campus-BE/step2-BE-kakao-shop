@@ -1,6 +1,5 @@
 package com.example.kakaoshop.product.repository;
 
-import com.example.kakaoshop.product.domain.model.ProductOption;
 import com.example.kakaoshop.product.entity.ProductEntity;
 import com.example.kakaoshop.product.entity.ProductOptionEntity;
 import com.example.kakaoshop.product.util.ProductDummyData;
@@ -15,7 +14,7 @@ import java.util.stream.Collectors;
 @Repository
 public class MemoryProductOptionRepository {
 
-    private Map<Long, ProductOptionEntity> productOptionEntities;
+    private final Map<Long, ProductOptionEntity> productOptionEntities;
     private Long count = 0L;
 
     public MemoryProductOptionRepository(ProductDummyData dummyData) {
@@ -27,14 +26,14 @@ public class MemoryProductOptionRepository {
     public List<ProductOptionEntity> findByProductEntity(ProductEntity productEntity) {
         return productOptionEntities.values()
                 .stream()
-                .filter(x -> x.getProduct().getId() == productEntity.getId())
+                .filter(x -> x.getProduct().getProductId().equals(productEntity.getProductId()))
                 .collect(Collectors.toList());
     }
 
-    public Optional<ProductOptionEntity> findById(int productOptionId) {
+    public Optional<ProductOptionEntity> findById(Long productOptionId) {
         return productOptionEntities.values()
                 .stream()
-                .filter(x -> x.getId() == productOptionId)
+                .filter(x -> x.getProductOptionId().equals(productOptionId))
                 .findAny();
     }
 }

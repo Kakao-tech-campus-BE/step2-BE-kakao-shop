@@ -7,11 +7,11 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "product_tb")
+@Table(name = "product_entity")
 public class ProductEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long productId;
     @Column(length = 100, nullable = false)
     private String productName;
     @Column(length = 1000, nullable = false)
@@ -22,8 +22,8 @@ public class ProductEntity {
 
 
     @Builder
-    public ProductEntity(int id, String productName, String description, String image, int price) {
-        this.id = id;
+    public ProductEntity(Long productId, String productName, String description, String image, int price) {
+        this.productId = productId;
         this.productName = productName;
         this.description = description;
         this.image = image;
