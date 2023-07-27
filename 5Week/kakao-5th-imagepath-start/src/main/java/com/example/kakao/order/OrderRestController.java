@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -27,8 +28,11 @@ public class OrderRestController {
 
     // (기능10) 주문 결과 확인 GET
     // /orders/{id}
-    public void findById() {
-
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findById(@PathVariable int id) {
+        Order order = orderService.findById(id);
+        OrderResponse.FindByIdDTO responseDTO = orderService.findByOrderId(order);
+        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 
 }

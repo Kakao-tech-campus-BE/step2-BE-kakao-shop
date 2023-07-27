@@ -1,6 +1,7 @@
 package com.example.kakao.order;
 
 import com.example.kakao._core.errors.exception.Exception400;
+import com.example.kakao._core.errors.exception.Exception500;
 import com.example.kakao.cart.Cart;
 import com.example.kakao.cart.CartJPARepository;
 import com.example.kakao.order.item.Item;
@@ -40,6 +41,17 @@ public class OrderService {
             itemList.add(item);
         }
 
+        return new OrderResponse.FindByIdDTO(order, itemList);
+    }
+
+    public Order findById(int id){
+        return orderJPARepository.findById(id).orElseThrow(
+                () -> new Exception400("주문 번호를 찾을 수 없습니다")
+        );
+    }
+
+    public OrderResponse.FindByIdDTO findByOrderId(Order order){
+        List<Item> itemList = itemJPARepository.FindByOrderId(order.getId());
         return new OrderResponse.FindByIdDTO(order, itemList);
     }
 
