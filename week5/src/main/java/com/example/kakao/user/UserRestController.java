@@ -20,22 +20,22 @@ import java.util.List;
 @RestController
 public class UserRestController {
 
-    private final GlobalExceptionHandler globalExceptionHandler;
+//    private final GlobalExceptionHandler globalExceptionHandler;
     private final UserService userService;
 
     // (기능3) 이메일 중복체크
     @PostMapping("/check")
     public ResponseEntity<?> check(@RequestBody @Valid UserRequest.EmailCheckDTO emailCheckDTO, Errors errors) {
         // 부가기능
-        if (errors.hasErrors()) {
-            List<FieldError> fieldErrors = errors.getFieldErrors();
-            Exception400 ex = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
-            return new ResponseEntity<>(
-                    ex.body(),
-                    ex.status()
-            );
-        }
-        
+//        if (errors.hasErrors()) {
+//            List<FieldError> fieldErrors = errors.getFieldErrors();
+//            Exception400 ex = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
+//            return new ResponseEntity<>(
+//                    ex.body(),
+//                    ex.status()
+//            );
+//        }
+
         // 핵심로직
         userService.sameCheckEmail(emailCheckDTO.getEmail());
         return ResponseEntity.ok(ApiUtils.success(null));
@@ -45,14 +45,14 @@ public class UserRestController {
     @PostMapping("/join")
     public ResponseEntity<?> join(@RequestBody @Valid UserRequest.JoinDTO requestDTO, Errors errors, HttpServletRequest request) {
         // 부가기능
-        if (errors.hasErrors()) {
-            List<FieldError> fieldErrors = errors.getFieldErrors();
-            Exception400 ex = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
-            return new ResponseEntity<>(
-                    ex.body(),
-                    ex.status()
-            );
-        }
+//        if (errors.hasErrors()) {
+//            List<FieldError> fieldErrors = errors.getFieldErrors();
+//            Exception400 ex = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
+//            return new ResponseEntity<>(
+//                    ex.body(),
+//                    ex.status()
+//            );
+//        }
         
 //        try {
 //            userService.join(requestDTO);
@@ -69,14 +69,14 @@ public class UserRestController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid UserRequest.LoginDTO requestDTO, Errors errors, HttpServletRequest request) {
         // 부가기능
-        if (errors.hasErrors()) {
-            List<FieldError> fieldErrors = errors.getFieldErrors();
-            Exception400 ex = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
-            return new ResponseEntity<>(
-                    ex.body(),
-                    ex.status()
-            );
-        }
+//        if (errors.hasErrors()) {
+//            List<FieldError> fieldErrors = errors.getFieldErrors();
+//            Exception400 ex = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
+//            return new ResponseEntity<>(
+//                    ex.body(),
+//                    ex.status()
+//            );
+//        }
 
 //        try {
 //            String jwt = userService.login(requestDTO);
