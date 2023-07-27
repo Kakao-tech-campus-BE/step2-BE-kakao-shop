@@ -2,6 +2,7 @@ package com.example.kakao._core.errors;
 
 import com.example.kakao._core.errors.exception.*;
 import com.example.kakao._core.utils.ApiUtils;
+import com.example.kakao.log.ErrorLog;
 import com.example.kakao.log.ErrorLogJPARepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
 
 @RequiredArgsConstructor
@@ -41,14 +43,21 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(e.body(), e.status());
     }
 
-
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> unknownServerError(Exception e){
+    public ResponseEntity<?> unknownServerError(Exception e, HttpServletRequest request){
         if(e instanceof ConstraintViolationException) {
             ApiUtils.ApiResult<?> apiResult = ApiUtils.error(e.getMessage(), HttpStatus.BAD_REQUEST);
             return new ResponseEntity<>(apiResult, HttpStatus.BAD_REQUEST);
         }
-        ApiUtils.ApiResult<?> apiResult = ApiUtils.error(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+
+        ErrorLog errorLog = ErrorLog.builder()
+                .message(e.getMessage())
+                .userAgent(request.getHeader("User-Agent"))
+                .userIp(request.getRemoteAddr())
+                .build();
+        errorLogJPARepository.save(errorLog);
+
+        ApiUtils.ApiResult<?> apiResult = ApiUtils.error("unknown server error", HttpStatus.INTERNAL_SERVER_ERROR);
         return new ResponseEntity<>(apiResult, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
