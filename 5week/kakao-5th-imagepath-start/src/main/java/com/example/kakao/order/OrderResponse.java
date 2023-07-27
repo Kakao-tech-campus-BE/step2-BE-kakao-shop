@@ -10,23 +10,28 @@ import java.util.stream.Collectors;
 
 public class OrderResponse {
 
-  @Getter @Setter
-  public static class findByIdDTO {
+  @Getter
+  @Setter
+  public static class FindByIdDTO {
+
     private int id;
     private List<ProductDTO> products;
     private int totalPrice;
 
-    public findByIdDTO(Order order, List<Item> itemList) {
+    public FindByIdDTO(Order order, List<Item> itemList) {
       this.id = order.getId();
       this.products = itemList.stream()
           .map(item -> item.getOption().getProduct()).distinct()
           .map(product -> new ProductDTO(itemList, product)).collect(Collectors.toList());
-      this.totalPrice = itemList.stream().mapToInt(item -> item.getOption().getPrice() * item.getQuantity()).sum();
+      this.totalPrice = itemList.stream()
+          .mapToInt(item -> item.getOption().getPrice() * item.getQuantity()).sum();
     }
 
 
-    @Getter @Setter
+    @Getter
+    @Setter
     public class ProductDTO {
+
       private int id;
       private String productName;
       private List<ItemDTO> items;
@@ -40,8 +45,10 @@ public class OrderResponse {
             .collect(Collectors.toList());
       }
 
-      @Getter @Setter
+      @Getter
+      @Setter
       public class ItemDTO {
+
         private int id;
         private String optionName;
         private int quantity;
@@ -51,11 +58,9 @@ public class OrderResponse {
           this.id = item.getId();
           this.optionName = item.getOption().getOptionName();
           this.quantity = item.getQuantity();
-          this.price = item.getOption().getPrice()*item.getQuantity();
+          this.price = item.getOption().getPrice() * item.getQuantity();
         }
-
       }
     }
   }
 }
-

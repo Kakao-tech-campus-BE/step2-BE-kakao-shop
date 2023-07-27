@@ -22,20 +22,20 @@ public class OrderService {
   private final ItemJPARepository itemJPARepository;
 
   @Transactional
-  public OrderResponse.findByIdDTO save(User user) {
+  public OrderResponse.FindByIdDTO save(User user) {
     List<Cart> carts = cartJPARepository.findAllByUserId(user.getId());
 
     if (carts.isEmpty()) {
       throw new Exception400("장바구니가 비어있습니다.");
     }
 
-    Order order = orderJPARepository.save(Order.builder().user(user).build());
+    Order orders = orderJPARepository.save(Order.builder().user(user).build());
     List<Item> items = new ArrayList<>();
 
     for (Cart cart : carts) {
       Item item = Item.builder()
           .option(cart.getOption())
-          .order(order)
+          .order(orders)
           .quantity(cart.getQuantity())
           .price(cart.getPrice())
           .build();
@@ -43,18 +43,18 @@ public class OrderService {
     }
 
     List<Item> savedItems = itemJPARepository.saveAll(items);
-    cartJPARepository.mdeleteAllByUserId(user.getId());
+    cartJPARepository.deleteByUserId(user.getId());
 
-    return new OrderResponse.findByIdDTO(order, savedItems);
+    return new OrderResponse.FindByIdDTO(orders, savedItems);
   }
 
   @Transactional
-  public OrderResponse.findByIdDTO findById(int id, User user) {
-    Order order = orderJPARepository.findById(id).orElseThrow(
+  public OrderResponse.FindByIdDTO findById(int id) {
+    Order orders = orderJPARepository.findById(id).orElseThrow(
         () -> new Exception400("해당 주문 내역을 찾을 수 없습니다.")
     );
     List<Item> items = itemJPARepository.findByOrderId(id);
 
-    return new OrderResponse.findByIdDTO(order, items);
+    return new OrderResponse.FindByIdDTO(orders, items);
   }
 }
