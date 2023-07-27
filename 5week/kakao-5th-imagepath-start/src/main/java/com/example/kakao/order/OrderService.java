@@ -58,8 +58,6 @@ public class OrderService {
         // 장바구니 초기화
         cartJPARepository.deleteAllByUserId(userId);
 
-        System.out.println("userId : " + userId);
-
         return new OrderResponse(order, itemList);
     }
 
@@ -67,9 +65,6 @@ public class OrderService {
     public OrderResponse findById(int orderId, int userId) {
         Order order = orderJPARepository.findById(orderId)
                 .orElseThrow(() -> new Exception400("주문 내역이 존재하지 않습니다. orderId : " + orderId));
-
-        System.out.println("orderId : " + orderId);
-        System.out.println("userId : " + userId);
 
         // 인증
         if(orderId != userId) {
