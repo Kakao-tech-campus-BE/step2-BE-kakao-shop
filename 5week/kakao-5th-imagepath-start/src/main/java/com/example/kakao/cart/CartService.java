@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -95,10 +96,23 @@ public class CartService {
         List<Cart> cartList = cartJPARepository.findAllByUserId(user.getId());
 
         // 1. 유저 장바구니에 아무것도 없으면 예외처리
+        if(cartList.isEmpty())
+        {
+            throw new Exception400("비어있음");
+        }
 
         // 2. cartId:1, cartId:1 이렇게 requestDTOs에 동일한 장바구니 아이디가 두번 들어오면 예외처리
+        validateDuplicateCartIds(requestDTOs);
 
         // 3. 유저 장바구니에 없는 cartId가 들어오면 예외처리
+        List<Integer> existingCartIds = cartList.stream().map(Cart::getId).collect(Collectors.toList());
+
+        for (CartRequest.UpdateDTO requestDTO : requestDTOs) {
+            int cartId = requestDTO.getCartId();
+            if (!existingCartIds.contains(cartId)) {
+                throw new Exception400("유저 장바구니에 존재하지 않는 장바구니 아이디입니다. cartId : " + cartId);
+            }
+        }
 
         // 위에 3개를 처리하지 않아도 프로그램은 잘돌아간다. 예를 들어 1번을 처리하지 않으면 for문을 돌지 않고, cartList가 빈배열 []로 정상응답이 나감.
         for (Cart cart : cartList) {
@@ -111,4 +125,16 @@ public class CartService {
 
         return new CartResponse.UpdateDTO(cartList);
     } // 더티체킹
+
+    // 카트옵션 체크
+    private void validateDuplicateCartIds(List<CartRequest.UpdateDTO> requestDTOs) {
+        Set<Integer> cartIdsSet = new HashSet<>();
+        for (CartRequest.UpdateDTO updateDTO : requestDTOs) {
+            int cartId = updateDTO.getCartId();
+            if (cartIdsSet.contains(cartId)) {
+                throw new Exception400("동일한 카트옵션을 추가할 수 없습니다. cartId : " + updateDTO.getCartId());
+            }
+            cartIdsSet.add(cartId);
+        }
+    }
 }
