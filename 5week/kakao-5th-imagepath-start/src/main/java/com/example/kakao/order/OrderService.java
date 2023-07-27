@@ -33,7 +33,10 @@ public class OrderService {
 
 
         // order 생성
-        Order order = new Order(userId, user);
+        Order order = Order.builder()
+                .user(user)
+                .build();
+
         orderJPARepository.save(order);
 
         // 유저의 카트 리스트 가져오기
@@ -55,6 +58,8 @@ public class OrderService {
         // 장바구니 초기화
         cartJPARepository.deleteAllByUserId(userId);
 
+        System.out.println("userId : " + userId);
+
         return new OrderResponse(order, itemList);
     }
 
@@ -62,6 +67,10 @@ public class OrderService {
     public OrderResponse findById(int orderId, int userId) {
         Order order = orderJPARepository.findById(orderId)
                 .orElseThrow(() -> new Exception400("주문 내역이 존재하지 않습니다. orderId : " + orderId));
+
+        System.out.println("orderId : " + orderId);
+        System.out.println("userId : " + userId);
+
         // 인증
         if(orderId != userId) {
             throw new Exception400("권한이 없습니다. orderId : " + orderId);
