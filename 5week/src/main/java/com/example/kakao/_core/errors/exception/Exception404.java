@@ -4,7 +4,6 @@ import com.example.kakao._core.utils.ApiUtils;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
-
 // 권한 없음
 @Getter
 public class Exception404 extends RuntimeException {
@@ -12,11 +11,11 @@ public class Exception404 extends RuntimeException {
         super(message);
     }
 
-    public ApiUtils.ApiResult<?> body(){
+    public ApiUtils.ApiResult<?> body() {
         return ApiUtils.error(getMessage(), HttpStatus.NOT_FOUND);
     }
 
-    public HttpStatus status(){
+    public HttpStatus status() {
         return HttpStatus.NOT_FOUND;
     }
 }

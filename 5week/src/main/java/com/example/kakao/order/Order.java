@@ -8,11 +8,10 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name="order_tb", indexes = {
+@Table(name = "order_tb", indexes = {
         @Index(name = "order_user_id_idx", columnList = "user_id")
 })
 public class Order {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

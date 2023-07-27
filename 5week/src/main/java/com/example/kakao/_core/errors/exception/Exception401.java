@@ -1,10 +1,8 @@
 package com.example.kakao._core.errors.exception;
 
-
 import com.example.kakao._core.utils.ApiUtils;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
-
 
 // 인증 안됨
 @Getter
@@ -13,11 +11,11 @@ public class Exception401 extends RuntimeException {
         super(message);
     }
 
-    public ApiUtils.ApiResult<?> body(){
+    public ApiUtils.ApiResult<?> body() {
         return ApiUtils.error(getMessage(), HttpStatus.UNAUTHORIZED);
     }
 
-    public HttpStatus status(){
+    public HttpStatus status() {
         return HttpStatus.UNAUTHORIZED;
     }
 }

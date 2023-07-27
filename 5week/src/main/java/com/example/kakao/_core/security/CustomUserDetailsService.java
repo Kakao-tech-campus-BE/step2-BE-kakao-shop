@@ -15,7 +15,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
-
     private final UserJPARepository userJPARepository;
 
     @Override

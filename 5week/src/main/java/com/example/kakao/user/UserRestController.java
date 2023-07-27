@@ -14,7 +14,6 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 @RestController
 public class UserRestController {
-
     private final UserService userService;
 
     // (기능3) 이메일 중복체크

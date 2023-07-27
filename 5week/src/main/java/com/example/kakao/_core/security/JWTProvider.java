@@ -1,6 +1,5 @@
 package com.example.kakao._core.security;
 
-
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
@@ -10,7 +9,6 @@ import com.example.kakao.user.User;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
-
 
 @Component
 public class JWTProvider {
@@ -35,5 +33,4 @@ public class JWTProvider {
                 .build().verify(jwt);
         return decodedJWT;
     }
-
 }

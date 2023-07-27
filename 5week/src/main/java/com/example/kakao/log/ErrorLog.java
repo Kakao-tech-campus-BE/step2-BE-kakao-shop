@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name="error_log_tb")
+@Table(name = "error_log_tb")
 public class ErrorLog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,17 +19,20 @@ public class ErrorLog {
 
     @Column(nullable = true)
     private Integer userId;
+
     @Column(nullable = false)
     private String userIp;
+
     @Column(nullable = false)
     private String userAgent;
+
     @Column(nullable = false, length = 1000)
     private String message;
 
     private LocalDateTime createdAt;
 
     @PrePersist
-    public void onCreate(){
+    public void onCreate() {
         createdAt = LocalDateTime.now();
     }
 

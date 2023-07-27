@@ -12,8 +12,7 @@ import org.springframework.validation.Errors;
 @Component
 public class GlobalValidationHandler {
     @Pointcut("@annotation(org.springframework.web.bind.annotation.PostMapping)")
-    public void postMapping() {
-    }
+    public void postMapping() { }
 
     @Before("postMapping()")
     public void validationAdvice(JoinPoint jp) {
@@ -21,10 +20,9 @@ public class GlobalValidationHandler {
         for (Object arg : args) {
             if (arg instanceof Errors) {
                 Errors errors = (Errors) arg;
-
                 if (errors.hasErrors()) {
                     throw new Exception400(
-                            errors.getFieldErrors().get(0).getDefaultMessage()+":"+errors.getFieldErrors().get(0).getField()
+                            errors.getFieldErrors().get(0).getDefaultMessage() + ":" + errors.getFieldErrors().get(0).getField()
                     );
                 }
             }
