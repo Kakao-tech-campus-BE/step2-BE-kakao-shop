@@ -78,7 +78,7 @@ public class OrderJPARepositoryTest extends DummyEntity {
 
 
         // 계속 터진다~ 이미 있는 DTO를 어떻게 활용해야 하는지 모르겠다 ~~
-        OrderResponse orderDTO = new OrderResponse.FindByIdDTO(, itemListPS);
+        OrderResponse orderDTO = new OrderResponse.FindByIdDTO(itemListPS.get, itemListPS);
         System.out.println("json 직렬화 직전========================");
         String responseBody = om.writeValueAsString(itemListPS);
         System.out.println("테스트 : "+responseBody);

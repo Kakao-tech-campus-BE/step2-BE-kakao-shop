@@ -189,7 +189,7 @@ Link : [OrderRestController](week2/src/main/java/com/example/kakaoshop/order/Ord
 
 ## 3주차 과제  
 
-Link : [Week3 폴더](C:\myWorkspace\kakao_tech_campus_2\Assignment\step2-BE-kakao-shop\week3\src)
+Link : [Week3 폴더](week3/src/test/java/com/example/kakao/order/OrderJPARepositoryTest.java)
  
 <br>
 
@@ -237,6 +237,21 @@ Link : [Week3 폴더](C:\myWorkspace\kakao_tech_campus_2\Assignment\step2-BE-kak
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
+<br>
+
+---
+
+<br>
+
+## 4주차 과제  
+
+Link : [Week4 폴더] (week4/src/test/java/com/example/kakao/order/OrderRestControllerTest.java)
+ 
+<br>
+
+### ~ Week4_Assignment_END
+
+---
 <br>
 
 # 4주차
