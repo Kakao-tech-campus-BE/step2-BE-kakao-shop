@@ -15,13 +15,13 @@ import java.util.List;
 public class OrderRestController {
 
 
-    // (기능9) 결재하기 - (주문 인서트) POST
+    // (기능9) 결재하기 - (주문 인서트) POST (과제)
     // /orders/save
     public void save() {
 
     }
 
-    // (기능10) 주문 결과 확인 GET
+    // (기능10) 주문 결과 확인 GET (과제)
     // /orders/{id}
     public void findById() {
 
