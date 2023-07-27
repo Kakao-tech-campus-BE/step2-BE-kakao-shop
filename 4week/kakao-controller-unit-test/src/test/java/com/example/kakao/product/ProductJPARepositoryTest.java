@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.assertj.core.api.Assertions;
 import org.hibernate.Hibernate;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,6 @@ import org.springframework.data.domain.PageRequest;
 import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static org.assertj.core.api.Assertions.*;
 
 @Import(ObjectMapper.class)
 @DataJpaTest
@@ -40,16 +39,14 @@ public class ProductJPARepositoryTest extends DummyEntity {
 
     @BeforeEach
     public void setUp(){
+        em.createNativeQuery("ALTER TABLE product_tb ALTER COLUMN id RESTART WITH 1").executeUpdate();
         List<Product> productListPS = productJPARepository.saveAll(productDummyList());
         optionJPARepository.saveAll(optionDummyList(productListPS));
         em.clear();
     }
 
-    //메서드 자체를 테스트하기보다는 더 좋은 코드를 찾아내기 위한 과정!
     @Test
     public void product_findAll_test() throws JsonProcessingException {
-        // 화면으로 응답되는 데이터기 있는데, 그 데이터를 만들기 위해 이 메서드가 충분한가
-
         // given
         int page = 0;
         int size = 9;
@@ -61,16 +58,16 @@ public class ProductJPARepositoryTest extends DummyEntity {
         System.out.println("테스트 : "+responseBody);
 
         // then
-        assertThat(productPG.getTotalPages()).isEqualTo(2);
-        assertThat(productPG.getSize()).isEqualTo(9);
-        assertThat(productPG.getNumber()).isEqualTo(0);
-        assertThat(productPG.getTotalElements()).isEqualTo(15);
-        assertThat(productPG.isFirst()).isEqualTo(true);
-        assertThat(productPG.getContent().get(0).getId()).isEqualTo(1);
-        assertThat(productPG.getContent().get(0).getProductName()).isEqualTo("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전");
-        assertThat(productPG.getContent().get(0).getDescription()).isEqualTo("");
-        assertThat(productPG.getContent().get(0).getImage()).isEqualTo("/images/1.jpg");
-        assertThat(productPG.getContent().get(0).getPrice()).isEqualTo(1000);
+        Assertions.assertThat(productPG.getTotalPages()).isEqualTo(2);
+        Assertions.assertThat(productPG.getSize()).isEqualTo(9);
+        Assertions.assertThat(productPG.getNumber()).isEqualTo(0);
+        Assertions.assertThat(productPG.getTotalElements()).isEqualTo(15);
+        Assertions.assertThat(productPG.isFirst()).isEqualTo(true);
+        Assertions.assertThat(productPG.getContent().get(0).getId()).isEqualTo(1);
+        Assertions.assertThat(productPG.getContent().get(0).getProductName()).isEqualTo("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전");
+        Assertions.assertThat(productPG.getContent().get(0).getDescription()).isEqualTo("");
+        Assertions.assertThat(productPG.getContent().get(0).getImage()).isEqualTo("/images/1.jpg");
+        Assertions.assertThat(productPG.getContent().get(0).getPrice()).isEqualTo(1000);
     }
 
     // ManyToOne 전략을 Eager로 간다면 추천
