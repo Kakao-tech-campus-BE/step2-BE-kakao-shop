@@ -54,4 +54,26 @@ public class CartService {
             cartJPARepository.save(cart);
         }
     } // 변경감지, 더티체킹, flush, 트랜젝션 종료
+
+    @Transactional
+    public CartResponse.UpdateDTO update(List<CartRequest.UpdateDTO> requestDTOs, User user) {
+        List<Cart> cartList = cartJPARepository.findAllByUserId(user.getId());
+
+        // 1. 유저 장바구니에 아무것도 없으면 예외처리
+
+        // 2. cartId:1, cartId:1 이렇게 requestDTOs에 동일한 장바구니 아이디가 두번 들어오면 예외처리
+
+        // 3. 유저 장바구니에 없는 cartId가 들어오면 예외처리
+
+        // 위에 3개를 처리하지 않아도 프로그램은 잘돌아간다. 예를 들어 1번을 처리하지 않으면 for문을 돌지 않고, cartList가 빈배열 []로 정상응답이 나감.
+        for (Cart cart : cartList) {
+            for (CartRequest.UpdateDTO updateDTO : requestDTOs) {
+                if (cart.getId() == updateDTO.getCartId()) {
+                    cart.update(updateDTO.getQuantity(), cart.getOption().getPrice() * updateDTO.getQuantity());
+                }
+            }
+        }
+
+        return new CartResponse.UpdateDTO(cartList);
+    } // 더티체킹
 }
