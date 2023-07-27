@@ -29,9 +29,11 @@ public class Cart {
     @OneToOne(fetch = FetchType.LAZY)
     private Option option;
 
+    @Setter
     @Column(nullable = false)
     private int quantity;
 
+    @Setter
     @Column(nullable = false)
     private int price;
 

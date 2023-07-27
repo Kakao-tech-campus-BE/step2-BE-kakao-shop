@@ -1,5 +1,6 @@
 package com.example.kakao.cart;
 
+import com.example.kakao._core.errors.exception.Exception400;
 import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao.product.option.Option;
 import com.example.kakao.product.option.OptionJPARepository;
@@ -8,7 +9,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -26,10 +30,9 @@ public class CartService {
 
     @Transactional
     public void addCartList(List<CartRequest.SaveDTO> requestDTOs, User sessionUser) {
-        // 1. 동일한 옵션이 들어오면 예외처리
-        // [ { optionId:1, quantity:5 }, { optionId:1, quantity:10 } ]
 
-        // 2. cartJPARepository.findByOptionIdAndUserId() 조회 -> 존재하면 장바구니에 수량을 추가하는 업데이트를 해야함. (더티체킹하기)
+        // 1. 동일한 옵션이 들어오면 예외처리하기 위한 Set 선언
+        Set<Integer> optionIdSet = new HashSet<>();
 
         // 3. [2번이 아니라면] 유저의 장바구니에 담기
         for (CartRequest.SaveDTO requestDTO : requestDTOs) {
@@ -38,12 +41,38 @@ public class CartService {
             Option optionPS = optionJPARepository.findById(optionId)
                     .orElseThrow(() -> new Exception404("해당 옵션을 찾을 수 없습니다 : " + optionId));
             int price = requestDTO.getPrice();
-            int priceCheck = optionPS.getPrice() * quantity;
-            if (price == priceCheck) {
-                Cart cart = Cart.builder().user(sessionUser).option(optionPS).quantity(quantity).price(price).build();
-                cartJPARepository.save(cart);
+
+            // 1. 동일한 옵션이 들어오면 예외처리
+            // [ { optionId:1, quantity:5, price:50000 }, { optionId:1, quantity:10, price:10000 } ]
+            if (optionIdSet.contains(optionId)){
+                throw new Exception400("잘못된 옵션 요청입니다." + optionId);
+            }
+            optionIdSet.add(optionId);
+
+            // 2. cartJPARepository.findByOptionIdAndUserId() 조회 -> 존재하면 장바구니에 수량을 추가하는 업데이트를 해야함. (더티체킹하기)
+            Optional<Cart> existingCart = cartJPARepository.findByOptionIdAndUserId(optionId, sessionUser.getId());
+            if (existingCart.isPresent()) {
+                // 장바구니에 해당 옵션이 이미 존재하는 경우, 수량을 더하여 업데이트
+                Cart cartToUpdate = existingCart.get();
+                int newQuantity = cartToUpdate.getQuantity() + quantity;
+                int newPrice = cartToUpdate.getPrice() + price;
+                int newPriceCheck = optionPS.getPrice() * newQuantity;
+                if (newPrice == newPriceCheck) {
+                    cartToUpdate.setQuantity(newQuantity);
+                    cartToUpdate.setPrice(newPrice);
+                    cartJPARepository.save(cartToUpdate);
+                } else {
+                    throw new Exception400("잘못된 가격 요청입니다." + price);
+                }
             } else {
-                // 예외처리 하기
+                // 3. 장바구니에 해당 옵션이 존재하지 않는 경우, 새로운 장바구니 정보 생성
+                int priceCheck = optionPS.getPrice() * quantity;
+                if (price == priceCheck) {
+                    Cart cart = Cart.builder().user(sessionUser).option(optionPS).quantity(quantity).price(price).build();
+                    cartJPARepository.save(cart);
+                } else {
+                    throw new Exception400("잘못된 가격 요청입니다." + price);
+                }
             }
         }
     } // 여기서 변경 감지, 더티체킹, flush, 트랜잭션 종료
