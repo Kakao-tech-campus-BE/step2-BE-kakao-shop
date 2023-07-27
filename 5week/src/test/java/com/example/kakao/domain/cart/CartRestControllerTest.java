@@ -2,10 +2,12 @@ package com.example.kakao.domain.cart;
 
 import com.example.kakao._core.util.DummyJwt;
 import com.example.kakao.domain.cart.dto.request.SaveRequestDTO;
+import com.example.kakao.domain.cart.dto.request.UpdateRequestDTO;
 import com.example.kakao.log.ErrorLogJPARepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +18,7 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.List;
 
+import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -68,6 +71,33 @@ class CartRestControllerTest {
     resultActions.andExpect(jsonPath("$.success").value("false"));
     resultActions.andExpect(jsonPath("$.error.status").value(400));
     resultActions.andExpect(jsonPath("$.error.message").value("Constraint Violation: [수량은 1 이상이어야 합니다.]"));
+  }
+
+  @Test
+  @DisplayName("장바구니 수정 시 수량 0 요청 (항목삭제) Validation 통과")
+  void deleteCartItem() throws Exception {
+    // given
+    String token = DummyJwt.generate();
+    List<UpdateRequestDTO> requestDTOs = List.of(
+      UpdateRequestDTO.builder()
+        .cartId(1)
+        .quantity(0)
+        .build()
+    );
+
+    // when
+    given(cartService.update(BDDMockito.any(), BDDMockito.any()))
+      .willReturn(null);
+
+    ResultActions resultActions = mvc.perform(
+      post("/carts/update")
+        .header("Authorization", "Bearer " + token)
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(om.writeValueAsString(requestDTOs)))
+      .andDo(print());
+
+    // then
+    resultActions.andExpect(jsonPath("$.success").value("true"));
   }
 
 }

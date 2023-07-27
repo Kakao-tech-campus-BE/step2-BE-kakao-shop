@@ -5,9 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
-
 
 
 @Aspect
@@ -16,10 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ExceptionLoggingHandler {
 
-  @Pointcut("@annotation(org.springframework.web.bind.annotation.ExceptionHandler)")
-  public void logException() {}
-
-  @After("logException()")
+  @After("@annotation(org.springframework.web.bind.annotation.ExceptionHandler)")
   public void logAfterException(JoinPoint joinPoint) {
     Exception ex = (Exception) joinPoint.getArgs()[0];
 

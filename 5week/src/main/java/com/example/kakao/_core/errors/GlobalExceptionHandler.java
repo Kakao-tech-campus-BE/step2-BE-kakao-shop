@@ -91,8 +91,6 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler(BadRequestException.class)
   public ResponseEntity<ApiResponse> handleBadRequestException(BadRequestException ex, HttpServletRequest request) {
-    log.error("error log in ex hand");
-    log.debug("debug log in ex hand");
     return new ResponseEntity<>(ex.body(), ex.status());
   }
 
