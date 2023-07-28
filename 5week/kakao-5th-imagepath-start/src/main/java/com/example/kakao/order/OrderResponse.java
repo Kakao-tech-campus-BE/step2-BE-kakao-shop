@@ -18,7 +18,6 @@ public class OrderResponse {
         private int totalPrice;
 
         public SaveOrderDTO(Order order, List<Item> itemList) {
-            System.out.println("dto 변환 진입");
             this.id = order.getId();
             this.products = itemList.stream()
                     .map(item -> item.getOption().getProduct()).distinct()

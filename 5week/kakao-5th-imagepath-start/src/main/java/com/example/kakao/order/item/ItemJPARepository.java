@@ -9,7 +9,12 @@ import java.util.List;
 
 public interface ItemJPARepository extends JpaRepository<Item, Integer> {
 
-    @Query("select i from Item i join fetch i.order where i.order.id = :orderId")
-    List<Item> mFindItemIdByJoinOrder(@Param("orderId") int orderId);
+  //  @Query("select i from Item i join fetch i.order where i.order.id = :orderId")
+  //  List<Item> mFindItemIdByJoinOrder(@Param("orderId") int orderId);
+
+    @Query("select i from Item i join fetch i.option o " +
+            "join fetch o.product " +
+            "where i.order.id = :orderId")
+    List<Item> mFindItemIdByJoin(@Param("orderId") int orderId);
 
 }

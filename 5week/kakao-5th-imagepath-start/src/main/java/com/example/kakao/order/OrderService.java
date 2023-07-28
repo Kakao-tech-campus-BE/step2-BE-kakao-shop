@@ -54,9 +54,7 @@ public class OrderService {
         System.out.println("save 전");
         itemJPARepository.saveAll(itemList);
         //장바구니 비우기
-        System.out.println("delete 전");
         cartJPARepository.deleteByUserId(sessionUser.getId());
-        System.out.println("delete 후");
 		return new OrderResponse.SaveOrderDTO(order, itemList);
     }
 
@@ -66,7 +64,7 @@ public class OrderService {
 		Order order = orderJPARepository.findOrderById(id).orElseThrow(
                 ()-> new Exception400("해당 주문을 찾을 수 없습니다 :"+ id)
         );
-        List<Item> itemList = itemJPARepository.mFindItemIdByJoinOrder(order.getId());
+        List<Item> itemList = itemJPARepository.mFindItemIdByJoin(order.getId());
 
         return new OrderResponse.findByIdDTO(order, itemList);
     }
