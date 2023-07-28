@@ -21,6 +21,7 @@ public class ProductService {
     private final ProductJPARepository productJPARepository;
     private final OptionJPARepository optionJPARepository;
 
+    @Transactional
     public List<ProductResponse.FindAllDTO> findAll(int page) {
 
         Pageable pageable = PageRequest.of(page, 9);
@@ -35,6 +36,7 @@ public class ProductService {
         return responeDTOs;
     }
 
+    @Transactional
     public ProductResponse.FindByIdDTO findById(int id) {
 
         // id에 해당하는 product 조회
@@ -48,6 +50,7 @@ public class ProductService {
         return new ProductResponse.FindByIdDTO(product, optionList);
     }
 
+    @Transactional
     public ProductResponse.FindByIdDTOv2 findByIdv2(int id) {
 
         // 상품 id로 옵션 조회
