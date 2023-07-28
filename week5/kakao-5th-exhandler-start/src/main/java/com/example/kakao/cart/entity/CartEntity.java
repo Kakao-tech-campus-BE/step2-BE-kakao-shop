@@ -1,6 +1,7 @@
 package com.example.kakao.cart.entity;
 
 import com.example.kakao.product.entity.ProductOptionEntity;
+import com.example.kakao.user.User;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
