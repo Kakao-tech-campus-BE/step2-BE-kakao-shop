@@ -3,7 +3,7 @@ package com.example.kakao.cart.web;
 import com.example.kakao._core.security.CustomUserDetails;
 import com.example.kakao._core.utils.ApiUtils;
 import com.example.kakao.cart.domain.service.CartService;
-import com.example.kakao.cart.web.request.CartSaveRequest;
+import com.example.kakao.cart.web.request.CartReqeust;
 import com.example.kakao.cart.web.request.CartUpdateRequest;
 import com.example.kakao.cart.web.response.CartChangedOptionResponse;
 import com.example.kakao.cart.web.response.CartFindAllResponse;
@@ -29,8 +29,8 @@ public class CartRestController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiUtils.ApiResult> saveCarts(@AuthenticationPrincipal CustomUserDetails user, @Valid @RequestBody CartSaveRequest cartSaveRequest) {
-        cartService.addCarts(user.getUser(), cartSaveRequest);
+    public ResponseEntity<ApiUtils.ApiResult> saveCarts(@AuthenticationPrincipal CustomUserDetails user, @Valid @RequestBody List<CartReqeust>cartSaveRequests) {
+        cartService.addCarts(user.getUser(), cartSaveRequests);
         return ResponseEntity.ok(ApiUtils.successWithoutData());
     }
 
