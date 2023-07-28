@@ -42,6 +42,11 @@ public class OrderService {
         // 유저의 카트 리스트 가져오기
         List<Cart> cartList = cartJPARepository.findAllByUserId(userId);
 
+        // 카트가 비어있다면
+        if (cartList.isEmpty()) {
+            throw new Exception400("장바구니가 비어있습니다.");
+        }
+
         // 응답값 items 만들기
         List<Item> itemList = cartList.stream()
                 .map(cart -> Item.builder()
@@ -67,8 +72,13 @@ public class OrderService {
                 .orElseThrow(() -> new Exception400("주문 내역이 존재하지 않습니다. orderId : " + orderId));
 
         // 인증
-        if(orderId != userId) {
-            throw new Exception400("권한이 없습니다. orderId : " + orderId);
+        if(orderId != order.getId()) {
+            throw new Exception400("권한이 없습니다. orderId : " + orderId + " order.getId() : " + order.getId());
+        }
+
+        // userId 인증
+        if(userId != order.getUser().getId()) {
+            throw new Exception400("다른 유저의 권한입니다. userId : " + userId + " order.getUser().getId() : " + order.getUser().getId());
         }
         // itemList 가져오기
         List<Item> itemList = itemJPARepository.findAllByOrderId(orderId);
