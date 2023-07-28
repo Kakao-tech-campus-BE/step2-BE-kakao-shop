@@ -8,7 +8,6 @@ import com.example.kakao.cart.domain.validation.CartValidator;
 import com.example.kakao.cart.entity.CartEntity;
 import com.example.kakao.cart.web.converter.CartFindAllResponseConverter;
 import com.example.kakao.cart.web.request.CartReqeust;
-import com.example.kakao.cart.web.request.CartSaveRequest;
 import com.example.kakao.cart.web.response.CartFindAllResponse;
 import com.example.kakao.product.domain.service.ProductOptionRepository;
 import com.example.kakao.product.entity.ProductOptionEntity;
@@ -42,9 +41,8 @@ public class CartService {
     }
 
     @Transactional
-    public void addCarts(User user, CartSaveRequest cartSaveRequest) {
-        List<CartReqeust> cartSaveRequests = cartSaveRequest.getCartSaveRequests();
-        cartSaveRequests.forEach(cartValidator::validateCreateConstraint);
+    public void addCarts(User user, List<CartReqeust>cartSaveRequests) {
+        cartValidator.validateCreateConstraint(cartSaveRequests);
 
         List<CartEntity> collect = cartSaveRequests.stream()
                 .map(x -> CartConverter.to(x.getQuantity(), getProductOptionById(x.getOptionId()), user))
