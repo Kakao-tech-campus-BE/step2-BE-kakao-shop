@@ -1,14 +1,10 @@
 package com.example.kakao.order;
 
 import com.example.kakao.order.item.Item;
-import com.example.kakao.product.Product;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OrderResponse {
@@ -51,6 +47,7 @@ public class OrderResponse {
             int quantity;
             int price;
 
+
             public ItemDTO(Item item) {
                 this.itemId = item.getId();
                 this.optionName = item.getOption().getOptionName();
@@ -63,6 +60,44 @@ public class OrderResponse {
     @Getter
     @Setter
     public static class findByIdDTO {
+        private int orderId;
+        private List<ProductDTO> products;
+        private int totalPrice;
 
+        findByIdDTO(int orderId, List<ProductDTO> products) {
+            this.orderId = orderId;
+            this.products = products;
+            this.totalPrice = products.stream().map(findByIdDTO.ProductDTO::getItems)
+                    .flatMap(List<findByIdDTO.ItemDTO>::stream)
+                    .mapToInt(findByIdDTO.ItemDTO::getPrice).sum();
+        }
+
+        @Getter
+        @Setter
+        public static class ProductDTO {
+            String productName;
+            List<findByIdDTO.ItemDTO> items;
+
+            public ProductDTO(String productName, List<Item> items) {
+                this.productName = productName;
+                this.items = items.stream().map(findByIdDTO.ItemDTO::new).collect(Collectors.toList());
+            }
+        }
+
+        @Getter
+        @Setter
+        public static class ItemDTO {
+            int itemId;
+            String optionName;
+            int quantity;
+            int price;
+
+            public ItemDTO(Item item) {
+                this.itemId = item.getId();
+                this.optionName = item.getOption().getOptionName();
+                this.quantity = item.getQuantity();
+                this.price = item.getPrice();
+            }
+        }
     }
 }

@@ -4,10 +4,8 @@ import com.example.kakao._core.errors.exception.Exception400;
 import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao.cart.Cart;
 import com.example.kakao.cart.CartJPARepository;
-import com.example.kakao.cart.CartRequest;
 import com.example.kakao.order.item.Item;
 import com.example.kakao.order.item.ItemJPARepository;
-import com.example.kakao.product.option.Option;
 import com.example.kakao.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -41,7 +39,7 @@ public class OrderService {
         cartJPARepository.deleteAllByUserId(userId);
 
         Map<Integer, List<Item>> groupedItemsMap = itemList.stream().collect(Collectors.groupingBy(i -> i.getOption().getProduct().getId()));
-        List<OrderResponse.saveDTO.ProductDTO> productDTOs = itemsMapToProductDTOs(groupedItemsMap);
+        List<OrderResponse.saveDTO.ProductDTO> productDTOs = itemsMapToSaveProductDTOs(groupedItemsMap);
         OrderResponse.saveDTO result = new OrderResponse.saveDTO(order.getId(), productDTOs);
         return result;
     }
@@ -55,7 +53,7 @@ public class OrderService {
                 .build();
     }
 
-    private List<OrderResponse.saveDTO.ProductDTO> itemsMapToProductDTOs(Map<Integer, List<Item>> groupedItemsMap) {
+    private List<OrderResponse.saveDTO.ProductDTO> itemsMapToSaveProductDTOs(Map<Integer, List<Item>> groupedItemsMap) {
         List<OrderResponse.saveDTO.ProductDTO> result = new ArrayList<>();
         Iterator<Integer> productIds = groupedItemsMap.keySet().iterator();
         while (productIds.hasNext()) {
@@ -69,6 +67,34 @@ public class OrderService {
     }
 
     public OrderResponse.findByIdDTO findByOrderId(int id, User user) {
-    return new OrderResponse.findByIdDTO();
+        Optional<Order> orderOP = orderJPARepository.findById(id);
+        //1. 존재하지 않는 주문번호를 조회할 경우
+        Order order;
+        if (orderOP.isEmpty()) throw new Exception404("존재하지 않는 주문번호입니다. :" + id);
+        order = orderOP.get();
+
+        //2. 다른 사용자의 주문번호를 조회할 경우
+        if (order.getUser().getId() != user.getId()) throw new Exception400("접근 권한이 없습니다.");
+
+        List<Item> itemList = itemJPARepository.findAllByOrderIdJoinOptionJoinProduct(id);
+
+        Map<Integer, List<Item>> groupedItemsMap = itemList.stream().collect(Collectors.groupingBy(i -> i.getOption().getProduct().getId()));
+        List<OrderResponse.findByIdDTO.ProductDTO> productDTOs = itemsMapToFindByIdProductDTOs(groupedItemsMap);
+        OrderResponse.findByIdDTO result = new OrderResponse.findByIdDTO(order.getId(), productDTOs);
+
+        return result;
+    }
+
+    private List<OrderResponse.findByIdDTO.ProductDTO> itemsMapToFindByIdProductDTOs(Map<Integer, List<Item>> groupedItemsMap) {
+        List<OrderResponse.findByIdDTO.ProductDTO> result = new ArrayList<>();
+        Iterator<Integer> productIds = groupedItemsMap.keySet().iterator();
+        while (productIds.hasNext()) {
+            int productId = productIds.next();
+            List<Item> groupedItems = groupedItemsMap.get(productId);
+
+            result.add(new OrderResponse.findByIdDTO.ProductDTO(groupedItems.get(0).getOption().getProduct().getProductName(), groupedItems));
+        }
+
+        return result;
     }
 }
