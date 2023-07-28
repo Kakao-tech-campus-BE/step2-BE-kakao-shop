@@ -125,7 +125,7 @@ public class CartService {
         for (CartRequest.UpdateDTO requestDTO : requestDTOs) {
             int cartId = requestDTO.getCartId();
             if (!existingCartIds.contains(cartId)) {
-                throw new Exception400("유저 장바구니에 존재하지 않는 아이디입니다. cartId : " + cartId);
+                throw new Exception404("유저 장바구니에 존재하지 않는 아이디입니다. cartId : " + cartId);
             }
         }
 
