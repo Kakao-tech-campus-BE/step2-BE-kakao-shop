@@ -1,5 +1,6 @@
 package com.example.kakao.cart;
 
+import com.example.kakao._core.errors.exception.Exception400;
 import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao.product.option.Option;
 import com.example.kakao.product.option.OptionJPARepository;
@@ -75,14 +76,14 @@ public class CartService {
                 .map(CartRequest.UpdateDTO::getCartId)
                 .collect(Collectors.toSet());
         if(cartIdSet.size() != requestDTOs.size()) {
-            throw new Exception404("동일한 장바구니 ID가 중복 되었습니다.");
+            throw new Exception400("동일한 장바구니 ID가 중복 되었습니다.");
         }
         // 3. 사용자의 장바구니에 없는 cartId가 입력되면 예외를 처리합니다.
         Set<Integer> userCartIdSet = cartList.stream()
                 .map(Cart::getId)
                 .collect(Collectors.toSet());
         if(!userCartIdSet.containsAll(cartIdSet)) {
-            throw new Exception404("장바구니에 없는 ID가 있습니다.");
+            throw new Exception400("장바구니에 없는 ID가 있습니다.");
         }
 
         for (Cart cart : cartList) {
