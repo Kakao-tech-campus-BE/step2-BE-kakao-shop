@@ -94,7 +94,7 @@ public class CartService {
       long cartId = updateDTO.getCartId();
       boolean existingCart = cartList.stream().anyMatch(cart -> cart.getId() == cartId);
       if (!existingCart) {
-        throw new Exception400("유저의 장바구니에 없는 CartId 입니다.");
+        throw new Exception400("유저의 장바구니에 없는 상품 입니다.");
       }
     }
 
