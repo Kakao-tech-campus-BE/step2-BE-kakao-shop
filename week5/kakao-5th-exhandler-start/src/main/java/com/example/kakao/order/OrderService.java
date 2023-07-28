@@ -1,5 +1,6 @@
 package com.example.kakao.order;
 
+import com.example.kakao._core.errors.exception.Exception401;
 import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao.cart.Cart;
 import com.example.kakao.cart.CartJPARepository;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -39,6 +41,18 @@ public class OrderService {
         cartJPARepository.deleteByUserId(ssesionUser.getId());
 
         return new OrderResponse.SaveDTO(order, findCart);
+    }
+
+    public OrderResponse.FindByIdDTO findById(int id, User ssesionUser) {
+        Optional<Order> order = orderJPARepository.findById(id);
+        List<Item> itemList = itemJPARepository.findAllByOrderId(id);
+        if(order.isEmpty()){
+            throw new Exception404("올바르지 않은 주문번호입니다.");
+        }
+        if(order.get().getUser().getId() != ssesionUser.getId()){
+            throw new Exception401("자신의 주문결과만 볼 수 있습니다.");
+        }
+        return new OrderResponse.FindByIdDTO(order.get(), itemList);
     }
 
 }
