@@ -468,6 +468,28 @@
 <details>
 <summary>5주차 과제 수행</summary>
 
+## 예외처리
+- 이번 과제를 수행하며 구현(실험)했던 예외 처리는 다음과 같습니다.
+1. `new Exception400("~~")`
+2. `new CartException.CartNotFoundException("~~")`
+3. `new CustomException(ErrorCode.CART_ITEM_NOT_FOUND)`
+
+- 1번째 방법은 기존에 주어진 코드를 활용한 방법이고,
+- 2번째 방법은 제가 스스로 생각해낸 CustomException을 구현하는 방법입니다.
+- 3번째 방법은 멘토님께서 4주차 과제에서 CustomException을 구현할 때, Enum을 활용해 보라고 조언해주신 부분을 활용하여 구현했습니다.
+
+## Validation
+- List와 같은 Collection Type을 RequestDto로 받을 때, 내부 객체를 Validation하지 못하는 문제가 발생했습니다.
+- ValidList를 사용하여 문제를 해결하였습니다.
+- 추가로, RequestDto에 `@NotNull int quantity` 와 같은 코드가 이해가 되지 않았습니다.
+  - RequestDto로 int타입을 받았을 때, quantity가 null로 들어오면 자동으로 0으로 변환될텐데, @NotNull은 필요없기 떄문입니다.
+  - 그러므로, @NotNull 대신 @Positive로 변경하였습니다.
+  - 이와 유사하게, Id값을 Integer로 변경하였습니다.
+
+## OrderService, Cart에 대한 예외처리 구현
+- 기능 구현 자체는 어렵지 않게 구현하였습니다.
+- 다만, Exception 처리에 대한 고민과 최대한 코드의 시간복잡도가 작은 방향으로 생각했습니다.
+
 </details>
 
 </br>
