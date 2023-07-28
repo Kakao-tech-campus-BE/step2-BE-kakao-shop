@@ -42,10 +42,18 @@ public class CartService {
                     .orElseThrow(() -> new Exception404("해당 옵션을 찾을 수 없습니다 : " + optionId));
             int price = requestDTO.getPrice();
 
+            if (price <= 0 ||price >= Math.pow(2,32)){
+                throw new Exception400("잘못된 가격 요청입니다. : " + price);
+            }
+
+            if (quantity <= 0 || quantity >= 1000){
+                throw new Exception400("잘못된 수량 요청입니다. : " + quantity);
+            }
+
             // 1. 동일한 옵션이 들어오면 예외처리
             // [ { optionId:1, quantity:5, price:50000 }, { optionId:1, quantity:10, price:10000 } ]
             if (optionIdSet.contains(optionId)){
-                throw new Exception400("잘못된 옵션 요청입니다." + optionId);
+                throw new Exception400("중복된 옵션 요청입니다. : " + optionId);
             }
             optionIdSet.add(optionId);
 
@@ -62,7 +70,7 @@ public class CartService {
                     cartToUpdate.setPrice(newPrice);
                     cartJPARepository.save(cartToUpdate);
                 } else {
-                    throw new Exception400("잘못된 가격 요청입니다." + price);
+                    throw new Exception400("잘못된 가격 요청입니다. : " + price);
                 }
             } else {
                 // 3. 장바구니에 해당 옵션이 존재하지 않는 경우, 새로운 장바구니 정보 생성
@@ -71,7 +79,7 @@ public class CartService {
                     Cart cart = Cart.builder().user(sessionUser).option(optionPS).quantity(quantity).price(price).build();
                     cartJPARepository.save(cart);
                 } else {
-                    throw new Exception400("잘못된 가격 요청입니다." + price);
+                    throw new Exception400("잘못된 가격 요청입니다. " + price);
                 }
             }
         }
@@ -82,16 +90,59 @@ public class CartService {
         List<Cart> cartList = cartJPARepository.findAllByUserId(user.getId());
 
         // 1. 유저 장바구니에 아무것도 없으면 예외처리
+        if (cartList.isEmpty()){
+            throw new Exception400("장바구니에 상품이 존재하지 않습니다. : " + cartList);
+        }
 
         // 2. cartId:1, cartId:1 이렇게 requestDTOs에 동일한 장바구니 아이디가 두번 들어오면 예외처리
+        Set<Integer> cartIdSet = new HashSet<>();
 
         // 3. 유저 장바구니에 없는 cartId가 들어오면 예외처리
+        boolean foundInCartList;
+
+        for (CartRequest.UpdateDTO updateDTO : requestDTOs) {
+            int cartId = updateDTO.getCartId();
+
+            if (cartIdSet.contains(cartId)) {
+                throw new Exception400("중복된 장바구니 아이디 요청입니다. : " + cartId);
+            }
+            cartIdSet.add(cartId);
+
+            foundInCartList = false;
+            for (Cart cart : cartList){
+                if(cart.getId() == cartId) {
+                    foundInCartList = true;
+                    break;
+                }
+            }
+            if (!foundInCartList) {
+                throw new Exception400("없는 장바구니 아이디 요청입니다. : " + cartId);
+            }
+        }
 
         // 위에 3개를 처리하지 않아도 프로그램은 잘돌아간다. 예를 들어 1번을 처리하지 않으면 for문을 돌지 않고, cartList가 빈배열 []로 정상응답이 나감.
         for (Cart cart : cartList) {
             for (CartRequest.UpdateDTO updateDTO : requestDTOs) {
                 if (cart.getId() == updateDTO.getCartId()) {
-                    cart.update(updateDTO.getQuantity(), cart.getOption().getPrice() * updateDTO.getQuantity());
+
+                    int cartQuantity = updateDTO.getQuantity();
+                    int cartPrice = updateDTO.getPrice();
+
+                    if (cartQuantity <= 0 || cartQuantity >= 1000 ){
+                        throw new Exception400("잘못된 수량 요청입니다. : " + cartQuantity);
+                    }
+
+                    if(cartPrice <= 0 || cartPrice >= Math.pow(2,32)) {
+                        throw new Exception400("잘못된 가격 요청입니다. : " + cartPrice);
+                    }
+
+                    int cartPriceCheck = cart.getOption().getPrice() * cartQuantity;
+
+                    if (cartPrice == cartPriceCheck){
+                        cart.update(cartQuantity, cartPrice);
+                    }else{
+                        throw new Exception400("잘못된 가격 요청 입니다. : " + cartPrice);
+                    }
                 }
             }
         }
