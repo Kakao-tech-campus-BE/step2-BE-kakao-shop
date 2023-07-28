@@ -50,4 +50,14 @@ public class OrderService {
         return new OrderResponse.SaveDTO(order, items);
     }
 
+    public OrderResponse.FindByIdDTO findById(int id) {
+
+        Order order = orderJPARepository.findById(id).orElseThrow(
+                () -> new Exception404("해당 주문을 찾을 수 없습니다 : "+id)
+        );
+
+        List<Item> itemList = itemJPARepository.findAllByOrderId(id);
+        return new OrderResponse.FindByIdDTO(order, itemList);
+
+    }
 }
