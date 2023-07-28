@@ -21,16 +21,21 @@ public class CartRestController {
     private final CartService cartService;
     /**
      * [
-     * {
-     * "optionId":1,
-     * "quantity":5,
-     * "price":50000
-     * },
-     * {
-     * "optionId":2,
-     * "quantity":5,
-     * "price":54500
-     * }
+     *     {
+     *         "optionId":1,
+     *         "quantity":5,
+     *         "price":50000
+     *     },
+     *     {
+     *         "optionId":2,
+     *         "quantity":5,
+     *         "price":54500
+     *     },
+     *     {
+     *         "optionId":8,
+     *         "quantity":2,
+     *         "price":11000
+     *     }
      * ]
      */
 // (기능6) 장바구니 담기 POST
