@@ -3,6 +3,7 @@ package com.example.kakao.order;
 import com.example.kakao._core.security.CustomUserDetails;
 import com.example.kakao._core.utils.ApiUtils;
 import com.example.kakao.order.OrderResponse;
+import com.example.kakao.order.item.Item;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -31,8 +32,11 @@ public class OrderRestController {
 
     // (기능10) 주문 결과 확인 GET
     // /orders/{id}
-    public void findById() {
 
+    @GetMapping("/orders/{id}")
+    public ResponseEntity<?> findById(@PathVariable int id) {
+        OrderResponse.FindByIdDTO responseDTO = orderService.findById(id);
+        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 
 }

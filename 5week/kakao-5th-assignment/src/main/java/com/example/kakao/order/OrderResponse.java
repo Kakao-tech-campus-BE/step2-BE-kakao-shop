@@ -73,7 +73,7 @@ public class OrderResponse {
             this.products = orderItemList.stream()
                     .map(item -> item.getOption().getProduct()).distinct()
                     .map(product -> new ProductDTO(orderItemList, product)).collect(Collectors.toList());
-            this.totalPrice = orderItemList.stream().mapToInt(item -> item.getOption().getPrice() * item.getQuantity()).sum();
+            this.totalPrice = orderItemList.stream().mapToInt(item -> item.getPrice()).sum();
         }
 
         @Getter
@@ -102,7 +102,7 @@ public class OrderResponse {
                     this.id = orderItem.getId();
                     this.optionName = orderItem.getOption().getOptionName();
                     this.quantity = orderItem.getQuantity();
-                    this.price = orderItem.getOption().getPrice()* orderItem.getQuantity();
+                    this.price = orderItem.getPrice();
                 }
 
             }
