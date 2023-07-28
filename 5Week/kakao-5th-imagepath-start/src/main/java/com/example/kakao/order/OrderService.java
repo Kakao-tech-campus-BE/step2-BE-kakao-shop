@@ -55,7 +55,7 @@ public class OrderService {
     }
 
     public OrderResponse.FindByIdDTO findByOrderId(Order order){
-        List<Item> itemList = itemJPARepository.FindByOrderId(order.getId());
+        List<Item> itemList = itemJPARepository.findByOrderId(order.getId());
         return new OrderResponse.FindByIdDTO(order, itemList);
     }
 
