@@ -1,5 +1,7 @@
 package com.example.kakao.user;
 
+import com.example.kakao._core.errors.ErrorCode;
+import com.example.kakao._core.errors.exception.CustomException;
 import com.example.kakao._core.errors.exception.Exception400;
 import com.example.kakao._core.errors.exception.Exception500;
 import com.example.kakao._core.security.JWTProvider;
@@ -30,8 +32,11 @@ public class UserService {
     }
 
     public String login(UserRequest.LoginDTO requestDTO) {
+//        User userPS = userJPARepository.findByEmail(requestDTO.getEmail()).orElseThrow(
+//                () -> new Exception400("이메일을 찾을 수 없습니다 : "+requestDTO.getEmail())
+//        );
         User userPS = userJPARepository.findByEmail(requestDTO.getEmail()).orElseThrow(
-                () -> new Exception400("이메일을 찾을 수 없습니다 : "+requestDTO.getEmail())
+                () -> new CustomException(ErrorCode.EMAIL_NOT_FOUND, requestDTO.getEmail())
         );
 
         if(!passwordEncoder.matches(requestDTO.getPassword(), userPS.getPassword())){
