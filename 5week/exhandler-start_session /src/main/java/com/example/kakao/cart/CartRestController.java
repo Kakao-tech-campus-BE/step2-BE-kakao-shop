@@ -42,12 +42,12 @@ public class CartRestController {
 
     // (기능7) 장바구니 조회 - (주문화면) GET
     // /carts
-    @GetMapping("/carts") //동일한 product에따라 cart값을 묶어 주기
-    public ResponseEntity<?> findAll(@AuthenticationPrincipal CustomUserDetails userDetails) {
-        CartResponse.FindAllDTO responseDTO = cartService.findAll(userDetails.getUser());
-        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(responseDTO);
-        return ResponseEntity.ok(apiResult);
-    }
+//    @GetMapping("/carts") //동일한 product에따라 cart값을 묶어 주기
+//    public ResponseEntity<?> findAll(@AuthenticationPrincipal CustomUserDetails userDetails) {
+//        CartResponse.FindAllDTO responseDTO = cartService.findAll(userDetails.getUser());
+//        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(responseDTO);
+//        return ResponseEntity.ok(apiResult);
+//    }
 
     @GetMapping("/carts/v2")
     public ResponseEntity<?> findAllv2(@AuthenticationPrincipal CustomUserDetails userDetails) {
