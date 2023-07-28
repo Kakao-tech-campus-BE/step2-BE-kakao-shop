@@ -13,19 +13,19 @@ public interface CartJPARepository extends JpaRepository<Cart, Integer> {
 
     List<Cart> findAllByUserId(int userId);
 
-    @Query("select c from Cart c join fetch Option where c.user.id = :userId")
+    @Query("select c from Cart c join fetch c.option where c.user.id = :userId")
     List<Cart> findAllByUserIdJoinFetch(@Param("userId") int userId);
 
     @Query("select c from Cart c where c.option.id = :optionId and c.user.id = :userId")
     Optional<Cart> findByOptionIdAndUserId(@Param("optionId") int optionId, @Param("userId") int userId);
 
-    @Query("select c from Cart c join fetch Option where c.option.id = :optionId and c.user.id = :userId")
+    @Query("select c from Cart c join fetch c.option where c.option.id = :optionId and c.user.id = :userId")
     Optional<Cart> findByOptionIdAndUserIdJoinFetch(@Param("optionId") int optionId, @Param("userId") int userId);
 
     @Query("select c from Cart c where c.id = :cartId and c.user.id = :userId")
     Optional<Cart> findByCartIdAndUserId(@Param("cartId") int cartId, @Param("userId") int userId);
 
-    @Modifying(clearAutomatically = true, flushAutomatically = true)
+    @Modifying
     @Query("update Cart c set c.quantity = :#{#cart.quantity}, c.price = :#{#cart.price} where c.id = :#{#cart.id}")
     void update(@Param("cart") Cart cart);
 

@@ -85,7 +85,7 @@ public class CartService {
                 cart.update(updateQuantity, updatePrice);
                 cartJPARepository.update(cart);
             }else{
-                Option option = optionJPARepository.findById(optionId).orElseThrow(
+                Option option = optionJPARepository.findByIdJoinFetch(optionId).orElseThrow(
                         () -> new Exception404("해당 옵션을 찾을 수 없습니다.")
                 );
                 int price = option.getPrice() * quantity;
@@ -96,8 +96,8 @@ public class CartService {
     }
 
     public CartResponse.FindAllDTO findAll(User user) {
-        List<Cart> carts = cartJPARepository.findAllByUserId(user.getId());
-        //List<Cart> carts = cartJPARepository.findAllByUserIdJoinFetch(user.getId());
+        //List<Cart> carts = cartJPARepository.findAllByUserId(user.getId());
+        List<Cart> carts = cartJPARepository.findAllByUserIdJoinFetch(user.getId());
         return new CartResponse.FindAllDTO(carts);
     }
 
@@ -109,8 +109,8 @@ public class CartService {
 
     @Transactional
     public CartResponse.UpdateDTO update(List<CartRequest.UpdateDTO> requestDTOs, User user) {
-        List<Cart> carts = cartJPARepository.findAllByUserId(user.getId());
-        //List<Cart> carts = cartJPARepository.findAllByUserIdJoinFetch(user.getId());
+        //List<Cart> carts = cartJPARepository.findAllByUserId(user.getId());
+        List<Cart> carts = cartJPARepository.findAllByUserIdJoinFetch(user.getId());
 
         //1. 사용자 장바구니가 비어있을 경우
         if(carts.isEmpty()){
