@@ -41,11 +41,12 @@ public class CartService {
             );
 
             Cart cartPS = cartJPARepository.findByOptionIdAndUserId(optionId, user.getId());    // 쿼리문O
-            // 3. 유저의 장바구니에 담기
+            // 3. 장바구니 담기
             if (cartPS == null) {
                 int quantity = requestDTO.getQuantity();
                 int price = optionPS.getPrice() * quantity;
-                Cart cart = Cart.builder().user(user)
+                Cart cart = Cart.builder()
+                        .user(user)
                         .option(optionPS)
                         .quantity(quantity)
                         .price(price)
@@ -64,15 +65,15 @@ public class CartService {
     }
 
     public CartResponse.FindAllDTO findAll(User user) {
+        // 1. 장바구니 조회
         List<Cart> cartList = cartJPARepository.findByUserIdOrderByOptionIdAsc(user.getId());   // 쿼리문O
         // Cart에 담긴 옵션이 3개이면, 2개는 바나나 상품, 1개는 딸기 상품이면 Product는 2개인 것이다.
 
-        // 1. 장바구니가 비어있으면 예외처리
+        // 2. 장바구니가 비어있으면 예외처리
         if (cartList.isEmpty()) {
             throw new Exception404("장바구니가 비어있습니다");
         }
 
-        // 2. 유저의 장바구니 조회
         return new CartResponse.FindAllDTO(cartList);
     }
 
@@ -107,10 +108,9 @@ public class CartService {
                     () -> new Exception404("해당 장바구니아이템을 찾을 수 없습니다 : " + cartId)
             );
 
-            // 4. 유저의 장바구니 수정
-            Option optionPS = cartPS.getOption();   // 쿼리문O
+            // 4. 장바구니 수정
             int quantity = requestDTO.getQuantity();
-            int price = optionPS.getPrice() * quantity;
+            int price = cartPS.getOption().getPrice() * quantity;   // option : join되어있음
             cartPS.update(quantity, price); // 쿼리문O
         }
 

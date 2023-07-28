@@ -24,15 +24,15 @@ public class OrderRestController {
     // /orders/save
     @PostMapping("/orders/save")
     public ResponseEntity<?> save(@AuthenticationPrincipal CustomUserDetails userDetails) {
-        OrderResponse.SaveDTO responseDTO = orderService.orderSave(userDetails.getUser());
-        return ResponseEntity.ok(ApiUtils.success( responseDTO));  // DTO반환으로 수정
+        OrderResponse.SaveDTO responseDTO = orderService.save(userDetails.getUser());
+        return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
 
     // (기능10) 주문 결과 확인 GET
     // /orders/{id}
     @GetMapping("/orders/{id}")
-    public ResponseEntity<?> findById(@PathVariable int id) {
-        OrderResponse.FindByIdDTO responseDTO = orderService.findById(id);
+    public ResponseEntity<?> findById(@PathVariable int id, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        OrderResponse.FindByIdDTO responseDTO = orderService.findById(id, userDetails.getUser());
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 
