@@ -24,24 +24,30 @@ public class CartService {
     public void addCartList(List<CartRequest.SaveDTO> requestDTOs, User sessionUser) {
         // 1. 동일한 옵션이 들어오면 예외처리
         // [ { optionId:1, quantity:5 }, { optionId:1, quantity:10 } ]
+        boolean isDuplicated = requestDTOs
+                .stream()
+                .map(CartRequest.SaveDTO::getOptionId)
+                .distinct()
+                .count() != requestDTOs.size();
+        if (isDuplicated){
+            throw new Exception400("동일한 장바구니를 추가할 수는 없습니다.");
+        }
 
-        // 2. cartJPARepository.findByOptionIdAndUserId() 조회 -> 존재하면 장바구니에 수량을 추가하는 업데이트를 해야함. (더티체킹하기)
-
-        // 3. [2번이 아니라면] 유저의 장바구니에 담기
         for (CartRequest.SaveDTO requestDTO : requestDTOs) {
             int optionId = requestDTO.getOptionId();
             int quantity = requestDTO.getQuantity();
             Option optionPS = optionJPARepository.findById(optionId)
                     .orElseThrow(() -> new Exception404("해당 옵션을 찾을 수 없습니다 : " + optionId));
-
             Optional<Cart> cartPS = cartJPARepository.findByOptionIdAndUserId(optionId, sessionUser.getId());
+
+            // 2. cartJPARepository.findByOptionIdAndUserId() 조회 -> 존재하면 장바구니에 수량을 추가하는 업데이트를 해야함. (더티체킹하기)
             if (cartPS.isPresent()) { //이미 optionId 존재하는 경우
                 int savedQuantity = cartPS.get().getQuantity();
                 int updatedQuantity = savedQuantity + quantity;
                 int updatedPrice = optionPS.getPrice() * updatedQuantity;
 
                 cartPS.get().update(updatedQuantity, updatedPrice);
-            } else {
+            } else {         // 3. [2번이 아니라면] 유저의 장바구니에 담기
                 int price = optionPS.getPrice() * quantity;
                 Cart cart = Cart.builder().user(sessionUser).option(optionPS).quantity(quantity).price(price).build();
                 cartJPARepository.save(cart);
