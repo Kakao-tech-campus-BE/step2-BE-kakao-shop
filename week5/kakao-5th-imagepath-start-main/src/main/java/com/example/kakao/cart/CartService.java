@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,13 +19,11 @@ public class CartService {
 
     private final CartJPARepository cartJPARepository;
     private final OptionJPARepository optionJPARepository;
-    private final EntityManager em;
 
     @Transactional
     public void addCartList(List<CartRequest.SaveDTO> requestDTOs, User sessionUser) {
         // 1. 동일한 옵션이 들어오면 예외처리
         // [ { optionId:1, quantity:5 }, { optionId:1, quantity:10 } ]
-        System.out.println(sessionUser.getUsername());
         boolean isDuplicated = requestDTOs
                 .stream()
                 .map(CartRequest.SaveDTO::getOptionId)
@@ -43,7 +40,7 @@ public class CartService {
             throw new Exception400("장바구니 수량은 1개 이상이어야 합니다.");
         }
         // 3. cartJPARepository.findByOptionIdAndUserId() 조회
-        for (CartRequest.SaveDTO requestDTO: requestDTOs){
+        for (CartRequest.SaveDTO requestDTO: requestDTOs) {
             Optional<Cart> cart = cartJPARepository.findByOptionIdAndUserId(requestDTO.getOptionId(), sessionUser.getId());
             if (cart.isPresent()){
                 // 4-1. 존재하면 장바구니에 수량을 추가하는 업데이트를 해야함. (더티체킹하기)
@@ -60,28 +57,21 @@ public class CartService {
                 cartJPARepository.save(mcart);
             }
         }
-        em.flush();
     }
 
     public CartResponse.FindAllDTO findAll(User user) {
-        List<Cart> cartList = cartJPARepository.findByUserIdOrderByOptionIdAsc(user.getId());
+        List<Cart> cartList = cartJPARepository.findByUserIdOrderByCartIdOptionIdAsc(user.getId());
         // Cart에 담긴 옵션이 3개이면, 2개는 바나나 상품, 1개는 딸기 상품이면 Product는 2개인 것이다.
         return new CartResponse.FindAllDTO(cartList);
     }
 
-    public CartResponse.FindAllDTOv2 findAllv2(User user) {
-        List<Cart> cartList = cartJPARepository.findByUserIdOrderByOptionIdAsc(user.getId());
-        return new CartResponse.FindAllDTOv2(cartList);
-    }
-
     @Transactional
     public CartResponse.UpdateDTO update(List<CartRequest.UpdateDTO> requestDTOs, User user) {
-        List<Cart> cartList = cartJPARepository.findAllByUserId(user.getId());
+        List<Cart> cartList = cartJPARepository.findByUserIdOrderByCartIdOptionIdAsc(user.getId());
         // 1. 유저 장바구니에 아무것도 없으면 예외처리
         if (cartList.isEmpty()){
-            throw new Exception400("유저 장바구니에 상품이 존재하지 않습니다.");
+            throw new Exception404("유저 장바구니에 상품이 존재하지 않습니다.");
         }
-
         // 2. cartId:1, cartId:1 이렇게 requestDTOs에 동일한 장바구니 아이디가 두번 들어오면 예외처리
         boolean isDuplicated = requestDTOs
                 .stream()
@@ -91,21 +81,19 @@ public class CartService {
         if (isDuplicated){
             throw new Exception400("동일한 장바구니를 업데이트할 수는 없습니다.");
         }
-
-        // 3. 유저 장바구니에 없는 cartId가 들어오면 예외처리
-        boolean isExist = requestDTOs.stream().allMatch(
-                requestCart -> cartList.stream().anyMatch(cart -> cart.getId() == requestCart.getCartId())
-        );
-        if (!isExist){
-            throw new Exception400("존재하지 않는 cartId입니다.");
-        }
-
-        // 4. quantity가 0이 된 경우 예외처리
+        // 3. quantity가 0이 된 경우 예외처리
         boolean isQuantityWrong = requestDTOs.stream().anyMatch(
                 requestCart -> requestCart.getQuantity() <= 0
         );
         if(isQuantityWrong){
             throw new Exception400("장바구니 수량은 1개 이상이어야 합니다.");
+        }
+        // 4. 유저 장바구니에 없는 cartId가 들어오면 예외처리
+        boolean isExist = requestDTOs.stream().allMatch(
+                requestCart -> cartList.stream().anyMatch(cart -> cart.getId() == requestCart.getCartId())
+        );
+        if (!isExist){
+            throw new Exception404("존재하지 않는 cartId입니다.");
         }
 
         // 장바구니 업데이트
