@@ -41,7 +41,9 @@ public class CartRestController {
 
     // (기능7) 장바구니 조회 - (주문화면) GET
     // /carts
-    public void findAll() {
+    public ResponseEntity<?> findAllv2(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        CartResponse.FindAllDTOv2 responseDTO = cartService.findAllv2(userDetails.getUser());
+        return ResponseEntity.ok(ApiUtils.success(responseDTO));
 
     }
 

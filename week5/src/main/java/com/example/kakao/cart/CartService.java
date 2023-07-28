@@ -6,6 +6,7 @@ import com.example.kakao.product.option.Option;
 import com.example.kakao.product.option.OptionJPARepository;
 import com.example.kakao.user.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,11 @@ public class CartService {
 
     private final CartJPARepository cartJPARepository;
     private final OptionJPARepository optionJPARepository;
+
+    public CartResponse.FindAllDTOv2 findAllv2(User user) {
+        List<Cart> cartList = cartJPARepository.findByUserIdOrderByOptionIdAsc(user.getId());
+        return new CartResponse.FindAllDTOv2(cartList);
+    }
 
     @Transactional // Transactional을 다시 해주지 않으면 update 쿼리가 작동하지 않음
     public void addCartList(List<CartRequest.SaveDTO> requestDTOs, User sessionUser) {
@@ -37,9 +43,10 @@ public class CartService {
 //            cartJPARepository.mSave(sessionUser.getId(), optionId, quantity, price);
 //        }
 
-        // 2. cartJPARepository.findByOptionIdAndUserId() 조회 -> 이미 존재하면 장바구니에 수량을 추가하는 업데이트를 해야함 (더티체킹)
+        // 2. cartJPARepository.findByOptionIdAndUserId() 조회
+        // 이미 존재하면 장바구니에 수량을 추가하는 업데이트를 해야함 (더티체킹)
         // 원래 상태에서는 uniqueConstraint 제약때문에 에러가 발생
-        // 3. [존재하지 않는다면] 유저의 장바구니에 담기
+        // 3. 존재하지 않는다면 유저의 장바구니에 담기
 
         for (CartRequest.SaveDTO requestDTO : requestDTOs) {
             int optionId = requestDTO.getOptionId();
