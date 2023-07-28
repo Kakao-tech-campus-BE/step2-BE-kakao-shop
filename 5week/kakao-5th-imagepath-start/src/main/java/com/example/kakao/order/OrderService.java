@@ -24,6 +24,7 @@ public class OrderService {
 
     @Transactional
     public OrderResponse.FindByIdDTO save(User user){
+
         List<Cart> carts = cartJPARepository.findAllWithOptionsUsingFetchJoinByUserId(user.getId());
         /**
          * 파라미터로 온 User는 id만 가지고 있는 객체! -> id를 가지고 있기 때문에 FK로서의 역할은 충분!
@@ -38,6 +39,7 @@ public class OrderService {
          */
         cartJPARepository.deleteByUserId(user.getId());
         return new OrderResponse.FindByIdDTO(order,items1);
+
     }
 
 
