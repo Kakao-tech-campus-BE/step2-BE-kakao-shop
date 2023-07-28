@@ -29,7 +29,10 @@ public class CartService {
         // [ { optionId:1, quantity:5 }, { optionId:1, quantity:10 } ]
         validateDuplicateOptions(requestDTOs);
 
-        // 2. cartJPARepository.findByOptionIdAndUserId() 조회 -> 존재하면 장바구니에 수량을 추가하는 업데이트를 해야함. (더티체킹하기)
+        // 2. 수량 음수 체크
+        validateQuantityForOptionId(requestDTOs);
+
+        // 3. cartJPARepository.findByOptionIdAndUserId() 조회 -> 존재하면 장바구니에 수량을 추가하는 업데이트를 해야함. (더티체킹하기)
         // userId 와 optionId 를 가져온 후, 만약 현재 존재하는 id 일 경우 업데이트
         int sessionUserId = sessionUser.getId();
 
@@ -56,7 +59,7 @@ public class CartService {
 
             }
             else {
-                // 3. [2번이 아니라면] 유저의 장바구니에 담기
+                // 4. [2번이 아니라면] 유저의 장바구니에 담기
                 int price = optionPS.getPrice() * quantity;
                 Cart cart = Cart.builder().user(sessionUser).option(optionPS).quantity(quantity).price(price).build();
                 cartJPARepository.save(cart);
@@ -76,6 +79,15 @@ public class CartService {
                 throw new Exception400("동일한 옵션을 추가할 수 없습니다. optionId : " + requestDTO.getOptionId());
             }
             optionSet.add(optionId);
+        }
+    }
+
+    // 수량 음수 체크
+    public void validateQuantityForOptionId(List<CartRequest.SaveDTO> requestDTOs) {
+        for (CartRequest.SaveDTO requestDTO : requestDTOs) {
+            if (requestDTO.getQuantity() < 0) {
+                throw new Exception400("수량은 0 이상이어야 합니다. quantity : " + requestDTO.getQuantity());
+            }
         }
     }
 
@@ -101,10 +113,13 @@ public class CartService {
             throw new Exception400("비어있음");
         }
 
-        // 2. cartId:1, cartId:1 이렇게 requestDTOs에 동일한 장바구니 아이디가 두번 들어오면 예외처리
+        // 2. 수량 음수체크
+        validateQuantityForCartIds(requestDTOs);
+
+        // 3. cartId:1, cartId:1 이렇게 requestDTOs에 동일한 장바구니 아이디가 두번 들어오면 예외처리
         validateDuplicateCartIds(requestDTOs);
 
-        // 3. 유저 장바구니에 없는 cartId가 들어오면 예외처리
+        // 4. 유저 장바구니에 없는 cartId가 들어오면 예외처리
         List<Integer> existingCartIds = cartList.stream().map(Cart::getId).collect(Collectors.toList());
 
         for (CartRequest.UpdateDTO requestDTO : requestDTOs) {
@@ -137,4 +152,14 @@ public class CartService {
             cartIdsSet.add(cartId);
         }
     }
+
+    private void validateQuantityForCartIds(List<CartRequest.UpdateDTO> requestDTOs) {
+        for (CartRequest.UpdateDTO updateDTO : requestDTOs) {
+            if (updateDTO.getQuantity() < 0) {
+                throw new Exception400("수량은 0 이상이어야 합니다. quantity : " + updateDTO.getQuantity());
+            }
+        }
+    }
 }
+
+

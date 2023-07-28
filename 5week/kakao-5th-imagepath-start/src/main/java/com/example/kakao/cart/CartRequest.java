@@ -4,7 +4,10 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 
 public class CartRequest {
 
@@ -13,6 +16,7 @@ public class CartRequest {
         @NotNull
         private int optionId;
         @NotNull
+        @Positive(message = "양수값만 가능합니다.")
         private int quantity;
     }
 
@@ -21,6 +25,7 @@ public class CartRequest {
         @NotNull
         private int cartId;
         @NotNull
+        @Positive(message = "양수값만 가능합니다.")
         private int quantity;
     }
 }
