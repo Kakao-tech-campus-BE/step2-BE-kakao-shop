@@ -34,15 +34,15 @@ public class CartService {
         }
     }
 
-    public CartResponse.FindAllDTO findAll(User user) {
-        List<Cart> cartList = cartJPARepository.findByUserIdOrderByOptionIdAsc(user.getId());
+    public CartResponse.FindAllDTO findAll(User sessionUser) {
+        List<Cart> cartList = cartJPARepository.findByUserIdOrderByOptionIdAsc(sessionUser.getId());
         // Cart에 담긴 옵션이 3개이면, 2개는 바나나 상품, 1개는 딸기 상품이면 Product는 2개인 것이다.
         return new CartResponse.FindAllDTO(cartList);
     }
 
     @Transactional
-    public CartResponse.UpdateDTO update(List<CartRequest.UpdateDTO> requestDTOs, User user) {
-        List<Cart> cartList = cartJPARepository.findAllByUserId(user.getId());
+    public CartResponse.UpdateDTO update(List<CartRequest.UpdateDTO> requestDTOs, User sessionUser) {
+        List<Cart> cartList = cartJPARepository.findAllByUserId(sessionUser.getId());
 
         // 1. 유저 장바구니에 아무것도 없으면 예외처리
         // 2. cartId:1, cartId:1 이렇게 requestDTOs에 동일한 장바구니 아이디가 두번 들어오면 예외처리
