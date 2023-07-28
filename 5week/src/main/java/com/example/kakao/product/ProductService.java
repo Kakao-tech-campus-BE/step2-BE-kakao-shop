@@ -22,7 +22,7 @@ public class ProductService {
 
     public ProductResponse.FindByIdDTO findById(int id) {
         List<Option> optionListPS = optionRepository.findByProductIdJoinProduct(id);
-        if (optionListPS.size() == 0) {
+        if (optionListPS.isEmpty()) {
             throw new Exception404("해당 상품을 찾을 수 없습니다 : " + id);
         }
         return new ProductResponse.FindByIdDTO(optionListPS);

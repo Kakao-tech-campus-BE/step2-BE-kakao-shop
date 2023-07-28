@@ -17,7 +17,7 @@ public class OrderService {
 
     public OrderResponse.FindByIdDTO findById(int id) {
         List<Item> itemListPS = itemRepository.findByOrderIdJoinOrder(id);
-        if (itemListPS.size() == 0) {
+        if (itemListPS.isEmpty()) {
             throw new Exception404("해당 주문을 찾을 수 없습니다 : " + id);
         }
         return new OrderResponse.FindByIdDTO(itemListPS);
