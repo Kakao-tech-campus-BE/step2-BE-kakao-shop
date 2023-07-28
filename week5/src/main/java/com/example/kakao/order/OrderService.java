@@ -37,7 +37,7 @@ public class OrderService {
         int userId = sessionUser.getId();
         List<Cart> cartList = cartJPARepository.findByUserIdOrderByOptionIdAsc(userId); //Option, Product join fetch
         if(cartList.isEmpty()){
-            throw new Exception404("담은 장바구니가 없습니다");
+            throw new Exception400("담은 장바구니가 없습니다");
         }
         //1. 주문 생성하기
         Order order = Order.builder().user(sessionUser).build();
@@ -62,7 +62,7 @@ public class OrderService {
     //주문 결과 확인
     public OrderResponse.FindAllDTO findById(int id) {
         Order order = orderJPARepository.findById(id).orElseThrow(
-                () -> new Exception404("존재하지않는 orderId 입니다")
+                () -> new Exception400("존재하지않는 orderId 입니다")
         );
         List<Item> itemList = itemJPARepository.findByOrderId(id);
         return new OrderResponse.FindAllDTO(order, itemList);

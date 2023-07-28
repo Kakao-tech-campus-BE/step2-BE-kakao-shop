@@ -1,5 +1,6 @@
 package com.example.kakao.product;
 
+import com.example.kakao._core.errors.exception.Exception400;
 import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao.product.option.Option;
 import com.example.kakao.product.option.OptionJPARepository;
@@ -40,7 +41,7 @@ public class ProductService {
     public ProductResponse.FindByIdDTO findById(int id) {
         List<Option> optionListPS = optionRepository.findByProductIdJoinProduct(id);
         if(optionListPS.size() == 0){
-            throw new Exception404("해당 상품을 찾을 수 없습니다 : "+id);
+            throw new Exception400("해당 상품을 찾을 수 없습니다 : "+id);
         }
         return new ProductResponse.FindByIdDTO(optionListPS);
     }

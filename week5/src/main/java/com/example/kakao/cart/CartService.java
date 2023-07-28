@@ -38,7 +38,7 @@ public class CartService {
             // Cart {cartId:1, optionId:1, quantity:3, userId:1} -> DTO {optionId:1, quantity:5}
             Optional<Cart> optional = cartJPARepository.findByOptionIdAndUserId(optionId, sessionUser.getId());
             Option option = optionJPARepository.findById(optionId)
-                    .orElseThrow(() -> new Exception404("해당 옵션을 찾을 수 없습니다 : " + optionId));
+                    .orElseThrow(() -> new Exception400("해당 옵션을 찾을 수 없습니다 : " + optionId));
 
             if(optional.isPresent()){ //이미 장바구니에 담긴 옵션이라면
                 Cart cart = optional.get();
