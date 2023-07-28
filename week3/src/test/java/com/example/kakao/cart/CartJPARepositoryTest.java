@@ -62,7 +62,7 @@ public class CartJPARepositoryTest extends DummyEntity {
 
         // when
         //다중 join fetch, select문 총 2번 수행(1번: join fetch, 1번:option의 product 조회)
-        List<Cart> cartPG = cartJPARepository.mFindFetchAll();
+        List<Cart> cartPG = cartJPARepository.FindFetchAllWithUserAndOption();
         String responseBody = om.writeValueAsString(cartPG); //직렬화하여 출력
         System.out.println("테스트 : "+responseBody);
 
@@ -96,18 +96,18 @@ public class CartJPARepositoryTest extends DummyEntity {
     @DisplayName("3.주문하기 (장바구니 수정)")
     public void update_cart_test() throws JsonProcessingException {
         // given
-        Cart c = cartJPARepository.mFindFetchAll().get(0);
-        int id = c.getId();
+        Cart cart = cartJPARepository.FindFetchAllWithUserAndOption().get(0);
+        int id = cart.getId();
         // when
         // select 쿼리 2번(join fetch 1번+ option의 Product 조회 1번) + update 쿼리 1번
-            c.update(10); //장바구니 수정
+            cart.update(10); //장바구니 수정
 
-            String responseBody = om.writeValueAsString(c); //직렬화하여 출력
+            String responseBody = om.writeValueAsString(cart); //직렬화하여 출력
             System.out.println("테스트 : "+responseBody);
 
             //then
-            Assertions.assertThat(c.getId()).isEqualTo(id);
-            Assertions.assertThat(c.getQuantity()).isEqualTo(10);
+            Assertions.assertThat(cart.getId()).isEqualTo(id);
+            Assertions.assertThat(cart.getQuantity()).isEqualTo(10);
     }
 
 }

@@ -63,7 +63,7 @@ public class OrderJPARepositoryTest extends DummyEntity {
 
         // when
         //select 쿼리 1번(join fetch)
-        List<Order> orderList = orderJPARepository.mFindFetchAll(); //join fetch하여 연관관계의 객체 가져오기
+        List<Order> orderList = orderJPARepository.FindFetchAllWithUser(); //join fetch하여 연관관계의 객체 가져오기
         String responseBody = om.writeValueAsString(orderList); //직렬화하여 출력
         System.out.println("테스트 : "+responseBody);
 

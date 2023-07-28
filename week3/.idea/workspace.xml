@@ -5,63 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="29ae2cb3-f9e4-4321-93a8-e0a413cc6a12" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tddbank/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tddbank/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../tddbank/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tddbank/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tddbank/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tddbank/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tddbank/gradlew" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tddbank/gradlew.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tddbank/settings.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tddbank/src/main/java/shop/mtcoding/tddbank/TddbankApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tddbank/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tddbank/src/test/java/shop/mtcoding/tddbank/TddbankApplicationTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.5.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5.1/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.5.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.5.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5.1/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.5.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.5.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/tests/test/classes/com.example.kakao.cart.CartJPARepositoryTest.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/tests/test/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/tests/test/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/tests/test/packages/com.example.kakao.cart.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/test-results/test/TEST-com.example.kakao.cart.CartJPARepositoryTest.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/test-results/test/binary/output.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/test-results/test/binary/output.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/test-results/test/binary/output.bin.idx" beforeDir="false" afterPath="$PROJECT_DIR$/build/test-results/test/binary/output.bin.idx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/test-results/test/binary/results.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/test-results/test/binary/results.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileTestJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileTestJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/kakao/product/ProductJPARepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/kakao/product/ProductJPARepositoryTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../week4/.gradle/7.5.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/.gradle/7.5.1/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../week4/.gradle/7.5.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/.gradle/7.5.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../week4/.gradle/7.5.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/.gradle/7.5.1/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../week4/.gradle/7.5.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/.gradle/7.5.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../week4/.gradle/7.5.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/.gradle/7.5.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../week4/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../week4/build/reports/tests/test/classes/com.example.kakao.cart.CartRestControllerTest.html" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/build/reports/tests/test/classes/com.example.kakao.cart.CartRestControllerTest.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../week4/build/reports/tests/test/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/build/reports/tests/test/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../week4/build/reports/tests/test/packages/com.example.kakao.cart.html" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/build/reports/tests/test/packages/com.example.kakao.cart.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../week4/build/test-results/test/TEST-com.example.kakao.cart.CartRestControllerTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/build/test-results/test/TEST-com.example.kakao.cart.CartRestControllerTest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../week4/build/test-results/test/binary/output.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/build/test-results/test/binary/output.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../week4/build/test-results/test/binary/output.bin.idx" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/build/test-results/test/binary/output.bin.idx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../week4/build/test-results/test/binary/results.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/build/test-results/test/binary/results.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../week4/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../week4/build/tmp/compileTestJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/build/tmp/compileTestJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../week4/src/main/java/com/example/kakao/_core/errors/exception/Exception404.java" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/src/main/java/com/example/kakao/_core/errors/exception/Exception404.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../week4/src/main/java/com/example/kakao/cart/CartRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/src/main/java/com/example/kakao/cart/CartRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../week4/src/main/java/com/example/kakao/cart/CartService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/src/main/java/com/example/kakao/cart/CartService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../week4/src/main/java/com/example/kakao/order/OrderRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/src/main/java/com/example/kakao/order/OrderRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../week4/src/main/java/com/example/kakao/order/OrderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/src/main/java/com/example/kakao/order/OrderService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../week4/src/main/java/com/example/kakao/product/ProductRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/src/main/java/com/example/kakao/product/ProductRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../week4/src/main/java/com/example/kakao/product/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/src/main/java/com/example/kakao/product/ProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../week4/src/main/java/com/example/kakao/user/UserResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/src/main/java/com/example/kakao/user/UserResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../week4/src/main/java/com/example/kakao/user/UserRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/src/main/java/com/example/kakao/user/UserRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../week4/src/test/java/com/example/kakao/cart/CartRestControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/src/test/java/com/example/kakao/cart/CartRestControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../week4/src/test/java/com/example/kakao/order/OrderRestControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/src/test/java/com/example/kakao/order/OrderRestControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../week4/src/test/java/com/example/kakao/user/UserRestControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../week4/src/test/java/com/example/kakao/user/UserRestControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/kakao/cart/CartJPARepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/kakao/cart/CartJPARepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/kakao/order/OrderJPARepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/kakao/order/OrderJPARepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/kakao/cart/CartJPARepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/kakao/cart/CartJPARepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/kakao/order/OrderJPARepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/kakao/order/OrderJPARepositoryTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +29,12 @@
         </task>
         <projects_view>
           <tree_state>
-            <expand />
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="kakao" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
             <select />
           </tree_state>
         </projects_view>
@@ -276,6 +229,7 @@
       <workItem from="1689570729348" duration="1588000" />
       <workItem from="1689933059115" duration="5047000" />
       <workItem from="1689938683595" duration="811000" />
+      <workItem from="1690531094484" duration="369000" />
     </task>
     <servers />
   </component>
