@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RestController
 public class OrderRestController {
-    // (기능9) 결재하기 - (주문 인서트) POST
+    // (기능 12) 결제
     public void save() { }
 
-    // (기능10) 주문 결과 확인 GET
+    // (기능 13) 주문 결과 확인
     public void findById() { }
 }

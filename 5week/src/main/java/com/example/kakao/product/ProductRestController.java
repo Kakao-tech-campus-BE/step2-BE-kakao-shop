@@ -15,7 +15,7 @@ import java.util.List;
 public class ProductRestController {
     private final ProductService productService;
 
-    // (기능1) 전체 상품 목록 조회 (페이징 9개씩)
+    // (기능 4) 전체 상품 목록 조회
     @GetMapping("/products")
     public ResponseEntity<?> findAll(@RequestParam(value = "page", defaultValue = "0") Integer page) {
         List<ProductResponse.FindAllDTO> responseDTOs = productService.findAll(page);
@@ -23,7 +23,7 @@ public class ProductRestController {
         return ResponseEntity.ok(apiResult);
     }
 
-    // (기능2) 개별 상품 상세 조회
+    // (기능 5) 개별 상품 상세 조회
     @GetMapping("/products/{id}")
     public ResponseEntity<?> findById(@PathVariable int id) {
         ProductResponse.FindByIdDTO responseDTO = productService.findById(id);
