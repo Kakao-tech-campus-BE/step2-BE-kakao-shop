@@ -46,7 +46,7 @@ public class CartService {
             Option optionPS = optionJPARepository.findById(optionId)
                     .orElseThrow(() -> new Exception404("해당 옵션을 찾을 수 없습니다 : " + optionId));
             // 현재 카트에 동일한 옵션 id 가 존재하는지 체크 -> optional 로 null 인지 아닌지 구분하여 if 문으로 비교하는 것이 더 좋은지, 아니면 다른 방법이 있는지?
-            Optional<Cart> cartOptional = cartJPARepository.findByOptionIdAndUserId(optionId, sessionUserId);
+            Optional<Cart> cartOptional = cartJPARepository.findByOptionIdAndUserId(optionId, sessionUserId); // 여기서도 n+1 문제 발생
 
             // 값이 존재할 경우 ( 동일한 옵션 id 가 존재할 경우 )
             if(cartOptional.isPresent()) {
