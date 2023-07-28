@@ -36,7 +36,7 @@ public class CartRestController {
     // /carts/add
     @PostMapping("/add")
     public ResponseEntity<?> addCartList(@RequestBody @Valid List<CartRequest.SaveDTO> requestDTOs, Errors errors, @AuthenticationPrincipal CustomUserDetails userDetails) {
-        cartListService.addCartList(requestDTOs, userDetails.getUser());
+        cartListService.AddOrUpdateCart(requestDTOs, userDetails.getUser());
         ApiUtils.ApiResult<?> apiResult = ApiUtils.success(null);
         return ResponseEntity.ok(apiResult);
     }
@@ -66,7 +66,7 @@ public class CartRestController {
 // /carts/update
 @PostMapping("/update")
 public ResponseEntity<?> update(@RequestBody @Valid List<CartRequest.UpdateDTO> requestDTOs, Errors errors, @AuthenticationPrincipal CustomUserDetails userDetails) {
-    CartResponse.UpdateDTO responseDTO = cartListService.update(requestDTOs,userDetails.getUser());
+    CartResponse.UpdateDTO responseDTO = cartListService.updateCart(requestDTOs,userDetails.getUser());
     ApiUtils.ApiResult<?> apiResult = ApiUtils.success(responseDTO);
     return ResponseEntity.ok(apiResult);
 }
