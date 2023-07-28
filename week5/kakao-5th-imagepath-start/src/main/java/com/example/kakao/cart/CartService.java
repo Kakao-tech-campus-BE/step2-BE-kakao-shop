@@ -75,7 +75,6 @@ public class CartService {
 
         for (CartRequest.UpdateDTO requestDTO : requestDTOs) {
             int cartId = requestDTO.getCartId();
-<<<<<<< HEAD
 
             // 동일한 장바구니 아이디가 들어올 경우
             if (cartIds.contains(cartId)) {
@@ -83,15 +82,6 @@ public class CartService {
             }
             cartIds.add(cartId);
 
-=======
-
-            // 동일한 장바구니 아이디가 들어올 경우
-            if (cartIds.contains(cartId)) {
-                throw new Exception400("동일한 장바구니 요청입니다.");
-            }
-            cartIds.add(cartId);
-
->>>>>>> f44b51781d427fceba3fc6d747ac84e97177f447
             // 3. 유저 장바구니에 없는 cartId가 들어오면 예외처리
             boolean cartIdFound = false;
             for (Cart cart: cartList) {
@@ -115,9 +105,5 @@ public class CartService {
         }
         return new CartResponse.UpdateDTO(cartList);
     } // 더티체킹
-<<<<<<< HEAD
-
     // 장바구니에 담긴 상품을 삭제하는 부분도 작성하면 좋을 것 같다.
-=======
->>>>>>> f44b51781d427fceba3fc6d747ac84e97177f447
 }
