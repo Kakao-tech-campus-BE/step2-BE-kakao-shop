@@ -35,13 +35,6 @@ public class CartRestController {
         return ResponseEntity.ok(apiResult);
     }
 
-    @GetMapping("/carts/v2")
-    public ResponseEntity<?> findAllv2(@AuthenticationPrincipal CustomUserDetails userDetails) {
-        CartResponse.FindAllDTOv2 responseDTO = cartListService.findAllv2(userDetails.getUser());
-        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(responseDTO);
-        return ResponseEntity.ok(apiResult);
-    }
-
     // (기능8) 주문하기 - (주문화면에서 장바구니 수정하기)
     @PostMapping("/carts/update")
     public ResponseEntity<?> update(@RequestBody @Valid List<CartRequest.UpdateDTO> requestDTOs, Errors errors, @AuthenticationPrincipal CustomUserDetails userDetails) {
