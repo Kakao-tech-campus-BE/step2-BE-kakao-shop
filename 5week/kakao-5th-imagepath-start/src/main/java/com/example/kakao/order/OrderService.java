@@ -1,6 +1,7 @@
 package com.example.kakao.order;
 
 import com.example.kakao._core.errors.exception.Exception400;
+import com.example.kakao._core.errors.exception.Exception403;
 import com.example.kakao.cart.Cart;
 import com.example.kakao.cart.CartJPARepository;
 import com.example.kakao.order.item.Item;
@@ -38,7 +39,7 @@ public class OrderService {
         
         // 해당하는 유저 가져오기
         User user = userJPARepository.findById(userId)
-                .orElseThrow(() -> new Exception400("해당하는 유저가 존재하지 않습니다. userId : " + userId));
+                .orElseThrow(() -> new Exception403("해당하는 유저가 존재하지 않습니다. userId : " + userId));
 
         // order 생성 -> build 후 save 하는 부분을 따로 함수로 빼는게 좋을지?
         Order order = Order.builder()
@@ -73,12 +74,12 @@ public class OrderService {
 
         // 인증 -> 이런 인증 부분도 따로 함수로 빼는게 좋을지?
         if(orderId != order.getId()) {
-            throw new Exception400("권한이 없습니다. orderId : " + orderId + " order.getId() : " + order.getId());
+            throw new Exception403("권한이 없습니다. orderId : " + orderId + " order.getId() : " + order.getId());
         }
 
         // userId 인증 -> 이런 인증 부분도 따로 함수로 빼는게 좋을지?
         if(userId != order.getUser().getId()) {
-            throw new Exception400("다른 유저의 권한입니다. userId : " + userId + " order.getUser().getId() : " + order.getUser().getId());
+            throw new Exception403("다른 유저의 권한입니다. userId : " + userId + " order.getUser().getId() : " + order.getUser().getId());
         }
         // itemList 가져오기
         List<Item> itemList = itemJPARepository.findAllByOrderId(orderId);
