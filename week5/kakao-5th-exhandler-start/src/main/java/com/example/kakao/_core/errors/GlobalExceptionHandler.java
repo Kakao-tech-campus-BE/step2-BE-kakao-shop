@@ -2,21 +2,20 @@ package com.example.kakao._core.errors;
 
 import com.example.kakao._core.errors.exception.*;
 import com.example.kakao._core.utils.ApiUtils;
-import com.example.kakao.log.ErrorLog;
-import com.example.kakao.log.ErrorLogJPARepository;
+import com.fasterxml.jackson.core.JsonParseException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
 
-@RequiredArgsConstructor
-@Component
+@ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(Exception400.class)
+    @ExceptionHandler({Exception400.class, JsonParseException.class })
     public ResponseEntity<?> badRequest(Exception400 e){
         return new ResponseEntity<>(e.body(), e.status());
     }

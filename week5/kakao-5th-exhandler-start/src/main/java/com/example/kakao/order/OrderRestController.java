@@ -33,8 +33,8 @@ public class OrderRestController {
     // /orders/{id}
     @GetMapping("/orders/{id}")
     public ResponseEntity<?> findById(@PathVariable int id, @AuthenticationPrincipal CustomUserDetails userDetails) {
-        //요청한 사람의 주문 결과를 출력해야 하므로 id는
-        OrderResponse.FindByIdDTO responseDTO = orderService.findById(id);
+        //요청한 사람의 주문 결과를 출력해야 하므로 유저id와 주문id를 검증할 수 있는 서비스인 findById로 넘긴다.
+        OrderResponse.FindByIdDTO responseDTO = orderService.findById(userDetails.getUser(), id);
         //정상 가동 시 responseDTO를 반환
         return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }

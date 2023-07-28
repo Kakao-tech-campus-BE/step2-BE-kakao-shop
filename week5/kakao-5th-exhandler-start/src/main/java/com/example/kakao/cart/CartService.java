@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,8 +24,19 @@ public class CartService {
 
     @Transactional
     public void addCartList(List<CartRequest.SaveDTO> requestDTOs, User sessionUser) {
+        // 1. optionId:1, optionId:1 이렇게 requestDTOs에 동일한 장바구니 아이디가 두번 들어오면 예외처리
+        // db를 조회하는 작업이 아니기 때문에 트랜잭션의 효율성을 위해 컨트롤러단으로 모셔와서 작성하였다. 로직은 addCartList의 로직과 같다.
+        List<Integer> optionIdList = new ArrayList<>();
+        for (CartRequest.SaveDTO requestDTO : requestDTOs) {
+            int cartId = requestDTO.getOptionId();
+            // 만약 이미 cartList에 존재하는 옵션이라면 중복이 발생한 것이므로 검증 실패. 존재하지 않는다면 리스트에 값을 넣어가면서 수행, 아니면 예외처리
+            if (optionIdList.contains(cartId)) {
+                throw new Exception400("중복된 장바구니를 업데이트할 수 없습니다.");
+            }
+            // 아니면 리스트에 optionId를 추가.
+            optionIdList.add(cartId);
+        }
 
-        // 3. [2번이 아니라면] 유저의 장바구니에 담기
         for (CartRequest.SaveDTO requestDTO : requestDTOs) {
             int optionId = requestDTO.getOptionId();
             int quantity = requestDTO.getQuantity();
@@ -39,6 +51,8 @@ public class CartService {
                 //update 후 for문 건너뛰기
                 continue;
             }
+
+            // 3. 유저의 장바구니에 담기
             //만약에 존재하지 않았을 경우 update가 아닌 추가 insert로직 수행
             //option이 실제 존재하지 않는 옵션일 경우의 예외 처리를 하고, 아니면 insert. option전체 중에 체크를 해야하므로 어쩔 수 없이 쿼리를 하나 더 뽑는다.
             Option optionPS = optionJPARepository.findById(optionId)
@@ -59,12 +73,23 @@ public class CartService {
     //update로직은 Transactional을 통해 update
     @Transactional
     public CartResponse.UpdateDTO update(List<CartRequest.UpdateDTO> requestDTOs, User user) {
-        List<Cart> cartList = cartJPARepository.findAllByUserId(user.getId());
+        List<Cart> cartList = cartJPARepository.findByUserIdOrderByOptionIdAsc((user.getId()));
         // 1. 유저 장바구니에 아무것도 없으면 예외처리
         if (cartList.size() == 0){
             throw new Exception400("장바구니에 상품이 존재하지 않습니다.");
         }
-        // 2번은 컨트롤러로 이사감.
+        // 2. cartId:1, cartId:1 이렇게 requestDTOs에 동일한 장바구니 아이디가 두번 들어오면 예외처리
+        // db를 조회하는 작업이 아니기 때문에 트랜잭션의 효율성을 위해 컨트롤러단으로 모셔와서 작성하였다. 로직은 addCartList의 로직과 같다.
+        List<Integer> cartIdList = new ArrayList<>();
+        for (CartRequest.UpdateDTO requestDTO : requestDTOs) {
+            int cartId = requestDTO.getCartId();
+            // 만약 이미 cartList에 존재하는 옵션이라면 중복이 발생한 것이므로 검증 실패. 존재하지 않는다면 리스트에 값을 넣어가면서 수행, 아니면 예외처리
+            if (cartIdList.contains(cartId)) {
+                throw new Exception400("중복된 장바구니를 업데이트할 수 없습니다.");
+            }
+            // 아니면 리스트에 optionId를 추가.
+            cartIdList.add(cartId);
+        }
 
         //for문의 순서를 바꿔 updateDTO를 앞에두면 1번 업데이트DTO가 CARTLIST를 순회한다. 그리고 일치하는게 카트리스트에 없다면 마지막 if문으로 예외처리를 하고
         //일치하는게 존재한다면 break를 통해 더 반복하지 않고, 다음 업데이트를 진행한다.
