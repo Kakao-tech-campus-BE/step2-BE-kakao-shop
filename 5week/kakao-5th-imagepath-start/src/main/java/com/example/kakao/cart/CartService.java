@@ -82,10 +82,12 @@ public class CartService {
             throw new Exception404("중복된 OptionId는 불가합니다");
         }
         // 3. 유저 장바구니에 없는 cartId가 들어오면 예외처리
-        boolean containsNull = cartList.stream().anyMatch(Objects::isNull);
-                if(containsNull) {
-                    throw new Exception404("장바구니가 비었습니다");
-                }
+        for(CartRequest.UpdateDTO requestDTO : requestDTOs) {
+            cartJPARepository.findById(requestDTO.getCartId()).orElseThrow(
+                    () -> new Exception404("DB에 저장되지않은 cartId가 요청되었습니다")
+            );
+        }
+
         // 위에 3개를 처리하지 않아도 프로그램은 잘돌아간다. 예를 들어 1번을 처리하지 않으면 for문을 돌지 않고, cartList가 빈배열 []로 정상응답이 나감.
         for (Cart cart : cartList) {
             for (CartRequest.UpdateDTO updateDTO : requestDTOs) {
