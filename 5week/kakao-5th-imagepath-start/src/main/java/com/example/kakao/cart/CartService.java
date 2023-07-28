@@ -25,9 +25,9 @@ public class CartService {
         // [ { optionId:1, quantity:5 }, { optionId:1, quantity:10 } ]
         List<Integer> checkDTOs = requestDTOs.stream()
                 .map(CartRequest.SaveDTO::getOptionId)
-                .distinct()
                 .collect(Collectors.toList());
-        if (requestDTOs.size() != checkDTOs.size()) {
+        List<Integer> finalcheckDTOs = checkDTOs.stream().distinct().collect(Collectors.toList());
+        if (requestDTOs.size() != finalcheckDTOs.size()) {
             throw new Exception404("중복된 OptionId는 불가합니다");
         }
          //2. cartJPARepository.findByOptionIdAndUserId() 조회 -> 존재하면 장바구니에 수량을 추가하는 업데이트를 해야함. (더티체킹하기)
@@ -74,11 +74,13 @@ public class CartService {
             throw new Exception404("유저 장바구니가 비어있습니다");
         }
         // 2. cartId:1, cartId:1 이렇게 requestDTOs에 동일한 장바구니 아이디가 두번 들어오면 예외처리
-        List<CartRequest.UpdateDTO> checkList = requestDTOs.stream()
-                .distinct().collect(Collectors.toList());
-                if(checkList.size()!=requestDTOs.size()) {
-                    throw new Exception404("장바구니에 중복된 cartId는 불가합니다");
-                }
+        List<Integer> checkDTOs1 = requestDTOs.stream()
+                .map(CartRequest.UpdateDTO::getCartId)
+                .collect(Collectors.toList());
+        List<Integer> finalcheckDTOs1 = checkDTOs1.stream().distinct().collect(Collectors.toList());
+        if (requestDTOs.size() != finalcheckDTOs1.size()) {
+            throw new Exception404("중복된 OptionId는 불가합니다");
+        }
         // 3. 유저 장바구니에 없는 cartId가 들어오면 예외처리
         boolean containsNull = cartList.stream().anyMatch(Objects::isNull);
                 if(containsNull) {
