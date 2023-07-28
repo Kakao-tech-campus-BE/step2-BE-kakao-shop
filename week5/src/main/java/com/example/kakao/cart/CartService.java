@@ -59,4 +59,38 @@ public class CartService {
         List<Cart> cartList = cartJPARepository.findByUserIdOrderByOptionIdAsc(user.getId());
         return new CartResponse.FindAllDTO(cartList);
     }
+
+    @Transactional
+    public CartResponse.UpdateDTO update(List<CartRequest.UpdateDTO> requestDTOs, User user) {
+
+        List<Cart> cartList = cartJPARepository.findByUserIdOrderByOptionIdAsc(user.getId());
+        if (cartList.isEmpty()) {
+            throw new Exception404("장바구니가 비어있습니다. ");
+        }
+
+        long setSize = requestDTOs.stream().map(cart -> cart.getCartId()).distinct().count();
+
+        if (setSize == 0) {     // 요청된 데이터가 없을 때
+            throw new Exception400("요청된 데이터가 없습니다. ");
+        } else if (requestDTOs.size() != setSize) {     // 동일한 장바구니 번호 들어왔을 때
+            throw new Exception400("요청된 데이터에 동일한 장바구니 번호가 존재합니다. ");
+        }
+
+        for (CartRequest.UpdateDTO requestDTO : requestDTOs) {
+            int cartId = requestDTO.getCartId();
+            int quantity = requestDTO.getQuantity();
+            if (quantity<=0) {
+                throw new Exception400("0 또는 음수 수량이 들어왔습니다. ");
+            }
+
+            Cart cart = cartList.stream()
+                    .filter(c -> c.getId()==cartId).findFirst().orElseThrow(
+                            () -> new Exception404("해당 장바구니를 찾을 수 없습니다. ")
+                    );
+
+            cart.update(quantity, cart.getOption().getPrice()*quantity);
+        }
+
+        return new CartResponse.UpdateDTO(cartList);
+    }
 }
