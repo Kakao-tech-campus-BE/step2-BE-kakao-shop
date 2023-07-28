@@ -26,7 +26,7 @@ public class OrderService {
     public OrderResponse.SaveDTO saveAll(User sessionuser){
 
         List<Cart> cartList = cartJPARepository.findAllByUserId(sessionuser.getId());
-        //1. 카트에 아무거소 없으면 예외 처리
+        //1. 카트에 아무것도 없으면 예외 처리
         if( cartList.isEmpty() ){
             throw new Exception400("카트가 비어있습니다.");
         }
