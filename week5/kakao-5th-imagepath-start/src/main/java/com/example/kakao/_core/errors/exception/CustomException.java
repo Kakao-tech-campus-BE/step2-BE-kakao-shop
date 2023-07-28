@@ -8,11 +8,11 @@ import org.springframework.http.HttpStatus;
 @Getter
 public class CustomException extends RuntimeException {
 
-    private static final long serialVersionUID = -5415773249608096132L;
+    private static final long serialVersionUID = -541587732408096132L;
 
     private final ErrorCode errorCode;
 
-    private String message;
+    private String message = "";
 
     public CustomException(ErrorCode errorCode, String message) {
         this.errorCode = errorCode;
