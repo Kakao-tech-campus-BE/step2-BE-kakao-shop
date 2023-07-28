@@ -29,7 +29,7 @@ public class CartService {
         // [ { optionId:1, quantity:5 }, { optionId:1, quantity:10 } ]
         validateDuplicateOptions(requestDTOs);
 
-        // 2. 수량 음수 체크
+        // 2. 수량 음수 체크 -> 왜 positive 에너테이션을 걸어줬는데 음수가 그대로 값에 들어가는지?
         validateQuantityForOptionId(requestDTOs);
 
         // 3. cartJPARepository.findByOptionIdAndUserId() 조회 -> 존재하면 장바구니에 수량을 추가하는 업데이트를 해야함. (더티체킹하기)
@@ -45,7 +45,7 @@ public class CartService {
             // option
             Option optionPS = optionJPARepository.findById(optionId)
                     .orElseThrow(() -> new Exception404("해당 옵션을 찾을 수 없습니다 : " + optionId));
-            // 현재 카트에 동일한 옵션 id 가 존재하는지 체크
+            // 현재 카트에 동일한 옵션 id 가 존재하는지 체크 -> optional 로 null 인지 아닌지 구분하여 if 문으로 비교하는 것이 더 좋은지, 아니면 다른 방법이 있는지?
             Optional<Cart> cartOptional = cartJPARepository.findByOptionIdAndUserId(optionId, sessionUserId);
 
             // 값이 존재할 경우 ( 동일한 옵션 id 가 존재할 경우 )
@@ -119,7 +119,7 @@ public class CartService {
         // 3. cartId:1, cartId:1 이렇게 requestDTOs에 동일한 장바구니 아이디가 두번 들어오면 예외처리
         validateDuplicateCartIds(requestDTOs);
 
-        // 4. 유저 장바구니에 없는 cartId가 들어오면 예외처리
+        // 4. 유저 장바구니에 없는 cartId가 들어오면 예외처리 -> 이런 부분은 따로 함수로 빼는게 좋을지?
         List<Integer> existingCartIds = cartList.stream().map(Cart::getId).collect(Collectors.toList());
 
         for (CartRequest.UpdateDTO requestDTO : requestDTOs) {
