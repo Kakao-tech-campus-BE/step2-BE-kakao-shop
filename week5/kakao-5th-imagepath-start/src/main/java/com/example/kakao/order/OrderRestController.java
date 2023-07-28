@@ -28,5 +28,11 @@ public class OrderRestController {
 
     // (기능10) 주문 결과 확인 GET
     // /orders/{id}
+    @GetMapping("/orders/{id}")
+    public ResponseEntity<?> orderFindById(@PathVariable int id, @AuthenticationPrincipal CustomUserDetails userDetails){
+        OrderResponse.FindByIdDTO responseDTO = orderService.findOrderById(id,userDetails.getUser());
+        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(responseDTO);
+        return ResponseEntity.ok(apiResult);
+    }
 
 }
