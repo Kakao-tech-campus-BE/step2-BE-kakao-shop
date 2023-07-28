@@ -14,8 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
 @Transactional(readOnly = true) // 변경감지를 하지 않는다
+@Service
 @RequiredArgsConstructor
 public class ProductService {
 

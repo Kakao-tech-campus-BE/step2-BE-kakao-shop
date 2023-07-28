@@ -10,6 +10,10 @@ import java.util.Optional;
 
 public interface CartJPARepository extends JpaRepository<Cart, Integer> {
 
+    // RequestDTO에서 Client에게 price 값까지 받아오는 경우
+//    @Query(value = "insert into cart_tb(user_id, option_id, quantity, price) values (:userId, :opitonId, :quantity, :price)", nativeQuery = true)
+//    void mSave(@Param("userId") int userId, @Param("optionId") int optionId, @Param("quantity") int quantity, @Param("price") int price)
+
     @Query("delete from Cart c where c.user.id = :userId")
     List<Cart> findAllByUserId(int userId);
 
