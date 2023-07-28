@@ -1,6 +1,5 @@
 package com.example.kakao.order.item;
 
-import com.example.kakao.cart.Cart;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

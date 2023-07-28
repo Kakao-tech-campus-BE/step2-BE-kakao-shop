@@ -21,6 +21,16 @@ public class MockJPAResultEntity {
                 .build();
     }
 
+    protected User newUser(int id, String username, PasswordEncoder passwordEncoder){
+        return User.builder()
+                .id(id)
+                .email(username+"@nate.com")
+                .password(passwordEncoder.encode("meta1234!"))
+                .username(username)
+                .roles(username.equals("admin") ? "ROLE_ADMIN" : "ROLE_USER")
+                .build();
+    }
+
     protected Product newProduct(int id, String productName, int imageNumber, int price) {
         return Product.builder()
                 .id(id)
