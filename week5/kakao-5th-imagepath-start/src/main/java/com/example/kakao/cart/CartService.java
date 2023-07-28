@@ -105,4 +105,6 @@ public class CartService {
         }
         return new CartResponse.UpdateDTO(cartList);
     } // 더티체킹
+
+    // 장바구니에 담긴 상품을 삭제하는 부분도 작성하면 좋을 것 같다.
 }

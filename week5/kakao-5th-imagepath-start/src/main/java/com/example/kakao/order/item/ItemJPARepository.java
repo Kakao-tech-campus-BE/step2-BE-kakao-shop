@@ -6,5 +6,7 @@ import java.util.List;
 
 
 public interface ItemJPARepository extends JpaRepository<Item, Integer> {
+
+    // 쿼리 수정 필요
     List<Item> findAllByOrderId(int orderId);
 }
