@@ -1,5 +1,6 @@
 package com.example.kakao.order;
 
+import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao.cart.Cart;
 import com.example.kakao.cart.CartJPARepository;
 import com.example.kakao.order.item.Item;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -35,10 +37,23 @@ public class OrderService {
         }
 
         List<Item> itemList = itemJPARepository.findAllByOrderId(order.getId());
-        System.out.println(itemList);
 
         //카트초기화
         cartJPARepository.deleteByUserId(sessionUser.getId());
         return new OrderResponse.saveDTO(itemList);
+    }
+
+    @Transactional
+    public OrderResponse.FindDTO findById(int id)
+    {
+        Optional<Order> order = orderJPARepository.findById(id);
+
+        if(order.isEmpty())
+        {
+            throw new Exception404("해당 주문을 찾을 수 없습니다 : "+id);
+        }
+
+        List<Item> itemList = itemJPARepository.findAllByOrderId(id);
+        return new OrderResponse.FindDTO(itemList);
     }
 }

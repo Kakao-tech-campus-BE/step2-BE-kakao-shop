@@ -37,4 +37,33 @@ public class OrderResponse {
         }
     }
 
+    @Getter
+    @Setter
+    public static class FindDTO {
+        private int orderId;
+        private List<OrderResponse.FindDTO.ItemDTO> items;
+        private int totalPrice;
+
+        public FindDTO(List<Item> itemList) {
+            this.items = itemList.stream().map(OrderResponse.FindDTO.ItemDTO::new).collect(Collectors.toList());
+            this.totalPrice = itemList.stream().mapToInt(item -> item.getPrice()).sum();
+        }
+
+        @Getter
+        @Setter
+        public class ItemDTO {
+            private int itemId;
+            private String optionName;
+            private int quantity;
+            private int price;
+
+            public ItemDTO(Item item) {
+                this.itemId = item.getId();
+                this.optionName = item.getOption().getOptionName();
+                this.quantity = item.getQuantity();
+                this.price = item.getPrice();
+            }
+        }
+    }
+
 }
