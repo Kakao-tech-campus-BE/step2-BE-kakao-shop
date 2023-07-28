@@ -51,13 +51,8 @@ public class CartService {
         cartRepository.saveAll(collect);
     }
     private ProductOptionEntity getProductOptionById(Long optionId) {
-        return productOptionRepository.findById(optionId).get();
+        return productOptionRepository.findById(optionId)
+                .orElseThrow(()->new IllegalArgumentException("존재하지 않는 옵션"));
     }
-
-    /**
-     * 1. CartRequest 에서 OptionId를 기준으로 기존에 존재하는 옵션인지 파악
-     * 2. 존재하는 옵션인 경우, quantity update
-     * 3. 존재하지 않는 새로운 옵션인 경우, CartSave
-     */
 
 }
