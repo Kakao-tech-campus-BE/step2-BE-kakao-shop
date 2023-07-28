@@ -2,6 +2,7 @@ package com.example.kakao.user;
 
 import com.example.kakao._core.errors.GlobalExceptionHandler;
 import com.example.kakao._core.errors.exception.Exception400;
+import com.example.kakao._core.errors.exception.Exception401;
 import com.example.kakao._core.errors.exception.Exception403;
 import com.example.kakao._core.security.CustomUserDetails;
 import com.example.kakao._core.security.JWTProvider;
@@ -47,8 +48,9 @@ public class UserRestController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody @Valid UserRequest.LoginDTO requestDTO, Errors errors, HttpServletRequest request) {
-
+    public ResponseEntity<?> login(@RequestBody @Valid UserRequest.LoginDTO requestDTO, Errors errors,
+                                   @AuthenticationPrincipal CustomUserDetails userDetails, HttpServletRequest request) {
+        //유효성 검사
         if (errors.hasErrors()) {
             List<FieldError> fieldErrors = errors.getFieldErrors();
             Exception400 ex = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
@@ -128,8 +130,25 @@ public class UserRestController {
 
     // 이메일 중복체크 (기능에는 없지만 사용중)
     @PostMapping("/check")
-    public ResponseEntity<?> check(@RequestBody UserRequest.EmailCheckDTO emailCheckDTO) {
-        return ResponseEntity.ok().body(ApiUtils.success(null));
+    public ResponseEntity<?> check(@RequestBody @Valid UserRequest.EmailCheckDTO emailCheckDTO, Errors errors, HttpServletRequest request) {
+        // 유효성 검사
+        if (errors.hasErrors()) {
+            List<FieldError> fieldErrors = errors.getFieldErrors();
+            Exception400 e = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
+            return new ResponseEntity<>(
+                    e.body(),
+                    e.status()
+            );
+        }
+        // 서비스 실행 : 내부에서 터지는 모든 익셉션은 예외 핸들러로 던지기
+        try {
+            String email = emailCheckDTO.getEmail();
+            userService.sameCheckEmail(email); //중복 체크(중복시 에러 던짐)
+            UserResponse.CheckEmail dto = new UserResponse.CheckEmail(email);
+            return ResponseEntity.ok().body(ApiUtils.success(dto));
+        } catch (RuntimeException e) {
+            return globalExceptionHandler.handle(e, request);
+        }
     }
 
     // (기능3) - 로그아웃

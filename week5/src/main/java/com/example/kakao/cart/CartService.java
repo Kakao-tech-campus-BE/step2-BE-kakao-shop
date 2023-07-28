@@ -57,7 +57,7 @@ public class CartService {
     } //변경감지, 더티체킹, flush, 트랜잭션 종료
 
     public CartResponse.FindAllDTO findAll(User user) {
-        List<Cart> cartList = cartJPARepository.findByUserIdOrderByOptionIdAsc(user.getId());
+        List<Cart> cartList = cartJPARepository.findByUserIdOrderByOptionIdAsc(user.getId()); //쿼리 수정
         // Cart에 담긴 옵션이 3개이면, 2개는 바나나 상품, 1개는 딸기 상품이면 Product는 2개인 것이다.
         return new CartResponse.FindAllDTO(cartList);
     }
@@ -68,7 +68,7 @@ public class CartService {
 //    }
     @Transactional
     public CartResponse.UpdateDTO update(List<CartRequest.UpdateDTO> requestDTOs, User user) {
-        List<Cart> cartList = cartJPARepository.findAllByUserId(user.getId());
+        List<Cart> cartList = cartJPARepository.findAllByUserIdWithOption(user.getId()); //쿼리 수정
         // 1. 유저 장바구니에 아무것도 없으면 예외처리
         if (cartList.isEmpty()) {
             throw new Exception404("담은 장바구니가 없습니다.");
@@ -93,7 +93,6 @@ public class CartService {
                 }
             }
         }
-
         return new CartResponse.UpdateDTO(cartList);
     } // 더티체킹
 

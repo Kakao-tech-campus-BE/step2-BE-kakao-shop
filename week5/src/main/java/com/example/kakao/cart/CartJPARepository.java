@@ -1,6 +1,7 @@
 package com.example.kakao.cart;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -15,14 +16,17 @@ public interface CartJPARepository extends JpaRepository<Cart, Integer> {
 
     List<Cart> findAllByUserId(int userId);
 
+    @Query("SELECT c FROM Cart c JOIN FETCH c.option o WHERE c.user.id = :userId")
+    List<Cart> findAllByUserIdWithOption(@Param("userId") int userId);
 
     @Query("select c from Cart c join fetch c.option o join fetch o.product p where c.user.id = :userId order by c.option.id asc")
     List<Cart> findByUserIdOrderByOptionIdAsc(int userId);
 
+    @Modifying
+    @Query("DELETE FROM Cart c WHERE c.user.id = :userId")
     void deleteByUserId(int userId);
 
     @Query("select c from Cart c where c.option.id = :optionId and c.user.id = :userId")
     Optional<Cart> findByOptionIdAndUserId(@Param("optionId") int optionId, @Param("userId") int userId);
-
 
 }

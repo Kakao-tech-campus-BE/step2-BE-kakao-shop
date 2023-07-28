@@ -178,6 +178,4 @@ public class OrderRestControllerTest {
         result.andExpect(jsonPath("$.response.products[0].items[1].quantity").value(5));
         result.andExpect(jsonPath("$.response.products[0].items[1].price").value(54500));
     }
-
-
 }

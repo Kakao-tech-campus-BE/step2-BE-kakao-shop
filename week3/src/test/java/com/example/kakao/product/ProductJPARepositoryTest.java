@@ -119,7 +119,7 @@ public class ProductJPARepositoryTest extends DummyEntity {
     public void option_mFindByProductId_lazy_test() throws JsonProcessingException {
         // given
         Option option = optionJPARepository.findAll().get(0);
-        int id = option.getId();
+        int id = option.getProduct().getId();
 
         // when
         List<Option> optionListPS = optionJPARepository.mFindByProductId(id); // Lazy, join fetch 사용해서 연관관계 객체 가져오기

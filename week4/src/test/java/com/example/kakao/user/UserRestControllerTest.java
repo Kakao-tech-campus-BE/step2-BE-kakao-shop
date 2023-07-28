@@ -108,5 +108,4 @@ public class UserRestControllerTest {
         String value = "Bearer eyJ0eX";
         System.out.println(value.substring(0,6));
     }
-
 }

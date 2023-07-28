@@ -715,6 +715,7 @@ CREATE TABLE user (
     username VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
+    roles VARCHAR(30) DEFAULT NULL,
     PRIMARY KEY (id)
 );
 ```
@@ -728,6 +729,8 @@ CREATE TABLE user (
 > INT로 선언하면 INT(11)로 선언하는 것과 같다. <br/> 
 > INT는 10자리이지만 음수까지 표현하기 위해 11자리가 default이다.
 
+> roles 필드를 선선하여 사용자의 역할을 표시한다.
+> 기본값은 NULL이며, 일반 회원을 뜻한다.
 <br/>
 
 ## **product**
@@ -751,7 +754,7 @@ CREATE TABLE product (
 ```sql
 CREATE TABLE option (
     id INT(11) NOT NULL AUTO_INCREMENT,
-    product_id INT(11) NOT NULL,
+    product_id INT(11) DEFAULT NULL,
     option_name VARCHAR(100) NOT NULL,
     price INT(11) NOT NULL,
     PRIMARY KEY (id),
@@ -3391,51 +3394,1899 @@ public void order_save_test() throws JsonProcessingException {
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
+<br/>
+
+### **ExceptionHandler**
+```java
+@RequiredArgsConstructor
+@Component
+public class GlobalExceptionHandler {
+
+    private final ErrorLogJPARepository errorLogJPARepository;
+
+    public ResponseEntity<?> handle(RuntimeException e, HttpServletRequest request){
+        if(e instanceof Exception400){
+            Exception400 ex = (Exception400) e;
+            return new ResponseEntity<>(
+                    ex.body(),
+                    ex.status()
+            );
+        }else if(e instanceof Exception401){
+            Exception401 ex = (Exception401) e;
+            return new ResponseEntity<>(
+                    ex.body(),
+                    ex.status()
+            );
+        }else if(e instanceof Exception403){
+            Exception403 ex = (Exception403) e;
+            return new ResponseEntity<>(
+                    ex.body(),
+                    ex.status()
+            );
+        }else if(e instanceof Exception404){
+            Exception404 ex = (Exception404) e;
+            return new ResponseEntity<>(
+                    ex.body(),
+                    ex.status()
+            );
+        }else if(e instanceof Exception500){
+            ErrorLog errorLog = ErrorLog.builder()
+                    .message(e.getMessage())
+                    .userAgent(request.getHeader("User-Agent"))
+                    .userIp(request.getRemoteAddr())
+                    .build();
+            errorLogJPARepository.save(errorLog);
+            Exception500 ex = (Exception500) e;
+            return new ResponseEntity<>(
+                    ex.body(),
+                    ex.status()
+            );
+        }else{
+            ErrorLog errorLog = ErrorLog.builder()
+                    .message(e.getMessage())
+                    .userAgent(request.getHeader("User-Agent"))
+                    .userIp(request.getRemoteAddr())
+                    .build();
+            errorLogJPARepository.save(errorLog);
+            return new ResponseEntity<>(
+                    "unknown server error",
+                    HttpStatus.INTERNAL_SERVER_ERROR
+            );
+        }
+    }
+}
+```
+> 예외 처리 코드이다.
+
+## <span style="color:#068FFF">**상품(Product)**</span>
+<br/>
+
+### **DTO - ProductResponse**
+```java
+public class ProductResponse {
+
+    @Getter @Setter
+    public static class FindAllDTO {
+
+        private int id;
+        private String productName;
+        private String description;
+        private String image;
+        private int price;
+
+        public FindAllDTO(Product product) {
+            this.id = product.getId();
+            this.productName = product.getProductName();
+            this.description = product.getDescription();
+            this.image = product.getImage();
+            this.price = product.getPrice();
+        }
+    }
+
+
+    @Getter @Setter
+    public static class FindByIdDTO {
+
+        private int id;
+        private String productName;
+        private String description;
+        private String image;
+        private int price;
+        private int starCount; // 0~5
+        private List<OptionDTO> options;
+
+        public FindByIdDTO(Product product, List<Option> optionList) {
+            this.id = product.getId();
+            this.productName = product.getProductName();
+            this.description = product.getDescription();
+            this.image = product.getImage();
+            this.price = product.getPrice();
+            this.starCount = 5; // 임시로 추가해둠 (요구사항에는 없음)
+            this.options = optionList.stream().map(OptionDTO::new).collect(Collectors.toList());
+        }
+
+        @Getter @Setter
+        public class OptionDTO {
+            private int id;
+            private String optionName;
+            private int price;
+
+            public OptionDTO(Option option) {
+                this.id = option.getId();
+                this.optionName = option.getOptionName();
+                this.price = option.getPrice();
+            }
+        }
+    }
+}
+
+```
+<br/>
+
+
+### **Controller**
+```java
+@RequiredArgsConstructor
+@RestController
+public class ProductRestController {
+
+    private final GlobalExceptionHandler globalExceptionHandler;
+    private final ProductService productService;
+
+    // (기능4) 전체 상품 목록 조회 (페이징 9개씩)
+    @GetMapping("/products")
+    public ResponseEntity<?> findAll(@RequestParam(defaultValue = "0") String page, HttpServletRequest request) {
+        try {
+            int pageInt = Integer.parseInt(page); //문자열->Integer
+            List<ProductResponse.FindAllDTO> findAllDTOList = productService.findAll(pageInt);
+            return ResponseEntity.ok().body(ApiUtils.success(findAllDTOList));
+        }
+        //page가 정수형인지 유효성 검사
+        catch(NumberFormatException e){
+            return ResponseEntity.badRequest().body(ApiUtils.error("page는 숫자만 가능합니다", HttpStatus.BAD_REQUEST));
+        }
+        catch (RuntimeException e) {
+            return globalExceptionHandler.handle(e, request);
+        }
+
+    }
+
+    // (기능5) 개별 상품 상세 조회
+    @GetMapping("/products/{id}")
+    public ResponseEntity<?> findById(@PathVariable String id, HttpServletRequest request) {
+        try {
+            int productId = Integer.parseInt(id); //문자열->Integer
+            ProductResponse.FindByIdDTO dto = productService.findById(productId);
+            return ResponseEntity.ok().body(ApiUtils.success(dto));
+        }
+        //id가 정수형인지 유효성 검사
+        catch(NumberFormatException e){
+            return ResponseEntity.badRequest().body(ApiUtils.error("id는 숫자만 가능합니다", HttpStatus.BAD_REQUEST));
+        }
+        catch (RuntimeException e) {
+            return globalExceptionHandler.handle(e, request);
+        }
+    }
+}
+```
+> id 파라미터가 int형인지 검증한다.
+
+<br/>
+
+### **Service**
+```java
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
+@Service
+public class ProductService {
+    private final ProductJPARepository productJPARepository;
+    private final OptionJPARepository optionJPARepository;
+
+    public List<ProductResponse.FindAllDTO> findAll(int page) {
+        try {
+            // 1. 데이터 가져와서 페이징하기
+            List<Product> productList =
+                    productJPARepository.findAll().stream().skip(page * 9).limit(9).collect(Collectors.toList());
+            ;
+
+            // 2. DTO 변환
+            List<ProductResponse.FindAllDTO> responseDTOs =
+                    productList.stream().map(ProductResponse.FindAllDTO::new).collect(Collectors.toList());
+
+            return responseDTOs;
+        } catch (Exception e){
+            throw new Exception500("unknown server error");
+        }
+    }
+
+    public ProductResponse.FindByIdDTO findById(Integer id){
+        // 1. 상품 찾기
+        Product product = productJPARepository.findById(id).stream().filter(p -> p.getId() == id).findFirst().orElseThrow(
+                () -> new Exception404("상품을 찾을 수 없습니다. : "+id));
+
+        try {
+            // 2. 해당 상품의 옵션 찾기
+            List<Option> optionList = optionJPARepository.findAll().stream().filter(option -> product.getId() == option.getProduct().getId()).collect(Collectors.toList());
+
+            // 3. DTO 변환
+            ProductResponse.FindByIdDTO responseDTO = new ProductResponse.FindByIdDTO(product, optionList);
+            return responseDTO;
+        } catch (Exception e){
+            throw new Exception500("unknown server error");
+        }
+    }
+}
+```
+> Dummy Data를 실제 DB와 연결된 Repository로 변경했다.
+> 로직을 작성했다.
+
+<br/>
+
+### **Repository**
+```java
+public interface ProductJPARepository extends JpaRepository<Product, Integer> {
+    
+}
+```
+
+<br/>
+
+### **Controller Test**
+```java
+@Import({
+        SecurityConfig.class,
+        GlobalExceptionHandler.class
+})
+@WebMvcTest(controllers = {ProductRestController.class})
+public class ProductRestControllerTest {
+
+    // 객체의 모든 메서드는 추상메서드로 구현됩니다. (가짜로 만들면)
+    // 해당 객체는 SpringContext에 등록됩니다.
+    @MockBean //가짜로 띄움
+    private ProductService productService;
+
+    @MockBean
+    private ErrorLogJPARepository errorLogJPARepository;
+
+    // @WebMvcTest를 하면 MockMvc가 SpringContext에 등록되기 때문에 DI할 수 있습니다.
+    @Autowired
+    private MockMvc mvc; //요청 보낼때 사용
+
+    // @WebMvcTest를 하면 ObjectMapper가 SpringContext에 등록되기 때문에 DI할 수 있습니다.
+    @Autowired
+    private ObjectMapper om; //직렬화
+
+    @Test
+    @DisplayName("전체 상품 조회 테스트")
+    public void findAll_test() throws Exception{
+        //given
+        List<Product> productList = Arrays.asList(
+                new Product(1, "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전", "", "/images/1.jpg", 1000),
+                new Product(2, "[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율", "", "/images/2.jpg", 2000),
+                new Product(3, "삼성전자 JBL JR310 외 어린이용/성인용 헤드셋 3종!", "", "/images/3.jpg", 30000),
+                new Product(4, "바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종", "", "/images/4.jpg", 4000),
+                new Product(5, "[더주] 컷팅말랑장족, 숏다리 100g/300g 외 주전부리 모음 /중독성 최고/마른안주", "", "/images/5.jpg", 5000),
+                new Product(6, "굳지않는 앙금절편 1,050g 2팩 외 우리쌀떡 모음전", "", "/images/6.jpg", 15900),
+                new Product(7, "eoe 이너딜리티 30포, 오렌지맛 고 식이섬유 보충제", "", "/images/7.jpg", 26800),
+                new Product(8, "제나벨 PDRN 크림 2개. 피부보습/진정 케어", "", "/images/8.jpg", 25900),
+                new Product(9, "플레이스테이션 VR2 호라이즌 번들. 생생한 몰입감", "", "/images/9.jpg", 797000)
+        );
+        List<ProductResponse.FindAllDTO> list = new ArrayList<>();
+        for (Product product : productList) {
+            ProductResponse.FindAllDTO dto = new ProductResponse.FindAllDTO(product);
+            list.add(dto);
+        }
+        given(productService.findAll(0)).willReturn(list);
+
+        //when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .get("/products")); //요청 uri
+
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+
+        //then
+        System.out.println();
+        result.andExpect(jsonPath("$.success").value("true"));
+        result.andExpect(jsonPath("$.response[0].id").value(1));
+        result.andExpect(jsonPath("$.response[0].productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"));
+        result.andExpect(jsonPath("$.response[0].description").value(""));
+        result.andExpect(jsonPath("$.response[0].image").value("/images/1.jpg"));
+        result.andExpect(jsonPath("$.response[0].price").value(1000));
+        result.andExpect(jsonPath("$.response[1].id").value(2));
+        result.andExpect(jsonPath("$.response[1].productName").value("[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율"));
+        result.andExpect(jsonPath("$.response[1].description").value(""));
+        result.andExpect(jsonPath("$.response[1].image").value("/images/2.jpg"));
+        result.andExpect(jsonPath("$.response[1].price").value(2000));
+    }
+
+    @Test
+    @DisplayName("개별 상품 상세 조회 테스트")
+    public void findById_test() throws Exception{
+        //given
+        Product product1 = new Product(1, "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전", "", "/images/1.jpg", 1000);
+        List<Option> optionList = Arrays.asList(
+                new Option(1, product1, "01. 슬라이딩 지퍼백 크리스마스에디션 4종", 10000),
+                new Option(2, product1, "02. 슬라이딩 지퍼백 플라워에디션 5종", 10900),
+                new Option(3, product1, "고무장갑 베이지 S(소형) 6팩", 9900),
+                new Option(4, product1, "뽑아쓰는 키친타올 130매 12팩", 16900),
+                new Option(5, product1, "2겹 식빵수세미 6매", 8900));
+        given(productService.findById(1)).willReturn(
+                (new ProductResponse.FindByIdDTO(product1, optionList)));
+
+        //when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .get("/products/1"));
+
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+
+        //then
+        result.andExpect(jsonPath("$.success").value("true"));
+        result.andExpect(jsonPath("$.response.id").value(1));
+        result.andExpect(jsonPath("$.response.productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"));
+        result.andExpect(jsonPath("$.response.description").value(""));
+        result.andExpect(jsonPath("$.response.image").value("/images/1.jpg"));
+        result.andExpect(jsonPath("$.response.price").value(1000));
+        result.andExpect(jsonPath("$.response.options[0].id").value(1));
+        result.andExpect(jsonPath("$.response.options[0].optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"));
+        result.andExpect(jsonPath("$.response.options[0].price").value(10000));
+        result.andExpect(jsonPath("$.response.options[1].id").value(2));
+        result.andExpect(jsonPath("$.response.options[1].optionName").value("02. 슬라이딩 지퍼백 플라워에디션 5종"));
+        result.andExpect(jsonPath("$.response.options[1].price").value(10900));
+    }
+}
+```
+> BDDMockito를 이용해 stub 코드를 작성했다.
+
+<br/>
+
+## <span style="color:#068FFF">**장바구니(Cart)**</span>
+<br/>
+
+### **DTO - CartRequest**
+```java
+public class CartRequest {
+
+    @Getter @Setter @ToString
+    public static class SaveDTO {
+        @Min(value = 1, message = "optionId는 숫자이고 1이상이어야 합니다.")
+        private int optionId;
+
+        @Min(value = 1, message = "quantity는 숫자이고 1이상이어야 합니다.")
+        private int quantity;
+    }
+
+    @Getter @Setter @ToString
+    public static class UpdateDTO {
+
+        @Min(value = 1, message = "cartId는 숫자이고 1이상이어야 합니다.")
+        private int cartId;
+
+        @Min(value = 1, message = "quantity는 숫자이고 1이상이어야 합니다.")
+        private int quantity;
+    }
+}
+
+```
+> 유효성 검증을 위한 Bean Validation을 작성했다.
+
+<br/>
+
+### **DTO - CartResponse**
+```java
+public class CartResponse {
+
+    @Getter @Setter
+    public static class UpdateDTO{
+        private List<CartDTO> carts;
+        private int totalPrice;
+
+        public UpdateDTO(List<Cart> cartList) {
+            this.carts = cartList.stream().map(CartDTO::new).collect(Collectors.toList());
+            this.totalPrice = cartList.stream().mapToInt(cart -> cart.getOption().getPrice() * cart.getQuantity()).sum();
+        }
+
+        @Getter
+        @Setter
+        public class CartDTO {
+            private int cartId;
+            private int optionId;
+            private String optionName;
+            private int quantity;
+            private int price;
+
+            public CartDTO(Cart cart) {
+                this.cartId = cart.getId();
+                this.optionId = cart.getOption().getId();
+                this.optionName = cart.getOption().getOptionName();
+                this.quantity = cart.getQuantity();
+                this.price = cart.getOption().getPrice() * cart.getQuantity();
+            }
+        }
+    }
+
+    @Getter @Setter
+    public static class FindAllDTO{
+        private List<ProductDTO> products;
+        private int totalPrice;
+
+        public FindAllDTO(List<Cart> cartList) {
+            this.products = cartList.stream()
+                    .map(cart -> cart.getOption().getProduct()).distinct() // 여러 옵션의 상품이 동일하면 중복을 제거한다.
+                    .map(product -> new ProductDTO(cartList, product)).collect(Collectors.toList()); // 중복이 제거된 상품과 장바구니 상품으로 DTO를 만든다.
+            this.totalPrice = cartList.stream().mapToInt(cart -> cart.getOption().getPrice() * cart.getQuantity()).sum();
+        }
+
+        @Getter
+        @Setter
+        public class ProductDTO {
+            private int id;
+            private String productName;
+            private List<CartDTO> carts;
+
+            public ProductDTO(List<Cart> cartList, Product product) {
+                this.id = product.getId();
+                this.productName = product.getProductName();
+                this.carts = cartList.stream()
+                        .filter(cart -> cart.getOption().getProduct().getId() == product.getId())
+                        .map(CartDTO::new)
+                        .collect(Collectors.toList());
+            }
+
+            @Getter @Setter
+            public class CartDTO {
+                private int id;
+                private OptionDTO option;
+                private int quantity;
+                private int price;
+
+                public CartDTO(Cart cart) {
+                    this.id = cart.getId();
+                    this.option = new OptionDTO(cart.getOption());
+                    this.quantity = cart.getQuantity();
+                    this.price = cart.getOption().getPrice()*cart.getQuantity();
+                }
+
+                @Getter @Setter
+                public class OptionDTO {
+                    private int id;
+                    private String optionName;
+                    private int price;
+
+
+                    public OptionDTO(Option option) {
+                        this.id = option.getId();
+                        this.optionName = option.getOptionName();
+                        this.price = option.getPrice();
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+<br/>
+
+### **Controller**
+```java
+@RequiredArgsConstructor
+@RestController
+public class CartRestController {
+
+
+    private final GlobalExceptionHandler globalExceptionHandler;
+    private final CartService cartService;
+
+    @Autowired
+    CustomCollectionValidator customCollectionValidator;
+
+    // (기능8) 장바구니 담기
+    @PostMapping("/carts/add")
+    public ResponseEntity<?> addCartList(@RequestBody @Valid List<CartRequest.SaveDTO> requestDTOs, Errors errors,
+                                         @AuthenticationPrincipal CustomUserDetails userDetails, HttpServletRequest request) {
+        customCollectionValidator.validate(requestDTOs, errors);
+        //유효성 검증 예외 처리
+        if (errors.hasErrors()) {
+            List<FieldError> fieldErrors = errors.getFieldErrors();
+            Exception400 ex = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
+            return new ResponseEntity<>(
+                    ex.body(),
+                    ex.status()
+            );
+        }
+        //서비스 호출
+        try {
+            cartService.save(requestDTOs, userDetails);
+            return ResponseEntity.ok().body(ApiUtils.success(null));
+        } catch (RuntimeException e) {
+            return globalExceptionHandler.handle(e, request);
+        }
+
+    }
+
+    // (기능9) 장바구니 보기 - (주문화면, 결재화면)
+    @GetMapping("/carts")
+    public ResponseEntity<?> findAll(@AuthenticationPrincipal CustomUserDetails userDetails, HttpServletRequest request) {
+        System.out.println("findAll 실행");
+        try {
+            CartResponse.FindAllDTO dto = cartService.findAll();
+            return ResponseEntity.ok().body(ApiUtils.success(dto));
+        } catch (RuntimeException e) {
+            return globalExceptionHandler.handle(e, request);
+        }
+    }
+
+    // (기능11) 주문하기 - (장바구니 업데이트)
+    @PostMapping("/carts/update")
+    public ResponseEntity<?> update(@RequestBody @Valid List<CartRequest.UpdateDTO> requestDTOs, Errors errors,
+                                    @AuthenticationPrincipal CustomUserDetails userDetails, HttpServletRequest request) {
+        customCollectionValidator.validate(requestDTOs, errors);
+        //유효성 검증 예외 처리
+        if (errors.hasErrors()) {
+            List<FieldError> fieldErrors = errors.getFieldErrors();
+            Exception400 ex = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
+            return new ResponseEntity<>(
+                    ex.body(),
+                    ex.status()
+            );
+        }
+        //서비스 호출
+        try {
+            CartResponse.UpdateDTO dto = cartService.update(requestDTOs);
+            return ResponseEntity.ok().body(ApiUtils.success(dto));
+        } catch (RuntimeException e) {
+            return globalExceptionHandler.handle(e, request);
+        }
+    }
+
+
+    @PostMapping("/carts/clear")
+    public ResponseEntity<?> clear(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        return ResponseEntity.ok(ApiUtils.success(null));
+    }
+}
+```
+> Collection은 @Valid로 유효성 검증이 어렵기때문에 customCollectionValidator 클래스를 만들어 유효성 검증을 했다.
+
+<br/>
+
+### **Service**
+```java
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
+@Service
+public class CartService {
+    private final CartJPARepository cartJPARepository;
+    private final OptionJPARepository optionJPARepository;
+
+    //장바구니 조회
+    public CartResponse.FindAllDTO findAll(){
+        List<Cart> cartList = cartJPARepository.findAll();
+        CartResponse.FindAllDTO responseDTO = new CartResponse.FindAllDTO(cartList);
+        return responseDTO;
+    }
+
+    //장바구니 담기
+    @Transactional
+    public void save(List<CartRequest.SaveDTO> dtoList, CustomUserDetails userDetails){
+        dtoList.forEach(
+                saveDTO -> System.out.println("요청 받은 장바구니 옵션 : "+saveDTO.toString())
+        );
+        try {
+            Option option = null;
+            Cart cart = null;
+            for (CartRequest.SaveDTO saveDTO : dtoList) {
+                Optional<Option> optional = optionJPARepository.findById(saveDTO.getOptionId());
+                System.out.println("optional"+optional);
+                if (optional.isEmpty()) throw new Exception404("해당 option이 없습니다.");
+                option = optional.get();
+                cart = Cart.builder()
+                        .user(userDetails.getUser())
+                        .option(option)
+                        .quantity(saveDTO.getQuantity())
+                        .price(option.getPrice() * saveDTO.getQuantity())
+                        .build();
+            }
+                cartJPARepository.save(cart);
+        }
+        catch (Exception404 e){
+            throw e;
+        }
+        catch (Exception e) {
+            throw new Exception500("unknown server error");
+        }
+    }
+    //장바구니 수정
+    public CartResponse.UpdateDTO update(List<CartRequest.UpdateDTO> requestDTOs){
+        requestDTOs.forEach(
+                updateDTO -> System.out.println("요청 받은 장바구니 수정 내역 : "+updateDTO.toString())
+        );
+        try {
+            List<Cart> cartList = cartJPARepository.findAll();
+            for (CartRequest.UpdateDTO updateDTO : requestDTOs) {
+                for (Cart cart : cartList) {
+                    if(cart.getId() == updateDTO.getCartId()){
+                        cart.update(updateDTO.getQuantity(), cart.getPrice() * updateDTO.getQuantity());
+                    }
+                }
+            }
+            cartList = cartJPARepository.findAll();
+            // DTO를 만들어서 응답한다.
+            CartResponse.UpdateDTO responseDTO = new CartResponse.UpdateDTO(cartList);
+            System.out.println("responseDTO" + responseDTO);
+            return responseDTO;
+        } catch (Exception e) {
+            throw new Exception500("unknown server error");
+        }
+    }
+}
+```
+> 로직 수행시 try-catch문을 이용해 발생할 수 있는 예외를 적절하게 처리했다.
+
+<br/>
+
+### **Repository**
+```java
+public interface CartJPARepository extends JpaRepository<Cart, Integer> {
+    @Query("SELECT c FROM Cart c WHERE c.user.id = :userId")
+    List<Cart> findAllCartsByUserId(Integer userId);
+}
+
+```
+<br/>
+
+### **Controller Test**
+```java
+@Import({
+        SecurityConfig.class,
+        GlobalExceptionHandler.class
+})
+@WebMvcTest(controllers = {CartRestController.class})
+public class CartRestControllerTest {
+
+    @MockBean
+    private CartService cartService;
+
+    @MockBean
+    private CustomCollectionValidator validator;
+
+    @MockBean
+    private ErrorLogJPARepository errorLogJPARepository;
+
+    @Autowired
+    private MockMvc mvc;
+
+    @Autowired
+    private ObjectMapper om;
+
+    @WithMockUser(username = "ssar@nate.com", roles = "USER") //가짜 인증객체 만들기
+    @Test
+    @DisplayName("장바구니 조회")
+    public void findAll_test() throws Exception {
+        //given
+        //stub
+        Product product1 = new Product(1, "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전", "", "/images/1.jpg", 1000);
+        Option option1 = new Option(1, product1, "01. 슬라이딩 지퍼백 크리스마스에디션 4종", 10000);
+        Option option2 = new Option(2, product1,"02. 슬라이딩 지퍼백 플라워에디션 5종", 10900);
+        User u = new User(1, "user1@nate,com", "fake", "user1", "USER");
+        BDDMockito.given(cartService.findAll()).willReturn(
+                new CartResponse.FindAllDTO(
+                        Arrays.asList(
+                                new Cart(1, u, option1, 5, option1.getPrice()),
+                                new Cart(2, u, option2, 5, option2.getPrice())
+                        )));
+
+        //when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .get("/carts"));
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+        //then
+        result.andExpect(jsonPath("$.success").value("true"));
+        result.andExpect(jsonPath("$.response.products[0].id").value(1));
+        result.andExpect(jsonPath("$.response.products[0].productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"));
+        result.andExpect(jsonPath("$.response.products[0].carts[0].id").value(1));
+        result.andExpect(jsonPath("$.response.products[0].carts[0].option.id").value(1));
+        result.andExpect(jsonPath("$.response.products[0].carts[0].option.optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"));
+        result.andExpect(jsonPath("$.response.products[0].carts[0].option.price").value(10000));
+        result.andExpect(jsonPath("$.response.products[0].carts[0].quantity").value(5));
+        result.andExpect(jsonPath("$.response.products[0].carts[0].price").value(50000));
+    }
+
+    @WithMockUser(username = "ssar@nate.com", roles = "USER") //가짜 인증객체 만들기
+    @Test
+    @DisplayName("장바구니 담기")
+    public void add_test() throws Exception {
+        // given
+        List<CartRequest.SaveDTO> requestDTOs = new ArrayList<>();
+        CartRequest.SaveDTO d1 = new CartRequest.SaveDTO();
+        d1.setOptionId(1);
+        d1.setQuantity(5);
+        CartRequest.SaveDTO d2 = new CartRequest.SaveDTO();
+        d2.setOptionId(2);
+        d2.setQuantity(5);
+        requestDTOs.add(d1);
+        requestDTOs.add(d2);
+        String requestBody = om.writeValueAsString(requestDTOs);
+        System.out.println("테스트 : "+requestBody);
+
+        // when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .post("/carts/add")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+
+        // then
+        result.andExpect(jsonPath("$.success").value("true"));
+        result.andExpect(jsonPath("$.response").doesNotExist()); //null인지 확인
+        result.andExpect(jsonPath("$.error").doesNotExist());
+    }
+
+    @WithMockUser(username = "ssar@nate.com", roles = "USER") //가짜 인증객체 만들기
+    @Test
+    @DisplayName("장바구니 수정")
+    public void update_test() throws Exception {
+        // given
+        //요청 DTO 생성
+        List<CartRequest.UpdateDTO> requestDTOs = new ArrayList<>();
+        CartRequest.UpdateDTO d1 = new CartRequest.UpdateDTO();
+        d1.setCartId(1);
+        d1.setQuantity(10);
+        CartRequest.UpdateDTO d2 = new CartRequest.UpdateDTO();
+        d2.setCartId(2);
+        d2.setQuantity(10);
+        requestDTOs.add(d1);
+        requestDTOs.add(d2);
+        String requestBody = om.writeValueAsString(requestDTOs);
+        System.out.println("테스트 : "+requestBody);
+
+        //stub
+        Product product1 = new Product(1, "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전", "", "/images/1.jpg", 1000);
+        Option option1 = new Option(1, product1, "01. 슬라이딩 지퍼백 크리스마스에디션 4종", 10000);
+        Option option2 = new Option(2, product1,"02. 슬라이딩 지퍼백 플라워에디션 5종", 10900);
+        User u = new User(1, "user1@nate,com", "fake", "user1", "USER");
+        CartResponse.UpdateDTO updateDTO = new CartResponse.UpdateDTO(
+                Arrays.asList(
+                        new Cart(1, u, option1, 5, option1.getPrice()),
+                        new Cart(2, u, option2, 5, option2.getPrice())
+                ));
+        BDDMockito.given(cartService.update(any())).willReturn(updateDTO);
+
+        // when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .post("/carts/update")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+
+        // then
+        result.andExpect(jsonPath("$.success").value("true"));
+        result.andExpect(jsonPath("$.response.carts[0].cartId").value(1));
+        result.andExpect(jsonPath("$.response.carts[0].optionId").value(1));
+        result.andExpect(jsonPath("$.response.carts[0].optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"));
+        result.andExpect(jsonPath("$.response.carts[0].quantity").value(5));
+        result.andExpect(jsonPath("$.response.carts[0].price").value(50000));
+    }
+}
+```
+<br/>
+
+## <span style="color:#068FFF">**주문(Order)**</span>
+<br/>
+
+### **OrderResponse - DTO**
+```java
+public class OrderResponse {
+
+    @Getter @Setter
+    public static class FindByIdDTO {
+        private int id;
+        private List<ProductDTO> products;
+        private int totalPrice;
+
+        public FindByIdDTO(Order order, List<Item> itemList) {
+            this.id = order.getId();
+            this.products = itemList.stream()
+                    .map(item -> item.getOption().getProduct()).distinct()
+                    .map(product -> new ProductDTO(itemList, product)).collect(Collectors.toList());
+            this.totalPrice = itemList.stream().mapToInt(item -> item.getOption().getPrice() * item.getQuantity()).sum();
+        }
+
+
+        @Getter @Setter
+        public class ProductDTO {
+            private int id;
+            private String productName;
+            private List<ItemDTO> items;
+
+            public ProductDTO(List<Item> itemList, Product product) {
+                this.id = product.getId();
+                this.productName = product.getProductName();
+                this.items = itemList.stream()
+                        .filter(item -> item.getOption().getProduct().getId() == product.getId())
+                        .map(ItemDTO::new)
+                        .collect(Collectors.toList());
+            }
+
+            @Getter @Setter
+            public class ItemDTO {
+                private int id;
+                private String optionName;
+                private int quantity;
+                private int price;
+
+                public ItemDTO(Item item) {
+                    this.id = item.getId();
+                    this.optionName = item.getOption().getOptionName();
+                    this.quantity = item.getQuantity();
+                    this.price = item.getOption().getPrice()*item.getQuantity();
+                }
+
+            }
+        }
+    }
+}
+```
+<br/>
+
+### **Controller**
+```java
+@RequiredArgsConstructor
+@RestController
+public class OrderRestController {
+
+    private final GlobalExceptionHandler globalExceptionHandler;
+    private final OrderService orderService;
+    private final UserService userService;
+
+    // (기능12) 결제
+    @PostMapping("/orders/save")
+    public ResponseEntity<?> save(@AuthenticationPrincipal CustomUserDetails userDetails, HttpServletRequest request) {
+        try {
+            if(userDetails.getUser()!= null){
+                //유저가 존재하는지 확인
+                UserResponse.FindById byId = userService.findById(userDetails.getUser().getId());
+
+                if(byId.getId() != 0){ //유저가 존재할 경우 order 저장
+                    OrderResponse.FindByIdDTO dto = orderService.save(userDetails.getUser());
+                    return ResponseEntity.ok().body(ApiUtils.success(dto));
+                }
+            }
+            return ResponseEntity.ok().body(ApiUtils.success(null));
+        }catch (RuntimeException e){
+            return globalExceptionHandler.handle(e, request);
+        }
+
+    }
+
+    // (기능13) 주문 결과 확인
+    @GetMapping("/orders/{id}")
+    public ResponseEntity<?> findById(@PathVariable String id, HttpServletRequest request) {
+        try {
+            int orderId = Integer.parseInt(id); //문자열->Integer
+            OrderResponse.FindByIdDTO dto = orderService.findById(orderId);
+            return ResponseEntity.ok().body(ApiUtils.success(dto));
+        }
+        catch(NumberFormatException e){
+            return ResponseEntity.badRequest().body(ApiUtils.error("id는 숫자만 가능합니다", HttpStatus.BAD_REQUEST));
+        }
+        catch (RuntimeException e) {
+            return globalExceptionHandler.handle(e, request);
+        }
+    }
+}
+```
+
+<br/>
+
+### **Service**
+```java
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
+@Service
+public class OrderService {
+    private final OrderJPARepository orderJPARepository;
+    private final ItemJPARepository itemJPARepository;
+    private final CartJPARepository cartJPARepository;
+
+    public OrderResponse.FindByIdDTO save(User user){
+        try {
+            //주문 생성하기
+            Order order = Order.builder()
+                    .user(user)
+                    .build();
+            orderJPARepository.save(order);
+
+            //장바구니 -> OrderItem으로 옮겨 저장하기
+            List<Cart> cartList = cartJPARepository.findAllCartsByUserId(user.getId());
+            Item item;
+            List<Item> itemList = new ArrayList<>();
+            for (Cart c : cartList) {
+                item = Item.builder().order(order)
+                        .option(c.getOption())
+                        .quantity(c.getQuantity())
+                        .price(c.getPrice())
+                        .build();
+                itemJPARepository.save(item);
+                itemList.add(item);
+            }
+            //응답 DTO 생성
+            OrderResponse.FindByIdDTO responseDTO = new OrderResponse.FindByIdDTO(order, itemList);
+            return responseDTO;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println(e.getStackTrace());
+            throw new Exception500("unknown server error : service");
+        }
+    }
+
+    public OrderResponse.FindByIdDTO findById(int id){
+        try{
+            Optional<Order> optional = orderJPARepository.findById(id);
+            Order order = null;
+            if(optional.isPresent()){ //주문이 존재할 경우
+                order = optional.get();
+                List<Item> itemList = itemJPARepository.findItemsByOrderId(id);
+                OrderResponse.FindByIdDTO responseDTO = new OrderResponse.FindByIdDTO(order, itemList);
+                return responseDTO;
+            }
+            else {
+                throw new Exception404("해당 주문이 없습니다.");
+            }
+        }
+        catch (Exception404 e){
+            throw e;
+        }
+        catch (Exception e) {
+                System.out.println(e.getMessage());
+                System.out.println(e.getStackTrace());
+                throw new Exception500("unknown server error");
+        }
+    }
+}
+```
+
+<br/>
+
+### **Repository**
+```java
+public interface OrderJPARepository extends JpaRepository<Order, Integer> {
+}
+```
+<br/>
+
+### **Controller Test**
+```java
+@Import({
+        SecurityConfig.class,
+        GlobalExceptionHandler.class,
+})
+@WebMvcTest(controllers = {OrderRestController.class})
+public class OrderRestControllerTest {
+
+    // 객체의 모든 메서드는 추상메서드로 구현됩니다. (가짜로 만들면)
+    // 해당 객체는 SpringContext에 등록됩니다.
+    @MockBean
+    private OrderService orderService;
+
+    @MockBean
+    private UserService userService;
+
+    @MockBean
+    private ErrorLogJPARepository errorLogJPARepository;
+
+    // @WebMvcTest를 하면 MockMvc가 SpringContext에 등록되기 때문에 DI할 수 있습니다.
+    @Autowired
+    private MockMvc mvc; //요청 보낼때 사용
+
+    // @WebMvcTest를 하면 ObjectMapper가 SpringContext에 등록되기 때문에 DI할 수 있습니다.
+    @Autowired
+    private ObjectMapper om; //직렬화
+
+    @MockBean
+    private CustomUserDetails userDetails;
+
+
+    @BeforeEach
+    void beforeEach(){
+        //stub
+        Product product1 = new Product(1, "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전", "", "/images/1.jpg", 1000);
+        Option option1 = new Option(1, product1, "01. 슬라이딩 지퍼백 크리스마스에디션 4종", 10000);
+        Option option2 = new Option(2, product1,"02. 슬라이딩 지퍼백 플라워에디션 5종", 10900);
+        User u = new User(1, "user1@nate,com", "fake", "user1", "USER");
+        AtomicInteger counter = new AtomicInteger(1);
+        Order order = new Order(1, u);
+        List<Cart> cartList = Arrays.asList(
+                new Cart(1, u, option1, 5, option1.getPrice()),
+                new Cart(2, u, option2, 5, option2.getPrice())
+        );
+        List<Item> itemList = cartList.stream().map(
+                cart -> new Item(counter.getAndIncrement(), cart.getOption(), order, cart.getQuantity(), cart.getPrice())
+        ).collect(Collectors.toList());
+
+        BDDMockito.given(userService.findById(any())).willReturn(
+                new UserResponse.FindById(u));
+
+        // 인증 객체 설정
+        Authentication auth = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(auth);
+        BDDMockito.given(userDetails.getUser()).willReturn(u);
+
+        BDDMockito.given(orderService.save(any())).willReturn(
+                new OrderResponse.FindByIdDTO(
+                        order, itemList));
+        BDDMockito.given(orderService.findById(anyInt())).willReturn(
+                new OrderResponse.FindByIdDTO(
+                        order, itemList
+                ));
+
+    }
+
+    @Test
+    @WithMockUser(username = "user1@nate.com", roles = "USER") //가짜 인증객체 만들기
+    @DisplayName("주문 저장하기 테스트")
+    public void save_test() throws Exception{
+        // given
+
+        // when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .post("/orders/save")
+        );
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+
+        //then
+        result.andExpect(jsonPath("$.success").value("true"));
+        result.andExpect(jsonPath("$.response.id").value(1));
+        result.andExpect(jsonPath("$.response.totalPrice").value(104500));
+
+        result.andExpect(jsonPath("$.response.products[0].productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"));
+        result.andExpect(jsonPath("$.response.products[0].items[0].id").value(1));
+        result.andExpect(jsonPath("$.response.products[0].items[0].optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"));
+        result.andExpect(jsonPath("$.response.products[0].items[0].quantity").value(5));
+        result.andExpect(jsonPath("$.response.products[0].items[0].price").value(50000));
+
+        result.andExpect(jsonPath("$.response.products[0].items[1].id").value(2));
+        result.andExpect(jsonPath("$.response.products[0].items[1].optionName").value("02. 슬라이딩 지퍼백 플라워에디션 5종"));
+        result.andExpect(jsonPath("$.response.products[0].items[1].quantity").value(5));
+        result.andExpect(jsonPath("$.response.products[0].items[1].price").value(54500));
+    }
+
+    @Test
+    @WithMockUser(username = "user1@nate.com", roles = "USER") //가짜 인증객체 만들기
+    @DisplayName("주문 결과 확인 테스트")
+    public void findById_test() throws Exception{
+        //given
+        int id =1;
+
+        //when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .get("/orders/"+id)); //요청 uri
+
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+
+        //then
+        result.andExpect(jsonPath("$.success").value("true"));
+        result.andExpect(jsonPath("$.response.id").value(1));
+        result.andExpect(jsonPath("$.response.totalPrice").value(104500));
+
+        result.andExpect(jsonPath("$.response.products[0].productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"));
+        result.andExpect(jsonPath("$.response.products[0].items[0].id").value(1));
+        result.andExpect(jsonPath("$.response.products[0].items[0].optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"));
+        result.andExpect(jsonPath("$.response.products[0].items[0].quantity").value(5));
+        result.andExpect(jsonPath("$.response.products[0].items[0].price").value(50000));
+
+        result.andExpect(jsonPath("$.response.products[0].items[1].id").value(2));
+        result.andExpect(jsonPath("$.response.products[0].items[1].optionName").value("02. 슬라이딩 지퍼백 플라워에디션 5종"));
+        result.andExpect(jsonPath("$.response.products[0].items[1].quantity").value(5));
+        result.andExpect(jsonPath("$.response.products[0].items[1].price").value(54500));
+    }
+}
+```
+> jwt의 UserDetails 값을 테스트시 사용하기 위해 @WithMockUser를 사용했으나 값이 정상적으로 불러와지지않았다.
+> Authentication 객체를 만들어 userDetails 값을 명시적으로 설정하여 해결했다.
+> 테스트시 사용하는 stub을 @BeforeEach로 모아 작성했다.
+
+<br/>
+
+## <span style="color:#068FFF">**유저(User)**</span>
+
+<br/>
+
+### **DTO - UserRequest**
+```java
+public class UserRequest {
+    @Getter
+    @Setter
+    public static class JoinDTO {
+
+        @NotEmpty
+        @Pattern(regexp = "^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$", message = "이메일 형식으로 작성해주세요")
+        private String email;
+
+        @NotEmpty
+        @Size(min = 8, max = 20, message = "8에서 20자 이내여야 합니다.")
+        @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@#$%^&+=!~`<>,./?;:'\"\\[\\]{}\\\\()|_-])\\S*$", message = "영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니다.")
+        private String password;
+
+        @Size(min = 8, max = 45, message = "8에서 45자 이내여야 합니다.")
+        @NotEmpty
+        private String username;
+
+        public User toEntity() {
+            return User.builder()
+                    .email(email)
+                    .password(password)
+                    .username(username)
+                    .roles("ROLE_USER")
+                    .build();
+        }
+    }
+
+    @Getter
+    @Setter
+    public static class LoginDTO {
+        @NotEmpty
+        @Pattern(regexp = "^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$", message = "이메일 형식으로 작성해주세요")
+        private String email;
+
+        @NotEmpty
+        @Size(min = 8, max = 20, message = "8에서 20자 이내여야 합니다.")
+        @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@#$%^&+=!~`<>,./?;:'\"\\[\\]{}\\\\()|_-])\\S*$", message = "영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니다.")
+        private String password;
+    }
+
+    @Getter
+    @Setter
+    public static class EmailCheckDTO {
+        @NotEmpty
+        @Pattern(regexp = "^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$", message = "이메일 형식으로 작성해주세요")
+        private String email;
+    }
+
+    @Getter
+    @Setter
+    public static class UpdatePasswordDTO {
+        @NotEmpty
+        @Size(min = 8, max = 20, message = "8에서 20자 이내여야 합니다.")
+        @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@#$%^&+=!~`<>,./?;:'\"\\[\\]{}\\\\()|_-])\\S*$", message = "영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니다.")
+        private String password;
+    }
+}
+```
+> 정규식을 이용해 유효성을 검증한다.
+> 
+<br/>
+
+### **DTO - UserResponse**
+```java
+public class UserResponse {
+
+    @Getter @Setter
+    public static class FindById{
+        private int id;
+        private String username;
+        private String email;
+
+        public FindById(User user) {
+            this.id = user.getId();
+            this.username = user.getUsername();
+            this.email = user.getEmail();
+        }
+    }
+
+    @Getter @Setter
+    public static class CheckEmail{
+        private String email;
+
+        public CheckEmail(String email) {
+            this.email = email;
+        }
+    }
+}
+```
+<br/>
+
+### **Controller**
+```java
+@RequiredArgsConstructor
+@RestController
+public class UserRestController {
+
+    private final GlobalExceptionHandler globalExceptionHandler;
+    private final UserService userService;
+
+    @PostMapping("/join")
+    public ResponseEntity<?> join(@RequestBody @Valid UserRequest.JoinDTO requestDTO, Errors errors,
+                                  HttpServletRequest request) {
+        //유효성 검증 예외 처리
+        if (errors.hasErrors()) {
+            List<FieldError> fieldErrors = errors.getFieldErrors();
+            Exception400 ex = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
+            return new ResponseEntity<>(
+                    ex.body(),
+                    ex.status()
+            );
+        }
+        try {
+            userService.join(requestDTO); //회원가입
+            return ResponseEntity.ok().body(ApiUtils.success(null));
+        } catch (RuntimeException e) {
+            return globalExceptionHandler.handle(e, request);
+        }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody @Valid UserRequest.LoginDTO requestDTO, Errors errors,
+                                   @AuthenticationPrincipal CustomUserDetails userDetails, HttpServletRequest request) {
+        //유효성 검사
+        if (errors.hasErrors()) {
+            List<FieldError> fieldErrors = errors.getFieldErrors();
+            Exception400 ex = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
+            return new ResponseEntity<>(
+                    ex.body(),
+                    ex.status()
+            );
+        }
+
+        try {
+            String jwt = userService.login(requestDTO);
+            return ResponseEntity.ok().header(JWTProvider.HEADER, jwt).body(ApiUtils.success(null));
+        }catch (RuntimeException e){
+            return globalExceptionHandler.handle(e, request);
+        }
+    }
+
+    @PostMapping("/users/{id}/update-password")
+    public ResponseEntity<?> updatePassword(
+            @PathVariable Integer id,
+            @RequestBody @Valid UserRequest.UpdatePasswordDTO requestDTO, Errors errors,
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            HttpServletRequest request) {
+
+        // 유효성 검사
+        if (errors.hasErrors()) {
+            List<FieldError> fieldErrors = errors.getFieldErrors();
+            Exception400 e = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
+            return new ResponseEntity<>(
+                    e.body(),
+                    e.status()
+            );
+        }
+
+        // 권한 체크 (DB를 조회하지 않아도 체크할 수 있는 것) - 유저 id가 세션에 존재하는지 확인
+        if (id != userDetails.getUser().getId()) {
+            Exception403 e = new Exception403("인증된 user는 해당 id로 접근할 권한이 없습니다" + id);
+            return new ResponseEntity<>(
+                    e.body(),
+                    e.status()
+            );
+        }
+
+        // 서비스 실행 : 내부에서 터지는 모든 익셉션은 예외 핸들러로 던지기
+        try {
+            userService.updatePassword(requestDTO, id);
+            return ResponseEntity.ok().body(ApiUtils.success(null));
+        } catch (RuntimeException e) {
+            return globalExceptionHandler.handle(e, request);
+        }
+    }
+
+    // 클라이언트로 부터 전달된 데이터는 신뢰할 수 없다.
+    @GetMapping("/users/{id}")
+    public ResponseEntity<?> findById(
+            @PathVariable Integer id,
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            HttpServletRequest request
+    ) {
+        // 권한 체크 (디비를 조회하지 않아도 체크할 수 있는 것)
+        if (id != userDetails.getUser().getId()) {
+            Exception403 e = new Exception403("인증된 user는 해당 id로 접근할 권한이 없습니다:" + id);
+            return new ResponseEntity<>(
+                    e.body(),
+                    e.status()
+            );
+        }
+
+        // 서비스 실행 : 내부에서 터지는 모든 익셉션은 예외 핸들러로 던지기
+        try {
+            UserResponse.FindById responseDTO = userService.findById(id);
+            return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
+        } catch (RuntimeException e) {
+            return globalExceptionHandler.handle(e, request);
+        }
+    }
+
+    // 이메일 중복체크 (기능에는 없지만 사용중)
+    @PostMapping("/check")
+    public ResponseEntity<?> check(@RequestBody @Valid UserRequest.EmailCheckDTO emailCheckDTO, Errors errors, HttpServletRequest request) {
+        // 유효성 검사
+        if (errors.hasErrors()) {
+            List<FieldError> fieldErrors = errors.getFieldErrors();
+            Exception400 e = new Exception400(fieldErrors.get(0).getDefaultMessage() + ":" + fieldErrors.get(0).getField());
+            return new ResponseEntity<>(
+                    e.body(),
+                    e.status()
+            );
+        }
+        // 서비스 실행 : 내부에서 터지는 모든 익셉션은 예외 핸들러로 던지기
+        try {
+            String email = emailCheckDTO.getEmail();
+            userService.sameCheckEmail(email); //중복 체크(중복시 에러 던짐)
+            UserResponse.CheckEmail dto = new UserResponse.CheckEmail(email);
+            return ResponseEntity.ok().body(ApiUtils.success(dto));
+        } catch (RuntimeException e) {
+            return globalExceptionHandler.handle(e, request);
+        }
+    }
+
+    // (기능3) - 로그아웃
+    // 사용 안함 - 프론트에서 localStorage JWT 토큰을 삭제하면 됨.
+    @GetMapping("/logout")
+    public ResponseEntity<?> logout(@RequestBody Map<String, String> user) {
+        return ResponseEntity.ok().header(JWTProvider.HEADER, "").body(ApiUtils.success(null));
+    }
+}
+```
+<br/>
+
+### **Service**
+```java
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
+@Service
+public class UserService {
+    private final PasswordEncoder passwordEncoder;
+    private final UserJPARepository userJPARepository;
+
+    public UserResponse.FindById findById(Integer id){
+        User userPS = userJPARepository.findById(id).orElseThrow(
+                () -> new Exception400("회원 아이디를 찾을 수 없습니다. : "+id)
+        );
+        return new UserResponse.FindById(userPS);
+    }
+
+    @Transactional
+    public void join(UserRequest.JoinDTO requestDTO) {
+        sameCheckEmail(requestDTO.getEmail());
+
+        requestDTO.setPassword(passwordEncoder.encode(requestDTO.getPassword()));
+        try {
+            userJPARepository.save(requestDTO.toEntity());
+        } catch (Exception e) {
+            throw new Exception500("unknown server error");
+        }
+    }
+
+    public String login(UserRequest.LoginDTO requestDTO) {
+        User userPS = userJPARepository.findByEmail(requestDTO.getEmail()).orElseThrow(
+                () -> new Exception400("이메일을 찾을 수 없습니다 : "+requestDTO.getEmail())
+        );
+
+        if(!passwordEncoder.matches(requestDTO.getPassword(), userPS.getPassword())){
+            throw new Exception400("패스워드가 잘못입력되었습니다 ");
+        }
+        return JWTProvider.create(userPS);
+    }
+
+    public void sameCheckEmail(String email) {
+        Optional<User> userOP = userJPARepository.findByEmail(email);
+        if (userOP.isPresent()) {
+            throw new Exception400("동일한 이메일이 존재합니다 : " + email);
+        }
+    }
+
+    @Transactional
+    public void updatePassword(UserRequest.UpdatePasswordDTO requestDTO, Integer id) {
+        User userPS = userJPARepository.findById(id).orElseThrow(
+                () -> new Exception400("회원 아이디를 찾을 수 없습니다. : "+id)
+        );
+
+        // 의미 있는 setter 추가
+        String encPassword =
+                passwordEncoder.encode(requestDTO.getPassword());
+        userPS.updatePassword(encPassword);
+    } // 더티체킹 flush
+}
+```
+<br/>
+
+### **Repository**
+```java
+public interface UserJPARepository extends JpaRepository<User, Integer> {
+    Optional<User> findByEmail(String email);
+}
+```
+<br/>
+
+### **Controller Test**
+```java
+@Import({
+        SecurityConfig.class,
+        GlobalExceptionHandler.class
+})
+@WebMvcTest(controllers = {UserRestController.class})
+public class UserRestControllerTest {
+
+    // 객체의 모든 메서드는 추상메서드로 구현됩니다. (가짜로 만들면)
+    // 해당 객체는 SpringContext에 등록됩니다.
+    @MockBean //가짜로 띄움
+    private UserService userService;
+
+    @MockBean
+    private ErrorLogJPARepository errorLogJPARepository;
+
+    // @WebMvcTest를 하면 MockMvc가 SpringContext에 등록되기 때문에 DI할 수 있습니다.
+    @Autowired
+    private MockMvc mvc; //요청 보낼때 사용
+
+    // @WebMvcTest를 하면 ObjectMapper가 SpringContext에 등록되기 때문에 DI할 수 있습니다.
+    @Autowired
+    private ObjectMapper om; //직렬화
+
+    @Test
+    public void join_test() throws Exception {
+        // given
+        UserRequest.JoinDTO requestDTO = new UserRequest.JoinDTO();
+        requestDTO.setEmail("ssarmango@nate.com");
+        requestDTO.setPassword("meta1234!");
+        requestDTO.setUsername("ssarmango");
+        String requestBody = om.writeValueAsString(requestDTO);
+
+        // when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .post("/join") //post 요청 uri
+                        .content(requestBody) //요청 본문
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+
+        // then
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
+    }
+
+    @Test
+    public void login_test() throws Exception {
+        // given
+        // stub
+        User user = User.builder().id(1).roles("ROLE_USER").build(); //유저 생성
+        String jwt = JWTProvider.create(user); //토큰 생성
+        Mockito.when(userService.login(any())).thenReturn(jwt); //가짜 객체가 로그인 요청시 생성한 jwt 반환
+        //DTO
+        UserRequest.LoginDTO loginDTO = new UserRequest.LoginDTO();
+        loginDTO.setEmail("ssar@nate.com");
+        loginDTO.setPassword("meta1234!");
+        String requestBody = om.writeValueAsString(loginDTO); //직렬화
+
+        // when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .post("/login")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        String responseHeader = result.andReturn().getResponse().getHeader(JWTProvider.HEADER);
+        System.out.println("테스트 : "+responseBody);
+        System.out.println("테스트 : "+responseHeader);
+
+        // then
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
+        Assertions.assertTrue(jwt.startsWith(JWTProvider.TOKEN_PREFIX)); //Bearer 토큰인지 확인(prefix)
+    }
+}
+```
+
+<br/>
+
 # 5주차
 
 카카오 테크 캠퍼스 2단계 - BE - 5주차 클론 과제
-<br/>
-<br/>
+</br>
+</br>
 
 ## **과제명**
 ```
-1. 실패 단위 테스트
+코드 리팩토링
 ```
 
 ## **과제 설명**
 ```
-1. 컨트롤러 단위테스트를 구현하는데, 실패 테스트 코드를 구현하시오.
-2. 어떤 문제가 발생할 수 있을지 모든 시나리오를 생각해본 뒤, 실패에 대한 모든 테스트를 구현하시오.
+카카오 쇼핑 프로젝트 전체 코드를 리팩토링한다
+ - AOP로 유효성검사 적용하기
+ - 구현하기
+ - 장바구니 담GlobalExceptionHanlder 기 -> 예외 처리하기
+ - 장바구니 수정(주문하기) -> 예외처리하기
+ - 결재하기 기능 구현 (장바구니가 꼭 초기화 되어야함)
+ - 주문결과 확인 기능 구현
 ```
 
-<br/>
+</br>
 
 ## **과제 상세 : 수강생들이 과제를 진행할 때, 유념해야할 것**
 아래 항목은 반드시 포함하여 과제 수행해주세요!
->- 실패 단위 테스트가 구현되었는가?
->- 모든 예외에 대한 실패 테스트가 구현되었는가?
->- 예외에 대한 처리를 ControllerAdvice or RestControllerAdvice로 구현하였는가?
->- Validation 라이브러리를 사용하여 유효성 검사가 되었는가?
->- 테스트는 격리되어 있는가?
-<br/>
+>- AOP가 적용되었는가?
+>- GlobalExceptionHandler가 적용되었는가?
+>- 장바구니 담기시 모든 예외가 처리 완료되었는가?
+>- 장바구니 수정시 모든 예외가 처리 완료되었는가?
+>- 결재하기와 주문결과 확인 코드가 완료되었는가?
+
+</br>
 
 ## **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
 **1. PR 제목과 내용을 아래와 같이 작성 해주세요.**
 
 >- PR 제목 : 부산대BE_라이언_5주차 과제
 
-<br/>
+</br>
 
 **2. PR 내용 :**
 
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
+<br/>
+
+## **과제**
+
+> AOP와 GlobalExceptionHandler는 week5 폴더에서 확인해주세요.
+
+<br/>
+
+## <span style="color:#068FFF">**장바구니(Cart)**</span>
+
+<br/>
+
+### **1. 장바구니 - 장바구니 담기 + 예외 처리하기**
+<br/>
+
+### **Service**
+```java
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
+@Service
+public class CartService {
+    private final OptionJPARepository optionJPARepository;
+    private final CartJPARepository cartJPARepository;
+
+    @Transactional //트랜잭션 시작
+    public void addCartList(List<CartRequest.SaveDTO> requestDTOs, User sessionUser) {
+        HashSet<Integer> set = new HashSet<>();
+        for (CartRequest.SaveDTO requestDTO : requestDTOs) {
+            int optionId = requestDTO.getOptionId();
+            int quantity = requestDTO.getQuantity();
+
+            // 1. 동일한 옵션이 들어오면 예외처리
+            // [ { optionId:1, quantity:5 }, { optionId:1, quantity:10 } ]
+            if (set.contains(optionId)) //중복 확인
+                throw new Exception400("동일한 옵션 여러개를 추가할 수 없습니다.");
+            else set.add(optionId);
+
+            // 2. cartJPARepository.findByOptionIdAndUserId() 조회 -> 존재하면 장바구니에 수량을 추가하는 업데이트를 해야함. (더티체킹하기)
+            // Cart {cartId:1, optionId:1, quantity:3, userId:1} -> DTO {optionId:1, quantity:5}
+            Optional<Cart> optional = cartJPARepository.findByOptionIdAndUserId(optionId, sessionUser.getId());
+            Option option = optionJPARepository.findById(optionId)
+                    .orElseThrow(() -> new Exception404("해당 옵션을 찾을 수 없습니다 : " + optionId));
+
+            if(optional.isPresent()){ //이미 장바구니에 담긴 옵션이라면
+                Cart cart = optional.get();
+                int updateQuantity = cart.getQuantity() +quantity;
+                int price = quantity * option.getPrice();
+                cart.update(updateQuantity, price); //더티체킹 수행
+            }
+            // 3. [2번이 아니라면] 유저의 장바구니에 담기
+            else{
+                int price = option.getPrice() * quantity;
+                Cart cart = Cart.builder().user(sessionUser).option(option).quantity(quantity).price(price).build();
+                cartJPARepository.save(cart);
+            }
+        }
+
+    } //변경감지, 더티체킹, flush, 트랜잭션 종료
+}
+```
+> 수행 쿼리 : 반복문마다 **3번** 나간다. <br/>
+> cart 조회 1번, option 조회 1번, insert(또는 update) 1번
+
+<br/>
+
+### **2. 장바구니 수정(update) + 예외처리하기**
+<br/>
+
+### **Service**
+```java
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
+@Service
+public class CartService {
+    private final OptionJPARepository optionJPARepository;
+    private final CartJPARepository cartJPARepository;
+
+    @Transactional
+    public CartResponse.UpdateDTO update(List<CartRequest.UpdateDTO> requestDTOs, User user) {
+        List<Cart> cartList = cartJPARepository.findAllByUserIdWithOption(user.getId()); //쿼리 수정
+        // 1. 유저 장바구니에 아무것도 없으면 예외처리
+        if (cartList.isEmpty()) {
+            throw new Exception404("담은 장바구니가 없습니다.");
+        }
+        // 2. cartId:1, cartId:1 이렇게 requestDTOs에 동일한 장바구니 아이디가 두번 들어오면 예외처리
+        HashSet<Integer> set = new HashSet<>();
+        for (CartRequest.UpdateDTO requestDTO : requestDTOs) {
+            int cartId = requestDTO.getCartId();
+            if (set.contains(cartId)) //중복 확인
+                throw new Exception400("동일한 장바구니를 동시에 update할 수 없습니다.");
+            else set.add(cartId);
+            // 3. 유저 장바구니에 없는 cartId가 들어오면 예외처리
+            boolean b = cartList.stream().anyMatch(cart -> cart.getId() == cartId);
+            if(!b) throw new Exception404("존재하지않는 cartId입니다.");
+        }
+
+        // 위에 3개를 처리하지 않아도 프로그램은 잘돌아간다. 예를 들어 1번을 처리하지 않으면 for문을 돌지 않고, cartList가 빈배열 []로 정상응답이 나감.
+        for (Cart cart : cartList) {
+            for (CartRequest.UpdateDTO updateDTO : requestDTOs) {
+                if (cart.getId() == updateDTO.getCartId()) {
+                    cart.update(updateDTO.getQuantity(), cart.getOption().getPrice() * updateDTO.getQuantity());
+                }
+            }
+        }
+
+        return new CartResponse.UpdateDTO(cartList);
+    } // 더티체킹
+}
+```
+<br/>
+
+### **Repository**
+```java
+public interface CartJPARepository extends JpaRepository<Cart, Integer> {
+    List<Cart> findAllByUserId(int userId);
+
+    @Query("SELECT c FROM Cart c JOIN FETCH c.option o WHERE c.user.id = :userId")
+    List<Cart> findAllByUserIdWithOption(@Param("userId") int userId);
+}
+```
+> cart 조회시 option을 join fetch하여 성능을 최적화했다.
+> 1. cart와 option을 한번에 가져오는 쿼리 2.장바구니마다 update 쿼리
+
+> **한번에 update**하는 쿼리를 만들어 수행해도 되겠지만, <br/>
+> 과제에서 더티체킹을 이용해 update를 수행하라고 하였으므로 추가 수정하지않았다.
+
+<br/>
+
+## <span style="color:#068FFF">**주문(Order)**</span>
+<br/>
+
+### **1. 결제하기(주문 인서트)**
+<br/>
+
+### **DTO**
+```java
+public class OrderResponse {
+    @Getter
+    @Setter
+    public static class FindAllDTO {
+        private int id;
+        private List<OrderResponse.FindAllDTO.ProductDTO> products;
+        private int totalPrice;
+
+        public FindAllDTO(Order order, List<Item> itemList) {
+            this.id = order.getId();
+            this.products = itemList.stream()
+                    // 중복되는 상품 걸러내기
+                    .map(item -> item.getOption().getProduct()).distinct()
+                    .map(product -> new ProductDTO(product, itemList)).collect(Collectors.toList());
+            this.totalPrice = itemList.stream().mapToInt(item -> item.getOption().getPrice() * item.getQuantity()).sum();
+        }
+
+        @Getter
+        @Setter
+        public class ProductDTO {
+            private String productName;
+            private List<OrderResponse.FindAllDTO.ProductDTO.ItemDTO> items;
+
+            public ProductDTO(Product product, List<Item> itemList) {
+                this.productName = product.getProductName();
+                // 현재 상품과 동일한 장바구니 내역만 담기
+                this.items = itemList.stream()
+                        .filter(item -> item.getOption().getProduct().getId() == product.getId())
+                        .map(item -> new ItemDTO(item, item.getOption()))
+                        .collect(Collectors.toList());
+            }
+
+            @Getter
+            @Setter
+            public class ItemDTO {
+                private int id;
+                private String optionName;
+                private int quantity;
+                private int price;
+
+                public ItemDTO(Item item, Option option) {
+                    this.id = item.getId();
+                    this.optionName = option.getOptionName();
+                    this.quantity = item.getQuantity();
+                    this.price = quantity * option.getPrice();
+                }
+            }
+        }
+    }
+}
+```
+> DTO 클래스 구조를 먼저 작성한 후, 생성자에서 **stream**을 이용하여 주어진 order와 itemList로 DTO를 한번에 생성할 수 있다. <br/>
+> 사용자가 매개변수 하나하나 넣어가며 만들 필요가 없어 편리하다.
+
+> ✳️ Repository에서 가져올때 DTO에서 사용할 entity들은 프록시 객체가 아닌 실제로 가져온 객체(join fetch또는 직접 조회)여야 직렬화 문제가 발생하지 않는다.
+
+<br/>
+
+### **Controller**
+```java
+@RequiredArgsConstructor
+@RestController
+public class OrderRestController {
+    private final OrderService orderService;
+
+    // (기능9) 결재하기 - (주문 인서트) POST
+    // /orders/save
+    @PostMapping("/orders/save")
+    public ResponseEntity<?> save(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        OrderResponse.FindAllDTO dto = orderService.save(userDetails.getUser());
+        return ResponseEntity.ok(ApiUtils.success(dto));
+    }
+}
+```
+<br/>
+
+### **Service**
+```java
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
+@Service
+public class OrderService {
+    private final CartJPARepository cartJPARepository;
+    private final OrderJPARepository orderJPARepository;
+    private final ItemJPARepository itemJPARepository;
+
+    //결재하기(주문 인서트)
+    @Transactional
+    public OrderResponse.FindAllDTO save(User sessionUser) {
+        // 사용자가 담은 장바구니가 없을때 예외처리
+        int userId = sessionUser.getId();
+        List<Cart> cartList = cartJPARepository.findByUserIdOrderByOptionIdAsc(userId);
+        if(cartList.isEmpty()){
+            throw new Exception404("담은 장바구니가 없습니다");
+        }
+        //1. 주문 생성하기
+        Order order = Order.builder().user(sessionUser).build();
+        orderJPARepository.save(order);
+
+        //2. 장바구니를 Item에 저장하기
+        List<Item> itemList = new ArrayList<>();
+        for (Cart cart : cartList) {
+            Item item = Item.builder().option(cart.getOption()).order(order)
+                    .quantity(cart.getQuantity()).price(cart.getPrice()).build();
+            itemJPARepository.save(item);
+            itemList.add(item);
+        }
+        //3. 장바구니 초기화하기
+        cartJPARepository.deleteByUserId(userId);
+
+        //4. DTO 응답
+        return new OrderResponse.FindAllDTO(order, itemList);
+    }
+}
+```
+<br/>
+
+### **Repository**
+```java
+public interface CartJPARepository extends JpaRepository<Cart, Integer> {
+    @Query("select c from Cart c join fetch c.option o join fetch o.product p where c.user.id = :userId order by c.option.id asc")
+    List<Cart> findByUserIdOrderByOptionIdAsc(int userId);
+
+    @Modifying
+    @Query("DELETE FROM Cart c WHERE c.user.id = :userId")
+    void deleteByUserId(int userId);
+}
+```
+> option은 Item 저장과 DTO에서 사용되고 product도 DTO에서 속성이 사용되므로 한번에 가져오는 것이 좋다.
+
+>✳️ 만약 join fetch를 하지 않으면 entity 사용시 따로 쿼리가 나가게 된다.
+
+<br/>
+
+> deleteByUserId 쿼리를 커스텀하여 삭제시 user를 조회하지 않고, 한번에 삭제가 가능하도록 하였다. <br/>
+
+> **@Modifying**을 붙여준 이유는 JPA에게 INSERT, UPDATE, DELETE 쿼리를 수행함을 명시적으로 알려주어서 더 안전하게 트랜잭션을 처리하기 위해서이다.
+
+<br/>
+
+### **2. 주문 결과 확인**
+<br/>
+
+> 위와 응답 JSON이 동일하므로 응답 DTO도 동일하다.
+
+<br/>
+
+### **Controller**
+```java
+@RequiredArgsConstructor
+@RestController
+public class OrderRestController {
+    private final OrderService orderService;
+
+    // (기능10) 주문 결과 확인 GET
+    // /orders/{id}
+    @GetMapping("/orders/{id}")
+    public ResponseEntity<?> findById(@PathVariable int id, @AuthenticationPrincipal CustomUserDetails userDetails) {
+        OrderResponse.FindAllDTO dto = orderService.findById(id);
+        return ResponseEntity.ok(ApiUtils.success(dto));
+    }
+}
+```
+### **Service**
+```java
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
+@Service
+public class OrderService {
+    private final CartJPARepository cartJPARepository;
+    private final OrderJPARepository orderJPARepository;
+    private final ItemJPARepository itemJPARepository;
+
+    //주문 결과 확인
+    public OrderResponse.FindAllDTO findById(int id) {
+        Order order = orderJPARepository.findById(id).orElseThrow(
+                () -> new Exception404("존재하지않는 orderId 입니다")
+        );
+        List<Item> itemList = itemJPARepository.findByOrderId(id);
+        return new OrderResponse.FindAllDTO(order, itemList);
+    }
+}
+```
+<br/>
+
+### **Repository**
+```java
+public interface ItemJPARepository extends JpaRepository<Item, Integer> {
+    @Query("select i from Item i join fetch i.option o join fetch o.product p where  i.order.id = :orderId")
+    List<Item> findByOrderId(int orderId);
+}
+```
+> DTO 생성을 위해 option과 product를 join fetch하여 item을 가져온다. 
+
+> ✳️ option과 product의 FetchType이 EAGER이라면 join fetch하지 않아도 함께 가져온다.
+
+> 총 2번의 쿼리가 수행되었다.
+> 1. order 조회 2. item 조회 (option, product join fetch)
+
+<br/>
+<br/>
+<br/>
+
 # 6주차
 
 카카오 테크 캠퍼스 2단계 - BE - 6주차 클론 과제
-<br/>
-<br/>
+</br>
+</br>
 
 ## **과제명**
 ```
@@ -3448,25 +5299,25 @@ public void order_save_test() throws JsonProcessingException {
 2. API문서를 구현하시오. (swagger, restdoc, word로 직접 작성, 공책에 적어서 제출 등 모든 방법이 다 가능합니다)
 3. 프론트앤드에 입장을 생각해본뒤 어떤 문서를 가장 원할지 생각해본뒤 API문서를 작성하시오.
 4. 카카오 클라우드에 배포하시오.
-5. 배포한 뒤 서비스 장애가 일어날 수 있으니, 해당 장애에 대처할 수 있게 로그를 작성하시오. (로그는 DB에 넣어도 되고, 외부 라이브러리를 사용해도 되고, 파일로 남겨도 된다 - 단 장애 발생시 확인을 할 수 있어야 한다)
 ```
 
-<br/>
+</br>
 
 ## **과제 상세 : 수강생들이 과제를 진행할 때, 유념해야할 것**
 아래 항목은 반드시 포함하여 과제 수행해주세요!
 >- 통합테스트가 구현되었는가?
 >- API문서가 구현되었는가?
 >- 배포가 정상적으로 되었는가?
->- 서비스에 문제가 발생했을 때, 로그를 통해 문제를 확인할 수 있는가?
-<br/>
+>- 프로그램이 정상 작동되고 있는가?
+>- API 문서에 실패 예시가 작성되었는가?
+</br>
 
 ## **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
 **1. PR 제목과 내용을 아래와 같이 작성 해주세요.**
 
 >- PR 제목 : 부산대BE_라이언_6주차 과제
 
-<br/>
+</br>
 
 **2. PR 내용 :**
 

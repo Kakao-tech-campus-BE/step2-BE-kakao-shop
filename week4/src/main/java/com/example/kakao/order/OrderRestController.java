@@ -7,6 +7,7 @@ import com.example.kakao._core.security.JWTProvider;
 import com.example.kakao._core.utils.ApiUtils;
 import com.example.kakao._core.utils.FakeStore;
 import com.example.kakao.order.item.Item;
+import com.example.kakao.product.ProductResponse;
 import com.example.kakao.product.ProductService;
 import com.example.kakao.user.UserResponse;
 import com.example.kakao.user.UserService;
@@ -34,6 +35,7 @@ public class OrderRestController {
     @PostMapping("/orders/save")
     public ResponseEntity<?> save(@AuthenticationPrincipal CustomUserDetails userDetails, HttpServletRequest request) {
         try {
+            //jwt가 존재하는지 확인
             if(userDetails.getUser()!= null){
                 //유저가 존재하는지 확인
                 UserResponse.FindById byId = userService.findById(userDetails.getUser().getId());
@@ -52,11 +54,16 @@ public class OrderRestController {
 
     // (기능13) 주문 결과 확인
     @GetMapping("/orders/{id}")
-    public ResponseEntity<?> findById(@PathVariable int id, HttpServletRequest request) {
+    public ResponseEntity<?> findById(@PathVariable String id, HttpServletRequest request) {
         try {
-            OrderResponse.FindByIdDTO dto = orderService.findById(id);
+            int orderId = Integer.parseInt(id); //문자열->Integer
+            OrderResponse.FindByIdDTO dto = orderService.findById(orderId);
             return ResponseEntity.ok().body(ApiUtils.success(dto));
-        } catch (RuntimeException e) {
+        }
+        catch(NumberFormatException e){
+            return ResponseEntity.badRequest().body(ApiUtils.error("id는 숫자만 가능합니다", HttpStatus.BAD_REQUEST));
+        }
+        catch (RuntimeException e) {
             return globalExceptionHandler.handle(e, request);
         }
     }

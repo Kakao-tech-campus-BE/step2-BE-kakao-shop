@@ -55,11 +55,6 @@ public class CartRestControllerTest {
     @Autowired
     private ObjectMapper om;
 
-    @BeforeEach
-    void beforeEach(){
-
-    }
-
     @WithMockUser(username = "ssar@nate.com", roles = "USER") //가짜 인증객체 만들기
     @Test
     @DisplayName("장바구니 조회")

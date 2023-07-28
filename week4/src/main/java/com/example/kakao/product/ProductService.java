@@ -30,29 +30,39 @@ public class ProductService {
     private final OptionJPARepository optionJPARepository;
 
     public List<ProductResponse.FindAllDTO> findAll(int page) {
-        // 1. 데이터 가져와서 페이징하기
-        List<Product> productList =
-                productJPARepository.findAll().stream().skip(page * 9).limit(9).collect(Collectors.toList());
-        ;
+        try {
+            // 1. 데이터 가져와서 페이징하기
+            List<Product> productList =
+                    productJPARepository.findAll().stream().skip(page * 9).limit(9).collect(Collectors.toList());
+            ;
 
-        // 2. DTO 변환
-        List<ProductResponse.FindAllDTO> responseDTOs =
-                productList.stream().map(ProductResponse.FindAllDTO::new).collect(Collectors.toList());
+            // 2. DTO 변환
+            List<ProductResponse.FindAllDTO> responseDTOs =
+                    productList.stream().map(ProductResponse.FindAllDTO::new).collect(Collectors.toList());
 
-        return responseDTOs;
+            return responseDTOs;
+        } catch (Exception e){
+            throw new Exception500("unknown server error");
+        }
     }
 
     public ProductResponse.FindByIdDTO findById(Integer id){
         // 1. 상품 찾기
         Product product = productJPARepository.findById(id).stream().filter(p -> p.getId() == id).findFirst().orElseThrow(
-                () -> new Exception400("상품을 찾을 수 없습니다. : "+id));
+                () -> new Exception404("상품을 찾을 수 없습니다. : "+id));
 
-        // 2. 해당 상품의 옵션 찾기
-        List<Option> optionList = optionJPARepository.findAll().stream().filter(option -> product.getId() == option.getProduct().getId()).collect(Collectors.toList());
+        try {
+            // 2. 해당 상품의 옵션 찾기
+            List<Option> optionList = optionJPARepository.findAll().stream().filter(option -> product.getId() == option.getProduct().getId()).collect(Collectors.toList());
 
-        // 3. DTO 변환
-        ProductResponse.FindByIdDTO responseDTO = new ProductResponse.FindByIdDTO(product, optionList);
-        return responseDTO;
+            // 3. DTO 변환
+            ProductResponse.FindByIdDTO responseDTO = new ProductResponse.FindByIdDTO(product, optionList);
+            return responseDTO;
+        } catch (Exception e){
+            throw new Exception500("unknown server error");
+        }
     }
+
+
 
 }
