@@ -15,5 +15,5 @@ public interface OptionJPARepository extends JpaRepository<Option, Integer> {
 
     // findById_select_product_lazy_error_fix_test
     @Query("select o from Option o join fetch o.product where o.product.id = :productId")
-    List<Option> mFindByProductId(@Param("productId") int productId);
+    List<Option> findByProductIdJoinProduct(@Param("productId") int productId);
 }
