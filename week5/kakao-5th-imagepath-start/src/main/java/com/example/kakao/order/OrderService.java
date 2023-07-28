@@ -26,7 +26,7 @@ public class OrderService {
 
     @Transactional
     public OrderResponse.SaveDTO saveOrder(User sesssionUser) {
-        List<Cart> cartList = cartJPARepository.findAll();
+        List<Cart> cartList = cartJPARepository.findAllByUserId(sesssionUser.getId());
         // 장바구니 비어 있을 때 예외 처리
         if (cartList.isEmpty()) {
             throw new Exception400("장바구니가 비어있습니다");
