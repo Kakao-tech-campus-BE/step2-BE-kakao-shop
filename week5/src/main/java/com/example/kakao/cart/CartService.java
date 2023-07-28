@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
 public class CartService {
@@ -52,7 +52,6 @@ public class CartService {
         }
     }
 
-    @Transactional
     public CartResponse.FindAllDTO findAll(User user) {
 
         // cart -> option -> product
