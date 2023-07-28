@@ -13,6 +13,8 @@ public class CartRequest {
         private int optionId;
         @NonNull
         private int quantity;
+
+        // price 추가했습니다.
         private int price;
     }
 
@@ -22,6 +24,8 @@ public class CartRequest {
         private int cartId;
         @NonNull
         private int quantity;
+
+        // price 추가했습니다.
         private int price;
     }
 }
