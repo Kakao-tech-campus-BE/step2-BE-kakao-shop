@@ -16,20 +16,17 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 public class OrderRestController {
-
-
     // (기능9) 결재하기 - (주문 인서트) POST
     // /orders/save
-//    @PostMapping("/order/save")
-//    public ResponseEntity<?> save(@AuthenticationPrincipal CustomUserDetails userDetails) {
-//
-//    }
+    private final OrderService orderService;
+    @PostMapping("/orders/save")
+    public ResponseEntity<?> save(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        OrderResponse.FindByIdDTO responseDTO = orderService.save(userDetails.getUser());
+        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(responseDTO);
+        return ResponseEntity.ok(apiResult);
+    }
 
     // (기능10) 주문 결과 확인 GET
     // /orders/{id}
-
-    public void findById() {
-
-    }
 
 }
