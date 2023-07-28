@@ -1,5 +1,6 @@
 package com.example.kakao.cart;
 
+import com.example.kakao._core.errors.exception.Exception400;
 import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao.product.option.Option;
 import com.example.kakao.product.option.OptionJPARepository;
@@ -64,12 +65,37 @@ public class CartService {
         List<Cart> cartList = cartJPARepository.findAllByUserId(user.getId());
 
         // 1. 유저 장바구니에 아무것도 없으면 예외처리
+        if (cartList.isEmpty()) {
+            throw new Exception404("유저 장바구니에 상품이 존재하지 않습니다.");
+        }
 
         // 2. cartId:1, cartId:1 이렇게 requestDTOs에 동일한 장바구니 아이디가 두번 들어오면 예외처리
+        boolean isDuplicated = requestDTOs
+                .stream()
+                .map(CartRequest.UpdateDTO::getCartId)
+                .distinct()
+                .count() != requestDTOs.size();
+        if(isDuplicated) {
+            throw new Exception400("동일한 장바구니를 업데이트할 수 없습니다.");
+        }
 
         // 3. 유저 장바구니에 없는 cartId가 들어오면 예외처리
+        boolean isExist = requestDTOs.stream().allMatch( // allMatch() 모든 요소가 특정 조건 만족해야 함
+                requestCart -> cartList.stream().anyMatch(cart -> cart.getId() == requestCart.getCartId())
+        );
+        if(!isExist) {
+            throw new Exception404("장바구니에 존재하지 않는 상품입니다.");
+        }
 
-        // 위에 3개를 처리하지 않아도 프로그램은 잘돌아간다. 예를 들어 1번을 처리하지 않으면 for문을 돌지 않고, cartList가 빈배열 []로 정상응답이 나감.
+        // 4. 수량 0인지 체크
+        boolean isQuantityWrong = requestDTOs.stream().anyMatch( // anyMatch() 하나 이상 특정 조건 만족해야 함
+                requestCart -> requestCart.getQuantity() <= 0
+        );
+        if(isQuantityWrong) {
+            throw new Exception404("장바구니에 담으려면 수량이 1개 이상이어야 합니다.");
+        }
+
+        // 위에 4개를 처리하지 않아도 프로그램은 잘돌아간다. 예를 들어 1번을 처리하지 않으면 for문을 돌지 않고, cartList가 빈배열 []로 정상응답이 나감.
         for (Cart cart : cartList) {
             for (CartRequest.UpdateDTO updateDTO : requestDTOs) {
                 if (cart.getId() == updateDTO.getCartId()) {
