@@ -45,14 +45,13 @@ public class CartRestController {
     @GetMapping("/carts")
     public ResponseEntity<?> findAll(@AuthenticationPrincipal CustomUserDetails userDetails) {
         CartResponse.FindAllDTO responseDTO = cartService.findAll(userDetails.getUser());
-        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(responseDTO);
-        return ResponseEntity.ok(apiResult);
-    }
-    @GetMapping("/carts/v2")
-    public ResponseEntity<?> findAllv2(@AuthenticationPrincipal CustomUserDetails userDetails) {
-        CartResponse.FindAllDTOv2 responseDTO = cartService.findAllv2(userDetails.getUser());
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
+//    @GetMapping("/carts/v2")
+//    public ResponseEntity<?> findAllv2(@AuthenticationPrincipal CustomUserDetails userDetails) {
+//        CartResponse.FindAllDTOv2 responseDTO = cartService.findAllv2(userDetails.getUser());
+//        return ResponseEntity.ok(ApiUtils.success(responseDTO));
+//    }
 
 
     /**
@@ -71,7 +70,7 @@ public class CartRestController {
     // /carts/update
     @PostMapping("/carts/update")
     public ResponseEntity<?> update(@RequestBody @Valid List<CartRequest.UpdateDTO> requestDTOs, Errors errors, @AuthenticationPrincipal CustomUserDetails userDetails) {
-        CartResponse.UpdateDTO responseDTO = cartService.update(requestDTOs,userDetails.getUser());
+        CartResponse.UpdateDTO responseDTO = cartService.update(requestDTOs, userDetails.getUser());
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
 

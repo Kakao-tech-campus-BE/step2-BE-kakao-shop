@@ -10,6 +10,10 @@ import java.util.Optional;
 
 public interface OptionJPARepository extends JpaRepository<Option, Integer> {
 
+
+    @Query("select o from Option o where o.id = :id")
+    Optional<Option> mFindById(@Param("id") int id);
+
     @Query("select o from Option o where o.product.id = :productId")
     List<Option> findByProductId(@Param("productId") int productId);
 

@@ -1,6 +1,5 @@
 package com.example.kakao.order;
 
-import com.example.kakao.cart.CartResponse;
 import com.example.kakao.order.item.Item;
 import com.example.kakao.product.Product;
 import lombok.Getter;
@@ -57,7 +56,6 @@ public class OrderResponse {
                     this.price = item.getOption().getPrice() * item.getQuantity();
                 }
             }
-
         }
     }
 
