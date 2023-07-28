@@ -23,4 +23,5 @@ public interface CartJPARepository extends JpaRepository<Cart, Integer> {
 
     @Query("select c from Cart c where c.option.id = :optionId and c.user.id = :userId")
     Optional<Cart> findByOptionIdAndUserId(@Param("optionId") int optionId, @Param("userId") int userId);
+
 }
