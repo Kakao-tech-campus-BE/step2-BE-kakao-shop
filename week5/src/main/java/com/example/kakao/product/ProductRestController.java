@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,7 +26,15 @@ public class ProductRestController {
 
     // (기능2) 개별 상품 상세 조회
     // /products/{id}
-    public void findById() {
+    @GetMapping("/products/{id}")
+    public ResponseEntity<?> findById(@PathVariable int id) {
+        ProductResponse.FindByIdDTO responseDTO = productService.findById(id);
+        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
+    }
 
+    @GetMapping("/products/{id}/v2")
+    public ResponseEntity<?> findByIdv2(@PathVariable int id) {
+        ProductResponse.FindByIdDTOv2 responseDTO = productService.findByIdv2(id);
+        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 }
