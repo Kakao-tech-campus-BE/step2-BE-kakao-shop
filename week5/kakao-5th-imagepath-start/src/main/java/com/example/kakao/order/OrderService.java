@@ -27,7 +27,7 @@ public class OrderService {
     public OrderResponse.CreateDTO create(User user) {
 
         // 1. 주문 전 장바구니 확인
-        List<Cart> cartList = findAllByUserId(user.getId());
+        List<Cart> cartList = getValidCartFindAllByUserId(user.getId());
 
         // 2. 주문 생성
         Order order = saveOrder(user);
@@ -43,27 +43,19 @@ public class OrderService {
 
     public OrderResponse.FindByIdDTO findById(int orderId, int userId) {
         // 1. 주문 존재 확인
-        Order order = orderJPARepository.findById(orderId).orElseThrow(
-                () -> new OrderException.OrderNotFoundException(orderId));
+        Order order = getValidOrderFindById(orderId);
 
         // 2. 유효한 사용자가 접근했는지 확인
         validOrderAccess(order.getUser().getId(), userId);
 
         // 3. 주문 상품 가져오기
-        List<Item> itemList = itemJPARepository.findByOrderId(order.getId());
-        if(itemList.isEmpty()) throw new ItemException.ItemNotFoundException();
+        List<Item> itemList = getValidItemFindByOrderId(orderId);
 
         // 4. 주문 결과 반환
         return new OrderResponse.FindByIdDTO(order, itemList);
     }
 
     // --------- private ---------
-
-    private List<Cart> findAllByUserId(int userId) {
-        List<Cart> cartList = cartJPARepository.findAllByUserIdFetchJoin(userId);
-        if(cartList.isEmpty()) throw new CartException.CartNotFoundException();
-        return cartList;
-    }
 
     private Order saveOrder(User user) {
         Order order = Order.builder()
@@ -106,5 +98,22 @@ public class OrderService {
 
     private void validOrderAccess(int orderUserId, int userId) {
         if(orderUserId != userId) throw new OrderException.ForbiddenOrderAccess();
+    }
+
+    private List<Cart> getValidCartFindAllByUserId(int userId) {
+        List<Cart> cartList = cartJPARepository.findAllByUserIdFetchJoin(userId);
+        if(cartList.isEmpty()) throw new CartException.CartNotFoundException();
+        return cartList;
+    }
+
+    private List<Item> getValidItemFindByOrderId(int orderId) {
+        List<Item> itemList = itemJPARepository.findByOrderId(orderId);
+        if(itemList.isEmpty()) throw new ItemException.ItemNotFoundException();
+        return itemList;
+    }
+
+    private Order getValidOrderFindById(int orderId) {
+        return orderJPARepository.findById(orderId).orElseThrow(
+                () -> new OrderException.OrderNotFoundException(orderId));
     }
 }

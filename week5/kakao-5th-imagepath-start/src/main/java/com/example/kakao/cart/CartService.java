@@ -143,8 +143,7 @@ public class CartService {
 
 
     public CartResponse.FindAllDTO findAll(User user) {
-        List<Cart> cartList = cartJPARepository.findByUserIdOrderByOptionIdAsc(user.getId());
-        if(cartList.isEmpty()) throw new CartException.CartNotFoundException();
+        List<Cart> cartList = getValidFindAllCartList(user);
 
         // Cart에 담긴 옵션이 3개이면, 2개는 바나나 상품, 1개는 딸기 상품이면 Product는 2개인 것이다.
         return new CartResponse.FindAllDTO(cartList);
@@ -156,8 +155,8 @@ public class CartService {
     }
 
     public void clearAll(User user) {
-        List<Cart> cartList = cartJPARepository.findAllByUserId(user.getId());
-        if(cartList.isEmpty()) throw new CartException.CartNotFoundException();
+
+        List<Cart> cartList = getValidCartList(user.getId());
 
         try {
             cartJPARepository.deleteAllInBatch(cartList);
@@ -194,7 +193,7 @@ public class CartService {
 
     /**
      * Cart가 데이터베이스에 없으면 예외를 발생시킨다.
-     *
+     * 입력받은 CartId가 회원의 장바구니에 존재하지 않는다면 예외를 발생시킨다.
      */
     private List<Cart> getValidCartList(List<Integer> requestIds,int userId) {
         List<Cart> cartList = cartJPARepository.findAllByUserIdFetchOption(userId);
@@ -207,6 +206,16 @@ public class CartService {
     }
 
     /**
+     * Cart가 데이터베이스에 없으면 예외를 발생시킨다.
+     */
+    private List<Cart> getValidCartList(int userId) {
+        List<Cart> cartList = cartJPARepository.findAllByUserIdFetchOption(userId);
+        if(cartList.isEmpty()) throw new CartException.CartNotFoundException();
+
+        return cartList;
+    }
+
+    /**
      * 데이터베이스에 있는 데이터와 입력받은 데이터 ID간의 유효성 체크
      */
     private List<Integer> findNotExistIds(List<Integer> requestIds, Set<Integer> databaseIds) {
@@ -214,5 +223,14 @@ public class CartService {
 
         setRequestIds.removeAll(databaseIds);
         return new ArrayList<>(setRequestIds);
+    }
+
+    /**
+     * 회원의 장바구니에 데이터가 없다면 예외를 발생시킨다.
+     */
+    private List<Cart> getValidFindAllCartList(User user) {
+        List<Cart> cartList = cartJPARepository.findByUserIdOrderByOptionIdAsc(user.getId());
+        if(cartList.isEmpty()) throw new CartException.CartNotFoundException();
+        return cartList;
     }
 }
