@@ -39,6 +39,7 @@ public class CartRestController {
     @PostMapping("/carts/add")
     public ResponseEntity<?> addCartList(@RequestBody @Valid List<CartRequest.SaveDTO> requestDTOs, Errors errors, @AuthenticationPrincipal CustomUserDetails userDetails) {
         cartService.addCartList(requestDTOs, userDetails.getUser());
+
         return ResponseEntity.ok(ApiUtils.success(null));
     }
 
@@ -48,6 +49,7 @@ public class CartRestController {
     public ResponseEntity<?> findAll(@AuthenticationPrincipal CustomUserDetails userDetails) {
         CartResponse.FindAllDTO responseDTO = cartService.findAll(userDetails.getUser());
         ApiUtils.ApiResult<?> apiResult = ApiUtils.success(responseDTO);
+
         return ResponseEntity.ok(apiResult);
     }
 
@@ -55,6 +57,7 @@ public class CartRestController {
     public ResponseEntity<?> findAllv2(@AuthenticationPrincipal CustomUserDetails userDetails) {
         CartResponse.FindAllDTOv2 responseDTO = cartService.findAllv2(userDetails.getUser());
         ApiUtils.ApiResult<?> apiResult = ApiUtils.success(responseDTO);
+
         return ResponseEntity.ok(apiResult);
     }
 

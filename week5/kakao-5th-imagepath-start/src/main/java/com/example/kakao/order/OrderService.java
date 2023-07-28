@@ -55,6 +55,7 @@ public class OrderService {
         Order order = orderJPARepository.findById(id)
                 .orElseThrow(() -> new Exception400("해당 주문이 없습니다."));
         List<Item> itemList = itemJPARepository.findByOrderId(id);
+
         return new OrderResponse.FindByIdDTO(order, itemList);
     }
 }
