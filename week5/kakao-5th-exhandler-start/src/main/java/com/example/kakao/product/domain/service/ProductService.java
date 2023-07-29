@@ -34,7 +34,7 @@ public class ProductService {
         return ProductResponseConverter.from(product, productOptions);
     }
 
-    public List<ProductReponse.ProductFindAllResponse> getPosts(Long page) {
+    public List<ProductReponse.ProductFindAllResponse> getPosts(int page) {
         List<Product> products = productRepository.findAll(page)
                 .stream()
                 .map(ProductConverter::from)

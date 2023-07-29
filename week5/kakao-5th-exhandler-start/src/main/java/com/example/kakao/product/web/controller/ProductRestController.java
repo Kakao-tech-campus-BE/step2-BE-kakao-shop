@@ -15,7 +15,7 @@ public class ProductRestController {
     private final ProductService productService;
 
     @GetMapping
-    public ResponseEntity<ApiUtils.ApiResult<List<ProductReponse.ProductFindAllResponse>>> findAll(@RequestParam(value = "page", defaultValue = "0") Long page) {
+    public ResponseEntity<ApiUtils.ApiResult<List<ProductReponse.ProductFindAllResponse>>> findAll(@RequestParam(value = "page", defaultValue = "0") int page) {
         return ResponseEntity.ok().body(ApiUtils.success(productService.getPosts(page)));
     }
 
