@@ -6,9 +6,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+
 @Repository
 public interface ProductOptionRepository {
-    public List<ProductOptionEntity> findByProductEntity(ProductEntity productEntity);
-
-    public Optional<ProductOptionEntity> findById(Long productOptionId);
+    Optional<ProductOptionEntity> findById(Long productOptionId);
+    List<ProductOptionEntity> findByProductEntity(ProductEntity productEntity);
 }
