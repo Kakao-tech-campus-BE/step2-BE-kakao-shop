@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
-public class CartReqeust {
+public class CartSaveReqeust {
 
     @NotNull
     private Long optionId;

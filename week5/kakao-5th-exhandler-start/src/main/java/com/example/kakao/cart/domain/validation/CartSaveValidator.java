@@ -1,6 +1,6 @@
 package com.example.kakao.cart.domain.validation;
 
-import com.example.kakao.cart.web.request.CartReqeust;
+import com.example.kakao.cart.web.request.CartSaveReqeust;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -12,18 +12,14 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class CartValidator {
+public class CartSaveValidator {
 
-    public void validateCreateConstraint(final List<CartReqeust> cartRequests) {
+    public void validateCreateConstraint(final List<CartSaveReqeust> cartRequests) {
         isDuplicated(cartRequests);
     }
-
-    public void validateUpdateConstraint(final List<CartReqeust>cartReqeusts){
-        isDuplicated(cartReqeusts);
-    }
-    private void isDuplicated(List<CartReqeust>cartRequests){
+    private void isDuplicated(List<CartSaveReqeust>cartRequests){
         Set<Long> notDuplicated = cartRequests.stream()
-                .map(CartReqeust::getOptionId)
+                .map(CartSaveReqeust::getOptionId)
                 .collect(Collectors.toSet());
 
         if(notDuplicated.size()!= cartRequests.size()){
