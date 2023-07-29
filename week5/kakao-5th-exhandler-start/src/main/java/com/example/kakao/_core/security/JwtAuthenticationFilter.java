@@ -36,10 +36,10 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
 
         try {
             DecodedJWT decodedJWT = JWTProvider.verify(jwt);
-            int id = decodedJWT.getClaim("id").asInt();
+            Long id = decodedJWT.getClaim("id").asLong();
             String roles = decodedJWT.getClaim("role").asString();
             System.out.println("roles : "+roles);
-            User user = User.builder().id(id).roles(roles).build();
+            User user = User.builder().userId(id).roles(roles).build();
             CustomUserDetails myUserDetails = new CustomUserDetails(user);
             Authentication authentication =
                     new UsernamePasswordAuthenticationToken(

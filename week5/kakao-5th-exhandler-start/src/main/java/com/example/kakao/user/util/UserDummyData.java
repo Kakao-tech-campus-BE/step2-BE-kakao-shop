@@ -1,6 +1,6 @@
 package com.example.kakao.user.util;
 
-import com.example.kakaoshop.user.User;
+import com.example.kakao.user.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;

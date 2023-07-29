@@ -1,7 +1,7 @@
 package com.example.kakao.user;
 
-import com.example.kakaoshop._core.security.CustomUserDetails;
-import com.example.kakaoshop._core.security.JWTProvider;
+import com.example.kakao._core.security.CustomUserDetails;
+import com.example.kakao._core.security.JWTProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
