@@ -6,10 +6,10 @@ server:
   port: 8080
 spring:
   datasource:
-    url: jdbc:h2:mem:test;MODE=MySQL
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
+    url: jdbc:mysql://localhost:13304/shop?useSSL=false&serverTimezone=UTC&characterEncoding=utf8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 1234
   h2:
     console:
       enabled: true
@@ -22,6 +22,10 @@ spring:
         format_sql: true
       default_batch_fetch_size: 100
     open-in-view: false
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: always
 
 logging:
   level:
