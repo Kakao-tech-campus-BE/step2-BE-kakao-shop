@@ -46,7 +46,7 @@ public class CartService {
     public void addCarts(User user, List<CartReqeust> cartSaveRequests) {
         cartValidator.validateCreateConstraint(cartSaveRequests);
 
-        cartSaveRequests.forEach(cartReqeust -> updateCart(cartReqeust,user));
+        cartSaveRequests.forEach(cartReqeust -> updateOrCreateCart(cartReqeust,user));
     }
 
     private ProductOptionEntity getProductOptionById(Long optionId) {
@@ -60,12 +60,35 @@ public class CartService {
         return cartRepository.findByProductOptionEntity(productOptionEntity);
     }
 
-    private void updateCart(CartReqeust cartReqeust, User user) {
+    private void updateOrCreateCart(CartReqeust cartReqeust, User user) {
         Optional<CartEntity> cartEntity = saveByExisting(cartReqeust);
         if (cartEntity.isEmpty()) {
-            CartEntity newCartEntity = CartConverter.to(cartReqeust.getQuantity(), getProductOptionById(cartReqeust.getOptionId()), user);
-            cartRepository.save(newCartEntity);
+            saveCart(cartReqeust, user);
         }
-        cartEntity.ifPresent(cartEntity1 -> cartEntity1.addQuantity(cartReqeust.getQuantity()));
+        updateCart(cartReqeust, cartEntity);
     }
+
+    private void updateCart(CartReqeust cartReqeust, Optional<CartEntity> cartEntity) {
+        cartEntity.ifPresent(entity -> entity.addQuantity(cartReqeust.getQuantity()));
+    }
+
+    private void saveCart(CartReqeust cartReqeust, User user) {
+        CartEntity newCartEntity = CartConverter.to(cartReqeust.getQuantity(), getProductOptionById(cartReqeust.getOptionId()), user);
+        cartRepository.save(newCartEntity);
+    }
+
+    public void updateCarts(User user, List<CartReqeust> cartUpdateRequests) {
+        cartValidator.validateUpdateConstraint(cartUpdateRequests);
+
+        cartUpdateRequests
+                .forEach(request -> findCart(user, request));
+    }
+
+    private void findCart(User user, CartReqeust cartReqeust){
+        Optional<CartEntity> cartEntity = cartRepository.findByUserAndProductOption(user, cartReqeust.getOptionId());
+        cartEntity.orElseThrow(() -> new IllegalArgumentException("잘못된 요청 : 옵션이 존재하지 않습니다."));
+
+        updateCart(cartReqeust, cartEntity);
+    }
+
 }
