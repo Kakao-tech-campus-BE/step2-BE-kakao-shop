@@ -21,10 +21,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Slf4j
-public class SearchCartService {
+public class SearchCartUseCase {
     private final CartRepository cartRepository;
 
-    public CartFindAllResponse getCartsByUser(User user) {
+    public CartFindAllResponse execute(User user) {
         List<Cart> carts = cartRepository.findByUser(user)
                 .stream()
                 .map(CartConverter::from)
