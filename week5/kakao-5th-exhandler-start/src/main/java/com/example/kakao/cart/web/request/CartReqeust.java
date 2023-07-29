@@ -16,7 +16,5 @@ public class CartReqeust {
     private Long optionId;
     @NotNull
     private Integer quantity;
-    @NotNull
-    private int price;
 
 }
