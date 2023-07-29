@@ -18,7 +18,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -41,18 +43,29 @@ public class CartService {
     }
 
     @Transactional
-    public void addCarts(User user, List<CartReqeust>cartSaveRequests) {
+    public void addCarts(User user, List<CartReqeust> cartSaveRequests) {
         cartValidator.validateCreateConstraint(cartSaveRequests);
 
-        List<CartEntity> collect = cartSaveRequests.stream()
-                .map(x -> CartConverter.to(x.getQuantity(), getProductOptionById(x.getOptionId()), user))
-                .collect(Collectors.toList());
-
-        cartRepository.saveAll(collect);
+        cartSaveRequests.forEach(cartReqeust -> updateCart(cartReqeust,user));
     }
+
     private ProductOptionEntity getProductOptionById(Long optionId) {
         return productOptionRepository.findById(optionId)
-                .orElseThrow(()->new IllegalArgumentException("존재하지 않는 옵션"));
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 옵션"));
     }
 
+    private Optional<CartEntity> saveByExisting(CartReqeust cartRequest) {
+        ProductOptionEntity productOptionEntity = getProductOptionById(cartRequest.getOptionId());
+
+        return cartRepository.findByProductOptionEntity(productOptionEntity);
+    }
+
+    private void updateCart(CartReqeust cartReqeust, User user) {
+        Optional<CartEntity> cartEntity = saveByExisting(cartReqeust);
+        if (cartEntity.isEmpty()) {
+            CartEntity newCartEntity = CartConverter.to(cartReqeust.getQuantity(), getProductOptionById(cartReqeust.getOptionId()), user);
+            cartRepository.save(newCartEntity);
+        }
+        cartEntity.ifPresent(cartEntity1 -> cartEntity1.addQuantity(cartReqeust.getQuantity()));
+    }
 }
