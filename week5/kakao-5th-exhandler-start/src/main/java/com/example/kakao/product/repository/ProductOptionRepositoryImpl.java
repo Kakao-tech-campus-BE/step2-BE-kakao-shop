@@ -11,15 +11,15 @@ import java.util.Optional;
 @Repository
 @RequiredArgsConstructor
 public class ProductOptionRepositoryImpl implements ProductOptionRepository {
-    private final MemoryProductOptionRepository productOptionRepository;
-
-    @Override
-    public List<ProductOptionEntity> findByProductEntity(ProductEntity productEntity) {
-        return productOptionRepository.findByProductEntity(productEntity);
-    }
+    private final ProductOptionJpaRepository productOptionRepository;
 
     @Override
     public Optional<ProductOptionEntity> findById(Long productOptionId) {
         return productOptionRepository.findById(productOptionId);
+    }
+
+    @Override
+    public List<ProductOptionEntity> findByProductEntity(ProductEntity productEntity) {
+        return productOptionRepository.findByProductEntity(productEntity);
     }
 }
