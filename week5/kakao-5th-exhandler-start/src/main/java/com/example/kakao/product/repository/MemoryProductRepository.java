@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 @Repository
 public class MemoryProductRepository {
-    private Map<Long, ProductEntity> productEntities;
+    private final Map<Long, ProductEntity> productEntities;
     private Long count = 0L;
 
     public MemoryProductRepository(ProductDummyData dummyData) {
@@ -28,7 +28,7 @@ public class MemoryProductRepository {
         return Optional.ofNullable(productEntities.get(id));
     }
 
-    List<ProductEntity> findAll(Long page) {
+    List<ProductEntity> findAll(int page) {
         if (!productEntities.containsKey(page * 9L)) {
             // TODO : 추후 ExceptionHandler 사용
             throw new IllegalArgumentException("해당 페이지에 상품이 존재하지 않습니다.");
