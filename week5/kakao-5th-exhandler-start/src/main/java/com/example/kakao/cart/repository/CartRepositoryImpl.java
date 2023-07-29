@@ -26,12 +26,12 @@ public class CartRepositoryImpl implements CartRepository {
     }
 
     @Override
-    public List<CartEntity> saveAll(List<CartEntity> entities) {
-        return cartRepository.saveAll(entities);
+    public Optional<CartEntity> findByProductOptionEntity(ProductOptionEntity productOptionEntity) {
+        return cartRepository.findByProductOptionEntity(productOptionEntity);
     }
 
     @Override
-    public Optional<CartEntity> findByProductOptionEntity(ProductOptionEntity productOptionEntity) {
-        return cartRepository.findByProductOptionEntity(productOptionEntity);
+    public Optional<CartEntity> findByUserAndProductOption(User user, Long optionId) {
+        return cartRepository.findByUserAndProductOptionId(user,optionId);
     }
 }

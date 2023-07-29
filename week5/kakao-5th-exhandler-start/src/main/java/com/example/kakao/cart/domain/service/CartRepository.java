@@ -14,7 +14,7 @@ public interface CartRepository {
 
     List<CartEntity> findByUser(User user);
 
-    List<CartEntity> saveAll(List<CartEntity> entities);
-
     Optional<CartEntity> findByProductOptionEntity(ProductOptionEntity productOptionEntity);
+
+    Optional<CartEntity>findByUserAndProductOption(User user, Long optionId);
 }
