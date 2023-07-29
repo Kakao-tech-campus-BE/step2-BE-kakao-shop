@@ -16,7 +16,10 @@ public class CartValidator {
 
     public void validateCreateConstraint(final List<CartReqeust> cartRequests) {
         isDuplicated(cartRequests);
+    }
 
+    public void validateUpdateConstraint(final List<CartReqeust>cartReqeusts){
+        isDuplicated(cartReqeusts);
     }
     private void isDuplicated(List<CartReqeust>cartRequests){
         Set<Long> notDuplicated = cartRequests.stream()
