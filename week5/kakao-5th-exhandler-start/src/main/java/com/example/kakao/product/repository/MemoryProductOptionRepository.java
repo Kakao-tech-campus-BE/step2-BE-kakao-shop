@@ -25,7 +25,7 @@ public class MemoryProductOptionRepository {
     public List<ProductOptionEntity> findByProductEntity(ProductEntity productEntity) {
         return productOptionEntities.values()
                 .stream()
-                .filter(x -> x.getProduct().getProductId().equals(productEntity.getProductId()))
+                .filter(x -> x.getProductEntity().getProductId().equals(productEntity.getProductId()))
                 .collect(Collectors.toList());
     }
 

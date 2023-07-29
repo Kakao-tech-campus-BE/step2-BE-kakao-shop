@@ -93,7 +93,7 @@ public class ProductDummyData {
 
     private ProductOptionEntity newOptionEntity(ProductEntity product, Long id, String optionName, int price) {
         return ProductOptionEntity.builder()
-                .product(product)
+                .productEntity(product)
                 .productOptionId(id)
                 .optionName(optionName)
                 .price(price)

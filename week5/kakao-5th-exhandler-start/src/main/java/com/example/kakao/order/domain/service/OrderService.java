@@ -45,7 +45,7 @@ public class OrderService {
 
     private List<OrderItem> findOrderItemsByUser(User user) {
         return cartRepository.findByUser(user).stream()
-                .map(x -> OrderItemConverter.to(x.getProductOption(), x.getQuantity()))
+                .map(x -> OrderItemConverter.to(x.getProductOptionEntity(), x.getQuantity()))
                 .map(OrderItemConverter::from)
                 .collect(Collectors.toList());
     }

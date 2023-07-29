@@ -37,9 +37,9 @@ public class OrderItemConverter {
 
     public static OrderItemEntity to(ProductOptionEntity productOptionEntity, int quantity) {
         return OrderItemEntity.builder()
-                .productName(productOptionEntity.getProduct().getProductName())
+                .productName(productOptionEntity.getProductEntity().getProductName())
                 .optionName(productOptionEntity.getOptionName())
-                .productId(productOptionEntity.getProduct().getProductId())
+                .productId(productOptionEntity.getProductEntity().getProductId())
                 .optionId(productOptionEntity.getProductOptionId())
                 .price(productOptionEntity.getPrice())
                 .quantity(quantity)

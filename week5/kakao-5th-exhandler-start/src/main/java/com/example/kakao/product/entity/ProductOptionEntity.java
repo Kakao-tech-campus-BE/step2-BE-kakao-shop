@@ -23,16 +23,16 @@ public class ProductOptionEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
-    private ProductEntity product;
+    private ProductEntity productEntity;
 
     @Column(length = 100, nullable = false)
     private String optionName;
     private int price;
 
     @Builder
-    public ProductOptionEntity(Long productOptionId, ProductEntity product, String optionName, int price) {
+    public ProductOptionEntity(Long productOptionId, ProductEntity productEntity, String optionName, int price) {
         this.productOptionId = productOptionId;
-        this.product = product;
+        this.productEntity = productEntity;
         this.optionName = optionName;
         this.price = price;
     }
