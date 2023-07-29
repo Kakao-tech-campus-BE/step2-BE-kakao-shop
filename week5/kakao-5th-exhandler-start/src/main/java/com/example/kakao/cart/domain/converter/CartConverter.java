@@ -17,7 +17,7 @@ public class CartConverter {
         return Cart.builder()
                 .id(entity.getCartId())
                 .user(entity.getUser())
-                .productOption(ProductOptionConverter.from(entity.getProductOption()))
+                .productOption(ProductOptionConverter.from(entity.getProductOptionEntity()))
                 .quantity(entity.getQuantity())
                 .build();
     }

@@ -13,7 +13,7 @@ public class CashierConverter {
         }
 
         return Cashier.builder()
-                .carts(carts)
+                .existingCarts(carts)
                 .build();
     }
 }

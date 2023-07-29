@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
@@ -26,7 +27,7 @@ public class CartEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_option_id")
-    private ProductOptionEntity productOption;
+    private ProductOptionEntity productOptionEntity;
 
     private int quantity;
 
@@ -34,8 +35,12 @@ public class CartEntity {
     public CartEntity(Long id, User user, ProductOptionEntity productOptionEntity, int quantity) {
         this.cartId = id;
         this.user = user;
-        this.productOption = productOptionEntity;
+        this.productOptionEntity = productOptionEntity;
         this.quantity = quantity;
+    }
+
+    public void addQuantity(int quantity) {
+        this.quantity += quantity;
     }
 }
 
