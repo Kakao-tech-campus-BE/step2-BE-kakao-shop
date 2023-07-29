@@ -2,6 +2,7 @@ package com.example.kakao.cart.repository;
 
 import com.example.kakao.cart.entity.CartEntity;
 import com.example.kakao.cart.util.CartDummyData;
+import com.example.kakao.user.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 @Repository
 public class MemoryCartRepository{
-    private Map<Long, CartEntity> cartEntities;
+    private final Map<Long, CartEntity> cartEntities;
 
     private Long count = 0L;
 

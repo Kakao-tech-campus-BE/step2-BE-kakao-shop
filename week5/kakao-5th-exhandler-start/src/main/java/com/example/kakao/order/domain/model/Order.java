@@ -1,5 +1,6 @@
 package com.example.kakao.order.domain.model;
 
+import com.example.kakao.user.User;
 import lombok.*;
 @Getter
 @Builder(toBuilder = true)
