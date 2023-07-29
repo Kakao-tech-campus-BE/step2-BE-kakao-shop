@@ -77,6 +77,7 @@ public class CartService {
         cartRepository.save(newCartEntity);
     }
 
+    @Transactional
     public void updateCarts(User user, List<CartReqeust> cartUpdateRequests) {
         cartValidator.validateUpdateConstraint(cartUpdateRequests);
 
