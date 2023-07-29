@@ -11,7 +11,7 @@ public class ApiUtils {
         return new ApiResult<>(true, response, null);
     }
 
-    public static ApiResult successWithoutData() {
+    public static <T> ApiResult<T> success() {
         return new ApiResult<>(true, null, null);
     }
 

@@ -27,9 +27,9 @@ public class CartRestController {
     }
 
     @PostMapping
-    public ResponseEntity<ApiUtils.ApiResult> saveCarts(@AuthenticationPrincipal CustomUserDetails user, @Valid @RequestBody List<CartSaveReqeust> cartSaveRequests) {
+    public ResponseEntity<ApiUtils.ApiResult<CartFindAllResponse>> saveCarts(@AuthenticationPrincipal CustomUserDetails user, @Valid @RequestBody List<CartSaveReqeust> cartSaveRequests) {
         saveCartUsecase.execute(user.getUser(), cartSaveRequests);
-        return ResponseEntity.ok(ApiUtils.successWithoutData());
+        return ResponseEntity.ok(ApiUtils.success());
     }
 
 //    @PutMapping
