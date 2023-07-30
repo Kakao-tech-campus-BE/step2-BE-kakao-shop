@@ -39,4 +39,9 @@ public class CartRepositoryImpl implements CartRepository {
     public CartEntity saveAndFlush(CartEntity entity) {
         return cartRepository.saveAndFlush(entity);
     }
+
+    @Override
+    public void deleteAll(List<CartEntity> entities) {
+        cartRepository.deleteAll(entities);
+    }
 }

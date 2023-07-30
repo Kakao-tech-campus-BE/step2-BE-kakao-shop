@@ -19,4 +19,6 @@ public interface CartRepository {
     Optional<CartEntity> findByCartIdAndUser(Long cartId, User user);
 
     CartEntity saveAndFlush(CartEntity entity);
+
+    void deleteAll(List<CartEntity>entities);
 }
