@@ -36,10 +36,14 @@ public class UpdateCartUseCase {
                 .map(CartConverter::from)
                 .collect(Collectors.toList());
 
-        Cashier cashier = Objects.requireNonNull(CashierConverter.from(carts));
-        int totalPrice = calculateTotalPrice(cashier);
+        int totalPrice = getTotalPrice(carts);
 
         return CartUpdateResponseConverter.from(carts, totalPrice);
+    }
+
+    private int getTotalPrice(List<Cart> carts) {
+        Cashier cashier = Objects.requireNonNull(CashierConverter.from(carts));
+        return cashier.calculateTotalPrice();
     }
 
     private CartEntity updateCart(User user, CartUpdateRequest request){
@@ -48,9 +52,5 @@ public class UpdateCartUseCase {
 
         entity.addQuantity(request.getQuantity());
         return cartRepository.saveAndFlush(entity);
-    }
-
-    private int calculateTotalPrice(Cashier cashier) {
-        return cashier.calculateTotalPrice();
     }
 }
