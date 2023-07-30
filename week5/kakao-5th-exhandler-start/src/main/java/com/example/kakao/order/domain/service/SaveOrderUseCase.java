@@ -27,7 +27,8 @@ public class SaveOrderUseCase {
 
     @Transactional
     public OrderResponse execute(User user) {
-        List<OrderItem> orderItems = findOrderItemsByUser(user);
+        List<CartEntity> cartEntities = getCartItem(user);
+        List<OrderItem> orderItems = toOrderItem(cartEntities);
 
         OrderEntity orderEntity = orderRepository.save(OrderConverter.to(user, getTotalPrice(orderItems)));
 
@@ -35,11 +36,12 @@ public class SaveOrderUseCase {
                 .map(x -> OrderItemConverter.to(x, orderEntity))
                 .collect(Collectors.toList());
 
+        deleteCarts(cartEntities);
+
         return OrderResponseConverter.from(orderEntity, orderItemEntities);
     }
-
-    private List<OrderItem> findOrderItemsByUser(User user) {
-        return getCartItem(user).stream()
+    private List<OrderItem> toOrderItem(List<CartEntity>cartEntities) {
+        return cartEntities.stream()
                 .map(x -> OrderItemConverter.to(x.getProductOptionEntity(), x.getQuantity()))
                 .map(OrderItemConverter::from)
                 .collect(Collectors.toList());
@@ -51,5 +53,9 @@ public class SaveOrderUseCase {
 
     private List<CartEntity> getCartItem(User user){
         return cartRepository.findByUser(user);
+    }
+
+    private void deleteCarts(List<CartEntity>entities){
+        cartRepository.deleteAll(entities);
     }
 }
