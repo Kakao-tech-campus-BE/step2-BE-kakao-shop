@@ -34,4 +34,9 @@ public class CartRepositoryImpl implements CartRepository {
     public Optional<CartEntity> findByCartIdAndUser(Long cartId, User user) {
         return cartRepository.findByCartIdAndUser(cartId, user);
     }
+
+    @Override
+    public CartEntity saveAndFlush(CartEntity entity) {
+        return cartRepository.saveAndFlush(entity);
+    }
 }
