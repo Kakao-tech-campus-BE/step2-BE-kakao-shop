@@ -21,6 +21,11 @@ public class CartService {
     private final CartJPARepository cartJPARepository;
     private final OptionJPARepository optionJPARepository;
 
+    public CartResponse.FindAllDTO findAll(User user) {
+        List<Cart> cartList = cartJPARepository.findByUserIdOrderByOptionIdAsc(user.getId());
+        return new CartResponse.FindAllDTO(cartList);
+    }
+
     public CartResponse.FindAllDTOv2 findAllv2(User user) {
         List<Cart> cartList = cartJPARepository.findByUserIdOrderByOptionIdAsc(user.getId());
         return new CartResponse.FindAllDTOv2(cartList);
