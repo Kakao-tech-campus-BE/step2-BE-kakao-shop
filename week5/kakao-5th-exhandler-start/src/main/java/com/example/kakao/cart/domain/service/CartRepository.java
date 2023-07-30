@@ -16,5 +16,5 @@ public interface CartRepository {
 
     Optional<CartEntity> findByProductOptionEntity(ProductOptionEntity productOptionEntity);
 
-    Optional<CartEntity>findByUserAndProductOption(User user, Long optionId);
+    Optional<CartEntity> findByCartIdAndUser(Long cartId, User user);
 }

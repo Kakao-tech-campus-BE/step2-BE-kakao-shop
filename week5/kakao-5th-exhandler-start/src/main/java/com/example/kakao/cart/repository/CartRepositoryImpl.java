@@ -31,7 +31,7 @@ public class CartRepositoryImpl implements CartRepository {
     }
 
     @Override
-    public Optional<CartEntity> findByUserAndProductOption(User user, Long optionId) {
-        return cartRepository.findByUserAndProductOptionId(user,optionId);
+    public Optional<CartEntity> findByCartIdAndUser(Long cartId, User user) {
+        return cartRepository.findByCartIdAndUser(cartId, user);
     }
 }
