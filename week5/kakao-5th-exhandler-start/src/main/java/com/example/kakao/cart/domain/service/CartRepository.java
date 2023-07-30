@@ -21,4 +21,6 @@ public interface CartRepository {
     CartEntity saveAndFlush(CartEntity entity);
 
     void deleteAll(List<CartEntity>entities);
+
+    void deleteAllInBatch(List<CartEntity>entities);
 }

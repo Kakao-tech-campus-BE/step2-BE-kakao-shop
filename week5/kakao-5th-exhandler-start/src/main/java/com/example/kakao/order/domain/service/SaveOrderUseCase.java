@@ -67,6 +67,6 @@ public class SaveOrderUseCase {
     }
 
     private void deleteCarts(List<CartEntity>entities){
-        cartRepository.deleteAll(entities);
+        cartRepository.deleteAllInBatch(entities);
     }
 }

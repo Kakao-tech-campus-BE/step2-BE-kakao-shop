@@ -44,4 +44,9 @@ public class CartRepositoryImpl implements CartRepository {
     public void deleteAll(List<CartEntity> entities) {
         cartRepository.deleteAll(entities);
     }
+
+    @Override
+    public void deleteAllInBatch(List<CartEntity> entities) {
+        cartRepository.deleteAllInBatch(entities);
+    }
 }
