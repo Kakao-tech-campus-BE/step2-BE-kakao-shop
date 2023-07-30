@@ -2,7 +2,7 @@ package com.example.kakao.order.web;
 
 import com.example.kakao._core.security.CustomUserDetails;
 import com.example.kakao._core.utils.ApiUtils;
-import com.example.kakao.order.domain.service.OrderService;
+import com.example.kakao.order.domain.service.SaveOrderUseCase;
 import com.example.kakao.order.web.response.OrderResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/orders")
 public class OrderRestController {
-        private final OrderService orderService;
+        private final SaveOrderUseCase saveOrderUseCase;
 
         @PostMapping
         public ResponseEntity<ApiUtils.ApiResult<OrderResponse>> createOrder(@AuthenticationPrincipal CustomUserDetails user) {
-            return ResponseEntity.ok(ApiUtils.success(orderService.saveOrder(user.getUser())));
+            return ResponseEntity.ok(ApiUtils.success(saveOrderUseCase.execute(user.getUser())));
         }
 }
