@@ -56,21 +56,32 @@ public class CartService {
     }
 
     @Transactional
-    public CartResponse.UpdateDTO update(List<CartRequest.UpdateDTO> requestDTOs, User sessionUser) {
+    public CartResponse.UpdateDTO updateCartList(List<CartRequest.UpdateDTO> requestDTOs, User sessionUser) {
         List<Cart> cartList = cartJPARepository.findAllByUserId(sessionUser.getId());
+        if (cartList.isEmpty()) {
+            throw new Exception404("장바구니가 비어있습니다");
+        }
 
-        // 1. 유저 장바구니에 아무것도 없으면 예외처리
-        // 2. cartId:1, cartId:1 이렇게 requestDTOs에 동일한 장바구니 아이디가 두번 들어오면 예외처리
-        // 3. 유저 장바구니에 없는 cartId가 들어오면 예외처리
-        // 위에 3개를 처리하지 않아도 프로그램은 잘돌아간다. 예를 들어 1번을 처리하지 않으면 for문을 돌지 않고, cartList가 빈배열 []로 정상응답이 나감.
+        HashSet<Integer> cartSet = new HashSet<>();
+        for (CartRequest.UpdateDTO requestDTO : requestDTOs) {
+            int cartId = requestDTO.getCartId();
+            if (cartSet.contains(cartId)) {
+                throw new Exception400("동일한 장바구니 아이디를 주문할 수 없습니다 : " + cartId);
+            } else if (cartList.stream().noneMatch(cart -> cart.getId() == cartId)) {
+                throw new Exception400("장바구니에 없는 상품은 주문할 수 없습니다 : " + cartId);
+            } else {
+                cartSet.add(cartId);
+            }
+        }
+
         for (Cart cart : cartList) {
-            for (CartRequest.UpdateDTO updateDTO : requestDTOs) {
-                if (cart.getId() == updateDTO.getCartId()) {
-                    cart.update(updateDTO.getQuantity(), cart.getOption().getPrice() * updateDTO.getQuantity());
+            for (CartRequest.UpdateDTO requestDTO : requestDTOs) {
+                if (cart.getId() == requestDTO.getCartId()) {
+                    cart.update(requestDTO.getQuantity(), cart.getOption().getPrice() * requestDTO.getQuantity());
                 }
             }
         }
 
         return new CartResponse.UpdateDTO(cartList);
-    } // 더티체킹
+    }
 }

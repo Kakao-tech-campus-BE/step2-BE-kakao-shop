@@ -38,7 +38,7 @@ public class CartRestController {
     // (기능 11) 주문
     @PostMapping("/carts/update")
     public ResponseEntity<?> update(@RequestBody @Valid List<CartRequest.UpdateDTO> requestDTOs, Errors errors, @AuthenticationPrincipal CustomUserDetails userDetails) {
-        CartResponse.UpdateDTO responseDTO = cartListService.update(requestDTOs,userDetails.getUser());
+        CartResponse.UpdateDTO responseDTO = cartListService.updateCartList(requestDTOs,userDetails.getUser());
         ApiUtils.ApiResult<?> apiResult = ApiUtils.success(responseDTO);
         return ResponseEntity.ok(apiResult);
     }
