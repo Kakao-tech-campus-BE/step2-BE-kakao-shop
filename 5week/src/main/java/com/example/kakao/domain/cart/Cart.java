@@ -21,7 +21,7 @@ import javax.persistence.*;
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int id; // 삭제가 빈번히 발생할것.. uuid 가 적절하지 않을까 ?
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user; // user별로 장바구니에 묶여 있음.

@@ -3,11 +3,12 @@ package com.example.kakao.integration;
 import com.example.kakao._core.errors.exception.BadRequestException;
 import com.example.kakao.domain.cart.Cart;
 import com.example.kakao.domain.cart.CartJPARepository;
-import com.example.kakao.domain.cart.CartPolicyManager;
-import com.example.kakao.domain.cart.CartService;
+import com.example.kakao.domain.cart.service.CartPolicyManager;
+import com.example.kakao.domain.cart.service.CartService;
 import com.example.kakao.domain.cart.dto.request.SaveRequestDTO;
 import com.example.kakao.domain.cart.dto.request.UpdateRequestDTO;
 import com.example.kakao.domain.cart.dto.response.FindAllResponseDTO;
+import com.example.kakao.domain.cart.dto.response.UpdateResponseDTO;
 import com.example.kakao.domain.product.Product;
 import com.example.kakao.domain.product.option.Option;
 import com.example.kakao.domain.product.option.OptionJPARepository;
@@ -24,12 +25,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.BDDMockito.given;
 
 @SpringBootTest
 @Transactional
@@ -142,9 +140,9 @@ class CartServiceIntegrationTest {
     assertThat(responseDTO.getProducts()).hasSize(3);
   }
 
+  /** 장바구니가 비어있는 상태로 시작해야 한다 */
   @Test
-  @DisplayName("장바구니 수정")
-  void updateCart() {
+  void 장바구니_수정() {
     // given
     User user = userRepository.findByEmail("ssarmango@nate.com").get();
     List<SaveRequestDTO> saveDTOs = List.of(
@@ -163,18 +161,24 @@ class CartServiceIntegrationTest {
 
     // when
     cartService.addCartList(saveDTOs, user);
-    cartService.update(updateDTOs, user);
-    List<Cart> cartList = cartRepository.findAllByUserId(user.getId());
+    UpdateResponseDTO responseDTO = cartService.update(updateDTOs, user);
+    List<Cart> cartListInDB = cartRepository.findAllByUserId(user.getId());
 
     // then
-    assertThat(cartList).hasSize(5);
-    assertThat(cartList.get(0).getQuantity()).isEqualTo(4); // -- 올바르게 수량이 변경되었는가
-    assertThat(cartList.get(0).getOption().getOptionName()).isEqualTo("01. 슬라이딩 지퍼백 크리스마스에디션 4종");
-    assertThat(cartList.get(1).getQuantity()).isEqualTo(4); // -- 올바르게 수량이 변경되었는가
-    assertThat(cartList.get(1).getOption().getOptionName()).isEqualTo("02. 슬라이딩 지퍼백 플라워에디션 5종");
-    assertThat(cartList.stream().anyMatch(cart -> cart.getOption().getId() == 6)).isFalse(); // optionId 6 이 존재하지 않는가?
-    assertThat(cartList.get(4).getOption().getId()).isEqualTo(10); // 명시하지 않은 요소는 그대로 유지되었는가 ?
+    assertThat(cartListInDB).hasSize(5);
+    assertThat(cartListInDB.get(0).getQuantity()).isEqualTo(4); // -- 올바르게 수량이 변경되었는가
+    assertThat(cartListInDB.get(0).getOption().getOptionName()).isEqualTo("01. 슬라이딩 지퍼백 크리스마스에디션 4종");
+    assertThat(cartListInDB.get(1).getQuantity()).isEqualTo(4); // -- 올바르게 수량이 변경되었는가
+    assertThat(cartListInDB.get(1).getOption().getOptionName()).isEqualTo("02. 슬라이딩 지퍼백 플라워에디션 5종");
+    assertThat(cartListInDB.stream().anyMatch(cart -> cart.getOption().getId() == 6)).isFalse(); // optionId 6 이 존재하지 않는가?
+    assertThat(cartListInDB.get(4).getOption().getId()).isEqualTo(10); // 명시하지 않은 요소는 그대로 유지되었는가 ?
 
+    assertThat(responseDTO.getCarts()).hasSize(5);
+    assertThat(responseDTO.getCarts().get(0).getQuantity()).isEqualTo(4);
+    assertThat(responseDTO.getCarts().get(1).getQuantity()).isEqualTo(4);
+    assertThat(responseDTO.getCarts().get(2).getQuantity()).isEqualTo(2); // 올바르게 삭제되었는가
+    assertThat(responseDTO.getCarts().get(3).getQuantity()).isEqualTo(2);
+    assertThat(responseDTO.getCarts().get(4).getQuantity()).isEqualTo(2); // 요청에 들어있지 않은 요소는 그대로 유지
   }
 
   @Test
@@ -201,7 +205,7 @@ class CartServiceIntegrationTest {
     // when - then
     BadRequestException exception =
       assertThrows(BadRequestException.class, () -> cartService.update(updateDTOs, user));
-    assertThat(exception.getMessage()).isEqualTo("유저의 장바구니에 존재하지 않는 cartId가 들어왔습니다 : 6");
+    assertThat(exception.getMessage()).isEqualTo("해당하는 CartId 가 장바구니에 존재하지 않습니다. : 6");
 
   }
 

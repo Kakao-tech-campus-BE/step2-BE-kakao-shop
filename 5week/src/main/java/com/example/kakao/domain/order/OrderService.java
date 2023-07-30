@@ -4,7 +4,8 @@ import com.example.kakao._core.errors.exception.NotFoundException;
 import com.example.kakao._core.errors.exception.UnAuthorizedException;
 import com.example.kakao.domain.cart.Cart;
 import com.example.kakao.domain.cart.CartJPARepository;
-import com.example.kakao.domain.cart.CartValidationService;
+import com.example.kakao.domain.cart.service.CartList;
+import com.example.kakao.domain.cart.service.CartRequestValidationService;
 import com.example.kakao.domain.order.dto.OrderDetailResponseDTO;
 import com.example.kakao.domain.order.item.Item;
 import com.example.kakao.domain.order.item.ItemJPARepository;
@@ -26,18 +27,16 @@ public class OrderService {
   private final OrderJPARepository orderRepository;
   private final ItemJPARepository itemRepository;
 
-  private final CartValidationService cartValidationService;
+  private final CartRequestValidationService cartRequestValidationService;
 
   @Transactional
   public OrderDetailResponseDTO save(int userId) {
     User user = findValidUserById(userId);
-    List<Cart> cartList = cartRepository.findAllByUserId(userId);
-
-    cartValidationService.validateNotEmptyCart(cartList);
+    CartList cartList = new CartList( cartRepository.findAllByUserId(userId) );
 
     Order order = new Order(user);
 
-    List<Item> items = buildOrderItems(order, cartList);
+    List<Item> items = buildOrderItems(order, cartList.getItems());
 
     orderRepository.save(order);
     itemRepository.saveAll(items);

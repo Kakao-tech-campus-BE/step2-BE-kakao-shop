@@ -1,6 +1,6 @@
 package com.example.kakao.integration;
 
-import com.example.kakao.domain.cart.CartService;
+import com.example.kakao.domain.cart.service.CartService;
 import com.example.kakao.domain.cart.dto.request.SaveRequestDTO;
 import com.example.kakao.domain.cart.dto.response.FindAllResponseDTO;
 import com.example.kakao.domain.order.OrderService;

@@ -5,6 +5,7 @@ import com.example.kakao._core.utils.ApiResponse;
 import com.example.kakao._core.utils.ApiUtils;
 import com.example.kakao.domain.cart.dto.request.SaveRequestDTO;
 import com.example.kakao.domain.cart.dto.request.UpdateRequestDTO;
+import com.example.kakao.domain.cart.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -70,7 +71,6 @@ public class CartRestController {
   public ResponseEntity<ApiResponse> update(
     @RequestBody @Valid List<UpdateRequestDTO> requestDTOs,
     @AuthenticationPrincipal CustomUserDetails userDetails) {
-
     return ResponseEntity.ok(ApiUtils.success(
       cartListService.update(requestDTOs, userDetails.getUser()))
     );
