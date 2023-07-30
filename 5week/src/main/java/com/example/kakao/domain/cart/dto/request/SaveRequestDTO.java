@@ -1,6 +1,6 @@
 package com.example.kakao.domain.cart.dto.request;
 
-import com.example.kakao.domain.cart.CartPolicyManager;
+import com.example.kakao.domain.cart.service.CartPolicyManager;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

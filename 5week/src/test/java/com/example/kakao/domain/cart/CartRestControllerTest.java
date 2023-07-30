@@ -1,49 +1,64 @@
 package com.example.kakao.domain.cart;
 
-import com.example.kakao._core.util.DummyJwt;
+import com.example.kakao.docs.ApiDocUtil;
 import com.example.kakao.domain.cart.dto.request.SaveRequestDTO;
 import com.example.kakao.domain.cart.dto.request.UpdateRequestDTO;
-import com.example.kakao.log.ErrorLogJPARepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.DisplayName;
+import com.example.kakao.domain.cart.service.CartService;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.List;
 
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.mockito.BDDMockito.willDoNothing;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-@AutoConfigureMockMvc
-class CartRestControllerTest {
-  @Autowired
-  MockMvc mvc;
+@WithUserDetails(value = "ssarmango@nate.com")
+class CartRestControllerTest extends ApiDocUtil {
 
   @MockBean
   private CartService cartService;
 
-  @MockBean
-  private ErrorLogJPARepository errorLogJPARepository;
+  @Test
+  void 성공_장바구니담기() throws Exception {
+    // given
+    List<SaveRequestDTO> requestDTOs = List.of(
+      SaveRequestDTO.builder()
+        .optionId(1)
+        .quantity(1)
+        .build(),
+      SaveRequestDTO.builder()
+        .optionId(2)
+        .quantity(5)
+        .build()
+    );
 
-  @Autowired
-  private ObjectMapper om;
+    // stub
+    willDoNothing().given(cartService).addCartList(BDDMockito.any(), BDDMockito.any());
+
+
+    // when
+    ResultActions resultActions = mvc.perform(
+      post("/carts/add")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(om.writeValueAsString(requestDTOs)));
+    generateApiDoc(resultActions);
+
+    // then
+    resultActions.andExpect(jsonPath("$.success").value("true"));
+  }
 
   @Test
-  @DisplayName("예외 - 장바구니 담기 - 수량이 0일 때")
-  void addCartListWithZeroQuantity() throws Exception {
+  void 실패_장바구니담기_수량이0일때() throws Exception {
     // given
-    String token = DummyJwt.generate();
     List<SaveRequestDTO> requestDTOs = List.of(
       SaveRequestDTO.builder()
         .optionId(1)
@@ -59,13 +74,15 @@ class CartRestControllerTest {
         .build()
     );
 
+    // stub
+    willDoNothing().given(cartService).addCartList(BDDMockito.any(), BDDMockito.any());
+
     // when
     ResultActions resultActions = mvc.perform(
       post("/carts/add")
-        .header("Authorization", "Bearer " + token)
         .contentType(MediaType.APPLICATION_JSON)
-        .content(om.writeValueAsString(requestDTOs)))
-        .andDo(print());
+        .content(om.writeValueAsString(requestDTOs)));
+    generateApiDoc(resultActions);
 
     // then
     resultActions.andExpect(jsonPath("$.success").value("false"));
@@ -74,10 +91,8 @@ class CartRestControllerTest {
   }
 
   @Test
-  @DisplayName("장바구니 수정 시 수량 0 요청 (항목삭제) Validation 통과")
-  void deleteCartItem() throws Exception {
+  void 성공_장바구니수정_수량이_0이면_삭제요청이다() throws Exception {
     // given
-    String token = DummyJwt.generate();
     List<UpdateRequestDTO> requestDTOs = List.of(
       UpdateRequestDTO.builder()
         .cartId(1)
@@ -91,10 +106,9 @@ class CartRestControllerTest {
 
     ResultActions resultActions = mvc.perform(
       post("/carts/update")
-        .header("Authorization", "Bearer " + token)
         .contentType(MediaType.APPLICATION_JSON)
-        .content(om.writeValueAsString(requestDTOs)))
-      .andDo(print());
+        .content(om.writeValueAsString(requestDTOs)));
+    generateApiDoc(resultActions);
 
     // then
     resultActions.andExpect(jsonPath("$.success").value("true"));

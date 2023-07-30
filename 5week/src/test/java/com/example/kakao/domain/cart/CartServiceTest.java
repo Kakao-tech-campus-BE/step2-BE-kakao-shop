@@ -3,6 +3,7 @@ package com.example.kakao.domain.cart;
 import com.example.kakao._core.errors.exception.BadRequestException;
 import com.example.kakao.domain.cart.dto.request.SaveRequestDTO;
 import com.example.kakao.domain.cart.dto.request.UpdateRequestDTO;
+import com.example.kakao.domain.cart.service.CartService;
 import com.example.kakao.domain.user.User;
 import com.example.kakao.domain.user.UserJPARepository;
 import org.junit.jupiter.api.DisplayName;

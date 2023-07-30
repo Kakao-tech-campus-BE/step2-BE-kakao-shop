@@ -1,7 +1,15 @@
+buildscript {
+    ext {
+        restdocsApiSpecVersion = '0.16.2'
+    }
+}
+
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '2.7.6'
-	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'java'
+    id 'org.springframework.boot' version '2.7.6'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'com.epages.restdocs-api-spec' version "${restdocsApiSpecVersion}"
+    id 'org.hidetake.swagger.generator' version '2.19.2'
 }
 
 group = 'com.example'
@@ -9,38 +17,71 @@ version = '1.0'
 sourceCompatibility = '11'
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-aop'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation "org.springframework.boot:spring-boot-starter-data-jpa"
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor ('org.projectlombok:lombok')
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.security:spring-security-test'
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-	// kargo
-	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+    implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'
 
-	// ide
-	implementation 'mysql:mysql-connector-java'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor('org.projectlombok:lombok')
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
 
-	// local
-	runtimeOnly 'com.h2database:h2'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-	// third party
-	implementation group: 'com.auth0', name: 'java-jwt', version: '4.3.0'
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+
+    // kargo
+    runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+
+    // ide
+    implementation 'mysql:mysql-connector-java'
+
+    // local
+    runtimeOnly 'com.h2database:h2'
+
+    // third party
+    implementation group: 'com.auth0', name: 'java-jwt', version: '4.3.0'
+    testImplementation "com.epages:restdocs-api-spec-mockmvc:${restdocsApiSpecVersion}"
 }
 
-tasks.named('test') {
-	systemProperty 'file.encoding', 'UTF-8'
-	useJUnitPlatform()
+test {
+    systemProperty 'file.encoding', 'UTF-8'
+    useJUnitPlatform()
+}
+
+openapi3 {
+    server = "http://localhost:8080" // List 로 넣을수 있음.
+    title = "KakaoShop API Docs"
+    description = ""
+    version = "0.1.0"
+    format = "json" // or json
+    outputDirectory = 'build/resources/main/static/docs'
+}
+
+tasks.withType(GenerateSwaggerUI) {
+    dependsOn 'openapi3'
+
+    // local 확인
+    delete 'src/main/resources/static/docs/*'
+    copy {
+        from "build/resources/main/static/docs"
+        into "src/main/resources/static/docs/"
+    }
+}
+
+bootJar {
+    dependsOn 'openapi3'
 }
 
 jar {
-	enabled = false
+    enabled = false
 }
+
