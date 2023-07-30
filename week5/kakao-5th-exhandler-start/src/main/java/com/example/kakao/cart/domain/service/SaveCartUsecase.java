@@ -23,11 +23,10 @@ import java.util.Optional;
 public class SaveCartUsecase {
     private final CartRepository cartRepository;
     private final ProductOptionRepository productOptionRepository;
-    private final CartSaveValidator cartSaveValidator;
 
     @Transactional
     public void execute(User user, List<CartSaveReqeust> cartSaveRequests) {
-        cartSaveValidator.validateCreateConstraint(cartSaveRequests);
+        CartSaveValidator.validate(cartSaveRequests);
 
         cartSaveRequests.forEach(request -> updateOrCreateCart(request,user));
     }

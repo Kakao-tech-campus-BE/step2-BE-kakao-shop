@@ -1,25 +1,29 @@
 package com.example.kakao.cart.domain.validation;
 
+import com.example.kakao.cart.domain.exception.DuplicatedCartRequestException;
 import com.example.kakao.cart.web.request.CartSaveReqeust;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Component
 public class CartSaveValidator {
 
-    public void validateCreateConstraint(final List<CartSaveReqeust> cartRequests) {
-        isDuplicated(cartRequests);
+    public static void validate(final List<CartSaveReqeust> requests){
+        isDuplicated(requests);
     }
-    private void isDuplicated(List<CartSaveReqeust>cartRequests){
-        Set<Long> notDuplicated = cartRequests.stream()
+    private static void isDuplicated(List<CartSaveReqeust>requests){
+        Set<Long> notDuplicated = requests.stream()
                 .map(CartSaveReqeust::getOptionId)
                 .collect(Collectors.toSet());
 
-        if(notDuplicated.size()!= cartRequests.size()){
-            throw new IllegalArgumentException("장바구니 요청에 동일한 옵션이 들어있습니다.");
+        if(notDuplicated.size()!= requests.size()){
+            throw new DuplicatedCartRequestException();
         }
     }
 }

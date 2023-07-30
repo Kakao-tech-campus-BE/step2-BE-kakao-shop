@@ -1,5 +1,6 @@
 package com.example.kakao.cart.domain.validation;
 
+import com.example.kakao.cart.domain.exception.DuplicatedCartRequestException;
 import com.example.kakao.cart.web.request.CartUpdateRequest;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -22,7 +23,7 @@ public class CartUpdateValidator {
                 .collect(Collectors.toSet());
 
         if(notDuplicated.size()!= requests.size()){
-            throw new IllegalArgumentException("장바구니 요청에 동일한 옵션이 들어있습니다.");
+            throw new DuplicatedCartRequestException();
         }
     }
 }
