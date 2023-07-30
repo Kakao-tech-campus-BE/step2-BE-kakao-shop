@@ -1,7 +1,5 @@
 package com.example.kakao._core.security;
 
-import com.example.kakao._core.errors.exception.Exception401;
-import com.example.kakao._core.errors.exception.Exception403;
 import com.example.kakao._core.utils.FilterResponseUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +14,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
 
 @Configuration
 public class SecurityConfig {
@@ -64,12 +61,12 @@ public class SecurityConfig {
 
         // 8. 인증 실패 처리
         http.exceptionHandling().authenticationEntryPoint((request, response, authException) -> {
-            FilterResponseUtils.unAuthorized(response, new Exception401("인증되지 않았습니다"));
+            FilterResponseUtils.unAuthorized(response, new NotAuthorizationException());
         });
 
         // 9. 권한 실패 처리
         http.exceptionHandling().accessDeniedHandler((request, response, accessDeniedException) -> {
-            FilterResponseUtils.forbidden(response, new Exception403("권한이 없습니다"));
+            FilterResponseUtils.forbidden(response, new ForbiddenException());
         });
 
         // 11. 인증, 권한 필터 설정

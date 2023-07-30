@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import static com.example.kakao._core.utils.ResponseBody.*;
 
 public class ApiResult<T> extends ResponseEntity<T> {
-    public ApiResult(T body, HttpStatus status) {
+    private ApiResult(T body, HttpStatus status) {
         super(body, status);
     }
 
@@ -19,6 +19,6 @@ public class ApiResult<T> extends ResponseEntity<T> {
     }
 
     public static ApiResult error(String message, HttpStatus status) {
-        return new ApiResult<>(new Body(false, null, new FailBody(message, status.value())),status);
+        return new ApiResult(new Body(false, null, new FailBody(message, status.value())),status);
     }
 }

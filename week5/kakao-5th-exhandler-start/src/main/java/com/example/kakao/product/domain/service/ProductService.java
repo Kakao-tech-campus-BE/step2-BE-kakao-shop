@@ -2,6 +2,7 @@ package com.example.kakao.product.domain.service;
 
 import com.example.kakao.product.domain.converter.ProductConverter;
 import com.example.kakao.product.domain.converter.ProductOptionConverter;
+import com.example.kakao.product.domain.exception.NotFoundProductException;
 import com.example.kakao.product.domain.model.Product;
 import com.example.kakao.product.domain.model.ProductOption;
 import com.example.kakao.product.entity.ProductEntity;
@@ -22,7 +23,7 @@ public class ProductService {
 
     public ProductReponse.ProductFindByIdResponse getPostByPostId(Long id) {
         ProductEntity productEntity = productRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 상품"));
+                .orElseThrow(NotFoundProductException::new);
 
         Product product = ProductConverter.from(productEntity);
 

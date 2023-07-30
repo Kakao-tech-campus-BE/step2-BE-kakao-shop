@@ -1,8 +1,8 @@
 package com.example.kakao.cart.domain.service;
 
-import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao.cart.domain.converter.CartConverter;
 import com.example.kakao.cart.domain.converter.CashierConverter;
+import com.example.kakao.cart.domain.exception.EmptyCartException;
 import com.example.kakao.cart.domain.model.Cart;
 import com.example.kakao.cart.domain.model.Cashier;
 import com.example.kakao.cart.web.converter.CartFindAllResponseConverter;
@@ -31,7 +31,7 @@ public class SearchCartUseCase {
                 .collect(Collectors.toList());
 
         if (carts.isEmpty()) {
-            throw new Exception404("장바구니에 아무것도 없습니다.");
+            throw new EmptyCartException();
         }
 
         Cashier cashier = Objects.requireNonNull(CashierConverter.from(carts));

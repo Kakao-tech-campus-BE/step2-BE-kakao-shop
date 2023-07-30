@@ -1,8 +1,8 @@
 package com.example.kakao.cart.domain.service;
 
-import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao.cart.domain.converter.CartConverter;
 import com.example.kakao.cart.domain.converter.CashierConverter;
+import com.example.kakao.cart.domain.exception.NotExistCartException;
 import com.example.kakao.cart.domain.model.Cart;
 import com.example.kakao.cart.domain.model.Cashier;
 import com.example.kakao.cart.domain.validation.CartUpdateValidator;
@@ -48,7 +48,7 @@ public class UpdateCartUseCase {
 
     private CartEntity updateCart(User user, CartUpdateRequest request){
         CartEntity entity = cartRepository.findByCartIdAndUser(request.getCartId(), user)
-                .orElseThrow(() -> new Exception404("존재하지 않는 장바구니 번호"));
+                .orElseThrow(NotExistCartException::new);
 
         entity.addQuantity(request.getQuantity());
         return cartRepository.saveAndFlush(entity);
