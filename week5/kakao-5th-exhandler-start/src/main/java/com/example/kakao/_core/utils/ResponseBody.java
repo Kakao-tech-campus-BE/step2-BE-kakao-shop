@@ -4,30 +4,28 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;
-
-public class ApiUtils {
+public class ResponseBody<T>{
 
     public static <T> ApiResult<T> success(T response) {
-        return new ApiResult<>(true, response, null);
+        return new ApiResult(new SuccessBody(false, response, null), HttpStatus.OK);
     }
 
     public static <T> ApiResult<T> success() {
-        return new ApiResult<>(true, null, null);
+        return new ApiResult(new SuccessBody(false, null, null), HttpStatus.OK);
     }
 
-    public static ApiResult<?> error(String message, HttpStatus status) {
-        return new ApiResult<>(false, null, new ApiError(message, status.value()));
+    public static ApiResult error(String message, HttpStatus status) {
+        return new ApiResult<>(new FailBody(message, status.value()), status);
     }
 
     @Getter @Setter @AllArgsConstructor
-    public static class ApiResult<T> {
+    public static class SuccessBody<T> {
         private final boolean success;
         private final T response;
-        private final ApiError error;
+        private final FailBody error;
     }
-
     @Getter @Setter @AllArgsConstructor
-    public static class ApiError {
+    public static class FailBody {
         private final String message;
         private final int status;
     }
