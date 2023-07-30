@@ -1,6 +1,7 @@
 package com.example.kakao.cart.domain.service;
 
 import com.example.kakao.cart.domain.converter.CartConverter;
+import com.example.kakao.cart.domain.exception.NotExistOptionException;
 import com.example.kakao.cart.domain.validation.CartSaveValidator;
 import com.example.kakao.cart.entity.CartEntity;
 import com.example.kakao.cart.web.request.CartSaveReqeust;
@@ -56,6 +57,6 @@ public class SaveCartUsecase {
 
     private ProductOptionEntity getProductOptionById(Long optionId) {
         return productOptionRepository.findById(optionId)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 옵션"));
+                .orElseThrow(NotExistOptionException::new);
     }
 }
