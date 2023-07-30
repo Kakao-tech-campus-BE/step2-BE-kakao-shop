@@ -19,6 +19,7 @@ public class OrderItemConverter {
                 .optionName(entity.getOptionName())
                 .productName(entity.getProductName())
                 .price(entity.getPrice())
+                .quantity(entity.getQuantity())
                 .build();
     }
 
