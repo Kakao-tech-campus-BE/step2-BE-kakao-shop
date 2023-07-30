@@ -25,6 +25,7 @@ public final class OrderProductResponseConverter {
 
     private static OrderProductResponse.OrderOption from(OrderItemEntity orderItemEntity) {
         return OrderProductResponse.OrderOption.builder()
+                .optionId(orderItemEntity.getOptionId())
                 .optionName(orderItemEntity.getOptionName())
                 .quantity(orderItemEntity.getQuantity())
                 .price(orderItemEntity.getPrice())
