@@ -14,7 +14,7 @@ public interface CartJPARepository extends JpaRepository<Cart, Integer> {
 //    @Query(value = "insert into cart_tb(user_id, option_id, quantity, price) values (:userId, :opitonId, :quantity, :price)", nativeQuery = true)
 //    void mSave(@Param("userId") int userId, @Param("optionId") int optionId, @Param("quantity") int quantity, @Param("price") int price)
 
-    @Query("delete from Cart c where c.user.id = :userId")
+    @Query("select c from Cart c where c.user.id = :userId")
     List<Cart> findAllByUserId(int userId);
 
     // Lazy Loading 때문에 SELECT가 3번이나 발생함
@@ -27,8 +27,11 @@ public interface CartJPARepository extends JpaRepository<Cart, Integer> {
     @Query("select c from Cart c join fetch c.option o join fetch o.product p where c.user.id = :userId order by c.option.id asc")
     List<Cart> findByUserIdOrderByOptionIdAsc(int userId);
 
-    void deleteByUserId(int userId);
+    //void deleteByUserId(int userId);
 
     @Query("select c from Cart c where c.option.id = :optionId and c.user.id = :userId")
     Optional<Cart> findByOptionIdAndUserId(@Param("optionId") int optionId, @Param("userId") int userId);
+
+//    @Query("select c from Cart c where c.user.id = :userID and c.id = :cartId")
+//    Optional<Cart> findByUserIdCartId(@Param("userId") int userId, @Param("cartId") int cartId);
 }
