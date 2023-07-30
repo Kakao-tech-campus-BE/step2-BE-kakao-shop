@@ -1,4 +1,4 @@
-package com.example.kakao.domain.cart.service;
+package com.example.kakao.domain.cart.collection;
 
 import com.example.kakao._core.errors.exception.BadRequestException;
 import com.example.kakao.domain.cart.Cart;

@@ -3,6 +3,7 @@ package com.example.kakao.domain.cart.service;
 import com.example.kakao._core.errors.exception.NotFoundException;
 import com.example.kakao.domain.cart.Cart;
 import com.example.kakao.domain.cart.CartJPARepository;
+import com.example.kakao.domain.cart.collection.CartList;
 import com.example.kakao.domain.cart.dto.request.SaveRequestDTO;
 import com.example.kakao.domain.cart.dto.request.UpdateRequestDTO;
 import com.example.kakao.domain.cart.dto.response.FindAllResponseDTO;

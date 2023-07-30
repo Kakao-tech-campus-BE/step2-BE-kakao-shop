@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 public class UserResponse {
+    private UserResponse() {}
 
     @Getter @Setter
     public static class FindById{

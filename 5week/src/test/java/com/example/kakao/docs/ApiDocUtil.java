@@ -5,6 +5,7 @@ import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.example.kakao.log.ErrorLogJPARepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +40,11 @@ public abstract class ApiDocUtil {
   @Autowired
   protected MockMvc mvc;
 
+  protected ResultActions resultActions;
+
   @MockBean
   private ErrorLogJPARepository errorLogJPARepository; // Exception Handler 의존성
+
 
   @BeforeEach
   void setUp(final RestDocumentationContextProvider restDocumentation) {
@@ -49,6 +53,11 @@ public abstract class ApiDocUtil {
       .addFilters(new CharacterEncodingFilter("UTF-8", true))
       .alwaysDo(print())
       .build();
+  }
+
+  @AfterEach
+  void generateApiDocAfterTest() throws Exception {
+    generateApiDoc(resultActions);
   }
 
   protected void generateApiDoc(ResultActions resultActions) throws Exception {

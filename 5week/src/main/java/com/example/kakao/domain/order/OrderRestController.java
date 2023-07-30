@@ -33,6 +33,6 @@ public class OrderRestController {
     @PathVariable(value = "id", required = true) @Positive @NotNull int id,
     @AuthenticationPrincipal CustomUserDetails userDetails) {
 
-    return ResponseEntity.ok(ApiUtils.success( orderService.findById( id, userDetails.getUser().getId()) ));
+    return ResponseEntity.ok(ApiUtils.success( orderService.findById( id, userDetails.getUser().getId()) ) );
   }
 }

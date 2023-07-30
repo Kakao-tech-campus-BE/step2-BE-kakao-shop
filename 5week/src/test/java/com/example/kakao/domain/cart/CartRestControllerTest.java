@@ -10,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
-import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.List;
 
@@ -33,7 +32,7 @@ class CartRestControllerTest extends ApiDocUtil {
     List<SaveRequestDTO> requestDTOs = List.of(
       SaveRequestDTO.builder()
         .optionId(1)
-        .quantity(1)
+        .quantity(3)
         .build(),
       SaveRequestDTO.builder()
         .optionId(2)
@@ -44,13 +43,11 @@ class CartRestControllerTest extends ApiDocUtil {
     // stub
     willDoNothing().given(cartService).addCartList(BDDMockito.any(), BDDMockito.any());
 
-
     // when
-    ResultActions resultActions = mvc.perform(
+    resultActions = mvc.perform(
       post("/carts/add")
         .contentType(MediaType.APPLICATION_JSON)
         .content(om.writeValueAsString(requestDTOs)));
-    generateApiDoc(resultActions);
 
     // then
     resultActions.andExpect(jsonPath("$.success").value("true"));
@@ -78,16 +75,15 @@ class CartRestControllerTest extends ApiDocUtil {
     willDoNothing().given(cartService).addCartList(BDDMockito.any(), BDDMockito.any());
 
     // when
-    ResultActions resultActions = mvc.perform(
+    resultActions = mvc.perform(
       post("/carts/add")
         .contentType(MediaType.APPLICATION_JSON)
         .content(om.writeValueAsString(requestDTOs)));
-    generateApiDoc(resultActions);
 
     // then
-    resultActions.andExpect(jsonPath("$.success").value("false"));
-    resultActions.andExpect(jsonPath("$.error.status").value(400));
-    resultActions.andExpect(jsonPath("$.error.message").value("Constraint Violation: [수량은 1 이상이어야 합니다.]"));
+    resultActions.andExpect(jsonPath("$.success").value("false"))
+      .andExpect(jsonPath("$.error.status").value(400))
+      .andExpect(jsonPath("$.error.message").value("Constraint Violation: [수량은 1 이상이어야 합니다.]"));
   }
 
   @Test
@@ -104,11 +100,10 @@ class CartRestControllerTest extends ApiDocUtil {
     given(cartService.update(BDDMockito.any(), BDDMockito.any()))
       .willReturn(null);
 
-    ResultActions resultActions = mvc.perform(
+    resultActions = mvc.perform(
       post("/carts/update")
         .contentType(MediaType.APPLICATION_JSON)
         .content(om.writeValueAsString(requestDTOs)));
-    generateApiDoc(resultActions);
 
     // then
     resultActions.andExpect(jsonPath("$.success").value("true"));

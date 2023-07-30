@@ -4,7 +4,7 @@ import com.example.kakao._core.errors.exception.NotFoundException;
 import com.example.kakao._core.errors.exception.UnAuthorizedException;
 import com.example.kakao.domain.cart.Cart;
 import com.example.kakao.domain.cart.CartJPARepository;
-import com.example.kakao.domain.cart.service.CartList;
+import com.example.kakao.domain.cart.collection.CartList;
 import com.example.kakao.domain.cart.service.CartRequestValidationService;
 import com.example.kakao.domain.order.dto.OrderDetailResponseDTO;
 import com.example.kakao.domain.order.item.Item;
