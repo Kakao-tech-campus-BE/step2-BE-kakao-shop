@@ -21,9 +21,9 @@ public class OrderItemEntity {
     private OrderEntity orderEntity;
     private Long optionId;
     private Long productId;
-    @Column(length = 30, nullable = false)
+    @Column(length = 255, nullable = false)
     private String optionName;
-    @Column(length = 20, nullable = false)
+    @Column(length = 255, nullable = false)
     private String productName;
     private int price;
     private int quantity;

@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class SaveOrderUseCase {
     private final OrderRepository orderRepository;
+    private final OrderItemRepository orderItemRepository;
     private final CartRepository cartRepository;
 
     @Transactional
@@ -30,16 +31,26 @@ public class SaveOrderUseCase {
         List<CartEntity> cartEntities = getCartItem(user);
         List<OrderItem> orderItems = toOrderItem(cartEntities);
 
-        OrderEntity orderEntity = orderRepository.save(OrderConverter.to(user, getTotalPrice(orderItems)));
-
-        List<OrderItemEntity> orderItemEntities = orderItems.stream()
-                .map(x -> OrderItemConverter.to(x, orderEntity))
-                .collect(Collectors.toList());
+        OrderEntity orderEntity = saveOrderEntity(user, orderItems);
+        List<OrderItemEntity> orderItemEntities = saveOrderItemEntity(orderItems, orderEntity);
 
         deleteCarts(cartEntities);
 
         return OrderResponseConverter.from(orderEntity, orderItemEntities);
     }
+
+    private OrderEntity saveOrderEntity(User user, List<OrderItem>orderItems) {
+        return orderRepository.save(OrderConverter.to(user, getTotalPrice(orderItems)));
+    }
+
+    private List<OrderItemEntity> saveOrderItemEntity(List<OrderItem>orderItems, OrderEntity orderEntity){
+        List<OrderItemEntity> orderItemEntities = orderItems.stream()
+                .map(x -> OrderItemConverter.to(x, orderEntity))
+                .collect(Collectors.toList());
+
+        return orderItemRepository.saveAllAndFlush(orderItemEntities);
+    }
+
     private List<OrderItem> toOrderItem(List<CartEntity>cartEntities) {
         return cartEntities.stream()
                 .map(x -> OrderItemConverter.to(x.getProductOptionEntity(), x.getQuantity()))
