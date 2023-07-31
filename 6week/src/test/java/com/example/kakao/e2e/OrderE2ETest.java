@@ -14,7 +14,7 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
-public class OrderE2ETest extends E2ETest {
+class OrderE2ETest extends E2ETest {
   @SpyBean
   private CartJPARepository cartRepository;
 

@@ -1,4 +1,4 @@
-package com.example.kakao.util;
+package com.example.kakao._core.util;
 
 
 import com.example.kakao.domain.cart.Cart;
