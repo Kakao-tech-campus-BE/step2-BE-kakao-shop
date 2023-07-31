@@ -44,7 +44,8 @@ public class KakaoApplication {
 					newProduct("깨끗한나라 순수소프트 30롤 2팩. 무형광, 도톰 3겹", 12, 28900),
 					newProduct("생활공작소 초미세모 칫솔 12입 2개+가글 증정", 13, 9900),
 					newProduct("경북 영천 샤인머스켓 가정용 1kg 2수 내외", 14, 9900),
-					newProduct("[LIVE][5%쿠폰] 홈카페 Y3.3 캡슐머신 베이직 세트", 15, 148000)
+					newProduct("[LIVE][5%쿠폰] 홈카페 Y3.3 캡슐머신 베이직 세트", 15, 148000),
+					newProduct("16번째 테스트 상품(옵션없음테스트용): Index(16)", 16, 20000)
 			));
 			optionJPARepository.saveAll(Arrays.asList(
 					newOption(Product.builder().id(1).build(), "01. 슬라이딩 지퍼백 크리스마스에디션 4종", 10000),

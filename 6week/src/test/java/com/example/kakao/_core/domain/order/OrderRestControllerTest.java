@@ -1,6 +1,7 @@
 package com.example.kakao._core.domain.order;
 
-import com.example.kakao.docs.ApiDocUtil;
+
+import com.example.kakao._core.RestControllerTest;
 import com.example.kakao.domain.order.OrderService;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
@@ -14,9 +15,7 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-@WithUserDetails(value = "ssarmango@nate.com")
-class OrderRestControllerTest extends ApiDocUtil {
+class OrderRestControllerTest extends RestControllerTest {
   @MockBean
   private OrderService orderService;
 
