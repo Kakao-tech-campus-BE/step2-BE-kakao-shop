@@ -1,25 +1,23 @@
-# deploy
+## 6주차 과제 - 카카오 클라우드 배포
 
-## 1. settings.gradle 
-```groovy
-rootProject.name = 'kakao'
+### 과제 설명
+
+```
+1. 통합테스트를 구현하시오.
+2. API문서를 구현하시오. (swagger, restdoc, word로 직접 작성, 공책에 적어서 제출 등 모든 방법이 다 가능합니다)
+3. 프론트앤드에 입장을 생각해본뒤 어떤 문서를 가장 원할지 생각해본뒤 API문서를 작성하시오.
+4. 카카오 클라우드에 배포하시오.
 ```
 
-## 2. build.gradle
-```groovy
-version = '1.0'
+## Todo-List
 
-tasks.named('test') {
-    // 생략
-    systemProperty 'file.encoding', 'UTF-8'
-    // 생략
-}
+---
 
-jar {
-	enabled = false
-}
-```
-
-## 3. Dockerfile 생성
-
-## 4.startFront.sh 생성
+- [ ] 5주차 과제 옮기기(장바구니 예외처리, 주문하기)
+- [ ] 통합테스트(성공, 실패) 구현
+  - [ ] user - 로그인, 로그아웃, 이메일 중복 체크
+  - [ ] cart - 장바구니 추가하기, 조회하기, 업데이트하기
+  - [ ] order - 결제하기, 주문결과 확인하기
+  - [ ] product - 전체 상품 조회, 개별 상품 상세 조회
+- [ ] API 문서 구현
+- [ ] 카카오 클라우드에 배포
