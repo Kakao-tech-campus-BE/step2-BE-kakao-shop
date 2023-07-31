@@ -1,5 +1,6 @@
 package com.example.kakao.cart;
 
+import com.example.kakao._core.errors.exception.Exception400;
 import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao.product.option.Option;
 import com.example.kakao.product.option.OptionJPARepository;
@@ -8,7 +9,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -20,12 +24,37 @@ public class CartService {
 
     @Transactional
     public void addCartList(List<CartRequest.SaveDTO> requestDTOs, User sessionUser) {
-        // 1. 동일한 옵션이 들어오면 예외처리
-        // [ { optionId:1, quantity:5 }, { optionId:1, quantity:10 } ]
+        List<Integer> numList = requestDTOs.stream()
+                .map(x->x.getOptionId())
+                .collect(Collectors.toList());
+        // Set 으로 변환
+        Set<Integer> numSet = new HashSet<>(numList);
 
-        // 2. cartJPARepository.findByOptionIdAndUserId() 조회 -> 존재하면 장바구니에 수량을 추가하는 업데이트를 해야함. (더티체킹하기)
 
-        // 3. [2번이 아니라면] 유저의 장바구니에 담기
+        if(numSet.size()!= numList.size()){
+            throw new Exception400("잘못된 요청입니다.");
+        }
+
+        if (requestDTOs.stream()
+                .filter(x->x.getOptionId()<=0 | x.getQuantity()<=0)
+                .collect(Collectors.toList()).size()!=0) {
+            throw new Exception400("잘못된 요청입니다.");
+        }
+
+//        List<Option> options = new ArrayList<>();
+        List<Option> options = requestDTOs.stream().map(x-> {
+            Option option = optionJPARepository.findById(x.getOptionId())
+                    .orElseThrow(() -> new Exception400("잘못된 요청입니다."));
+            return option;
+        }).collect(Collectors.toList());
+        List<Integer> distinctProductIds = options.stream()
+                .map(option -> option.getProduct().getId())
+                .distinct()
+                .collect(Collectors.toList());
+        if (distinctProductIds.size()!=1){
+            throw  new Exception400("중복되지않는 제품입니다.");
+        }
+
         for (CartRequest.SaveDTO requestDTO : requestDTOs) {
             int optionId = requestDTO.getOptionId();
             int quantity = requestDTO.getQuantity();
@@ -38,35 +67,40 @@ public class CartService {
     }
 
     public CartResponse.FindAllDTO findAll(User user) {
-        List<Cart> cartList = cartJPARepository.findByUserIdOrderByOptionIdAsc(user.getId());
+        List<Cart> carts = cartJPARepository.findByUserIdOrderByOptionIdAsc(user.getId());
         // Cart에 담긴 옵션이 3개이면, 2개는 바나나 상품, 1개는 딸기 상품이면 Product는 2개인 것이다.
-        return new CartResponse.FindAllDTO(cartList);
-    }
-
-    public CartResponse.FindAllDTOv2 findAllv2(User user) {
-        List<Cart> cartList = cartJPARepository.findByUserIdOrderByOptionIdAsc(user.getId());
-        return new CartResponse.FindAllDTOv2(cartList);
+        return new CartResponse.FindAllDTO(carts);
     }
 
     @Transactional
     public CartResponse.UpdateDTO update(List<CartRequest.UpdateDTO> requestDTOs, User user) {
-        List<Cart> cartList = cartJPARepository.findAllByUserId(user.getId());
-
-        // 1. 유저 장바구니에 아무것도 없으면 예외처리
-
-        // 2. cartId:1, cartId:1 이렇게 requestDTOs에 동일한 장바구니 아이디가 두번 들어오면 예외처리
-
-        // 3. 유저 장바구니에 없는 cartId가 들어오면 예외처리
-
-        // 위에 3개를 처리하지 않아도 프로그램은 잘돌아간다. 예를 들어 1번을 처리하지 않으면 for문을 돌지 않고, cartList가 빈배열 []로 정상응답이 나감.
-        for (Cart cart : cartList) {
-            for (CartRequest.UpdateDTO updateDTO : requestDTOs) {
-                if (cart.getId() == updateDTO.getCartId()) {
-                    cart.update(updateDTO.getQuantity(), cart.getOption().getPrice() * updateDTO.getQuantity());
-                }
-            }
+        // 빈 요청 검사
+        if (requestDTOs.isEmpty()) {
+            throw new Exception400("잘못된 요청입니다.");
         }
 
-        return new CartResponse.UpdateDTO(cartList);
+        // 중복 데이터 검사
+        Set<Integer> requestIds = requestDTOs.stream()
+                .map(x->x.getCartId())
+                .collect(Collectors.toSet());
+        if (requestDTOs.size() != requestIds.size()) {
+            throw new Exception400("잘못된 요청입니다.");
+        }
+
+        List<Cart> carts = cartJPARepository.findAllByUserId(user.getId());
+        if (carts.isEmpty()) {
+            throw new Exception400("잘못된 요청입니다.");
+        }
+
+
+        carts.forEach(cart -> {
+            requestDTOs.forEach(requestDTO -> {
+                if (cart.getId() == requestDTO.getCartId()) {
+                    cart.update(requestDTO.getQuantity(), cart.getOption().getPrice() * requestDTO.getQuantity());
+                }
+            });
+        });
+
+        return new CartResponse.UpdateDTO(carts);
     } // 더티체킹
 }

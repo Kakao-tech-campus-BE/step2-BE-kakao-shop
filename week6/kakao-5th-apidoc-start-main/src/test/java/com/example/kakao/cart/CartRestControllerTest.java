@@ -37,9 +37,7 @@ public class CartRestControllerTest extends MyRestDoc {
     public void addCartList_test() throws Exception {
         // given -> optionId [1,2,16]이 teardown.sql을 통해 들어가 있음
         List<CartRequest.SaveDTO> requestDTOs = new ArrayList<>();
-        CartRequest.SaveDTO item = new CartRequest.SaveDTO();
-        item.setOptionId(3);
-        item.setQuantity(5);
+        CartRequest.SaveDTO item = new CartRequest.SaveDTO(3,5);
         requestDTOs.add(item);
 
         String requestBody = om.writeValueAsString(requestDTOs);
@@ -92,9 +90,7 @@ public class CartRestControllerTest extends MyRestDoc {
     public void update_test() throws Exception {
         // given -> cartId [1번 5개,2번 1개,3번 5개]가 teardown.sql을 통해 들어가 있음
         List<CartRequest.UpdateDTO> requestDTOs = new ArrayList<>();
-        CartRequest.UpdateDTO item = new CartRequest.UpdateDTO();
-        item.setCartId(1);
-        item.setQuantity(10);
+        CartRequest.UpdateDTO item = new CartRequest.UpdateDTO(1,10);
         requestDTOs.add(item);
 
         String requestBody = om.writeValueAsString(requestDTOs);

@@ -1,26 +1,35 @@
 package com.example.kakao.cart;
 
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Min;
 
 public class CartRequest {
 
-    @Getter @Setter @ToString
+    @Getter @ToString
     public static class SaveDTO {
-        @NotNull
+        @Min(value = 1, message = "잘못된 옵션입니다.")
         private int optionId;
-        @NotNull
+        @Min(value = 1, message = "잘못된 수량입니다.")
         private int quantity;
+
+        public SaveDTO(int optionId, int quantity) {
+            this.optionId = optionId;
+            this.quantity = quantity;
+        }
     }
 
-    @Getter @Setter @ToString
+    @Getter @ToString
     public static class UpdateDTO {
-        @NotNull
+        @Min(value = 1, message = "잘못된 옵션입니다.")
         private int cartId;
-        @NotNull
+        @Min(value = 1, message = "잘못된 수량입니다.")
         private int quantity;
+
+        public UpdateDTO(int cartId, int quantity) {
+            this.cartId = cartId;
+            this.quantity = quantity;
+        }
     }
 }
