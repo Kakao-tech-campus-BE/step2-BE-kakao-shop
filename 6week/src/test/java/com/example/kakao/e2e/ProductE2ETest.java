@@ -71,7 +71,7 @@ public class ProductE2ETest extends E2ETest {
     @Test
     void 성공_개별상품상세조회() throws Exception {
       resultActions = mvc.perform(
-        get("/products/1")
+        get("/products/{id}", 1)
           .contentType(MediaType.APPLICATION_JSON));
 
       expectSuccess();
@@ -86,7 +86,7 @@ public class ProductE2ETest extends E2ETest {
     @Test
     void 실패_개별상품상세조회_상품이_없을때() throws Exception {
       resultActions = mvc.perform(
-        get("/products/999")
+        get("/products/{id}", 999)
           .contentType(MediaType.APPLICATION_JSON));
 
       expectFail(400);
@@ -95,7 +95,7 @@ public class ProductE2ETest extends E2ETest {
     @Test
     void 실패_개별상품상세조회_상품번호가_음수일때() throws Exception {
       resultActions = mvc.perform(
-        get("/products/-1")
+        get("/products/{id}", -1)
           .contentType(MediaType.APPLICATION_JSON));
 
       expectFail(400);
@@ -104,7 +104,7 @@ public class ProductE2ETest extends E2ETest {
     @Test
     void 실패_개별상품상세조회_상품번호가_숫자가_아닐때() throws Exception {
       resultActions = mvc.perform(
-        get("/products/a")
+        get("/products/{id}", "a")
           .contentType(MediaType.APPLICATION_JSON));
 
       expectFail(400);
