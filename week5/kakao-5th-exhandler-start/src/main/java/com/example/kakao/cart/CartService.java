@@ -33,10 +33,10 @@ public class CartService {
             throw new Exception400("동일한 옵션이 입력되었습니다");
         }
 
-        // 2. 유효하지 않은 옵션이면 예외처리
         for (CartRequest.SaveDTO requestDTO : requestDTOs) {
+            // 2. 유효하지 않은 옵션이면 예외처리
             int optionId = requestDTO.getOptionId();
-            Option optionPS = optionJPARepository.mFindById(optionId).orElseThrow(  // 쿼리문O
+            Option optionPS = optionJPARepository.findById(optionId).orElseThrow(  // 쿼리문O
                 () -> new Exception404("해당 옵션을 찾을 수 없습니다 : " + optionId)
             );
 
@@ -66,15 +66,15 @@ public class CartService {
 
     public CartResponse.FindAllDTO findAll(User user) {
         // 1. 장바구니 조회
-        List<Cart> cartList = cartJPARepository.findByUserIdOrderByOptionIdAsc(user.getId());   // 쿼리문O
+        List<Cart> cartListPS = cartJPARepository.mFindAllByUserIdOrderByOptionIdAsc(user.getId());   // 쿼리문O - 조인 Option, Product
         // Cart에 담긴 옵션이 3개이면, 2개는 바나나 상품, 1개는 딸기 상품이면 Product는 2개인 것이다.
 
         // 2. 장바구니가 비어있으면 예외처리
-        if (cartList.isEmpty()) {
+        if (cartListPS.isEmpty()) {
             throw new Exception404("장바구니가 비어있습니다");
         }
 
-        return new CartResponse.FindAllDTO(cartList);
+        return new CartResponse.FindAllDTO(cartListPS);
     }
 
 //    public CartResponse.FindAllDTOv2 findAllv2(User user) {
@@ -94,26 +94,35 @@ public class CartService {
             throw new Exception400("동일한 장바구니아이템이 입력되었습니다");
         }
 
-        List<Cart> cartList = cartJPARepository.findAllByUserId(user.getId());  // 쿼리문O
+        List<Cart> cartListPS = cartJPARepository.mFindAllByUserId(user.getId());  // 쿼리문O
 
         // 2. 장바구니가 비어있으면 예외처리
-        if (cartList.isEmpty()) {
+        if (cartListPS.isEmpty()) {
             throw new Exception404("장바구니가 비어있습니다");
         }
 
-        // 3. 유효하지 않은 장바구니아이템이면 예외처리
         for (CartRequest.UpdateDTO requestDTO : requestDTOs) {
+            // 3. 장바구니 수정
             int cartId = requestDTO.getCartId();
-            Cart cartPS = cartJPARepository.mFindById(cartId).orElseThrow(   // 쿼리문O
-                    () -> new Exception404("해당 장바구니아이템을 찾을 수 없습니다 : " + cartId)
-            );
+            Boolean flag = true;
 
-            // 4. 장바구니 수정
-            int quantity = requestDTO.getQuantity();
-            int price = cartPS.getOption().getPrice() * quantity;   // option : join되어있음
-            cartPS.update(quantity, price); // 쿼리문O
+            for (Cart cartPS : cartListPS) {
+                if (cartId == cartPS.getId()) {
+
+                    int quantity = requestDTO.getQuantity();
+                    int price = cartPS.getOption().getPrice() * quantity;
+                    cartPS.update(quantity, price); // 쿼리문O
+
+                    flag = false;
+                    break;
+                }
+            }
+            // 4. 유효하지 않은 장바구니아이템이면 예외처리
+            if (flag) {
+                throw new Exception404("해당 장바구니아이템을 찾을 수 없습니다 : " + cartId);
+            }
         }
 
-        return new CartResponse.UpdateDTO(cartList);
+        return new CartResponse.UpdateDTO(cartListPS);
     } // 더티체킹
 }

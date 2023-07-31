@@ -27,7 +27,7 @@ public class OrderService {
     @Transactional
     public OrderResponse.SaveDTO save(User user) {
         // 1. 장바구니가 비어있으면 예외처리
-        List<Cart> cartListPS = cartJPARepository.mFindAllByUserId(user.getId());    // 쿼리문O
+        List<Cart> cartListPS = cartJPARepository.mFindAllByUserIdOrderByOptionIdAsc(user.getId());    // 쿼리문O
         if (cartListPS.isEmpty()) {
             throw new Exception404("장바구니가 비어있습니다");
         }
@@ -69,7 +69,7 @@ public class OrderService {
         }
 
         // 3. 주문 결과 확인
-        List<Item> itemListPS = itemJPARepository.findByOrderId(orderPS.getId());   // 쿼리문O
+        List<Item> itemListPS = itemJPARepository.mFindAllByOrderId(orderPS.getId());   // 쿼리문O
 
         return new OrderResponse.FindByIdDTO(itemListPS);
     }
