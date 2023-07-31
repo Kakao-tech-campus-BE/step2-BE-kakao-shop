@@ -1,7 +1,7 @@
 package com.example.kakao._core.security;
 
-import com.example.kakao.user.User;
-import com.example.kakao.user.UserJPARepository;
+import com.example.kakao.domain.user.User;
+import com.example.kakao.domain.user.UserJPARepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

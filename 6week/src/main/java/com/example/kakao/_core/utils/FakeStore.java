@@ -1,13 +1,12 @@
 package com.example.kakao._core.utils;
 
-import com.example.kakao.cart.Cart;
-import com.example.kakao.order.Order;
-import com.example.kakao.order.item.Item;
-import com.example.kakao.product.Product;
-import com.example.kakao.product.option.Option;
-import com.example.kakao.user.User;
+import com.example.kakao.domain.cart.Cart;
+import com.example.kakao.domain.order.Order;
+import com.example.kakao.domain.order.item.Item;
+import com.example.kakao.domain.product.Product;
+import com.example.kakao.domain.product.option.Option;
+import com.example.kakao.domain.user.User;
 import lombok.Getter;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -83,7 +82,6 @@ public class FakeStore {
     private Order newOrder(){
         return Order.builder()
                 .user(newUser(1, "ssar"))
-                .id(1)
                 .build();
     }
 

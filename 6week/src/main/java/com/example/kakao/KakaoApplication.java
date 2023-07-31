@@ -1,11 +1,12 @@
 package com.example.kakao;
 
-import com.example.kakao.product.Product;
-import com.example.kakao.product.ProductJPARepository;
-import com.example.kakao.product.option.Option;
-import com.example.kakao.product.option.OptionJPARepository;
-import com.example.kakao.user.User;
-import com.example.kakao.user.UserJPARepository;
+
+import com.example.kakao.domain.product.Product;
+import com.example.kakao.domain.product.ProductJPARepository;
+import com.example.kakao.domain.product.option.Option;
+import com.example.kakao.domain.product.option.OptionJPARepository;
+import com.example.kakao.domain.user.User;
+import com.example.kakao.domain.user.UserJPARepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

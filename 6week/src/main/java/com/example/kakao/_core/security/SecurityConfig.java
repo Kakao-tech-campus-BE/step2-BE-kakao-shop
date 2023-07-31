@@ -1,12 +1,12 @@
 package com.example.kakao._core.security;
 
-import com.example.kakao._core.errors.exception.Exception401;
-import com.example.kakao._core.errors.exception.Exception403;
-import com.example.kakao._core.utils.FilterResponseUtils;
+import com.example.kakao._core.errors.exception.ForbiddenException;
+import com.example.kakao._core.errors.exception.UnAuthorizedException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -16,6 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 
 
 @Configuration
@@ -26,7 +27,7 @@ public class SecurityConfig {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
-    public class CustomSecurityFilterManager extends AbstractHttpConfigurer<CustomSecurityFilterManager, HttpSecurity> {
+    public static class CustomSecurityFilterManager extends AbstractHttpConfigurer<CustomSecurityFilterManager, HttpSecurity> {
         @Override
         public void configure(HttpSecurity builder) throws Exception {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
@@ -36,7 +37,10 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(
+      HttpSecurity http,
+      @Autowired @Qualifier("handlerExceptionResolver")
+      HandlerExceptionResolver resolver) throws Exception {
         // 1. CSRF 해제
         http.csrf().disable(); // postman 접근해야 함!! - CSR 할때!!
 
@@ -59,14 +63,12 @@ public class SecurityConfig {
         http.apply(new CustomSecurityFilterManager());
 
         // 8. 인증 실패 처리
-        http.exceptionHandling().authenticationEntryPoint((request, response, authException) -> {
-            FilterResponseUtils.unAuthorized(response, new Exception401("인증되지 않았습니다"));
-        });
+        http.exceptionHandling().authenticationEntryPoint((request, response, authException) ->
+            resolver.resolveException(request, response, null, new UnAuthorizedException("인증되지 않은 사용자입니다.")));
 
         // 9. 권한 실패 처리
-        http.exceptionHandling().accessDeniedHandler((request, response, accessDeniedException) -> {
-            FilterResponseUtils.forbidden(response, new Exception403("권한이 없습니다"));
-        });
+        http.exceptionHandling().accessDeniedHandler((request, response, accessDeniedException) ->
+            resolver.resolveException(request, response, null, new ForbiddenException("권한이 없습니다.")));
 
         // 11. 인증, 권한 필터 설정
         http.authorizeRequests(
