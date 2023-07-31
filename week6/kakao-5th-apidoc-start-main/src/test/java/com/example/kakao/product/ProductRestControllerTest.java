@@ -1,6 +1,7 @@
 package com.example.kakao.product;
 
 import com.example.kakao.MyRestDoc;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -21,6 +22,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 public class ProductRestControllerTest extends MyRestDoc {
+    @Autowired
+    private ObjectMapper om;
 
     @Test
     public void findAll_test() throws Exception {
