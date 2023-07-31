@@ -62,7 +62,7 @@ openapi3 {
 	title = "KakaoShop API Docs"
 	description = ""
 	version = "0.1.0"
-	format = "json" // or json
+	format = "json"
 	outputDirectory = 'build/resources/main/static/docs'
 }
 

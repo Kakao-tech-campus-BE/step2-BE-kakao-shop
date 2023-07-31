@@ -47,6 +47,4 @@ public abstract class RestControllerTest {
   @MockBean
   private ErrorLogJPARepository errorLogJPARepository; // Exception Handler 의존성
 
-
-
 }

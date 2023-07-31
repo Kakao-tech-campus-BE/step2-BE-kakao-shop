@@ -1,6 +1,6 @@
 package com.example.kakao._core.integration;
 
-import com.example.kakao._core.IntegrationTest;
+import com.example.kakao._core.E2ETest;
 import com.example.kakao.domain.cart.dto.request.SaveRequestDTO;
 import com.example.kakao.domain.cart.dto.request.UpdateRequestDTO;
 import com.example.kakao.domain.cart.service.CartPolicyManager;
@@ -14,7 +14,7 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 
-class CartIntegrationTest extends IntegrationTest {
+class CartE2ETest extends E2ETest {
 
   @Nested
   class 장바구니담기 {
@@ -131,6 +131,7 @@ class CartIntegrationTest extends IntegrationTest {
     @Test
     void 실패_장바구니수정_장바구니에없는품목을수정하려고시도한다() throws Exception {
       int notExistCartId = 99;
+
       List<UpdateRequestDTO> requestDTOs = List.of(
         UpdateRequestDTO.builder()
           .cartId(1)
@@ -153,6 +154,7 @@ class CartIntegrationTest extends IntegrationTest {
     @Test
     void 실패_장바구니수정_요청가능한_최대수량초과() throws Exception {
       int notExistCartId = 99;
+
       List<UpdateRequestDTO> requestDTOs = List.of(
         UpdateRequestDTO.builder()
           .cartId(1)
@@ -171,6 +173,7 @@ class CartIntegrationTest extends IntegrationTest {
     @Test
     void 실패_장바구니수정_요청에중복ID가포함되어있다() throws Exception {
       int duplicatedCartId = 1;
+
       List<UpdateRequestDTO> requestDTOs = List.of(
         UpdateRequestDTO.builder()
           .cartId(1)
