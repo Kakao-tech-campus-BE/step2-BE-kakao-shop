@@ -1,4 +1,4 @@
-package com.example.kakao._core;
+package com.example.kakao;
 
 
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;

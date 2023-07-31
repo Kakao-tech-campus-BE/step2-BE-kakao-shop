@@ -1,6 +1,6 @@
-package com.example.kakao._core.integration;
+package com.example.kakao.e2e;
 
-import com.example.kakao._core.E2ETest;
+import com.example.kakao.E2ETest;
 import com.example.kakao.domain.cart.CartJPARepository;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

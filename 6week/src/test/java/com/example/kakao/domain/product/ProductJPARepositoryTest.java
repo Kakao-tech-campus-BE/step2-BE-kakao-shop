@@ -1,9 +1,6 @@
-package com.example.kakao._core.domain.product;
+package com.example.kakao.domain.product;
 
 import com.example.kakao._core.errors.exception.BadRequestException;
-import com.example.kakao.domain.product.Product;
-import com.example.kakao.domain.product.ProductJPARepository;
-import com.example.kakao.domain.product.ProductResponse;
 import com.example.kakao.domain.product.option.OptionJPARepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

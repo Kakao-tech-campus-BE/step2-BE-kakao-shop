@@ -1,19 +1,15 @@
-package com.example.kakao._core.integration;
+package com.example.kakao.integration;
 
-import com.example.kakao._core.IntegrationTest;
+import com.example.kakao.IntegrationTest;
 import com.example.kakao.domain.cart.dto.request.SaveRequestDTO;
 import com.example.kakao.domain.cart.dto.response.FindAllResponseDTO;
 import com.example.kakao.domain.cart.service.CartService;
 import com.example.kakao.domain.order.OrderService;
-import com.example.kakao.domain.order.dto.OrderDetailResponseDTO;
 import com.example.kakao.domain.user.User;
 import com.example.kakao.domain.user.UserJPARepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

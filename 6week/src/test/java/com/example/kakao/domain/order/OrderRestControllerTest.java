@@ -1,14 +1,11 @@
-package com.example.kakao._core.domain.order;
+package com.example.kakao.domain.order;
 
 
-import com.example.kakao._core.RestControllerTest;
-import com.example.kakao.domain.order.OrderService;
+import com.example.kakao.RestControllerTest;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithUserDetails;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;

@@ -1,18 +1,15 @@
-package com.example.kakao._core.domain.cart;
+package com.example.kakao.domain.cart;
 
 
-import com.example.kakao._core.RestControllerTest;
+import com.example.kakao.RestControllerTest;
 import com.example.kakao.domain.cart.dto.request.SaveRequestDTO;
 import com.example.kakao.domain.cart.dto.request.UpdateRequestDTO;
 import com.example.kakao.domain.cart.service.CartService;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithUserDetails;
 
 import java.util.List;
 

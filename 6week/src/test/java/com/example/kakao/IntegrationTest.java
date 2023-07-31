@@ -1,4 +1,4 @@
-package com.example.kakao._core;
+package com.example.kakao;
 
 import com.example.kakao.log.ErrorLogJPARepository;
 import com.fasterxml.jackson.databind.ObjectMapper;

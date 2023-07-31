@@ -1,10 +1,7 @@
-package com.example.kakao._core.domain.order;
+package com.example.kakao.domain.order;
 
 import com.example.kakao._core.errors.exception.NotFoundException;
 import com.example.kakao._core.errors.exception.UnAuthorizedException;
-import com.example.kakao.domain.order.Order;
-import com.example.kakao.domain.order.OrderJPARepository;
-import com.example.kakao.domain.order.OrderService;
 import com.example.kakao.domain.user.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

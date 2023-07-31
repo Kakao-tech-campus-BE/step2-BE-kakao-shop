@@ -1,4 +1,4 @@
-package com.example.kakao._core.domain.cart;
+package com.example.kakao.domain.cart;
 
 import com.example.kakao._core.errors.exception.BadRequestException;
 import com.example.kakao.domain.cart.dto.request.SaveRequestDTO;

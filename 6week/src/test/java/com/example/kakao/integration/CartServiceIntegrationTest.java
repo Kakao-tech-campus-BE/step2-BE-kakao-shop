@@ -1,31 +1,21 @@
-package com.example.kakao._core.integration;
+package com.example.kakao.integration;
 
-import com.example.kakao._core.IntegrationTest;
+import com.example.kakao.IntegrationTest;
 import com.example.kakao._core.errors.exception.BadRequestException;
 import com.example.kakao.domain.cart.Cart;
 import com.example.kakao.domain.cart.CartJPARepository;
 import com.example.kakao.domain.cart.dto.request.SaveRequestDTO;
 import com.example.kakao.domain.cart.dto.request.UpdateRequestDTO;
-import com.example.kakao.domain.cart.dto.response.FindAllResponseDTO;
 import com.example.kakao.domain.cart.dto.response.UpdateResponseDTO;
-import com.example.kakao.domain.cart.service.CartPolicyManager;
 import com.example.kakao.domain.cart.service.CartService;
-import com.example.kakao.domain.product.Product;
-import com.example.kakao.domain.product.option.Option;
 import com.example.kakao.domain.product.option.OptionJPARepository;
 import com.example.kakao.domain.user.User;
 import com.example.kakao.domain.user.UserJPARepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
