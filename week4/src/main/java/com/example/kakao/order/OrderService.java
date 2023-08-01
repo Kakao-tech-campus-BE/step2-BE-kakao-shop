@@ -1,6 +1,7 @@
 package com.example.kakao.order;
 
 import com.example.kakao._core.errors.exception.Exception400;
+import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao._core.errors.exception.Exception500;
 import com.example.kakao._core.utils.FakeStore;
 import com.example.kakao.cart.Cart;
@@ -33,13 +34,11 @@ public class OrderService {
 
     public OrderResponse.FindByIdDTO save(User user){
         try {
-            System.out.println("save 서비");
             //주문 생성하기
             Order order = Order.builder()
                     .user(user)
                     .build();
             orderJPARepository.save(order);
-            System.out.println("save 통과?");
 
             //장바구니 -> OrderItem으로 옮겨 저장하기
             List<Cart> cartList = cartJPARepository.findAllCartsByUserId(user.getId());
@@ -52,9 +51,9 @@ public class OrderService {
                         .price(c.getPrice())
                         .build();
                 itemJPARepository.save(item);
-                System.out.println("item:"+item);
                 itemList.add(item);
             }
+            //응답 DTO 생성
             OrderResponse.FindByIdDTO responseDTO = new OrderResponse.FindByIdDTO(order, itemList);
             return responseDTO;
         } catch (Exception e) {
@@ -75,9 +74,13 @@ public class OrderService {
                 return responseDTO;
             }
             else {
-                throw new Exception400("해당 주문이 없습니다.");
+                throw new Exception404("해당 주문이 없습니다.");
             }
-        } catch (Exception e) {
+        }
+        catch (Exception404 e){
+            throw e;
+        }
+        catch (Exception e) {
                 System.out.println(e.getMessage());
                 System.out.println(e.getStackTrace());
                 throw new Exception500("unknown server error");

@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -63,11 +64,11 @@ public class UserRestControllerTest {
                 MockMvcRequestBuilders
                         .post("/join") //post 요청 uri
                         .content(requestBody) //요청 본문
-                        .contentType(MediaType.APPLICATION_JSON)
-        );
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(MockMvcResultHandlers.print());
 
-        String responseBody = result.andReturn().getResponse().getContentAsString();
-        System.out.println("테스트 : "+responseBody);
+//        String responseBody = result.andReturn().getResponse().getContentAsString();
+//        System.out.println("테스트 : "+responseBody);
 
         // then
         result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
@@ -91,12 +92,13 @@ public class UserRestControllerTest {
                 MockMvcRequestBuilders
                         .post("/login")
                         .content(requestBody)
-                        .contentType(MediaType.APPLICATION_JSON)
-        );
-        String responseBody = result.andReturn().getResponse().getContentAsString();
-        String responseHeader = result.andReturn().getResponse().getHeader(JWTProvider.HEADER);
-        System.out.println("테스트 : "+responseBody);
-        System.out.println("테스트 : "+responseHeader);
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(MockMvcResultHandlers.print());
+
+//        String responseBody = result.andReturn().getResponse().getContentAsString();
+//        String responseHeader = result.andReturn().getResponse().getHeader(JWTProvider.HEADER);
+//        System.out.println("테스트 : "+responseBody);
+//        System.out.println("테스트 : "+responseHeader);
 
         // then
         result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
@@ -108,5 +110,4 @@ public class UserRestControllerTest {
         String value = "Bearer eyJ0eX";
         System.out.println(value.substring(0,6));
     }
-
 }

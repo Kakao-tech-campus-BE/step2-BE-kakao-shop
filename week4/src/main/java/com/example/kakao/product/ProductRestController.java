@@ -9,6 +9,7 @@ import com.example.kakao._core.utils.FakeStore;
 import com.example.kakao.product.option.Option;
 import com.example.kakao.user.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,11 +30,17 @@ public class ProductRestController {
 
     // (기능4) 전체 상품 목록 조회 (페이징 9개씩)
     @GetMapping("/products")
-    public ResponseEntity<?> findAll(@RequestParam(defaultValue = "0") int page, HttpServletRequest request) {
+    public ResponseEntity<?> findAll(@RequestParam(defaultValue = "0") String page, HttpServletRequest request) {
         try {
-            List<ProductResponse.FindAllDTO> findAllDTOList = productService.findAll(page);
+            int pageInt = Integer.parseInt(page); //문자열->Integer
+            List<ProductResponse.FindAllDTO> findAllDTOList = productService.findAll(pageInt);
             return ResponseEntity.ok().body(ApiUtils.success(findAllDTOList));
-        } catch (RuntimeException e) {
+        }
+        //page가 정수형인지 유효성 검사
+        catch(NumberFormatException e){
+            return ResponseEntity.badRequest().body(ApiUtils.error("page는 숫자만 가능합니다", HttpStatus.BAD_REQUEST));
+        }
+        catch (RuntimeException e) {
             return globalExceptionHandler.handle(e, request);
         }
 
@@ -41,11 +48,17 @@ public class ProductRestController {
 
     // (기능5) 개별 상품 상세 조회
     @GetMapping("/products/{id}")
-    public ResponseEntity<?> findById(@PathVariable int id, HttpServletRequest request) {
+    public ResponseEntity<?> findById(@PathVariable String id, HttpServletRequest request) {
         try {
-            ProductResponse.FindByIdDTO dto = productService.findById(id);
+            int productId = Integer.parseInt(id); //문자열->Integer
+            ProductResponse.FindByIdDTO dto = productService.findById(productId);
             return ResponseEntity.ok().body(ApiUtils.success(dto));
-        } catch (RuntimeException e) {
+        }
+        //id가 정수형인지 유효성 검사
+        catch(NumberFormatException e){
+            return ResponseEntity.badRequest().body(ApiUtils.error("id는 숫자만 가능합니다", HttpStatus.BAD_REQUEST));
+        }
+        catch (RuntimeException e) {
             return globalExceptionHandler.handle(e, request);
         }
     }

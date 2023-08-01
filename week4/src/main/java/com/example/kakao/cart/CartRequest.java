@@ -12,10 +12,10 @@ public class CartRequest {
 
     @Getter @Setter @ToString
     public static class SaveDTO {
-        @Min(value = 1, message = "optionId must be greater than or equal to 1")
+        @Min(value = 1, message = "optionId는 숫자이고 1이상이어야 합니다.")
         private int optionId;
 
-        @Min(value = 1, message = "quantity must be greater than or equal to 1")
+        @Min(value = 1, message = "quantity는 숫자이고 1이상이어야 합니다.")
         private int quantity;
 
 
@@ -24,10 +24,10 @@ public class CartRequest {
     @Getter @Setter @ToString
     public static class UpdateDTO {
 
-        @Min(value = 1, message = "cartId must be greater than or equal to 1")
+        @Min(value = 1, message = "cartId는 숫자이고 1이상이어야 합니다.")
         private int cartId;
 
-        @Min(value = 1, message = "quantity must be greater than or equal to 1")
+        @Min(value = 1, message = "quantity는 숫자이고 1이상이어야 합니다.")
         private int quantity;
     }
 }

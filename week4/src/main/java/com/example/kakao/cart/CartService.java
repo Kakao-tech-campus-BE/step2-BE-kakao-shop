@@ -1,6 +1,7 @@
 package com.example.kakao.cart;
 
 import com.example.kakao._core.errors.exception.Exception400;
+import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao._core.errors.exception.Exception500;
 import com.example.kakao._core.security.CustomUserDetails;
 import com.example.kakao._core.security.JWTProvider;
@@ -44,16 +45,22 @@ public class CartService {
             Cart cart = null;
             for (CartRequest.SaveDTO saveDTO : dtoList) {
                 Optional<Option> optional = optionJPARepository.findById(saveDTO.getOptionId());
-                if (optional.isPresent()) option = optional.get();
+                System.out.println("optional"+optional);
+                if (optional.isEmpty()) throw new Exception404("해당 option이 없습니다.");
+                option = optional.get();
                 cart = Cart.builder()
                         .user(userDetails.getUser())
                         .option(option)
                         .quantity(saveDTO.getQuantity())
                         .price(option.getPrice() * saveDTO.getQuantity())
                         .build();
-                }
+            }
                 cartJPARepository.save(cart);
-        } catch (Exception e) {
+        }
+        catch (Exception404 e){
+            throw e;
+        }
+        catch (Exception e) {
             throw new Exception500("unknown server error");
         }
     }

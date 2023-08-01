@@ -17,4 +17,13 @@ public class UserResponse {
             this.email = user.getEmail();
         }
     }
+
+    @Getter @Setter
+    public static class CheckEmail{
+        private String email;
+
+        public CheckEmail(String email) {
+            this.email = email;
+        }
+    }
 }

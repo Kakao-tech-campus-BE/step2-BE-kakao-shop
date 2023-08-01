@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface OrderJPARepository extends JpaRepository<Order, Integer> {
     @Query("select o from Order o join fetch o.user")
-    List<Order> mFindFetchAll();
+    List<Order> FindFetchAllWithUser();
 
 }

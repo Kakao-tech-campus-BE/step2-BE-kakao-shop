@@ -39,6 +39,7 @@ import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequ
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -80,31 +81,37 @@ public class OrderRestControllerTest {
     @MockBean
     private CustomUserDetails userDetails;
 
+    Product product1;
+    Option option1, option2;
+    User user;
+    int quantity;
 
     @BeforeEach
     void beforeEach(){
         //stub
-        Product product1 = new Product(1, "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전", "", "/images/1.jpg", 1000);
-        Option option1 = new Option(1, product1, "01. 슬라이딩 지퍼백 크리스마스에디션 4종", 10000);
-        Option option2 = new Option(2, product1,"02. 슬라이딩 지퍼백 플라워에디션 5종", 10900);
-        User u = new User(1, "user1@nate,com", "fake", "user1", "USER");
+        product1 = new Product(1, "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전", "", "/images/1.jpg", 1000);
+        option1 = new Option(1, product1, "01. 슬라이딩 지퍼백 크리스마스에디션 4종", 10000);
+        option2 = new Option(2, product1,"02. 슬라이딩 지퍼백 플라워에디션 5종", 10900);
+        user = new User(1, "user1@nate,com", "fake", "user1", "USER");
+        quantity=5;
+
         AtomicInteger counter = new AtomicInteger(1);
-        Order order = new Order(1, u);
+        Order order = new Order(1, user);
         List<Cart> cartList = Arrays.asList(
-                new Cart(1, u, option1, 5, option1.getPrice()),
-                new Cart(2, u, option2, 5, option2.getPrice())
+                new Cart(1, user, option1, quantity, option1.getPrice()),
+                new Cart(2, user, option2, quantity, option2.getPrice())
         );
         List<Item> itemList = cartList.stream().map(
                 cart -> new Item(counter.getAndIncrement(), cart.getOption(), order, cart.getQuantity(), cart.getPrice())
         ).collect(Collectors.toList());
 
         BDDMockito.given(userService.findById(any())).willReturn(
-                new UserResponse.FindById(u));
+                new UserResponse.FindById(user));
 
         // 인증 객체 설정
         Authentication auth = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);
-        BDDMockito.given(userDetails.getUser()).willReturn(u);
+        BDDMockito.given(userDetails.getUser()).willReturn(user);
 
         BDDMockito.given(orderService.save(any())).willReturn(
                 new OrderResponse.FindByIdDTO(
@@ -125,26 +132,26 @@ public class OrderRestControllerTest {
         // when
         ResultActions result = mvc.perform(
                 MockMvcRequestBuilders
-                        .post("/orders/save")
-        );
-        String responseBody = result.andReturn().getResponse().getContentAsString();
-        System.out.println("테스트 : "+responseBody);
+                        .post("/orders/save"))
+                .andDo(MockMvcResultHandlers.print());
+//        String responseBody = result.andReturn().getResponse().getContentAsString();
+//        System.out.println("테스트 : "+responseBody);
 
         //then
         result.andExpect(jsonPath("$.success").value("true"));
         result.andExpect(jsonPath("$.response.id").value(1));
-        result.andExpect(jsonPath("$.response.totalPrice").value(104500));
+        result.andExpect(jsonPath("$.response.totalPrice").value(option1.getPrice() * quantity+option2.getPrice() * quantity));
 
-        result.andExpect(jsonPath("$.response.products[0].productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"));
+        result.andExpect(jsonPath("$.response.products[0].productName").value(product1.getProductName()));
         result.andExpect(jsonPath("$.response.products[0].items[0].id").value(1));
-        result.andExpect(jsonPath("$.response.products[0].items[0].optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"));
-        result.andExpect(jsonPath("$.response.products[0].items[0].quantity").value(5));
-        result.andExpect(jsonPath("$.response.products[0].items[0].price").value(50000));
+        result.andExpect(jsonPath("$.response.products[0].items[0].optionName").value(option1.getOptionName()));
+        result.andExpect(jsonPath("$.response.products[0].items[0].quantity").value(quantity));
+        result.andExpect(jsonPath("$.response.products[0].items[0].price").value(option1.getPrice() * quantity));
 
         result.andExpect(jsonPath("$.response.products[0].items[1].id").value(2));
-        result.andExpect(jsonPath("$.response.products[0].items[1].optionName").value("02. 슬라이딩 지퍼백 플라워에디션 5종"));
-        result.andExpect(jsonPath("$.response.products[0].items[1].quantity").value(5));
-        result.andExpect(jsonPath("$.response.products[0].items[1].price").value(54500));
+        result.andExpect(jsonPath("$.response.products[0].items[1].optionName").value(option2.getOptionName()));
+        result.andExpect(jsonPath("$.response.products[0].items[1].quantity").value(quantity));
+        result.andExpect(jsonPath("$.response.products[0].items[1].price").value(option2.getPrice() * quantity));
     }
 
     @Test
@@ -157,7 +164,8 @@ public class OrderRestControllerTest {
         //when
         ResultActions result = mvc.perform(
                 MockMvcRequestBuilders
-                        .get("/orders/"+id)); //요청 uri
+                        .get("/orders/"+id))
+                .andDo(MockMvcResultHandlers.print()); //요청 uri
 
         String responseBody = result.andReturn().getResponse().getContentAsString();
         System.out.println("테스트 : "+responseBody);
@@ -165,19 +173,18 @@ public class OrderRestControllerTest {
         //then
         result.andExpect(jsonPath("$.success").value("true"));
         result.andExpect(jsonPath("$.response.id").value(1));
-        result.andExpect(jsonPath("$.response.totalPrice").value(104500));
+        result.andExpect(jsonPath("$.response.totalPrice").value(option1.getPrice() * quantity+option2.getPrice() * quantity));
 
-        result.andExpect(jsonPath("$.response.products[0].productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"));
+        result.andExpect(jsonPath("$.response.products[0].productName").value(product1.getProductName()));
         result.andExpect(jsonPath("$.response.products[0].items[0].id").value(1));
-        result.andExpect(jsonPath("$.response.products[0].items[0].optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"));
-        result.andExpect(jsonPath("$.response.products[0].items[0].quantity").value(5));
-        result.andExpect(jsonPath("$.response.products[0].items[0].price").value(50000));
+        result.andExpect(jsonPath("$.response.products[0].items[0].optionName").value(option1.getOptionName()));
+        result.andExpect(jsonPath("$.response.products[0].items[0].quantity").value(quantity));
+        result.andExpect(jsonPath("$.response.products[0].items[0].price").value(option1.getPrice() * quantity));
 
         result.andExpect(jsonPath("$.response.products[0].items[1].id").value(2));
-        result.andExpect(jsonPath("$.response.products[0].items[1].optionName").value("02. 슬라이딩 지퍼백 플라워에디션 5종"));
-        result.andExpect(jsonPath("$.response.products[0].items[1].quantity").value(5));
-        result.andExpect(jsonPath("$.response.products[0].items[1].price").value(54500));
+        result.andExpect(jsonPath("$.response.products[0].items[1].optionName").value(option2.getOptionName()));
+        result.andExpect(jsonPath("$.response.products[0].items[1].quantity").value(quantity));
+        result.andExpect(jsonPath("$.response.products[0].items[1].price").value(option2.getPrice() * quantity));
+
     }
-
-
 }
