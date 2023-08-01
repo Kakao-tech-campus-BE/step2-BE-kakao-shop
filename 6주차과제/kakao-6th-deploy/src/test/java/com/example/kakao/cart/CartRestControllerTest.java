@@ -13,7 +13,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +31,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class CartRestControllerTest extends MyRestDoc {
     @Autowired
     private ObjectMapper om;
+    @Autowired
+    private CartService cartService;
 
     @WithUserDetails(value = "ssarmango@nate.com")
     @Test
@@ -117,5 +121,172 @@ public class CartRestControllerTest extends MyRestDoc {
         resultActions.andExpect(jsonPath("$.response.carts[0].price").value(100000));
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
+
+    // 장바구니가 비어있는경우
+    @WithUserDetails(value = "ssarmango2@nate.com")
+    @Test
+    public void update_error1_test() throws Exception {
+        // given -> cartId [1번 5개,2번 1개,3번 5개]가 teardown.sql을 통해 들어가 있음
+        List<CartRequest.UpdateDTO> requestDTOs = new ArrayList<>();
+        CartRequest.UpdateDTO item = new CartRequest.UpdateDTO();
+        item.setCartId(1);
+        item.setQuantity(10);
+        requestDTOs.add(item);
+
+        // 장바구니 비우기
+
+        String requestBody = om.writeValueAsString(requestDTOs);
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/carts/update")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+
+        // eye
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("false"));
+        resultActions.andExpect(jsonPath("$.error.message").value("장바구니가 비었습니다."));
+        resultActions.andExpect(jsonPath("$.error.status").value("404"));
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);// API DOCS부분
+    }
+
+    @WithUserDetails(value = "ssarmango@nate.com")
+    @Test
+    public void update_error2_test() throws Exception {
+        // given -> cartId [1번 5개,2번 1개,3번 5개]가 teardown.sql을 통해 들어가 있음
+        List<CartRequest.UpdateDTO> requestDTOs = new ArrayList<>();
+        CartRequest.UpdateDTO item = new CartRequest.UpdateDTO();
+        item.setCartId(1);
+        item.setQuantity(10);
+        CartRequest.UpdateDTO item2 = new CartRequest.UpdateDTO();
+        item2.setCartId(1);
+        item2.setQuantity(10);
+        requestDTOs.add(item);
+        requestDTOs.add(item2);
+
+        // 장바구니 비우기
+
+        String requestBody = om.writeValueAsString(requestDTOs);
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/carts/update")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+
+        // eye
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("false"));
+        resultActions.andExpect(jsonPath("$.error.message").value("장바구니에 중복된 id가 존재합니다."));
+        resultActions.andExpect(jsonPath("$.error.status").value("404"));
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);// API DOCS부분
+    }
+
+    @WithUserDetails(value = "ssarmango@nate.com")
+    @Test
+    public void update_error3_test() throws Exception {
+        // given -> cartId [1번 5개,2번 1개,3번 5개]가 teardown.sql을 통해 들어가 있음
+        List<CartRequest.UpdateDTO> requestDTOs = new ArrayList<>();
+        CartRequest.UpdateDTO item = new CartRequest.UpdateDTO();
+        item.setCartId(4);
+        item.setQuantity(10);
+        requestDTOs.add(item);
+
+        // 장바구니 비우기
+
+        String requestBody = om.writeValueAsString(requestDTOs);
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/carts/update")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+
+        // eye
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("false"));
+        resultActions.andExpect(jsonPath("$.error.message").value("잘못된 cartId를 입력하셨습니다."));
+        resultActions.andExpect(jsonPath("$.error.status").value("404"));
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);// API DOCS부분
+    }
+
+    // 1. 동일한 옵션이 들어오면 예외처리
+    // [ { optionId:1, quantity:5 }, { optionId:1, quantity:10 } ] 같은 경우
+    @WithUserDetails(value = "ssarmango@nate.com")
+    @Test
+    public void addCartList_error1_test() throws Exception {
+        // given -> optionId [1,2,16]이 teardown.sql을 통해 들어가 있음
+        List<CartRequest.SaveDTO> requestDTOs = new ArrayList<>();
+        CartRequest.SaveDTO item = new CartRequest.SaveDTO();
+        item.setOptionId(3);
+        item.setQuantity(5);
+        requestDTOs.add(item);
+        CartRequest.SaveDTO item2 = new CartRequest.SaveDTO();
+        item2.setOptionId(3);
+        item2.setQuantity(6);
+        requestDTOs.add(item2);
+
+        String requestBody = om.writeValueAsString(requestDTOs);
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/carts/add")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("false"));
+        resultActions.andExpect(jsonPath("$.error.message").value("장바구니에 중복된 id가 존재합니다."));
+        resultActions.andExpect(jsonPath("$.error.status").value("404"));
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
+    }
+
+
+    @WithUserDetails(value = "ssarmango@nate.com")
+    @Test
+    public void addCartList_error2_test() throws Exception {
+        // given -> optionId [1,2,16]이 teardown.sql을 통해 들어가 있음
+        List<CartRequest.SaveDTO> requestDTOs = new ArrayList<>();
+        CartRequest.SaveDTO item = new CartRequest.SaveDTO();
+        item.setOptionId(49);
+        item.setQuantity(5);
+        requestDTOs.add(item);
+
+        String requestBody = om.writeValueAsString(requestDTOs);
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/carts/add")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("false"));
+        resultActions.andExpect(jsonPath("$.error.message").value("해당 옵션을 찾을 수 없습니다 : " + 49));
+        resultActions.andExpect(jsonPath("$.error.status").value("404"));
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
+    }
+
 
 }
