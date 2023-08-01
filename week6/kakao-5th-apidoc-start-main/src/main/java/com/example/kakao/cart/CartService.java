@@ -55,15 +55,31 @@ public class CartService {
             throw  new Exception400("중복되지않는 제품입니다.");
         }
 
-        for (CartRequest.SaveDTO requestDTO : requestDTOs) {
+        requestDTOs.forEach(requestDTO -> {
             int optionId = requestDTO.getOptionId();
             int quantity = requestDTO.getQuantity();
-            Option optionPS = optionJPARepository.findById(optionId)
-                    .orElseThrow(() -> new Exception404("해당 옵션을 찾을 수 없습니다 : " + optionId));
-            int price = optionPS.getPrice() * quantity;
-            Cart cart = Cart.builder().user(sessionUser).option(optionPS).quantity(quantity).price(price).build();
-            cartJPARepository.save(cart);
-        }
+            System.out.println("옵션 : " + optionId);
+            Option option = optionJPARepository.findById(optionId)
+                    .orElseThrow(() -> new Exception404("해당 옵션을 찾을 수 없습니다. : " + optionId));
+
+            // 장바구니에 담겼는지 확인하는 로직
+            Cart prevCart = cartJPARepository.findByOptionIdAndUserId(optionId, sessionUser.getId()).orElse(null);
+            if (prevCart == null) {
+                int price = option.getPrice() * quantity;
+                Cart cart = Cart.builder()
+                        .user(sessionUser)
+                        .option(option)
+                        .quantity(quantity)
+                        .price(price)
+                        .build();
+                cartJPARepository.save(cart);
+            } else {
+                int updatedQuantity = quantity + prevCart.getQuantity();
+                int price = option.getPrice() * updatedQuantity;
+
+                prevCart.update(updatedQuantity, price);
+            }
+        });
     }
 
     public CartResponse.FindAllDTO findAll(User user) {
