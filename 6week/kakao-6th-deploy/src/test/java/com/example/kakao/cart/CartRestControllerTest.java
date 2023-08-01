@@ -2,6 +2,7 @@ package com.example.kakao.cart;
 
 import com.example.kakao.MyRestDoc;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -13,7 +14,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +32,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class CartRestControllerTest extends MyRestDoc {
     @Autowired
     private ObjectMapper om;
+    @Autowired
+    private CartService cartService;
 
     @WithUserDetails(value = "ssarmango@nate.com")
     @Test
@@ -117,5 +122,171 @@ public class CartRestControllerTest extends MyRestDoc {
         resultActions.andExpect(jsonPath("$.response.carts[0].price").value(100000));
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
+    @DisplayName("동일한 OptionId를 추가할 경우 예외")
+    @WithUserDetails(value = "ssarmango@nate.com")
+    @Test
+    public void addCartList_fail_test() throws Exception{
+        //given
+        // 동일한 OptionId를 추가할 경우
+        List<CartRequest.SaveDTO> requestDTOs = new ArrayList<>();
+        CartRequest.SaveDTO item = new CartRequest.SaveDTO();
+        item.setOptionId(3);
+        item.setQuantity(5);
+        requestDTOs.add(item);
 
+        CartRequest.SaveDTO item2 = new CartRequest.SaveDTO();
+        item2.setOptionId(3);
+        item.setQuantity(10);
+        requestDTOs.add(item2);
+
+        String requestBody = om.writeValueAsString(requestDTOs);
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/carts/add")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("false"));
+        resultActions.andExpect(jsonPath("$.error.message").value("중복된 OptionId는 불가합니다"));
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
+    }
+    @DisplayName("DB 옵션에 등록되지않은 OptionId를 요청받았을 때 예외")
+    @WithUserDetails(value = "ssarmango@nate.com")
+    @Test
+    public void addCartList_fail_test2() throws Exception{
+        //given
+        // DB 옵션에 등록되지않은 OptionId를 요청받았을 때
+        int optionId = 50;
+        List<CartRequest.SaveDTO> requestDTOs = new ArrayList<>();
+        CartRequest.SaveDTO item = new CartRequest.SaveDTO();
+        item.setOptionId(optionId);
+        item.setQuantity(5);
+        requestDTOs.add(item);
+
+        String requestBody = om.writeValueAsString(requestDTOs);
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/carts/add")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("false"));
+        resultActions.andExpect(jsonPath("$.error.message").value("해당 옵션을 찾을 수 없습니다 : " + optionId));
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
+    }
+    @DisplayName("유저 장바구니에 아무것도 없을 때")
+    @WithUserDetails(value = "ssarmango@nate.com")
+    @Test
+    public void update_fail_test() throws Exception {
+        // given
+        // 유저 장바구니에 아무것도 없을 때
+        int userId = 1;
+        cartService.deleteByUserId(userId);
+        List<CartRequest.UpdateDTO> requestDTOs = new ArrayList<>();
+        CartRequest.UpdateDTO item = new CartRequest.UpdateDTO();
+        item.setCartId(1);
+        item.setQuantity(10);
+        requestDTOs.add(item);
+
+        String requestBody = om.writeValueAsString(requestDTOs);
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/carts/update")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+
+        // eye
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("false"));
+        resultActions.andExpect(jsonPath("$.error.message").value("유저 장바구니가 비어있습니다"));
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
+    }
+
+    @DisplayName("중복된 cartId가 요청으로 들어올 경우 예외")
+    @WithUserDetails(value = "ssarmango@nate.com")
+    @Test
+    public void update_fail_test2() throws Exception {
+        // given
+        // 중복된 cartId가 요청으로 들어올 경우
+
+        List<CartRequest.UpdateDTO> requestDTOs = new ArrayList<>();
+        CartRequest.UpdateDTO item = new CartRequest.UpdateDTO();
+        item.setCartId(1);
+        item.setQuantity(10);
+        requestDTOs.add(item);
+
+        CartRequest.UpdateDTO item2 = new CartRequest.UpdateDTO();
+        item2.setCartId(1);
+        item2.setQuantity(20);
+        requestDTOs.add(item2);
+
+        String requestBody = om.writeValueAsString(requestDTOs);
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/carts/update")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+
+        // eye
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("false"));
+        resultActions.andExpect(jsonPath("$.error.message").value("중복된 OptionId는 불가합니다"));
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
+    }
+
+    @DisplayName("DB cart에 등록되지않은 cartId를 요청받았을 때 예외 ")
+    @WithUserDetails(value = "ssarmango@nate.com")
+    @Test
+    public void update_fail_test3() throws Exception {
+        // given
+        // DB cart에 등록되지않은 cartId를 요청받았을 때 예외
+
+        List<CartRequest.UpdateDTO> requestDTOs = new ArrayList<>();
+        CartRequest.UpdateDTO item = new CartRequest.UpdateDTO();
+        item.setCartId(4);
+        item.setQuantity(10);
+        requestDTOs.add(item);
+
+
+        String requestBody = om.writeValueAsString(requestDTOs);
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/carts/update")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+
+        // eye
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("false"));
+        resultActions.andExpect(jsonPath("$.error.message").value("DB에 저장되지않은 cartId가 요청되었습니다"));
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
+    }
 }
+

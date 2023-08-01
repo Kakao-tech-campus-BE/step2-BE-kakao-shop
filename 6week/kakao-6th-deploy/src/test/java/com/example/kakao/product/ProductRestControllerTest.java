@@ -1,6 +1,7 @@
 package com.example.kakao.product;
 
 import com.example.kakao.MyRestDoc;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -64,6 +65,26 @@ public class ProductRestControllerTest extends MyRestDoc {
         resultActions.andExpect(jsonPath("$.response.description").value(""));
         resultActions.andExpect(jsonPath("$.response.image").value("/images/1.jpg"));
         resultActions.andExpect(jsonPath("$.response.price").value(1000));
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
+    }
+    @DisplayName("DB 상품에 등록되지않는 productId를 요청받았을 때 예외")
+    @Test
+    public void findById_fail_test() throws Exception {
+        //given
+        int id = 16; //DB 상품에 등록되지않는 productId를 요청받았을 때
+
+        //when
+        ResultActions resultActions = mvc.perform(
+                get("/products/" + id)
+        );
+
+        //console
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        //verify
+        resultActions.andExpect(jsonPath("$.success").value("false"));
+        resultActions.andExpect(jsonPath("$.error.message").value("해당 상품을 찾을 수 없습니다 : "+id));
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 }
