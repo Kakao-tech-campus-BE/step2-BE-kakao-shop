@@ -124,7 +124,7 @@ public class OrderServiceTest {
 
         // mocking
         given(cartJPARepository.findAllByUserIdFetchJoin(anyInt())).willReturn(cartList);
-        willThrow(new RuntimeException("db error")).given(cartJPARepository).deleteAllInBatch(cartList);
+        willThrow(new RuntimeException("db error")).given(cartJPARepository).deleteAllIn(List.of(1, 2));
 
         // when & then
         assertThatThrownBy(() -> orderService.create(user)).isInstanceOf(CartException.CartDeleteException.class);
@@ -147,7 +147,7 @@ public class OrderServiceTest {
         given(itemJPARepository.findByOrderId(anyInt())).willReturn(itemList);
 
         // when & then
-        orderService.findById(order.getId(), user.getId());
+        orderService.findById(order.getId(), user);
     }
 
     @DisplayName("주문_조회_테스트_실패_주문_없음")
@@ -162,7 +162,7 @@ public class OrderServiceTest {
         given(orderJPARepository.findById(anyInt())).willReturn(Optional.empty());
 
         // when & then
-        assertThatThrownBy(() -> orderService.findById(order.getId(), user.getId()))
+        assertThatThrownBy(() -> orderService.findById(order.getId(), user))
                 .isInstanceOf(OrderException.OrderNotFoundException.class);
     }
 
@@ -178,7 +178,7 @@ public class OrderServiceTest {
         given(orderJPARepository.findById(anyInt())).willReturn(Optional.of(order));
 
         // when & then
-        assertThatThrownBy(() -> orderService.findById(order.getId(),anotherUser.getId()))
+        assertThatThrownBy(() -> orderService.findById(order.getId(),anotherUser))
                 .isInstanceOf(OrderException.ForbiddenOrderAccess.class);
     }
 
@@ -194,7 +194,7 @@ public class OrderServiceTest {
         given(itemJPARepository.findByOrderId(anyInt())).willReturn(List.of());
 
         // when & then
-        assertThatThrownBy(() -> orderService.findById(order.getId(),user.getId()))
+        assertThatThrownBy(() -> orderService.findById(order.getId(),user))
                 .isInstanceOf(ItemException.ItemNotFoundException.class);
     }
 
