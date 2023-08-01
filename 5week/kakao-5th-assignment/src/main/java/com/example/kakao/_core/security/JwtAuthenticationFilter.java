@@ -40,6 +40,7 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
             String roles = decodedJWT.getClaim("role").asString();
             System.out.println("roles : "+roles);
             User user = User.builder().id(id).roles(roles).build();
+
             CustomUserDetails myUserDetails = new CustomUserDetails(user);
             Authentication authentication =
                     new UsernamePasswordAuthenticationToken(

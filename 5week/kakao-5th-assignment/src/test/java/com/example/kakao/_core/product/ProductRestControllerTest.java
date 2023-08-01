@@ -62,6 +62,4 @@ public class ProductRestControllerTest {
         resultActions.andExpect(jsonPath("$.response.image").value("/images/1.jpg"));
         resultActions.andExpect(jsonPath("$.response.price").value(1000));
     }
-
-
 }
