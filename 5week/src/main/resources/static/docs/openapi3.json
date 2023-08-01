@@ -1,0 +1,176 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "KakaoShop API Docs",
+    "description" : "",
+    "version" : "0.1.0"
+  },
+  "servers" : [ {
+    "url" : "http://localhost:8080"
+  } ],
+  "tags" : [ ],
+  "paths" : {
+    "/carts/add" : {
+      "post" : {
+        "tags" : [ "carts" ],
+        "operationId" : "cart-rest-controller-test/",
+        "requestBody" : {
+          "content" : {
+            "application/json;charset=UTF-8" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/orders-id486549215"
+              },
+              "examples" : {
+                "cart-rest-controller-test/성공_장바구니담기" : {
+                  "value" : "[ {\r\n  \"optionId\" : 1,\r\n  \"quantity\" : 3\r\n}, {\r\n  \"optionId\" : 2,\r\n  \"quantity\" : 5\r\n} ]"
+                },
+                "cart-rest-controller-test/실패_장바구니담기_수량이0일때" : {
+                  "value" : "[ {\r\n  \"optionId\" : 1,\r\n  \"quantity\" : 0\r\n}, {\r\n  \"optionId\" : 2,\r\n  \"quantity\" : 5\r\n}, {\r\n  \"optionId\" : 3,\r\n  \"quantity\" : 5\r\n} ]"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/orders-id486549215"
+                },
+                "examples" : {
+                  "cart-rest-controller-test/성공_장바구니담기" : {
+                    "value" : "{\r\n  \"success\" : true,\r\n  \"response\" : null,\r\n  \"error\" : null\r\n}"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "400",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/orders-id486549215"
+                },
+                "examples" : {
+                  "cart-rest-controller-test/실패_장바구니담기_수량이0일때" : {
+                    "value" : "{\r\n  \"success\" : false,\r\n  \"response\" : null,\r\n  \"error\" : {\r\n    \"message\" : \"Constraint Violation: [수량은 1 이상이어야 합니다.]\",\r\n    \"status\" : 400\r\n  }\r\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/carts/update" : {
+      "post" : {
+        "tags" : [ "carts" ],
+        "operationId" : "cart-rest-controller-test/성공_장바구니수정_수량이_0이면_삭제요청이다",
+        "requestBody" : {
+          "content" : {
+            "application/json;charset=UTF-8" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/orders-id486549215"
+              },
+              "examples" : {
+                "cart-rest-controller-test/성공_장바구니수정_수량이_0이면_삭제요청이다" : {
+                  "value" : "[ {\r\n  \"cartId\" : 1,\r\n  \"quantity\" : 0\r\n} ]"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/orders-id486549215"
+                },
+                "examples" : {
+                  "cart-rest-controller-test/성공_장바구니수정_수량이_0이면_삭제요청이다" : {
+                    "value" : "{\r\n  \"success\" : true,\r\n  \"response\" : null,\r\n  \"error\" : null\r\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders/{id}" : {
+      "get" : {
+        "tags" : [ "orders" ],
+        "operationId" : "order-rest-controller-test/",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "400",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/orders-id486549215"
+                },
+                "examples" : {
+                  "order-rest-controller-test/find-by-id-with-id-zero" : {
+                    "value" : "{\r\n  \"success\" : false,\r\n  \"response\" : null,\r\n  \"error\" : {\r\n    \"message\" : \"Constraint Violation: [must be greater than 0]\",\r\n    \"status\" : 400\r\n  }\r\n}"
+                  },
+                  "order-rest-controller-test/실패_주문내역상세조회_id가0일때" : {
+                    "value" : "{\r\n  \"success\" : false,\r\n  \"response\" : null,\r\n  \"error\" : {\r\n    \"message\" : \"Constraint Violation: [must be greater than 0]\",\r\n    \"status\" : 400\r\n  }\r\n}"
+                  },
+                  "order-rest-controller-test/예외_주문내역상세조회_id가0일때" : {
+                    "value" : "{\r\n  \"success\" : false,\r\n  \"response\" : null,\r\n  \"error\" : {\r\n    \"message\" : \"Constraint Violation: [must be greater than 0]\",\r\n    \"status\" : 400\r\n  }\r\n}"
+                  }
+                }
+              }
+            }
+          },
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/orders-id486549215"
+                },
+                "examples" : {
+                  "order-rest-controller-test/성공_주문내역상세조회" : {
+                    "value" : "{\r\n  \"success\" : true,\r\n  \"response\" : null,\r\n  \"error\" : null\r\n}"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "bearerAuthJWT" : [ ]
+        } ]
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "orders-id486549215" : {
+        "type" : "object"
+      }
+    },
+    "securitySchemes" : {
+      "bearerAuthJWT" : {
+        "type" : "http",
+        "scheme" : "bearer",
+        "bearerFormat" : "JWT"
+      }
+    }
+  }
+}

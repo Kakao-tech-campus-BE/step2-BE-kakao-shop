@@ -1,0 +1,563 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "KakaoShop API Docs",
+    "description" : "",
+    "version" : "0.1.0"
+  },
+  "servers" : [ {
+    "url" : "http://localhost:8080"
+  } ],
+  "tags" : [ ],
+  "paths" : {
+    "/carts/" : {
+      "get" : {
+        "tags" : [ "carts" ],
+        "summary" : "장바구니조회",
+        "description" : "장바구니조회",
+        "operationId" : "장바구니조회/성공_장바구니조회",
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/carts-update486549215"
+                },
+                "examples" : {
+                  "장바구니조회/성공_장바구니조회" : {
+                    "value" : "{\r\n  \"success\" : true,\r\n  \"response\" : {\r\n    \"products\" : [ {\r\n      \"id\" : 1,\r\n      \"productName\" : \"기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전\",\r\n      \"carts\" : [ {\r\n        \"id\" : 1,\r\n        \"option\" : {\r\n          \"id\" : 1,\r\n          \"optionName\" : \"01. 슬라이딩 지퍼백 크리스마스에디션 4종\",\r\n          \"price\" : 10000\r\n        },\r\n        \"quantity\" : 5,\r\n        \"price\" : 50000\r\n      }, {\r\n        \"id\" : 2,\r\n        \"option\" : {\r\n          \"id\" : 2,\r\n          \"optionName\" : \"02. 슬라이딩 지퍼백 플라워에디션 5종\",\r\n          \"price\" : 10900\r\n        },\r\n        \"quantity\" : 1,\r\n        \"price\" : 10900\r\n      } ]\r\n    }, {\r\n      \"id\" : 4,\r\n      \"productName\" : \"바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종\",\r\n      \"carts\" : [ {\r\n        \"id\" : 3,\r\n        \"option\" : {\r\n          \"id\" : 16,\r\n          \"optionName\" : \"선택02_바른곡물효소누룽지맛 6박스\",\r\n          \"price\" : 50000\r\n        },\r\n        \"quantity\" : 5,\r\n        \"price\" : 250000\r\n      } ]\r\n    } ],\r\n    \"totalPrice\" : 310900\r\n  },\r\n  \"error\" : null\r\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/carts/add" : {
+      "post" : {
+        "tags" : [ "carts" ],
+        "summary" : "장바구니담기",
+        "description" : "장바구니담기",
+        "operationId" : "장바구니담기/",
+        "requestBody" : {
+          "content" : {
+            "application/json;charset=UTF-8" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/carts-update486549215"
+              },
+              "examples" : {
+                "장바구니담기/성공_장바구니담기" : {
+                  "value" : "[ {\r\n  \"optionId\" : 1,\r\n  \"quantity\" : 3\r\n}, {\r\n  \"optionId\" : 2,\r\n  \"quantity\" : 5\r\n} ]"
+                },
+                "장바구니담기/실패_장바구니담기_수량이0일때" : {
+                  "value" : "[ {\r\n  \"optionId\" : 1,\r\n  \"quantity\" : 8\r\n}, {\r\n  \"optionId\" : 3,\r\n  \"quantity\" : 0\r\n} ]"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/carts-update486549215"
+                },
+                "examples" : {
+                  "장바구니담기/성공_장바구니담기" : {
+                    "value" : "{\r\n  \"success\" : true,\r\n  \"response\" : null,\r\n  \"error\" : null\r\n}"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "400",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/carts-update486549215"
+                },
+                "examples" : {
+                  "장바구니담기/실패_장바구니담기_수량이0일때" : {
+                    "value" : "{\r\n  \"success\" : false,\r\n  \"response\" : null,\r\n  \"error\" : {\r\n    \"message\" : \"Constraint Violation: [수량은 1 이상이어야 합니다.]\",\r\n    \"status\" : 400\r\n  }\r\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/carts/update" : {
+      "post" : {
+        "tags" : [ "carts" ],
+        "summary" : "장바구니수정",
+        "description" : "장바구니수정",
+        "operationId" : "장바구니수정/",
+        "requestBody" : {
+          "content" : {
+            "application/json;charset=UTF-8" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/carts-update486549215"
+              },
+              "examples" : {
+                "장바구니수정/성공_장바구니수정_수량이_0이면_삭제요청이다" : {
+                  "value" : "[ {\r\n  \"cartId\" : 1,\r\n  \"quantity\" : 0\r\n}, {\r\n  \"cartId\" : 2,\r\n  \"quantity\" : 3\r\n} ]"
+                },
+                "장바구니수정/실패_장바구니수정_요청가능한_최대수량초과" : {
+                  "value" : "[ {\r\n  \"cartId\" : 1,\r\n  \"quantity\" : 10001\r\n} ]"
+                },
+                "장바구니수정/실패_장바구니수정_요청에중복id가포함되어있다" : {
+                  "value" : "[ {\r\n  \"cartId\" : 1,\r\n  \"quantity\" : 1\r\n}, {\r\n  \"cartId\" : 1,\r\n  \"quantity\" : 1\r\n} ]"
+                },
+                "장바구니수정/실패_장바구니수정_장바구니에없는품목을수정하려고시도한다" : {
+                  "value" : "[ {\r\n  \"cartId\" : 1,\r\n  \"quantity\" : 0\r\n}, {\r\n  \"cartId\" : 99,\r\n  \"quantity\" : 3\r\n} ]"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/carts-update486549215"
+                },
+                "examples" : {
+                  "장바구니수정/성공_장바구니수정_수량이_0이면_삭제요청이다" : {
+                    "value" : "{\r\n  \"success\" : true,\r\n  \"response\" : {\r\n    \"carts\" : [ {\r\n      \"cartId\" : 2,\r\n      \"optionId\" : 2,\r\n      \"optionName\" : \"02. 슬라이딩 지퍼백 플라워에디션 5종\",\r\n      \"quantity\" : 3,\r\n      \"price\" : 32700\r\n    }, {\r\n      \"cartId\" : 3,\r\n      \"optionId\" : 16,\r\n      \"optionName\" : \"선택02_바른곡물효소누룽지맛 6박스\",\r\n      \"quantity\" : 5,\r\n      \"price\" : 250000\r\n    } ],\r\n    \"totalPrice\" : 282700\r\n  },\r\n  \"error\" : null\r\n}"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "400",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/carts-update486549215"
+                },
+                "examples" : {
+                  "장바구니수정/실패_장바구니수정_요청가능한_최대수량초과" : {
+                    "value" : "{\r\n  \"success\" : false,\r\n  \"response\" : null,\r\n  \"error\" : {\r\n    \"message\" : \"Constraint Violation: [수량은 10000개 이하이어야 합니다.]\",\r\n    \"status\" : 400\r\n  }\r\n}"
+                  },
+                  "장바구니수정/실패_장바구니수정_요청에중복id가포함되어있다" : {
+                    "value" : "{\r\n  \"success\" : false,\r\n  \"response\" : null,\r\n  \"error\" : {\r\n    \"message\" : \"요청 명세에 동일한 장바구니 아이디가 2개 이상 존재합니다.\",\r\n    \"status\" : 400\r\n  }\r\n}"
+                  },
+                  "장바구니수정/실패_장바구니수정_장바구니에없는품목을수정하려고시도한다" : {
+                    "value" : "{\r\n  \"success\" : false,\r\n  \"response\" : null,\r\n  \"error\" : {\r\n    \"message\" : \"해당하는 CartId 가 장바구니에 존재하지 않습니다. : 99\",\r\n    \"status\" : 400\r\n  }\r\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/check" : {
+      "post" : {
+        "tags" : [ "check" ],
+        "summary" : "이메일_중복체크",
+        "description" : "이메일_중복체크",
+        "operationId" : "이메일_중복체크/",
+        "requestBody" : {
+          "content" : {
+            "application/json;charset=UTF-8" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/carts-update486549215"
+              },
+              "examples" : {
+                "이메일_중복체크/성공_이메일중복체크" : {
+                  "value" : "{\r\n  \"email\" : \"anonymous@gmail.com\"\r\n}"
+                },
+                "이메일_중복체크/실패_이메일중복체크_이메일양식을지키지않음" : {
+                  "value" : "{\r\n  \"email\" : \"anonymousgmail.com\"\r\n}"
+                },
+                "이메일_중복체크/실패_이메일중복체크_이메일이중복됨" : {
+                  "value" : "{\r\n  \"email\" : \"ssarmango@nate.com\"\r\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/carts-update486549215"
+                },
+                "examples" : {
+                  "이메일_중복체크/성공_이메일중복체크" : {
+                    "value" : "{\r\n  \"success\" : true,\r\n  \"response\" : null,\r\n  \"error\" : null\r\n}"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "400",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/carts-update486549215"
+                },
+                "examples" : {
+                  "이메일_중복체크/실패_이메일중복체크_이메일양식을지키지않음" : {
+                    "value" : "{\r\n  \"success\" : false,\r\n  \"response\" : null,\r\n  \"error\" : {\r\n    \"message\" : \"Method Argument Not Valid Exception: 이메일 형식으로 작성해주세요\",\r\n    \"status\" : 400\r\n  }\r\n}"
+                  },
+                  "이메일_중복체크/실패_이메일중복체크_이메일이중복됨" : {
+                    "value" : "{\r\n  \"success\" : false,\r\n  \"response\" : null,\r\n  \"error\" : {\r\n    \"message\" : \"동일한 이메일이 존재합니다 : ssarmango@nate.com\",\r\n    \"status\" : 400\r\n  }\r\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/join" : {
+      "post" : {
+        "tags" : [ "join" ],
+        "summary" : "회원가입",
+        "description" : "회원가입",
+        "operationId" : "회원가입/",
+        "requestBody" : {
+          "content" : {
+            "application/json;charset=UTF-8" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/carts-update486549215"
+              },
+              "examples" : {
+                "회원가입/성공_회원가입" : {
+                  "value" : "{\r\n  \"email\" : \"anonymous@gmail.com\",\r\n  \"password\" : \"1234abcd!!\",\r\n  \"username\" : \"AnonymousUser\"\r\n}"
+                },
+                "회원가입/실패_회원가입_비밀번호양식을지키지않음" : {
+                  "value" : "{\r\n  \"email\" : \"anonymous@gmail.com\",\r\n  \"password\" : \"1234abcd\",\r\n  \"username\" : \"AnonymousUser\"\r\n}"
+                },
+                "회원가입/실패_회원가입_유저이름길이규칙을지키지않음" : {
+                  "value" : "{\r\n  \"email\" : \"anonymous@gmail.com\",\r\n  \"password\" : \"1234abcd!!\",\r\n  \"username\" : \"Anon\"\r\n}"
+                },
+                "회원가입/실패_회원가입_이메일양식을지키지않음" : {
+                  "value" : "{\r\n  \"email\" : \"anonymousgmail.com\",\r\n  \"password\" : \"1234abcd!!\",\r\n  \"username\" : \"AnonymousUser\"\r\n}"
+                },
+                "회원가입/실패_회원가입_이메일이중복됨" : {
+                  "value" : "{\r\n  \"email\" : \"ssarmango@nate.com\",\r\n  \"password\" : \"1234abcd!!\",\r\n  \"username\" : \"AnonymousUser\"\r\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/carts-update486549215"
+                },
+                "examples" : {
+                  "회원가입/성공_회원가입" : {
+                    "value" : "{\r\n  \"success\" : true,\r\n  \"response\" : null,\r\n  \"error\" : null\r\n}"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "400",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/carts-update486549215"
+                },
+                "examples" : {
+                  "회원가입/실패_회원가입_비밀번호양식을지키지않음" : {
+                    "value" : "{\r\n  \"success\" : false,\r\n  \"response\" : null,\r\n  \"error\" : {\r\n    \"message\" : \"Method Argument Not Valid Exception: 영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니다.\",\r\n    \"status\" : 400\r\n  }\r\n}"
+                  },
+                  "회원가입/실패_회원가입_유저이름길이규칙을지키지않음" : {
+                    "value" : "{\r\n  \"success\" : false,\r\n  \"response\" : null,\r\n  \"error\" : {\r\n    \"message\" : \"Method Argument Not Valid Exception: 8에서 45자 이내여야 합니다.\",\r\n    \"status\" : 400\r\n  }\r\n}"
+                  },
+                  "회원가입/실패_회원가입_이메일양식을지키지않음" : {
+                    "value" : "{\r\n  \"success\" : false,\r\n  \"response\" : null,\r\n  \"error\" : {\r\n    \"message\" : \"Method Argument Not Valid Exception: 이메일 형식으로 작성해주세요\",\r\n    \"status\" : 400\r\n  }\r\n}"
+                  },
+                  "회원가입/실패_회원가입_이메일이중복됨" : {
+                    "value" : "{\r\n  \"success\" : false,\r\n  \"response\" : null,\r\n  \"error\" : {\r\n    \"message\" : \"동일한 이메일이 존재합니다 : ssarmango@nate.com\",\r\n    \"status\" : 400\r\n  }\r\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/login" : {
+      "post" : {
+        "tags" : [ "login" ],
+        "summary" : "로그인",
+        "description" : "로그인",
+        "operationId" : "로그인/",
+        "requestBody" : {
+          "content" : {
+            "application/json;charset=UTF-8" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/carts-update486549215"
+              },
+              "examples" : {
+                "로그인/성공_로그인" : {
+                  "value" : "{\r\n  \"email\" : \"ssarmango@nate.com\",\r\n  \"password\" : \"meta1234!\"\r\n}"
+                },
+                "로그인/실패_존재하지않는이메일" : {
+                  "value" : "{\r\n  \"email\" : \"anonymous@gmail.com\",\r\n  \"password\" : \"meta1234!\"\r\n}"
+                },
+                "로그인/실패_패스워드틀림" : {
+                  "value" : "{\r\n  \"email\" : \"ssarmango@nate.com\",\r\n  \"password\" : \"1234abcd!!\"\r\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/carts-update486549215"
+                },
+                "examples" : {
+                  "로그인/성공_로그인" : {
+                    "value" : "{\r\n  \"success\" : true,\r\n  \"response\" : null,\r\n  \"error\" : null\r\n}"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "400",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/carts-update486549215"
+                },
+                "examples" : {
+                  "로그인/실패_존재하지않는이메일" : {
+                    "value" : "{\r\n  \"success\" : false,\r\n  \"response\" : null,\r\n  \"error\" : {\r\n    \"message\" : \"이메일을 찾을 수 없습니다 : anonymous@gmail.com\",\r\n    \"status\" : 400\r\n  }\r\n}"
+                  },
+                  "로그인/실패_패스워드틀림" : {
+                    "value" : "{\r\n  \"success\" : false,\r\n  \"response\" : null,\r\n  \"error\" : {\r\n    \"message\" : \"패스워드가 잘못입력되었습니다 \",\r\n    \"status\" : 400\r\n  }\r\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders/save" : {
+      "post" : {
+        "tags" : [ "orders" ],
+        "summary" : "결제하기",
+        "description" : "결제하기",
+        "operationId" : "결제하기/",
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/carts-update486549215"
+                },
+                "examples" : {
+                  "결제하기/성공_결제하기" : {
+                    "value" : "{\r\n  \"success\" : true,\r\n  \"response\" : {\r\n    \"id\" : 2,\r\n    \"products\" : [ {\r\n      \"productName\" : \"기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전\",\r\n      \"items\" : [ {\r\n        \"id\" : 4,\r\n        \"optionName\" : \"01. 슬라이딩 지퍼백 크리스마스에디션 4종\",\r\n        \"quantity\" : 5,\r\n        \"price\" : 50000\r\n      }, {\r\n        \"id\" : 5,\r\n        \"optionName\" : \"02. 슬라이딩 지퍼백 플라워에디션 5종\",\r\n        \"quantity\" : 1,\r\n        \"price\" : 10900\r\n      } ]\r\n    }, {\r\n      \"productName\" : \"바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종\",\r\n      \"items\" : [ {\r\n        \"id\" : 6,\r\n        \"optionName\" : \"선택02_바른곡물효소누룽지맛 6박스\",\r\n        \"quantity\" : 5,\r\n        \"price\" : 250000\r\n      } ]\r\n    } ],\r\n    \"totalPrice\" : 310900\r\n  },\r\n  \"error\" : null\r\n}"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "400",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/carts-update486549215"
+                },
+                "examples" : {
+                  "결제하기/실패_결제하기_장바구니비어있음" : {
+                    "value" : "{\r\n  \"success\" : false,\r\n  \"response\" : null,\r\n  \"error\" : {\r\n    \"message\" : \"장바구니에 담긴 상품이 없습니다.\",\r\n    \"status\" : 400\r\n  }\r\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/orders/{id}" : {
+      "get" : {
+        "tags" : [ "orders" ],
+        "summary" : "주문결과확인",
+        "description" : "주문결과확인",
+        "operationId" : "주문결과확인/",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/carts-update486549215"
+                },
+                "examples" : {
+                  "주문결과확인/성공_주문결과확인" : {
+                    "value" : "{\r\n  \"success\" : true,\r\n  \"response\" : {\r\n    \"id\" : 1,\r\n    \"products\" : [ {\r\n      \"productName\" : \"기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전\",\r\n      \"items\" : [ {\r\n        \"id\" : 1,\r\n        \"optionName\" : \"01. 슬라이딩 지퍼백 크리스마스에디션 4종\",\r\n        \"quantity\" : 5,\r\n        \"price\" : 50000\r\n      }, {\r\n        \"id\" : 2,\r\n        \"optionName\" : \"02. 슬라이딩 지퍼백 플라워에디션 5종\",\r\n        \"quantity\" : 1,\r\n        \"price\" : 10900\r\n      } ]\r\n    }, {\r\n      \"productName\" : \"바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종\",\r\n      \"items\" : [ {\r\n        \"id\" : 3,\r\n        \"optionName\" : \"선택02_바른곡물효소누룽지맛 6박스\",\r\n        \"quantity\" : 5,\r\n        \"price\" : 250000\r\n      } ]\r\n    } ],\r\n    \"totalPrice\" : 310900\r\n  },\r\n  \"error\" : null\r\n}"
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "404",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/carts-update486549215"
+                },
+                "examples" : {
+                  "주문결과확인/실패_주문결과확인_주문내역이존재하지않음" : {
+                    "value" : "{\r\n  \"success\" : false,\r\n  \"response\" : null,\r\n  \"error\" : {\r\n    \"message\" : \"주문 내역을 찾을 수 없습니다. : 99\",\r\n    \"status\" : 404\r\n  }\r\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products" : {
+      "get" : {
+        "tags" : [ "products" ],
+        "summary" : "전체상품목록조회",
+        "description" : "전체상품목록조회",
+        "operationId" : "전체상품목록조회/",
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/carts-update486549215"
+                },
+                "examples" : {
+                  "전체상품목록조회/성공_전체상품목록조회" : {
+                    "value" : "{\r\n  \"success\" : true,\r\n  \"response\" : [ {\r\n    \"id\" : 1,\r\n    \"productName\" : \"기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전\",\r\n    \"description\" : \"\",\r\n    \"image\" : \"/images/1.jpg\",\r\n    \"price\" : 1000\r\n  }, {\r\n    \"id\" : 2,\r\n    \"productName\" : \"[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율\",\r\n    \"description\" : \"\",\r\n    \"image\" : \"/images/2.jpg\",\r\n    \"price\" : 2000\r\n  }, {\r\n    \"id\" : 3,\r\n    \"productName\" : \"삼성전자 JBL JR310 외 어린이용/성인용 헤드셋 3종!\",\r\n    \"description\" : \"\",\r\n    \"image\" : \"/images/3.jpg\",\r\n    \"price\" : 30000\r\n  }, {\r\n    \"id\" : 4,\r\n    \"productName\" : \"바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종\",\r\n    \"description\" : \"\",\r\n    \"image\" : \"/images/4.jpg\",\r\n    \"price\" : 4000\r\n  }, {\r\n    \"id\" : 5,\r\n    \"productName\" : \"[더주] 컷팅말랑장족, 숏다리 100g/300g 외 주전부리 모음 /중독성 최고/마른안주\",\r\n    \"description\" : \"\",\r\n    \"image\" : \"/images/5.jpg\",\r\n    \"price\" : 5000\r\n  }, {\r\n    \"id\" : 6,\r\n    \"productName\" : \"굳지않는 앙금절편 1,050g 2팩 외 우리쌀떡 모음전\",\r\n    \"description\" : \"\",\r\n    \"image\" : \"/images/6.jpg\",\r\n    \"price\" : 15900\r\n  }, {\r\n    \"id\" : 7,\r\n    \"productName\" : \"eoe 이너딜리티 30포, 오렌지맛 고 식이섬유 보충제\",\r\n    \"description\" : \"\",\r\n    \"image\" : \"/images/7.jpg\",\r\n    \"price\" : 26800\r\n  }, {\r\n    \"id\" : 8,\r\n    \"productName\" : \"제나벨 PDRN 크림 2개. 피부보습/진정 케어\",\r\n    \"description\" : \"\",\r\n    \"image\" : \"/images/8.jpg\",\r\n    \"price\" : 25900\r\n  }, {\r\n    \"id\" : 9,\r\n    \"productName\" : \"플레이스테이션 VR2 호라이즌 번들. 생생한 몰입감\",\r\n    \"description\" : \"\",\r\n    \"image\" : \"/images/9.jpg\",\r\n    \"price\" : 797000\r\n  } ],\r\n  \"error\" : null\r\n}"
+                  },
+                  "전체상품목록조회/성공_전체상품목록조회_페이지가어있을때" : {
+                    "value" : "{\r\n  \"success\" : true,\r\n  \"response\" : [ ],\r\n  \"error\" : null\r\n}"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "400",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/carts-update486549215"
+                },
+                "examples" : {
+                  "전체상품목록조회/실패_전체상품목록조회_페이지번호가_숫자가_아닐때" : {
+                    "value" : "{\r\n  \"success\" : false,\r\n  \"response\" : null,\r\n  \"error\" : {\r\n    \"message\" : \"Argument Type Mismatch: page should be int\",\r\n    \"status\" : 400\r\n  }\r\n}"
+                  },
+                  "전체상품목록조회/실패_전체상품목록조회_페이지번호가_음수일때" : {
+                    "value" : "{\r\n  \"success\" : false,\r\n  \"response\" : null,\r\n  \"error\" : {\r\n    \"message\" : \"Constraint Violation: [must be greater than or equal to 0]\",\r\n    \"status\" : 400\r\n  }\r\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/products/{id}" : {
+      "get" : {
+        "tags" : [ "products" ],
+        "summary" : "개별상품상세조회",
+        "description" : "개별상품상세조회",
+        "operationId" : "개별상품상세조회/",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/carts-update486549215"
+                },
+                "examples" : {
+                  "개별상품상세조회/성공_개별상품상세조회" : {
+                    "value" : "{\r\n  \"success\" : true,\r\n  \"response\" : {\r\n    \"id\" : 1,\r\n    \"productName\" : \"기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전\",\r\n    \"description\" : \"\",\r\n    \"image\" : \"/images/1.jpg\",\r\n    \"price\" : 1000,\r\n    \"starCount\" : 5,\r\n    \"options\" : [ {\r\n      \"id\" : 1,\r\n      \"optionName\" : \"01. 슬라이딩 지퍼백 크리스마스에디션 4종\",\r\n      \"price\" : 10000\r\n    }, {\r\n      \"id\" : 2,\r\n      \"optionName\" : \"02. 슬라이딩 지퍼백 플라워에디션 5종\",\r\n      \"price\" : 10900\r\n    }, {\r\n      \"id\" : 3,\r\n      \"optionName\" : \"고무장갑 베이지 S(소형) 6팩\",\r\n      \"price\" : 9900\r\n    }, {\r\n      \"id\" : 4,\r\n      \"optionName\" : \"뽑아쓰는 키친타올 130매 12팩\",\r\n      \"price\" : 16900\r\n    }, {\r\n      \"id\" : 5,\r\n      \"optionName\" : \"2겹 식빵수세미 6매\",\r\n      \"price\" : 8900\r\n    } ]\r\n  },\r\n  \"error\" : null\r\n}"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "400",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/carts-update486549215"
+                },
+                "examples" : {
+                  "개별상품상세조회/실패_개별상품상세조회_상품번호가_숫자가_아닐때" : {
+                    "value" : "{\r\n  \"success\" : false,\r\n  \"response\" : null,\r\n  \"error\" : {\r\n    \"message\" : \"Argument Type Mismatch: id should be int\",\r\n    \"status\" : 400\r\n  }\r\n}"
+                  },
+                  "개별상품상세조회/실패_개별상품상세조회_상품번호가_음수일때" : {
+                    "value" : "{\r\n  \"success\" : false,\r\n  \"response\" : null,\r\n  \"error\" : {\r\n    \"message\" : \"Constraint Violation: [must be greater than 0]\",\r\n    \"status\" : 400\r\n  }\r\n}"
+                  },
+                  "개별상품상세조회/실패_개별상품상세조회_상품이_없을때" : {
+                    "value" : "{\r\n  \"success\" : false,\r\n  \"response\" : null,\r\n  \"error\" : {\r\n    \"message\" : \"해당 상품이 존재하지 않습니다.\",\r\n    \"status\" : 400\r\n  }\r\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "carts-update486549215" : {
+        "type" : "object"
+      }
+    }
+  }
+}
