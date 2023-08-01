@@ -42,7 +42,7 @@ public class CartRestControllerTest {
         CartRequest.SaveDTO item = new CartRequest.SaveDTO();
         item.setOptionId(3);
         item.setQuantity(5);
-        item.setPrice(49500); // 이 코드 추가해줌
+        item.setPrice(49500); // 가격 코드 추가해줌
         requestDTOs.add(item);
 
         String requestBody = om.writeValueAsString(requestDTOs);
@@ -97,7 +97,7 @@ public class CartRestControllerTest {
         CartRequest.UpdateDTO item = new CartRequest.UpdateDTO();
         item.setCartId(1);
         item.setQuantity(10);
-        item.setPrice(100000);
+        item.setPrice(100000); // 여기도 가격 코드 추가
         requestDTOs.add(item);
 
         String requestBody = om.writeValueAsString(requestDTOs);
