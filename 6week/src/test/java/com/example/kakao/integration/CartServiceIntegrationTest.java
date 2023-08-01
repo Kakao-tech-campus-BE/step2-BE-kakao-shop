@@ -39,7 +39,7 @@ class CartServiceIntegrationTest extends IntegrationTest {
 
   @BeforeEach
   void setUpUser() {
-    user = userRepository.findByEmail("ssarmango@nate.com").get();
+    user = userRepository.findByEmail("ssar@nate.com").get();
   }
 
 

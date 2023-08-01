@@ -30,7 +30,7 @@ class OrderServiceIntegrationTest extends IntegrationTest {
   @DisplayName("주문 이후 장바구니 초기화 확인")
   void cartResetAfterOrder() {
     // given
-    User user = userRepository.findByEmail("ssarmango@nate.com").get();
+    User user = userRepository.findByEmail("ssar@nate.com").get();
     List<SaveRequestDTO> requestDTOs = List.of(
       SaveRequestDTO.builder().optionId(1).quantity(3).build(),
       SaveRequestDTO.builder().optionId(2).quantity(2).build()

@@ -27,7 +27,7 @@ class CartServiceTest {
   @DisplayName("예외: 같은 옵션 2개 이상 담기 요청 시 예외처리")
   void addCartListSameOptionsError() {
     // given
-    User user = userRepository.findByEmail("ssarmango@nate.com").get();
+    User user = userRepository.findByEmail("ssar@nate.com").get();
     List<SaveRequestDTO> requestDTOs = List.of(
       SaveRequestDTO.builder().optionId(1).quantity(2).build(),
       SaveRequestDTO.builder().optionId(1).quantity(4).build()
@@ -40,7 +40,7 @@ class CartServiceTest {
   @DisplayName("예외: 비어있는 수정 요청")
   void updateWithEmptyRequest() {
     // given
-    User user = userRepository.findByEmail("ssarmango@nate.com").get();
+    User user = userRepository.findByEmail("ssar@nate.com").get();
     List<UpdateRequestDTO> requestDTOs = List.of();
 
     assertThrows(BadRequestException.class, () -> cartService.update(requestDTOs, user));
@@ -50,7 +50,7 @@ class CartServiceTest {
   @DisplayName("예외: 빈 장바구니 수정 시도")
   void updateEmptyCartError() {
     // given
-    User user = userRepository.findByEmail("ssarmango@nate.com").get();
+    User user = userRepository.findByEmail("ssar@nate.com").get();
     List<UpdateRequestDTO> requestDTOs = List.of(
       UpdateRequestDTO.builder().cartId(1).quantity(2).build(),
       UpdateRequestDTO.builder().cartId(2).quantity(4).build()

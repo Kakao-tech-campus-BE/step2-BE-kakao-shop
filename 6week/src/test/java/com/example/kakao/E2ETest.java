@@ -41,7 +41,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 @Transactional
 @Sql("classpath:db/teardown.sql")
-@WithUserDetails(value = "ssarmango@nate.com")
+@WithUserDetails(value = "ssar@nate.com")
 @AutoConfigureRestDocs(uriScheme = "http")
 @AutoConfigureMockMvc
 @ExtendWith({RestDocumentationExtension.class})

@@ -28,7 +28,7 @@ public class KakaoApplication {
 	@Bean
 	CommandLineRunner localServerStart(UserJPARepository userJPARepository, ProductJPARepository productJPARepository, OptionJPARepository optionJPARepository, PasswordEncoder passwordEncoder){
 		return args -> {
-			userJPARepository.saveAll(Arrays.asList(newUser("ssarmango", passwordEncoder)));
+			userJPARepository.saveAll(Arrays.asList(newUser("ssar", passwordEncoder)));
 			productJPARepository.saveAll(Arrays.asList(
 					newProduct("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전", 1, 1000),
 					newProduct("[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율", 2, 2000),

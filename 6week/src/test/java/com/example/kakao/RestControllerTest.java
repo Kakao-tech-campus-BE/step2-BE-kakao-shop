@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 
 
 @AutoConfigureMockMvc
-@WithUserDetails(value = "ssarmango@nate.com")
+@WithUserDetails(value = "ssar@nate.com")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 public abstract class RestControllerTest {
 

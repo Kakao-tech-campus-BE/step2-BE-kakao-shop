@@ -17,7 +17,7 @@ import javax.transaction.Transactional;
 @ActiveProfiles("test")
 @Transactional
 @Sql("classpath:db/teardown.sql")
-@WithUserDetails(value = "ssarmango@nate.com")
+@WithUserDetails(value = "ssar@nate.com")
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 public abstract class IntegrationTest {

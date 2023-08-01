@@ -10,7 +10,7 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 
 class UserE2ETest extends E2ETest {
-  private String existEmail = "ssarmango@nate.com";
+  private String existEmail = "ssar@nate.com";
   private String nonExistEmail = "anonymous@gmail.com";
   private String existPassword = "meta1234!";
 
