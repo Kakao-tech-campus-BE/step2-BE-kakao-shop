@@ -1,16 +1,12 @@
 package com.example.kakao.order;
 
-import com.example.kakao.cart.CartResponse;
 import com.example.kakao.order.item.Item;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import com.example.kakao.product.Product;
-
 
 
 public class OrderResponse {
@@ -29,6 +25,7 @@ public class OrderResponse {
                     .map(product -> new OrderResponse.SaveDTO.ProductDTO(product, items)).collect(Collectors.toList());
             this.totalPrice = items.stream().mapToInt(item -> item.getPrice()).sum();
         }
+
         @Getter @Setter
         public class ProductDTO {
             private String ProductName;
@@ -43,6 +40,7 @@ public class OrderResponse {
                         .collect(Collectors.toList());
             }
         }
+
         @Getter @Setter
         public class ItemDTO{
             private int id;
@@ -55,9 +53,7 @@ public class OrderResponse {
                 this.OptionName=item.getOption().getOptionName();
                 this.quantitiy=item.getQuantity();
                 this.price=item.getPrice();
-
             }
-
         }
     }
 
@@ -89,6 +85,7 @@ public class OrderResponse {
                         .collect(Collectors.toList());
             }
         }
+
         @Getter @Setter
         public class ItemDTO {
             private int id;
@@ -101,7 +98,6 @@ public class OrderResponse {
                 this.OptionName = item.getOption().getOptionName();
                 this.quantitiy = item.getQuantity();
                 this.price = item.getPrice();
-
             }
         }
     }

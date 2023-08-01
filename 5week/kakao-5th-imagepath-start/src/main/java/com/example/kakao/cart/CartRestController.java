@@ -17,21 +17,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 public class CartRestController {
-
     private final CartService cartListService;
 
-    /**
-     * [
-     * {
-     * "optionId":1,
-     * "quantity":5
-     * },
-     * {
-     * "optionId":2,
-     * "quantity":5
-     * }
-     * ]
-     */
     // (기능6) 장바구니 담기 POST
     // /carts/add
     @PostMapping("/carts/add")
@@ -50,26 +37,6 @@ public class CartRestController {
         return ResponseEntity.ok(apiResult);
     }
 
-    @GetMapping("/carts/v2")
-    public ResponseEntity<?> findAllv2(@AuthenticationPrincipal CustomUserDetails userDetails) {
-        CartResponse.FindAllDTOv2 responseDTO = cartListService.findAllv2(userDetails.getUser());
-        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(responseDTO);
-        return ResponseEntity.ok(apiResult);
-    }
-
-
-    /**
-     * [
-     * {
-     * "cartId":1,
-     * "quantity":10
-     * },
-     * {
-     * "cartId":2,
-     * "quantity":10
-     * }
-     * ]
-     */
 // (기능8) 주문하기 - (주문화면에서 장바구니 수정하기)
 // /carts/update
     @PostMapping("/carts/update")

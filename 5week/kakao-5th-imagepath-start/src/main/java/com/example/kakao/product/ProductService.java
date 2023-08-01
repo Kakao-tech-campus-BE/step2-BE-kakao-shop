@@ -20,14 +20,6 @@ public class ProductService {
     private final ProductJPARepository productRepository;
     private final OptionJPARepository optionRepository;
 
-    public ProductResponse.FindByIdDTOv2 findByIdv2(int id) {
-        List<Option> optionListPS = optionRepository.findByProductIdJoinProduct(id);
-        if(optionListPS.size() == 0){
-            throw new Exception404("해당 상품을 찾을 수 없습니다 : "+id);
-        }
-        return new ProductResponse.FindByIdDTOv2(optionListPS);
-    }
-
     public ProductResponse.FindByIdDTO findById(int id) {
         Product productPS = productRepository.findById(id).orElseThrow(
                 () -> new Exception404("해당 상품을 찾을 수 없습니다 : "+id)
@@ -36,15 +28,11 @@ public class ProductService {
         return new ProductResponse.FindByIdDTO(productPS, optionListPS);
     }
 
-
-
     public List<ProductResponse.FindAllDTO> findAll(int page) {
         // 1. 페이지 객체 만들기
         Pageable pageable = PageRequest.of(page,9);
-
         // 2. DB 조회하기
         Page<Product> pageContent = productRepository.findAll(pageable);
-
         // 3. DTO 만들기
         // 페이지 객체의 content는 List이다.
         // List를 stream()으로 변환 -> 자바 오브젝트의 타입이 없어진다. (강물에 흩뿌린다)

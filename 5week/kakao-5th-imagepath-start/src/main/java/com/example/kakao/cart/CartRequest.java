@@ -7,7 +7,6 @@ import lombok.ToString;
 import javax.validation.constraints.NotNull;
 
 public class CartRequest {
-
     @Getter @Setter @ToString
     public static class SaveDTO {
         @NotNull
