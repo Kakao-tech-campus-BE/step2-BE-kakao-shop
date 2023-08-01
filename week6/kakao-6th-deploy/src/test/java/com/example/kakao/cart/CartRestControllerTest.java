@@ -1,6 +1,7 @@
 package com.example.kakao.cart;
 
 import com.example.kakao.MyRestDoc;
+import com.example.kakao.cart.CartJPARepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,8 +16,10 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -29,8 +32,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 public class CartRestControllerTest extends MyRestDoc {
-    @Autowired
+
     private ObjectMapper om;
+
+    private final CartJPARepository cartJPARepository;
+
+    @Autowired
+    public CartRestControllerTest(ObjectMapper om, CartJPARepository cartJPARepository) {
+        this.om = om;
+        this.cartJPARepository = cartJPARepository;
+    }
+
+
 
     @WithUserDetails(value = "ssarmango@nate.com")
     @Test
@@ -120,5 +133,27 @@ public class CartRestControllerTest extends MyRestDoc {
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
+    @Transactional
+    @DisplayName("장바구니 조회 에러 테스트")
+    @WithUserDetails(value = "ssarmango@nate.com")
+    @Test
+    public void findAllError_test() throws Exception {
+        //given
+        cartJPARepository.deleteAllById(Arrays.asList(1,2,3));
 
+        //when
+        ResultActions resultActions = mvc.perform(
+                get("/carts")
+        );
+
+        //console
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        //then
+        resultActions.andExpect(jsonPath("$.success").value(false))
+                .andExpect(jsonPath("$.response").isEmpty())
+                .andExpect(jsonPath("$.error.message").value("장바구니가 비어있습니다."));
+
+    }
 }
