@@ -32,4 +32,4 @@ springdoc:
   default-produces-media-type: application/json;charset=UTF-8
   swagger-ui:
     url: /docs/openapi3.json
-    path: /docs/api-docs # api doc path
+    path: /api/docs/api-docs # api doc path
