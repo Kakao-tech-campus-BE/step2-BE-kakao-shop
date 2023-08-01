@@ -45,6 +45,11 @@ public class ProductService {
         // 2. DB 조회하기
         Page<Product> pageContent = productRepository.findAll(pageable);
 
+
+        if (pageContent == null || !pageContent.hasContent()) {
+            throw new Exception404("상품이 없는 페이지입니다. 접근불가"); // You can customize this exception
+        }
+
         // 3. DTO 만들기
         // 페이지 객체의 content는 List이다.
         // List를 stream()으로 변환 -> 자바 오브젝트의 타입이 없어진다. (강물에 흩뿌린다)
