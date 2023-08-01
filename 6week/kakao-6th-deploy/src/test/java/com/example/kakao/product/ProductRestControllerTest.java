@@ -1,11 +1,13 @@
 package com.example.kakao.product;
 
 import com.example.kakao.MyRestDoc;
+import com.example.kakao._core.util.CustomRequestPostProcessor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.ResultActions;
@@ -28,6 +30,7 @@ public class ProductRestControllerTest extends MyRestDoc {
         // when
         ResultActions resultActions = mvc.perform(
                 get("/products")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
         );
 
         // console
@@ -52,6 +55,7 @@ public class ProductRestControllerTest extends MyRestDoc {
         ResultActions resultActions = mvc.perform(
                 get("/products")
                         .param("page", String.valueOf(page))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
         );
 
         // console
@@ -76,7 +80,9 @@ public class ProductRestControllerTest extends MyRestDoc {
         // when
         ResultActions resultActions = mvc.perform(
                 get("/products")
-                        .param("page", String.valueOf(page))
+                    .param("page", String.valueOf(page))
+                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                    .with(new CustomRequestPostProcessor())
         );
 
         // console
@@ -99,6 +105,7 @@ public class ProductRestControllerTest extends MyRestDoc {
         // when
         ResultActions resultActions = mvc.perform(
                 get("/products/" + id)
+                    .contentType(MediaType.APPLICATION_JSON_VALUE)
         );
 
         // console
@@ -123,6 +130,7 @@ public class ProductRestControllerTest extends MyRestDoc {
         // when
         ResultActions resultActions = mvc.perform(
                 get("/products/" + id + "/v2")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
         );
 
         // console
@@ -148,6 +156,8 @@ public class ProductRestControllerTest extends MyRestDoc {
         // when
         ResultActions resultActions = mvc.perform(
                 get("/products/" + id + "/v2")
+                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+                    .with(new CustomRequestPostProcessor())
         );
 
         // console

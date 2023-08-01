@@ -1,6 +1,7 @@
 package com.example.kakao.cart;
 
 import com.example.kakao.MyRestDoc;
+import com.example.kakao._core.util.CustomRequestPostProcessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -107,6 +108,7 @@ public class CartRestControllerTest extends MyRestDoc {
                 post("/carts/add")
                         .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .with(new CustomRequestPostProcessor())
         );
 
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
@@ -128,6 +130,7 @@ public class CartRestControllerTest extends MyRestDoc {
         // when
         ResultActions resultActions = mvc.perform(
                 get("/carts")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
         );
 
         // eye
@@ -157,6 +160,7 @@ public class CartRestControllerTest extends MyRestDoc {
         // when
         ResultActions resultActions = mvc.perform(
                 get("/carts")
+                .with(new CustomRequestPostProcessor())
         );
 
         // eye
@@ -223,6 +227,7 @@ public class CartRestControllerTest extends MyRestDoc {
                 post("/carts/update")
                         .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .with(new CustomRequestPostProcessor())
         );
 
         // eye

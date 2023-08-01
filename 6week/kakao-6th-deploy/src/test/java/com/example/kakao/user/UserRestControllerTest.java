@@ -1,6 +1,7 @@
 package com.example.kakao.user;
 
 import com.example.kakao.MyRestDoc;
+import com.example.kakao._core.util.CustomRequestPostProcessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -70,6 +71,7 @@ public class UserRestControllerTest extends MyRestDoc {
                 post("/check")
                         .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .with(new CustomRequestPostProcessor())
         );
 
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
@@ -126,6 +128,7 @@ public class UserRestControllerTest extends MyRestDoc {
                 post("/join")
                         .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .with(new CustomRequestPostProcessor())
         );
 
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
@@ -155,6 +158,7 @@ public class UserRestControllerTest extends MyRestDoc {
                 post("/join")
                         .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .with(new CustomRequestPostProcessor())
         );
 
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
@@ -184,6 +188,7 @@ public class UserRestControllerTest extends MyRestDoc {
                 post("/join")
                         .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .with(new CustomRequestPostProcessor())
         );
 
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
@@ -213,6 +218,7 @@ public class UserRestControllerTest extends MyRestDoc {
                 post("/join")
                         .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .with(new CustomRequestPostProcessor())
         );
 
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
@@ -268,6 +274,7 @@ public class UserRestControllerTest extends MyRestDoc {
                 post("/login")
                         .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .with(new CustomRequestPostProcessor())
         );
 
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();

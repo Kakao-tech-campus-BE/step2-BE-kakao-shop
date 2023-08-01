@@ -1,6 +1,7 @@
 package com.example.kakao.order;
 
 import com.example.kakao.MyRestDoc;
+import com.example.kakao._core.util.CustomRequestPostProcessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
@@ -38,6 +40,7 @@ public class OrderRestControllerTest extends MyRestDoc {
         // when
         ResultActions resultActions = mvc.perform(
                 post("/orders/save")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
         );
 
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
@@ -70,6 +73,8 @@ public class OrderRestControllerTest extends MyRestDoc {
         // when
         ResultActions resultActions = mvc.perform(
                 post("/orders/save")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .with(new CustomRequestPostProcessor())
         );
 
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
@@ -92,6 +97,7 @@ public class OrderRestControllerTest extends MyRestDoc {
         // when
         ResultActions resultActions = mvc.perform(
                 get("/orders/" + orderId)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
         );
 
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
@@ -123,6 +129,8 @@ public class OrderRestControllerTest extends MyRestDoc {
         // when
         ResultActions resultActions = mvc.perform(
                 get("/orders/" + orderId)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .with(new CustomRequestPostProcessor())
         );
 
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
@@ -145,6 +153,8 @@ public class OrderRestControllerTest extends MyRestDoc {
         // when
         ResultActions resultActions = mvc.perform(
                 get("/orders/" + orderId)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .with(new CustomRequestPostProcessor())
         );
 
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
