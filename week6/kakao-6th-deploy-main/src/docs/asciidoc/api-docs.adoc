@@ -5,9 +5,10 @@ ifndef::snippets[]
 :snippets: ./build/generated-snippets
 endif::[]
 
+:user: user-rest-controller-test
 :product: product-rest-controller-test
 :cart: cart-rest-controller-test
-:user: user-rest-controller-test
+:order: order-rest-controller-test
 
 :toc: left
 :toclevels: 2
@@ -79,13 +80,21 @@ include::{snippets}/{user}/login_fail_test_invalid_password_length/http-request.
 ==== 응답 예시
 include::{snippets}/{user}/login_fail_test_invalid_password_length/response-body.adoc[]
 
-=== 로그인 실패 - 인증되지 않은 사용자
+=== 로그인 실패 - 미등록 이메일
 
 ==== 요청 예시
-include::{snippets}/{user}/login_fail_test_invalid_auth/http-request.adoc[]
+include::{snippets}/{user}/login_fail_test_unregistered_email/http-request.adoc[]
 
 ==== 응답 예시
-include::{snippets}/{user}/login_fail_test_invalid_auth/response-body.adoc[]
+include::{snippets}/{user}/login_fail_test_unregistered_email/response-body.adoc[]
+
+=== 로그인 실패 - 비밀번호 오류
+
+==== 요청 예시
+include::{snippets}/{user}/login_fail_test_wrong_password/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/login_fail_test_wrong_password/response-body.adoc[]
 
 === 이메일 중복 체크
 
@@ -123,6 +132,14 @@ include::{snippets}/{product}/find-by-id_test/http-request.adoc[]
 ==== 응답 예시
 include::{snippets}/{product}/find-by-id_test/response-body.adoc[]
 
+=== 개별 상품 상세 조회 실패 - 미등록 상품
+
+==== 요청 예시
+include::{snippets}/{product}/find-by-id_test_unregistered_product/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{product}/find-by-id_test_unregistered_product/response-body.adoc[]
+
 == 장바구니
 
 === 장바구니 담기
@@ -132,6 +149,38 @@ include::{snippets}/{cart}/add-cart-list_test/http-request.adoc[]
 
 ==== 응답 예시
 include::{snippets}/{cart}/add-cart-list_test/response-body.adoc[]
+
+=== 장바구니 담기 - 기존 장바구니 수량 업데이트
+
+==== 요청 예시
+include::{snippets}/{cart}/add-cart-list_test_update_quantity/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/add-cart-list_test_update_quantity/response-body.adoc[]
+
+=== 장바구니 담기 실패 - 최소 수량
+
+==== 요청 예시
+include::{snippets}/{cart}/add-cart-list_fail_test_min_quantity/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/add-cart-list_fail_test_min_quantity/response-body.adoc[]
+
+=== 장바구니 담기 실패 - 중복 옵션값
+
+==== 요청 예시
+include::{snippets}/{cart}/add-cart-list_fail_test_duplicated_id/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/add-cart-list_fail_test_duplicated_id/response-body.adoc[]
+
+=== 장바구니 담기 실패 - 찾을 수 없는 optionId
+
+==== 요청 예시
+include::{snippets}/{cart}/add-cart-list_fail_test_invalid_option-id/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/add-cart-list_fail_test_invalid_option-id/response-body.adoc[]
 
 === 장바구니 조회
 
@@ -150,3 +199,69 @@ include::{snippets}/{cart}/update_test/http-request.adoc[]
 
 ==== 응답 예시
 include::{snippets}/{cart}/update_test/response-body.adoc[]
+
+=== 장바구니 수정 실패 - 최소 수량
+
+==== 요청 예시
+include::{snippets}/{cart}/update_fail_test_min_quantity/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/update_fail_test_min_quantity/response-body.adoc[]
+
+=== 장바구니 수정 실패 - 빈 장바구니
+
+==== 요청 예시
+include::{snippets}/{cart}/update_fail_test_empty_cart/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/update_fail_test_empty_cart/response-body.adoc[]
+
+=== 장바구니 수정 실패 - 중복값
+
+==== 요청 예시
+include::{snippets}/{cart}/update_fail_test_duplicated_id/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/update_fail_test_duplicated_id/response-body.adoc[]
+
+=== 장바구니 수정 실패 - 찾을 수 없는 cartId
+
+==== 요청 예시
+include::{snippets}/{cart}/update_fail_test_invalid_cart-id/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/update_fail_test_invalid_cart-id/response-body.adoc[]
+
+== 주문
+
+=== 결재하기
+
+==== 요청 예시
+include::{snippets}/{order}/save_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{order}/save_test/response-body.adoc[]
+
+=== 결재하기 실패 - 빈 장바구니
+
+==== 요청 예시
+include::{snippets}/{order}/save_fail_test_empty_cart/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{order}/save_fail_test_empty_cart/response-body.adoc[]
+
+=== 주문하기
+
+==== 요청 예시
+include::{snippets}/{order}/find-by-id_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{order}/find-by-id_test/response-body.adoc[]
+
+=== 주문하기 실패 - 찾을 수 없는 orderId
+
+==== 요청 예시
+include::{snippets}/{order}/find-by-id_fail_test_invalid_order-id/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{order}/find-by-id_fail_test_invalid_order-id/response-body.adoc[]

@@ -214,8 +214,34 @@ public class UserRestControllerTest extends MyRestDoc {
     }
 
     @Test
-    @DisplayName("로그인 실패 - 인증되지 않은 사용자")
-    public void login_fail_test_invalid_auth() throws Exception {
+    @DisplayName("로그인 실패 - 비밀번호 길이")
+    public void login_fail_test_invalid_password_length() throws Exception {
+        // given
+        UserRequest.LoginDTO requestDTO = new UserRequest.LoginDTO();
+        requestDTO.setEmail("ssarmango@nate.com");
+        requestDTO.setPassword("meta12!");
+
+        String requestBody = om.writeValueAsString(requestDTO);
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/login")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+
+        // console
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트: " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("false"));
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
+    }
+
+    @Test
+    @DisplayName("로그인 실패 - 미등록 이메일")
+    public void login_fail_test_unregistered_email() throws Exception {
         // given
         UserRequest.LoginDTO requestDTO = new UserRequest.LoginDTO();
         requestDTO.setEmail("ssarmango1@nate.com");
@@ -240,12 +266,12 @@ public class UserRestControllerTest extends MyRestDoc {
     }
 
     @Test
-    @DisplayName("로그인 실패 - 비밀번호 길이")
-    public void login_fail_test_invalid_password_length() throws Exception {
+    @DisplayName("로그인 실패 - 잘못된 비밀번호")
+    public void login_fail_test_wrong_password() throws Exception {
         // given
         UserRequest.LoginDTO requestDTO = new UserRequest.LoginDTO();
         requestDTO.setEmail("ssarmango@nate.com");
-        requestDTO.setPassword("meta12!");
+        requestDTO.setPassword("meta1234!!");
 
         String requestBody = om.writeValueAsString(requestDTO);
 

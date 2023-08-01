@@ -35,8 +35,12 @@ public class CartService {
                 throw new Exception400("동일한 상품이 중복으로 담겨있습니다. : " + optionId);
             }
 
+            if(quantity < 1) {
+                throw new Exception400("최소 1개 이상의 상품을 담아주시기 바랍니다. : " + optionId);
+            }
+
             Option optionPS = optionJPARepository.findById(optionId)
-                    .orElseThrow(() -> new Exception404("해당 상품을 찾을 수 없습니다 : " + optionId));
+                    .orElseThrow(() -> new Exception400("해당 상품을 찾을 수 없습니다 : " + optionId));
             int price = optionPS.getPrice() * quantity;
 
             Optional<Cart> findExistingCart = cartJPARepository.findByOptionIdAndUserId(optionId, sessionUser.getId());
@@ -68,9 +72,14 @@ public class CartService {
 
         for(CartRequest.UpdateDTO updateDTO : requestDTOs) {
             int cartId = updateDTO.getCartId();
+            int quantity = updateDTO.getQuantity();
 
             if (!checkCartId.add(cartId)) {
                 throw new Exception400("동일한 상품이 중복으로 담겨있습니다 : " + cartId);
+            }
+
+            if(quantity < 1) {
+                throw new Exception400("최소 1개 이상의 상품을 담아주시기 바랍니다. : " + cartId);
             }
 
             boolean cartExist = false;
