@@ -13,12 +13,12 @@ public class OrderResponse {
     @Getter @Setter
     public static class FindByIdDTO {
         private int id;
-        private List<ProductDTO> productDTOS;
+        private List<ProductDTO> products;
         private int totalPrice;
 
         public FindByIdDTO(Order order, List<Item> itemList) {
             this.id = order.getId();
-            this.productDTOS = itemList.stream()
+            this.products = itemList.stream()
                     .map(item -> item.getOption().getProduct()).distinct()
                     .map(product -> new ProductDTO(itemList, product)).collect(Collectors.toList());
             this.totalPrice = itemList.stream().mapToInt(item -> item.getOption().getPrice() * item.getQuantity()).sum();
@@ -28,12 +28,12 @@ public class OrderResponse {
         public class ProductDTO {
             private int id;
             private String productName;
-            private List<ItemDTO> itemDTOS;
+            private List<ItemDTO> items;
 
             public ProductDTO(List<Item> itemList, Product product) {
                 this.id = product.getId();
                 this.productName = product.getProductName();
-                this.itemDTOS = itemList.stream()
+                this.items = itemList.stream()
                         .filter(item -> item.getOption().getProduct().getId() == product.getId())
                         .map(ItemDTO::new)
                         .collect(Collectors.toList());
