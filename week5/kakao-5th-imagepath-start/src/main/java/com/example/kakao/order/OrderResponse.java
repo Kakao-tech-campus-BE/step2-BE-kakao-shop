@@ -33,8 +33,9 @@ public class OrderResponse {
 
             public ProductDTO(Product product, List<Item> itemList) {
                 this.productName = product.getProductName();
-                this.items = null;
-                this.items = itemList.stream().map(ItemDTO::new).collect(Collectors.toList());
+                this.items = itemList.stream()
+                        .filter(item -> item.getOption().getProduct().getId() == product.getId())
+                        .map(ItemDTO::new).collect(Collectors.toList());
             }
 
             @Getter
@@ -77,7 +78,9 @@ public class OrderResponse {
 
             public ProductDTO(Product product, List<Item> itemList) {
                 this.productName = product.getProductName();
-                this.items = itemList.stream().map(ItemDTO::new).collect(Collectors.toList());
+                this.items = itemList.stream()
+                        .filter(item -> item.getOption().getProduct().getId() == product.getId())
+                        .map(ItemDTO::new).collect(Collectors.toList());
             }
 
             @Getter
