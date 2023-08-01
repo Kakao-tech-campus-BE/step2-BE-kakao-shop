@@ -1,0 +1,7 @@
+[source,options="nowrap"]
+----
+[ {
+  "optionId" : 3,
+  "quantity" : 5
+} ]
+----

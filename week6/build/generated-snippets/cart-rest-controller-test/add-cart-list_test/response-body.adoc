@@ -1,0 +1,8 @@
+[source,options="nowrap"]
+----
+{
+  "success" : true,
+  "response" : null,
+  "error" : null
+}
+----
