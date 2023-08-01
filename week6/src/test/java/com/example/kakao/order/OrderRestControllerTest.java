@@ -118,4 +118,23 @@ public class OrderRestControllerTest extends MyRestDoc {
         resultActions.andExpect(jsonPath("$.response.products[0].items[0].quantity").value(5));
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
+
+    @DisplayName("실패 테스트 : 빈 장바구니")
+    @WithUserDetails(value = "moon@kakao.com")
+    @Test
+    public void orderInsert_fail_test() throws Exception {
+        // given
+
+        // when
+        ResultActions resultActions = mockMvc.perform(
+                post("/orders/save")
+        );
+
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // then
+        resultActions.andExpect(jsonPath("$.success").value("false"));
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
+    }
 }

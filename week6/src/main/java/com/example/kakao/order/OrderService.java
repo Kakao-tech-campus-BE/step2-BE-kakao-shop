@@ -27,6 +27,8 @@ public class OrderService {
                 () -> new Exception403("장바구니가 비어있습니다.")
         );
 
+        if (carts.isEmpty()) throw new Exception403("장바구니가 비어있습니다.");
+
         Order savedOrder = orderJPARepository.save(Order.builder().user(user).build());
         List<Item> items = carts
                 .stream()
