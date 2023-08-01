@@ -4,6 +4,7 @@ server:
       charset: utf-8
       force: true
   port: 8080
+  forward-headers-strategy: framework
 spring:
   datasource:
     url: jdbc:mariadb://localhost:3306/kakao?allowPublicKeyRetrieval=true&useSSL=false
