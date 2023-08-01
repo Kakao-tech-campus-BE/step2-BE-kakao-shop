@@ -73,7 +73,7 @@ public class OrderService {
 
     public OrderResponse.saveDTO findAll (int id){
         List<Item> itemList = itemJPARepository.findByOrderId(id);
-        boolean containsNull = itemList.stream().anyMatch(Objects::isNull);
+        boolean containsNull = itemList.isEmpty() || itemList.stream().anyMatch(Objects::isNull);
         if(containsNull) {
             throw new IllegalArgumentException("item 리스트에 null이 들어갔거나 orderId에 해당하는 item을 찾을 수 없습니다");
         }
