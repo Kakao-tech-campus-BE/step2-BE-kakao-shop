@@ -159,7 +159,7 @@ public class CartService {
         List<Cart> cartList = getValidCartList(user.getId());
 
         try {
-            cartJPARepository.deleteAllInBatch(cartList);
+            cartJPARepository.deleteAllIn(cartList.stream().map(Cart::getId).collect(Collectors.toList()));
         } catch(Exception e) {
             throw new CartException.CartDeleteException(e.getMessage());
         }
@@ -167,7 +167,9 @@ public class CartService {
 
     // --------- private ---------
 
-    // 중복되는 id가 들어오면 예외를 발생시킨다.
+   /**
+    * 중복되는 id가 들어오면 예외를 발생시킨다.
+    */
     private <T, E extends RuntimeException> List<Integer> getValidDataIds(List<T> requestDtos, Function<T, Integer> getIdFunc, E exception){
         List<Integer> requestIds = requestDtos.stream()
                 .map(getIdFunc).distinct().collect(Collectors.toList());

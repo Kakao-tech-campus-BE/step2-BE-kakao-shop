@@ -39,4 +39,11 @@ public interface CartJPARepository extends JpaRepository<Cart, Integer> {
                                          @Param("userId") int userId);
 
 
+    // 기존의 deleteAllInBatch의 경우 or로 삭제할 데이터를 묶지만, in으로 처리하는 것이 더 빠르다.
+    // 이는 or과 in의 쿼리 실행계획이 다르기 때문.
+    @Modifying(flushAutomatically = true, clearAutomatically = true)
+    @Query("delete from Cart c " +
+            "where c.id in(:cartIds)")
+    void deleteAllIn(List<Integer> cartIds);
+
 }
