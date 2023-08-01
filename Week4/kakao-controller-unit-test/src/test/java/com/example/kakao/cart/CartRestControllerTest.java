@@ -2,13 +2,21 @@ package com.example.kakao.cart;
 
 import com.example.kakao._core.security.JWTProvider;
 import com.example.kakao._core.security.SecurityConfig;
+import com.example.kakao._core.utils.ApiUtils;
 import com.example.kakao._core.utils.FakeStore;
+import com.example.kakao.product.Product;
+import com.example.kakao.product.option.Option;
+import com.example.kakao.user.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -16,6 +24,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Import({
@@ -24,11 +33,66 @@ import java.util.List;
 })
 @WebMvcTest(controllers = {CartRestController.class})
 public class CartRestControllerTest {
+    @MockBean
+    private FakeStore fakeStore;
+
     @Autowired
     private MockMvc mvc;
 
     @Autowired
     private ObjectMapper om;
+
+    private User user;
+    private Product product;
+    private List<Option> optionList;
+    private List<Cart> cartList;
+
+    @BeforeEach
+    public void setUp() {
+        user = User.builder()
+                .id(1)
+                .email("ssar@nate.com")
+                .username("ssarmango")
+                .roles("ROLE_USER")
+                .build();
+        product = Product.builder()
+                .id(1)
+                .productName("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전")
+                .description("")
+                .image("/images/1.jpg")
+                .price(1000)
+                .build();
+        optionList = Arrays.asList(
+                Option.builder()
+                        .product(product)
+                        .id(1)
+                        .optionName("01. 슬라이딩 지퍼백 크리스마스에디션 4종")
+                        .price(10000)
+                        .build(),
+                Option.builder()
+                        .product(product)
+                        .id(2)
+                        .optionName("02. 슬라이딩 지퍼백 플라워에디션 5종")
+                        .price(10900)
+                        .build()
+        );
+        cartList = Arrays.asList(
+                Cart.builder()
+                        .id(1)
+                        .user(user)
+                        .option(optionList.get(0))
+                        .quantity(5)
+                        .price(optionList.get(0).getPrice() * 5)
+                        .build(),
+                Cart.builder()
+                        .id(2)
+                        .user(user)
+                        .option(optionList.get(1))
+                        .quantity(5)
+                        .price(optionList.get(1).getPrice() * 5)
+                        .build()
+        );
+    }
 
     @WithMockUser(username = "ssar@nate.com", roles = "USER")
     @Test
@@ -64,6 +128,9 @@ public class CartRestControllerTest {
     @Test
     public void findAll_test() throws Exception {
         // given
+
+        // stub
+        Mockito.when(fakeStore.getCartList()).thenReturn(cartList);
 
         // when
         ResultActions result = mvc.perform(
@@ -101,6 +168,9 @@ public class CartRestControllerTest {
         requestDTOs.add(d2);
         String requestBody = om.writeValueAsString(requestDTOs);
         System.out.println("테스트 : "+requestBody);
+
+        // stub
+        Mockito.when(fakeStore.getCartList()).thenReturn(cartList);
 
         // when
         ResultActions result = mvc.perform(
