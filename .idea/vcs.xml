@@ -4,6 +4,6 @@
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/2week/Kakao-Backend-Second-DTO" vcs="" />
     <mapping directory="$PROJECT_DIR$/4week/kakao-controller-unit-test" vcs="" />
-    <mapping directory="$PROJECT_DIR$/5week/kakao-5th-imagepath-start" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/5week/kakao-5th-imagepath-start" vcs="" />
   </component>
 </project>
