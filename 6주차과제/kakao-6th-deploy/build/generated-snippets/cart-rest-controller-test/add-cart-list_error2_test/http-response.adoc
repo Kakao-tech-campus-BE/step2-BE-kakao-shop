@@ -1,0 +1,15 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 404 Not Found
+Content-Type: application/json;charset=UTF-8
+Content-Length: 147
+
+{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "해당 옵션을 찾을 수 없습니다 : 49",
+    "status" : 404
+  }
+}
+----

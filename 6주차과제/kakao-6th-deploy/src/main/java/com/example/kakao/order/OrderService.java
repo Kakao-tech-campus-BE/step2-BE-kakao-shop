@@ -57,8 +57,7 @@ public class OrderService {
 
     public OrderResponse.findAllDTO findAll (int id){
         List<Item> items = itemJPARepository.findByOrderId(id);
-        boolean checkNull = items.stream().anyMatch((o) -> Objects.isNull(o));
-        if(checkNull) {
+        if(items==null || items.isEmpty()) {
             throw new Exception404("해당된 아이템을 찾을 수 없습니다.");
         }
         return OrderResponse.findAllDTO

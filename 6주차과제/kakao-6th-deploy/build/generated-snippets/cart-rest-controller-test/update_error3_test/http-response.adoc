@@ -1,0 +1,15 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 404 Not Found
+Content-Type: application/json;charset=UTF-8
+Content-Length: 144
+
+{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "잘못된 cartId를 입력하셨습니다.",
+    "status" : 404
+  }
+}
+----

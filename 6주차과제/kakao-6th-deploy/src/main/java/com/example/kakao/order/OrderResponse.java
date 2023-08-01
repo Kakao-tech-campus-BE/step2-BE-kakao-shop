@@ -66,6 +66,7 @@ public class OrderResponse {
 
     }
 
+    @Getter @Setter
     public static class findAllDTO {
         private int id;
         private List<ProductDTO> products;
