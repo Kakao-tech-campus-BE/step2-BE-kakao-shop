@@ -2,12 +2,14 @@ package com.example.kakao.cart;
 
 import com.example.kakao.MyRestDoc;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
@@ -117,5 +119,6 @@ public class CartRestControllerTest extends MyRestDoc {
         resultActions.andExpect(jsonPath("$.response.carts[0].price").value(100000));
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
+
 
 }
