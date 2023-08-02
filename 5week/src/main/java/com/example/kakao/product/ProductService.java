@@ -37,7 +37,6 @@ public class ProductService {
     }
 
 
-
     public List<ProductResponse.FindAllDTO> findAll(int page) {
         // 1. 페이지 객체 만들기
         Pageable pageable = PageRequest.of(page,9);

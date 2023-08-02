@@ -1,0 +1,11 @@
+[source,options="nowrap"]
+----
+{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "장바구니에 없는 cartId가 들어옴",
+    "status" : 404
+  }
+}
+----
