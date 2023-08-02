@@ -1679,7 +1679,8 @@ user를 두 명 저장하고 각 user에 따른 cart, order, item을 생성해�
 
 </br>
 
-## **Assignment**
+<details>
+<summary>Assignment</summary>
 
 - DB 사용
   > - fakeStore에서 DB로 변경했습니다.
@@ -1815,6 +1816,8 @@ user를 두 명 저장하고 각 user에 따른 cart, order, item을 생성해�
   - 로그인 실패 - 비밀번호 형식 오류
   - 400 Bad Request
 
+</details>
+
 </br>
 
 # 5주차
@@ -1826,14 +1829,7 @@ user를 두 명 저장하고 각 user에 따른 cart, order, item을 생성해�
 ## **과제명**
 
 ```
-1. 실패 단위 테스트
-```
-
-## **과제 설명**
-
-```
-1. 컨트롤러 단위테스트를 구현하는데, 실패 테스트 코드를 구현하시오.
-2. 어떤 문제가 발생할 수 있을지 모든 시나리오를 생각해본 뒤, 실패에 대한 모든 테스트를 구현하시오.
+1. 코드 리팩토링
 ```
 
 </br>
@@ -1842,9 +1838,13 @@ user를 두 명 저장하고 각 user에 따른 cart, order, item을 생성해�
 
 아래 항목은 반드시 포함하여 과제 수행해주세요!
 
-> - 실패 단위 테스트가 구현되었는가?
-> - 모든 예외에 대한 실패 테스트가 구현되었는가?
->   </br>
+> - AOP가 적용되었는가?
+> - GlobalExceptionHandler가 적용되었는가?
+> - 장바구니 담기시 모든 예외가 처리 완료되었는가?
+> - 장바구니 수정시 모든 예외가 처리 완료되었는가?
+> - 결제하기와 주문결과 확인이 완료되었는가?
+
+</br>
 
 ## **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
 
@@ -1858,6 +1858,57 @@ user를 두 명 저장하고 각 user에 따른 cart, order, item을 생성해�
 
 > - 코드 작성하면서 어려웠던 점
 > - 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
+
+</br>
+
+## **작성하면서 어려웠던 점**
+
+- 예외와 받아온 데이터를 처리할 때 적절하게 구현하려고 노력했습니다.
+- 어떤 쿼리로 가져와야 할지 고민이 됩니다.
+
+</br>
+
+## **리뷰 시 중점적으로 봐주셨으면 하는 부분**
+
+- 서비스가 적절하게 구현되어 있는지 궁금합니다. 
+
+</br>
+
+## **Assignment**
+
+- GlobalValidationHandler
+  - Request 유효성 검증하는 부분을 AOP를 만들어서 중복 코드를 추출합니다.
+- GlobalExceptionHandler
+  - 기존의 try catch 문을 없애고 @RestControllerAdvice를 이용해서 모든 컨트롤러에 대해 전역적으로 예외를 처리합니다.
+- CartService
+  - 리스트 validation 적용을 위해서 CartController에 @Validated를 추가했습니다.
+  - addCartList
+    - 추가 1 : 입력 중 동일한 optionId가 있을 경우 400 Bad Request
+    - 추가 2 : 입력받은 옵션이 장바구니에 이미 존재하면 수량을 추가합니다. 그렇지 않다면 사용자의 장바구니에 추가합니다.
+    - isDuplicated : requestDTOs에 동일한 optionId가 있는지 나타내는 boolean 값
+    - findByOptionIdAndUserId는 입력 받은 optionId와 userId로 cart를 찾아오는 쿼리입니다.
+    - 카트가 존재할 경우 받아온 데이터에서 데이터를 수정한 후 update를 합니다.
+    - 카트가 존재하지 않을 경우 save를 합니다.
+    - addCartListV1
+      - 입력 받은 optionId가 현재 옵션 목록에 있는지 카트의 존재 유무에 관계없이 확인해야 한다면 옵션을 가져오는 쿼리를 보내야 합니다.
+      - findCart를 가져올 때는 옵션을 이미 가져왔기 때문에 join fetch로 가져오지 않아도 됩니다. findCart가 존재하고 업데이트를 위해 가격을 계산할 때도 가져온 옵션을 이용합니다.
+    - addCartListV2
+      - 업데이트할 옵션이 존재하는지 확인할 필요가 없다면 옵션까지 fetch join으로 가져옵니다.
+      - findCart가 존재하지 않는 경우만 option을 가져오면 됩니다.
+    - 결국, save를 할 때는 쿼리 개수 차이는 없지만 update 때는 줄어듭니다. 하지만 PK로 가져오기 때문에 쿼리 개수가 하나 증가하더라도 성능에 유의미한 차이는 없기 때문에 확실하게 확인하는 addCartListV1가 좋다고 생각합니다.
+  - findAllV1
+  - findAllV2
+    - ResponseDTO가 이전과 다른 방식으로 구현되었는데 ProductDTO와 CartDTO를 합쳐서 depth는 줄어들었지만 프론트에서 totalPrice를 계산하기 위해 추가 계산을 해야합니다. 
+  - update
+    - 추가 1 : 사용자의 장바구니가 비어있을 경우 400 Bad Request
+    - 추가 2 : 입력 중 동일한 cartId가 있을 경우 400 Bad Request
+    - 추가 3 : 사용자 장바구니에 있는 cartId가 들어온 경우만 update 합니다. 그렇지 않다면 404 Not Found
+    - 사용자 장바구니에 있는 cartId가 맞는지 확인하기 위해 쿼리를 보낼 수도 있지만 request 개수가 증가할수록 쿼리 개수도 증가하기 때문에 처음 받아온 사용자의 장바구니 목록에 filter를 적용합니다.
+- OrderService
+  - save
+  - findById
+
+</br>
 
 # 6주차
 
