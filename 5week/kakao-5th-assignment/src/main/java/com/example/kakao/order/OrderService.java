@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-@Transactional(readOnly = true)
+
 @RequiredArgsConstructor
 @Service
 public class OrderService {
@@ -27,6 +27,8 @@ public class OrderService {
     private final CartJPARepository cartJPARepository;
     private final ItemJPARepository itemJPARepository;
 
+
+    @Transactional
     public OrderResponse.SaveDTO save(User user) {
         List<Cart> orderItemList = cartJPARepository.findAllByUserId(user.getId());
 
@@ -42,9 +44,12 @@ public class OrderService {
             itemJPARepository.save(item);
         }
 
+        cartJPARepository.deleteByUserId(user.getId());
+
         return new OrderResponse.SaveDTO(order, orderItemList);
     }
 
+    @Transactional(readOnly = true)
     public OrderResponse.FindByIdDTO findById(int orderItemId, User user) {
 
         if (orderItemId <= 0) {
