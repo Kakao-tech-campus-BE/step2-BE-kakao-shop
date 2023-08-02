@@ -65,11 +65,6 @@ public class CartService {
         return new CartResponse.FindAllDTO(cartList);
     }
 
-    public CartResponse.FindAllDTOv2 findAllv2(User user) {
-        List<Cart> cartList = cartJPARepository.findByUserIdOrderByOptionIdAsc(user.getId());
-        return new CartResponse.FindAllDTOv2(cartList);
-    }
-
     @Transactional
     public CartResponse.UpdateDTO update(List<CartRequest.UpdateDTO> requestDTOs, User user) {
         List<Cart> cartList = cartJPARepository.findAllByUserId(user.getId());
