@@ -450,6 +450,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_회원">회원</a>
 <ul class="sectlevel2">
 <li><a href="#_회원가입">회원가입</a></li>
+<li><a href="#_로그인">로그인</a></li>
 <li><a href="#_회원가입_실패_이름_예시">회원가입 실패 이름 예시</a></li>
 <li><a href="#_회원가입_실패_이메일_예시">회원가입 실패 이메일 예시</a></li>
 <li><a href="#_회원가입_실패_비밀번호_예시">회원가입 실패 비밀번호 예시</a></li>
@@ -515,9 +516,40 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect2">
-<h3 id="_회원가입_실패_이름_예시">회원가입 실패 이름 예시</h3>
+<h3 id="_로그인">로그인</h3>
 <div class="sect3">
 <h4 id="_요청_예시_2">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /login HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 67
+Host: localhost:8080
+
+{
+  "email" : "ssarmango@nate.com",
+  "password" : "meta1234!"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_2">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
+  "success" : true,
+  "response" : null,
+  "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_회원가입_실패_이름_예시">회원가입 실패 이름 예시</h3>
+<div class="sect3">
+<h4 id="_요청_예시_3">요청 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /join HTTP/1.1
@@ -534,7 +566,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect3">
-<h4 id="_응답_예시_2">응답 예시</h4>
+<h4 id="_응답_예시_3">응답 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
@@ -552,7 +584,7 @@ Host: localhost:8080
 <div class="sect2">
 <h3 id="_회원가입_실패_이메일_예시">회원가입 실패 이메일 예시</h3>
 <div class="sect3">
-<h4 id="_요청_예시_3">요청 예시</h4>
+<h4 id="_요청_예시_4">요청 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /join HTTP/1.1
@@ -569,7 +601,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect3">
-<h4 id="_응답_예시_3">응답 예시</h4>
+<h4 id="_응답_예시_4">응답 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
@@ -587,7 +619,7 @@ Host: localhost:8080
 <div class="sect2">
 <h3 id="_회원가입_실패_비밀번호_예시">회원가입 실패 비밀번호 예시</h3>
 <div class="sect3">
-<h4 id="_요청_예시_4">요청 예시</h4>
+<h4 id="_요청_예시_5">요청 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /join HTTP/1.1
@@ -604,7 +636,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect3">
-<h4 id="_응답_예시_4">응답 예시</h4>
+<h4 id="_응답_예시_5">응답 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
@@ -637,7 +669,7 @@ Host: localhost:8080
 </ul>
 </div>
 <div class="sect3">
-<h4 id="_요청_예시_5">요청 예시</h4>
+<h4 id="_요청_예시_6">요청 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /products HTTP/1.1
@@ -646,7 +678,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_응답_예시_5">응답 예시</h4>
+<h4 id="_응답_예시_6">응답 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
@@ -715,7 +747,7 @@ Host: localhost:8080</code></pre>
 <div class="sect2">
 <h3 id="_개별_상품_상세_조회">개별 상품 상세 조회</h3>
 <div class="sect3">
-<h4 id="_요청_예시_6">요청 예시</h4>
+<h4 id="_요청_예시_7">요청 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /products/1 HTTP/1.1
@@ -724,7 +756,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_응답_예시_6">응답 예시</h4>
+<h4 id="_응답_예시_7">응답 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
@@ -772,7 +804,7 @@ Host: localhost:8080</code></pre>
 <div class="sect2">
 <h3 id="_장바구니_담기">장바구니 담기</h3>
 <div class="sect3">
-<h4 id="_요청_예시_7">요청 예시</h4>
+<h4 id="_요청_예시_8">요청 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /carts/add HTTP/1.1
@@ -788,7 +820,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect3">
-<h4 id="_응답_예시_7">응답 예시</h4>
+<h4 id="_응답_예시_8">응답 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
@@ -803,7 +835,7 @@ Host: localhost:8080
 <div class="sect2">
 <h3 id="_장바구니_조회">장바구니 조회</h3>
 <div class="sect3">
-<h4 id="_요청_예시_8">요청 예시</h4>
+<h4 id="_요청_예시_9">요청 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /carts HTTP/1.1
@@ -812,7 +844,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_응답_예시_8">응답 예시</h4>
+<h4 id="_응답_예시_9">응답 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
@@ -875,7 +907,7 @@ Host: localhost:8080</code></pre>
 </ul>
 </div>
 <div class="sect3">
-<h4 id="_요청_예시_9">요청 예시</h4>
+<h4 id="_요청_예시_10">요청 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /carts/update HTTP/1.1
@@ -891,7 +923,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect3">
-<h4 id="_응답_예시_9">응답 예시</h4>
+<h4 id="_응답_예시_10">응답 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
@@ -932,7 +964,7 @@ Host: localhost:8080
 <div class="sect2">
 <h3 id="_주문하기">주문하기</h3>
 <div class="sect3">
-<h4 id="_요청_예시_10">요청 예시</h4>
+<h4 id="_요청_예시_11">요청 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /orders/save HTTP/1.1
@@ -941,7 +973,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_응답_예시_10">응답 예시</h4>
+<h4 id="_응답_예시_11">응답 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
@@ -983,7 +1015,7 @@ Host: localhost:8080</code></pre>
 <div class="sect2">
 <h3 id="_주문_결과_확인">주문 결과 확인</h3>
 <div class="sect3">
-<h4 id="_요청_예시_11">요청 예시</h4>
+<h4 id="_요청_예시_12">요청 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /orders/1 HTTP/1.1
@@ -992,7 +1024,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_응답_예시_11">응답 예시</h4>
+<h4 id="_응답_예시_12">응답 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
@@ -1041,7 +1073,7 @@ Host: localhost:8080</code></pre>
 </ul>
 </div>
 <div class="sect3">
-<h4 id="_요청_예시_12">요청 예시</h4>
+<h4 id="_요청_예시_13">요청 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /orders/-1000 HTTP/1.1
@@ -1050,7 +1082,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_응답_예시_12">응답 예시</h4>
+<h4 id="_응답_예시_13">응답 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-none hljs">{
@@ -1071,7 +1103,7 @@ Host: localhost:8080</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2023-08-02 11:35:09 +0900
+Last updated 2023-08-02 11:39:44 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

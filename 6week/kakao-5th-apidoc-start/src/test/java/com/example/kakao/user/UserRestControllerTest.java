@@ -33,6 +33,53 @@ public class UserRestControllerTest extends MyRestDoc {
     @Autowired
     private ObjectMapper om;
 
+    @Test
+    public void check_test() throws Exception{
+        //given
+        UserRequest.EmailCheckDTO requestDTO = new UserRequest.EmailCheckDTO();
+        requestDTO.setEmail("meta1234@nate.com");
+        String requestBody = om.writeValueAsString(requestDTO);
+
+        //when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .post("/check")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // then
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("true"));
+        result.andDo(MockMvcResultHandlers.print()).andDo(document);
+    }
+
+    @Test
+    public void check_email_fail_test() throws Exception {
+        // given
+        UserRequest.EmailCheckDTO requestDTO = new UserRequest.EmailCheckDTO();
+        requestDTO.setEmail("meta1234nate.com");
+
+        String requestBody = om.writeValueAsString(requestDTO);
+        // when
+        ResultActions result = mvc.perform(
+                MockMvcRequestBuilders
+                        .post("/check")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+        String responseBody = result.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // then
+        result.andExpectAll(
+                status().is4xxClientError(), // 404 오류 확인,
+                MockMvcResultMatchers.jsonPath("$.success").value("false"));
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.error.message").value("이메일 형식으로 작성해주세요:email"));
+        result.andDo(MockMvcResultHandlers.print()).andDo(document);
+    }
 
     @Test
     public void join_test() throws Exception {
@@ -59,33 +106,6 @@ public class UserRestControllerTest extends MyRestDoc {
         result.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
-    @Test
-    public void join_email_fail_test() throws Exception {
-        // given
-        UserRequest.JoinDTO requestDTO = new UserRequest.JoinDTO();
-        requestDTO.setEmail("meta1234nate.com");
-        requestDTO.setPassword("meta1234!");
-        requestDTO.setUsername("kangboseung");
-
-        String requestBody = om.writeValueAsString(requestDTO);
-        // when
-        ResultActions result = mvc.perform(
-                MockMvcRequestBuilders
-                        .post("/join")
-                        .content(requestBody)
-                        .contentType(MediaType.APPLICATION_JSON)
-        );
-
-        String responseBody = result.andReturn().getResponse().getContentAsString();
-        System.out.println("테스트 : " + responseBody);
-
-        // then
-        result.andExpectAll(
-                status().is4xxClientError(), // 404 오류 확인,
-                MockMvcResultMatchers.jsonPath("$.success").value("false"));
-        result.andExpect(MockMvcResultMatchers.jsonPath("$.error.message").value("이메일 형식으로 작성해주세요:email"));
-        result.andDo(MockMvcResultHandlers.print()).andDo(document);
-    }
 
     @Test
     public void join_password_fail_test() throws Exception {
