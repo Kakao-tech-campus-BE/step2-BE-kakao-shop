@@ -1,0 +1,11 @@
+[source,http,options="nowrap"]
+----
+POST /check HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 32
+Host: localhost:8080
+
+{
+  "email" : "user1@nate.com"
+}
+----

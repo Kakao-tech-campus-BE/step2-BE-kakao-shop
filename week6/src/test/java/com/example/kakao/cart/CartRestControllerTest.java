@@ -2,6 +2,7 @@ package com.example.kakao.cart;
 
 import com.example.kakao.MyRestDoc;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
@@ -30,8 +31,8 @@ public class CartRestControllerTest extends MyRestDoc {
     @Autowired
     private ObjectMapper om;
 
-    // 장바구니 담기 테스트
     @WithUserDetails(value = "ssarmango@nate.com") //시큐리티 인증
+    @DisplayName("장바구니 담기(저장)")
     @Test
     public void addCartList_test() throws Exception {
         // given -> optionId [1,2,16]이 teardown.sql을 통해 들어가 있음
@@ -59,8 +60,8 @@ public class CartRestControllerTest extends MyRestDoc {
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
-    // 장바구니 조회 테스트
     @WithUserDetails(value = "ssarmango@nate.com") //UserDetailService의 loadByUsername 실행, email으로 user를 DB 조회
+    @DisplayName("장바구니 조회(전체 조회)")
     @Test
     public void findAll_test() throws Exception {
         // given teardown
@@ -89,6 +90,7 @@ public class CartRestControllerTest extends MyRestDoc {
     }
 
     @WithUserDetails(value = "ssarmango@nate.com")
+    @DisplayName("주문하기(장바구니 수정)")
     @Test
     public void update_test() throws Exception {
         // given -> cartId [1번 5개,2번 1개,3번 5개]가 teardown.sql을 통해 들어가 있음

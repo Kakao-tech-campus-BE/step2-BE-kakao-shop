@@ -1,0 +1,8 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/check' -i -X POST \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -d '{
+  "email" : "newuser@nate.com"
+}'
+----

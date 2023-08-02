@@ -1,0 +1,11 @@
+[source,options="nowrap"]
+----
+{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "동일한 이메일이 존재합니다 : user1@nate.com",
+    "status" : 400
+  }
+}
+----

@@ -1,6 +1,7 @@
 package com.example.kakao.product;
 
 import com.example.kakao.MyRestDoc;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -21,19 +22,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class ProductRestControllerTest extends MyRestDoc {
 
     @Test
+    @DisplayName("전체 상품 목록 조회")
     public void findAll_test() throws Exception {
         // given teardown.sql
-//            Integer page  = 1;
 
         // when
         ResultActions resultActions = mvc.perform(
                 get("/products")
         );
-        //페이징 확인
-//        ResultActions resultActions = mvc.perform(
-//                get("/products")
-//                        .param("page", page.toString())
-//        );
 
         // eye (눈으로 본다.)
 //        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
@@ -50,6 +46,34 @@ public class ProductRestControllerTest extends MyRestDoc {
     }
 
     @Test
+    @DisplayName("전체 상품 목록 조회 - Param 사용")
+    public void findAll_test_when_using_param() throws Exception {
+        // given teardown.sql
+            Integer page  = 1; //기본 0페이지, 1페이지(id=10)부터 시작
+
+        // when
+        //페이징 확인
+        ResultActions resultActions = mvc.perform(
+                get("/products")
+                        .param("page", page.toString())
+        );
+
+        // eye (눈으로 본다.)
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("true"));
+        resultActions.andExpect(jsonPath("$.response[0].id").value(10));
+        resultActions.andExpect(jsonPath("$.response[0].productName").value("통영 홍 가리비 2kg, 2세트 구매시 1kg 추가증정"));
+        resultActions.andExpect(jsonPath("$.response[0].description").value(""));
+        resultActions.andExpect(jsonPath("$.response[0].image").value("/images/10.jpg"));
+        resultActions.andExpect(jsonPath("$.response[0].price").value(8900));
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document); //restDoc
+    }
+
+    @Test
+    @DisplayName("개별 상품 상세 조회")
     public void findById_test() throws Exception {
         // given teardown.sql
         int id = 1;

@@ -1,0 +1,11 @@
+[source,options="nowrap"]
+----
+{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "8에서 20자 이내여야 합니다.:password",
+    "status" : 400
+  }
+}
+----
