@@ -61,5 +61,6 @@ public class OrderService {
     public void clearOrder() {
         itemJPARepository.deleteAll();
         orderJPARepository.deleteAll();
+        cartJPARepository.deleteAll();
     }
 }
