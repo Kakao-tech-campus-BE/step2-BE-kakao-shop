@@ -56,7 +56,9 @@ public class OrderService {
             throw new Exception400("존재하지 않는 주문 아이디입니다. : " + orderItemId);
         }
 
-        Order order = orderJPARepository.findByUserId(user.getId());
+        List<Order> orderList = orderJPARepository.findAllUserId(user.getId());
+
+        Order order = orderList.get(orderItemId-1);
 
         if (order == null) {
             throw new Exception400("존재하지 않는 주문 결과입니다. : " + order);
