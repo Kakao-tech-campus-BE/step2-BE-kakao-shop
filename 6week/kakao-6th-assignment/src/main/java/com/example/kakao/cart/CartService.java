@@ -127,11 +127,14 @@ public class CartService {
 
                     int cartPriceCheck = cart.getOption().getPrice() * cartQuantity;
 
+                    cart.update(cartQuantity, cartPriceCheck);
+                    /*
                     if (cartPrice == cartPriceCheck){
                         cart.update(cartQuantity, cartPrice);
                     }else{
                         throw new Exception400("잘못된 가격 요청 입니다. : " + cartPrice);
                     }
+                    */
                 }
             }
         }

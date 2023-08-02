@@ -40,7 +40,8 @@ public class OrderService {
         orderJPARepository.save(order);
 
         for (Cart cart : orderItemList){
-            Item item = Item.builder().order(order).price(cart.getPrice()).option(cart.getOption()).quantity(cart.getQuantity()).build();
+            //Item item = Item.builder().order(order).price(cart.getPrice()).option(cart.getOption()).quantity(cart.getQuantity()).build();
+            Item item = Item.builder().order(order).price(cart.getOption().getPrice()*cart.getQuantity()).option(cart.getOption()).quantity(cart.getQuantity()).build();
             itemJPARepository.save(item);
         }
 
@@ -56,15 +57,15 @@ public class OrderService {
             throw new Exception400("존재하지 않는 주문 아이디입니다. : " + orderItemId);
         }
 
-        List<Order> orderList = orderJPARepository.findAllUserId(user.getId());
+        Order order= orderJPARepository.findByUserIdAndOrderItemId(user.getId(), orderItemId);
 
-        Order order = orderList.get(orderItemId-1);
 
         if (order == null) {
             throw new Exception400("존재하지 않는 주문 결과입니다. : " + order);
         }
 
         List<Item> itemList = itemJPARepository.findAllByOrderId(order.getId());
+
 
         if (itemList.isEmpty()){
             throw new Exception400("주문의 상품 목록이 존재하지 않습니다. : " + itemList);

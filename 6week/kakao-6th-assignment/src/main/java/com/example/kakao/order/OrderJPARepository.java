@@ -13,4 +13,8 @@ public interface OrderJPARepository extends JpaRepository<Order, Integer> {
 
     @Query("select o from Order o where o.user.id = :userId")
     List<Order> findAllUserId(int userId);
+
+
+    @Query("select o from Order o join o.user where o.user.id = :userId and o.id = :orderItemId")
+    Order findByUserIdAndOrderItemId(int userId, int orderItemId);
 }
