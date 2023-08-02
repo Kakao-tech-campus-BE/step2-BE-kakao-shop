@@ -2,8 +2,6 @@ package com.example.kakao.order;
 
 import com.example.kakao._core.security.CustomUserDetails;
 import com.example.kakao._core.utils.ApiUtils;
-import com.example.kakao.order.item.Item;
-import com.example.kakao.product.ProductResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -33,7 +30,7 @@ public class OrderRestController {
     // /orders/{id}
     @GetMapping("/orders/{id}")
     public ResponseEntity<?> findById(@PathVariable int id, @AuthenticationPrincipal CustomUserDetails userDetails) {
-        OrderResponse.findByIdDTO responseDTOs = orderService.findById(id, userDetails.getUser());
+        OrderResponse.FindByIdDTO responseDTOs = orderService.findById(id, userDetails.getUser());
         ApiUtils.ApiResult<?> apiResult = ApiUtils.success(responseDTOs);
         return ResponseEntity.ok(apiResult);
     }

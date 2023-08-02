@@ -32,8 +32,6 @@ public class CartService {
                 Cart cart = cartPS.get();
                 int quantity = cart.getQuantity() + requestDTO.getQuantity();
                 int price = quantity * cart.getOption().getPrice();
-                System.out.println(quantity);
-                System.out.println(price);
                 cart.update(quantity, price); // 해당 장바구니에 추가한 수량만큼 더해서 update
             }
             // 3. [2번이 아니라면] 유저의 장바구니에 담기
@@ -66,7 +64,7 @@ public class CartService {
 
         // 1. 유저 장바구니에 아무것도 없으면 예외처리
         if (cartList.isEmpty()) {
-            throw new Exception400("장바구니 비어 있음");
+            throw new Exception400("장바구니가 비어있습니다.");
         }
 
         // 2. cartId:1, cartId:1 이렇게 requestDTOs에 동일한 장바구니 아이디가 두번 들어오면 예외처리
@@ -74,21 +72,15 @@ public class CartService {
         for (CartRequest.UpdateDTO requestDTO : requestDTOs) {
             int cartId = requestDTO.getCartId();
             if (cartIdList.contains(cartId)) {
-                throw new Exception400("같은 상품 수량을 두번 이상 변경");
+                throw new Exception400("상품 수량은 요청당 한 번만 변경할 수 있습니다.");
             }
             cartIdList.add(cartId);
         }
 
         // 3. 유저 장바구니에 없는 cartId가 들어오면 예외처리
         for (CartRequest.UpdateDTO requestDTO : requestDTOs) {
-            boolean found = false;
-            for (Cart cart : cartList) {
-                if (requestDTO.getCartId() == cart.getId()) {
-                    found = true;
-                }
-            }
-            if (!found) {
-                throw new Exception400("존재하지 않는 장바구니");
+            if (!findCartId(requestDTO.getCartId(), cartList)) {
+                throw new Exception400("장바구니에 존재하지 않는 아이템입니다.");
             }
         }
 
@@ -100,7 +92,15 @@ public class CartService {
                 }
             }
         }
-
         return new CartResponse.UpdateDTO(cartList);
     } // 더티체킹
+
+    private boolean findCartId(int id, List<Cart> cartList) {
+        // 메서드 분리
+        for (Cart cart: cartList) {
+            if (cart.getId() == id)
+                return true;
+        }
+        return false;
+    }
 }

@@ -75,30 +75,30 @@ public class OrderResponse {
     @Getter
     @Setter
     @ToString
-    public static class findByIdDTO {
+    public static class FindByIdDTO {
         private int id;
         private List<ProductDTO> products;
         private int totalPrice;
 
-        public findByIdDTO(int orderId, List<Item> itemList) {
+        public FindByIdDTO(int orderId, List<Item> itemList) {
             this.id = orderId; //order.getId();
             this.products = itemList.stream()
                     // 중복되는 상품 걸러내기
                     .map(item -> item.getOption().getProduct()).distinct()
-                    .map(product -> new OrderResponse.findByIdDTO.ProductDTO(product, itemList)).collect(Collectors.toList());
+                    .map(product -> new OrderResponse.FindByIdDTO.ProductDTO(product, itemList)).collect(Collectors.toList());
             this.totalPrice = itemList.stream().mapToInt(item -> item.getPrice()).sum();
         }
         @Getter
         @Setter
         public class ProductDTO {
             private String productName;
-            private List<findByIdDTO.ProductDTO.ItemDTO> items;
+            private List<FindByIdDTO.ProductDTO.ItemDTO> items;
             public ProductDTO(Product product, List<Item> itemList) {
                 this.productName = product.getProductName();
                 // 현재 상품과 동일한 장바구니 내역만 담기
                 this.items = itemList.stream()
                         .filter(item -> item.getOption().getProduct().getId() == product.getId())
-                        .map(findByIdDTO.ProductDTO.ItemDTO::new)
+                        .map(FindByIdDTO.ProductDTO.ItemDTO::new)
                         .collect(Collectors.toList());
             }
 
