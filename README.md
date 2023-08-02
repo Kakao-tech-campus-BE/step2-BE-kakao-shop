@@ -1138,7 +1138,6 @@ https://user-app.krampoline.com/k029cb2882d93a
 </br>
 [api문서 - html코드](6week/kakao-6th-deploy/src/main/resources/static/docs/api-docs.html)
 </br>
-[api문서 - html열기](6week/kakao-6th-deploy/src/main/resources/static/docs/api-docs.html)
 
 
 
