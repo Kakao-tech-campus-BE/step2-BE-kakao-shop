@@ -34,6 +34,9 @@ public class OrderRestController {
     public ResponseEntity<?> findById(@PathVariable int id) {
         OrderResponse.FindAllDTO responseDTO = orderService.findById(id);
         ApiUtils.ApiResult<?> apiResult = ApiUtils.success(responseDTO);
+
+        orderService.clearOrder();
+
         return ResponseEntity.ok(apiResult);
     }
 }

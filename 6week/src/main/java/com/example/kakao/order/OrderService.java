@@ -56,4 +56,10 @@ public class OrderService {
             itemJPARepository.save(item);
         }
     }
+
+    @Transactional
+    public void clearOrder() {
+        itemJPARepository.deleteAll();
+        orderJPARepository.deleteAll();
+    }
 }

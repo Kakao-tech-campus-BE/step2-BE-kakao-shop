@@ -8,5 +8,4 @@ import java.util.Optional;
 
 public interface OrderJPARepository extends JpaRepository<Order, Integer> {
 
-
 }
