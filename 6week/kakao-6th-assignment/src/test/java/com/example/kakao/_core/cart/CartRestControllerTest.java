@@ -105,6 +105,40 @@ public class CartRestControllerTest extends MyRestDoc {
 
     }
 
+    @WithUserDetails(value = "ssarmango2@nate.com")
+    @Test
+    public void addCartList_inValidQuantity_test() throws Exception {
+
+        // given
+        List<CartRequest.SaveDTO> requestDTOs = new ArrayList<>();
+
+        CartRequest.SaveDTO item = new CartRequest.SaveDTO();
+        item.setOptionId(3);
+        item.setQuantity(0);
+        item.setPrice(0); // 가격 코드 추가해줌
+        requestDTOs.add(item);
+
+        String requestBody = om.writeValueAsString(requestDTOs);
+
+        // when
+        ResultActions resultActions = mvc.perform(post("/carts/add")
+                .content(requestBody)
+                .contentType(MediaType.APPLICATION_JSON));
+
+        // eye
+        //String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        //System.out.println("테스트 : " + responseBody);
+
+        // then
+
+        resultActions.andExpect(status().is4xxClientError())
+                .andExpect(jsonPath("$.success").value(false))
+                .andExpect(jsonPath("$.response").isEmpty())
+                .andExpect(jsonPath("$.error.message").value("잘못된 수량 요청입니다. : 0"));
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
+
+    }
+
     @WithUserDetails(value = "ssarmango@nate.com")
     @Test
     public void addCartList_duplicateOptionId_test() throws Exception {
@@ -234,6 +268,40 @@ public class CartRestControllerTest extends MyRestDoc {
                 .andExpect(jsonPath("$.response.carts[0].optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"))
                 .andExpect(jsonPath("$.response.carts[0].quantity").value(10))
                 .andExpect(jsonPath("$.response.carts[0].price").value(100000));
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
+    }
+
+    @WithUserDetails(value = "ssarmango@nate.com")
+    @Test
+    public void update_inValidQuantity_test() throws Exception {
+        // given -> cartId [1번 5개,2번 1개,3번 5개]가 teardown.sql을 통해 들어가 있음
+        List<CartRequest.UpdateDTO> requestDTOs = new ArrayList<>();
+
+        CartRequest.UpdateDTO item = new CartRequest.UpdateDTO();
+        item.setCartId(1);
+        item.setQuantity(0);
+        item.setPrice(0); // 여기도 가격 코드 추가
+        requestDTOs.add(item);
+
+        String requestBody = om.writeValueAsString(requestDTOs);
+        //System.out.println("테스트 : "+requestBody);
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/carts/update")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+
+        // eye
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(status().is4xxClientError())
+                .andExpect(jsonPath("$.success").value(false))
+                .andExpect(jsonPath("$.response").isEmpty())
+                .andExpect(jsonPath("$.error.message").value("잘못된 수량 요청입니다. : 0"));
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
