@@ -66,11 +66,6 @@ public class OrderService {
 
         List<Item> itemList = itemJPARepository.findAllByOrderId(order.getId());
 
-
-        if (itemList.isEmpty()){
-            throw new Exception400("주문의 상품 목록이 존재하지 않습니다. : " + itemList);
-        }
-
         return new OrderResponse.FindByIdDTO(order, itemList);
     }
 
