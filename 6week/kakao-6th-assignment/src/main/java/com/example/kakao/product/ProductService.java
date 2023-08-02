@@ -1,5 +1,6 @@
 package com.example.kakao.product;
 
+import com.example.kakao._core.errors.exception.Exception400;
 import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao.product.option.Option;
 import com.example.kakao.product.option.OptionJPARepository;
@@ -20,6 +21,10 @@ public class ProductService {
     private final ProductJPARepository productRepository;
     private final OptionJPARepository optionRepository;
     public List<ProductResponse.FindAllDTO> findAll(int page) {
+
+        if (page < 0) {
+            throw new Exception400("잘못된 page 번호입니다. : " + page);
+        }
         // 1. 페이지 객체 만들기
         Pageable pageable = PageRequest.of(page,9);
 

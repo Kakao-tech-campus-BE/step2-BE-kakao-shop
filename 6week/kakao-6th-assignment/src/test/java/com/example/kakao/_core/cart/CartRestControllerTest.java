@@ -72,6 +72,39 @@ public class CartRestControllerTest extends MyRestDoc {
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
+    @Test
+    public void addCartList_inValidUser_test() throws Exception {
+
+        // given
+        List<CartRequest.SaveDTO> requestDTOs = new ArrayList<>();
+
+        CartRequest.SaveDTO item = new CartRequest.SaveDTO();
+        item.setOptionId(3);
+        item.setQuantity(5);
+        item.setPrice(49500); // 가격 코드 추가해줌
+        requestDTOs.add(item);
+
+        String requestBody = om.writeValueAsString(requestDTOs);
+
+        // when
+        ResultActions resultActions = mvc.perform(post("/carts/add")
+                .content(requestBody)
+                .contentType(MediaType.APPLICATION_JSON));
+
+        // eye
+        //String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        //System.out.println("테스트 : " + responseBody);
+
+        // then
+
+        resultActions.andExpect(status().is4xxClientError())
+                .andExpect(jsonPath("$.success").value(false))
+                .andExpect(jsonPath("$.response").isEmpty())
+                .andExpect(jsonPath("$.error.message").value("인증되지 않았습니다"));
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
+
+    }
+
     @WithUserDetails(value = "ssarmango@nate.com")
     @Test
     public void addCartList_duplicateOptionId_test() throws Exception {
