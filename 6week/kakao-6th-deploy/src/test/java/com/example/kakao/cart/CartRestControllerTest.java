@@ -157,6 +157,38 @@ public class CartRestControllerTest extends MyRestDoc {
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
+    @WithUserDetails(value = "ssarssar@nate.com")
+    @DisplayName("장바구니 업데이트시 장바구니가 비어있는 경우 예외 발생 테스트")
+    @Test
+    public void update_emptyCart_fail_test() throws Exception {
+        // given -> cartId [1번 5개,2번 1개,3번 5개]가 teardown.sql을 통해 들어가 있음
+        List<CartRequest.UpdateDTO> requestDTOs = new ArrayList<>();
+        CartRequest.UpdateDTO item = new CartRequest.UpdateDTO();
+        item.setCartId(1);
+        item.setQuantity(10);
+        requestDTOs.add(item);
+
+        String requestBody = om.writeValueAsString(requestDTOs);
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/carts/update")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+
+        // eye
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("false"));
+        resultActions.andExpect(jsonPath("$.response").isEmpty());
+        resultActions.andExpect(jsonPath("$.error.message").value("장바구니가 비어있어 수정할 수 없습니다."));
+        resultActions.andExpect(jsonPath("$.error.status").value("400"));
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
+    }
+
     @WithUserDetails(value = "ssarmango@nate.com")
     @DisplayName("장바구니 업데이트시 동일한 cartId가 들어오는 경우 예외 발생 통합 테스트")
     @Test

@@ -13,12 +13,12 @@ public class OrderResponse {
     @Getter
     @Setter
     public static class saveDTO {
-        private int orderId;
+        private int id;
         private List<ProductDTO> products;
         private int totalPrice;
 
-        public saveDTO(int orderId, List<ProductDTO> products) {
-            this.orderId = orderId;
+        public saveDTO(int id, List<ProductDTO> products) {
+            this.id = id;
             this.products = products;
             this.totalPrice = products.stream().map(ProductDTO::getItems)
                     .flatMap(List<ItemDTO>::stream)
@@ -42,14 +42,14 @@ public class OrderResponse {
         @Getter
         @Setter
         public static class ItemDTO {
-            int itemId;
+            int id;
             String optionName;
             int quantity;
             int price;
 
 
             public ItemDTO(Item item) {
-                this.itemId = item.getId();
+                this.id = item.getId();
                 this.optionName = item.getOption().getOptionName();
                 this.quantity = item.getQuantity();
                 this.price = item.getPrice();
@@ -60,12 +60,12 @@ public class OrderResponse {
     @Getter
     @Setter
     public static class findByIdDTO {
-        private int orderId;
+        private int id;
         private List<ProductDTO> products;
         private int totalPrice;
 
-        findByIdDTO(int orderId, List<ProductDTO> products) {
-            this.orderId = orderId;
+        findByIdDTO(int id, List<ProductDTO> products) {
+            this.id = id;
             this.products = products;
             this.totalPrice = products.stream().map(findByIdDTO.ProductDTO::getItems)
                     .flatMap(List<findByIdDTO.ItemDTO>::stream)
@@ -87,13 +87,13 @@ public class OrderResponse {
         @Getter
         @Setter
         public static class ItemDTO {
-            int itemId;
+            int id;
             String optionName;
             int quantity;
             int price;
 
             public ItemDTO(Item item) {
-                this.itemId = item.getId();
+                this.id = item.getId();
                 this.optionName = item.getOption().getOptionName();
                 this.quantity = item.getQuantity();
                 this.price = item.getPrice();
