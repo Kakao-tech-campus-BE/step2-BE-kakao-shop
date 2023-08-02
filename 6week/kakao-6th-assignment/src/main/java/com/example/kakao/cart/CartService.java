@@ -57,22 +57,27 @@ public class CartService {
                 int newQuantity = cartToUpdate.getQuantity() + quantity;
                 int newPrice = cartToUpdate.getPrice() + price;
                 int newPriceCheck = optionPS.getPrice() * newQuantity;
-                if (newPrice == newPriceCheck) {
+                cartToUpdate.setQuantity(newQuantity);
+                cartToUpdate.setPrice(newPriceCheck);
+                cartJPARepository.save(cartToUpdate);
+                /*if (newPrice == newPriceCheck) {
                     cartToUpdate.setQuantity(newQuantity);
                     cartToUpdate.setPrice(newPrice);
                     cartJPARepository.save(cartToUpdate);
                 } else {
                     throw new Exception400("잘못된 가격 요청입니다. : " + price);
-                }
+                }*/
             } else {
                 // 3. 장바구니에 해당 옵션이 존재하지 않는 경우, 새로운 장바구니 정보 생성
                 int priceCheck = optionPS.getPrice() * quantity;
-                if (price == priceCheck) {
+                Cart cart = Cart.builder().user(sessionUser).option(optionPS).quantity(quantity).price(priceCheck).build();
+                cartJPARepository.save(cart);
+                /*if (price == priceCheck) {
                     Cart cart = Cart.builder().user(sessionUser).option(optionPS).quantity(quantity).price(price).build();
                     cartJPARepository.save(cart);
                 } else {
                     throw new Exception400("잘못된 가격 요청입니다. " + price);
-                }
+                }*/
             }
         }
     } // 여기서 변경 감지, 더티체킹, flush, 트랜잭션 종료

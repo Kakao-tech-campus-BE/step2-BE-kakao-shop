@@ -21,7 +21,7 @@ public class CartResponse {
                     // 중복되는 상품 걸러내기
                     .map(cart -> cart.getOption().getProduct()).distinct()
                     .map(product -> new ProductDTO(product, cartList)).collect(Collectors.toList());
-            this.totalPrice = cartList.stream().mapToInt(cart -> cart.getOption().getPrice() * cart.getQuantity()).sum();
+            this.totalPrice = cartList.stream().mapToInt(cart -> cart.getOption().getPrice()*cart.getQuantity()).sum();
         }
 
 
@@ -82,7 +82,8 @@ public class CartResponse {
 
         public UpdateDTO(List<Cart> cartList) {
             this.carts = cartList.stream().map(CartDTO::new).collect(Collectors.toList());
-            this.totalPrice = cartList.stream().mapToInt(cart -> cart.getPrice()).sum();
+            //this.totalPrice = cartList.stream().mapToInt(cart -> cart.getPrice()).sum();
+            this.totalPrice = cartList.stream().mapToInt(cart -> cart.getOption().getPrice()*cart.getQuantity()).sum();
         }
 
 
@@ -100,7 +101,8 @@ public class CartResponse {
                 this.optionId = cart.getOption().getId();
                 this.optionName = cart.getOption().getOptionName();
                 this.quantity = cart.getQuantity();
-                this.price = cart.getPrice();
+                //this.price = cart.getPrice();
+                this.price = cart.getOption().getPrice()*cart.getQuantity();
             }
         }
     }
