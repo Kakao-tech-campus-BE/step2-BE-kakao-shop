@@ -111,7 +111,7 @@ public class UserRestControllerTest extends MyRestDoc {
     }
     @DisplayName("회원가입 실패 테스트 - 이메일 형식")
     @Test
-    public void joinCheckSameEmailError_test() throws Exception {
+    public void joinCheckEmailError_test() throws Exception {
         //given
         UserRequest.JoinDTO requestDTO = new UserRequest.JoinDTO();
         requestDTO.setEmail("hanjunaver.com");
@@ -140,7 +140,7 @@ public class UserRestControllerTest extends MyRestDoc {
 
     @DisplayName("회원가입 실패 테스트 - password 형식(영문, 숫자, 특수기호)")
     @Test
-    public void joinCheckWrongPasswordError_test1() throws Exception {
+    public void joinCheckWrongPasswordError_test() throws Exception {
         //given
         UserRequest.JoinDTO requestDTO = new UserRequest.JoinDTO();
         requestDTO.setEmail("hanju@naver.com");
