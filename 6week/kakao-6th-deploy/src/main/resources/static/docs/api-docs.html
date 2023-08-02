@@ -884,9 +884,101 @@ Content-Length: 168
 </div>
 </div>
 <div class="sect2">
-<h3 id="_로그인">로그인</h3>
+<h3 id="_회원가입_실패_예시_3">회원가입 실패 예시 3</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>이메일 형식으로 작성하지 않음.</p>
+</li>
+</ul>
+</div>
 <div class="sect3">
 <h4 id="_요청_예시_10">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /join HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 95
+Host: localhost:8080
+
+{
+  "email" : "ssarmangonate.com",
+  "password" : "meta1234!",
+  "username" : "ssarmango"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_10">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+Content-Length: 156
+
+{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "이메일 형식으로 작성해주세요:email",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_회원가입_실패_예시_4">회원가입 실패 예시 4</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>비밀번호 형식이 잘못됨.</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_요청_예시_11">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /join HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 95
+Host: localhost:8080
+
+{
+  "email" : "ssarcherry@nate.com",
+  "password" : "meta12!",
+  "username" : "ssarmango"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_11">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+Content-Length: 155
+
+{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "8에서 20자 이내여야 합니다.:password",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_로그인">로그인</h3>
+<div class="sect3">
+<h4 id="_요청_예시_12">요청 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /login HTTP/1.1
@@ -902,11 +994,11 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect3">
-<h4 id="_응답_예시_10">응답 예시</h4>
+<h4 id="_응답_예시_12">응답 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzc2FybWFuZ29AbmF0ZS5jb20iLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWQiOjEsImV4cCI6MTY5MTA2NTI0M30.eHU16-0DSBDcViII7P2quE1dgb7pKGEF28x9lnjBKr8c2nvRnP3-W0Mvk8lYQcF0MOIH2mXdvj-lDYECptTHrA
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzc2FybWFuZ29AbmF0ZS5jb20iLCJyb2xlIjoiUk9MRV9VU0VSIiwiaWQiOjEsImV4cCI6MTY5MTExOTI5M30.uPtfq02mef2YY_b-_jj4q-XzyhWqAmkPzrNjVSvNMKlPm0-CdP_2Ouxj-IoaxovAeGe0iPkZEpfRcnhfrKV9-A
 Content-Type: application/json;charset=UTF-8
 Content-Length: 65
 
@@ -929,7 +1021,7 @@ Content-Length: 65
 </ul>
 </div>
 <div class="sect3">
-<h4 id="_요청_예시_11">요청 예시</h4>
+<h4 id="_요청_예시_13">요청 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /login HTTP/1.1
@@ -945,7 +1037,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect3">
-<h4 id="_응답_예시_11">응답 예시</h4>
+<h4 id="_응답_예시_13">응답 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 400 Bad Request
@@ -964,6 +1056,141 @@ Content-Length: 162
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_로그인_실패_예시_2">로그인 실패 예시 2</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>이메일 형식으로 작성하지않음.</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_요청_예시_14">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /login HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 66
+Host: localhost:8080
+
+{
+  "email" : "ssarmangonate.com",
+  "password" : "meta1234!"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_14">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+Content-Length: 156
+
+{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "이메일 형식으로 작성해주세요:email",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_로그인_실패_예시_3">로그인 실패 예시 3</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>패스워드 형식이 잘못됨.</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_요청_예시_15">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /login HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 66
+Host: localhost:8080
+
+{
+  "email" : "ssarmango@nate.com",
+  "password" : "meta1234"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_15">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+Content-Length: 209
+
+{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니다.:password",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_로그인_실패_예시_4">로그인 실패 예시 4</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>잘못된 패스워드를 입력함.</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_요청_예시_16">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /login HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 67
+Host: localhost:8080
+
+{
+  "email" : "ssarmango@nate.com",
+  "password" : "ssar1234!"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_16">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+Content-Length: 153
+
+{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "패스워드가 잘못입력되었습니다 ",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -972,7 +1199,7 @@ Content-Length: 162
 <div class="sect2">
 <h3 id="_장바구니_담기">장바구니 담기</h3>
 <div class="sect3">
-<h4 id="_요청_예시_12">요청 예시</h4>
+<h4 id="_요청_예시_17">요청 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /carts/add HTTP/1.1
@@ -988,7 +1215,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect3">
-<h4 id="_응답_예시_12">응답 예시</h4>
+<h4 id="_응답_예시_17">응답 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code>{
@@ -1010,7 +1237,7 @@ Host: localhost:8080
 </ul>
 </div>
 <div class="sect3">
-<h4 id="_요청_예시_13">요청 예시</h4>
+<h4 id="_요청_예시_18">요청 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /carts/add HTTP/1.1
@@ -1026,7 +1253,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect3">
-<h4 id="_응답_예시_13">응답 예시</h4>
+<h4 id="_응답_예시_18">응답 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 404 Not Found
@@ -1048,7 +1275,7 @@ Content-Length: 156
 <div class="sect2">
 <h3 id="_장바구니_조회">장바구니 조회</h3>
 <div class="sect3">
-<h4 id="_요청_예시_14">요청 예시</h4>
+<h4 id="_요청_예시_19">요청 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /carts HTTP/1.1
@@ -1057,7 +1284,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_응답_예시_14">응답 예시</h4>
+<h4 id="_응답_예시_19">응답 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code>{
@@ -1120,7 +1347,7 @@ Host: localhost:8080</code></pre>
 </ul>
 </div>
 <div class="sect3">
-<h4 id="_요청_예시_15">요청 예시</h4>
+<h4 id="_요청_예시_20">요청 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /carts/update HTTP/1.1
@@ -1136,7 +1363,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect3">
-<h4 id="_응답_예시_15">응답 예시</h4>
+<h4 id="_응답_예시_20">응답 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code>{
@@ -1177,7 +1404,7 @@ Host: localhost:8080
 <div class="sect2">
 <h3 id="_결재하기">결재하기</h3>
 <div class="sect3">
-<h4 id="_요청_예시_16">요청 예시</h4>
+<h4 id="_요청_예시_21">요청 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /orders/save HTTP/1.1
@@ -1187,7 +1414,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_응답_예시_16">응답 예시</h4>
+<h4 id="_응답_예시_21">응답 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
@@ -1238,7 +1465,7 @@ Content-Length: 917
 </ul>
 </div>
 <div class="sect3">
-<h4 id="_요청_예시_17">요청 예시</h4>
+<h4 id="_요청_예시_22">요청 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /orders/save HTTP/1.1
@@ -1248,7 +1475,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_응답_예시_17">응답 예시</h4>
+<h4 id="_응답_예시_22">응답 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 400 Bad Request
@@ -1270,7 +1497,7 @@ Content-Length: 138
 <div class="sect2">
 <h3 id="_주문_결과_확인">주문 결과 확인</h3>
 <div class="sect3">
-<h4 id="_요청_예시_18">요청 예시</h4>
+<h4 id="_요청_예시_23">요청 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /orders/1 HTTP/1.1
@@ -1279,7 +1506,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_응답_예시_18">응답 예시</h4>
+<h4 id="_응답_예시_23">응답 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
@@ -1330,7 +1557,7 @@ Content-Length: 917
 </ul>
 </div>
 <div class="sect3">
-<h4 id="_요청_예시_19">요청 예시</h4>
+<h4 id="_요청_예시_24">요청 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /orders/1000 HTTP/1.1
@@ -1339,7 +1566,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_응답_예시_19">응답 예시</h4>
+<h4 id="_응답_예시_24">응답 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 400 Bad Request
@@ -1364,7 +1591,7 @@ Content-Length: 155
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2023-08-01 20:54:27 +0900
+Last updated 2023-08-02 12:19:33 +0900
 </div>
 </div>
 </body>

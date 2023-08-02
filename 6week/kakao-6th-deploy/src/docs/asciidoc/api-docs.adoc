@@ -103,6 +103,25 @@ include::{snippets}/user-rest-controller-test/join_fail_test2/http-request.adoc[
 ==== 응답 예시
 include::{snippets}/user-rest-controller-test/join_fail_test2/http-response.adoc[]
 
+=== 회원가입 실패 예시 3
+* 이메일 형식으로 작성하지 않음.
+
+==== 요청 예시
+include::{snippets}/user-rest-controller-test/join_fail_test3/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/user-rest-controller-test/join_fail_test3/http-response.adoc[]
+
+
+=== 회원가입 실패 예시 4
+* 비밀번호 형식이 잘못됨.
+
+==== 요청 예시
+include::{snippets}/user-rest-controller-test/join_fail_test4/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/user-rest-controller-test/join_fail_test4/http-response.adoc[]
+
 
 === 로그인
 
@@ -117,10 +136,40 @@ include::{snippets}/user-rest-controller-test/login_test/http-response.adoc[]
 * 없는 이메일로 로그인을 시도함.
 
 ==== 요청 예시
-include::{snippets}/user-rest-controller-test/login_fail_test/http-request.adoc[]
+include::{snippets}/user-rest-controller-test/login_fail_test1/http-request.adoc[]
 
 ==== 응답 예시
-include::{snippets}/user-rest-controller-test/login_fail_test/http-response.adoc[]
+include::{snippets}/user-rest-controller-test/login_fail_test1/http-response.adoc[]
+
+
+=== 로그인 실패 예시 2
+* 이메일 형식으로 작성하지않음.
+
+==== 요청 예시
+include::{snippets}/user-rest-controller-test/login_fail_test2/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/user-rest-controller-test/login_fail_test2/http-response.adoc[]
+
+
+=== 로그인 실패 예시 3
+* 패스워드 형식이 잘못됨.
+
+==== 요청 예시
+include::{snippets}/user-rest-controller-test/login_fail_test3/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/user-rest-controller-test/login_fail_test3/http-response.adoc[]
+
+
+=== 로그인 실패 예시 4
+* 잘못된 패스워드를 입력함.
+
+==== 요청 예시
+include::{snippets}/user-rest-controller-test/login_fail_test4/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/user-rest-controller-test/login_fail_test4/http-response.adoc[]
 
 
 
