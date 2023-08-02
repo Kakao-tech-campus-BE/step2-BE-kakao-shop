@@ -1,8 +1,10 @@
 package com.example.kakao.order;
 
+import com.example.kakao.MyRestDoc;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -12,15 +14,17 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@AutoConfigureRestDocs(uriScheme = "http", uriHost = "localhost", uriPort = 8080)
 @ActiveProfiles("test")
 @Sql(value="classpath:db/teardown.sql")
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-public class OrderRestControllerTest {
+public class OrderRestControllerTest extends MyRestDoc {
     @Autowired
     private MockMvc mvc;
     @Autowired
@@ -47,6 +51,8 @@ public class OrderRestControllerTest {
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].quantity").value(5));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].price").value(50000));
+        result.andDo(MockMvcResultHandlers.print()).andDo(document);
+
     }
 
     @WithUserDetails(value = "ssarmango@nate.com")
@@ -72,13 +78,14 @@ public class OrderRestControllerTest {
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].quantity").value(5));
         result.andExpect(MockMvcResultMatchers.jsonPath("$.response.products[0].items[0].price").value(50000));
+        result.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
     @WithUserDetails(value = "ssarmango@nate.com")
     @Test//findById() 실패 테스트
     public void findById_wrong_id_test() throws Exception{
         //given
-        final int id = 1000; // 없는 id 값
+        final int id = -1000; // 없는 id 값
 
         //when
         ResultActions result = mvc.perform(
@@ -93,5 +100,6 @@ public class OrderRestControllerTest {
                 status().is4xxClientError(), // 404 오류 확인
                 MockMvcResultMatchers.jsonPath("$.success").value("false")
         );
+        result.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 }
