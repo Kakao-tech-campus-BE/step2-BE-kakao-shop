@@ -19,18 +19,19 @@ public class CartRequest {
         private int quantity;
 
         @Size(min=1, max=10000000, message = "잘못된 가격 요청입니다.")
-        // price 추가했습니다.
-        private int price;
+        private int price; // price 추가했습니다.
     }
 
     @Getter @Setter @ToString
     public static class UpdateDTO {
         @NonNull
         private int cartId;
+
+        @Size(min=1, max = 1000, message = "잘못된 수량 요청입니다.")
         @NonNull
         private int quantity;
 
-        // price 추가했습니다.
-        private int price;
+        @Size(min=1, max=10000000, message = "잘못된 가격 요청입니다.")
+        private int price; // price 추가했습니다.
     }
 }
