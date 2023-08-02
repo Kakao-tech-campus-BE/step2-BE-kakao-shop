@@ -153,7 +153,8 @@ public class CartRestControllerTest extends MyRestDoc {
         //then
         resultActions.andExpect(jsonPath("$.success").value(false))
                 .andExpect(jsonPath("$.response").isEmpty())
-                .andExpect(jsonPath("$.error.message").value("장바구니가 비어있습니다."));
+                .andExpect(jsonPath("$.error.message").value("장바구니가 비어있습니다."))
+                .andDo(MockMvcResultHandlers.print()).andDo(document);
 
     }
 }
