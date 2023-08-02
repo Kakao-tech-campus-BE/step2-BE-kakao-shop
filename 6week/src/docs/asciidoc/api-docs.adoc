@@ -1,5 +1,4 @@
 = 카카오 쇼핑하기 RestAPI
-Metacoding <getinthere@naver.com>
 
 ifndef::snippets[]
 :snippets: ./build/generated-snippets
@@ -194,7 +193,7 @@ include::{snippets}/{user}/login_fail_test3/response-body.adoc[]
 
 == 주문
 
-=== 주문 저장
+https://xxx[https://xxx[https://xxx][text]][=== 주문 저장]
 
 ==== 요청 예시
 include::{snippets}/{order}/save_test/http-request.adoc[]
