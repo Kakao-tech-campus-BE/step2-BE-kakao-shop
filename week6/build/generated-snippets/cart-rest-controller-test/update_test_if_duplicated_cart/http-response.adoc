@@ -1,0 +1,15 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+Content-Length: 165
+
+{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "동일한 장바구니를 동시에 update할 수 없습니다.",
+    "status" : 400
+  }
+}
+----

@@ -1,0 +1,11 @@
+[source,options="nowrap"]
+----
+{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "동일한 옵션 여러개를 추가할 수 없습니다.",
+    "status" : 400
+  }
+}
+----

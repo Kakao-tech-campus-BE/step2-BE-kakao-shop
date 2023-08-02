@@ -1,0 +1,8 @@
+[source,bash]
+----
+$ echo '[ {
+  "cartId" : 1,
+  "quantity" : 10
+} ]' | http POST 'http://localhost:8080/carts/update' \
+    'Content-Type:application/json;charset=UTF-8'
+----

@@ -1,0 +1,11 @@
+[source,options="nowrap"]
+----
+{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "동일한 장바구니를 동시에 update할 수 없습니다.",
+    "status" : 400
+  }
+}
+----

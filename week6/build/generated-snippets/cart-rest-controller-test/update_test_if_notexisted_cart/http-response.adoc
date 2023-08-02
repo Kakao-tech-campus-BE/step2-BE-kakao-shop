@@ -1,0 +1,15 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 404 Not Found
+Content-Type: application/json;charset=UTF-8
+Content-Length: 137
+
+{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "존재하지않는 cartId입니다.",
+    "status" : 404
+  }
+}
+----
