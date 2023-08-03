@@ -39,7 +39,7 @@ public class CartRestController {
     // /carts/add
     @PostMapping("/carts/add")
     public ResponseEntity<?> addCartList(@RequestBody @Valid ValidList<CartRequest.SaveDTO> requestDTOs,Errors errors, @AuthenticationPrincipal CustomUserDetails userDetails) {
-        cartListService.addOrUpdateCart(requestDTOs, userDetails.getUser());
+        cartListService.addCartList(requestDTOs, userDetails.getUser());
         return ResponseEntity.ok(ApiUtils.success(null));
     }
 
