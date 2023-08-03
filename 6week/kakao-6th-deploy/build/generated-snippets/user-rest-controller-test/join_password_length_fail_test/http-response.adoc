@@ -1,0 +1,15 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+Content-Length: 148
+
+{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "8에서 20자 이내여야 합니다.:password",
+    "status" : 400
+  }
+}
+----

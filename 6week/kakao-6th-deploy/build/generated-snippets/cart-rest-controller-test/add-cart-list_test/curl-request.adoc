@@ -1,0 +1,9 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/carts/add' -i -X POST \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -d '[ {
+  "optionId" : 3,
+  "quantity" : 5
+} ]'
+----

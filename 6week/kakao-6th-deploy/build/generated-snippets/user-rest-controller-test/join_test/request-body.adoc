@@ -1,0 +1,8 @@
+[source,options="nowrap"]
+----
+{
+  "email" : "ssarmangoo@nate.com",
+  "password" : "meta1234!",
+  "username" : "ssarmango"
+}
+----

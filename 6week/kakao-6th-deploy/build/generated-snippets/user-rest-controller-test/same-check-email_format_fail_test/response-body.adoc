@@ -1,0 +1,11 @@
+[source,options="nowrap"]
+----
+{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "이메일 형식으로 작성해주세요:email",
+    "status" : 400
+  }
+}
+----
