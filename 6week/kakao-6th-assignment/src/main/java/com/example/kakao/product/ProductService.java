@@ -23,7 +23,7 @@ public class ProductService {
     public List<ProductResponse.FindAllDTO> findAll(int page) {
 
         if (page < 0) {
-            throw new Exception400("잘못된 page 번호입니다. : " + page);
+            throw new Exception400("WRONG_PAGE:" + page);
         }
         // 1. 페이지 객체 만들기
         Pageable pageable = PageRequest.of(page,9);
@@ -45,7 +45,7 @@ public class ProductService {
     public ProductResponse.FindByIdDTO findById(int id) {
         List<Option> optionListPS = optionRepository.findByProductIdJoinProduct(id);
         if(optionListPS.size() == 0){
-            throw new Exception404("해당 상품을 찾을 수 없습니다 : "+id);
+            throw new Exception404("PRODUCT_NOT_FOUND:"+id);
         }
         return new ProductResponse.FindByIdDTO(optionListPS);
     }

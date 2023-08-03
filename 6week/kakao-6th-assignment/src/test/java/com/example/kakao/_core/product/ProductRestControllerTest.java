@@ -62,7 +62,7 @@ public class ProductRestControllerTest extends MyRestDoc {
         resultActions.andExpect(status().is4xxClientError())
                 .andExpect(jsonPath("$.success").value(false))
                 .andExpect(jsonPath("$.response").isEmpty())
-                .andExpect(jsonPath("$.error.message").value("잘못된 page 번호입니다. : -1"));
+                .andExpect(jsonPath("$.error.message").value("WRONG_PAGE:"+page));
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
@@ -109,7 +109,7 @@ public class ProductRestControllerTest extends MyRestDoc {
         resultActions.andExpect(status().is4xxClientError())
                 .andExpect(jsonPath("$.success").value(false))
                 .andExpect(jsonPath("$.response").isEmpty())
-                .andExpect(jsonPath("$.error.message").value("해당 상품을 찾을 수 없습니다 : 20"));
+                .andExpect(jsonPath("$.error.message").value("PRODUCT_NOT_FOUND:"+id));
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 }
