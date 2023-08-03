@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,7 +37,7 @@ public class OrderService {
         return new OrderResponse.FindAllDTO(itemList);
     }
     @Transactional
-    public void addOrder(User sessionUser){
+    public OrderResponse.FindAllDTO addOrder(User sessionUser){
         List<Cart> cartList = cartJPARepository.findAll();
 
         // 장바구니에 아무것도 없으면 예외처리
@@ -47,14 +48,19 @@ public class OrderService {
         Order order = Order.builder().user(sessionUser).build();
         orderJPARepository.save(order);
 
+        List<Item> itemList = new ArrayList<>();
+
         for(Cart cart : cartList){
             Option option = cart.getOption();
             int quantity = cart.getQuantity();
             int price = cart.getPrice();
 
             Item item = Item.builder().option(option).order(order).quantity(quantity).price(price).build();
+            itemList.add(item);
             itemJPARepository.save(item);
         }
+
+        return new OrderResponse.FindAllDTO(itemList);
     }
 
     @Transactional
