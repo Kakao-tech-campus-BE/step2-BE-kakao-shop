@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,7 +25,10 @@ public interface CartJPARepository extends JpaRepository<Cart, Integer> {
     //List<Cart> findWithOptionAndUserByUserIdOrderByOptionIdAsc(@Param("userId") int userId);
     //메모리 먹는거 때매 더 느릴듯..
 
-    void deleteByUserId(int userId);
+    @Modifying
+    @Transactional
+    @Query("delete from Cart c where c.user.id = :userId")
+    void deleteByUserId(@Param("userId") int userId);
 
     @Modifying
     @Query("UPDATE Cart c SET c.quantity = :quantity, c.price = :price WHERE c.id = :id")
