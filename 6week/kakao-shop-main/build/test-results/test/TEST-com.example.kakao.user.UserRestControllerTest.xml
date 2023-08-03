@@ -1,0 +1,699 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.kakao.user.UserRestControllerTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2023-08-03T17:16:21" hostname="LAPTOP-KKPNP3F6" time="4.201">
+  <properties/>
+  <testcase name="잘못된 이메일 양식 로그인 테스트" classname="com.example.kakao.user.UserRestControllerTest" time="0.641"/>
+  <testcase name="틀린 비밀번호 로그인 테스트" classname="com.example.kakao.user.UserRestControllerTest" time="0.757"/>
+  <testcase name="잘못된 이메일 양식 중복체크 테스트" classname="com.example.kakao.user.UserRestControllerTest" time="0.387"/>
+  <testcase name="로그인 테스트" classname="com.example.kakao.user.UserRestControllerTest" time="0.734"/>
+  <testcase name="중복된 이메일 회원가입 실패 테스트" classname="com.example.kakao.user.UserRestControllerTest" time="0.351"/>
+  <testcase name="틀린 이메일 로그인 실패 테스트" classname="com.example.kakao.user.UserRestControllerTest" time="0.313"/>
+  <testcase name="잘못된 비밀번호 양식 회원가입 실패 테스트" classname="com.example.kakao.user.UserRestControllerTest" time="0.23"/>
+  <testcase name="중복된 이메일 중복체크 테스트" classname="com.example.kakao.user.UserRestControllerTest" time="0.208"/>
+  <testcase name="중복이 아닌 이메일 중복체크 테스트" classname="com.example.kakao.user.UserRestControllerTest" time="0.17"/>
+  <testcase name="회원가입 테스트" classname="com.example.kakao.user.UserRestControllerTest" time="0.243"/>
+  <testcase name="잘못된 이메일 양식 회원가입 실패 테스트" classname="com.example.kakao.user.UserRestControllerTest" time="0.131"/>
+  <system-out><![CDATA[2023-08-04 02:16:21.113  INFO 19532 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.example.kakao.user.UserRestControllerTest], using SpringBootContextLoader
+2023-08-04 02:16:21.115  INFO 19532 --- [    Test worker] o.s.t.c.support.AbstractContextLoader    : Could not detect default resource locations for test class [com.example.kakao.user.UserRestControllerTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+2023-08-04 02:16:21.116  INFO 19532 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.kakao.user.UserRestControllerTest]: UserRestControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2023-08-04 02:16:21.215  INFO 19532 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.kakao.KakaoApplication for test class com.example.kakao.user.UserRestControllerTest
+2023-08-04 02:16:21.219  INFO 19532 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener, org.springframework.security.test.context.support.ReactorContextTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+2023-08-04 02:16:21.220  INFO 19532 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@3d2a164e, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@3725471, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@35216a2e, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@3c51dec5, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@51a42767, org.springframework.test.context.support.DirtiesContextTestExecutionListener@40e420fe, org.springframework.test.context.transaction.TransactionalTestExecutionListener@7eaa52d6, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@4cbf1c30, org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener@3c5095df, org.springframework.test.context.event.EventPublishingTestExecutionListener@5d52a17b, org.springframework.security.test.context.support.ReactorContextTestExecutionListener@71c264e5, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@4528a871, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@7d6e2366, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@357f0cc9, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@57f8a3cf, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@5713e261, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@5b6a9ef6]
+2023-08-04 02:16:21.248  INFO 19532 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-04 02:16:21.248  INFO 19532 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-04 02:16:21.249  INFO 19532 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+Hibernate: 
+    insert 
+    into
+        user_tb
+        (id, email, password, roles, username) 
+    values
+        (default, ?, ?, ?, ?)
+2023-08-04 02:16:21.527 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [cha@naver.com]
+2023-08-04 02:16:21.527 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [{bcrypt}$2a$10$v8D3Qu8ce6ydNv1TLe03yuIGUEZfOcLa4rLCwqjpF7fW.o84NrmAa]
+2023-08-04 02:16:21.530 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - [null]
+2023-08-04 02:16:21.531 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [cha]
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /login
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"50"]
+             Body = {"email":"cha123naver.com","password":"hello123!"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.example.kakao.user.UserRestController
+           Method = com.example.kakao.user.UserRestController#login(LoginDTO, Errors)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = com.example.kakao._core.errors.exception.Exception400
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 400
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json;charset=UTF-8", X-Content-Type-Options:"nosniff", X-XSS-Protection:"1; mode=block", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"SAMEORIGIN"]
+     Content type = application/json;charset=UTF-8
+             Body = {"success":false,"response":null,"error":{"message":"이메일 형식으로 작성해주세요:email","status":400}}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2023-08-04 02:16:21.896  INFO 19532 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-04 02:16:21.897  INFO 19532 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-04 02:16:21.902  INFO 19532 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 5 ms
+Hibernate: 
+    insert 
+    into
+        user_tb
+        (id, email, password, roles, username) 
+    values
+        (default, ?, ?, ?, ?)
+2023-08-04 02:16:22.190 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [cha@naver.com]
+2023-08-04 02:16:22.191 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [{bcrypt}$2a$10$cCtSjo6jPxlUlKfhel07GeEIYZ7CSK75p07dCkYWqKwJwx2fVOJFG]
+2023-08-04 02:16:22.191 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - [null]
+2023-08-04 02:16:22.192 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [cha]
+Hibernate: 
+    select
+        user0_.id as id1_6_,
+        user0_.email as email2_6_,
+        user0_.password as password3_6_,
+        user0_.roles as roles4_6_,
+        user0_.username as username5_6_ 
+    from
+        user_tb user0_ 
+    where
+        user0_.email=?
+2023-08-04 02:16:22.226 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [cha@naver.com]
+2023-08-04 02:16:22.229 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_6_] : [INTEGER]) - [3]
+2023-08-04 02:16:22.230 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([email2_6_] : [VARCHAR]) - [cha@naver.com]
+2023-08-04 02:16:22.231 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([password3_6_] : [VARCHAR]) - [{bcrypt}$2a$10$cCtSjo6jPxlUlKfhel07GeEIYZ7CSK75p07dCkYWqKwJwx2fVOJFG]
+2023-08-04 02:16:22.231 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([roles4_6_] : [VARCHAR]) - [null]
+2023-08-04 02:16:22.231 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([username5_6_] : [VARCHAR]) - [cha]
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /login
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"49"]
+             Body = {"email":"cha@naver.com","password":"hello1234!"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.example.kakao.user.UserRestController
+           Method = com.example.kakao.user.UserRestController#login(LoginDTO, Errors)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = com.example.kakao._core.errors.exception.Exception400
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 400
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json;charset=UTF-8", X-Content-Type-Options:"nosniff", X-XSS-Protection:"1; mode=block", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"SAMEORIGIN"]
+     Content type = application/json;charset=UTF-8
+             Body = {"success":false,"response":null,"error":{"message":"패스워드가 잘못입력되었습니다 ","status":400}}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2023-08-04 02:16:22.662  INFO 19532 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-04 02:16:22.663  INFO 19532 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-04 02:16:22.669  INFO 19532 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 6 ms
+Hibernate: 
+    insert 
+    into
+        user_tb
+        (id, email, password, roles, username) 
+    values
+        (default, ?, ?, ?, ?)
+2023-08-04 02:16:22.916 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [cha@naver.com]
+2023-08-04 02:16:22.916 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [{bcrypt}$2a$10$FOju9M5cP7pJFMvY1vJc0.pPF35QvxL.sDOCQ46olssTOAo0ck5/m]
+2023-08-04 02:16:22.916 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - [null]
+2023-08-04 02:16:22.916 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [cha]
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /check
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"24"]
+             Body = {"email":"chanaver.com"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.example.kakao.user.UserRestController
+           Method = com.example.kakao.user.UserRestController#check(EmailCheckDTO, Errors)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = com.example.kakao._core.errors.exception.Exception400
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 400
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json;charset=UTF-8", X-Content-Type-Options:"nosniff", X-XSS-Protection:"1; mode=block", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"SAMEORIGIN"]
+     Content type = application/json;charset=UTF-8
+             Body = {"success":false,"response":null,"error":{"message":"이메일 형식으로 작성해주세요:email","status":400}}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2023-08-04 02:16:23.083  INFO 19532 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-04 02:16:23.084  INFO 19532 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-04 02:16:23.085  INFO 19532 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+Hibernate: 
+    insert 
+    into
+        user_tb
+        (id, email, password, roles, username) 
+    values
+        (default, ?, ?, ?, ?)
+2023-08-04 02:16:23.374 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [cha@naver.com]
+2023-08-04 02:16:23.375 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [{bcrypt}$2a$10$RBOlTFeD0NtuxhjAKQNmsO9Xd4mzU/ZW4gtdrbsDrXxhcUVSvFBnS]
+2023-08-04 02:16:23.375 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - [null]
+2023-08-04 02:16:23.376 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [cha]
+Hibernate: 
+    select
+        user0_.id as id1_6_,
+        user0_.email as email2_6_,
+        user0_.password as password3_6_,
+        user0_.roles as roles4_6_,
+        user0_.username as username5_6_ 
+    from
+        user_tb user0_ 
+    where
+        user0_.email=?
+2023-08-04 02:16:23.399 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [cha@naver.com]
+2023-08-04 02:16:23.399 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_6_] : [INTEGER]) - [3]
+2023-08-04 02:16:23.400 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([email2_6_] : [VARCHAR]) - [cha@naver.com]
+2023-08-04 02:16:23.400 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([password3_6_] : [VARCHAR]) - [{bcrypt}$2a$10$RBOlTFeD0NtuxhjAKQNmsO9Xd4mzU/ZW4gtdrbsDrXxhcUVSvFBnS]
+2023-08-04 02:16:23.400 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([roles4_6_] : [VARCHAR]) - [null]
+2023-08-04 02:16:23.400 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([username5_6_] : [VARCHAR]) - [cha]
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /login
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"48"]
+             Body = {"email":"cha@naver.com","password":"hello123!"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.example.kakao.user.UserRestController
+           Method = com.example.kakao.user.UserRestController#login(LoginDTO, Errors)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Authorization:"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGFAbmF2ZXIuY29tIiwicm9sZSI6bnVsbCwiaWQiOjMsImV4cCI6MTY5MTI1NTc4M30.Mx9FOJmhEsnU0z0dRVqAjE-1FrWf8ZzljrByJwagE9sSZV6uicWMNR6a9p73Qwi_t8PGawB-Ciu0cZ3HxOezvA", Content-Type:"application/json;charset=UTF-8", X-Content-Type-Options:"nosniff", X-XSS-Protection:"1; mode=block", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"SAMEORIGIN"]
+     Content type = application/json;charset=UTF-8
+             Body = {"success":true,"response":null,"error":null}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2023-08-04 02:16:23.807  INFO 19532 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-04 02:16:23.807  INFO 19532 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-04 02:16:23.814  INFO 19532 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 6 ms
+Hibernate: 
+    insert 
+    into
+        user_tb
+        (id, email, password, roles, username) 
+    values
+        (default, ?, ?, ?, ?)
+2023-08-04 02:16:24.038 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [cha@naver.com]
+2023-08-04 02:16:24.039 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [{bcrypt}$2a$10$ran79TnDdG0RBlSgywwP5u01EASJYugTTMfMgRkG1diPh8WRo7hA2]
+2023-08-04 02:16:24.040 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - [null]
+2023-08-04 02:16:24.041 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [cha]
+Hibernate: 
+    select
+        user0_.id as id1_6_,
+        user0_.email as email2_6_,
+        user0_.password as password3_6_,
+        user0_.roles as roles4_6_,
+        user0_.username as username5_6_ 
+    from
+        user_tb user0_ 
+    where
+        user0_.email=?
+2023-08-04 02:16:24.053 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [cha@naver.com]
+2023-08-04 02:16:24.054 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_6_] : [INTEGER]) - [3]
+2023-08-04 02:16:24.054 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([email2_6_] : [VARCHAR]) - [cha@naver.com]
+2023-08-04 02:16:24.054 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([password3_6_] : [VARCHAR]) - [{bcrypt}$2a$10$ran79TnDdG0RBlSgywwP5u01EASJYugTTMfMgRkG1diPh8WRo7hA2]
+2023-08-04 02:16:24.054 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([roles4_6_] : [VARCHAR]) - [null]
+2023-08-04 02:16:24.054 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([username5_6_] : [VARCHAR]) - [cha]
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /join
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"70"]
+             Body = {"email":"cha@naver.com","password":"hello123!","username":"ChaJiwon"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.example.kakao.user.UserRestController
+           Method = com.example.kakao.user.UserRestController#join(JoinDTO, Errors)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = com.example.kakao._core.errors.exception.Exception400
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 400
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json;charset=UTF-8", X-Content-Type-Options:"nosniff", X-XSS-Protection:"1; mode=block", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"SAMEORIGIN"]
+     Content type = application/json;charset=UTF-8
+             Body = {"success":false,"response":null,"error":{"message":"동일한 이메일이 존재합니다 : cha@naver.com","status":400}}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2023-08-04 02:16:24.227  INFO 19532 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-04 02:16:24.228  INFO 19532 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-04 02:16:24.244  INFO 19532 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 15 ms
+Hibernate: 
+    insert 
+    into
+        user_tb
+        (id, email, password, roles, username) 
+    values
+        (default, ?, ?, ?, ?)
+2023-08-04 02:16:24.405 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [cha@naver.com]
+2023-08-04 02:16:24.405 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [{bcrypt}$2a$10$icJA1Ed4nJ1CB0ccnxnrm.Z6Vt/AkcgzKsh5EA3N6ik5iYt8rlv1m]
+2023-08-04 02:16:24.405 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - [null]
+2023-08-04 02:16:24.405 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [cha]
+Hibernate: 
+    select
+        user0_.id as id1_6_,
+        user0_.email as email2_6_,
+        user0_.password as password3_6_,
+        user0_.roles as roles4_6_,
+        user0_.username as username5_6_ 
+    from
+        user_tb user0_ 
+    where
+        user0_.email=?
+2023-08-04 02:16:24.411 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [cha123@naver.com]
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /login
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"51"]
+             Body = {"email":"cha123@naver.com","password":"hello123!"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.example.kakao.user.UserRestController
+           Method = com.example.kakao.user.UserRestController#login(LoginDTO, Errors)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = com.example.kakao._core.errors.exception.Exception400
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 400
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json;charset=UTF-8", X-Content-Type-Options:"nosniff", X-XSS-Protection:"1; mode=block", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"SAMEORIGIN"]
+     Content type = application/json;charset=UTF-8
+             Body = {"success":false,"response":null,"error":{"message":"이메일을 찾을 수 없습니다 : cha123@naver.com","status":400}}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2023-08-04 02:16:24.462  INFO 19532 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-04 02:16:24.462  INFO 19532 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-04 02:16:24.463  INFO 19532 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+Hibernate: 
+    insert 
+    into
+        user_tb
+        (id, email, password, roles, username) 
+    values
+        (default, ?, ?, ?, ?)
+2023-08-04 02:16:24.631 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [cha@naver.com]
+2023-08-04 02:16:24.632 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [{bcrypt}$2a$10$fqpSDyCHVkd4qW4BGqo/k.77tL/J1KK2VSLUoptRUszjtEHZncCjy]
+2023-08-04 02:16:24.633 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - [null]
+2023-08-04 02:16:24.633 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [cha]
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /join
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"73"]
+             Body = {"email":"cha0825@naver.com","password":"hello123","username":"ChaJiwon"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.example.kakao.user.UserRestController
+           Method = com.example.kakao.user.UserRestController#join(JoinDTO, Errors)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = com.example.kakao._core.errors.exception.Exception400
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 400
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json;charset=UTF-8", X-Content-Type-Options:"nosniff", X-XSS-Protection:"1; mode=block", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"SAMEORIGIN"]
+     Content type = application/json;charset=UTF-8
+             Body = {"success":false,"response":null,"error":{"message":"영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니다.:password","status":400}}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2023-08-04 02:16:24.721  INFO 19532 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-04 02:16:24.721  INFO 19532 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-04 02:16:24.722  INFO 19532 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+Hibernate: 
+    insert 
+    into
+        user_tb
+        (id, email, password, roles, username) 
+    values
+        (default, ?, ?, ?, ?)
+2023-08-04 02:16:24.853 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [cha@naver.com]
+2023-08-04 02:16:24.853 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [{bcrypt}$2a$10$FaJPfzaPcY9VC7E2dtNXYOxZb5xwbHBNaC6gGdEW3jcLtocGLIWQC]
+2023-08-04 02:16:24.853 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - [null]
+2023-08-04 02:16:24.853 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [cha]
+Hibernate: 
+    select
+        user0_.id as id1_6_,
+        user0_.email as email2_6_,
+        user0_.password as password3_6_,
+        user0_.roles as roles4_6_,
+        user0_.username as username5_6_ 
+    from
+        user_tb user0_ 
+    where
+        user0_.email=?
+2023-08-04 02:16:24.861 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [cha@naver.com]
+2023-08-04 02:16:24.862 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_6_] : [INTEGER]) - [3]
+2023-08-04 02:16:24.862 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([email2_6_] : [VARCHAR]) - [cha@naver.com]
+2023-08-04 02:16:24.862 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([password3_6_] : [VARCHAR]) - [{bcrypt}$2a$10$FaJPfzaPcY9VC7E2dtNXYOxZb5xwbHBNaC6gGdEW3jcLtocGLIWQC]
+2023-08-04 02:16:24.862 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([roles4_6_] : [VARCHAR]) - [null]
+2023-08-04 02:16:24.862 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([username5_6_] : [VARCHAR]) - [cha]
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /check
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"25"]
+             Body = {"email":"cha@naver.com"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.example.kakao.user.UserRestController
+           Method = com.example.kakao.user.UserRestController#check(EmailCheckDTO, Errors)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = com.example.kakao._core.errors.exception.Exception400
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 400
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json;charset=UTF-8", X-Content-Type-Options:"nosniff", X-XSS-Protection:"1; mode=block", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"SAMEORIGIN"]
+     Content type = application/json;charset=UTF-8
+             Body = {"success":false,"response":null,"error":{"message":"동일한 이메일이 존재합니다 : cha@naver.com","status":400}}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2023-08-04 02:16:24.898  INFO 19532 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-04 02:16:24.898  INFO 19532 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-04 02:16:24.899  INFO 19532 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+Hibernate: 
+    insert 
+    into
+        user_tb
+        (id, email, password, roles, username) 
+    values
+        (default, ?, ?, ?, ?)
+2023-08-04 02:16:25.016 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [cha@naver.com]
+2023-08-04 02:16:25.016 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [{bcrypt}$2a$10$Szs.gHpvD87BAZ4vD057WOCExRGuqlco8tmWvXxbmWh6N2nsuSfAa]
+2023-08-04 02:16:25.016 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - [null]
+2023-08-04 02:16:25.016 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [cha]
+Hibernate: 
+    select
+        user0_.id as id1_6_,
+        user0_.email as email2_6_,
+        user0_.password as password3_6_,
+        user0_.roles as roles4_6_,
+        user0_.username as username5_6_ 
+    from
+        user_tb user0_ 
+    where
+        user0_.email=?
+2023-08-04 02:16:25.025 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [cha0825@naver.com]
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /check
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"29"]
+             Body = {"email":"cha0825@naver.com"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.example.kakao.user.UserRestController
+           Method = com.example.kakao.user.UserRestController#check(EmailCheckDTO, Errors)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json;charset=UTF-8", X-Content-Type-Options:"nosniff", X-XSS-Protection:"1; mode=block", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"SAMEORIGIN"]
+     Content type = application/json;charset=UTF-8
+             Body = {"success":true,"response":null,"error":null}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2023-08-04 02:16:25.073  INFO 19532 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-04 02:16:25.074  INFO 19532 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-04 02:16:25.075  INFO 19532 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+Hibernate: 
+    insert 
+    into
+        user_tb
+        (id, email, password, roles, username) 
+    values
+        (default, ?, ?, ?, ?)
+2023-08-04 02:16:25.180 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [cha@naver.com]
+2023-08-04 02:16:25.181 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [{bcrypt}$2a$10$l1wz3dRTl4Dv0k/I9Zm26OacAHe05EEeYAaN5JEaQpHJsODIy6C9K]
+2023-08-04 02:16:25.181 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - [null]
+2023-08-04 02:16:25.181 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [cha]
+Hibernate: 
+    select
+        user0_.id as id1_6_,
+        user0_.email as email2_6_,
+        user0_.password as password3_6_,
+        user0_.roles as roles4_6_,
+        user0_.username as username5_6_ 
+    from
+        user_tb user0_ 
+    where
+        user0_.email=?
+2023-08-04 02:16:25.185 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [cha0825@naver.com]
+Hibernate: 
+    insert 
+    into
+        user_tb
+        (id, email, password, roles, username) 
+    values
+        (default, ?, ?, ?, ?)
+2023-08-04 02:16:25.278 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [cha0825@naver.com]
+2023-08-04 02:16:25.278 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [{bcrypt}$2a$10$GuLSR7.Ss6a0P/EytPwvY.MO1woV5rBOfrul35/umJ6hXPos86iCK]
+2023-08-04 02:16:25.278 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - [ROLE_USER]
+2023-08-04 02:16:25.278 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [ChaJiwon]
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /join
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"74"]
+             Body = {"email":"cha0825@naver.com","password":"hello123!","username":"ChaJiwon"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.example.kakao.user.UserRestController
+           Method = com.example.kakao.user.UserRestController#join(JoinDTO, Errors)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json;charset=UTF-8", X-Content-Type-Options:"nosniff", X-XSS-Protection:"1; mode=block", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"SAMEORIGIN"]
+     Content type = application/json;charset=UTF-8
+             Body = {"success":true,"response":null,"error":null}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2023-08-04 02:16:25.311  INFO 19532 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-04 02:16:25.312  INFO 19532 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-04 02:16:25.312  INFO 19532 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+Hibernate: 
+    insert 
+    into
+        user_tb
+        (id, email, password, roles, username) 
+    values
+        (default, ?, ?, ?, ?)
+2023-08-04 02:16:25.411 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [cha@naver.com]
+2023-08-04 02:16:25.411 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [{bcrypt}$2a$10$wmKXsgMp4a6d9o8Pth858Oxn9h./1CW8FGaUAAv2mTD/2iCj5dtq6]
+2023-08-04 02:16:25.411 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - [null]
+2023-08-04 02:16:25.411 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [cha]
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /join
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8", Content-Length:"69"]
+             Body = {"email":"chanaver.com","password":"hello123!","username":"ChaJiwon"}
+    Session Attrs = {}
+
+Handler:
+             Type = com.example.kakao.user.UserRestController
+           Method = com.example.kakao.user.UserRestController#join(JoinDTO, Errors)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = com.example.kakao._core.errors.exception.Exception400
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 400
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json;charset=UTF-8", X-Content-Type-Options:"nosniff", X-XSS-Protection:"1; mode=block", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"SAMEORIGIN"]
+     Content type = application/json;charset=UTF-8
+             Body = {"success":false,"response":null,"error":{"message":"이메일 형식으로 작성해주세요:email","status":400}}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,11 @@
+[source,options="nowrap"]
+----
+{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "옵션이 중복되었습니다 : 1",
+    "status" : 400
+  }
+}
+----

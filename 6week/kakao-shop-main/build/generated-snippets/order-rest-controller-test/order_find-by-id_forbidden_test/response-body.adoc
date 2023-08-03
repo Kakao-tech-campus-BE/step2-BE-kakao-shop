@@ -1,0 +1,11 @@
+[source,options="nowrap"]
+----
+{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "해당 주문을 조회할 권한이 없습니다.",
+    "status" : 403
+  }
+}
+----
