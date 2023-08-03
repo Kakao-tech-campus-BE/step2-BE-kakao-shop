@@ -5,6 +5,7 @@ import com.example.kakao.product.Product;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,12 +33,16 @@ public class OrderResponse {
         @Setter
         public class productDTO {
             private String productName;
-            private List<ItemsDTO> items;
+            private List<ItemsDTO> items = new ArrayList<>();
 
             public productDTO(Product product, List<Item> itemList){
                 this.productName = product.getProductName();
-                this.items = itemList.stream()
-                        .map(item -> new ItemsDTO(item)).collect(Collectors.toList());
+                for(Item item : itemList){
+                    if(product.getId() == item.getOption().getProduct().getId()){
+                        System.out.println("아이템 담김\n");
+                        items.add(new ItemsDTO(item));
+                    }
+                }
             }
 
             @Getter
