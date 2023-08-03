@@ -557,7 +557,7 @@ Host: localhost:8080</code></pre>
   "success" : false,
   "response" : null,
   "error" : {
-    "message" : "잘못된 page 번호입니다. : -1",
+    "message" : "WRONG_PAGE:-1",
     "status" : 400
   }
 }</code></pre>
@@ -636,7 +636,7 @@ Host: localhost:8080</code></pre>
   "success" : false,
   "response" : null,
   "error" : {
-    "message" : "해당 상품을 찾을 수 없습니다 : 20",
+    "message" : "PRODUCT_NOT_FOUND:20",
     "status" : 404
   }
 }</code></pre>
@@ -692,34 +692,14 @@ Host: localhost:8080
 </div>
 <div class="sect3">
 <h4 id="_요청_예시_6">요청 예시</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /join HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-Content-Length: 96
-Host: localhost:8080
-
-{
-  "email" : "ssarmango@nate.com",
-  "password" : "meta1234!",
-  "username" : "ssarmango"
-}</code></pre>
-</div>
+<div class="paragraph">
+<p>Unresolved directive in api-docs.adoc - include::./build/generated-snippets/user-rest-controller-test/join_duplicate-email_test/http-request.adoc[]</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_응답_예시_6">응답 예시</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight nowrap"><code>{
-  "success" : false,
-  "response" : null,
-  "error" : {
-    "message" : "동일한 이메일이 존재합니다 : ssarmango@nate.com",
-    "status" : 400
-  }
-}</code></pre>
-</div>
+<div class="paragraph">
+<p>Unresolved directive in api-docs.adoc - include::./build/generated-snippets/user-rest-controller-test/join_duplicate-email_test/response-body.adoc[]</p>
 </div>
 </div>
 </div>
@@ -734,34 +714,14 @@ Host: localhost:8080
 </div>
 <div class="sect3">
 <h4 id="_요청_예시_7">요청 예시</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /join HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-Content-Length: 95
-Host: localhost:8080
-
-{
-  "email" : "ssarmangonate.com",
-  "password" : "meta1234!",
-  "username" : "ssarmango"
-}</code></pre>
-</div>
+<div class="paragraph">
+<p>Unresolved directive in api-docs.adoc - include::./build/generated-snippets/user-rest-controller-test/join_not-email-form_test/http-request.adoc[]</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_응답_예시_7">응답 예시</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight nowrap"><code>{
-  "success" : false,
-  "response" : null,
-  "error" : {
-    "message" : "이메일 형식으로 작성해주세요:email",
-    "status" : 400
-  }
-}</code></pre>
-</div>
+<div class="paragraph">
+<p>Unresolved directive in api-docs.adoc - include::./build/generated-snippets/user-rest-controller-test/join_not-email-form_test/response-body.adoc[]</p>
 </div>
 </div>
 </div>
@@ -799,7 +759,7 @@ Host: localhost:8080
   "success" : false,
   "response" : null,
   "error" : {
-    "message" : "영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니다.:password",
+    "message" : "INCLUDE_ENGLISH_LETTERS_NUMBERS_SPECIAL_CHARACTERS_NO_SPACE:password",
     "status" : 400
   }
 }</code></pre>
@@ -841,7 +801,7 @@ Host: localhost:8080
   "success" : false,
   "response" : null,
   "error" : {
-    "message" : "8에서 45자 이내여야 합니다.:username",
+    "message" : "CHARACTER_LENGTH_CONSTRAINT_8_TO_45:username",
     "status" : 400
   }
 }</code></pre>
@@ -913,7 +873,7 @@ Host: localhost:8080
   "success" : false,
   "response" : null,
   "error" : {
-    "message" : "이메일 형식으로 작성해주세요:email",
+    "message" : "NOT_EMAIL_FORM:email",
     "status" : 400
   }
 }</code></pre>
@@ -954,7 +914,7 @@ Host: localhost:8080
   "success" : false,
   "response" : null,
   "error" : {
-    "message" : "영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니다.:password",
+    "message" : "INCLUDE_ENGLISH_LETTERS_NUMBERS_SPECIAL_CHARACTERS_NO_SPACE:password",
     "status" : 400
   }
 }</code></pre>
@@ -995,7 +955,7 @@ Host: localhost:8080
   "success" : false,
   "response" : null,
   "error" : {
-    "message" : "이메일을 찾을 수 없습니다 : ssarmangoo@nate.com",
+    "message" : "EMAIL_NOT_FOUND:ssarmangoo@nate.com",
     "status" : 400
   }
 }</code></pre>
@@ -1036,7 +996,7 @@ Host: localhost:8080
   "success" : false,
   "response" : null,
   "error" : {
-    "message" : "패스워드가 잘못입력되었습니다 ",
+    "message" : "WRONG_PASSWORD:meta1234!a",
     "status" : 400
   }
 }</code></pre>
@@ -1106,7 +1066,7 @@ Host: localhost:8080
   "success" : false,
   "response" : null,
   "error" : {
-    "message" : "동일한 이메일이 존재합니다 : ssarmango@nate.com",
+    "message" : "SAME_EMAIL:ssarmango@nate.com",
     "status" : 400
   }
 }</code></pre>
@@ -1127,13 +1087,12 @@ Host: localhost:8080
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /carts/add HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Content-Length: 65
+Content-Length: 45
 Host: localhost:8080
 
 [ {
   "optionId" : 3,
-  "quantity" : 5,
-  "price" : 49500
+  "quantity" : 5
 } ]</code></pre>
 </div>
 </div>
@@ -1166,17 +1125,15 @@ Host: localhost:8080
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /carts/add HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Content-Length: 129
+Content-Length: 89
 Host: localhost:8080
 
 [ {
   "optionId" : 1,
-  "quantity" : 5,
-  "price" : 10000
+  "quantity" : 5
 }, {
   "optionId" : 1,
-  "quantity" : 10,
-  "price" : 20000
+  "quantity" : 10
 } ]</code></pre>
 </div>
 </div>
@@ -1189,7 +1146,7 @@ Host: localhost:8080
   "success" : false,
   "response" : null,
   "error" : {
-    "message" : "중복된 옵션 요청입니다. : 1",
+    "message" : "SAME_OPTION:1",
     "status" : 400
   }
 }</code></pre>
@@ -1212,13 +1169,12 @@ Host: localhost:8080
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /carts/add HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Content-Length: 61
+Content-Length: 45
 Host: localhost:8080
 
 [ {
   "optionId" : 3,
-  "quantity" : 0,
-  "price" : 0
+  "quantity" : 0
 } ]</code></pre>
 </div>
 </div>
@@ -1231,7 +1187,7 @@ Host: localhost:8080
   "success" : false,
   "response" : null,
   "error" : {
-    "message" : "잘못된 수량 요청입니다. : 0",
+    "message" : "INVALID_QUANTITY:0",
     "status" : 400
   }
 }</code></pre>
@@ -1254,13 +1210,12 @@ Host: localhost:8080
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /carts/add HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Content-Length: 65
+Content-Length: 45
 Host: localhost:8080
 
 [ {
   "optionId" : 3,
-  "quantity" : 5,
-  "price" : 49500
+  "quantity" : 5
 } ]</code></pre>
 </div>
 </div>
@@ -1273,7 +1228,7 @@ Host: localhost:8080
   "success" : false,
   "response" : null,
   "error" : {
-    "message" : "인증되지 않았습니다",
+    "message" : "UNAUTHENTICATED_USER",
     "status" : 401
   }
 }</code></pre>
@@ -1361,13 +1316,12 @@ Host: localhost:8080</code></pre>
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /carts/update HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Content-Length: 65
+Content-Length: 44
 Host: localhost:8080
 
 [ {
   "cartId" : 1,
-  "quantity" : 10,
-  "price" : 100000
+  "quantity" : 10
 } ]</code></pre>
 </div>
 </div>
@@ -1421,13 +1375,12 @@ Host: localhost:8080
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /carts/update HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Content-Length: 66
+Content-Length: 45
 Host: localhost:8080
 
 [ {
   "cartId" : 10,
-  "quantity" : 10,
-  "price" : 100000
+  "quantity" : 10
 } ]</code></pre>
 </div>
 </div>
@@ -1440,7 +1393,7 @@ Host: localhost:8080
   "success" : false,
   "response" : null,
   "error" : {
-    "message" : "없는 장바구니 아이디 요청입니다. : 10",
+    "message" : "CART_NOT_FOUND:10",
     "status" : 400
   }
 }</code></pre>
@@ -1463,17 +1416,15 @@ Host: localhost:8080
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /carts/update HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Content-Length: 126
+Content-Length: 85
 Host: localhost:8080
 
 [ {
   "cartId" : 1,
-  "quantity" : 10,
-  "price" : 100000
+  "quantity" : 10
 }, {
   "cartId" : 1,
-  "quantity" : 5,
-  "price" : 50000
+  "quantity" : 5
 } ]</code></pre>
 </div>
 </div>
@@ -1486,7 +1437,7 @@ Host: localhost:8080
   "success" : false,
   "response" : null,
   "error" : {
-    "message" : "중복된 장바구니 아이디 요청입니다. : 1",
+    "message" : "SAME_CART:1",
     "status" : 400
   }
 }</code></pre>
@@ -1509,13 +1460,12 @@ Host: localhost:8080
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /carts/update HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Content-Length: 59
+Content-Length: 43
 Host: localhost:8080
 
 [ {
   "cartId" : 1,
-  "quantity" : 0,
-  "price" : 0
+  "quantity" : 0
 } ]</code></pre>
 </div>
 </div>
@@ -1528,7 +1478,7 @@ Host: localhost:8080
   "success" : false,
   "response" : null,
   "error" : {
-    "message" : "잘못된 수량 요청입니다. : 0",
+    "message" : "INVALID_QUANTITY:0",
     "status" : 400
   }
 }</code></pre>
@@ -1631,7 +1581,7 @@ Host: localhost:8080
   "success" : false,
   "response" : null,
   "error" : {
-    "message" : "주문할 상품이 존재하지 않습니다. : []",
+    "message" : "EMPTY_CART:[]",
     "status" : 400
   }
 }</code></pre>
@@ -1714,7 +1664,7 @@ Host: localhost:8080</code></pre>
   "success" : false,
   "response" : null,
   "error" : {
-    "message" : "존재하지 않는 주문 아이디입니다. : -1",
+    "message" : "INVALID_ORDER_ID:-1",
     "status" : 400
   }
 }</code></pre>
@@ -1748,7 +1698,7 @@ Host: localhost:8080</code></pre>
   "success" : false,
   "response" : null,
   "error" : {
-    "message" : "존재하지 않는 주문 결과입니다. : null",
+    "message" : "ORDER_NOT_FOUND:null",
     "status" : 400
   }
 }</code></pre>
