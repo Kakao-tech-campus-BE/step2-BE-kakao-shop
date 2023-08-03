@@ -302,7 +302,7 @@
 > 
 > 2. Mock API Controller 구현
 >
-> 2week/Kakao-Backend-Second-DTO 경로에 구현 파일이 있습니다.
+> 2week/Kakao-Backend-Second-DTO 경로에 구현된 파일이 있습니다.
 
 # 3주차
 
@@ -385,6 +385,10 @@
 
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
+
+# 4주차 클론 과제
+>- 리포지토리 단위테스트
+>- 3week/kakao-jpa 경로에 과제 파일들이 있습니다.
 
 # 5주차
 
