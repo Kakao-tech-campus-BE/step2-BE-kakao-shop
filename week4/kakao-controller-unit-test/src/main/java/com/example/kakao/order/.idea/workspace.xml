@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="2974d61d-f44c-4621-9d46-5b9b7420abb4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../../../../../../../../../week5/kakao-5th-exhandler-start/src/main/java/com/example/kakao/order/OrderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../week5/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../week5/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../week5/kakao-5th-exhandler-start/src/main/java/com/example/kakao/cart/CartJPARepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../week5/kakao-5th-exhandler-start/src/main/java/com/example/kakao/cart/CartJPARepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../week5/kakao-5th-exhandler-start/src/main/java/com/example/kakao/cart/CartRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../week5/kakao-5th-exhandler-start/src/main/java/com/example/kakao/cart/CartRestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../week5/kakao-5th-exhandler-start/src/main/java/com/example/kakao/order/OrderJPARepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../week5/kakao-5th-exhandler-start/src/main/java/com/example/kakao/order/OrderJPARepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../week5/kakao-5th-exhandler-start/src/main/java/com/example/kakao/order/OrderResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../week5/kakao-5th-exhandler-start/src/main/java/com/example/kakao/order/OrderResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../week5/kakao-5th-exhandler-start/src/main/java/com/example/kakao/order/OrderRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../week5/kakao-5th-exhandler-start/src/main/java/com/example/kakao/order/OrderRestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../../../week5/kakao-5th-exhandler-start/src/main/java/com/example/kakao/order/item/ItemJPARepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../../../week5/kakao-5th-exhandler-start/src/main/java/com/example/kakao/order/item/ItemJPARepository.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../../../../../../.." />
+  </component>
+  <component name="ProjectId" id="2T728adg7z6bkWCtOlgYJNATnHt" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="2974d61d-f44c-4621-9d46-5b9b7420abb4" name="Changes" comment="" />
+      <created>1690379639672</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1690379639672</updated>
+      <workItem from="1690379641080" duration="2316000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
