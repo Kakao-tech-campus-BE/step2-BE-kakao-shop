@@ -41,7 +41,7 @@ public class OrderRestControllerTest extends MyRestDoc {
 
         // when
         ResultActions resultActions = mvc.perform(
-            post("/carts/orders/save")
+            post("/orders/save")
                     .contentType(MediaType.APPLICATION_JSON)
         );
 
@@ -66,7 +66,7 @@ public class OrderRestControllerTest extends MyRestDoc {
 
         // when
         ResultActions resultActions = mvc.perform(
-                get("/carts/orders/{id}", orderId)
+                get("/orders/{id}", orderId)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
         );
 
@@ -91,7 +91,7 @@ public class OrderRestControllerTest extends MyRestDoc {
 
         // when
         ResultActions resultActions = mvc.perform(
-                get("/carts/orders/{id}", orderId)
+                get("/orders/{id}", orderId)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
         );
 

@@ -22,7 +22,7 @@ public class OrderRestController {
 
     // (기능9) 결재하기 - (주문 인서트) POST
     // /orders/save
-    @PostMapping("/carts/orders/save")
+    @PostMapping("/orders/save")
     public ResponseEntity<?> save(@AuthenticationPrincipal CustomUserDetails userDetails) {
         OrderResponse.saveDTO resDTO = orderService.save(userDetails.getUser());
         return ResponseEntity.ok(ApiUtils.success(resDTO));
@@ -30,7 +30,7 @@ public class OrderRestController {
 
     // (기능10) 주문 결과 확인 GET
     // /orders/{id}
-    @GetMapping("/carts/orders/{id}")
+    @GetMapping("/orders/{id}")
     public ResponseEntity<?> findById(@PathVariable int id) {
         OrderResponse.findAllDTO responseDTO = orderService.findAll(id);
         return ResponseEntity.ok(ApiUtils.success(responseDTO));

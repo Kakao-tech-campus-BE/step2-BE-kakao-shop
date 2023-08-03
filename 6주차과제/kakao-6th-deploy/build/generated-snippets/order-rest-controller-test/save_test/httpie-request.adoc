@@ -1,5 +1,5 @@
 [source,bash]
 ----
-$ http POST 'http://localhost:8080/carts/orders/save' \
+$ http POST 'http://localhost:8080/orders/save' \
     'Content-Type:application/json;charset=UTF-8'
 ----
