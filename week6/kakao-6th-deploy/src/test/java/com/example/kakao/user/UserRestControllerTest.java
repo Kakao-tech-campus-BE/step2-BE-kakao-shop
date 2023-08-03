@@ -46,6 +46,25 @@ public class UserRestControllerTest extends MyRestDoc {
     }
 
     @Test
+    public void check_fail_test() throws Exception{
+        //given
+        UserRequest.EmailCheckDTO requestDTO = new UserRequest.EmailCheckDTO();
+        requestDTO.setEmail("ssarnate.com"); // 이메일 형식 조건 위배
+        String requestBody = om.writeValueAsString(requestDTO);
+        //when
+        ResultActions resultActions = mvc.perform(
+                post("/check")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+        //then
+        resultActions.andExpect(jsonPath("$.success").value("false"));
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
+    }
+
+    @Test
     public void join_test() throws Exception{
         //given
         UserRequest.JoinDTO requestDTO = new UserRequest.JoinDTO();
@@ -67,6 +86,28 @@ public class UserRestControllerTest extends MyRestDoc {
     }
 
     @Test
+    public void join_fail_test() throws Exception{
+        //given
+        UserRequest.JoinDTO requestDTO = new UserRequest.JoinDTO();
+        requestDTO.setUsername("temp"); // 사용자 이름의 최소 길이 조건 위배
+        requestDTO.setEmail("tempnate.com"); // 이메일 형식 조건 위배
+        requestDTO.setPassword("temp1234"); // 패스워드 필수 포함 문자 조건 위배
+        String requestBody = om.writeValueAsString(requestDTO);
+        //when
+        ResultActions resultActions = mvc.perform(
+                post("/join")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+        //then
+        resultActions.andExpect(jsonPath("$.success").value("false"));
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
+    }
+
+
+    @Test
     public void login_test() throws Exception{
         //given
         UserRequest.LoginDTO requestDTO = new UserRequest.LoginDTO();
@@ -83,6 +124,26 @@ public class UserRestControllerTest extends MyRestDoc {
         System.out.println("테스트 : " + responseBody);
         //then
         resultActions.andExpect(jsonPath("$.success").value("true"));
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
+    }
+
+    @Test
+    public void login_fail_test() throws Exception{
+        //given
+        UserRequest.LoginDTO requestDTO = new UserRequest.LoginDTO();
+        requestDTO.setEmail("ssar@nate.com"); // 존재하지 않는 사용자
+        requestDTO.setPassword("meta1234!");
+        String requestBody = om.writeValueAsString(requestDTO);
+        //when
+        ResultActions resultActions = mvc.perform(
+                post("/login")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+        //then
+        resultActions.andExpect(jsonPath("$.success").value("false"));
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 }

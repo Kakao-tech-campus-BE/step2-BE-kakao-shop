@@ -864,6 +864,16 @@ Host: localhost:8080</code></pre>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="_회원_가입">회원 가입</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>회원 가입 시 사용자 이름은 최소 8자에서 최대 45자까지로 설정해야 한다.</p>
+</li>
+<li>
+<p>비밀번호에는 영어 대소문자 및 숫자와 특수문자를 포함하여 최소 8자에서 최대 20자까지로 설정해야 한다.</p>
+</li>
+</ul>
+</div>
 <div class="sect3">
 <h4 id="_요청_예시_8">요청 예시</h4>
 <div class="listingblock">
@@ -895,9 +905,44 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect2">
-<h3 id="_로그인">로그인</h3>
+<h3 id="_회원_가입_실패">회원 가입 실패</h3>
 <div class="sect3">
 <h4 id="_요청_예시_9">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /join HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 84
+Host: localhost:8080
+
+{
+  "email" : "tempnate.com",
+  "password" : "temp1234",
+  "username" : "temp"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_9">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니다.:password",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_로그인">로그인</h3>
+<div class="sect3">
+<h4 id="_요청_예시_10">요청 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /login HTTP/1.1
@@ -908,36 +953,6 @@ Host: localhost:8080
 {
   "email" : "ssarmango@nate.com",
   "password" : "meta1234!"
-}</code></pre>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_응답_예시_9">응답 예시</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight nowrap"><code>{
-  "success" : true,
-  "response" : null,
-  "error" : null
-}</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_이메일_중복_체크">이메일 중복 체크</h3>
-<div class="sect3">
-<h4 id="_요청_예시_10">요청 예시</h4>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /check HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-Content-Length: 33
-Host: localhost:8080
-
-{
-  "email" : "ssar@nate.com"
 }</code></pre>
 </div>
 </div>
@@ -955,13 +970,110 @@ Host: localhost:8080
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_로그인_실패">로그인 실패</h3>
+<div class="sect3">
+<h4 id="_요청_예시_11">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /login HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 62
+Host: localhost:8080
+
+{
+  "email" : "ssar@nate.com",
+  "password" : "meta1234!"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_11">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "이메일을 찾을 수 없습니다 : ssar@nate.com",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_이메일_중복_체크">이메일 중복 체크</h3>
+<div class="sect3">
+<h4 id="_요청_예시_12">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /check HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 33
+Host: localhost:8080
+
+{
+  "email" : "ssar@nate.com"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_12">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : true,
+  "response" : null,
+  "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_이메일_중복_체크_실패">이메일 중복 체크 실패</h3>
+<div class="sect3">
+<h4 id="_요청_예시_13">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /check HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 32
+Host: localhost:8080
+
+{
+  "email" : "ssarnate.com"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_13">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "이메일 형식으로 작성해주세요:email",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2023-08-01 10:24:41 +0900
+Last updated 2023-08-03 21:11:56 +0900
 </div>
 </div>
 </body>

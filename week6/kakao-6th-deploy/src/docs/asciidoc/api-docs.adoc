@@ -83,12 +83,22 @@ include::{snippets}/{order}/find-by-id_test/response-body.adoc[]
 == 사용자
 
 === 회원 가입
+* 회원 가입 시 사용자 이름은 최소 8자에서 최대 45자까지로 설정해야 한다.
+* 비밀번호에는 영어 대소문자 및 숫자와 특수문자를 포함하여 최소 8자에서 최대 20자까지로 설정해야 한다.
 
 ==== 요청 예시
 include::{snippets}/{user}/join_test/http-request.adoc[]
 
 ==== 응답 예시
 include::{snippets}/{user}/join_test/response-body.adoc[]
+
+=== 회원 가입 실패
+
+==== 요청 예시
+include::{snippets}/{user}/join_fail_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/join_fail_test/response-body.adoc[]
 
 === 로그인
 
@@ -98,6 +108,15 @@ include::{snippets}/{user}/login_test/http-request.adoc[]
 ==== 응답 예시
 include::{snippets}/{user}/login_test/response-body.adoc[]
 
+=== 로그인 실패
+
+==== 요청 예시
+include::{snippets}/{user}/login_fail_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/login_fail_test/response-body.adoc[]
+
+
 === 이메일 중복 체크
 
 ==== 요청 예시
@@ -105,3 +124,11 @@ include::{snippets}/{user}/check_test/http-request.adoc[]
 
 ==== 응답 예시
 include::{snippets}/{user}/check_test/response-body.adoc[]
+
+=== 이메일 중복 체크 실패
+
+==== 요청 예시
+include::{snippets}/{user}/check_fail_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/check_fail_test/response-body.adoc[]
