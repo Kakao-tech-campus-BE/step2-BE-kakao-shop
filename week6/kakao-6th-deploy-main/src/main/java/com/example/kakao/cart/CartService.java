@@ -31,7 +31,7 @@ public class CartService {
                 .distinct()
                 .count() != requestDTOs.size();
         if (isDuplicated){
-            throw new Exception400("동일한 장바구니를 추가할 수는 없습니다.");
+            throw new Exception400("중복된 장바구니를 추가할 수는 없습니다.");
         }
         // 2. quantity가 0이 된 경우 예외처리
         boolean isQuantityWrong = requestDTOs.stream().anyMatch(
@@ -103,7 +103,7 @@ public class CartService {
         }
 
         if (requestDTOs.isEmpty()){
-            throw new Exception400("추가하려는 장바구니의 내용이 비었습니다.");
+            throw new Exception400("업데이트하려는 장바구니의 내용이 비었습니다.");
         }
         // 장바구니 업데이트
         for (Cart cart : cartList) {

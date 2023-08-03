@@ -20,7 +20,7 @@ public class OrderRestController {
 
     // (기능9) 결재하기 - (주문 인서트) POST
     // /orders/save
-    @PostMapping("/orders")
+    @PostMapping("/orders/save")
     public ResponseEntity<?> save(@AuthenticationPrincipal CustomUserDetails userDetails) {
         OrderResponse.SaveDTO responseDTO = orderService.save(userDetails.getUser());
         return ResponseEntity.ok(ApiUtils.success(responseDTO));
