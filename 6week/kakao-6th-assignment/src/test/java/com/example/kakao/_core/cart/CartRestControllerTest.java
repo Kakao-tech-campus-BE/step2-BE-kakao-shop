@@ -50,7 +50,7 @@ public class CartRestControllerTest extends MyRestDoc {
         CartRequest.SaveDTO item = new CartRequest.SaveDTO();
         item.setOptionId(3);
         item.setQuantity(5);
-        item.setPrice(49500); // 가격 코드 추가해줌
+        //item.setPrice(49500); // 가격 코드 추가해줌
         requestDTOs.add(item);
 
         String requestBody = om.writeValueAsString(requestDTOs);
@@ -81,7 +81,7 @@ public class CartRestControllerTest extends MyRestDoc {
         CartRequest.SaveDTO item = new CartRequest.SaveDTO();
         item.setOptionId(3);
         item.setQuantity(5);
-        item.setPrice(49500); // 가격 코드 추가해줌
+        //item.setPrice(49500); // 가격 코드 추가해줌
         requestDTOs.add(item);
 
         String requestBody = om.writeValueAsString(requestDTOs);
@@ -115,7 +115,7 @@ public class CartRestControllerTest extends MyRestDoc {
         CartRequest.SaveDTO item = new CartRequest.SaveDTO();
         item.setOptionId(3);
         item.setQuantity(0);
-        item.setPrice(0); // 가격 코드 추가해줌
+        //item.setPrice(0); // 가격 코드 추가해줌
         requestDTOs.add(item);
 
         String requestBody = om.writeValueAsString(requestDTOs);
@@ -149,13 +149,13 @@ public class CartRestControllerTest extends MyRestDoc {
         CartRequest.SaveDTO item1 = new CartRequest.SaveDTO();
         item1.setOptionId(1);
         item1.setQuantity(5);
-        item1.setPrice(10000);
+        //item1.setPrice(10000);
         requestDTOs.add(item1);
 
         CartRequest.SaveDTO item2 = new CartRequest.SaveDTO();
         item2.setOptionId(1);
         item2.setQuantity(10);
-        item2.setPrice(20000);
+        //item2.setPrice(20000);
         requestDTOs.add(item2);
 
         String requestBody = om.writeValueAsString(requestDTOs);
@@ -219,7 +219,7 @@ public class CartRestControllerTest extends MyRestDoc {
         CartRequest.UpdateDTO item = new CartRequest.UpdateDTO();
         item.setCartId(1);
         item.setQuantity(10);
-        item.setPrice(100000); // 여기도 가격 코드 추가
+        //item.setPrice(100000); // 여기도 가격 코드 추가
         requestDTOs.add(item);
 
         String requestBody = om.writeValueAsString(requestDTOs);
@@ -255,7 +255,7 @@ public class CartRestControllerTest extends MyRestDoc {
         CartRequest.UpdateDTO item = new CartRequest.UpdateDTO();
         item.setCartId(1);
         item.setQuantity(0);
-        item.setPrice(0); // 여기도 가격 코드 추가
+        //item.setPrice(0); // 여기도 가격 코드 추가
         requestDTOs.add(item);
 
         String requestBody = om.writeValueAsString(requestDTOs);
@@ -289,13 +289,13 @@ public class CartRestControllerTest extends MyRestDoc {
         CartRequest.UpdateDTO item1 = new CartRequest.UpdateDTO();
         item1.setCartId(1);
         item1.setQuantity(10);
-        item1.setPrice(100000);
+        //item1.setPrice(100000);
         requestDTOs.add(item1);
 
         CartRequest.UpdateDTO item2 = new CartRequest.UpdateDTO();
         item2.setCartId(1);
         item2.setQuantity(5);
-        item2.setPrice(50000);
+        //item2.setPrice(50000);
         requestDTOs.add(item2);
 
         String requestBody = om.writeValueAsString(requestDTOs);
@@ -327,7 +327,7 @@ public class CartRestControllerTest extends MyRestDoc {
         CartRequest.UpdateDTO item1 = new CartRequest.UpdateDTO();
         item1.setCartId(10);
         item1.setQuantity(10);
-        item1.setPrice(100000);
+        //item1.setPrice(100000);
         requestDTOs.add(item1);
 
         String requestBody = om.writeValueAsString(requestDTOs);
