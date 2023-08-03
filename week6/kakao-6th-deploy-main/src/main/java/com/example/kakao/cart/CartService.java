@@ -1,7 +1,6 @@
 package com.example.kakao.cart;
 
 import com.example.kakao._core.errors.exception.Exception400;
-import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao.product.option.Option;
 import com.example.kakao.product.option.OptionJPARepository;
 import com.example.kakao.user.User;
@@ -11,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Transactional(readOnly = true)
@@ -22,40 +20,35 @@ public class CartService {
     private final CartJPARepository cartJPARepository;
     private final OptionJPARepository optionJPARepository;
 
+
     @Transactional
     public void addCartList(List<CartRequest.SaveDTO> requestDTOs, User sessionUser) {
-
         Set<Integer> checkOptionId = new HashSet<>();
 
-        for (CartRequest.SaveDTO requestDTO : requestDTOs) {
+        for(CartRequest.SaveDTO requestDTO : requestDTOs) {
             int optionId = requestDTO.getOptionId();
             int quantity = requestDTO.getQuantity();
 
-            if(!checkOptionId.add(optionId)) {
-                throw new Exception400("동일한 상품이 중복으로 담겨있습니다. : " + optionId);
-            }
+            validateDuplicatedId(optionId, checkOptionId);
+            validateQuantity(optionId, quantity);
 
-            if(quantity < 1) {
-                throw new Exception400("최소 1개 이상의 상품을 담아주시기 바랍니다. : " + optionId);
-            }
-
-            Option optionPS = optionJPARepository.findById(optionId)
-                    .orElseThrow(() -> new Exception400("해당 상품을 찾을 수 없습니다 : " + optionId));
-            int price = optionPS.getPrice() * quantity;
-
-            Optional<Cart> findExistingCart = cartJPARepository.findByOptionIdAndUserId(optionId, sessionUser.getId());
-            if(findExistingCart.isPresent()) {
-                Cart existingCart = findExistingCart.get();
-                existingCart.update(existingCart.getQuantity() + quantity, existingCart.getPrice() + price);
-            } else {
-                Cart cart = Cart.builder().user(sessionUser).option(optionPS).quantity(quantity).price(price).build();
-                cartJPARepository.save(cart);
-            }
+            saveOrUpdateCart(sessionUser, optionId, quantity);
         }
     }
 
+    private void saveOrUpdateCart(User sessionUser, int optionId, int quantity) {
+        Option option = validateExistOption(optionId);
+        cartJPARepository.findByOptionIdAndUserId(optionId, sessionUser.getId())
+                .ifPresent(
+                        existingCart -> existingCart.update(existingCart.getQuantity() + quantity, existingCart.getPrice() + option.getPrice() * quantity)
+                );
+
+        Cart cart = Cart.builder().user(sessionUser).option(option).quantity(quantity).price(option.getPrice() * quantity).build();
+        cartJPARepository.save(cart);
+    }
+
     public CartResponse.FindAllDTO findAll(User user) {
-        List<Cart> cartList = cartJPARepository.findByUserIdOrderByOptionIdAsc(user.getId());
+        List<Cart> cartList = cartJPARepository.findByUserIdOrderByOptionId(user.getId());
 
         return new CartResponse.FindAllDTO(cartList);
     }
@@ -74,29 +67,40 @@ public class CartService {
             int cartId = updateDTO.getCartId();
             int quantity = updateDTO.getQuantity();
 
-            if (!checkCartId.add(cartId)) {
-                throw new Exception400("동일한 상품이 중복으로 담겨있습니다 : " + cartId);
-            }
+            validateDuplicatedId(cartId, checkCartId);
+            validateQuantity(cartId, quantity);
 
-            if(quantity < 1) {
-                throw new Exception400("최소 1개 이상의 상품을 담아주시기 바랍니다. : " + cartId);
-            }
-
-            boolean cartExist = false;
-
-            for(Cart cart : cartList) {
-                if(cart.getId() == cartId) {
-                    cart.update(updateDTO.getQuantity(), cart.getOption().getPrice() * updateDTO.getQuantity());
-                    cartExist = true;
-                    break;
-                }
-            }
-
-            if(!cartExist) {
-                throw new Exception400("해당 상품은 장바구니에 존재하지 않습니다 : " + cartId);
-            }
+            updateCartIfExist(cartList, cartId, quantity);
         }
 
         return new CartResponse.UpdateDTO(cartList);
+    }
+
+    private static void updateCartIfExist(List<Cart> cartList, int cartId, int quantity) {
+        Cart cart = cartList.stream()
+                .filter(c -> c.getId() == cartId)
+                .findFirst()
+                .orElseThrow(() -> new Exception400("해당 상품은 장바구니에 존재하지 않습니다 : " + cartId));
+
+        cart.update(quantity, cart.getOption().getPrice() * quantity);
+    }
+
+    private Option validateExistOption(int id) {
+        return optionJPARepository.findById(id)
+                .orElseThrow(() -> new Exception400("해당 상품을 찾을 수 없습니다 : " + id));
+    }
+
+    private void validateDuplicatedId(int id, Set<Integer> checkId) {
+        if(checkId.contains(id)) {
+            throw new Exception400("동일한 상품이 이미 담겨있습니다. : " + id);
+        }
+
+        checkId.add(id);
+    }
+
+    private void validateQuantity(int id, int quantity) {
+        if(quantity < 1) {
+            throw new Exception400("최소 1개 이상의 상품을 담아주시기 바랍니다. : " + id);
+        }
     }
 }

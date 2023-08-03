@@ -22,11 +22,8 @@ public class UserService {
         sameCheckEmail(requestDTO.getEmail());
 
         requestDTO.setPassword(passwordEncoder.encode(requestDTO.getPassword()));
-        try {
-            userJPARepository.save(requestDTO.toEntity());
-        } catch (Exception e) {
-            throw new Exception500("unknown server error");
-        }
+
+        userJPARepository.save(requestDTO.toEntity());
     }
 
     public String login(UserRequest.LoginDTO requestDTO) {
@@ -41,9 +38,9 @@ public class UserService {
     }
 
     public void sameCheckEmail(String email) {
-        Optional<User> userOP = userJPARepository.findByEmail(email);
-        if (userOP.isPresent()) {
-            throw new Exception400("동일한 이메일이 존재합니다 : " + email);
-        }
+        userJPARepository.findByEmail(email).ifPresent(
+                user -> {
+                    throw new Exception400("동일한 이메일이 존재합니다 : " + email);
+                });
     }
 }

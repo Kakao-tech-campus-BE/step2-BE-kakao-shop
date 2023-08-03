@@ -30,24 +30,26 @@ public class OrderService {
             throw new Exception400("장바구니가 비어있습니다.");
         }
 
-        Order order = Order.builder()
-                .user(user)
-                .build();
-        orderJPARepository.save(order);
+        Order order = saveOrder(user);
+        List<Item> itemList = saveItemList(cartList, order);
+        cartJPARepository.deleteByUserId(user.getId());
 
-        List<Item> itemList = cartList.stream()
+        return new OrderResponse.FindByIdDTO(order, itemList);
+    }
+
+    private Order saveOrder(User user) {
+        return orderJPARepository.save(Order.builder().user(user).build());
+    }
+
+    private List<Item> saveItemList(List<Cart> cartList, Order order) {
+        return itemJPARepository.saveAll(cartList.stream()
                 .map(cart -> Item.builder()
                         .option(cart.getOption())
                         .order(order)
                         .quantity(cart.getQuantity())
                         .price(cart.getPrice())
                         .build())
-                .collect(Collectors.toList());
-
-        itemJPARepository.saveAll(itemList);
-        cartJPARepository.deleteByUserId(user.getId());
-
-        return new OrderResponse.FindByIdDTO(order, itemList);
+                .collect(Collectors.toList()));
     }
 
     public OrderResponse.FindByIdDTO findById(int id, User user) {

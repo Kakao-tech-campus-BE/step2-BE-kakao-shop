@@ -146,7 +146,7 @@ public class CartRestControllerTest extends MyRestDoc {
 
         // verify
         resultActions.andExpect(jsonPath("$.success").value("false"));
-        resultActions.andExpect(jsonPath("$.error.message").value("동일한 상품이 중복으로 담겨있습니다. : 3"));
+        resultActions.andExpect(jsonPath("$.error.message").value("동일한 상품이 이미 담겨있습니다. : 3"));
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
@@ -338,7 +338,7 @@ public class CartRestControllerTest extends MyRestDoc {
 
         // verify
         resultActions.andExpect(jsonPath("$.success").value("false"));
-        resultActions.andExpect(jsonPath("$.error.message").value("동일한 상품이 중복으로 담겨있습니다 : 1"));
+        resultActions.andExpect(jsonPath("$.error.message").value("동일한 상품이 이미 담겨있습니다. : 1"));
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 

@@ -21,7 +21,7 @@ public class UserRestController {
     @PostMapping("/check")
     public ResponseEntity<?> check(@RequestBody @Valid UserRequest.EmailCheckDTO emailCheckDTO, Errors errors) {
         userService.sameCheckEmail(emailCheckDTO.getEmail());
-        return ResponseEntity.ok(ApiUtils.success(null));
+        return ResponseEntity.ok().body(ApiUtils.success(null));
     }
 
     // (기능4) 회원가입
