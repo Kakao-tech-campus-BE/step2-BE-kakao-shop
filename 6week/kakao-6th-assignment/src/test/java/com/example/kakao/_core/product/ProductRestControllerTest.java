@@ -48,7 +48,7 @@ public class ProductRestControllerTest extends MyRestDoc {
     }
 
     @Test
-    public void findAll_InvalidPage_test() throws Exception {
+    public void findAll_invalidPage_test() throws Exception {
 
         // given
         Integer page = -1;
