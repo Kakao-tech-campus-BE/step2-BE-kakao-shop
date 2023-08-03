@@ -97,4 +97,9 @@ public class CartService {
 
         return new CartResponse.UpdateDTO(cartList);
     } // 더티체킹
+
+    @Transactional
+    public void clearCart(int userId){
+        cartJPARepository.deleteByUserId(userId);
+    }
 }
