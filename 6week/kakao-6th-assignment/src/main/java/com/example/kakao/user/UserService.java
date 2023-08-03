@@ -25,17 +25,17 @@ public class UserService {
         try {
             userJPARepository.save(requestDTO.toEntity());
         } catch (Exception e) {
-            throw new Exception500("unknown server error");
+            throw new Exception500("UNKNOWN_SERVER_ERROR");
         }
     }
 
     public String login(UserRequest.LoginDTO requestDTO) {
         User userPS = userJPARepository.findByEmail(requestDTO.getEmail()).orElseThrow(
-                () -> new Exception400("이메일을 찾을 수 없습니다 : "+requestDTO.getEmail())
+                () -> new Exception400("EMAIL_NOT_FOUND:"+requestDTO.getEmail())
         );
 
         if(!passwordEncoder.matches(requestDTO.getPassword(), userPS.getPassword())){
-            throw new Exception400("패스워드가 잘못입력되었습니다 ");
+            throw new Exception400("WRONG_PASSWORD:"+requestDTO.getPassword());
         }
         return JWTProvider.create(userPS);
     }
@@ -43,7 +43,7 @@ public class UserService {
     public void sameCheckEmail(String email) {
         Optional<User> userOP = userJPARepository.findByEmail(email);
         if (userOP.isPresent()) {
-            throw new Exception400("동일한 이메일이 존재합니다 : " + email);
+            throw new Exception400("SAME_EMAIL:" + email);
         }
     }
 }

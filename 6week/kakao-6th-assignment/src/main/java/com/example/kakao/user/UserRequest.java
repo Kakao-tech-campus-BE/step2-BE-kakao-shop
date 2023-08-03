@@ -14,15 +14,15 @@ public class UserRequest {
     public static class JoinDTO {
 
         @NotEmpty
-        @Pattern(regexp = "^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$", message = "이메일 형식으로 작성해주세요")
+        @Pattern(regexp = "^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$", message = "NOT_EMAIL_FORM")
         private String email;
 
         @NotEmpty
-        @Size(min = 8, max = 20, message = "8에서 20자 이내여야 합니다.")
-        @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@#$%^&+=!~`<>,./?;:'\"\\[\\]{}\\\\()|_-])\\S*$", message = "영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니다.")
+        @Size(min = 8, max = 20, message = "CHARACTER_LENGTH_CONSTRAINT_8_TO_20")
+        @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@#$%^&+=!~`<>,./?;:'\"\\[\\]{}\\\\()|_-])\\S*$", message = "INCLUDE_ENGLISH_LETTERS_NUMBERS_SPECIAL_CHARACTERS_NO_SPACE")
         private String password;
 
-        @Size(min = 8, max = 45, message = "8에서 45자 이내여야 합니다.")
+        @Size(min = 8, max = 45, message = "CHARACTER_LENGTH_CONSTRAINT_8_TO_45")
         @NotEmpty
         private String username;
 
@@ -40,12 +40,12 @@ public class UserRequest {
     @Setter
     public static class LoginDTO {
         @NotEmpty
-        @Pattern(regexp = "^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$", message = "이메일 형식으로 작성해주세요")
+        @Pattern(regexp = "^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$", message = "NOT_EMAIL_FORM")
         private String email;
 
         @NotEmpty
-        @Size(min = 8, max = 20, message = "8에서 20자 이내여야 합니다.")
-        @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@#$%^&+=!~`<>,./?;:'\"\\[\\]{}\\\\()|_-])\\S*$", message = "영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니다.")
+        @Size(min = 8, max = 20, message = "CHARACTER_LENGTH_CONSTRAINT_8_TO_20")
+        @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@#$%^&+=!~`<>,./?;:'\"\\[\\]{}\\\\()|_-])\\S*$", message = "INCLUDE_ENGLISH_LETTERS_NUMBERS_SPECIAL_CHARACTERS_NO_SPACE")
         private String password;
     }
 
@@ -53,7 +53,7 @@ public class UserRequest {
     @Setter
     public static class EmailCheckDTO {
         @NotEmpty
-        @Pattern(regexp = "^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$", message = "이메일 형식으로 작성해주세요")
+        @Pattern(regexp = "^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$", message = "NOT_EMAIL_FORM")
         private String email;
     }
 
@@ -61,8 +61,8 @@ public class UserRequest {
     @Setter
     public static class UpdatePasswordDTO {
         @NotEmpty
-        @Size(min = 8, max = 20, message = "8에서 20자 이내여야 합니다.")
-        @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@#$%^&+=!~`<>,./?;:'\"\\[\\]{}\\\\()|_-])\\S*$", message = "영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니다.")
+        @Size(min = 8, max = 20, message = "CHARACTER_LENGTH_CONSTRAINT_8_TO_20")
+        @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*[@#$%^&+=!~`<>,./?;:'\"\\[\\]{}\\\\()|_-])\\S*$", message = "INCLUDE_ENGLISH_LETTERS_NUMBERS_SPECIAL_CHARACTERS_NO_SPACE")
         private String password;
     }
 }

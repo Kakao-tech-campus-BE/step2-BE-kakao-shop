@@ -61,59 +61,6 @@ public class UserRestControllerTest extends MyRestDoc {
     }
 
     @Test
-    public void join_duplicateEmail_test() throws Exception {
-
-        //given
-        UserRequest.JoinDTO requestDTO = new UserRequest.JoinDTO();
-        requestDTO.setEmail("ssarmango@nate.com");
-        requestDTO.setPassword("meta1234!");
-        requestDTO.setUsername("ssarmango");
-        String requestBody = om.writeValueAsString(requestDTO);
-
-        // when
-        ResultActions resultActions = mvc.perform(
-                post("/join")
-                        .content(requestBody)
-                        .contentType(MediaType.APPLICATION_JSON)
-        );
-
-        //eye
-        //String responseBody = resultActions.andReturn().getResponse().getContentAsString();
-        //System.out.println("테스트 : "+responseBody);
-
-        resultActions.andExpect(status().is4xxClientError())
-                .andExpect(jsonPath("$.success").value(false))
-                .andExpect(jsonPath("$.response").isEmpty())
-                .andExpect(jsonPath("$.error.message").value("동일한 이메일이 존재합니다 : ssarmango@nate.com"));
-        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
-    }
-
-    @Test
-    public void join_notEmailForm_test() throws Exception {
-
-        //given
-        UserRequest.JoinDTO requestDTO = new UserRequest.JoinDTO();
-        requestDTO.setEmail("ssarmangonate.com");
-        requestDTO.setPassword("meta1234!");
-        requestDTO.setUsername("ssarmango");
-        String requestBody = om.writeValueAsString(requestDTO);
-
-        // when
-        ResultActions resultActions = mvc.perform(
-                post("/join")
-                        .content(requestBody)
-                        .contentType(MediaType.APPLICATION_JSON)
-        );
-
-
-        resultActions.andExpect(status().is4xxClientError())
-                .andExpect(jsonPath("$.success").value(false))
-                .andExpect(jsonPath("$.response").isEmpty())
-                .andExpect(jsonPath("$.error.message").value("이메일 형식으로 작성해주세요:email"));
-        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
-    }
-
-    @Test
     public void join_notPasswordForm_test() throws Exception {
 
         //given
@@ -133,7 +80,7 @@ public class UserRestControllerTest extends MyRestDoc {
         resultActions.andExpect(status().is4xxClientError())
                 .andExpect(jsonPath("$.success").value(false))
                 .andExpect(jsonPath("$.response").isEmpty())
-                .andExpect(jsonPath("$.error.message").value("영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니다.:password"));
+                .andExpect(jsonPath("$.error.message").value("INCLUDE_ENGLISH_LETTERS_NUMBERS_SPECIAL_CHARACTERS_NO_SPACE:password"));
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
@@ -157,7 +104,7 @@ public class UserRestControllerTest extends MyRestDoc {
         resultActions.andExpect(status().is4xxClientError())
                 .andExpect(jsonPath("$.success").value(false))
                 .andExpect(jsonPath("$.response").isEmpty())
-                .andExpect(jsonPath("$.error.message").value("8에서 45자 이내여야 합니다.:username"));
+                .andExpect(jsonPath("$.error.message").value("CHARACTER_LENGTH_CONSTRAINT_8_TO_45:username"));
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
@@ -214,7 +161,7 @@ public class UserRestControllerTest extends MyRestDoc {
         resultActions.andExpect(status().is4xxClientError())
                 .andExpect(jsonPath("$.success").value(false))
                 .andExpect(jsonPath("$.response").isEmpty())
-                .andExpect(jsonPath("$.error.message").value("이메일 형식으로 작성해주세요:email"));
+                .andExpect(jsonPath("$.error.message").value("NOT_EMAIL_FORM:email"));
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
@@ -243,7 +190,7 @@ public class UserRestControllerTest extends MyRestDoc {
         resultActions.andExpect(status().is4xxClientError())
                 .andExpect(jsonPath("$.success").value(false))
                 .andExpect(jsonPath("$.response").isEmpty())
-                .andExpect(jsonPath("$.error.message").value("이메일을 찾을 수 없습니다 : ssarmangoo@nate.com"));
+                .andExpect(jsonPath("$.error.message").value("EMAIL_NOT_FOUND:"+loginDTO.getEmail()));
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
@@ -267,7 +214,7 @@ public class UserRestControllerTest extends MyRestDoc {
         resultActions.andExpect(status().is4xxClientError())
                 .andExpect(jsonPath("$.success").value(false))
                 .andExpect(jsonPath("$.response").isEmpty())
-                .andExpect(jsonPath("$.error.message").value("영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니다.:password"));
+                .andExpect(jsonPath("$.error.message").value("INCLUDE_ENGLISH_LETTERS_NUMBERS_SPECIAL_CHARACTERS_NO_SPACE:password"));
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
@@ -297,7 +244,7 @@ public class UserRestControllerTest extends MyRestDoc {
         resultActions.andExpect(status().is4xxClientError())
                 .andExpect(jsonPath("$.success").value(false))
                 .andExpect(jsonPath("$.response").isEmpty())
-                .andExpect(jsonPath("$.error.message").value("패스워드가 잘못입력되었습니다 "));
+                .andExpect(jsonPath("$.error.message").value("WRONG_PASSWORD:"+loginDTO.getPassword()));
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
@@ -351,7 +298,32 @@ public class UserRestControllerTest extends MyRestDoc {
         resultActions.andExpect(status().is4xxClientError())
                 .andExpect(jsonPath("$.success").value(false))
                 .andExpect(jsonPath("$.response").isEmpty())
-                .andExpect(jsonPath("$.error.message").value("동일한 이메일이 존재합니다 : ssarmango@nate.com"));
+                .andExpect(jsonPath("$.error.message").value("SAME_EMAIL:"+emailCheckDTO.getEmail()));
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
+    }
+
+    @Test
+    public void check_notEmailForm_test() throws Exception {
+
+        //given
+        UserRequest.JoinDTO requestDTO = new UserRequest.JoinDTO();
+        requestDTO.setEmail("ssarmangonate.com");
+        requestDTO.setPassword("meta1234!");
+        requestDTO.setUsername("ssarmango");
+        String requestBody = om.writeValueAsString(requestDTO);
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/check")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+        );
+
+
+        resultActions.andExpect(status().is4xxClientError())
+                .andExpect(jsonPath("$.success").value(false))
+                .andExpect(jsonPath("$.response").isEmpty())
+                .andExpect(jsonPath("$.error.message").value("NOT_EMAIL_FORM:email"));
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
