@@ -190,7 +190,7 @@ public class CartRestControllerTest extends MyRestDoc {
     // 동일한 장바구니 아이디가 들어올 경우
     @WithUserDetails(value = "ssarmango@nate.com")
     @Test
-    public void updateSameCartId() throws Exception {
+    public void updateSameCartId_test() throws Exception {
         // given
         List<CartRequest.UpdateDTO> requestDTOs = new ArrayList<>();
         CartRequest.UpdateDTO item1 = new CartRequest.UpdateDTO();
@@ -225,7 +225,7 @@ public class CartRestControllerTest extends MyRestDoc {
     // 유저 장바구니에 없는 cartId가 들어올 경우
     @WithUserDetails(value = "ssarmango@nate.com")
     @Test
-    public void updateNotFoundCartId() throws Exception {
+    public void updateNotFoundCartId_test() throws Exception {
         // given
         List<CartRequest.UpdateDTO> requestDTOs = new ArrayList<>();
         CartRequest.UpdateDTO item = new CartRequest.UpdateDTO();
