@@ -108,7 +108,7 @@ public class OrderRestControllerTest extends MyRestDoc {
         resultActions.andExpect(status().is4xxClientError())
                 .andExpect(jsonPath("$.success").value(false))
                 .andExpect(jsonPath("$.response").isEmpty())
-                .andExpect(jsonPath("$.error.message").value("주문할 상품이 존재하지 않습니다. : []"));
+                .andExpect(jsonPath("$.error.message").value("EMPTY_CART:[]"));
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
 
     }
@@ -174,7 +174,7 @@ public class OrderRestControllerTest extends MyRestDoc {
         resultActions.andExpect(status().is4xxClientError())
                 .andExpect(jsonPath("$.success").value(false))
                 .andExpect(jsonPath("$.response").isEmpty())
-                .andExpect(jsonPath("$.error.message").value("존재하지 않는 주문 아이디입니다. : -1"));
+                .andExpect(jsonPath("$.error.message").value("INVALID_ORDER_ID:"+id));
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
@@ -198,7 +198,7 @@ public class OrderRestControllerTest extends MyRestDoc {
         resultActions.andExpect(status().is4xxClientError())
                 .andExpect(jsonPath("$.success").value(false))
                 .andExpect(jsonPath("$.response").isEmpty())
-                .andExpect(jsonPath("$.error.message").value("존재하지 않는 주문 결과입니다. : null"));
+                .andExpect(jsonPath("$.error.message").value("ORDER_NOT_FOUND:null"));
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 

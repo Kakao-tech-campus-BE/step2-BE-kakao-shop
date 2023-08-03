@@ -33,7 +33,7 @@ public class OrderService {
         List<Cart> orderItemList = cartJPARepository.findAllByUserId(user.getId());
 
         if (orderItemList.isEmpty()){
-            throw new Exception400("주문할 상품이 존재하지 않습니다. : " + orderItemList);
+            throw new Exception400("EMPTY_CART:" + orderItemList);
         }
 
         Order order = Order.builder().user(user).build();
@@ -54,14 +54,14 @@ public class OrderService {
     public OrderResponse.FindByIdDTO findById(int orderItemId, User user) {
 
         if (orderItemId <= 0) {
-            throw new Exception400("존재하지 않는 주문 아이디입니다. : " + orderItemId);
+            throw new Exception400("INVALID_ORDER_ID:" + orderItemId);
         }
 
         Order order= orderJPARepository.findByUserIdAndOrderItemId(user.getId(), orderItemId);
 
 
         if (order == null) {
-            throw new Exception400("존재하지 않는 주문 결과입니다. : " + order);
+            throw new Exception400("ORDER_NOT_FOUND:" + order);
         }
 
         List<Item> itemList = itemJPARepository.findAllByOrderId(order.getId());
