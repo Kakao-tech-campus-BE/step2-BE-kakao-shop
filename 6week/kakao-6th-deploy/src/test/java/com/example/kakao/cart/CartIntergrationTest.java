@@ -22,15 +22,21 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @AutoConfigureRestDocs(uriScheme = "http", uriHost = "localhost", uriPort = 8080)
-@ActiveProfiles("test")
-@Sql(value = "classpath:db/teardown.sql")
+@ActiveProfiles("test") // 이렇게 해야 localServerStart 실행안됨 local 프로파일에서만 실행되니까
+@Sql(value = "classpath:db/teardown.sql",executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+//db패키지안에 teardown.sql사용하겠다는 의미
 @AutoConfigureMockMvc
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-public class CartRestControllerTest extends MyRestDoc {
+//MockMvc 빈으로 spring context에 등록
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK) //통합테스트를하겠다는 의미
+//(SF -F - DS - C -S -R -DB 싹다 메모리올려서 테스트하겠다는 의미)
+public class CartIntergrationTest extends MyRestDoc {
+
     @Autowired
-    private ObjectMapper om;
+    ObjectMapper om;
 
     @WithUserDetails(value = "ssarmango@nate.com")
+    //UserDetailService 의 loadByUsername 실행 -> loadByUsername의 로직으로 인해
+    // ssarmango@nate.com 이 db에잇으면 => 로그인해서 권환있다고 생각됨
     @Test
     public void addCartList_test() throws Exception {
         // given -> optionId [1,2,16]이 teardown.sql을 통해 들어가 있음
@@ -48,7 +54,7 @@ public class CartRestControllerTest extends MyRestDoc {
                         .content(requestBody)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
         );
-
+        // eye
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
         System.out.println("테스트 : " + responseBody);
 
