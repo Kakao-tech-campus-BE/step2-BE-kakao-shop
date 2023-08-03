@@ -1,15 +1,24 @@
 package com.example.kakao.product;
 
 import com.example.kakao.MyRestDoc;
+import com.example.kakao.order.OrderJPARepository;
+import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.Optional;
+
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
@@ -19,6 +28,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 public class ProductRestControllerTest extends MyRestDoc {
+
+    @Autowired
+    private MockMvc mvc;
 
     @Test
     public void findAll_test() throws Exception {
@@ -31,7 +43,7 @@ public class ProductRestControllerTest extends MyRestDoc {
 
         // console
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
-        System.out.println("테스트 : "+responseBody);
+        System.out.println("테스트 : " + responseBody);
 
         // verify
         resultActions.andExpect(jsonPath("$.success").value("true"));
@@ -55,7 +67,7 @@ public class ProductRestControllerTest extends MyRestDoc {
 
         // console
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
-        System.out.println("테스트 : "+responseBody);
+        System.out.println("테스트 : " + responseBody);
 
         // verify
         resultActions.andExpect(jsonPath("$.success").value("true"));
@@ -66,4 +78,27 @@ public class ProductRestControllerTest extends MyRestDoc {
         resultActions.andExpect(jsonPath("$.response.price").value(1000));
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
+
+    @Test
+    public void findById_exception_test() throws Exception {
+        // given
+        int id = Integer.MAX_VALUE;
+        // when
+        ResultActions resultActions = mvc.perform(
+                get("/products/" + id)
+        );
+
+        //eye
+        //String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        //System.out.println("테스트 : "+responseBody);
+
+        // then
+        resultActions.andExpect(MockMvcResultMatchers.jsonPath("$.success").value("false"));
+        resultActions.andExpect(MockMvcResultMatchers.jsonPath("$.response").value(IsNull.nullValue()));
+        resultActions.andExpect(MockMvcResultMatchers.jsonPath("$.error.message").value("해당 상품을 찾을 수 없습니다 : " + id));
+        resultActions.andExpect(MockMvcResultMatchers.jsonPath("$.error.status").value(404));
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
+
+    }
+
 }
