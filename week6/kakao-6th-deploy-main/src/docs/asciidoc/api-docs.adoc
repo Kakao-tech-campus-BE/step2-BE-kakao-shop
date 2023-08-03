@@ -6,11 +6,111 @@ ifndef::snippets[]
 endif::[]
 
 :product: product-rest-controller-test
+:order: order-rest-controller-test
+:user: user-rest-controller-test
 :cart: cart-rest-controller-test
 
 :toc: left
 :toclevels: 2
 :source-highlighter: highlightjs
+
+== 유저
+
+=== 이메일 중복 체크
+
+==== 요청 예시
+include::{snippets}/{user}/email-check_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/email-check_test/response-body.adoc[]
+
+=== 이메일 중복 체크 실패 예시 1 중복
+
+==== 요청 예시
+include::{snippets}/{user}/email-check-fail_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/email-check-fail_test/response-body.adoc[]
+
+=== 이메일 중복 체크 실패 예시 2 @ 없음
+
+==== 요청 예시
+include::{snippets}/{user}/email-check-fail_at-miss_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/email-check-fail_at-miss_test/response-body.adoc[]
+
+=== 회원가입
+
+==== 요청 예시
+include::{snippets}/{user}/join_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/join_test/response-body.adoc[]
+
+=== 회원가입 실패 예시 1 @ 없음
+
+==== 요청 예시
+include::{snippets}/{user}/join-fail_at-miss_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/join-fail_at-miss_test/response-body.adoc[]
+
+=== 회원가입 실패 예시 2 비밀번호 @ 영문, 숫자 특수문자 포함
+
+==== 요청 예시
+include::{snippets}/{user}/join-fail_password-error_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/join-fail_password-error_test/response-body.adoc[]
+
+=== 회원가입 실패 예시 3 이메일 중복 체크
+
+==== 요청 예시
+include::{snippets}/{user}/join-fail_email-check-fail_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/join-fail_email-check-fail_test/response-body.adoc[]
+
+=== 회원가입 실패 예시 4 비밀번호 길이
+
+==== 요청 예시
+include::{snippets}/{user}/join-fail_password-legnth-error_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/join-fail_password-legnth-error_test/response-body.adoc[]
+
+=== 로그인
+
+==== 요청 예시
+include::{snippets}/{user}/login_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/login_test/response-body.adoc[]
+
+=== 로그인 실패 예시 1 @ 없음
+
+==== 요청 예시
+include::{snippets}/{user}/login-fail_at-miss_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/login-fail_at-miss_test/response-body.adoc[]
+
+=== 로그인 실패 예시 2 비밀번호 @ 영문, 숫자 특수문자 포함
+
+==== 요청 예시
+include::{snippets}/{user}/login-fail_password-error_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/login-fail_password-error_test/response-body.adoc[]
+
+=== 로그인 실패 예시 3 비밀번호 길이
+
+==== 요청 예시
+include::{snippets}/{user}/login-fail_-password-length_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/login-fail_-password-length_test/response-body.adoc[]
 
 == 상품
 
@@ -42,6 +142,14 @@ include::{snippets}/{cart}/add-cart-list_test/http-request.adoc[]
 ==== 응답 예시
 include::{snippets}/{cart}/add-cart-list_test/response-body.adoc[]
 
+=== 장바구니 담기 실패 예시 같은 옵션
+
+==== 요청 예시
+include::{snippets}/{cart}/add-cart-list-fail_-same-option_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/add-cart-list-fail_-same-option_test/response-body.adoc[]
+
 === 장바구니 조회
 
 ==== 요청 예시
@@ -59,3 +167,23 @@ include::{snippets}/{cart}/update_test/http-request.adoc[]
 
 ==== 응답 예시
 include::{snippets}/{cart}/update_test/response-body.adoc[]
+
+== 주문
+
+=== 주문하기
+
+==== 요청 예시
+include::{snippets}/{order}/order_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{order}/order_test/response-body.adoc[]
+
+=== 주문 id 조회
+* param : id={number}
+
+==== 요청 예시
+include::{snippets}/{order}/order_find-by-id_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{order}/order_find-by-id_test/response-body.adoc[]
+
