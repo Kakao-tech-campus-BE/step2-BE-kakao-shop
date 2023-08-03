@@ -35,7 +35,7 @@ public class UserService {
         );
 
         if(!passwordEncoder.matches(requestDTO.getPassword(), userPS.getPassword())){
-            throw new Exception400("패스워드가 잘못입력되었습니다 ");
+            throw new Exception400("비밀번호가 일치하지 않습니다");
         }
         return JWTProvider.create(userPS);
     }

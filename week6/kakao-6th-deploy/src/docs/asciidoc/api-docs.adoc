@@ -1,5 +1,5 @@
 = 카카오 쇼핑하기 RestAPI
-Metacoding <getinthere@naver.com>
+Lee CheongEun
 
 ifndef::snippets[]
 :snippets: ./build/generated-snippets
