@@ -27,6 +27,7 @@ public class OrderService {
 
 
 
+    @Transactional
     public OrderResponse.saveDTO save(User sessionUser) {
         List<Cart> carts = cartJPARepository.mFindAllByUserId(sessionUser.getId());
 
