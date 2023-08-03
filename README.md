@@ -1180,3 +1180,13 @@ POST /orders
 
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
+
+# 6주차 과제
+
+**배포 링크**
+
+[배포 인스턴스] (https://user-app.krampoline.com/k331e094df835a)
+
+**API 문서**
+
+[API 문서] (https://user-app.krampoline.com/k331e094df835a/api/docs/api-docs.html)
