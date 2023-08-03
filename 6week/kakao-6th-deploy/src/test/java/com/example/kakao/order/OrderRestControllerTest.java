@@ -51,7 +51,7 @@ public class OrderRestControllerTest  extends MyRestDoc {
 
         // verify
         resultActions.andExpect(jsonPath("$.success").value("true"));
-        resultActions.andExpect(jsonPath("$.response.orderId").value(2));
+        resultActions.andExpect(jsonPath("$.response.id").value(2));
         resultActions.andExpect(jsonPath("$.response.products[0].productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"));
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
 
@@ -98,9 +98,9 @@ public class OrderRestControllerTest  extends MyRestDoc {
         // verify
 
         resultActions.andExpect(jsonPath("$.success").value("true"));
-        resultActions.andExpect(jsonPath("$.response.orderId").value(1));
+        resultActions.andExpect(jsonPath("$.response.id").value(1));
         resultActions.andExpect(jsonPath("$.response.products[0].productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"));
-        resultActions.andExpect(jsonPath("$.response.products[0].items[0].itemId").value(1));
+        resultActions.andExpect(jsonPath("$.response.products[0].items[0].id").value(1));
         resultActions.andExpect(jsonPath("$.response.products[0].items[0].optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"));
         resultActions.andExpect(jsonPath("$.response.products[0].items[0].quantity").value(5));
         resultActions.andExpect(jsonPath("$.response.products[0].items[0].price").value(50000));
@@ -127,7 +127,7 @@ public class OrderRestControllerTest  extends MyRestDoc {
 
         resultActions.andExpect(jsonPath("$.success").value("false"));
         resultActions.andExpect(jsonPath("$.error.message").value("해당 주문번호의 주문이 없습니다."));
-        resultActions.andExpect(jsonPath("$.error.status").value("400"));
+        resultActions.andExpect(jsonPath("$.error.status").value("404"));
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
 
 

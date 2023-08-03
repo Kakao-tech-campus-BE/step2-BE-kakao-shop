@@ -6,6 +6,7 @@ import com.example.kakao.product.Product;
 import com.example.kakao.product.option.Option;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,19 +16,19 @@ public class OrderResponse {
 
     @Getter
     @Setter
+    @ToString
     public static class SaveDTO{
 
-        private int orderId;
+        private int id;
         private List<ProductDTO> products;
         private int totalPrice;
 
         public SaveDTO(Order order, List<Item> itemList){
-            this.orderId = order.getId();
+            this.id = order.getId();
             this.products = itemList.stream()
                     .map(item -> item.getOption().getProduct()).distinct()
                     .map(product -> new ProductDTO(product, itemList)).collect(Collectors.toList());
-            this.totalPrice = itemList.stream().mapToInt(item -> item.getOption().getPrice() * item.getQuantity()).sum();
-        }
+            this.totalPrice = itemList.stream().mapToInt(item -> item.getOption().getPrice() * item.getQuantity()).sum();        }
         @Getter
         @Setter
         public class ProductDTO{
@@ -45,16 +46,16 @@ public class OrderResponse {
             @Getter
             @Setter
             public class ItemDTO{
-                public int itemId;
+                public int id;
                 public String optionName;
                 public int quantity;
                 public int price;
 
                 public ItemDTO(Item item){
-                    this.itemId = item.getId();
+                    this.id = item.getId();
                     this.optionName = item.getOption().getOptionName();
                     this.quantity = item.getQuantity();
-                    this.price = item.getPrice();
+                    this.price = item.getOption().getPrice() * item.getQuantity();
                 }
             }
         }
@@ -62,14 +63,15 @@ public class OrderResponse {
 
     @Getter
     @Setter
+    @ToString
     public static class FindByIdDTO{
 
-        private int orderId;
+        private int id;
         private List<ProductDTO> products;
         private int totalPrice;
 
-        public FindByIdDTO(int orderId, List<Item> itemList){
-            this.orderId = orderId;
+        public FindByIdDTO(Order order, List<Item> itemList){
+            this.id = order.getId();
             this.products = itemList.stream()
                     .map(item -> item.getOption().getProduct()).distinct()
                     .map(product -> new ProductDTO(product, itemList)).collect(Collectors.toList());
@@ -92,17 +94,16 @@ public class OrderResponse {
             @Getter
             @Setter
             public class ItemDTO{
-                public int itemId;
+                public int id;
                 public String optionName;
                 public int quantity;
                 public int price;
 
                 public ItemDTO(Item item){
-                    this.itemId = item.getId();
+                    this.id = item.getId();
                     this.optionName = item.getOption().getOptionName();
                     this.quantity = item.getQuantity();
-                    this.price = item.getPrice();
-                }
+                    this.price = item.getOption().getPrice() * item.getQuantity();                }
             }
         }
     }
