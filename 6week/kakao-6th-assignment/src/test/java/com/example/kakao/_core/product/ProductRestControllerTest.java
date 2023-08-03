@@ -48,7 +48,7 @@ public class ProductRestControllerTest extends MyRestDoc {
     }
 
     @Test
-    public void testFindAll_InvalidPage_ExceptionThrown() throws Exception {
+    public void findAll_InvalidPage_test() throws Exception {
 
         // given
         Integer page = -1;
@@ -82,12 +82,12 @@ public class ProductRestControllerTest extends MyRestDoc {
 
         // verify
         resultActions.andExpect(status().isOk())
-                .andExpect(jsonPath("$.success").value("true"));
-        resultActions.andExpect(jsonPath("$.response.id").value(1));
-        resultActions.andExpect(jsonPath("$.response.productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"));
-        resultActions.andExpect(jsonPath("$.response.description").value(""));
-        resultActions.andExpect(jsonPath("$.response.image").value("/images/1.jpg"));
-        resultActions.andExpect(jsonPath("$.response.price").value(1000));
+                .andExpect(jsonPath("$.success").value("true"))
+                .andExpect(jsonPath("$.response.id").value(1))
+                .andExpect(jsonPath("$.response.productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"))
+                .andExpect(jsonPath("$.response.description").value(""))
+                .andExpect(jsonPath("$.response.image").value("/images/1.jpg"))
+                .andExpect(jsonPath("$.response.price").value(1000));
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
