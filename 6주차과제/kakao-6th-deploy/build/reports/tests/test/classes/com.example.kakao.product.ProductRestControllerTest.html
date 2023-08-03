@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - ProductRestControllerTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>ProductRestControllerTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.example.kakao.product.html">com.example.kakao.product</a> &gt; ProductRestControllerTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">3</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.841s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">findAll_test()</td>
+<td class="success">0.080s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">findById_error_test()</td>
+<td class="success">0.077s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">findById_test()</td>
+<td class="success">0.684s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>21:35:44.451 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
+21:35:44.463 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
+21:35:44.509 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [com.example.kakao.product.ProductRestControllerTest] from class [org.springframework.boot.test.context.SpringBootTestContextBootstrapper]
+21:35:44.516 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.example.kakao.product.ProductRestControllerTest], using SpringBootContextLoader
+21:35:44.519 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.example.kakao.product.ProductRestControllerTest]: class path resource [com/example/kakao/product/ProductRestControllerTest-context.xml] does not exist
+21:35:44.519 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.example.kakao.product.ProductRestControllerTest]: class path resource [com/example/kakao/product/ProductRestControllerTestContext.groovy] does not exist
+21:35:44.519 [Test worker] INFO org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [com.example.kakao.product.ProductRestControllerTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+21:35:44.520 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.example.kakao.product.ProductRestControllerTest]: ProductRestControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+21:35:44.649 [Test worker] DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider - Identified candidate component class: file [/Users/park/kakao_campus/nnnnnn/step2-BE-kakao-shop/6주차과제/kakao-6th-deploy/build/classes/java/main/com/example/kakao/KakaoApplication.class]
+21:35:44.650 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.example.kakao.KakaoApplication for test class com.example.kakao.product.ProductRestControllerTest
+21:35:44.718 [Test worker] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - @TestExecutionListeners is not present for class [com.example.kakao.product.ProductRestControllerTest]: using defaults.
+21:35:44.719 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener, org.springframework.security.test.context.support.ReactorContextTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+21:35:44.733 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@2a39fe6a, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@410ae9a3, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@319988b0, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@d5ae57e, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@68759011, org.springframework.test.context.support.DirtiesContextTestExecutionListener@7e242b4d, org.springframework.test.context.transaction.TransactionalTestExecutionListener@305f031, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@592e843a, org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener@1d1f7216, org.springframework.test.context.event.EventPublishingTestExecutionListener@423e4cbb, org.springframework.security.test.context.support.ReactorContextTestExecutionListener@6e16b8b5, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@43b4fe19, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@25ddbbbb, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@1536602f, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@4ebea12c, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@2a1edad4, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@6256ac4f]
+21:35:44.736 [Test worker] DEBUG org.springframework.test.context.support.AbstractDirtiesContextTestExecutionListener - Before test class: context [DefaultTestContext@89c10b7 testClass = ProductRestControllerTest, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@5dbe30be testClass = ProductRestControllerTest, locations = '{}', classes = '{class com.example.kakao.KakaoApplication}', contextInitializerClasses = '[]', activeProfiles = '{test}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@64c63c79, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@63da79bb, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@19e4fcac, [ImportsContextCustomizer@4fe89c24 key = [@org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc(webDriverEnabled=true, print=DEFAULT, webClientEnabled=true, printOnlyOnFailure=true, addFilters=true), @org.springframework.context.annotation.Import({org.springframework.boot.autoconfigure.ImportAutoConfigurationImportSelector.class}), @org.springframework.boot.autoconfigure.ImportAutoConfiguration(value={}, exclude={}, classes={}), @org.springframework.boot.test.autoconfigure.properties.PropertyMapping(value=&quot;spring.test.mockmvc&quot;, skip=NO), @org.springframework.test.context.jdbc.Sql(executionPhase=BEFORE_TEST_METHOD, statements={}, scripts={}, value={&quot;classpath:db/teardown.sql&quot;}, config=@org.springframework.test.context.jdbc.SqlConfig(blockCommentStartDelimiter=&quot;&quot;, commentPrefix=&quot;&quot;, blockCommentEndDelimiter=&quot;&quot;, transactionMode=DEFAULT, commentPrefixes={}, transactionManager=&quot;&quot;, errorMode=DEFAULT, encoding=&quot;&quot;, separator=&quot;&quot;, dataSource=&quot;&quot;)), @org.springframework.boot.test.context.SpringBootTest(args={}, webEnvironment=MOCK, value={}, properties={}, classes={}), @org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs(uriScheme=&quot;http&quot;, outputDir=&quot;&quot;, uriPort=8080, value=&quot;&quot;, uriHost=&quot;localhost&quot;), @org.springframework.test.context.BootstrapWith(org.springframework.boot.test.context.SpringBootTestContextBootstrapper.class), @org.springframework.test.context.ActiveProfiles(profiles={}, resolver=org.springframework.test.context.ActiveProfilesResolver.class, value={&quot;test&quot;}, inheritProfiles=true), @org.springframework.context.annotation.Import({org.springframework.boot.test.autoconfigure.restdocs.RestDocumentationContextProviderRegistrar.class}), @org.springframework.boot.test.autoconfigure.properties.PropertyMapping(value=&quot;spring.test.restdocs&quot;, skip=NO)]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@16fdec90, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@dbd8e44, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@74bada02, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@272ed83b], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -&gt; true]], class annotated with @DirtiesContext [false] with mode [null].
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v2.7.6)
+
+2023-08-02 21:35:45.228  INFO 70099 --- [    Test worker] c.e.k.product.ProductRestControllerTest  : Starting ProductRestControllerTest using Java 17.0.7 on bag-yeong-gyuui-MacBookPro.local with PID 70099 (started by park in /Users/park/kakao_campus/nnnnnn/step2-BE-kakao-shop/6주차과제/kakao-6th-deploy)
+2023-08-02 21:35:45.229 DEBUG 70099 --- [    Test worker] c.e.k.product.ProductRestControllerTest  : Running with Spring Boot v2.7.6, Spring v5.3.24
+2023-08-02 21:35:45.229  INFO 70099 --- [    Test worker] c.e.k.product.ProductRestControllerTest  : The following 1 profile is active: &quot;test&quot;
+2023-08-02 21:35:45.904  INFO 70099 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-08-02 21:35:45.986  INFO 70099 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 73 ms. Found 7 JPA repository interfaces.
+2023-08-02 21:35:46.518  INFO 70099 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-08-02 21:35:46.591  INFO 70099 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.14.Final
+2023-08-02 21:35:46.793  INFO 70099 --- [    Test worker] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-08-02 21:35:46.826 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration boolean -&gt; org.hibernate.type.BooleanType@1ae924f1
+2023-08-02 21:35:46.826 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration boolean -&gt; org.hibernate.type.BooleanType@1ae924f1
+2023-08-02 21:35:46.826 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Boolean -&gt; org.hibernate.type.BooleanType@1ae924f1
+2023-08-02 21:35:46.827 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration numeric_boolean -&gt; org.hibernate.type.NumericBooleanType@104a287c
+2023-08-02 21:35:46.828 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration true_false -&gt; org.hibernate.type.TrueFalseType@1e734eee
+2023-08-02 21:35:46.830 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration yes_no -&gt; org.hibernate.type.YesNoType@5e68be2
+2023-08-02 21:35:46.833 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration byte -&gt; org.hibernate.type.ByteType@7f51f588
+2023-08-02 21:35:46.833 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration byte -&gt; org.hibernate.type.ByteType@7f51f588
+2023-08-02 21:35:46.833 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Byte -&gt; org.hibernate.type.ByteType@7f51f588
+2023-08-02 21:35:46.835 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration character -&gt; org.hibernate.type.CharacterType@372954e1
+2023-08-02 21:35:46.841 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration char -&gt; org.hibernate.type.CharacterType@372954e1
+2023-08-02 21:35:46.843 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Character -&gt; org.hibernate.type.CharacterType@372954e1
+2023-08-02 21:35:46.845 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration short -&gt; org.hibernate.type.ShortType@53cddaf8
+2023-08-02 21:35:46.845 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration short -&gt; org.hibernate.type.ShortType@53cddaf8
+2023-08-02 21:35:46.846 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Short -&gt; org.hibernate.type.ShortType@53cddaf8
+2023-08-02 21:35:46.847 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration integer -&gt; org.hibernate.type.IntegerType@1e721583
+2023-08-02 21:35:46.847 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration int -&gt; org.hibernate.type.IntegerType@1e721583
+2023-08-02 21:35:46.847 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Integer -&gt; org.hibernate.type.IntegerType@1e721583
+2023-08-02 21:35:46.847 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration long -&gt; org.hibernate.type.LongType@48dff674
+2023-08-02 21:35:46.848 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration long -&gt; org.hibernate.type.LongType@48dff674
+2023-08-02 21:35:46.848 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Long -&gt; org.hibernate.type.LongType@48dff674
+2023-08-02 21:35:46.848 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration float -&gt; org.hibernate.type.FloatType@77fc19cf
+2023-08-02 21:35:46.848 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration float -&gt; org.hibernate.type.FloatType@77fc19cf
+2023-08-02 21:35:46.848 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Float -&gt; org.hibernate.type.FloatType@77fc19cf
+2023-08-02 21:35:46.848 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration double -&gt; org.hibernate.type.DoubleType@bb8ead8
+2023-08-02 21:35:46.848 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration double -&gt; org.hibernate.type.DoubleType@bb8ead8
+2023-08-02 21:35:46.848 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Double -&gt; org.hibernate.type.DoubleType@bb8ead8
+2023-08-02 21:35:46.849 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration big_decimal -&gt; org.hibernate.type.BigDecimalType@677cb96e
+2023-08-02 21:35:46.849 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.math.BigDecimal -&gt; org.hibernate.type.BigDecimalType@677cb96e
+2023-08-02 21:35:46.851 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration big_integer -&gt; org.hibernate.type.BigIntegerType@63dda940
+2023-08-02 21:35:46.851 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.math.BigInteger -&gt; org.hibernate.type.BigIntegerType@63dda940
+2023-08-02 21:35:46.852 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration string -&gt; org.hibernate.type.StringType@33627576
+2023-08-02 21:35:46.852 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.String -&gt; org.hibernate.type.StringType@33627576
+2023-08-02 21:35:46.852 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration nstring -&gt; org.hibernate.type.StringNVarcharType@5a3cf878
+2023-08-02 21:35:46.852 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration ncharacter -&gt; org.hibernate.type.CharacterNCharType@5c53c235
+2023-08-02 21:35:46.853 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration url -&gt; org.hibernate.type.UrlType@66d3b881
+2023-08-02 21:35:46.853 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.net.URL -&gt; org.hibernate.type.UrlType@66d3b881
+2023-08-02 21:35:46.854 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration Duration -&gt; org.hibernate.type.DurationType@52f9e8bb
+2023-08-02 21:35:46.854 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.Duration -&gt; org.hibernate.type.DurationType@52f9e8bb
+2023-08-02 21:35:46.855 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration Instant -&gt; org.hibernate.type.InstantType@72224107
+2023-08-02 21:35:46.855 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.Instant -&gt; org.hibernate.type.InstantType@72224107
+2023-08-02 21:35:46.856 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration LocalDateTime -&gt; org.hibernate.type.LocalDateTimeType@1c7cd434
+2023-08-02 21:35:46.856 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.LocalDateTime -&gt; org.hibernate.type.LocalDateTimeType@1c7cd434
+2023-08-02 21:35:46.856 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration LocalDate -&gt; org.hibernate.type.LocalDateType@5cce40d7
+2023-08-02 21:35:46.856 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.LocalDate -&gt; org.hibernate.type.LocalDateType@5cce40d7
+2023-08-02 21:35:46.858 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration LocalTime -&gt; org.hibernate.type.LocalTimeType@2c99c8d
+2023-08-02 21:35:46.858 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.LocalTime -&gt; org.hibernate.type.LocalTimeType@2c99c8d
+2023-08-02 21:35:46.860 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration OffsetDateTime -&gt; org.hibernate.type.OffsetDateTimeType@f95d64d
+2023-08-02 21:35:46.861 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.OffsetDateTime -&gt; org.hibernate.type.OffsetDateTimeType@f95d64d
+2023-08-02 21:35:46.863 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration OffsetTime -&gt; org.hibernate.type.OffsetTimeType@74a58a06
+2023-08-02 21:35:46.863 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.OffsetTime -&gt; org.hibernate.type.OffsetTimeType@74a58a06
+2023-08-02 21:35:46.865 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration ZonedDateTime -&gt; org.hibernate.type.ZonedDateTimeType@3bd08435
+2023-08-02 21:35:46.866 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.time.ZonedDateTime -&gt; org.hibernate.type.ZonedDateTimeType@3bd08435
+2023-08-02 21:35:46.868 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration date -&gt; org.hibernate.type.DateType@1de5cc88
+2023-08-02 21:35:46.868 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.sql.Date -&gt; org.hibernate.type.DateType@1de5cc88
+2023-08-02 21:35:46.869 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration time -&gt; org.hibernate.type.TimeType@78479f2b
+2023-08-02 21:35:46.869 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.sql.Time -&gt; org.hibernate.type.TimeType@78479f2b
+2023-08-02 21:35:46.869 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration timestamp -&gt; org.hibernate.type.TimestampType@1b0e031b
+2023-08-02 21:35:46.869 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.sql.Timestamp -&gt; org.hibernate.type.TimestampType@1b0e031b
+2023-08-02 21:35:46.869 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.util.Date -&gt; org.hibernate.type.TimestampType@1b0e031b
+2023-08-02 21:35:46.880 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration dbtimestamp -&gt; org.hibernate.type.DbTimestampType@4e5c8ef3
+2023-08-02 21:35:46.882 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration calendar -&gt; org.hibernate.type.CalendarType@7e18ced7
+2023-08-02 21:35:46.883 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.util.Calendar -&gt; org.hibernate.type.CalendarType@7e18ced7
+2023-08-02 21:35:46.883 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.util.GregorianCalendar -&gt; org.hibernate.type.CalendarType@7e18ced7
+2023-08-02 21:35:46.884 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration calendar_date -&gt; org.hibernate.type.CalendarDateType@50a7c72b
+2023-08-02 21:35:46.887 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration calendar_time -&gt; org.hibernate.type.CalendarTimeType@d108406
+2023-08-02 21:35:46.889 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration locale -&gt; org.hibernate.type.LocaleType@5c70d7f0
+2023-08-02 21:35:46.889 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.util.Locale -&gt; org.hibernate.type.LocaleType@5c70d7f0
+2023-08-02 21:35:46.890 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration currency -&gt; org.hibernate.type.CurrencyType@7f5ce33e
+2023-08-02 21:35:46.890 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.util.Currency -&gt; org.hibernate.type.CurrencyType@7f5ce33e
+2023-08-02 21:35:46.890 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration timezone -&gt; org.hibernate.type.TimeZoneType@6eede35e
+2023-08-02 21:35:46.890 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.util.TimeZone -&gt; org.hibernate.type.TimeZoneType@6eede35e
+2023-08-02 21:35:46.891 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration class -&gt; org.hibernate.type.ClassType@46d0f89c
+2023-08-02 21:35:46.891 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Class -&gt; org.hibernate.type.ClassType@46d0f89c
+2023-08-02 21:35:46.892 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration uuid-binary -&gt; org.hibernate.type.UUIDBinaryType@58164e9a
+2023-08-02 21:35:46.892 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.util.UUID -&gt; org.hibernate.type.UUIDBinaryType@58164e9a
+2023-08-02 21:35:46.892 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration uuid-char -&gt; org.hibernate.type.UUIDCharType@76e6c070
+2023-08-02 21:35:46.892 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration binary -&gt; org.hibernate.type.BinaryType@5e5a8718
+2023-08-02 21:35:46.892 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration byte[] -&gt; org.hibernate.type.BinaryType@5e5a8718
+2023-08-02 21:35:46.892 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration [B -&gt; org.hibernate.type.BinaryType@5e5a8718
+2023-08-02 21:35:46.893 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration wrapper-binary -&gt; org.hibernate.type.WrapperBinaryType@91a2543
+2023-08-02 21:35:46.893 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration Byte[] -&gt; org.hibernate.type.WrapperBinaryType@91a2543
+2023-08-02 21:35:46.893 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration [Ljava.lang.Byte; -&gt; org.hibernate.type.WrapperBinaryType@91a2543
+2023-08-02 21:35:46.894 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration row_version -&gt; org.hibernate.type.RowVersionType@7e2c6702
+2023-08-02 21:35:46.895 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration image -&gt; org.hibernate.type.ImageType@4ce267cc
+2023-08-02 21:35:46.895 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration characters -&gt; org.hibernate.type.CharArrayType@74500e4f
+2023-08-02 21:35:46.895 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration char[] -&gt; org.hibernate.type.CharArrayType@74500e4f
+2023-08-02 21:35:46.895 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration [C -&gt; org.hibernate.type.CharArrayType@74500e4f
+2023-08-02 21:35:46.896 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration wrapper-characters -&gt; org.hibernate.type.CharacterArrayType@54a056e4
+2023-08-02 21:35:46.896 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration [Ljava.lang.Character; -&gt; org.hibernate.type.CharacterArrayType@54a056e4
+2023-08-02 21:35:46.896 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration Character[] -&gt; org.hibernate.type.CharacterArrayType@54a056e4
+2023-08-02 21:35:46.897 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration text -&gt; org.hibernate.type.TextType@4cb00fa5
+2023-08-02 21:35:46.898 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration ntext -&gt; org.hibernate.type.NTextType@3407aa4f
+2023-08-02 21:35:46.898 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration blob -&gt; org.hibernate.type.BlobType@6d4a05f7
+2023-08-02 21:35:46.898 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.sql.Blob -&gt; org.hibernate.type.BlobType@6d4a05f7
+2023-08-02 21:35:46.899 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration materialized_blob -&gt; org.hibernate.type.MaterializedBlobType@4f235e8e
+2023-08-02 21:35:46.899 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration clob -&gt; org.hibernate.type.ClobType@4264beb8
+2023-08-02 21:35:46.899 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.sql.Clob -&gt; org.hibernate.type.ClobType@4264beb8
+2023-08-02 21:35:46.900 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration nclob -&gt; org.hibernate.type.NClobType@19705650
+2023-08-02 21:35:46.900 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.sql.NClob -&gt; org.hibernate.type.NClobType@19705650
+2023-08-02 21:35:46.902 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration materialized_clob -&gt; org.hibernate.type.MaterializedClobType@2df3545d
+2023-08-02 21:35:46.903 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration materialized_nclob -&gt; org.hibernate.type.MaterializedNClobType@5cf0673d
+2023-08-02 21:35:46.904 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration serializable -&gt; org.hibernate.type.SerializableType@44aa91e2
+2023-08-02 21:35:46.908 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration object -&gt; org.hibernate.type.ObjectType@5bb2fb2b
+2023-08-02 21:35:46.908 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration java.lang.Object -&gt; org.hibernate.type.ObjectType@5bb2fb2b
+2023-08-02 21:35:46.909 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration imm_date -&gt; org.hibernate.type.AdaptedImmutableType@1a7163e3
+2023-08-02 21:35:46.910 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration imm_time -&gt; org.hibernate.type.AdaptedImmutableType@44da7eb3
+2023-08-02 21:35:46.910 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration imm_timestamp -&gt; org.hibernate.type.AdaptedImmutableType@5e69cf07
+2023-08-02 21:35:46.910 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration imm_dbtimestamp -&gt; org.hibernate.type.AdaptedImmutableType@3d512652
+2023-08-02 21:35:46.911 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration imm_calendar -&gt; org.hibernate.type.AdaptedImmutableType@2c2e3460
+2023-08-02 21:35:46.911 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration imm_calendar_date -&gt; org.hibernate.type.AdaptedImmutableType@3b96f8b0
+2023-08-02 21:35:46.911 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration imm_binary -&gt; org.hibernate.type.AdaptedImmutableType@2b170932
+2023-08-02 21:35:46.911 DEBUG 70099 --- [    Test worker] org.hibernate.type.BasicTypeRegistry     : Adding type registration imm_serializable -&gt; org.hibernate.type.AdaptedImmutableType@1fc0d9b4
+2023-08-02 21:35:46.956  INFO 70099 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-08-02 21:35:47.238  INFO 70099 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-08-02 21:35:47.275  INFO 70099 --- [    Test worker] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+2023-08-02 21:35:47.310 DEBUG 70099 --- [    Test worker] o.h.type.spi.TypeConfiguration$Scope     : Scoping TypeConfiguration [org.hibernate.type.spi.TypeConfiguration@667a467f] to MetadataBuildingContext [org.hibernate.boot.internal.MetadataBuildingContextRootImpl@324e8baa]
+2023-08-02 21:35:47.546 DEBUG 70099 --- [    Test worker] o.h.type.spi.TypeConfiguration$Scope     : Scoping TypeConfiguration [org.hibernate.type.spi.TypeConfiguration@667a467f] to SessionFactoryImpl [org.hibernate.internal.SessionFactoryImpl@7be62956]
+Hibernate: 
+    
+    drop table if exists cart_tb CASCADE 
+Hibernate: 
+    
+    drop table if exists error_log_tb CASCADE 
+Hibernate: 
+    
+    drop table if exists item_tb CASCADE 
+Hibernate: 
+    
+    drop table if exists option_tb CASCADE 
+Hibernate: 
+    
+    drop table if exists order_tb CASCADE 
+Hibernate: 
+    
+    drop table if exists product_tb CASCADE 
+Hibernate: 
+    
+    drop table if exists user_tb CASCADE 
+Hibernate: 
+    
+    create table cart_tb (
+       id integer generated by default as identity,
+        price integer not null,
+        quantity integer not null,
+        option_id integer,
+        user_id integer,
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table error_log_tb (
+       id integer generated by default as identity,
+        created_at timestamp,
+        message varchar(1000) not null,
+        user_agent varchar(255) not null,
+        user_id integer,
+        user_ip varchar(255) not null,
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table item_tb (
+       id integer generated by default as identity,
+        price integer not null,
+        quantity integer not null,
+        option_id integer,
+        order_id integer,
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table option_tb (
+       id integer generated by default as identity,
+        option_name varchar(100) not null,
+        price integer not null,
+        product_id integer,
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table order_tb (
+       id integer generated by default as identity,
+        user_id integer,
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table product_tb (
+       id integer generated by default as identity,
+        description varchar(1000) not null,
+        image varchar(500),
+        price integer not null,
+        product_name varchar(100) not null,
+        primary key (id)
+    )
+Hibernate: 
+    
+    create table user_tb (
+       id integer generated by default as identity,
+        email varchar(100) not null,
+        password varchar(256) not null,
+        roles varchar(30),
+        username varchar(45) not null,
+        primary key (id)
+    )
+Hibernate: create index cart_user_id_idx on cart_tb (user_id)
+Hibernate: create index cart_option_id_idx on cart_tb (option_id)
+Hibernate: 
+    
+    alter table cart_tb 
+       add constraint uk_cart_option_user unique (user_id, option_id)
+Hibernate: create index item_option_id_idx on item_tb (option_id)
+Hibernate: create index item_order_id_idx on item_tb (order_id)
+Hibernate: create index option_product_id_idx on option_tb (product_id)
+Hibernate: create index order_user_id_idx on order_tb (user_id)
+Hibernate: 
+    
+    alter table user_tb 
+       add constraint UK_2dlfg6wvnxboknkp9d1h75icb unique (email)
+Hibernate: 
+    
+    alter table cart_tb 
+       add constraint FKjv34r03v7eauvpfhwsci0deyp 
+       foreign key (option_id) 
+       references option_tb
+Hibernate: 
+    
+    alter table cart_tb 
+       add constraint FKi00yw2m90df70t3igqyjbbf91 
+       foreign key (user_id) 
+       references user_tb
+Hibernate: 
+    
+    alter table item_tb 
+       add constraint FKbgcgxbitac3tct8kqsvyqm85f 
+       foreign key (option_id) 
+       references option_tb
+Hibernate: 
+    
+    alter table item_tb 
+       add constraint FKofe121qxhn816wo07qr9jr0hb 
+       foreign key (order_id) 
+       references order_tb
+Hibernate: 
+    
+    alter table option_tb 
+       add constraint FK6j02px4ow9xxw0o3rc59buyew 
+       foreign key (product_id) 
+       references product_tb
+Hibernate: 
+    
+    alter table order_tb 
+       add constraint FK9wkv8x8yfgaaquhn4vquq4aps 
+       foreign key (user_id) 
+       references user_tb
+2023-08-02 21:35:47.853  INFO 70099 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-08-02 21:35:47.858 TRACE 70099 --- [    Test worker] o.h.type.spi.TypeConfiguration$Scope     : Handling #sessionFactoryCreated from [org.hibernate.internal.SessionFactoryImpl@7be62956] for TypeConfiguration
+2023-08-02 21:35:47.860  INFO 70099 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-08-02 21:35:48.932  INFO 70099 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@41092c8, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2e590e36, org.springframework.security.web.context.SecurityContextPersistenceFilter@5003c114, org.springframework.security.web.header.HeaderWriterFilter@112b3298, org.springframework.web.filter.CorsFilter@3fc2a1d1, org.springframework.security.web.authentication.logout.LogoutFilter@1728d307, com.example.kakao._core.security.JwtAuthenticationFilter@752e4223, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3d2ff73a, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@736a8aea, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7528089c, org.springframework.security.web.session.SessionManagementFilter@39921410, org.springframework.security.web.access.ExceptionTranslationFilter@70d16858, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@7ff7e353]
+2023-08-02 21:35:49.408  INFO 70099 --- [    Test worker] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:test'
+2023-08-02 21:35:49.833  INFO 70099 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-02 21:35:49.833  INFO 70099 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-02 21:35:49.834  INFO 70099 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2023-08-02 21:35:49.858  INFO 70099 --- [    Test worker] c.e.k.product.ProductRestControllerTest  : Started ProductRestControllerTest in 5.089 seconds (JVM running for 6.067)
+2023-08-02 21:35:50.179  INFO 70099 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-02 21:35:50.180  INFO 70099 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-02 21:35:50.181  INFO 70099 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+Hibernate: 
+    select
+        product0_.id as id1_5_0_,
+        product0_.description as descript2_5_0_,
+        product0_.image as image3_5_0_,
+        product0_.price as price4_5_0_,
+        product0_.product_name as product_5_5_0_ 
+    from
+        product_tb product0_ 
+    where
+        product0_.id=?
+2023-08-02 21:35:50.295 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [1]
+2023-08-02 21:35:50.323 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([descript2_5_0_] : [VARCHAR]) - []
+2023-08-02 21:35:50.323 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([image3_5_0_] : [VARCHAR]) - [/images/1.jpg]
+2023-08-02 21:35:50.324 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price4_5_0_] : [INTEGER]) - [1000]
+2023-08-02 21:35:50.324 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_5_5_0_] : [VARCHAR]) - [기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전]
+Hibernate: 
+    select
+        option0_.id as id1_3_,
+        option0_.option_name as option_n2_3_,
+        option0_.price as price3_3_,
+        option0_.product_id as product_4_3_ 
+    from
+        option_tb option0_ 
+    where
+        option0_.product_id=?
+2023-08-02 21:35:50.351 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [1]
+2023-08-02 21:35:50.352 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_3_] : [INTEGER]) - [1]
+2023-08-02 21:35:50.352 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_n2_3_] : [VARCHAR]) - [01. 슬라이딩 지퍼백 크리스마스에디션 4종]
+2023-08-02 21:35:50.352 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price3_3_] : [INTEGER]) - [10000]
+2023-08-02 21:35:50.352 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_4_3_] : [INTEGER]) - [1]
+2023-08-02 21:35:50.352 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_3_] : [INTEGER]) - [2]
+2023-08-02 21:35:50.352 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_n2_3_] : [VARCHAR]) - [02. 슬라이딩 지퍼백 플라워에디션 5종]
+2023-08-02 21:35:50.352 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price3_3_] : [INTEGER]) - [10900]
+2023-08-02 21:35:50.352 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_4_3_] : [INTEGER]) - [1]
+2023-08-02 21:35:50.352 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_3_] : [INTEGER]) - [3]
+2023-08-02 21:35:50.352 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_n2_3_] : [VARCHAR]) - [고무장갑 베이지 S(소형) 6팩]
+2023-08-02 21:35:50.352 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price3_3_] : [INTEGER]) - [9900]
+2023-08-02 21:35:50.352 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_4_3_] : [INTEGER]) - [1]
+2023-08-02 21:35:50.352 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_3_] : [INTEGER]) - [4]
+2023-08-02 21:35:50.352 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_n2_3_] : [VARCHAR]) - [뽑아쓰는 키친타올 130매 12팩]
+2023-08-02 21:35:50.353 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price3_3_] : [INTEGER]) - [16900]
+2023-08-02 21:35:50.353 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_4_3_] : [INTEGER]) - [1]
+2023-08-02 21:35:50.353 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_3_] : [INTEGER]) - [5]
+2023-08-02 21:35:50.353 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_n2_3_] : [VARCHAR]) - [2겹 식빵수세미 6매]
+2023-08-02 21:35:50.353 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price3_3_] : [INTEGER]) - [8900]
+2023-08-02 21:35:50.353 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_4_3_] : [INTEGER]) - [1]
+테스트 : {&quot;success&quot;:true,&quot;response&quot;:{&quot;id&quot;:1,&quot;productName&quot;:&quot;기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/1.jpg&quot;,&quot;price&quot;:1000,&quot;starCount&quot;:5,&quot;options&quot;:[{&quot;id&quot;:1,&quot;optionName&quot;:&quot;01. 슬라이딩 지퍼백 크리스마스에디션 4종&quot;,&quot;price&quot;:10000},{&quot;id&quot;:2,&quot;optionName&quot;:&quot;02. 슬라이딩 지퍼백 플라워에디션 5종&quot;,&quot;price&quot;:10900},{&quot;id&quot;:3,&quot;optionName&quot;:&quot;고무장갑 베이지 S(소형) 6팩&quot;,&quot;price&quot;:9900},{&quot;id&quot;:4,&quot;optionName&quot;:&quot;뽑아쓰는 키친타올 130매 12팩&quot;,&quot;price&quot;:16900},{&quot;id&quot;:5,&quot;optionName&quot;:&quot;2겹 식빵수세미 6매&quot;,&quot;price&quot;:8900}]},&quot;error&quot;:null}
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /products/1
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.example.kakao.product.ProductRestController
+           Method = com.example.kakao.product.ProductRestController#findById(int)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;]
+     Content type = application/json;charset=UTF-8
+             Body = {&quot;success&quot;:true,&quot;response&quot;:{&quot;id&quot;:1,&quot;productName&quot;:&quot;기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/1.jpg&quot;,&quot;price&quot;:1000,&quot;starCount&quot;:5,&quot;options&quot;:[{&quot;id&quot;:1,&quot;optionName&quot;:&quot;01. 슬라이딩 지퍼백 크리스마스에디션 4종&quot;,&quot;price&quot;:10000},{&quot;id&quot;:2,&quot;optionName&quot;:&quot;02. 슬라이딩 지퍼백 플라워에디션 5종&quot;,&quot;price&quot;:10900},{&quot;id&quot;:3,&quot;optionName&quot;:&quot;고무장갑 베이지 S(소형) 6팩&quot;,&quot;price&quot;:9900},{&quot;id&quot;:4,&quot;optionName&quot;:&quot;뽑아쓰는 키친타올 130매 12팩&quot;,&quot;price&quot;:16900},{&quot;id&quot;:5,&quot;optionName&quot;:&quot;2겹 식빵수세미 6매&quot;,&quot;price&quot;:8900}]},&quot;error&quot;:null}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2023-08-02 21:35:50.600  INFO 70099 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-02 21:35:50.600  INFO 70099 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-02 21:35:50.601  INFO 70099 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+Hibernate: 
+    select
+        product0_.id as id1_5_0_,
+        product0_.description as descript2_5_0_,
+        product0_.image as image3_5_0_,
+        product0_.price as price4_5_0_,
+        product0_.product_name as product_5_5_0_ 
+    from
+        product_tb product0_ 
+    where
+        product0_.id=?
+2023-08-02 21:35:50.604 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [0]
+테스트 : {&quot;success&quot;:false,&quot;response&quot;:null,&quot;error&quot;:{&quot;message&quot;:&quot;해당 상품을 찾을 수 없습니다 : 0&quot;,&quot;status&quot;:404}}
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /products/0
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.example.kakao.product.ProductRestController
+           Method = com.example.kakao.product.ProductRestController#findById(int)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = com.example.kakao._core.errors.exception.Exception404
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 404
+    Error message = null
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;]
+     Content type = application/json;charset=UTF-8
+             Body = {&quot;success&quot;:false,&quot;response&quot;:null,&quot;error&quot;:{&quot;message&quot;:&quot;해당 상품을 찾을 수 없습니다 : 0&quot;,&quot;status&quot;:404}}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2023-08-02 21:35:50.659  INFO 70099 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-02 21:35:50.659  INFO 70099 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-02 21:35:50.661  INFO 70099 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+Hibernate: 
+    select
+        product0_.id as id1_5_,
+        product0_.description as descript2_5_,
+        product0_.image as image3_5_,
+        product0_.price as price4_5_,
+        product0_.product_name as product_5_5_ 
+    from
+        product_tb product0_ limit ?
+2023-08-02 21:35:50.676 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_5_] : [INTEGER]) - [1]
+2023-08-02 21:35:50.676 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([descript2_5_] : [VARCHAR]) - []
+2023-08-02 21:35:50.677 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([image3_5_] : [VARCHAR]) - [/images/1.jpg]
+2023-08-02 21:35:50.677 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price4_5_] : [INTEGER]) - [1000]
+2023-08-02 21:35:50.677 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_5_5_] : [VARCHAR]) - [기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전]
+2023-08-02 21:35:50.677 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_5_] : [INTEGER]) - [2]
+2023-08-02 21:35:50.677 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([descript2_5_] : [VARCHAR]) - []
+2023-08-02 21:35:50.677 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([image3_5_] : [VARCHAR]) - [/images/2.jpg]
+2023-08-02 21:35:50.677 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price4_5_] : [INTEGER]) - [2000]
+2023-08-02 21:35:50.677 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_5_5_] : [VARCHAR]) - [[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율]
+2023-08-02 21:35:50.677 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_5_] : [INTEGER]) - [3]
+2023-08-02 21:35:50.677 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([descript2_5_] : [VARCHAR]) - []
+2023-08-02 21:35:50.677 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([image3_5_] : [VARCHAR]) - [/images/3.jpg]
+2023-08-02 21:35:50.677 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price4_5_] : [INTEGER]) - [30000]
+2023-08-02 21:35:50.677 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_5_5_] : [VARCHAR]) - [삼성전자 JBL JR310 외 어린이용/성인용 헤드셋 3종!]
+2023-08-02 21:35:50.677 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_5_] : [INTEGER]) - [4]
+2023-08-02 21:35:50.677 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([descript2_5_] : [VARCHAR]) - []
+2023-08-02 21:35:50.677 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([image3_5_] : [VARCHAR]) - [/images/4.jpg]
+2023-08-02 21:35:50.677 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price4_5_] : [INTEGER]) - [4000]
+2023-08-02 21:35:50.677 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_5_5_] : [VARCHAR]) - [바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종]
+2023-08-02 21:35:50.677 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_5_] : [INTEGER]) - [5]
+2023-08-02 21:35:50.677 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([descript2_5_] : [VARCHAR]) - []
+2023-08-02 21:35:50.677 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([image3_5_] : [VARCHAR]) - [/images/5.jpg]
+2023-08-02 21:35:50.677 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price4_5_] : [INTEGER]) - [5000]
+2023-08-02 21:35:50.677 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_5_5_] : [VARCHAR]) - [[더주] 컷팅말랑장족, 숏다리 100g/300g 외 주전부리 모음 /중독성 최고/마른안주]
+2023-08-02 21:35:50.677 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_5_] : [INTEGER]) - [6]
+2023-08-02 21:35:50.677 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([descript2_5_] : [VARCHAR]) - []
+2023-08-02 21:35:50.677 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([image3_5_] : [VARCHAR]) - [/images/6.jpg]
+2023-08-02 21:35:50.678 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price4_5_] : [INTEGER]) - [15900]
+2023-08-02 21:35:50.678 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_5_5_] : [VARCHAR]) - [굳지않는 앙금절편 1,050g 2팩 외 우리쌀떡 모음전]
+2023-08-02 21:35:50.678 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_5_] : [INTEGER]) - [7]
+2023-08-02 21:35:50.678 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([descript2_5_] : [VARCHAR]) - []
+2023-08-02 21:35:50.678 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([image3_5_] : [VARCHAR]) - [/images/7.jpg]
+2023-08-02 21:35:50.678 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price4_5_] : [INTEGER]) - [26800]
+2023-08-02 21:35:50.678 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_5_5_] : [VARCHAR]) - [eoe 이너딜리티 30포, 오렌지맛 고 식이섬유 보충제]
+2023-08-02 21:35:50.678 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_5_] : [INTEGER]) - [8]
+2023-08-02 21:35:50.678 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([descript2_5_] : [VARCHAR]) - []
+2023-08-02 21:35:50.678 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([image3_5_] : [VARCHAR]) - [/images/8.jpg]
+2023-08-02 21:35:50.678 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price4_5_] : [INTEGER]) - [25900]
+2023-08-02 21:35:50.678 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_5_5_] : [VARCHAR]) - [제나벨 PDRN 크림 2개. 피부보습/진정 케어]
+2023-08-02 21:35:50.678 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_5_] : [INTEGER]) - [9]
+2023-08-02 21:35:50.679 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([descript2_5_] : [VARCHAR]) - []
+2023-08-02 21:35:50.681 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([image3_5_] : [VARCHAR]) - [/images/9.jpg]
+2023-08-02 21:35:50.681 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price4_5_] : [INTEGER]) - [797000]
+2023-08-02 21:35:50.681 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_5_5_] : [VARCHAR]) - [플레이스테이션 VR2 호라이즌 번들. 생생한 몰입감]
+Hibernate: 
+    select
+        count(product0_.id) as col_0_0_ 
+    from
+        product_tb product0_
+2023-08-02 21:35:50.690 TRACE 70099 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([col_0_0_] : [BIGINT]) - [15]
+테스트 : {&quot;success&quot;:true,&quot;response&quot;:[{&quot;id&quot;:1,&quot;productName&quot;:&quot;기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/1.jpg&quot;,&quot;price&quot;:1000},{&quot;id&quot;:2,&quot;productName&quot;:&quot;[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/2.jpg&quot;,&quot;price&quot;:2000},{&quot;id&quot;:3,&quot;productName&quot;:&quot;삼성전자 JBL JR310 외 어린이용/성인용 헤드셋 3종!&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/3.jpg&quot;,&quot;price&quot;:30000},{&quot;id&quot;:4,&quot;productName&quot;:&quot;바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/4.jpg&quot;,&quot;price&quot;:4000},{&quot;id&quot;:5,&quot;productName&quot;:&quot;[더주] 컷팅말랑장족, 숏다리 100g/300g 외 주전부리 모음 /중독성 최고/마른안주&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/5.jpg&quot;,&quot;price&quot;:5000},{&quot;id&quot;:6,&quot;productName&quot;:&quot;굳지않는 앙금절편 1,050g 2팩 외 우리쌀떡 모음전&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/6.jpg&quot;,&quot;price&quot;:15900},{&quot;id&quot;:7,&quot;productName&quot;:&quot;eoe 이너딜리티 30포, 오렌지맛 고 식이섬유 보충제&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/7.jpg&quot;,&quot;price&quot;:26800},{&quot;id&quot;:8,&quot;productName&quot;:&quot;제나벨 PDRN 크림 2개. 피부보습/진정 케어&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/8.jpg&quot;,&quot;price&quot;:25900},{&quot;id&quot;:9,&quot;productName&quot;:&quot;플레이스테이션 VR2 호라이즌 번들. 생생한 몰입감&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/9.jpg&quot;,&quot;price&quot;:797000}],&quot;error&quot;:null}
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /products
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.example.kakao.product.ProductRestController
+           Method = com.example.kakao.product.ProductRestController#findAll(Integer)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;]
+     Content type = application/json;charset=UTF-8
+             Body = {&quot;success&quot;:true,&quot;response&quot;:[{&quot;id&quot;:1,&quot;productName&quot;:&quot;기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/1.jpg&quot;,&quot;price&quot;:1000},{&quot;id&quot;:2,&quot;productName&quot;:&quot;[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/2.jpg&quot;,&quot;price&quot;:2000},{&quot;id&quot;:3,&quot;productName&quot;:&quot;삼성전자 JBL JR310 외 어린이용/성인용 헤드셋 3종!&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/3.jpg&quot;,&quot;price&quot;:30000},{&quot;id&quot;:4,&quot;productName&quot;:&quot;바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/4.jpg&quot;,&quot;price&quot;:4000},{&quot;id&quot;:5,&quot;productName&quot;:&quot;[더주] 컷팅말랑장족, 숏다리 100g/300g 외 주전부리 모음 /중독성 최고/마른안주&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/5.jpg&quot;,&quot;price&quot;:5000},{&quot;id&quot;:6,&quot;productName&quot;:&quot;굳지않는 앙금절편 1,050g 2팩 외 우리쌀떡 모음전&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/6.jpg&quot;,&quot;price&quot;:15900},{&quot;id&quot;:7,&quot;productName&quot;:&quot;eoe 이너딜리티 30포, 오렌지맛 고 식이섬유 보충제&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/7.jpg&quot;,&quot;price&quot;:26800},{&quot;id&quot;:8,&quot;productName&quot;:&quot;제나벨 PDRN 크림 2개. 피부보습/진정 케어&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/8.jpg&quot;,&quot;price&quot;:25900},{&quot;id&quot;:9,&quot;productName&quot;:&quot;플레이스테이션 VR2 호라이즌 번들. 생생한 몰입감&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/9.jpg&quot;,&quot;price&quot;:797000}],&quot;error&quot;:null}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 7.4</a> at 2023. 8. 2. 오후 9:35:51</p>
+</div>
+</div>
+</body>
+</html>
