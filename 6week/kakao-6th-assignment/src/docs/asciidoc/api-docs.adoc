@@ -79,31 +79,31 @@ include::{snippets}/{product}/find-by-id_test/response-body.adoc[]
 |===
 | Path | Type | Description
 
-| [].id
+| id
 | int
 | 상품 ID
 
-| [].productName
+| productName
 | String
 | 상품 이름
 
-| [].description
+| description
 | String
 | 상품 설명
 
-| [].image
+| image
 | String
 | 상품 이미지
 
-| [].price
+| price
 | int
 | 상품 가격
 
-| [].starCount
+| starCount
 | int
 | 상품평
 
-| [].options
+| options
 | List
 | 상품 옵션
 
@@ -141,15 +141,15 @@ include::{snippets}/{user}/join_test/http-request.adoc[]
 |===
 | Path | Type | Description
 
-| [].email
+| email
 | String
 | 사용자 이메일
 
-| [].password
+| password
 | String
 | 사용자 비밀번호
 
-| [].username
+| username
 | String
 | 사용자 이름
 |===
@@ -185,11 +185,11 @@ include::{snippets}/{user}/login_test/http-request.adoc[]
 |===
 | Path | Type | Description
 
-| [].email
+| email
 | String
 | 사용자 이메일
 
-| [].password
+| password
 | String
 | 사용자 비밀번호
 |===
@@ -243,7 +243,7 @@ include::{snippets}/{user}/check_test/http-request.adoc[]
 |===
 | Path | Type | Description
 
-| [].email
+| email
 | String
 | 사용자 이메일
 |===
@@ -378,15 +378,15 @@ include::{snippets}/{cart}/find-all_test/response-body.adoc[]
 | int
 | 장바구니에 담긴 상품 옵션 가격
 
-| option.id
+| cart[].option.id
 | int
 | 옵션 ID
 
-| option.optionName
+| cart[].option.optionName
 | String
 | 옵션 이름
 
-| option.price
+| cart[].option.price
 | int
 | 옵션 가격
 |===
@@ -512,19 +512,19 @@ include::{snippets}/{order}/save_test/response-body.adoc[]
 | List
 | 주문한 상품의 옵션 목록
 
-| items[].id
+| products[].items[].id
 | int
 | 주문한 상품의 옵션 ID
 
-| items[].optionName
+| products[].items[].optionName
 | String
 | 주문한 상품의 옵션 이름
 
-| items[].quantity
+| products[].items[].quantity
 | int
 | 주문한 상품의 옵션 수량
 
-| items[].price
+| products[].items[].price
 | int
 | 주문한 상품의 옵션 가격
 |===
@@ -571,19 +571,19 @@ include::{snippets}/{order}/find-by-id_test/response-body.adoc[]
 | List
 | 주문한 상품의 옵션 목록
 
-| items[].id
+| products[].items[].id
 | int
 | 주문한 상품의 옵션 ID
 
-| items[].optionName
+| products[].items[].optionName
 | String
 | 주문한 상품의 옵션 이름
 
-| items[].quantity
+| products[].items[].quantity
 | int
 | 주문한 상품의 옵션 수량
 
-| items[].price
+| products[].items[].price
 | int
 | 주문한 상품의 옵션 가격
 |===
