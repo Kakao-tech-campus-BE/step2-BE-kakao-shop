@@ -1,0 +1,148 @@
+= 카카오 쇼핑하기 RestAPI
+Metacoding <getinthere@naver.com>
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+:product: product-rest-controller-test
+:cart: cart-rest-controller-test
+:user: user-rest-controller-test
+:order: order-rest-controller-test
+
+:toc: left
+:toclevels: 2
+
+:source-highlighter: highlightjs
+
+== 상품
+=== 전체 상품 목록 조회
+* param : page={number}
+* param의 디폴트 값은 0이다.
+==== 요청 예시
+include::{snippets}/{product}/find-all_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{product}/find-all_test/response-body.adoc[]
+
+=== 개별 상품 상세 조회
+==== 요청 예시
+include::{snippets}/{product}/find-by-id_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{product}/find-by-id_test/response-body.adoc[]
+
+=== 개별 상품 상세 조회 실패(없는 id 요청)
+==== 요청 예시
+include::{snippets}/{product}/find-by-id-fail_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{product}/find-by-id-fail_test/response-body.adoc[]
+
+
+== 장바구니
+=== 장바구니 담기
+==== 요청 예시
+include::{snippets}/{cart}/add-cart-list_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{cart}/add-cart-list_test/response-body.adoc[]
+
+=== 장바구니 담기 실패(옵션id 중복)
+==== 요청 예시
+include::{snippets}/{cart}/add-cart-list-duplicate-option_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{cart}/add-cart-list-duplicate-option_test/response-body.adoc[]
+
+=== 장바구니 담기 실패(없는 옵션id 요청)
+==== 요청 예시
+include::{snippets}/{cart}/add-cart-list-option-not-found_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{cart}/add-cart-list-option-not-found_test/response-body.adoc[]
+
+=== 장바구니 조회
+==== 요청 예시
+include::{snippets}/{cart}/find-all_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{cart}/find-all_test/response-body.adoc[]
+
+
+=== 장바구니 수정
+* 주문하기를 할 때 장바구니 데이터를 update하고 그 결과를 응답받는다.
+* 결재페이지에서 이 응답을 사용해도 되고, 다시 장바구니 조회 API를 사용해도 된다.
+
+==== 요청 예시
+include::{snippets}/{cart}/update_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{cart}/update_test/response-body.adoc[]
+
+=== 장바구니 수정 실패(장바구니Id 중복)
+
+==== 요청 예시
+include::{snippets}/{cart}/update-duplicate-cart-id_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{cart}/update-duplicate-cart-id_test/response-body.adoc[]
+
+== 유저
+=== 회원가입
+==== 요청 예시
+include::{snippets}/{user}/join_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{user}/join_test/response-body.adoc[]
+
+=== 회원가입 실패 예시(이메일 중복)
+==== 요청 예시
+include::{snippets}/{user}/join-existed-email_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{user}/join-existed-email_test/response-body.adoc[]
+
+=== 회원가입 실패 예시(이메일 형식이 아닌 경우)
+==== 요청 예시
+include::{snippets}/{user}/join-not-email-form_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{user}/join-not-email-form_test/response-body.adoc[]
+
+=== 회원가입 실패 예시(username이 짧은 경우)
+==== 요청 예시
+include::{snippets}/{user}/join-short-username_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{user}/join-short-username_test/response-body.adoc[]
+
+=== 회원가입 실패 예시(비밀번호 특수문자 없는 경우)
+==== 요청 예시
+include::{snippets}/{user}/join-password-fail_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{user}/join-password-fail_test/response-body.adoc[]
+
+=== 로그인
+==== 요청 예시
+include::{snippets}/{user}/login_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{user}/login_test/response-body.adoc[]
+
+=== 로그인 실패 예시(이메일 틀린 경우)
+==== 요청 예시
+include::{snippets}/{user}/login-email-fail_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{user}/login-email-fail_test/response-body.adoc[]
+
+=== 로그인 실패 예시(비밀번호 불일치)
+==== 요청 예시
+include::{snippets}/{user}/login-password-not-match_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{user}/login-password-not-match_test/response-body.adoc[]
+
+=== 로그인 실패 예시(비밀번호 형식 틀린 경우)
+==== 요청 예시
+include::{snippets}/{user}/login-password-not-match-v2_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{user}/login-password-not-match-v2_test/response-body.adoc[]
+
+== 결제
+=== 결제하기
+==== 요청 예시
+include::{snippets}/{order}/save_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{order}/save_test/response-body.adoc[]
+
+=== 결제 내역 조회
+==== 요청 예시
+include::{snippets}/{order}/find-by-id_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{order}/find-by-id_test/response-body.adoc[]
+
