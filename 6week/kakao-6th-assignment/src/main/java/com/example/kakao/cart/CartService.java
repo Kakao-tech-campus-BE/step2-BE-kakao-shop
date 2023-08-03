@@ -41,17 +41,17 @@ public class CartService {
             int quantity = requestDTO.getQuantity();
 
             if (quantity <= 0 || quantity >= 1000){
-                throw new Exception400("잘못된 수량 요청입니다. : "+quantity);
+                throw new Exception400("INVALID_QUANTITY:"+quantity);
             }
 
             Option optionPS = optionJPARepository.findById(optionId)
-                    .orElseThrow(() -> new Exception404("해당 옵션을 찾을 수 없습니다 : " + optionId));
-            int price = requestDTO.getPrice();
+                    .orElseThrow(() -> new Exception404("OPTION_NOT_FOUND:" + optionId));
+            //int price = requestDTO.getPrice();
 
             // 1. 동일한 옵션이 들어오면 예외처리
             // [ { optionId:1, quantity:5, price:50000 }, { optionId:1, quantity:10, price:10000 } ]
             if (optionIdSet.contains(optionId)){
-                throw new Exception400("중복된 옵션 요청입니다. : " + optionId);
+                throw new Exception400("SAME_OPTION:" + optionId);
             }
             optionIdSet.add(optionId);
 
@@ -61,7 +61,7 @@ public class CartService {
                 // 장바구니에 해당 옵션이 이미 존재하는 경우, 수량을 더하여 업데이트
                 Cart cartToUpdate = existingCart.get();
                 int newQuantity = cartToUpdate.getQuantity() + quantity;
-                int newPrice = cartToUpdate.getPrice() + price;
+                //int newPrice = cartToUpdate.getPrice() + price;
                 int newPriceCheck = optionPS.getPrice() * newQuantity;
                 cartToUpdate.setQuantity(newQuantity);
                 cartToUpdate.setPrice(newPriceCheck);
@@ -94,7 +94,7 @@ public class CartService {
 
         // 1. 유저 장바구니에 아무것도 없으면 예외처리
         if (cartList.isEmpty()){
-            throw new Exception400("장바구니에 상품이 존재하지 않습니다. : " + cartList);
+            throw new Exception400("EMPTY_CART:" + cartList);
         }
 
         // 2. cartId:1, cartId:1 이렇게 requestDTOs에 동일한 장바구니 아이디가 두번 들어오면 예외처리
@@ -107,7 +107,7 @@ public class CartService {
             int cartId = updateDTO.getCartId();
 
             if (cartIdSet.contains(cartId)) {
-                throw new Exception400("중복된 장바구니 아이디 요청입니다. : " + cartId);
+                throw new Exception400("SAME_CART:" + cartId);
             }
             cartIdSet.add(cartId);
 
@@ -119,7 +119,7 @@ public class CartService {
                 }
             }
             if (!foundInCartList) {
-                throw new Exception400("없는 장바구니 아이디 요청입니다. : " + cartId);
+                throw new Exception400("CART_NOT_FOUND:" + cartId);
             }
         }
 
@@ -130,10 +130,10 @@ public class CartService {
 
                     int cartQuantity = updateDTO.getQuantity();
                     if (cartQuantity <= 0 || cartQuantity >= 1000){
-                        throw new Exception400("잘못된 수량 요청입니다. : "+cartQuantity);
+                        throw new Exception400("INVALID_QUANTITY:"+cartQuantity);
                     }
 
-                    int cartPrice = updateDTO.getPrice();
+                    //int cartPrice = updateDTO.getPrice();
                     int cartPriceCheck = cart.getOption().getPrice() * cartQuantity;
 
                     cart.update(cartQuantity, cartPriceCheck);

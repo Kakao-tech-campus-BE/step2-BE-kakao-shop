@@ -17,8 +17,8 @@ public class CartRequest {
         @NonNull
         private int optionId;
 
-        @Min(value = 1, message = "잘못된 수량 요청입니다.")
-        @Max(value = 1000, message = "잘못된 수량 요청입니다.")
+        @Min(value = 1, message = "INVALID_QUANTITY")
+        @Max(value = 1000, message = "INVALID_QUANTITY")
         @NonNull
         private int quantity;
 
@@ -36,8 +36,8 @@ public class CartRequest {
         @NonNull
         private int cartId;
 
-        @Min(value = 1, message = "잘못된 수량 요청입니다.")
-        @Max(value = 1000, message = "잘못된 수량 요청입니다.")
+        @Min(value = 1, message = "INVALID_QUANTITY")
+        @Max(value = 1000, message = "INVALID_QUANTITY")
         @NonNull
         private int quantity;
 

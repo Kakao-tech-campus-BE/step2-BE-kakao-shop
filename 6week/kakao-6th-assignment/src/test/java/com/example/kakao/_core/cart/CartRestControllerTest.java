@@ -100,7 +100,7 @@ public class CartRestControllerTest extends MyRestDoc {
         resultActions.andExpect(status().is4xxClientError())
                 .andExpect(jsonPath("$.success").value(false))
                 .andExpect(jsonPath("$.response").isEmpty())
-                .andExpect(jsonPath("$.error.message").value("인증되지 않았습니다"));
+                .andExpect(jsonPath("$.error.message").value("UNAUTHENTICATED_USER"));
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
 
     }
@@ -134,7 +134,7 @@ public class CartRestControllerTest extends MyRestDoc {
         resultActions.andExpect(status().is4xxClientError())
                 .andExpect(jsonPath("$.success").value(false))
                 .andExpect(jsonPath("$.response").isEmpty())
-                .andExpect(jsonPath("$.error.message").value("잘못된 수량 요청입니다. : 0"));
+                .andExpect(jsonPath("$.error.message").value("INVALID_QUANTITY:"+item.getQuantity()));
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
 
     }
@@ -174,7 +174,7 @@ public class CartRestControllerTest extends MyRestDoc {
         resultActions.andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.success").value(false))
                 .andExpect(jsonPath("$.response").isEmpty())
-                .andExpect(jsonPath("$.error.message").value("중복된 옵션 요청입니다. : "+ 1));
+                .andExpect(jsonPath("$.error.message").value("SAME_OPTION:"+ item2.getOptionId()));
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
 
     }
@@ -276,7 +276,7 @@ public class CartRestControllerTest extends MyRestDoc {
         resultActions.andExpect(status().is4xxClientError())
                 .andExpect(jsonPath("$.success").value(false))
                 .andExpect(jsonPath("$.response").isEmpty())
-                .andExpect(jsonPath("$.error.message").value("잘못된 수량 요청입니다. : 0"));
+                .andExpect(jsonPath("$.error.message").value("INVALID_QUANTITY:"+item.getQuantity()));
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
@@ -312,7 +312,7 @@ public class CartRestControllerTest extends MyRestDoc {
         resultActions.andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.success").value(false))
                 .andExpect(jsonPath("$.response").isEmpty())
-                .andExpect(jsonPath("$.error.message").value("중복된 장바구니 아이디 요청입니다. : "+ 1));
+                .andExpect(jsonPath("$.error.message").value("SAME_CART:"+ item2.getCartId()));
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
 
     }
@@ -345,7 +345,7 @@ public class CartRestControllerTest extends MyRestDoc {
         resultActions.andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.success").value(false))
                 .andExpect(jsonPath("$.response").isEmpty())
-                .andExpect(jsonPath("$.error.message").value("없는 장바구니 아이디 요청입니다. : "+ 10));
+                .andExpect(jsonPath("$.error.message").value("CART_NOT_FOUND:"+item1.getCartId()));
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
