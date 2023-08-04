@@ -489,6 +489,114 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_요청_예시_실패_1">요청 예시 (실패 1)</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "email" : "testmango.nate.com",
+  "password" : "test1234!",
+  "username" : "testmango"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_실패_1">응답 예시 (실패 1)</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "이메일 형식으로 작성해주세요.:email",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_요청_예시_실패_2">요청 예시 (실패 2)</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "email" : "testmango@nate.com",
+  "password" : "test12!",
+  "username" : "testmango"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_실패_2">응답 예시 (실패 2)</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "8에서 20자 이내여야 합니다.:password",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_요청_예시_실패_3">요청 예시 (실패 3)</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "email" : "testmango@nate.com",
+  "password" : "test1234",
+  "username" : "testmango"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_실패_3">응답 예시 (실패 3)</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니다.:password",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_요청_예시_실패_4">요청 예시 (실패 4)</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "email" : "testmango@nate.com",
+  "password" : "test1234!",
+  "username" : "test"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_실패_4">응답 예시 (실패 4)</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "8에서 45자 이내여야 합니다.:username",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_2_로그인">2. 로그인</h3>
@@ -528,6 +636,136 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_요청_예시_실패_1_2">요청 예시 (실패 1)</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "email" : "ssarmango.nate.com",
+  "password" : "meta1234!"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_실패_1_2">응답 예시 (실패 1)</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "이메일 형식으로 작성해주세요.:email",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_요청_예시_실패_2_2">요청 예시 (실패 2)</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "email" : "ssarmango@nate.com",
+  "password" : "meta12!"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_실패_2_2">응답 예시 (실패 2)</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "8에서 20자 이내여야 합니다.:password",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_요청_예시_실패_3_2">요청 예시 (실패 3)</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "email" : "ssarmango@nate.com",
+  "password" : "meta1234"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_실패_3_2">응답 예시 (실패 3)</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니다.:password",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_요청_예시_실패_4_2">요청 예시 (실패 4)</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "email" : "ssarmango12@nate.com",
+  "password" : "meta1234!"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_실패_4_2">응답 예시 (실패 4)</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "이메일을 찾을 수 없습니다.:ssarmango12@nate.com",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_요청_예시_실패_5">요청 예시 (실패 5)</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "email" : "ssarmango@nate.com",
+  "password" : "meta123456!"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_실패_5">응답 예시 (실패 5)</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "패스워드가 잘못 입력되었습니다.",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_3_이메일_중복_체크">3. 이메일 중복 체크</h3>
@@ -562,6 +800,56 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
   "success" : true,
   "response" : null,
   "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_요청_예시_실패_1_3">요청 예시 (실패 1)</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "email" : "testmango.nate.com"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_실패_1_3">응답 예시 (실패 1)</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "이메일 형식으로 작성해주세요.:email",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_요청_예시_실패_2_3">요청 예시 (실패 2)</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "email" : "ssarmango@nate.com"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_실패_2_3">응답 예시 (실패 2)</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "동일한 이메일이 존재합니다.:ssarmango@nate.com",
+    "status" : 400
+  }
 }</code></pre>
 </div>
 </div>
@@ -712,6 +1000,21 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_응답_예시_실패">응답 예시 (실패)</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "해당 상품을 찾을 수 없습니다.:10000",
+    "status" : 404
+  }
+}</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -755,6 +1058,61 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
   "success" : true,
   "response" : null,
   "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_요청_예시_실패_1_4">요청 예시 (실패 1)</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>[ {
+  "optionId" : 1,
+  "quantity" : 3
+}, {
+  "optionId" : 1,
+  "quantity" : 5
+} ]</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_실패_1_4">응답 예시 (실패 1)</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "중복되는 옵션이 존재합니다.:1",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_요청_예시_실패_2_4">요청 예시 (실패 2)</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>[ {
+  "optionId" : 10000,
+  "quantity" : 5
+} ]</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_실패_2_4">응답 예시 (실패 2)</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "해당 옵션을 찾을 수 없습니다.:10000",
+    "status" : 404
+  }
 }</code></pre>
 </div>
 </div>
@@ -888,6 +1246,84 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_요청_예시_실패_1_5">요청 예시 (실패 1)</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>[ ]</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_실패_1_5">응답 예시 (실패 1)</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "장바구니가 비어있습니다.",
+    "status" : 404
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_요청_예시_실패_2_5">요청 예시 (실패 2)</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>[ {
+  "cartId" : 1,
+  "quantity" : 3
+}, {
+  "cartId" : 1,
+  "quantity" : 5
+} ]</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_실패_2_5">응답 예시 (실패 2)</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "동일한 장바구니 아이디를 주문할 수 없습니다.:1",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_요청_예시_실패_3_3">요청 예시 (실패 3)</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>[ {
+  "cartId" : 10000,
+  "quantity" : 5
+} ]</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_실패_3_3">응답 예시 (실패 3)</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "장바구니에 없는 상품은 주문할 수 없습니다.:10000",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -946,6 +1382,21 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_응답_예시_실패_6">응답 예시 (실패)</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "장바구니가 비어있습니다.",
+    "status" : 404
+  }
+}</code></pre>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_10_주문_결과_확인">10. 주문 결과 확인</h3>
@@ -999,6 +1450,21 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_응답_예시_실패_7">응답 예시 (실패)</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "해당 주문을 찾을 수 없습니다.:10000",
+    "status" : 404
+  }
+}</code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -1006,7 +1472,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2023-08-04 23:39:37 +0900
+Last updated 2023-08-05 01:11:31 +0900
 </div>
 </div>
 </body>
