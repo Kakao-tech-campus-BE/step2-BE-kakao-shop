@@ -1,5 +1,6 @@
 package com.example.kakao.order;
 
+import com.example.kakao._core.errors.exception.Exception401;
 import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao.cart.Cart;
 import com.example.kakao.cart.CartJPARepository;
@@ -52,11 +53,15 @@ public class OrderService {
     }
 
     @Transactional
-    public OrderResponse.FindByIdDTO findById(int id) {
+    public OrderResponse.FindByIdDTO findById(int id, int userId) {
 
         Order order = orderJPARepository.findById(id).orElseThrow(
                 () -> new Exception404("해당 주문을 찾을 수 없습니다 : "+id)
         );
+
+        if (order.getUser().getId() != userId) {
+            throw new Exception401("해당 주문을 조회할 권한이 없습니다 : "+id);
+        }
 
         List<Item> itemList = itemJPARepository.findAllByOrderId(id);
         return new OrderResponse.FindByIdDTO(order, itemList);
