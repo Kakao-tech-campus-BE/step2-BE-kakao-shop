@@ -1,5 +1,6 @@
 package com.example.kakao.order;
 
+import com.example.kakao._core.errors.exception.Exception400;
 import com.example.kakao._core.errors.exception.Exception404;
 import com.example.kakao.cart.Cart;
 import com.example.kakao.cart.CartJPARepository;
@@ -40,20 +41,15 @@ public class OrderService {
 
         //카트초기화
         cartJPARepository.deleteByUserId(sessionUser.getId());
-        return new OrderResponse.saveDTO(itemList);
+        return new OrderResponse.saveDTO(order, itemList);
     }
 
     @Transactional
-    public OrderResponse.FindDTO findById(int id)
+    public OrderResponse.saveDTO findById(int id)
     {
-        Optional<Order> order = orderJPARepository.findById(id);
-
-        if(order.isEmpty())
-        {
-            throw new Exception404("해당 주문을 찾을 수 없습니다 : "+id);
-        }
+        Order order = orderJPARepository.findById(id).orElseThrow(() -> new Exception404("존재하지않는 orderId 입니다"));
 
         List<Item> itemList = itemJPARepository.findAllByOrderId(id);
-        return new OrderResponse.FindDTO(itemList);
+        return new OrderResponse.saveDTO(order, itemList);
     }
 }

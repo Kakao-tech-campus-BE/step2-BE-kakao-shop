@@ -1,15 +1,11 @@
 server:
-  servlet:
-    encoding:
-      charset: utf-8
-      force: true
-  port: 5000
+  port: 8000
 spring:
   datasource:
-    url: jdbc:mariadb://localhost:3306/kakao?allowPublicKeyRetrieval=true&useSSL=false
+    url: ${DATABASE_URL}?allowPublicKeyRetrieval=true&useSSL=false
     driver-class-name: org.mariadb.jdbc.Driver
     username: root
-    password: root1234
+    password: root
   jpa:
     hibernate:
       ddl-auto: validate
