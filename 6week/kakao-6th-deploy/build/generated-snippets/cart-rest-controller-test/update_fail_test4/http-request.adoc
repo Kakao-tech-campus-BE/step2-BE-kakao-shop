@@ -1,0 +1,18 @@
+[source,http,options="nowrap"]
+----
+POST /carts/update HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 125
+Host: localhost:8080
+
+[ {
+  "cartId" : 1,
+  "quantity" : 0
+}, {
+  "cartId" : 2,
+  "quantity" : 0
+}, {
+  "cartId" : 3,
+  "quantity" : 0
+} ]
+----

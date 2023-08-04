@@ -1,0 +1,11 @@
+[source,options="nowrap"]
+----
+{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "장바구니에 없는 상품은 주문할 수 없습니다 : 4",
+    "status" : 400
+  }
+}
+----

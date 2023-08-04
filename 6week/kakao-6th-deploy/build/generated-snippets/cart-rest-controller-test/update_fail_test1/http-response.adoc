@@ -1,0 +1,15 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 404 Not Found
+Content-Type: application/json;charset=UTF-8
+Content-Length: 154
+
+{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "주문할 장바구니 상품이 없습니다",
+    "status" : 404
+  }
+}
+----

@@ -1,0 +1,14 @@
+[source,bash]
+----
+$ echo '[ {
+  "cartId" : 1,
+  "quantity" : 0
+}, {
+  "cartId" : 2,
+  "quantity" : 0
+}, {
+  "cartId" : 3,
+  "quantity" : 0
+} ]' | http POST 'http://localhost:8080/carts/update' \
+    'Content-Type:application/json;charset=UTF-8'
+----
