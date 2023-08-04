@@ -32,6 +32,10 @@ public class CartService {
             int optionId = requestDTO.getOptionId();
             int quantity = requestDTO.getQuantity();
 
+            if (quantity<=0) {
+                throw new Exception400("수량은 0 또는 음수가 될 수 없습니다. ");
+            }
+
             // 이미 장바구니에 똑같은 상품 존재하면, 해당 개수만큼 증가
             Cart cart = cartJPARepository.findByOptionIdAndUserId(optionId, sessionUser.getId()).orElse(null);
 
@@ -81,7 +85,7 @@ public class CartService {
             int cartId = requestDTO.getCartId();
             int quantity = requestDTO.getQuantity();
             if (quantity<=0) {
-                throw new Exception400("0 또는 음수 수량이 들어왔습니다. ");
+                throw new Exception400("수량은 0 또는 음수가 될 수 없습니다. ");
             }
 
             Cart cart = cartList.stream()
