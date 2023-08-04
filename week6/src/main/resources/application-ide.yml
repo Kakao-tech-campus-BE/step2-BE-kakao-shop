@@ -4,7 +4,11 @@ server:
       charset: utf-8
       force: true
   port: 8080
+  forward-headers-strategy: framework
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   datasource:
     url: jdbc:mariadb://localhost:3306/kakao?allowPublicKeyRetrieval=true&useSSL=false
     driver-class-name: org.mariadb.jdbc.Driver
@@ -28,3 +32,9 @@ logging:
 
 file:
   path: ./images/
+springdoc:
+  packages-to-scan: com.example.kakao
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+  swagger-ui:
+    path: /docs/api-docs

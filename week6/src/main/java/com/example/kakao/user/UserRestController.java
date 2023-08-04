@@ -2,6 +2,7 @@ package com.example.kakao.user;
 
 import com.example.kakao._core.security.JWTProvider;
 import com.example.kakao._core.utils.ApiUtils;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+@Tag(name = "사용자 API")
 @RequiredArgsConstructor
 @RestController
 public class UserRestController {

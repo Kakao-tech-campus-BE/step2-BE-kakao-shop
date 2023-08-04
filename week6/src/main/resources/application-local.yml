@@ -5,6 +5,9 @@ server:
       force: true
   port: 8080
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   datasource:
     url: jdbc:h2:mem:test;MODE=MySQL
     driver-class-name: org.h2.Driver
@@ -22,11 +25,16 @@ spring:
         format_sql: true
       default_batch_fetch_size: 100
     open-in-view: false
-
 logging:
   level:
     '[com.example.kakao]': DEBUG
     '[org.hibernate.type]': TRACE
-
 file:
   path: ./images/
+
+springdoc:
+  packages-to-scan: com.example.kakao
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+  swagger-ui:
+    path: /docs/api-docs

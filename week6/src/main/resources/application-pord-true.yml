@@ -4,11 +4,7 @@ server:
       charset: utf-8
       force: true
   port: 8080
-  forward-headers-strategy: framework
 spring:
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher
   datasource:
     url: ${DATABASE_URL}?allowPublicKeyRetrieval=true&useSSL=false
     driver-class-name: org.mariadb.jdbc.Driver
@@ -25,14 +21,8 @@ spring:
 
 logging:
   level:
-    '[com.example.kakao]': DEBUG
+    '[com.example.kakao]': INFO
     '[org.hibernate.type]': TRACE
 
 file:
   path: ./images/
-springdoc:
-  packages-to-scan: com.example.kakao
-  default-consumes-media-type: application/json;charset=UTF-8
-  default-produces-media-type: application/json;charset=UTF-8
-  swagger-ui:
-    path: /docs/api-docs

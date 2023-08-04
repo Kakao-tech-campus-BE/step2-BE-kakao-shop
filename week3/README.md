@@ -1,18 +1,23 @@
 # 🐥 카카오테크캠퍼스 - 2단계 3주차 과제 구현
 
 ## 측정 지표
+
 - 레퍼지터리 단위 테스트 구현
 - 테스트 메서드의 격리성이 보장 되었는가
 - 테스트 코드 쿼리 관련 메서드가 너무 많은 Select를 유발하지 않는가
 
 ### 과제 목적
+
 - 핵심은 내가 JPA 테스트를 통해 원하는 데이터를 얻어낼 수 있는가!!
 - 그 데이터를 얻기 위해 너무 많은 select가 유발되지 않았는가?
 - 테스트를 통해 JPA를 좀 더 잘 이해하는 것이다.
+
 # 과제 상세 코드
+
 ## Product
 
 ### 전체 상품 목록 조회
+
 ```java
 @Test
  public void product_findAll_test() throws JsonProcessingException {
@@ -38,7 +43,9 @@
 	  Assertions.assertThat(productPG.getContent().get(0).getPrice()).isEqualTo(1000);
  }
 ```
+
 ### 개별 상품 상세 조회
+
 ```java
 	@Test
     public void option_mFindByProductId_lazy_test() throws JsonProcessingException {
@@ -60,7 +67,9 @@
         Assertions.assertThat(optionListPS.get(0).getPrice()).isEqualTo(10000);
     }
 ```
+
 ## Cart
+
 ### 장바구니 담기
 
 ```java
@@ -99,6 +108,7 @@
 	  };
  }
 ```
+
 ### 장바구니 조회
 
 ```java
@@ -132,7 +142,9 @@
 	  Assertions.assertThat(cartDtoList.get(2).getOption().getOptionName()).isEqualTo("JR310BT (무선 전용) - 그린");
  }
 ```
+
 #### carttDto
+
 ```java
 public class CartDTO {
     private int id;
@@ -193,6 +205,7 @@ public class CartDTO {
 ```
 
 ### 장바구니 수정
+
 ```java
 @Test
  public void update() {
@@ -212,8 +225,11 @@ public class CartDTO {
 	  Assertions.assertThat(cart.getPrice()).isEqualTo(cart.getOption().getPrice() * quantity);
  }
 ```
+
 ## Order
+
 ### 주문하기
+
 ```java
 @Test
  public void save(){
@@ -239,7 +255,9 @@ public class CartDTO {
 
  }
 ```
+
 ### 주문 조회하기
+
 ```java
 @Test
  public void findById(){

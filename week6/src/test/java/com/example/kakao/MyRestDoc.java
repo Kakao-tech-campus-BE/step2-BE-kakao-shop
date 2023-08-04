@@ -20,15 +20,12 @@ public class MyRestDoc {
     protected MockMvc mvc;
     protected RestDocumentationResultHandler document;
 
-
     @BeforeEach
     private void setup(WebApplicationContext webApplicationContext,
                        RestDocumentationContextProvider restDocumentation) {
         this.document = MockMvcRestDocumentation.document("{class-name}/{method-name}",
                 Preprocessors.preprocessRequest(Preprocessors.prettyPrint()),
-                Preprocessors.preprocessResponse(Preprocessors.prettyPrint())
-
-        );
+                Preprocessors.preprocessResponse(Preprocessors.prettyPrint()));
 
         mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
                 .addFilter(new CharacterEncodingFilter(StandardCharsets.UTF_8.name(), true))

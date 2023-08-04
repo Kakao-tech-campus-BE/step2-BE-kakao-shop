@@ -4,16 +4,16 @@ Berom <gobeumsu@gmail.com>
 :toc: left
 :toclevels: 2
 
+
+
+:user: user-rest-controller-test
+:product: product-rest-controller-test
+:cart: cart-rest-controller-test
+:order: order-rest-controller-test
+
 ifndef::snippets[]
 :snippets: build/generated-snippets
 endif::[]
-
-:cart: cart-rest-controller-test
-
-:order: order-rest-controller-test
-
-:user: user-rest-controller-test
-
 == 사용자
 
 === 회원 가입
@@ -68,7 +68,7 @@ include::{snippets}/{user}/join_test_wrong_password/http-request.adoc[]
 
 include::{snippets}/{user}/join_test_wrong_password/response-body.adoc[]
 
-    === 로그인
+=== 로그인
 
 ==== 로그인
 
