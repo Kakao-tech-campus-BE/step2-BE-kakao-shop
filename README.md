@@ -407,14 +407,53 @@ GlobalValidationHandler에서 요청된 데이터 유효성 검사를 위해 Pos
 >- API 문서에 실패 예시가 작성되었는가?
 </br>
 
-## **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
-**1. PR 제목과 내용을 아래와 같이 작성 해주세요.**
+## **과제 수행 내용**
 
->- PR 제목 : 부산대BE_라이언_6주차 과제
+### 통합 테스트
+**ProductRestControllerTest**  
+- findAll_test_1 : 상품 전체 조회 성공 테스트 
+- findAll_test_2 : 매개변수를 이용한 상품 전체 조회 성공 테스트 
+- findById_test : 상품 상세 조회 성공 테스트 
+- findById_fail_test : 상품 상세 조회 실패 테스트 (존재하지 않는 상품)
 
-</br>
+**UserRestControllerTest**  
+- email_check_test : 이메일 중복 체크 성공 테스트 
+- email_check_fail_test_1 : 이메일 중복 체크 실패 테스트 (이미 존재하는 이메일)
+- email_check_fail_test_2 : 이메일 중복 체크 실패 테스트 (올바르지 않은 이메일 형식) 
+- join_test : 회원가입 성공 테스트 
+- join_fail_test_1 : 회원가입 실패 테스트 (이미 존재하는 이메일) 
+- join_fail_test_2 : 회원가입 실패 테스트 (올바르지 않은 이메일 형식)
+- join_fail_test_3 : 회원가입 실패 테스트 (올바르지 않은 사용자 이름 길이)
+- join_fail_test_4 : 회원가입 실패 테스트 (올바르지 않은 비밀번호 길이)
+- join_fail_test_5 : 회원가입 실패 테스트 (올바르지 않은 비밀번호 형식)
+- login_test : 로그인 성공 테스트 
+- login_fail_test_1 : 로그인 실패 테스트 (존재하지 않는 이메일)
+- login_fail_test_2 : 로그인 실패 테스트 (올바르지 않은 이메일 형식)
+- login_fail_test_3 : 로그인 실패 테스트 (틀린 비밀번호)
+- login_fail_test_4 : 로그인 실패 테스트 (올바르지 않은 비밀번호 길이)
+- login_fail_test_5 : 로그인 실패 테스트 (올바르지 않은 비밀번호 형식)
 
-**2. PR 내용 :**
+ **CartRestControlletrest**  
+- addCartList_test : 장바구니 추가 성공 테스트 
+- addCartList_fail_test_1 : 장바구니 추가 실패 테스트 (중복된 옵션 요청)
+- addCartList_fail_test_2 : 장바구니 추가 실패 테스트 (존재하지 않는 옵션 요청)
+- addCartList_fail_test_3 : 장바구니 추가 실패 테스트 (잘못된 수량 요청)
+- findAll_test : 장바구니 조회 성공 테스트 
+- update_test : 장바구니 업데이트 성공 테스트 
+- update_fail_test_1 : 장바구니 업데이트 실패 테스트 (빈 장바구니)
+- update_fail_test_2 : 장바구니 업데이트 실패 테스트 (중복된 옵션 요청)
+- update_fail_test_3 : 장바구니 업데이트 실패 테스트 (잘못된 수량 요청)
+- update_fail_test_4 : 장바구니 업데이트 실패 테스트 (존재하지 않는 장바구니 요청)
+ 
+ **OrderRestControllerTest**
+ - save_test : 주문 저장 성공 테스트 
+ - save_fail_test : 주문 저장 실패 테스트 (빈 장바구니) 
+ - findById_test : 주문 조회 성공 테스트 
+ - findById_fail_test_1 : 주문 조회 실패 테스트 (존재하지 않는 주문)
+ - findById_fail_test_2 : 주문 조회 실패 테스트 (권한 없는 조회)
 
->- 코드 작성하면서 어려웠던 점
->- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
+### API 문서
+url: https://user-app.krampoline.com/k2ce265cc9e62a/api/docs/api-docs.html
+
+### 클라우드 배포
+url: https://user-app.krampoline.com/k2ce265cc9e62a
