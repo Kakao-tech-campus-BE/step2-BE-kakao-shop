@@ -1,0 +1,308 @@
+= 카카오 쇼핑하기 RestAPI
+Eunjin Choi <cgoya01@naver.com>
+
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+:user: user-rest-controller-test
+:product: product-rest-controller-test
+:cart: cart-rest-controller-test
+:order: order-rest-controller-test
+
+:toc: left
+:toclevels: 2
+:source-highlighter: highlightjs
+
+== 사용자
+
+=== [이메일 중복 확인]
+
+==== 이메일 중복 확인 성공
+
+===== 요청 예시
+include::{snippets}/{user}/same-check-email_test/http-request.adoc[]
+
+===== 응답 예시
+include::{snippets}/{user}/same-check-email_test/response-body.adoc[]
+
+==== 이메일 Pattern Validation 실패
+
+===== 요청 예시
+include::{snippets}/{user}/same-check-email_email-pattern-validation-fail_test/http-request.adoc[]
+
+===== 응답 예시
+include::{snippets}/{user}/same-check-email_email-pattern-validation-fail_test/response-body.adoc[]
+
+==== 이미 가입된 이메일이면 실패
+
+===== 요청 예시
+include::{snippets}/{user}/same-check-email_is-present_test/http-request.adoc[]
+
+===== 응답 예시
+include::{snippets}/{user}/same-check-email_is-present_test/response-body.adoc[]
+
+=== [회원가입]
+
+==== 회원가입 성공
+
+===== 요청 예시
+include::{snippets}/{user}/join_test/http-request.adoc[]
+
+===== 응답 예시
+include::{snippets}/{user}/join_test/response-body.adoc[]
+
+==== 이메일 Pattern Validation 실패
+
+===== 요청 예시
+include::{snippets}/{user}/join_email-pattern-validation-fail_test/http-request.adoc[]
+
+===== 응답 예시
+include::{snippets}/{user}/join_email-pattern-validation-fail_test/response-body.adoc[]
+
+==== 비밀번호 Size Validation 실패
+
+===== 요청 예시
+include::{snippets}/{user}/join_password-size-validation-fail_test/http-request.adoc[]
+
+===== 응답 예시
+include::{snippets}/{user}/join_password-size-validation-fail_test/response-body.adoc[]
+
+==== 비밀번호 Pattern Validation 실패
+
+===== 요청 예시
+include::{snippets}/{user}/join_password-pattern-validation-fail_test/http-request.adoc[]
+
+===== 응답 예시
+include::{snippets}/{user}/join_password-pattern-validation-fail_test/response-body.adoc[]
+
+==== 이름 Size Validation 실패
+
+===== 요청 예시
+include::{snippets}/{user}/join_username-size-validation-fail_test/http-request.adoc[]
+
+===== 응답 예시
+include::{snippets}/{user}/join_username-size-validation-fail_test/response-body.adoc[]
+
+==== 이미 가입된 이메일이면 실패
+
+===== 요청 예시
+include::{snippets}/{user}/join_is-present_test/http-request.adoc[]
+
+===== 응답 예시
+include::{snippets}/{user}/join_is-present_test/response-body.adoc[]
+
+=== [로그인]
+
+==== 로그인 성공
+
+===== 요청 예시
+include::{snippets}/{user}/login_test/http-request.adoc[]
+
+===== 응답 예시
+include::{snippets}/{user}/login_test/response-body.adoc[]
+
+==== 이메일 Pattern Validation 실패
+
+===== 요청 예시
+include::{snippets}/{user}/login_email-pattern-validation-fail_test/http-request.adoc[]
+
+===== 응답 예시
+include::{snippets}/{user}/login_email-pattern-validation-fail_test/response-body.adoc[]
+
+==== 비밀번호 Size Validation 실패
+
+===== 요청 예시
+include::{snippets}/{user}/login_password-size-validation-fail_test/http-request.adoc[]
+
+===== 응답 예시
+include::{snippets}/{user}/login_password-size-validation-fail_test/response-body.adoc[]
+
+==== 비밀번호 Pattern Validation 실패
+
+===== 요청 예시
+include::{snippets}/{user}/login_password-pattern-validation-fail_test/http-request.adoc[]
+
+===== 응답 예시
+include::{snippets}/{user}/login_password-pattern-validation-fail_test/response-body.adoc[]
+
+
+==== 존재하지 않는 이메일이면 실패
+
+===== 요청 예시
+include::{snippets}/{user}/login_not-found_test/http-request.adoc[]
+
+===== 응답 예시
+include::{snippets}/{user}/login_not-found_test/response-body.adoc[]
+
+==== 비밀번호가 일치하지 않으면 실패
+
+===== 요청 예시
+include::{snippets}/{user}/login_not-match_test/http-request.adoc[]
+
+===== 응답 예시
+include::{snippets}/{user}/login_not-match_test/response-body.adoc[]
+
+== 상품
+
+=== [상품 전체 조회]
+
+==== 상품 전체 조회 성공
+* param : page={number}
+* param의 디폴트 값은 0이다.
+
+===== 요청 예시
+include::{snippets}/{product}/find-all_test/http-request.adoc[]
+
+===== 응답 예시
+include::{snippets}/{product}/find-all_test/response-body.adoc[]
+
+=== [상품 상세 조회]
+
+==== 상품 상세 조회 성공
+* path variable : 상품아이디
+
+===== 요청 예시
+include::{snippets}/{product}/find-by-id_test/http-request.adoc[]
+
+===== 응답 예시
+include::{snippets}/{product}/find-by-id_test/response-body.adoc[]
+
+==== 유효하지 않은 상품이면 실패
+
+===== 요청 예시
+include::{snippets}/{product}/find-by-id_not-found_test/http-request.adoc[]
+
+===== 응답 예시
+include::{snippets}/{product}/find-by-id_not-found_test/response-body.adoc[]
+
+== 장바구니
+
+=== [장바구니 담기]
+
+==== 장바구니 담기 성공
+
+===== 요청 예시
+include::{snippets}/{cart}/add-cart-list_test/http-request.adoc[]
+
+===== 응답 예시
+include::{snippets}/{cart}/add-cart-list_test/response-body.adoc[]
+
+==== 이미 추가한 옵션이면 수량 수정 성공
+
+===== 요청 예시
+include::{snippets}/{cart}/add-cart-list_quantity-update_test/http-request.adoc[]
+
+===== 응답 예시
+include::{snippets}/{cart}/add-cart-list_quantity-update_test/response-body.adoc[]
+
+==== 동일한 옵션을 요청하면 실패
+
+===== 요청 예시
+include::{snippets}/{cart}/add-cart-list_bad-request_test/http-request.adoc[]
+
+===== 응답 예시
+include::{snippets}/{cart}/add-cart-list_bad-request_test/response-body.adoc[]
+
+==== 유효하지 않은 옵션이면 실패
+
+===== 요청 예시
+include::{snippets}/{cart}/add-cart-list_not-found_test/http-request.adoc[]
+
+===== 응답 예시
+include::{snippets}/{cart}/add-cart-list_not-found_test/response-body.adoc[]
+
+=== [장바구니 조회]
+
+==== 장바구니 조회 성공
+* 장바구니에 상품이 없을 경우, front-end에서 에러처리한다.
+
+===== 요청 예시
+include::{snippets}/{cart}/find-all_test/http-request.adoc[]
+
+===== 응답 예시
+include::{snippets}/{cart}/find-all_test/response-body.adoc[]
+
+=== [장바구니 수정]
+
+==== 장바구니 수정 성공
+* 주문하기를 할 때 장바구니 데이터를 update하고 그 결과를 응답받는다.
+* 결제페이지에서 이 응답을 사용해도 되고, 다시 장바구니 조회 API를 사용해도 된다.
+
+===== 요청 예시
+include::{snippets}/{cart}/update_test/http-request.adoc[]
+
+===== 응답 예시
+include::{snippets}/{cart}/update_test/response-body.adoc[]
+
+==== 동일한 장바구니아이템을 요청하면 실패
+
+===== 요청 예시
+include::{snippets}/{cart}/update_bad-request_test/http-request.adoc[]
+
+===== 응답 예시
+include::{snippets}/{cart}/update_bad-request_test/response-body.adoc[]
+
+==== 장바구니가 비어있으면 실패
+
+===== 요청 예시
+include::{snippets}/{cart}/update_is-empty_test/http-request.adoc[]
+
+===== 응답 예시
+include::{snippets}/{cart}/update_is-empty_test/response-body.adoc[]
+
+==== 유효하지 않은 장바구니아이템이면 실패
+
+===== 요청 예시
+include::{snippets}/{cart}/update_not-found_test/http-request.adoc[]
+
+===== 응답 예시
+include::{snippets}/{cart}/update_not-found_test/response-body.adoc[]
+
+== 주문
+
+=== [주문 저장]
+
+==== 주문 저장 성공
+* 장바구니에 담긴 장바구니아이템을 그대로 주문아이템으로 넘겨와 저장하고, 장바구니는 비워진다.
+
+===== 요청 예시
+include::{snippets}/{order}/save_test/http-request.adoc[]
+
+===== 응답 예시
+include::{snippets}/{order}/save_test/response-body.adoc[]
+
+==== 장바구니가 비어있으면 실패
+
+===== 요청 예시
+include::{snippets}/{order}/save_is-empty_test/http-request.adoc[]
+
+===== 응답 예시
+include::{snippets}/{order}/save_is-empty_test/response-body.adoc[]
+
+=== [주문 조회]
+
+==== 주문 조회 성공
+* path variable : 주문아이디
+
+===== 요청 예시
+include::{snippets}/{order}/find-by-id_test/http-request.adoc[]
+
+===== 응답 예시
+include::{snippets}/{order}/find-by-id_test/response-body.adoc[]
+
+==== 유효하지 않은 주문이면 실패
+
+===== 요청 예시
+include::{snippets}/{order}/find-by-id_not-found_test/http-request.adoc[]
+
+===== 응답 예시
+include::{snippets}/{order}/find-by-id_not-found_test/response-body.adoc[]
+
+==== 해당 유저의 주문이 아니라면 실패
+
+===== 요청 예시
+include::{snippets}/{order}/find-by-id_for-bidden_test/http-request.adoc[]
+
+===== 응답 예시
+include::{snippets}/{order}/find-by-id_for-bidden_test/response-body.adoc[]
