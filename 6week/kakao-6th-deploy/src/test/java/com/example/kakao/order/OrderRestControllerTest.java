@@ -120,7 +120,4 @@ public class OrderRestControllerTest extends MyRestDoc {
         result.andDo(MockMvcResultHandlers.print()).andDo(document);
 
     }
-
-
-
 }

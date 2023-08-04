@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.10">
-<meta name="author" content="Metacoding">
+<meta name="author" content="KimDonWoo">
 <title>카카오 쇼핑하기 RestAPI</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
@@ -441,29 +441,425 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="header">
 <h1>카카오 쇼핑하기 RestAPI</h1>
 <div class="details">
-<span id="author" class="author">Metacoding</span><br>
-<span id="email" class="email"><a href="mailto:getinthere@naver.com">getinthere@naver.com</a></span><br>
+<span id="author" class="author">KimDonWoo</span><br>
+<span id="email" class="email"><a href="mailto:ehstjstod@gmail.com">ehstjstod@gmail.com</a></span><br>
 <span id="revnumber">version 1.0</span>
 </div>
 </div>
 <div id="content">
 <div class="sect1">
+<h2 id="_유저">유저</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_회원가입">회원가입</h3>
+<div class="sect3">
+<h4 id="_요청_예시">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /join HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 95
+Host: localhost:8080
+
+{
+  "email" : "donudonu@nate.com",
+  "password" : "meta1234!",
+  "username" : "ssarmango"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : true,
+  "response" : null,
+  "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_회원가입_실패_by_이메일_형식">회원가입 실패 by 이메일 형식</h3>
+<div class="sect3">
+<h4 id="_요청_예시_2">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /join HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 95
+Host: localhost:8080
+
+{
+  "email" : "ssarmangonate.com",
+  "password" : "meta1234!",
+  "username" : "ssarmango"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_2">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "이메일 형식으로 작성해주세요:email",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_회원가입_실패_by_패스워드_형식">회원가입 실패 by 패스워드 형식</h3>
+<div class="sect3">
+<h4 id="_요청_예시_3">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /join HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 95
+Host: localhost:8080
+
+{
+  "email" : "ssarmango@nate.com",
+  "password" : "metameta",
+  "username" : "ssarmango"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_3">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니다.:password",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_회원가입_실패_by_동일_이메일_존재">회원가입 실패 by 동일 이메일 존재</h3>
+<div class="sect3">
+<h4 id="_요청_예시_4">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /join HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 96
+Host: localhost:8080
+
+{
+  "email" : "ssarmango@nate.com",
+  "password" : "meta1234!",
+  "username" : "ssarmango"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_4">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "동일한 이메일이 존재합니다 : ssarmango@nate.com",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_회원가입_실패_by_패스워드_글자_수">회원가입 실패 by 패스워드 글자 수</h3>
+<div class="sect3">
+<h4 id="_요청_예시_5">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /join HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 93
+Host: localhost:8080
+
+{
+  "email" : "ssarmango@nate.com",
+  "password" : "meta1!",
+  "username" : "ssarmango"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_5">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "8에서 20자 이내여야 합니다.:password",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_이메일_중복_체크">이메일 중복 체크</h3>
+<div class="sect3">
+<h4 id="_요청_예시_6">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /check HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 33
+Host: localhost:8080
+
+{
+  "email" : "donu@nate.com"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_6">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : true,
+  "response" : null,
+  "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_이메일_중복_체크_실패_by_동일_이메일_존재">이메일 중복 체크 실패 by 동일 이메일 존재</h3>
+<div class="sect3">
+<h4 id="_요청_예시_7">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /check HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 38
+Host: localhost:8080
+
+{
+  "email" : "ssarmango@nate.com"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_7">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "동일한 이메일이 존재합니다 : ssarmango@nate.com",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_이메일_중복_체크_by_이메일_형식">이메일 중복 체크 by 이메일 형식</h3>
+<div class="sect3">
+<h4 id="_요청_예시_8">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /check HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 37
+Host: localhost:8080
+
+{
+  "email" : "ssarmangonate.com"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_8">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "이메일 형식으로 작성해주세요:email",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_로그인">로그인</h3>
+<div class="sect3">
+<h4 id="_요청_예시_9">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /login HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 67
+Host: localhost:8080
+
+{
+  "email" : "ssarmango@nate.com",
+  "password" : "meta1234!"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_9">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : true,
+  "response" : null,
+  "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_로그인_실패_by_이메일_형식">로그인 실패 by 이메일 형식</h3>
+<div class="sect3">
+<h4 id="_요청_예시_10">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /login HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 66
+Host: localhost:8080
+
+{
+  "email" : "ssarmangonate.com",
+  "password" : "meta1234!"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_10">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "이메일 형식으로 작성해주세요:email",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_로그인_실패_by_패스워드_형식">로그인 실패 by 패스워드 형식</h3>
+<div class="sect3">
+<h4 id="_요청_예시_11">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /login HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 66
+Host: localhost:8080
+
+{
+  "email" : "ssarmango@nate.com",
+  "password" : "metameta"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_11">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니다.:password",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_로그인_실패_by_패스워드_길이">로그인 실패 by 패스워드 길이</h3>
+<div class="sect3">
+<h4 id="_요청_예시_12">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /login HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 62
+Host: localhost:8080
+
+{
+  "email" : "ssarmango@nate.com",
+  "password" : "me!2"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_12">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "8에서 20자 이내여야 합니다.:password",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_상품">상품</h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="_전체_상품_목록_조회">전체 상품 목록 조회</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>param : page={number}</p>
-</li>
-<li>
-<p>param의 디폴트 값은 0이다.</p>
-</li>
-</ul>
-</div>
 <div class="sect3">
-<h4 id="_요청_예시">요청 예시</h4>
+<h4 id="_요청_예시_13">요청 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /products HTTP/1.1
@@ -472,7 +868,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_응답_예시">응답 예시</h4>
+<h4 id="_응답_예시_13">응답 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code>{
@@ -541,7 +937,7 @@ Host: localhost:8080</code></pre>
 <div class="sect2">
 <h3 id="_개별_상품_상세_조회">개별 상품 상세 조회</h3>
 <div class="sect3">
-<h4 id="_요청_예시_2">요청 예시</h4>
+<h4 id="_요청_예시_14">요청 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /products/1 HTTP/1.1
@@ -550,7 +946,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_응답_예시_2">응답 예시</h4>
+<h4 id="_응답_예시_14">응답 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code>{
@@ -598,7 +994,7 @@ Host: localhost:8080</code></pre>
 <div class="sect2">
 <h3 id="_장바구니_담기">장바구니 담기</h3>
 <div class="sect3">
-<h4 id="_요청_예시_3">요청 예시</h4>
+<h4 id="_요청_예시_15">요청 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /carts/add HTTP/1.1
@@ -614,7 +1010,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect3">
-<h4 id="_응답_예시_3">응답 예시</h4>
+<h4 id="_응답_예시_15">응답 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code>{
@@ -627,9 +1023,46 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect2">
+<h3 id="_장바구니_담기_실패_by_동일_옵션">장바구니 담기 실패 by 동일 옵션</h3>
+<div class="sect3">
+<h4 id="_요청_예시_16">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /carts/add HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 88
+Host: localhost:8080
+
+[ {
+  "optionId" : 3,
+  "quantity" : 5
+}, {
+  "optionId" : 3,
+  "quantity" : 5
+} ]</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_16">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "동일한 옵션이 중복되어 들어왔습니다: 3",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_장바구니_조회">장바구니 조회</h3>
 <div class="sect3">
-<h4 id="_요청_예시_4">요청 예시</h4>
+<h4 id="_요청_예시_17">요청 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /carts HTTP/1.1
@@ -638,7 +1071,7 @@ Host: localhost:8080</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_응답_예시_4">응답 예시</h4>
+<h4 id="_응답_예시_17">응답 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code>{
@@ -701,7 +1134,7 @@ Host: localhost:8080</code></pre>
 </ul>
 </div>
 <div class="sect3">
-<h4 id="_요청_예시_5">요청 예시</h4>
+<h4 id="_요청_예시_18">요청 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /carts/update HTTP/1.1
@@ -717,7 +1150,7 @@ Host: localhost:8080
 </div>
 </div>
 <div class="sect3">
-<h4 id="_응답_예시_5">응답 예시</h4>
+<h4 id="_응답_예시_18">응답 예시</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlight nowrap"><code>{
@@ -750,13 +1183,155 @@ Host: localhost:8080
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_장바구니_수정_실패_by_동일_아이템">장바구니 수정 실패 by 동일 아이템</h3>
+<div class="sect3">
+<h4 id="_요청_예시_19">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /carts/update HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 85
+Host: localhost:8080
+
+[ {
+  "cartId" : 1,
+  "quantity" : 10
+}, {
+  "cartId" : 1,
+  "quantity" : 5
+} ]</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_19">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "동일한 장바구니 아이디를 주문할 수 없습니다1",
+    "status" : 400
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_주문">주문</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_결재하기">결재하기</h3>
+<div class="sect3">
+<h4 id="_요청_예시_20">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /orders/save HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_20">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : true,
+  "response" : {
+    "id" : 2,
+    "products" : [ {
+      "productName" : "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전",
+      "items" : [ {
+        "id" : 4,
+        "optionName" : "01. 슬라이딩 지퍼백 크리스마스에디션 4종",
+        "quantity" : 5,
+        "price" : 50000
+      }, {
+        "id" : 5,
+        "optionName" : "02. 슬라이딩 지퍼백 플라워에디션 5종",
+        "quantity" : 1,
+        "price" : 10900
+      } ]
+    }, {
+      "productName" : "바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종",
+      "items" : [ {
+        "id" : 6,
+        "optionName" : "선택02_바른곡물효소누룽지맛 6박스",
+        "quantity" : 5,
+        "price" : 250000
+      } ]
+    } ],
+    "totalPrice" : 310900
+  },
+  "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_주문_결과_확인">주문 결과 확인</h3>
+<div class="sect3">
+<h4 id="_요청_예시_21">요청 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /orders/1 HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Host: localhost:8080</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_응답_예시_21">응답 예시</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code>{
+  "success" : true,
+  "response" : {
+    "id" : 1,
+    "products" : [ {
+      "productName" : "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전",
+      "items" : [ {
+        "id" : 1,
+        "optionName" : "01. 슬라이딩 지퍼백 크리스마스에디션 4종",
+        "quantity" : 5,
+        "price" : 50000
+      }, {
+        "id" : 2,
+        "optionName" : "02. 슬라이딩 지퍼백 플라워에디션 5종",
+        "quantity" : 1,
+        "price" : 10900
+      } ]
+    }, {
+      "productName" : "바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종",
+      "items" : [ {
+        "id" : 3,
+        "optionName" : "선택02_바른곡물효소누룽지맛 6박스",
+        "quantity" : 5,
+        "price" : 250000
+      } ]
+    } ],
+    "totalPrice" : 310900
+  },
+  "error" : null
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 1.0<br>
-Last updated 2023-07-24 01:15:46 +0900
+Last updated 2023-08-04 17:03:55 +0900
 </div>
 </div>
 </body>
