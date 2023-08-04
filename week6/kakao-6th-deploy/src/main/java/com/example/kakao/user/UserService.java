@@ -26,6 +26,7 @@ public class UserService {
             userJPARepository.save(requestDTO.toEntity());
         } catch (Exception e) {
             throw new Exception500("unknown server error");
+
         }
     }
 
