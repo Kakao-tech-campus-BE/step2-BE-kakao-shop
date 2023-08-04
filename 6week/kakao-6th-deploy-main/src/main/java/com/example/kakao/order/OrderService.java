@@ -29,6 +29,7 @@ public class OrderService {
         if(cartList.isEmpty()){
             throw new Exception404("주문할 수 있는 상품이 없습니다");
         }
+
         Order order = orderJPARepository.save(Order.builder().user(user).build());
         for (Cart cart : cartList){
             Item item = Item.builder()
@@ -51,6 +52,7 @@ public class OrderService {
         if(order.getUser().getId() != user.getId()){
             throw new Exception403("잘못된 주문 번호입니다: " + id);
         }
+
         List<Item> itemList = itemJPARepository.findAllByOrder(id);
         return new OrderResponse.FindByIdDTO(order, itemList);
     }

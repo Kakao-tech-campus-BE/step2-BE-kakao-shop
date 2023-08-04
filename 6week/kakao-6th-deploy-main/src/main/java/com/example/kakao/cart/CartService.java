@@ -40,6 +40,7 @@ public class CartService {
             int quantity = requestDTO.getQuantity();
             Option optionPS = optionJPARepository.findById(optionId)
                     .orElseThrow(() -> new Exception404("해당 옵션을 찾을 수 없습니다 : " + optionId));
+
             cartJPARepository.findByOptionIdAndUserId(optionId, sessionUser.getId())
                     .ifPresentOrElse(
                             c -> updateCart(c, quantity),

@@ -93,9 +93,9 @@ public class FakeStore {
 
     private List<Item> itemDummyList(List<Cart> cartList){
         AtomicInteger counter = new AtomicInteger(1);
-        return cartList.stream().map(
-                cart -> newItem(cart, counter.getAndIncrement())
-        ).collect(Collectors.toList());
+        return cartList.stream()
+                .map(cart -> newItem(cart, counter.getAndIncrement()))
+                .collect(Collectors.toList());
     }
 
     private List<Cart> cartDummyList(List<Option> optionList){
