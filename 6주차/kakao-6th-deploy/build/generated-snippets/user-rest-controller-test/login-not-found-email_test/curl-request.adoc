@@ -1,0 +1,10 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/join' -i -X POST \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -d '{
+  "email" : "whatthe@nate.com",
+  "password" : "12341234!ab@",
+  "username" : null
+}'
+----

@@ -1,0 +1,9 @@
+[source,bash]
+----
+$ echo '{
+  "email" : "yuseon@nate.com",
+  "password" : "12341234!ab@",
+  "username" : "kimyuseon"
+}' | http POST 'http://localhost:8080/join' \
+    'Content-Type:application/json;charset=UTF-8'
+----

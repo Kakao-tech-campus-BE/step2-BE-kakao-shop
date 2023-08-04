@@ -1,0 +1,8 @@
+[source,bash]
+----
+$ echo '{
+  "email" : "ssarmango@nate.com",
+  "password" : "{bcrypt}$2a$10$8H0OT8wgtALJkig6fmypi.Y7jzI5Y7W9PGgRKqnVeS2cLWGifwHF2"
+}' | http POST 'http://localhost:8080/login' \
+    'Content-Type:application/json;charset=UTF-8'
+----
