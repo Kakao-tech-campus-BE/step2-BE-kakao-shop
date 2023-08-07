@@ -1330,10 +1330,10 @@ endif::[]
 
 ## **3. 프론트엔드의 입장을 생각해 본 뒤 어떤 문서를 가장 원할지 생각하면서 API문서를 작성하시오.**
 
-[카카오 크램폴린 링크](https://user-app.krampoline.com/ke756c423dfafa/api/docs/api-docs.html)
+[카카오 크램폴린 링크](https://user-app.krampoline.com/kd478ef512a20a/api/docs/api-docs.html)
 
 </br>
 
 ## **4. 카카오 클라우드에 배포하시오.**
 
-[카카오 크램폴린 링크](https://user-app.krampoline.com/ke756c423dfafa)
+[카카오 크램폴린 링크](https://user-app.krampoline.com/kd478ef512a20a)
