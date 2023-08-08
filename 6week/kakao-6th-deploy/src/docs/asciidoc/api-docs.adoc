@@ -1,0 +1,197 @@
+= 카카오 쇼핑하기 RestAPI
+Chomingi <nstgic3@gmail.com>
+
+[[toc]]
+.목차
+
+- <<product-section,🛍️ Product 상품>>
+- <<cart-section,🛒 Cart 장바구니>>
+- <<order-section,📦 Order 주문>>
+- <<user-section,👤 User 사용자>>
+
+
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+:product: product-rest-controller-test
+:cart: cart-rest-controller-test
+:order: order-rest-controller-test
+:user: user-rest-controller-test
+
+:toc: left
+:toclevels: 2
+:source-highlighter: highlightjs
+
+[[product-section]]
+== 상품
+
+=== 전체 상품 목록 조회
+* param : page={number}
+* param의 디폴트 값은 0이다.
+
+==== 요청 예시
+include::{snippets}/{product}/find-all_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{product}/find-all_test/response-body.adoc[]
+
+=== 개별 상품 상세 조회
+
+==== 요청 예시
+include::{snippets}/{product}/find-by-id_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{product}/find-by-id_test/response-body.adoc[]
+
+
+=== 전체 상품 목록 조회 (페이징)
+
+==== 요청 예시
+include::{snippets}/{product}/find-all_paging_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{product}/find-all_paging_test/response-body.adoc[]
+
+=== 전체 상품 목록 조회 에러 (페이징)
+
+==== 요청 예시
+include::{snippets}/{product}/find-all_paging_error_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{product}/find-all_paging_error_test/response-body.adoc[]
+
+
+=== 개별 상품 상세 조회 v2
+
+==== 요청 예시
+include::{snippets}/{product}/find-by-idv2_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{product}/find-by-idv2_test/response-body.adoc[]
+
+=== 상품 상세 조회 에러
+
+==== 요청 예시
+include::{snippets}/{product}/find-by-id_error_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{product}/find-by-id_error_test/response-body.adoc[]
+
+[[cart-section]]
+== 장바구니
+
+=== 장바구니 추가 오류
+==== 요청 예시
+include::{snippets}/{cart}/add-cart-list_error_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{cart}/add-cart-list_error_test/response-body.adoc[]
+
+=== 장바구니 동일 아이템 추가
+==== 요청 예시
+include::{snippets}/{cart}/add-cart-list_same_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{cart}/add-cart-list_same_test/response-body.adoc[]
+
+=== 장바구니 조회 오류
+==== 요청 예시
+include::{snippets}/{cart}/find-all_error_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{cart}/find-all_error_test/response-body.adoc[]
+
+=== 장바구니 수정 오류
+==== 요청 예시
+include::{snippets}/{cart}/update_error_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{cart}/update_error_test/response-body.adoc[]
+
+[[order-section]]
+== 주문
+
+=== 전체 주문 목록 조회
+==== 요청 예시
+include::{snippets}/{order}/order-all_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{order}/order-all_test/response-body.adoc[]
+
+=== 개별 주문 상세 조회
+==== 요청 예시
+include::{snippets}/{order}/order_find-by-id_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{order}/order_find-by-id_test/response-body.adoc[]
+
+=== 주문 목록 조회 오류
+==== 요청 예시
+include::{snippets}/{order}/order-all_error_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{order}/order-all_error_test/response-body.adoc[]
+
+=== 주문 상세 조회 오류
+==== 요청 예시
+include::{snippets}/{order}/order_find-by-id_error_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{order}/order_find-by-id_error_test/response-body.adoc[]
+
+=== 잘못된 사용자로 주문 상세 조회 오류
+==== 요청 예시
+include::{snippets}/{order}/order_find-by-id_wrong-user_error_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{order}/order_find-by-id_wrong-user_error_test/response-body.adoc[]
+
+[[user-section]]
+== 사용자
+
+=== 이메일 중복 체크
+
+==== 요청 예시
+include::{snippets}/{user}/check_email_same-case_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{user}/check_email_same-case_test/response-body.adoc[]
+
+=== 이메일 유일성 체크
+
+==== 요청 예시
+include::{snippets}/{user}/check_email_unique-case_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{user}/check_email_unique-case_test/response-body.adoc[]
+
+=== 회원가입: 이메일 오류 1
+
+==== 요청 예시
+include::{snippets}/{user}/join_email-error_1_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{user}/join_email-error_1_test/response-body.adoc[]
+
+=== 회원가입: 이메일 오류 2
+==== 요청 예시
+include::{snippets}/{user}/join_email-error2_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{user}/join_email-error2_test/response-body.adoc[]
+
+=== 회원가입: 비밀번호 오류
+==== 요청 예시
+include::{snippets}/{user}/join_password-error_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{user}/join_password-error_test/response-body.adoc[]
+
+=== 회원가입: 유저네임 오류
+==== 요청 예시
+include::{snippets}/{user}/join_username-error_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{user}/join_username-error_test/response-body.adoc[]
+
+=== 회원가입
+==== 요청 예시
+include::{snippets}/{user}/join_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{user}/join_test/response-body.adoc[]
+
+=== 로그인 실패
+==== 요청 예시
+include::{snippets}/{user}/login_fail_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{user}/login_fail_test/response-body.adoc[]
+
+=== 로그인 성공
+==== 요청 예시
+include::{snippets}/{user}/login_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{user}/login_test/response-body.adoc[]
