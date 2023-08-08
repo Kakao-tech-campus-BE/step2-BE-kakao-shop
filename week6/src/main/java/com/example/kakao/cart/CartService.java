@@ -31,16 +31,11 @@ public class CartService {
             int price = option.getPrice() * quantity;
 
             //Exception Handler 처리
-            Cart cart = cartJPARepository.findByOptionIdAndUserId(optionId, sessionUser.getId())
-                    .orElseThrow(
-                            () -> new Exception400("Could not find that option: " + optionId)
-                    );
+            Cart cart = cartJPARepository.findByOptionIdAndUserId(optionId, sessionUser.getId()).orElseThrow(() -> new Exception404("Could not find that option: " + optionId));
             if (cart != null) {
-                cartJPARepository.updateQuantityAndPrice(cart.getId(), cart.getQuantity() + quantity,
-                        cart.getPrice() + price);
+                cartJPARepository.updateQuantityAndPrice(cart.getId(), cart.getQuantity() + quantity, cart.getPrice() + price);
             } else {
-                Cart newCart = Cart.builder().user(sessionUser).option(option).quantity(quantity)
-                        .price(price).build();
+                Cart newCart = Cart.builder().user(sessionUser).option(option).quantity(quantity).price(price).build();
                 cartJPARepository.save(newCart);
             }
         }
@@ -51,21 +46,15 @@ public class CartService {
         for (CartRequest.SaveDTO requestDTO : requestDTOs) {
             int optionId = requestDTO.getOptionId();
             int quantity = requestDTO.getQuantity();
-            optionIdToQuantityMap.put(optionId,
-                    optionIdToQuantityMap.getOrDefault(optionId, 0) + quantity);
+            optionIdToQuantityMap.put(optionId, optionIdToQuantityMap.getOrDefault(optionId, 0) + quantity);
         }
         return optionIdToQuantityMap;
     }
 
     private Option findOption(Integer optionId) {
-        return optionJPARepository.findById(optionId)
-                .orElseThrow(() -> new Exception404("Could not find that option: " + optionId));
+        return optionJPARepository.findById(optionId).orElseThrow(() -> new Exception404("Could not find that option: " + optionId));
     }
 
-    public CartResponse.FindAllDTOv2 findAllv2(User user) {
-        List<Cart> cartList = cartJPARepository.findByUserIdOrderByOptionIdAsc(user.getId());
-        return new CartResponse.FindAllDTOv2(cartList);
-    }
 
     public CartResponse.FindAllDTO findAll(User user) {
         List<Cart> cartList = cartJPARepository.findByUserIdOrderByOptionIdAsc(user.getId());
@@ -83,16 +72,12 @@ public class CartService {
         }
 
         // 2. requestDTOs에 동일한 장바구니 ID가 두 번 입력되면 예외를 처리합니다. 예를 들어, cartId:1, cartId:1과 같은 경우입니다.
-        Set<Integer> cartIdSet = requestDTOs.stream()
-                .map(CartRequest.UpdateDTO::getCartId)
-                .collect(Collectors.toSet());
+        Set<Integer> cartIdSet = requestDTOs.stream().map(CartRequest.UpdateDTO::getCartId).collect(Collectors.toSet());
         if (cartIdSet.size() != requestDTOs.size()) {
             throw new Exception400("동일한 장바구니 ID가 중복 되었습니다.");
         }
         // 3. 사용자의 장바구니에 없는 cartId가 입력되면 예외를 처리합니다.
-        Set<Integer> userCartIdSet = cartList.stream()
-                .map(Cart::getId)
-                .collect(Collectors.toSet());
+        Set<Integer> userCartIdSet = cartList.stream().map(Cart::getId).collect(Collectors.toSet());
         if (!userCartIdSet.containsAll(cartIdSet)) {
             throw new Exception400("장바구니에 없는 ID가 있습니다.");
         }
@@ -100,8 +85,7 @@ public class CartService {
         for (Cart cart : cartList) {
             for (CartRequest.UpdateDTO updateDTO : requestDTOs) {
                 if (cart.getId() == updateDTO.getCartId()) {
-                    cart.update(updateDTO.getQuantity(),
-                            cart.getOption().getPrice() * updateDTO.getQuantity());
+                    cart.update(updateDTO.getQuantity(), cart.getOption().getPrice() * updateDTO.getQuantity());
                 }
             }
         }

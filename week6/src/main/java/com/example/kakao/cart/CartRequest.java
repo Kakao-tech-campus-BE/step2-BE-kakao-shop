@@ -1,9 +1,10 @@
 package com.example.kakao.cart;
 
-import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import javax.validation.constraints.NotNull;
 
 public class CartRequest {
 
@@ -13,10 +14,8 @@ public class CartRequest {
         private int optionId;
         @NotNull
         private int quantity;
-        //private int price;
     }
 
-    //Validation 추가
     @Getter @Setter @ToString
     public static class UpdateDTO {
         @NotNull
