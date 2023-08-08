@@ -92,7 +92,6 @@ public class CartService {
       cartList.remove(cartInRequest); // 응답 Dto 에서 삭제되기 위해
     } else {
       cartInRequest.update(updateDTO.getQuantity(), calcTotalPrice(cartInRequest.getOption(), updateDTO.getQuantity()));
-      // TODO: update 되고있는거 맞냐
     }
   }
 

@@ -53,7 +53,7 @@ public class FindAllResponseDTO {
         this.id = cart.getId();
         this.option = new OptionDTO(cart.getOption());
         this.quantity = cart.getQuantity();
-        this.price = cart.getOption().getPrice() * (long) cart.getQuantity();
+        this.price = cart.getOption().getPrice() * cart.getQuantity();
       }
 
       @Getter

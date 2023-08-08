@@ -23,18 +23,6 @@ public class CartRestController {
 
   private final CartService cartListService;
 
-  /**
-   * [
-   * {
-   * "optionId":1,
-   * "quantity":5
-   * },
-   * {
-   * "optionId":2,
-   * "quantity":5
-   * }
-   * ]
-   */
   // (기능6) 장바구니 담기 POST
   @PostMapping("/add")
   public ResponseEntity<ApiResponse> addCartList(
@@ -53,19 +41,6 @@ public class CartRestController {
     );
   }
 
-
-  /**
-   * [
-   * {
-   * "cartId":1,
-   * "quantity":10
-   * },
-   * {
-   * "cartId":2,
-   * "quantity":10
-   * }
-   * ]
-   */
 // (기능8) 주문하기 - (주문화면에서 장바구니 수정하기)
   @PostMapping("/update")
   public ResponseEntity<ApiResponse> update(
