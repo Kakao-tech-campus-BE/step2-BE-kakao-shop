@@ -1,0 +1,6 @@
+[source,options="nowrap"]
+----
+{
+  "email" : "newuser@nate.com"
+}
+----

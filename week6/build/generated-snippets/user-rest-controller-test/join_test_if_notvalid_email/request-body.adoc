@@ -1,0 +1,8 @@
+[source,options="nowrap"]
+----
+{
+  "email" : "newusernate.com",
+  "password" : "user1234!",
+  "username" : "newusermango"
+}
+----

@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - UserRestControllerTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>UserRestControllerTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.example.kakao.user.html">com.example.kakao.user</a> &gt; UserRestControllerTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">12</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.373s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Method name</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">이메일 중복확인 - 유효하지않은 이메일</td>
+<td class="success">check_notvalid_test()</td>
+<td class="success">0.016s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">이메일 중복확인</td>
+<td class="success">check_test()</td>
+<td class="success">0.013s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">이메일 중복확인 - 중복된 이메일</td>
+<td class="success">check_test_if_duplicated()</td>
+<td class="success">0.011s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">회원가입</td>
+<td class="success">join_test()</td>
+<td class="success">0.094s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">회원가입 - 동일한 이메일 존재</td>
+<td class="success">join_test_if_duplicated_email()</td>
+<td class="success">0.010s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">회원가입 - 유효하지않은 이메일</td>
+<td class="success">join_test_if_notvalid_email()</td>
+<td class="success">0.019s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">회원가입 - 유효하지않은 비밀번호(모든 문자종류 포함X)</td>
+<td class="success">join_test_if_notvalid_pw1()</td>
+<td class="success">0.011s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">회원가입 - 유효하지않은 비밀번호(글자수)</td>
+<td class="success">join_test_if_notvalid_pw2()</td>
+<td class="success">0.011s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">로그인</td>
+<td class="success">login_test()</td>
+<td class="success">0.157s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">로그인 - 유효하지 않은 이메일</td>
+<td class="success">login_test_if_notvalid_email()</td>
+<td class="success">0.009s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">로그인 - 유효하지 않은 비밀번호(문자종류 포함X)</td>
+<td class="success">login_test_if_notvalid_pw()</td>
+<td class="success">0.010s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">로그인 - 유효하지않은 비밀번호(글자수)</td>
+<td class="success">login_test_if_notvalid_pw2()</td>
+<td class="success">0.012s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>2023-08-02 13:50:58.463  INFO 48152 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.example.kakao.user.UserRestControllerTest], using SpringBootContextLoader
+2023-08-02 13:50:58.463  INFO 48152 --- [    Test worker] o.s.t.c.support.AbstractContextLoader    : Could not detect default resource locations for test class [com.example.kakao.user.UserRestControllerTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+2023-08-02 13:50:58.463  INFO 48152 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.kakao.user.UserRestControllerTest]: UserRestControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2023-08-02 13:50:58.466  INFO 48152 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.kakao.KakaoApplication for test class com.example.kakao.user.UserRestControllerTest
+2023-08-02 13:50:58.466  INFO 48152 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener, org.springframework.security.test.context.support.ReactorContextTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+2023-08-02 13:50:58.467  INFO 48152 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@344db28d, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@4420f4d4, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@126320a8, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@4bb05e2a, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@12b0440b, org.springframework.test.context.support.DirtiesContextTestExecutionListener@517594dd, org.springframework.test.context.transaction.TransactionalTestExecutionListener@5a98983b, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@1390cc4c, org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener@3905229, org.springframework.test.context.event.EventPublishingTestExecutionListener@7ebefdfa, org.springframework.security.test.context.support.ReactorContextTestExecutionListener@60f9fb56, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@751eb9a9, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@749ebc39, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@7dc6ce7d, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@52caa9d8, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@521981d9, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@53e780d7]
+2023-08-02 13:50:58.472  INFO 48152 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-02 13:50:58.472  INFO 48152 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-02 13:50:58.473  INFO 48152 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+요청 데이터 : {&quot;email&quot;:&quot;user1@nate.com&quot;,&quot;password&quot;:&quot;user1234!&quot;}
+Hibernate: 
+    select
+        user0_.id as id1_6_,
+        user0_.email as email2_6_,
+        user0_.password as password3_6_,
+        user0_.roles as roles4_6_,
+        user0_.username as username5_6_ 
+    from
+        user_tb user0_ 
+    where
+        user0_.email=?
+2023-08-02 13:50:58.514 TRACE 48152 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [user1@nate.com]
+2023-08-02 13:50:58.514 TRACE 48152 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_6_] : [INTEGER]) - [2]
+2023-08-02 13:50:58.514 TRACE 48152 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([email2_6_] : [VARCHAR]) - [user1@nate.com]
+2023-08-02 13:50:58.514 TRACE 48152 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([password3_6_] : [VARCHAR]) - [{bcrypt}$2a$10$nfm1CxFC6mYT2zivOTJUNedyfMRFImsQKmqw2Tl6llK4mTAl0wq8y]
+2023-08-02 13:50:58.514 TRACE 48152 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([roles4_6_] : [VARCHAR]) - [ROLE_USER]
+2023-08-02 13:50:58.514 TRACE 48152 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([username5_6_] : [VARCHAR]) - [user1mango]
+테스트 : {&quot;success&quot;:true,&quot;response&quot;:null,&quot;error&quot;:null}
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /login
+       Parameters = {}
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Content-Length:&quot;49&quot;]
+             Body = {&quot;email&quot;:&quot;user1@nate.com&quot;,&quot;password&quot;:&quot;user1234!&quot;}
+    Session Attrs = {}
+
+Handler:
+             Type = com.example.kakao.user.UserRestController
+           Method = com.example.kakao.user.UserRestController#login(LoginDTO, Errors)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Authorization:&quot;Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMUBuYXRlLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJpZCI6MiwiZXhwIjoxNjkxMTI0NjU4fQ.ZDaHhvi8L4s7FG00AP8SmS2s2u3q7uKTAbMM6UoC38ulFfWYTOA0xj14XIJrwtLljd-t6Awg3qhPDzPzEOAhhA&quot;, Content-Type:&quot;application/json;charset=UTF-8&quot;]
+     Content type = application/json;charset=UTF-8
+             Body = {&quot;success&quot;:true,&quot;response&quot;:null,&quot;error&quot;:null}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2023-08-02 13:50:58.629  INFO 48152 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-02 13:50:58.629  INFO 48152 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-02 13:50:58.630  INFO 48152 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+요청 데이터 : {&quot;email&quot;:&quot;newusernate.com&quot;,&quot;password&quot;:&quot;user1234!&quot;,&quot;username&quot;:&quot;newusermango&quot;}
+테스트 : {&quot;success&quot;:false,&quot;response&quot;:null,&quot;error&quot;:{&quot;message&quot;:&quot;이메일 형식으로 작성해주세요:email&quot;,&quot;status&quot;:400}}
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /join
+       Parameters = {}
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Content-Length:&quot;76&quot;]
+             Body = {&quot;email&quot;:&quot;newusernate.com&quot;,&quot;password&quot;:&quot;user1234!&quot;,&quot;username&quot;:&quot;newusermango&quot;}
+    Session Attrs = {}
+
+Handler:
+             Type = com.example.kakao.user.UserRestController
+           Method = com.example.kakao.user.UserRestController#join(JoinDTO, Errors)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = com.example.kakao._core.errors.exception.Exception400
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 400
+    Error message = null
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;]
+     Content type = application/json;charset=UTF-8
+             Body = {&quot;success&quot;:false,&quot;response&quot;:null,&quot;error&quot;:{&quot;message&quot;:&quot;이메일 형식으로 작성해주세요:email&quot;,&quot;status&quot;:400}}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2023-08-02 13:50:58.649  INFO 48152 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-02 13:50:58.649  INFO 48152 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-02 13:50:58.650  INFO 48152 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+요청 데이터 : {&quot;email&quot;:&quot;user1@nate.com&quot;,&quot;password&quot;:&quot;user12!&quot;}
+테스트 : {&quot;success&quot;:false,&quot;response&quot;:null,&quot;error&quot;:{&quot;message&quot;:&quot;8에서 20자 이내여야 합니다.:password&quot;,&quot;status&quot;:400}}
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /login
+       Parameters = {}
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Content-Length:&quot;47&quot;]
+             Body = {&quot;email&quot;:&quot;user1@nate.com&quot;,&quot;password&quot;:&quot;user12!&quot;}
+    Session Attrs = {}
+
+Handler:
+             Type = com.example.kakao.user.UserRestController
+           Method = com.example.kakao.user.UserRestController#login(LoginDTO, Errors)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = com.example.kakao._core.errors.exception.Exception400
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 400
+    Error message = null
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;]
+     Content type = application/json;charset=UTF-8
+             Body = {&quot;success&quot;:false,&quot;response&quot;:null,&quot;error&quot;:{&quot;message&quot;:&quot;8에서 20자 이내여야 합니다.:password&quot;,&quot;status&quot;:400}}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2023-08-02 13:50:58.662  INFO 48152 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-02 13:50:58.662  INFO 48152 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-02 13:50:58.662  INFO 48152 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+요청 데이터 : {&quot;email&quot;:&quot;newuser@nate.com&quot;}
+Hibernate: 
+    select
+        user0_.id as id1_6_,
+        user0_.email as email2_6_,
+        user0_.password as password3_6_,
+        user0_.roles as roles4_6_,
+        user0_.username as username5_6_ 
+    from
+        user_tb user0_ 
+    where
+        user0_.email=?
+2023-08-02 13:50:58.665 TRACE 48152 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [newuser@nate.com]
+테스트 : {&quot;success&quot;:true,&quot;response&quot;:null,&quot;error&quot;:null}
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /check
+       Parameters = {}
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Content-Length:&quot;28&quot;]
+             Body = {&quot;email&quot;:&quot;newuser@nate.com&quot;}
+    Session Attrs = {}
+
+Handler:
+             Type = com.example.kakao.user.UserRestController
+           Method = com.example.kakao.user.UserRestController#check(EmailCheckDTO, Errors)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;]
+     Content type = application/json;charset=UTF-8
+             Body = {&quot;success&quot;:true,&quot;response&quot;:null,&quot;error&quot;:null}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2023-08-02 13:50:58.676  INFO 48152 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-02 13:50:58.676  INFO 48152 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-02 13:50:58.676  INFO 48152 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+요청 데이터 : {&quot;email&quot;:&quot;newuser@nate.com&quot;,&quot;password&quot;:&quot;user1234!&quot;,&quot;username&quot;:&quot;newusermango&quot;}
+Hibernate: 
+    select
+        user0_.id as id1_6_,
+        user0_.email as email2_6_,
+        user0_.password as password3_6_,
+        user0_.roles as roles4_6_,
+        user0_.username as username5_6_ 
+    from
+        user_tb user0_ 
+    where
+        user0_.email=?
+2023-08-02 13:50:58.678 TRACE 48152 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [newuser@nate.com]
+Hibernate: 
+    insert 
+    into
+        user_tb
+        (id, email, password, roles, username) 
+    values
+        (default, ?, ?, ?, ?)
+2023-08-02 13:50:58.758 TRACE 48152 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [newuser@nate.com]
+2023-08-02 13:50:58.758 TRACE 48152 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [VARCHAR] - [{bcrypt}$2a$10$6QlV/xvW22mPUQpRkABFseR.TCz5ojB6bZDbGrfMZzpTRV2X.rrm.]
+2023-08-02 13:50:58.758 TRACE 48152 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [VARCHAR] - [ROLE_USER]
+2023-08-02 13:50:58.758 TRACE 48152 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [VARCHAR] - [newusermango]
+테스트 : {&quot;success&quot;:true,&quot;response&quot;:null,&quot;error&quot;:null}
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /join
+       Parameters = {}
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Content-Length:&quot;77&quot;]
+             Body = {&quot;email&quot;:&quot;newuser@nate.com&quot;,&quot;password&quot;:&quot;user1234!&quot;,&quot;username&quot;:&quot;newusermango&quot;}
+    Session Attrs = {}
+
+Handler:
+             Type = com.example.kakao.user.UserRestController
+           Method = com.example.kakao.user.UserRestController#join(JoinDTO, Errors)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;]
+     Content type = application/json;charset=UTF-8
+             Body = {&quot;success&quot;:true,&quot;response&quot;:null,&quot;error&quot;:null}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2023-08-02 13:50:58.774  INFO 48152 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-02 13:50:58.774  INFO 48152 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-02 13:50:58.775  INFO 48152 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+요청 데이터 : {&quot;email&quot;:&quot;newusernate.com&quot;}
+테스트 : {&quot;success&quot;:false,&quot;response&quot;:null,&quot;error&quot;:{&quot;message&quot;:&quot;이메일 형식으로 작성해주세요:email&quot;,&quot;status&quot;:400}}
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /check
+       Parameters = {}
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Content-Length:&quot;27&quot;]
+             Body = {&quot;email&quot;:&quot;newusernate.com&quot;}
+    Session Attrs = {}
+
+Handler:
+             Type = com.example.kakao.user.UserRestController
+           Method = com.example.kakao.user.UserRestController#check(EmailCheckDTO, Errors)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = com.example.kakao._core.errors.exception.Exception400
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 400
+    Error message = null
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;]
+     Content type = application/json;charset=UTF-8
+             Body = {&quot;success&quot;:false,&quot;response&quot;:null,&quot;error&quot;:{&quot;message&quot;:&quot;이메일 형식으로 작성해주세요:email&quot;,&quot;status&quot;:400}}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2023-08-02 13:50:58.786  INFO 48152 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-02 13:50:58.786  INFO 48152 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-02 13:50:58.786  INFO 48152 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+요청 데이터 : {&quot;email&quot;:&quot;newuser@nate.com&quot;,&quot;password&quot;:&quot;user1234&quot;,&quot;username&quot;:&quot;newusermango&quot;}
+테스트 : {&quot;success&quot;:false,&quot;response&quot;:null,&quot;error&quot;:{&quot;message&quot;:&quot;영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니다.:password&quot;,&quot;status&quot;:400}}
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /join
+       Parameters = {}
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Content-Length:&quot;76&quot;]
+             Body = {&quot;email&quot;:&quot;newuser@nate.com&quot;,&quot;password&quot;:&quot;user1234&quot;,&quot;username&quot;:&quot;newusermango&quot;}
+    Session Attrs = {}
+
+Handler:
+             Type = com.example.kakao.user.UserRestController
+           Method = com.example.kakao.user.UserRestController#join(JoinDTO, Errors)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = com.example.kakao._core.errors.exception.Exception400
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 400
+    Error message = null
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;]
+     Content type = application/json;charset=UTF-8
+             Body = {&quot;success&quot;:false,&quot;response&quot;:null,&quot;error&quot;:{&quot;message&quot;:&quot;영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니다.:password&quot;,&quot;status&quot;:400}}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2023-08-02 13:50:58.797  INFO 48152 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-02 13:50:58.797  INFO 48152 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-02 13:50:58.797  INFO 48152 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+요청 데이터 : {&quot;email&quot;:&quot;newuser@nate.com&quot;,&quot;password&quot;:&quot;user12!&quot;,&quot;username&quot;:&quot;newusermango&quot;}
+테스트 : {&quot;success&quot;:false,&quot;response&quot;:null,&quot;error&quot;:{&quot;message&quot;:&quot;8에서 20자 이내여야 합니다.:password&quot;,&quot;status&quot;:400}}
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /join
+       Parameters = {}
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Content-Length:&quot;75&quot;]
+             Body = {&quot;email&quot;:&quot;newuser@nate.com&quot;,&quot;password&quot;:&quot;user12!&quot;,&quot;username&quot;:&quot;newusermango&quot;}
+    Session Attrs = {}
+
+Handler:
+             Type = com.example.kakao.user.UserRestController
+           Method = com.example.kakao.user.UserRestController#join(JoinDTO, Errors)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = com.example.kakao._core.errors.exception.Exception400
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 400
+    Error message = null
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;]
+     Content type = application/json;charset=UTF-8
+             Body = {&quot;success&quot;:false,&quot;response&quot;:null,&quot;error&quot;:{&quot;message&quot;:&quot;8에서 20자 이내여야 합니다.:password&quot;,&quot;status&quot;:400}}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2023-08-02 13:50:58.809  INFO 48152 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-02 13:50:58.809  INFO 48152 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-02 13:50:58.809  INFO 48152 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+요청 데이터 : {&quot;email&quot;:&quot;user1@nate.com&quot;,&quot;password&quot;:&quot;user1234&quot;}
+테스트 : {&quot;success&quot;:false,&quot;response&quot;:null,&quot;error&quot;:{&quot;message&quot;:&quot;영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니다.:password&quot;,&quot;status&quot;:400}}
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /login
+       Parameters = {}
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Content-Length:&quot;48&quot;]
+             Body = {&quot;email&quot;:&quot;user1@nate.com&quot;,&quot;password&quot;:&quot;user1234&quot;}
+    Session Attrs = {}
+
+Handler:
+             Type = com.example.kakao.user.UserRestController
+           Method = com.example.kakao.user.UserRestController#login(LoginDTO, Errors)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = com.example.kakao._core.errors.exception.Exception400
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 400
+    Error message = null
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;]
+     Content type = application/json;charset=UTF-8
+             Body = {&quot;success&quot;:false,&quot;response&quot;:null,&quot;error&quot;:{&quot;message&quot;:&quot;영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없습니다.:password&quot;,&quot;status&quot;:400}}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2023-08-02 13:50:58.819  INFO 48152 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-02 13:50:58.819  INFO 48152 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-02 13:50:58.819  INFO 48152 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+요청 데이터 : {&quot;email&quot;:&quot;user1@nate.com&quot;}
+Hibernate: 
+    select
+        user0_.id as id1_6_,
+        user0_.email as email2_6_,
+        user0_.password as password3_6_,
+        user0_.roles as roles4_6_,
+        user0_.username as username5_6_ 
+    from
+        user_tb user0_ 
+    where
+        user0_.email=?
+2023-08-02 13:50:58.821 TRACE 48152 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [user1@nate.com]
+2023-08-02 13:50:58.821 TRACE 48152 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_6_] : [INTEGER]) - [2]
+2023-08-02 13:50:58.821 TRACE 48152 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([email2_6_] : [VARCHAR]) - [user1@nate.com]
+2023-08-02 13:50:58.821 TRACE 48152 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([password3_6_] : [VARCHAR]) - [{bcrypt}$2a$10$nfm1CxFC6mYT2zivOTJUNedyfMRFImsQKmqw2Tl6llK4mTAl0wq8y]
+2023-08-02 13:50:58.821 TRACE 48152 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([roles4_6_] : [VARCHAR]) - [ROLE_USER]
+2023-08-02 13:50:58.821 TRACE 48152 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([username5_6_] : [VARCHAR]) - [user1mango]
+테스트 : {&quot;success&quot;:false,&quot;response&quot;:null,&quot;error&quot;:{&quot;message&quot;:&quot;동일한 이메일이 존재합니다 : user1@nate.com&quot;,&quot;status&quot;:400}}
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /check
+       Parameters = {}
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Content-Length:&quot;26&quot;]
+             Body = {&quot;email&quot;:&quot;user1@nate.com&quot;}
+    Session Attrs = {}
+
+Handler:
+             Type = com.example.kakao.user.UserRestController
+           Method = com.example.kakao.user.UserRestController#check(EmailCheckDTO, Errors)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = com.example.kakao._core.errors.exception.Exception400
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 400
+    Error message = null
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;]
+     Content type = application/json;charset=UTF-8
+             Body = {&quot;success&quot;:false,&quot;response&quot;:null,&quot;error&quot;:{&quot;message&quot;:&quot;동일한 이메일이 존재합니다 : user1@nate.com&quot;,&quot;status&quot;:400}}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2023-08-02 13:50:58.830  INFO 48152 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-02 13:50:58.830  INFO 48152 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-02 13:50:58.831  INFO 48152 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+요청 데이터 : {&quot;email&quot;:&quot;user1nate.com&quot;,&quot;password&quot;:&quot;user1234!&quot;}
+테스트 : {&quot;success&quot;:false,&quot;response&quot;:null,&quot;error&quot;:{&quot;message&quot;:&quot;이메일 형식으로 작성해주세요:email&quot;,&quot;status&quot;:400}}
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /login
+       Parameters = {}
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Content-Length:&quot;48&quot;]
+             Body = {&quot;email&quot;:&quot;user1nate.com&quot;,&quot;password&quot;:&quot;user1234!&quot;}
+    Session Attrs = {}
+
+Handler:
+             Type = com.example.kakao.user.UserRestController
+           Method = com.example.kakao.user.UserRestController#login(LoginDTO, Errors)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = com.example.kakao._core.errors.exception.Exception400
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 400
+    Error message = null
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;]
+     Content type = application/json;charset=UTF-8
+             Body = {&quot;success&quot;:false,&quot;response&quot;:null,&quot;error&quot;:{&quot;message&quot;:&quot;이메일 형식으로 작성해주세요:email&quot;,&quot;status&quot;:400}}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2023-08-02 13:50:58.840  INFO 48152 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-02 13:50:58.840  INFO 48152 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-02 13:50:58.840  INFO 48152 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+요청 데이터 : {&quot;email&quot;:&quot;user1@nate.com&quot;,&quot;password&quot;:&quot;user1234!&quot;,&quot;username&quot;:&quot;newusermango&quot;}
+Hibernate: 
+    select
+        user0_.id as id1_6_,
+        user0_.email as email2_6_,
+        user0_.password as password3_6_,
+        user0_.roles as roles4_6_,
+        user0_.username as username5_6_ 
+    from
+        user_tb user0_ 
+    where
+        user0_.email=?
+2023-08-02 13:50:58.842 TRACE 48152 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [user1@nate.com]
+2023-08-02 13:50:58.842 TRACE 48152 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_6_] : [INTEGER]) - [2]
+2023-08-02 13:50:58.842 TRACE 48152 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([email2_6_] : [VARCHAR]) - [user1@nate.com]
+2023-08-02 13:50:58.842 TRACE 48152 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([password3_6_] : [VARCHAR]) - [{bcrypt}$2a$10$nfm1CxFC6mYT2zivOTJUNedyfMRFImsQKmqw2Tl6llK4mTAl0wq8y]
+2023-08-02 13:50:58.842 TRACE 48152 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([roles4_6_] : [VARCHAR]) - [ROLE_USER]
+2023-08-02 13:50:58.842 TRACE 48152 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([username5_6_] : [VARCHAR]) - [user1mango]
+테스트 : {&quot;success&quot;:false,&quot;response&quot;:null,&quot;error&quot;:{&quot;message&quot;:&quot;동일한 이메일이 존재합니다 : user1@nate.com&quot;,&quot;status&quot;:400}}
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /join
+       Parameters = {}
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;, Content-Length:&quot;75&quot;]
+             Body = {&quot;email&quot;:&quot;user1@nate.com&quot;,&quot;password&quot;:&quot;user1234!&quot;,&quot;username&quot;:&quot;newusermango&quot;}
+    Session Attrs = {}
+
+Handler:
+             Type = com.example.kakao.user.UserRestController
+           Method = com.example.kakao.user.UserRestController#join(JoinDTO, Errors)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = com.example.kakao._core.errors.exception.Exception400
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 400
+    Error message = null
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;]
+     Content type = application/json;charset=UTF-8
+             Body = {&quot;success&quot;:false,&quot;response&quot;:null,&quot;error&quot;:{&quot;message&quot;:&quot;동일한 이메일이 존재합니다 : user1@nate.com&quot;,&quot;status&quot;:400}}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 7.5.1</a> at 2023. 8. 2. 오후 1:50:59</p>
+</div>
+</div>
+</body>
+</html>

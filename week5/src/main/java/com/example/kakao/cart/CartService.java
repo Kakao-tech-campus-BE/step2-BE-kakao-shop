@@ -36,22 +36,22 @@ public class CartService {
 
             // 2. cartJPARepository.findByOptionIdAndUserId() 조회 -> 존재하면 장바구니에 수량을 추가하는 업데이트를 해야함. (더티체킹하기)
             // Cart {cartId:1, optionId:1, quantity:3, userId:1} -> DTO {optionId:1, quantity:5}
-            Optional<Cart> optional = cartJPARepository.findByOptionIdAndUserId(optionId, sessionUser.getId());
             Option option = optionJPARepository.findById(optionId)
                     .orElseThrow(() -> new Exception400("해당 옵션을 찾을 수 없습니다 : " + optionId));
 
-            if(optional.isPresent()){ //이미 장바구니에 담긴 옵션이라면
-                Cart cart = optional.get();
-                int updateQuantity = cart.getQuantity() +quantity;
-                int price = quantity * option.getPrice();
-                cart.update(updateQuantity, price); //더티체킹 수행
-            }
-            // 3. [2번이 아니라면] 유저의 장바구니에 담기
-            else{
-                int price = option.getPrice() * quantity;
-                Cart cart = Cart.builder().user(sessionUser).option(option).quantity(quantity).price(price).build();
-                cartJPARepository.save(cart);
-            }
+
+            Cart cart = cartJPARepository.findByOptionIdAndUserId(optionId, sessionUser.getId()).orElseGet(
+                    () -> {
+                        //유저의 장바구니에 담기
+                        int price = option.getPrice() * quantity;
+                        Cart cart2 = Cart.builder().user(sessionUser).option(option).quantity(quantity).price(price).build();
+                        return cartJPARepository.save(cart2);
+                    }
+            );
+
+            int updateQuantity = cart.getQuantity() +quantity;
+            int price = quantity * option.getPrice();
+            cart.update(updateQuantity, price); //더티체킹 수행
         }
 
     } //변경감지, 더티체킹, flush, 트랜잭션 종료

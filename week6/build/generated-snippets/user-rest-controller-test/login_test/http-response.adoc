@@ -1,0 +1,13 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 200 OK
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMUBuYXRlLmNvbSIsInJvbGUiOiJST0xFX1VTRVIiLCJpZCI6MiwiZXhwIjoxNjkxMTI0NjU4fQ.ZDaHhvi8L4s7FG00AP8SmS2s2u3q7uKTAbMM6UoC38ulFfWYTOA0xj14XIJrwtLljd-t6Awg3qhPDzPzEOAhhA
+Content-Type: application/json;charset=UTF-8
+Content-Length: 61
+
+{
+  "success" : true,
+  "response" : null,
+  "error" : null
+}
+----

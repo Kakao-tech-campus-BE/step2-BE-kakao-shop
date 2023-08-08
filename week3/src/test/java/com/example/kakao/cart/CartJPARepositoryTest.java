@@ -5,7 +5,6 @@ import com.example.kakao.product.Product;
 import com.example.kakao.product.ProductJPARepository;
 import com.example.kakao.product.option.Option;
 import com.example.kakao.product.option.OptionJPARepository;
-import com.example.kakao.user.User;
 import com.example.kakao.user.UserJPARepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,12 +15,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 
 import javax.persistence.EntityManager;
 import java.util.List;
-import java.util.Optional;
 
 @Import(ObjectMapper.class)
 @DataJpaTest
@@ -62,7 +58,7 @@ public class CartJPARepositoryTest extends DummyEntity {
 
         // when
         //다중 join fetch, select문 총 2번 수행(1번: join fetch, 1번:option의 product 조회)
-        List<Cart> cartPG = cartJPARepository.FindFetchAllWithUserAndOption();
+        List<Cart> cartPG = cartJPARepository.findFetchAllWithUserAndOption();
         String responseBody = om.writeValueAsString(cartPG); //직렬화하여 출력
         System.out.println("테스트 : "+responseBody);
 
@@ -96,7 +92,7 @@ public class CartJPARepositoryTest extends DummyEntity {
     @DisplayName("3.주문하기 (장바구니 수정)")
     public void update_cart_test() throws JsonProcessingException {
         // given
-        Cart cart = cartJPARepository.FindFetchAllWithUserAndOption().get(0);
+        Cart cart = cartJPARepository.findFetchAllWithUserAndOption().get(0);
         int id = cart.getId();
         // when
         // select 쿼리 2번(join fetch 1번+ option의 Product 조회 1번) + update 쿼리 1번

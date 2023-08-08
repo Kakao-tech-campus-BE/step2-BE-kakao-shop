@@ -1,0 +1,15 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+Content-Length: 157
+
+{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "동일한 이메일이 존재합니다 : user1@nate.com",
+    "status" : 400
+  }
+}
+----

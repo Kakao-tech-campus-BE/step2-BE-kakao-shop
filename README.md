@@ -5323,3 +5323,1103 @@ public interface ItemJPARepository extends JpaRepository<Item, Integer> {
 
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
+
+<br/>
+
+## **1. 통합테스트 구현**
+### **ProductRestControllerTest**
+```java
+@AutoConfigureRestDocs(uriScheme = "http", uriHost = "localhost", uriPort = 8080)
+@ActiveProfiles("test") //test profile 사용
+@Sql(value = "classpath:db/teardown.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD) //Test 메서드 실행 전에 Sql 실행
+@AutoConfigureMockMvc //MockMvc 사용
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK) //통합테스트(SF-F-DS(Handler, ExHandler)-C-S-R-PC-DB) 다 뜬다.
+public class ProductRestControllerTest extends MyRestDoc {
+
+    @Test
+    @DisplayName("전체 상품 목록 조회")
+    public void findAll_test() throws Exception {
+        // given teardown.sql
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                get("/products")
+        );
+
+        // eye (눈으로 본다.)
+//        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+//        System.out.println("테스트 : "+responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("true"));
+        resultActions.andExpect(jsonPath("$.response[0].id").value(1));
+        resultActions.andExpect(jsonPath("$.response[0].productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"));
+        resultActions.andExpect(jsonPath("$.response[0].description").value(""));
+        resultActions.andExpect(jsonPath("$.response[0].image").value("/images/1.jpg"));
+        resultActions.andExpect(jsonPath("$.response[0].price").value(1000));
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document); //restDoc
+    }
+
+    @Test
+    @DisplayName("전체 상품 목록 조회 - Param 사용")
+    public void findAll_test_when_using_param() throws Exception {
+        // given teardown.sql
+            Integer page  = 1; //기본 0페이지, 1페이지(id=10)부터 시작
+
+        // when
+        //페이징 확인
+        ResultActions resultActions = mvc.perform(
+                get("/products")
+                        .param("page", page.toString())
+        );
+
+        // eye (눈으로 본다.)
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("true"));
+        resultActions.andExpect(jsonPath("$.response[0].id").value(10));
+        resultActions.andExpect(jsonPath("$.response[0].productName").value("통영 홍 가리비 2kg, 2세트 구매시 1kg 추가증정"));
+        resultActions.andExpect(jsonPath("$.response[0].description").value(""));
+        resultActions.andExpect(jsonPath("$.response[0].image").value("/images/10.jpg"));
+        resultActions.andExpect(jsonPath("$.response[0].price").value(8900));
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document); //restDoc
+    }
+
+    @Test
+    @DisplayName("개별 상품 상세 조회")
+    public void findById_test() throws Exception {
+        // given teardown.sql
+        int id = 1;
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                get("/products/" + id)
+        );
+
+        // console
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("true"));
+        resultActions.andExpect(jsonPath("$.response.id").value(1));
+        resultActions.andExpect(jsonPath("$.response.productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"));
+        resultActions.andExpect(jsonPath("$.response.description").value(""));
+        resultActions.andExpect(jsonPath("$.response.image").value("/images/1.jpg"));
+        resultActions.andExpect(jsonPath("$.response.price").value(1000));
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
+    }
+}
+```
+> 예외 처리 부분도 포함하여 작성
+
+### **CartRestControllerTest**
+```java
+@AutoConfigureRestDocs(uriScheme = "http", uriHost = "localhost", uriPort = 8080)
+@ActiveProfiles("test")
+@Sql(value = "classpath:db/teardown.sql")
+@AutoConfigureMockMvc
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+public class CartRestControllerTest extends MyRestDoc {
+    @Autowired
+    private ObjectMapper om;
+
+    @Autowired
+    private CartJPARepository cartJPARepository;
+
+    @WithUserDetails(value = "ssarmango@nate.com") //시큐리티 인증
+    @DisplayName("장바구니 담기(저장)")
+    @Test
+    public void addCartList_test() throws Exception {
+        // given -> optionId [1,2,16]이 teardown.sql을 통해 들어가 있음
+        List<CartRequest.SaveDTO> requestDTOs = new ArrayList<>();
+        CartRequest.SaveDTO item = new CartRequest.SaveDTO();
+        item.setOptionId(3);
+        item.setQuantity(5);
+        requestDTOs.add(item);
+
+        String requestBody = om.writeValueAsString(requestDTOs);
+        System.out.println("요청 데이터 : " + requestBody);
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/carts/add")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("true"));
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
+    }
+
+    @WithUserDetails(value = "ssarmango@nate.com") //시큐리티 인증
+    @DisplayName("장바구니 담기(저장) 실패 - 중복된 옵션 입력")
+    @Test
+    public void addCartList_test_if_duplicated_option() throws Exception {
+        // given -> optionId [1,2,16]이 teardown.sql을 통해 들어가 있음
+        // [ { optionId:3, quantity:5 }, { optionId:3, quantity:5 } ]
+        List<CartRequest.SaveDTO> requestDTOs = new ArrayList<>();
+        CartRequest.SaveDTO item = new CartRequest.SaveDTO();
+        item.setOptionId(3);
+        item.setQuantity(5);
+        requestDTOs.add(item);
+        //동일한 옵션
+        CartRequest.SaveDTO item2 = new CartRequest.SaveDTO();
+        item2.setOptionId(3);
+        item2.setQuantity(5);
+        requestDTOs.add(item2);
+
+        String requestBody = om.writeValueAsString(requestDTOs);
+        System.out.println("요청 데이터 : " + requestBody);
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/carts/add")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("false"));
+        resultActions.andExpect(status().isBadRequest()); //400번 에러
+
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
+    }
+    @WithUserDetails(value = "ssarmango@nate.com") //시큐리티 인증
+    @DisplayName("장바구니 담기(저장) - 이미 존재하는 옵션 입력(업데이트)")
+    @Test
+    public void addCartList_test_if_existed_option() throws Exception {
+        // given -> optionId [1,2,16]이 teardown.sql을 통해 들어가 있음
+        List<CartRequest.SaveDTO> requestDTOs = new ArrayList<>();
+        CartRequest.SaveDTO item = new CartRequest.SaveDTO();
+        item.setOptionId(1);
+        item.setQuantity(5);
+        requestDTOs.add(item);
+
+        String requestBody = om.writeValueAsString(requestDTOs);
+        System.out.println("요청 데이터 : " + requestBody);
+
+        // when
+        //장바구니 담기
+        ResultActions resultActions = mvc.perform(
+                post("/carts/add")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+        //장바구니 조회
+        ResultActions resultActions2 = mvc.perform(
+                get("/carts")
+        );
+
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("장바구니 담기 : " + responseBody);
+        String responseBody2 = resultActions2.andReturn().getResponse().getContentAsString();
+        System.out.println("장바구니 조회 결과 : " + responseBody2);
+
+        // verify
+        //장바구니 담기
+        resultActions.andExpect(jsonPath("$.success").value("true"));
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
+
+        //장바구니 조회(장바구니 업데이트 결과)
+        resultActions2.andExpect(jsonPath("$.response.products[0].productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"));
+        resultActions2.andExpect(jsonPath("$.response.products[0].carts[0].id").value(1));
+        resultActions2.andExpect(jsonPath("$.response.products[0].carts[0].quantity").value(10)); //5개 더 추가되어 10개
+    }
+
+    @WithUserDetails(value = "ssarmango@nate.com") //UserDetailService의 loadByUsername 실행, email으로 user를 DB 조회
+    @DisplayName("장바구니 조회(전체 조회)")
+    @Test
+    public void findAll_test() throws Exception {
+        // given teardown
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                get("/carts")
+        );
+
+        // eye
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("true"));
+        resultActions.andExpect(jsonPath("$.response.products[0].id").value(1));
+        resultActions.andExpect(jsonPath("$.response.products[0].productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"));
+        resultActions.andExpect(jsonPath("$.response.products[0].carts[0].id").value(1));
+        resultActions.andExpect(jsonPath("$.response.products[0].carts[0].option.id").value(1));
+        resultActions.andExpect(jsonPath("$.response.products[0].carts[0].option.optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"));
+        resultActions.andExpect(jsonPath("$.response.products[0].carts[0].option.price").value(10000));
+        resultActions.andExpect(jsonPath("$.response.products[0].carts[0].quantity").value(5));
+        resultActions.andExpect(jsonPath("$.response.products[0].carts[0].price").value(50000));
+        resultActions.andExpect(jsonPath("$.response.totalPrice").value(310900));
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
+    }
+
+    @WithUserDetails(value = "ssarmango@nate.com")
+    @DisplayName("주문하기(장바구니 수정)")
+    @Test
+    public void update_test() throws Exception {
+        // given -> cartId [1번 5개,2번 1개,3번 5개]가 teardown.sql을 통해 들어가 있음
+        List<CartRequest.UpdateDTO> requestDTOs = new ArrayList<>();
+        CartRequest.UpdateDTO item = new CartRequest.UpdateDTO();
+        item.setCartId(1);
+        item.setQuantity(10);
+        requestDTOs.add(item);
+
+        String requestBody = om.writeValueAsString(requestDTOs);
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/carts/update")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+
+        // eye
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("true"));
+        resultActions.andExpect(jsonPath("$.response.carts[0].cartId").value("1"));
+        resultActions.andExpect(jsonPath("$.response.carts[0].optionId").value("1"));
+        resultActions.andExpect(jsonPath("$.response.carts[0].optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"));
+        resultActions.andExpect(jsonPath("$.response.carts[0].quantity").value(10));
+        resultActions.andExpect(jsonPath("$.response.carts[0].price").value(100000));
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
+    }
+
+    @WithUserDetails(value = "ssarmango@nate.com")
+    @DisplayName("주문하기(장바구니 수정) 실패 - 장바구니가 비었을때")
+    @Test
+    public void update_test_if_cart_empty() throws Exception {
+        // given -> cartId [1번 5개,2번 1개,3번 5개]가 teardown.sql을 통해 들어가 있음
+        //장바구니 비우기
+        cartJPARepository.deleteAll();
+        //dto 생성
+        List<CartRequest.UpdateDTO> requestDTOs = new ArrayList<>();
+        CartRequest.UpdateDTO item = new CartRequest.UpdateDTO();
+        item.setCartId(1);
+        item.setQuantity(10);
+        requestDTOs.add(item);
+
+        String requestBody = om.writeValueAsString(requestDTOs);
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/carts/update")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+
+        // eye
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("false"));
+        resultActions.andExpect(status().isNotFound()); //404번 에러
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
+    }
+
+    @WithUserDetails(value = "ssarmango@nate.com")
+    @DisplayName("주문하기(장바구니 수정) 실패 - 중복된 장바구니 입력")
+    @Test
+    public void update_test_if_duplicated_cart() throws Exception {
+        // given -> cartId [1번 5개,2번 1개,3번 5개]가 teardown.sql을 통해 들어가 있음
+        //dto 생성
+        List<CartRequest.UpdateDTO> requestDTOs = new ArrayList<>();
+        CartRequest.UpdateDTO item = new CartRequest.UpdateDTO();
+        item.setCartId(1);
+        item.setQuantity(10);
+        requestDTOs.add(item);
+        //중복된 장바구니
+        CartRequest.UpdateDTO item2 = new CartRequest.UpdateDTO();
+        item2.setCartId(1);
+        item2.setQuantity(10);
+        requestDTOs.add(item);
+
+        String requestBody = om.writeValueAsString(requestDTOs);
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/carts/update")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+
+        // eye
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("false"));
+        resultActions.andExpect(status().isBadRequest()); //400번 에러
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
+    }
+
+    @WithUserDetails(value = "ssarmango@nate.com")
+    @DisplayName("주문하기(장바구니 수정) 실패 - 존재하지 않은 장바구니 업데이트 시도")
+    @Test
+    public void update_test_if_notexisted_cart() throws Exception {
+        // given -> cartId [1번 5개,2번 1개,3번 5개]가 teardown.sql을 통해 들어가 있음
+        List<CartRequest.UpdateDTO> requestDTOs = new ArrayList<>();
+        CartRequest.UpdateDTO item = new CartRequest.UpdateDTO();
+        item.setCartId(4); //존재하지 않은 cartId
+        item.setQuantity(5);
+        requestDTOs.add(item);
+
+        String requestBody = om.writeValueAsString(requestDTOs);
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/carts/update")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+
+        // eye
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("false"));
+        resultActions.andExpect(status().isNotFound()); //404번 에러
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
+    }
+
+}
+```
+
+### **OrderRestControllerTest**
+```java
+@AutoConfigureRestDocs(uriScheme = "http", uriHost = "localhost", uriPort = 8080)
+@ActiveProfiles("test")
+@Sql(value = "classpath:db/teardown.sql")
+@AutoConfigureMockMvc
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+public class OrderRestControllerTest extends MyRestDoc {
+    @Autowired
+    private ObjectMapper om;
+
+    @WithUserDetails(value = "ssarmango@nate.com") //시큐리티 인증
+    @Test
+    @DisplayName("주문 결과 확인")
+    public void findById_test() throws Exception {
+        // given
+        int id = 1;
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                get("/orders/"+id)
+        );
+
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("true"));
+        resultActions.andExpect(jsonPath("$.response.id").value(1));
+        resultActions.andExpect(jsonPath("$.response.totalPrice").value(310900));
+
+        resultActions.andExpect(jsonPath("$.response.products[0].productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"));
+        resultActions.andExpect(jsonPath("$.response.products[0].items[0].id").value(1));
+        resultActions.andExpect(jsonPath("$.response.products[0].items[0].optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"));
+        resultActions.andExpect(jsonPath("$.response.products[0].items[0].quantity").value(5));
+        resultActions.andExpect(jsonPath("$.response.products[0].items[0].price").value(50000));
+
+        resultActions.andExpect(jsonPath("$.response.products[0].items[1].id").value(2));
+        resultActions.andExpect(jsonPath("$.response.products[0].items[1].optionName").value("02. 슬라이딩 지퍼백 플라워에디션 5종"));
+        resultActions.andExpect(jsonPath("$.response.products[0].items[1].quantity").value(1));
+        resultActions.andExpect(jsonPath("$.response.products[0].items[1].price").value(10900));
+
+        resultActions.andExpect(jsonPath("$.response.products[1].productName").value("바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종"));
+        resultActions.andExpect(jsonPath("$.response.products[1].items[0].id").value(3));
+        resultActions.andExpect(jsonPath("$.response.products[1].items[0].optionName").value("선택02_바른곡물효소누룽지맛 6박스"));
+        resultActions.andExpect(jsonPath("$.response.products[1].items[0].quantity").value(5));
+        resultActions.andExpect(jsonPath("$.response.products[1].items[0].price").value(250000));
+
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document); //api docs
+    }
+
+    @WithUserDetails(value = "ssarmango@nate.com")
+    @Test
+    @DisplayName("결재하기-주문 인서트")
+    public void save_test() throws Exception {
+        // given teardown - cart 담겨져 있음
+
+        // when
+        //결재하기
+        ResultActions resultActions = mvc.perform(
+                post("/orders/save")
+        );
+        //장바구니 조회(주문 후 장바구니 초기화 확인)
+        ResultActions resultActions2 = mvc.perform(
+                get("/carts")
+        );
+
+        // eye
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("응답(결재) : " + responseBody);
+        String responseBody2 = resultActions2.andReturn().getResponse().getContentAsString();
+        System.out.println("응답(장바구니) : " + responseBody2);
+
+        // verify
+        //결재하기 - 주문 인서트
+        resultActions.andExpect(jsonPath("$.success").value("true"));
+        resultActions.andExpect(jsonPath("$.response.id").value(2));
+        resultActions.andExpect(jsonPath("$.response.totalPrice").value(310900));
+
+        resultActions.andExpect(jsonPath("$.response.products[0].productName").value("기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전"));
+        resultActions.andExpect(jsonPath("$.response.products[0].items[0].id").value(4));
+        resultActions.andExpect(jsonPath("$.response.products[0].items[0].optionName").value("01. 슬라이딩 지퍼백 크리스마스에디션 4종"));
+        resultActions.andExpect(jsonPath("$.response.products[0].items[0].quantity").value(5));
+        resultActions.andExpect(jsonPath("$.response.products[0].items[0].price").value(50000));
+
+        resultActions.andExpect(jsonPath("$.response.products[0].items[1].id").value(5));
+        resultActions.andExpect(jsonPath("$.response.products[0].items[1].optionName").value("02. 슬라이딩 지퍼백 플라워에디션 5종"));
+        resultActions.andExpect(jsonPath("$.response.products[0].items[1].quantity").value(1));
+        resultActions.andExpect(jsonPath("$.response.products[0].items[1].price").value(10900));
+
+        resultActions.andExpect(jsonPath("$.response.products[1].productName").value("바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종"));
+        resultActions.andExpect(jsonPath("$.response.products[1].items[0].id").value(6));
+        resultActions.andExpect(jsonPath("$.response.products[1].items[0].optionName").value("선택02_바른곡물효소누룽지맛 6박스"));
+        resultActions.andExpect(jsonPath("$.response.products[1].items[0].quantity").value(5));
+        resultActions.andExpect(jsonPath("$.response.products[1].items[0].price").value(250000));
+
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document); //api docs
+
+        // carts(장바구니)가 초기화 확인
+        resultActions2.andExpect(jsonPath("$.response.products.length()").value(0));
+        resultActions2.andExpect(jsonPath("$.response.totalPrice").value(0));
+
+    }
+
+}
+```
+
+### **UserRestControllerTest**
+```java
+@AutoConfigureRestDocs(uriScheme = "http", uriHost = "localhost", uriPort = 8080)
+@ActiveProfiles("test") //test profile 사용
+@Sql(value = "classpath:db/teardown.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD) //Test 메서드 실행 전에 Sql 실행
+@AutoConfigureMockMvc //MockMvc 사용
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK) //통합테스트(SF-F-DS(Handler, ExHandler)-C-S-R-PC-DB) 다 뜬다.
+public class UserRestControllerTest extends MyRestDoc {
+    @Autowired
+    private ObjectMapper om;
+
+    @Test
+    @DisplayName("로그인")
+    public void login_test() throws Exception {
+        // given teardown.sql - user1 저장되어있음
+        UserRequest.LoginDTO requestDTO = new UserRequest.LoginDTO();
+        requestDTO.setEmail("user1@nate.com");
+        requestDTO.setPassword("user1234!");
+
+        String requestBody = om.writeValueAsString(requestDTO);
+        System.out.println("요청 데이터 : " + requestBody);
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/login")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("true"));
+        resultActions.andExpect(jsonPath("$.response").doesNotExist()); //null인지 확인
+        resultActions.andExpect(jsonPath("$.error").doesNotExist());
+
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document); //restDoc
+    }
+
+    @Test
+    @DisplayName("로그인 - 유효하지 않은 이메일")
+    public void login_test_if_notvalid_email() throws Exception {
+        // given teardown.sql - user1 저장되어있음
+        UserRequest.LoginDTO requestDTO = new UserRequest.LoginDTO();
+        requestDTO.setEmail("user1nate.com"); //@가 없는 이메일
+        requestDTO.setPassword("user1234!");
+
+        String requestBody = om.writeValueAsString(requestDTO);
+        System.out.println("요청 데이터 : " + requestBody);
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/login")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("false"));
+        resultActions.andExpect(status().isBadRequest()); //400번 에러-유효성 검사 에러(@Valid)
+
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document); //restDoc
+    }
+
+    @Test
+    @DisplayName("로그인 - 유효하지 않은 비밀번호(문자종류 포함X)")
+    public void login_test_if_notvalid_pw() throws Exception {
+        // given teardown.sql - user1 저장되어있음
+        UserRequest.LoginDTO requestDTO = new UserRequest.LoginDTO();
+        requestDTO.setEmail("user1@nate.com");
+        requestDTO.setPassword("user1234"); //특수기호 포함하지않은 비밀번호
+
+        String requestBody = om.writeValueAsString(requestDTO);
+        System.out.println("요청 데이터 : " + requestBody);
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/login")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("false"));
+        resultActions.andExpect(status().isBadRequest()); //400번 에러-유효성 검사 에러(@Valid)
+
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document); //restDoc
+    }
+
+    @Test
+    @DisplayName("로그인 - 유효하지않은 비밀번호(글자수)")
+    public void login_test_if_notvalid_pw2() throws Exception {
+        // given teardown.sql - user1 저장되어있음
+        UserRequest.LoginDTO requestDTO = new UserRequest.LoginDTO();
+        requestDTO.setEmail("user1@nate.com");
+        requestDTO.setPassword("user12!"); //글자수 부족한 비밀번호
+
+        String requestBody = om.writeValueAsString(requestDTO);
+        System.out.println("요청 데이터 : " + requestBody);
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/login")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("false"));
+        resultActions.andExpect(status().isBadRequest()); //400번 에러-유효성 검사 에러(@Valid)
+
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document); //restDoc
+    }
+
+    @Test
+    @DisplayName("회원가입")
+    public void join_test() throws Exception {
+        // given teardown.sql
+        UserRequest.JoinDTO requestDTO = new UserRequest.JoinDTO();
+        requestDTO.setEmail("newuser@nate.com");
+        requestDTO.setPassword("user1234!");
+        requestDTO.setUsername("newusermango");
+
+        String requestBody = om.writeValueAsString(requestDTO);
+        System.out.println("요청 데이터 : " + requestBody);
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                    post("/join")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("true"));
+        resultActions.andExpect(jsonPath("$.response").doesNotExist()); //null인지 확인
+        resultActions.andExpect(jsonPath("$.error").doesNotExist());
+
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document); //restDoc
+    }
+    @Test
+    @DisplayName("회원가입 - 유효하지않은 이메일")
+    public void join_test_if_notvalid_email() throws Exception {
+        // given teardown.sql
+        UserRequest.JoinDTO requestDTO = new UserRequest.JoinDTO();
+        requestDTO.setEmail("newusernate.com"); //@가 없는 유효하지않은 이메일
+        requestDTO.setPassword("user1234!");
+        requestDTO.setUsername("newusermango");
+
+        String requestBody = om.writeValueAsString(requestDTO);
+        System.out.println("요청 데이터 : " + requestBody);
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/join")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("false"));
+        resultActions.andExpect(status().isBadRequest()); //400번 에러
+
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document); //restDoc
+    }
+
+    @Test
+    @DisplayName("회원가입 - 유효하지않은 비밀번호(모든 문자종류 포함X)")
+    public void join_test_if_notvalid_pw1() throws Exception {
+        // given teardown.sql
+        UserRequest.JoinDTO requestDTO = new UserRequest.JoinDTO();
+        requestDTO.setEmail("newuser@nate.com");
+        requestDTO.setPassword("user1234"); //특수기호가 없는 유효하지않은 비밀번호
+        requestDTO.setUsername("newusermango");
+
+        String requestBody = om.writeValueAsString(requestDTO);
+        System.out.println("요청 데이터 : " + requestBody);
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/join")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("false"));
+        resultActions.andExpect(status().isBadRequest()); //400번 에러-유효성 검사 에러(@Valid)
+
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document); //restDoc
+    }
+    @Test
+    @DisplayName("회원가입 - 동일한 이메일 존재")
+    public void join_test_if_duplicated_email() throws Exception {
+        // given teardown.sql
+        UserRequest.JoinDTO requestDTO = new UserRequest.JoinDTO();
+        requestDTO.setEmail("user1@nate.com"); //중복된 이메일
+        requestDTO.setPassword("user1234!");
+        requestDTO.setUsername("newusermango");
+
+        String requestBody = om.writeValueAsString(requestDTO);
+        System.out.println("요청 데이터 : " + requestBody);
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/join")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("false"));
+        resultActions.andExpect(status().isBadRequest()); //400번 에러-유효성 검사 에러(@Valid)
+
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document); //restDoc
+    }
+
+    @Test
+    @DisplayName("회원가입 - 유효하지않은 비밀번호(글자수)")
+    public void join_test_if_notvalid_pw2() throws Exception {
+        // given teardown.sql된
+        UserRequest.JoinDTO requestDTO = new UserRequest.JoinDTO();
+        requestDTO.setEmail("newuser@nate.com");
+        requestDTO.setPassword("user12!"); //글자수 적은 비밀번호
+        requestDTO.setUsername("newusermango");
+
+        String requestBody = om.writeValueAsString(requestDTO);
+        System.out.println("요청 데이터 : " + requestBody);
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/join")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("false"));
+        resultActions.andExpect(status().isBadRequest()); //400번 에러-유효성 검사 에러(@Valid)
+
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document); //restDoc
+    }
+
+    @Test
+    @DisplayName("이메일 중복확인")
+        public void check_test() throws Exception {
+        // given
+        UserRequest.EmailCheckDTO requestDTO = new UserRequest.EmailCheckDTO();
+        requestDTO.setEmail("newuser@nate.com"); //중복되지 않은 이메일
+
+        String requestBody = om.writeValueAsString(requestDTO);
+        System.out.println("요청 데이터 : " + requestBody);
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/check")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("true"));
+        resultActions.andExpect(jsonPath("$.response").doesNotExist()); //null인지 확인
+        resultActions.andExpect(jsonPath("$.error").doesNotExist());
+
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document); //restDoc
+    }
+
+    @Test
+    @DisplayName("이메일 중복확인 - 중복된 이메일")
+    public void check_test_if_duplicated() throws Exception {
+        // given
+        UserRequest.EmailCheckDTO requestDTO = new UserRequest.EmailCheckDTO();
+        requestDTO.setEmail("user1@nate.com"); //중복된 이메일(이미 저장된 이메일)
+
+        String requestBody = om.writeValueAsString(requestDTO);
+        System.out.println("요청 데이터 : " + requestBody);
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/check")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("false"));
+        resultActions.andExpect(status().isBadRequest()); //400번 에러
+
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document); //restDoc
+    }
+
+    @Test
+    @DisplayName("이메일 중복확인 - 유효하지않은 이메일")
+    public void check_notvalid_test() throws Exception {
+        // given
+        UserRequest.EmailCheckDTO requestDTO = new UserRequest.EmailCheckDTO();
+        requestDTO.setEmail("newusernate.com"); //유효한 형식이 아닌 이메일
+
+        String requestBody = om.writeValueAsString(requestDTO);
+        System.out.println("요청 데이터 : " + requestBody);
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/check")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("false"));
+        resultActions.andExpect(status().isBadRequest()); //400번 에러
+
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document); //restDoc
+    }
+}
+```
+<br/>
+<br/>
+
+## **2. API 문서 구현 / 작성**
+### **adoc 파일 생성**
+```adoc
+= 카카오 쇼핑하기 RestAPI
+MyungJiKim <audwl03071@gmail.com>
+
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+:product: product-rest-controller-test
+:cart: cart-rest-controller-test
+:order: order-rest-controller-test
+:user: user-rest-controller-test
+
+:toc: left
+:toclevels: 2
+:source-highlighter: highlightjs
+
+== **상품**
+
+=== *1. 전체 상품 목록 조회*
+* param : page={number}
+* param의 디폴트 값은 0이다.
+
+==== 요청 예시
+include::{snippets}/{product}/find-all_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{product}/find-all_test/response-body.adoc[]
+
+==== *1-1. 전체 상품 목록 조회 : Param 사용*
+* param : page=1
+
+==== 요청 예시
+include::{snippets}/{product}/find-all_test_when_using_param/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{product}/find-all_test_when_using_param/response-body.adoc[]
+
+
+=== *2. 개별 상품 상세 조회*
+
+==== 요청 예시
+include::{snippets}/{product}/find-by-id_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{product}/find-by-id_test/response-body.adoc[]
+
+== **장바구니**
+
+=== *1. 장바구니 담기*
+
+==== 요청 예시
+include::{snippets}/{cart}/add-cart-list_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/add-cart-list_test/response-body.adoc[]
+
+==== *1-1. 장바구니 담기 : 동일 옵션 입력*
+
+==== 요청 예시
+include::{snippets}/{cart}/add-cart-list_test_if_duplicated_option/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/add-cart-list_test_if_duplicated_option/response-body.adoc[]
+
+==== *1-2. 장바구니 담기 : 이미 담은 옵션 입력 (업데이트)*
+
+==== 요청 예시
+include::{snippets}/{cart}/add-cart-list_test_if_existed_option/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/add-cart-list_test_if_existed_option/response-body.adoc[]
+
+
+=== *2. 장바구니 조회*
+
+==== 요청 예시
+include::{snippets}/{cart}/find-all_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/find-all_test/response-body.adoc[]
+
+=== *3. 장바구니 수정*
+* 주문하기를 할 때 장바구니 데이터를 update하고 그 결과를 응답받는다.
+* 결재페이지에서 이 응답을 사용해도 되고, 다시 장바구니 조회 API를 사용해도 된다.
+
+==== 요청 예시
+include::{snippets}/{cart}/update_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/update_test/response-body.adoc[]
+
+==== *3-1. 장바구니 수정 : 담은 장바구니가 없을때 (empty)*
+
+==== 요청 예시
+include::{snippets}/{cart}/update_test_if_cart_empty/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/update_test_if_cart_empty/response-body.adoc[]
+
+==== *3-2. 장바구니 수정 : 동일한 장바구니 입력*
+
+==== 요청 예시
+include::{snippets}/{cart}/update_test_if_duplicated_cart/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/update_test_if_duplicated_cart/response-body.adoc[]
+
+==== *3-3. 장바구니 수정 : 존재하지 않은 장바구니 입력*
+
+==== 요청 예시
+include::{snippets}/{cart}/update_test_if_notexisted_cart/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/update_test_if_notexisted_cart/response-body.adoc[]
+
+
+== **주문**
+
+=== *1. 결재하기 - (주문 인서트)*
+
+==== 요청 예시
+include::{snippets}/{order}/save_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{order}/save_test/response-body.adoc[]
+
+=== *2. 주문 결과 확인*
+
+==== 요청 예시
+include::{snippets}/{order}/find-by-id_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{order}/find-by-id_test/response-body.adoc[]
+
+== **사용자**
+
+=== *1. 회원가입*
+
+==== 요청 예시
+include::{snippets}/{user}/join_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/join_test/response-body.adoc[]
+
+==== *1-1. 회원가입 실패 : 형식에 맞지 않은 이메일*
+
+==== 요청 예시
+include::{snippets}/{user}/join_test_if_notvalid_email/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/join_test_if_notvalid_email/response-body.adoc[]
+
+==== *1-2. 회원가입 실패 : 형식에 맞지 않은 비밀번호 (문자종류)*
+
+==== 요청 예시
+include::{snippets}/{user}/join_test_if_notvalid_pw1/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/join_test_if_notvalid_pw1/response-body.adoc[]
+
+==== *1-3. 회원가입 실패 : 가입된 이메일*
+
+==== 요청 예시
+include::{snippets}/{user}/join_test_if_duplicated_email/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/join_test_if_duplicated_email/response-body.adoc[]
+
+==== *1-4. 회원가입 실패 : 형식에 맞지 않은 비밀번호 (글자수)*
+
+==== 요청 예시
+include::{snippets}/{user}/join_test_if_notvalid_pw2/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/join_test_if_notvalid_pw2/response-body.adoc[]
+
+
+=== *2. 로그인*
+
+==== 요청 예시
+include::{snippets}/{user}/login_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/login_test/response-body.adoc[]
+
+==== *2-1. 로그인 실패 : 형식에 맞지 않은 이메일*
+
+==== 요청 예시
+include::{snippets}/{user}/login_test_if_notvalid_email/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/login_test_if_notvalid_email/response-body.adoc[]
+
+==== *2-2. 로그인 실패 : 형식에 맞지 않은 비밀번호 (문자종류)*
+
+==== 요청 예시
+include::{snippets}/{user}/login_test_if_notvalid_pw/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/login_test_if_notvalid_pw/response-body.adoc[]
+
+==== *2-3. 로그인 실패 : 형식에 맞지 않은 비밀번호 (글자수)*
+
+==== 요청 예시
+include::{snippets}/{user}/login_test_if_notvalid_pw2/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/login_test_if_notvalid_pw2/response-body.adoc[]
+
+=== *3. 이메일 중복 확인*
+
+==== 요청 예시
+include::{snippets}/{user}/check_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/check_test/response-body.adoc[]
+
+==== *3-1. 이메일 중복 확인 실패 : 가입된 이메일*
+
+==== 요청 예시
+include::{snippets}/{user}/check_test_if_duplicated/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/check_test_if_duplicated/response-body.adoc[]
+
+==== *3-2. 이메일 중복 확인 실패 : 형식에 맞지 않은 이메일*
+
+==== 요청 예시
+include::{snippets}/{user}/check_notvalid_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/check_notvalid_test/response-body.adoc[]
+```
+
+### **생성된 API 문서**
+<img src="img/api-docs/1.jpg">
+<img src="img/api-docs/2.jpg">
+<img src="img/api-docs/3.jpg">
+<img src="img/api-docs/4.jpg">
+<img src="img/api-docs/5.jpg">
+<img src="img/api-docs/6.jpg">
+<img src="img/api-docs/7.jpg">
+<img src="img/api-docs/8.jpg">
+<img src="img/api-docs/9.jpg">
+<img src="img/api-docs/10.jpg">
+<img src="img/api-docs/11.jpg">
+<img src="img/api-docs/12.jpg">
+<img src="img/api-docs/13.jpg">
+<img src="img/api-docs/14.jpg">
+<img src="img/api-docs/15.jpg">
+<img src="img/api-docs/16.jpg">
+<img src="img/api-docs/17.jpg">
+<img src="img/api-docs/18.jpg">
+<br/>
+
+## **3. 카카오 클라우드 배포**
+> 배포 url : https://user-app.krampoline.com/k9ce14cd5c016a
+
