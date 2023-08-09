@@ -1870,11 +1870,12 @@ user를 두 명 저장하고 각 user에 따른 cart, order, item을 생성해�
 
 ## **리뷰 시 중점적으로 봐주셨으면 하는 부분**
 
-- 서비스가 적절하게 구현되어 있는지 궁금합니다. 
+- 서비스가 적절하게 구현되어 있는지 궁금합니다.
 
 </br>
 
-## **Assignment**
+<details>
+<summary>Assignment</summary>
 
 - GlobalValidationHandler
   - Request 유효성 검증하는 부분을 AOP를 만들어서 중복 코드를 추출합니다.
@@ -1898,7 +1899,7 @@ user를 두 명 저장하고 각 user에 따른 cart, order, item을 생성해�
     - 결국, save를 할 때는 쿼리 개수 차이는 없지만 update 때는 줄어듭니다. 하지만 PK로 가져오기 때문에 쿼리 개수가 하나 증가하더라도 성능에 유의미한 차이는 없기 때문에 확실하게 확인하는 addCartListV1가 좋다고 생각합니다.
   - findAllV1
   - findAllV2
-    - ResponseDTO가 이전과 다른 방식으로 구현되었는데 ProductDTO와 CartDTO를 합쳐서 depth는 줄어들었지만 프론트에서 totalPrice를 계산하기 위해 추가 계산을 해야합니다. 
+    - ResponseDTO가 이전과 다른 방식으로 구현되었는데 ProductDTO와 CartDTO를 합쳐서 depth는 줄어들었지만 프론트에서 totalPrice를 계산하기 위해 추가 계산을 해야합니다.
   - update
     - 추가 1 : 사용자의 장바구니가 비어있을 경우 400 Bad Request
     - 추가 2 : 입력 중 동일한 cartId가 있을 경우 400 Bad Request
@@ -1907,6 +1908,8 @@ user를 두 명 저장하고 각 user에 따른 cart, order, item을 생성해�
 - OrderService
   - save
   - findById
+
+</details>
 
 </br>
 
@@ -1927,7 +1930,7 @@ user를 두 명 저장하고 각 user에 따른 cart, order, item을 생성해�
 ```
 1. 통합테스트를 구현하시오.
 2. API문서를 구현하시오. (swagger, restdoc, word로 직접 작성, 공책에 적어서 제출 등 모든 방법이 다 가능합니다)
-3. 프론트앤드에 입장을 생각해본뒤 어떤 문서를 가장 원할지 생각해본뒤 API문서를 작성하시오.
+3. 프론트엔드의 입장을 생각해본뒤 어떤 문서를 가장 원할지 생각해본뒤 API문서를 작성하시오.
 4. 카카오 클라우드에 배포하시오.
 5. 배포한 뒤 서비스 장애가 일어날 수 있으니, 해당 장애에 대처할 수 있게 로그를 작성하시오. (로그는 DB에 넣어도 되고, 외부 라이브러리를 사용해도 되고, 파일로 남겨도 된다 - 단 장애 발생시 확인을 할 수 있어야 한다)
 ```
@@ -1942,7 +1945,8 @@ user를 두 명 저장하고 각 user에 따른 cart, order, item을 생성해�
 > - API문서가 구현되었는가?
 > - 배포가 정상적으로 되었는가?
 > - 서비스에 문제가 발생했을 때, 로그를 통해 문제를 확인할 수 있는가?
->   </br>
+
+</br>
 
 ## **코드리뷰 관련: PR시, 아래 내용을 포함하여 코멘트 남겨주세요.**
 
@@ -1956,3 +1960,173 @@ user를 두 명 저장하고 각 user에 따른 cart, order, item을 생성해�
 
 > - 코드 작성하면서 어려웠던 점
 > - 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
+
+</br>
+
+## **Assignment**
+
+### 통합 테스트
+
+- UserRestControllerTest
+
+  - 회원가입 성공
+    - 200 OK
+  - 회원가입 실패 - 이메일 형식 오류
+    - 400 BadRequest
+  - 회원가입 실패 - 비밀번호 형식 오류
+    - 400 BadRequest
+  - 회원가입 실패 - 이름 길이 오류
+    - 400 BadRequest
+  - 회원가입 실패 - 비밀번호 길이 오류
+    - 400 BadRequest
+  - 로그인 성공
+    - 200 OK
+  - 로그인 실패 - 비밀번호 오류
+    - 400 BadRequest
+  - 로그인 실패 - 이메일 형식 오류
+    - 400 BadRequest
+  - 로그인 실패 - 비밀번호 형식 오류
+    - 400 BadRequest
+  - 로그인 실패 - 이메일 없음
+    - 400 BadRequest
+  - 로그인 실패 - 비밀번호 길이 오류
+    - 400 BadRequest
+  - 이메일 중복 확인 성공
+    - 200 OK
+  - 이메일 중복 확인 실패 - 동일한 이메일 존재
+    - 400 BadRequest
+  - 이메일 중복 확인 실패 - 이메일 형식 오류
+    - 400 BadRequest
+
+</br>
+
+- ProductRestControllerTest
+  - 전체 상품 조회
+    - 200 OK
+  - 상품 상세 조회 성공
+    - 200 OK
+  - 상품 상세 조회 실패 - 상품 없음
+    - 404 NotFound
+
+</br>
+
+- CartRestControllerTest
+  - 장바구니 저장 성공
+    - 200 OK
+  - 장바구니 저장 실패 - 최소 수량 미달
+    - 400 BadRequest
+  - 장바구니 저장 실패 - 최대 수량 초과
+    - 400 BadRequest
+  - 장바구니 저장 실패 - 옵션 없음
+    - 400 BadRequest
+  - 장바구니 저장 실패 - 수량 없음
+    - 400 BadRequest
+  - 장바구니 저장 실패 - 인증 실패
+    - 401 Unauthorized
+  - 장바구니 저장 실패 - 동일한 옵션 아이디 존재
+    - 400 BadRequest
+  - 장바구니 조회
+    - 200 OK
+  - 장바구니 수정 성공
+    - 200 OK
+  - 장바구니 수정 실패 - 최소 수량 미달
+    - 400 BadRequest
+  - 장바구니 수정 실패 - 최대 수량 초과
+    - 400 BadRequest
+  - 장바구니 수정 실패 - 카트 없음
+    - 400 BadRequest
+  - 장바구니 수정 실패 - 수량 없음
+    - 400 BadRequest
+  - 장바구니 수정 실패 - 인증 실패
+    - 401 Unauthorized
+  - 장바구니 수정 실패 - 동일한 카트 아이디 존재
+    - 400 BadRequest
+  - 장바구니 수정 실패 - 사용자 장바구니에 없는 카트 아이디
+    - 404 NotFound
+  - 장바구니 수정 실패 - 빈 장바구니
+    - 400 BadRequest
+
+</br>
+
+- OrderRestControllerTest
+  - 주문 생성 성공
+    - 200 OK
+  - 주문 생성 실패 - 인증 실패
+    - 401 Unauthorized
+  - 주문 생성 실패 - 빈 장바구니
+    - 400 BadRequest
+  - 주문 결과 조회 성공
+    - 200 OK
+  - 주문 결과 조회 실패 - 주문 없음
+    - 404 NotFound
+  - 주문 결과 조회 실패 - 권한 없음
+    - 403 Forbidden
+
+</br>
+
+### API 문서
+
+- [API 문서](https://user-app.krampoline.com/k7933b0779e88a/api/docs/api-docs.html)
+- 프론트엔드가 서버에서 데이터를 받고, 서버로 데이터를 전달하기 위해서 서버에서 정의한 스키마를 잘 보여주는 것에 중점을 두었습니다.
+- swagger는 프로덕션 코드에 문서화 코드가 포함되어 있기 때문에 RestDoc으로 API 문서를 구현했습니다.
+
+</br>
+
+### 배포
+
+- [배포 링크](https://user-app.krampoline.com/k7933b0779e88a/)
+- 추가 테스트 : 콘솔로 확인되지 않는 부분을 추가로 검증했습니다.
+  - 로그인 실패 - 비밀번호 오류
+    ![Image](./img/%EB%A1%9C%EA%B7%B8%EC%9D%B8%20%EC%8B%A4%ED%8C%A8%20-%20%EB%B9%84%EB%B0%80%EB%B2%88%ED%98%B8%20%EC%98%A4%EB%A5%98.png)
+  - 로그인 실패 - 이메일 형식 오류
+    ![Image](./img/%EB%A1%9C%EA%B7%B8%EC%9D%B8%20%EC%8B%A4%ED%8C%A8%20-%20%EC%9D%B4%EB%A9%94%EC%9D%BC%20%ED%98%95%EC%8B%9D%20%EC%98%A4%EB%A5%98.png)
+  - 로그인 실패 - 비밀번호 형식 오류
+    ![Image](./img/%EB%A1%9C%EA%B7%B8%EC%9D%B8%20%EC%8B%A4%ED%8C%A8%20-%20%EB%B9%84%EB%B0%80%EB%B2%88%ED%98%B8%20%ED%98%95%EC%8B%9D%20%EC%98%A4%EB%A5%98.png)
+  - 로그인 실패 - 이메일 없음
+    ![Image](./img/%EB%A1%9C%EA%B7%B8%EC%9D%B8%20%EC%8B%A4%ED%8C%A8%20-%20%EC%9D%B4%EB%A9%94%EC%9D%BC%20%EC%97%86%EC%9D%8C.png)
+  - 로그인 실패 - 비밀번호 길이 오류
+    ![Image](./img/%EB%A1%9C%EA%B7%B8%EC%9D%B8%20%EC%8B%A4%ED%8C%A8%20-%20%EB%B9%84%EB%B0%80%EB%B2%88%ED%98%B8%20%EA%B8%B8%EC%9D%B4%20%EC%98%A4%EB%A5%98.png)
+  - 상품 상세 조회 실패 - 상품 없음
+    ![Image](./img/%EC%83%81%ED%92%88%20%EC%83%81%EC%84%B8%20%EC%A1%B0%ED%9A%8C%20%EC%8B%A4%ED%8C%A8%20-%20%EC%83%81%ED%92%88%20%EC%97%86%EC%9D%8C.png)
+  - 장바구니 저장 실패 - 최소 수량 미달
+    ![Image](./img/%EC%9E%A5%EB%B0%94%EA%B5%AC%EB%8B%88%20%EC%A0%80%EC%9E%A5%20%EC%8B%A4%ED%8C%A8%20-%20%EC%B5%9C%EC%86%8C%20%EC%88%98%EB%9F%89%20%EB%AF%B8%EB%8B%AC.png)
+  - 장바구니 저장 실패 - 최대 수량 초과
+    ![Image](./img/%EC%9E%A5%EB%B0%94%EA%B5%AC%EB%8B%88%20%EC%A0%80%EC%9E%A5%20%EC%8B%A4%ED%8C%A8%20-%20%EC%B5%9C%EB%8C%80%20%EC%88%98%EB%9F%89%20%EC%B4%88%EA%B3%BC.png)
+  - 장바구니 저장 실패 - 옵션 없음
+    ![Image](./img/%EC%9E%A5%EB%B0%94%EA%B5%AC%EB%8B%88%20%EC%A0%80%EC%9E%A5%20%EC%8B%A4%ED%8C%A8%20-%20%EC%98%B5%EC%85%98%20%EC%97%86%EC%9D%8C.png)
+  - 장바구니 저장 실패 - 수량 없음
+    ![Image](./img/%EC%9E%A5%EB%B0%94%EA%B5%AC%EB%8B%88%20%EC%A0%80%EC%9E%A5%20%EC%8B%A4%ED%8C%A8%20-%20%EC%88%98%EB%9F%89%20%EC%97%86%EC%9D%8C.png)
+  - 장바구니 저장 실패 - 인증 실패
+    ![Image](./img/%EC%9E%A5%EB%B0%94%EA%B5%AC%EB%8B%88%20%EC%A0%80%EC%9E%A5%20%EC%8B%A4%ED%8C%A8%20-%20%EC%9D%B8%EC%A6%9D%20%EC%8B%A4%ED%8C%A8.png)
+  - 장바구니 저장 실패 - 동일한 옵션 아이디 존재
+    ![Image](./img/%EC%9E%A5%EB%B0%94%EA%B5%AC%EB%8B%88%20%EC%A0%80%EC%9E%A5%20%EC%8B%A4%ED%8C%A8%20-%20%EB%8F%99%EC%9D%BC%ED%95%9C%20%EC%98%B5%EC%85%98%20%EC%95%84%EC%9D%B4%EB%94%94%20%EC%A1%B4%EC%9E%AC.png)
+  - 장바구니 수정 실패 - 최소 수량 미달
+    ![Image](./img/%EC%9E%A5%EB%B0%94%EA%B5%AC%EB%8B%88%20%EC%88%98%EC%A0%95%20%EC%8B%A4%ED%8C%A8%20-%20%EC%B5%9C%EC%86%8C%20%EC%88%98%EB%9F%89%20%EB%AF%B8%EB%8B%AC.png)
+  - 장바구니 수정 실패 - 최대 수량 초과
+    ![Image](./img/%EC%9E%A5%EB%B0%94%EA%B5%AC%EB%8B%88%20%EC%88%98%EC%A0%95%20%EC%8B%A4%ED%8C%A8%20-%20%EC%B5%9C%EB%8C%80%20%EC%88%98%EB%9F%89%20%EC%B4%88%EA%B3%BC.png)
+  - 장바구니 수정 실패 - 카트 없음
+    ![Image](./img/%EC%9E%A5%EB%B0%94%EA%B5%AC%EB%8B%88%20%EC%88%98%EC%A0%95%20%EC%8B%A4%ED%8C%A8%20-%20%EC%B9%B4%ED%8A%B8%20%EC%97%86%EC%9D%8C.png)
+  - 장바구니 수정 실패 - 수량 없음
+    ![Image](./img/%EC%9E%A5%EB%B0%94%EA%B5%AC%EB%8B%88%20%EC%88%98%EC%A0%95%20%EC%8B%A4%ED%8C%A8%20-%20%EC%88%98%EB%9F%89%20%EC%97%86%EC%9D%8C.png)
+  - 장바구니 수정 실패 - 인증 실패
+    ![Image](./img/%EC%9E%A5%EB%B0%94%EA%B5%AC%EB%8B%88%20%EC%88%98%EC%A0%95%20%EC%8B%A4%ED%8C%A8%20-%20%EC%9D%B8%EC%A6%9D%20%EC%8B%A4%ED%8C%A8.png)
+  - 장바구니 수정 실패 - 동일한 카트 아이디 존재
+    ![Image](./img/%EC%9E%A5%EB%B0%94%EA%B5%AC%EB%8B%88%20%EC%88%98%EC%A0%95%20%EC%8B%A4%ED%8C%A8%20-%20%EB%8F%99%EC%9D%BC%ED%95%9C%20%EC%B9%B4%ED%8A%B8%20%EC%95%84%EC%9D%B4%EB%94%94%20%EC%A1%B4%EC%9E%AC.png)
+  - 장바구니 수정 실패 - 사용자 장바구니에 없는 카트 아이디
+    ![Image](./img/%EC%9E%A5%EB%B0%94%EA%B5%AC%EB%8B%88%20%EC%88%98%EC%A0%95%20%EC%8B%A4%ED%8C%A8%20-%20%EC%82%AC%EC%9A%A9%EC%9E%90%20%EC%9E%A5%EB%B0%94%EA%B5%AC%EB%8B%88%EC%97%90%20%EC%97%86%EB%8A%94%20%EC%B9%B4%ED%8A%B8%20%EC%95%84%EC%9D%B4%EB%94%94.png)
+  - 장바구니 수정 실패 - 빈 장바구니
+    ![Image](./img/%EC%9E%A5%EB%B0%94%EA%B5%AC%EB%8B%88%20%EC%88%98%EC%A0%95%20%EC%8B%A4%ED%8C%A8%20-%20%EB%B9%88%20%EC%9E%A5%EB%B0%94%EA%B5%AC%EB%8B%88.png)
+  - 주문 생성 실패 - 인증 실패
+    ![Image](./img/%EC%A3%BC%EB%AC%B8%20%EC%83%9D%EC%84%B1%20%EC%8B%A4%ED%8C%A8%20-%20%EC%9D%B8%EC%A6%9D%20%EC%8B%A4%ED%8C%A8.png)
+  - 주문 생성 실패 - 빈 장바구니
+    ![Image](./img/%EC%A3%BC%EB%AC%B8%20%EC%83%9D%EC%84%B1%20%EC%8B%A4%ED%8C%A8%20-%20%EB%B9%88%20%EC%9E%A5%EB%B0%94%EA%B5%AC%EB%8B%88.png)
+  - 주문 결과 조회 실패 - 주문 없음
+    ![Image](./img/%EC%A3%BC%EB%AC%B8%20%EA%B2%B0%EA%B3%BC%20%EC%A1%B0%ED%9A%8C%20%EC%8B%A4%ED%8C%A8%20-%20%EC%A3%BC%EB%AC%B8%20%EC%97%86%EC%9D%8C.png)
+  - 주문 결과 조회 실패 - 권한 없음
+    ![Image](./img/%EC%A3%BC%EB%AC%B8%20%EA%B2%B0%EA%B3%BC%20%EC%A1%B0%ED%9A%8C%20%EC%8B%A4%ED%8C%A8%20-%20%EA%B6%8C%ED%95%9C%20%EC%97%86%EC%9D%8C.png)
+- 배포 상태 확인하기
+  - 실행 중인 컨테이너 보기
+    </br>
+    ![Image](./img/check-container.png)
+  - 컨테이너 로그 보기
+    ![Image](./img/check-logs.png)
