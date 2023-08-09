@@ -1,0 +1,11 @@
+[source,options="nowrap"]
+----
+{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "인증되지 않았습니다",
+    "status" : 401
+  }
+}
+----

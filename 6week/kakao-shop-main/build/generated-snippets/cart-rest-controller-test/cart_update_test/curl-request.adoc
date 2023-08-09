@@ -1,0 +1,9 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/carts/update' -i -X POST \
+    -H 'Content-Type: application/json;charset=UTF-8' \
+    -d '[ {
+  "cartId" : 1,
+  "quantity" : 10
+} ]'
+----

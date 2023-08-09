@@ -1,0 +1,4 @@
+[source,bash]
+----
+$ curl 'http://localhost:8080/products?page=99' -i -X GET
+----

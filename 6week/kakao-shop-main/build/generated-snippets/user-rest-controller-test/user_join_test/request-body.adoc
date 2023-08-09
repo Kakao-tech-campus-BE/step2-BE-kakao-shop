@@ -1,0 +1,8 @@
+[source,options="nowrap"]
+----
+{
+  "email" : "cha0825@naver.com",
+  "password" : "hello123!",
+  "username" : "ChaJiwon"
+}
+----

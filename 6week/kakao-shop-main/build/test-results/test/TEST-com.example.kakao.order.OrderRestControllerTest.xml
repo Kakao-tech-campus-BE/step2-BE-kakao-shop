@@ -1,0 +1,609 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.kakao.order.OrderRestControllerTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2023-08-03T17:16:19" hostname="LAPTOP-KKPNP3F6" time="1.013">
+  <properties/>
+  <testcase name="결재하기 실패 테스트 (장바구니 비어있음)" classname="com.example.kakao.order.OrderRestControllerTest" time="0.225"/>
+  <testcase name="주문 찾기 테스트" classname="com.example.kakao.order.OrderRestControllerTest" time="0.265"/>
+  <testcase name="결재하기 성공 테스트" classname="com.example.kakao.order.OrderRestControllerTest" time="0.204"/>
+  <testcase name="주문 찾기 권한 실패 테스트 (인증 실패)" classname="com.example.kakao.order.OrderRestControllerTest" time="0.083"/>
+  <testcase name="주문 찾기 실패 테스트 (잘못된 order id)" classname="com.example.kakao.order.OrderRestControllerTest" time="0.125"/>
+  <testcase name="결재하기 인증 실패 테스트" classname="com.example.kakao.order.OrderRestControllerTest" time="0.098"/>
+  <system-out><![CDATA[2023-08-04 02:16:18.987  INFO 19532 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.example.kakao.order.OrderRestControllerTest], using SpringBootContextLoader
+2023-08-04 02:16:18.990  INFO 19532 --- [    Test worker] o.s.t.c.support.AbstractContextLoader    : Could not detect default resource locations for test class [com.example.kakao.order.OrderRestControllerTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+2023-08-04 02:16:18.991  INFO 19532 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.kakao.order.OrderRestControllerTest]: OrderRestControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2023-08-04 02:16:19.067  INFO 19532 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.kakao.KakaoApplication for test class com.example.kakao.order.OrderRestControllerTest
+2023-08-04 02:16:19.073  INFO 19532 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener, org.springframework.security.test.context.support.ReactorContextTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+2023-08-04 02:16:19.074  INFO 19532 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@5feceb2f, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@5327c503, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@b41ceac, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@4ee8ea84, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@76e5d5e5, org.springframework.test.context.support.DirtiesContextTestExecutionListener@1b0709e7, org.springframework.test.context.transaction.TransactionalTestExecutionListener@1e368085, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@1703e50d, org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener@4f1150f5, org.springframework.test.context.event.EventPublishingTestExecutionListener@6cfa20c1, org.springframework.security.test.context.support.ReactorContextTestExecutionListener@46e2a773, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@4ec1192f, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@b926efa, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@3653bb61, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@65595be7, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@23972e02, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@3bea7134]
+Hibernate: 
+    select
+        user0_.id as id1_6_,
+        user0_.email as email2_6_,
+        user0_.password as password3_6_,
+        user0_.roles as roles4_6_,
+        user0_.username as username5_6_ 
+    from
+        user_tb user0_ 
+    where
+        user0_.email=?
+2023-08-04 02:16:19.132 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [error@nate.com]
+2023-08-04 02:16:19.133 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_6_] : [INTEGER]) - [2]
+2023-08-04 02:16:19.134 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([email2_6_] : [VARCHAR]) - [error@nate.com]
+2023-08-04 02:16:19.135 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([password3_6_] : [VARCHAR]) - [{bcrypt}$2a$10$8H0OT8wgtALJkig6fmypi.Y7jzI5Y7W9PGgRKqnVeS2cLWGifwHF2]
+2023-08-04 02:16:19.135 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([roles4_6_] : [VARCHAR]) - [ROLE_USER]
+2023-08-04 02:16:19.135 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([username5_6_] : [VARCHAR]) - [error]
+2023-08-04 02:16:19.141  INFO 19532 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-04 02:16:19.141  INFO 19532 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-04 02:16:19.143  INFO 19532 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+Hibernate: 
+    select
+        cart0_.id as id1_0_,
+        cart0_.option_id as option_i4_0_,
+        cart0_.price as price2_0_,
+        cart0_.quantity as quantity3_0_,
+        cart0_.user_id as user_id5_0_ 
+    from
+        cart_tb cart0_ 
+    where
+        cart0_.user_id=?
+2023-08-04 02:16:19.263 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [2]
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /orders/save
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8"]
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.example.kakao.order.OrderRestController
+           Method = com.example.kakao.order.OrderRestController#save(CustomUserDetails)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = com.example.kakao._core.errors.exception.Exception404
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 404
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json;charset=UTF-8", X-Content-Type-Options:"nosniff", X-XSS-Protection:"1; mode=block", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"SAMEORIGIN"]
+     Content type = application/json;charset=UTF-8
+             Body = {"success":false,"response":null,"error":{"message":"장바구니가 비어있습니다 : 2","status":404}}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+Hibernate: 
+    select
+        user0_.id as id1_6_,
+        user0_.email as email2_6_,
+        user0_.password as password3_6_,
+        user0_.roles as roles4_6_,
+        user0_.username as username5_6_ 
+    from
+        user_tb user0_ 
+    where
+        user0_.email=?
+2023-08-04 02:16:19.336 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [ssarmango@nate.com]
+2023-08-04 02:16:19.337 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_6_] : [INTEGER]) - [1]
+2023-08-04 02:16:19.337 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([email2_6_] : [VARCHAR]) - [ssarmango@nate.com]
+2023-08-04 02:16:19.337 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([password3_6_] : [VARCHAR]) - [{bcrypt}$2a$10$8H0OT8wgtALJkig6fmypi.Y7jzI5Y7W9PGgRKqnVeS2cLWGifwHF2]
+2023-08-04 02:16:19.338 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([roles4_6_] : [VARCHAR]) - [ROLE_USER]
+2023-08-04 02:16:19.338 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([username5_6_] : [VARCHAR]) - [ssarmango]
+2023-08-04 02:16:19.340  INFO 19532 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-04 02:16:19.342  INFO 19532 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-04 02:16:19.343  INFO 19532 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+Hibernate: 
+    select
+        order0_.id as id1_4_0_,
+        order0_.user_id as user_id2_4_0_ 
+    from
+        order_tb order0_ 
+    where
+        order0_.id=?
+2023-08-04 02:16:19.368 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [1]
+2023-08-04 02:16:19.368 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([user_id2_4_0_] : [INTEGER]) - [1]
+Hibernate: 
+    select
+        item0_.id as id1_2_0_,
+        order1_.id as id1_4_1_,
+        option2_.id as id1_3_2_,
+        product3_.id as id1_5_3_,
+        item0_.option_id as option_i4_2_0_,
+        item0_.order_id as order_id5_2_0_,
+        item0_.price as price2_2_0_,
+        item0_.quantity as quantity3_2_0_,
+        order1_.user_id as user_id2_4_1_,
+        option2_.option_name as option_n2_3_2_,
+        option2_.price as price3_3_2_,
+        option2_.product_id as product_4_3_2_,
+        product3_.description as descript2_5_3_,
+        product3_.image as image3_5_3_,
+        product3_.price as price4_5_3_,
+        product3_.product_name as product_5_5_3_ 
+    from
+        item_tb item0_ 
+    inner join
+        order_tb order1_ 
+            on item0_.order_id=order1_.id 
+    inner join
+        option_tb option2_ 
+            on item0_.option_id=option2_.id 
+    inner join
+        product_tb product3_ 
+            on option2_.product_id=product3_.id 
+    where
+        item0_.order_id=?
+2023-08-04 02:16:19.379 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [1]
+2023-08-04 02:16:19.381 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_2_0_] : [INTEGER]) - [1]
+2023-08-04 02:16:19.381 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_4_1_] : [INTEGER]) - [1]
+2023-08-04 02:16:19.381 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_3_2_] : [INTEGER]) - [1]
+2023-08-04 02:16:19.381 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_5_3_] : [INTEGER]) - [1]
+2023-08-04 02:16:19.381 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_i4_2_0_] : [INTEGER]) - [1]
+2023-08-04 02:16:19.381 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([order_id5_2_0_] : [INTEGER]) - [1]
+2023-08-04 02:16:19.381 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price2_2_0_] : [INTEGER]) - [50000]
+2023-08-04 02:16:19.381 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([quantity3_2_0_] : [INTEGER]) - [5]
+2023-08-04 02:16:19.381 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_n2_3_2_] : [VARCHAR]) - [01. 슬라이딩 지퍼백 크리스마스에디션 4종]
+2023-08-04 02:16:19.381 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price3_3_2_] : [INTEGER]) - [10000]
+2023-08-04 02:16:19.381 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_4_3_2_] : [INTEGER]) - [1]
+2023-08-04 02:16:19.382 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([descript2_5_3_] : [VARCHAR]) - []
+2023-08-04 02:16:19.382 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([image3_5_3_] : [VARCHAR]) - [/images/1.jpg]
+2023-08-04 02:16:19.382 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price4_5_3_] : [INTEGER]) - [1000]
+2023-08-04 02:16:19.382 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_5_5_3_] : [VARCHAR]) - [기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전]
+2023-08-04 02:16:19.382 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_2_0_] : [INTEGER]) - [2]
+2023-08-04 02:16:19.382 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_4_1_] : [INTEGER]) - [1]
+2023-08-04 02:16:19.382 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_3_2_] : [INTEGER]) - [2]
+2023-08-04 02:16:19.382 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_5_3_] : [INTEGER]) - [1]
+2023-08-04 02:16:19.383 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_i4_2_0_] : [INTEGER]) - [2]
+2023-08-04 02:16:19.383 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([order_id5_2_0_] : [INTEGER]) - [1]
+2023-08-04 02:16:19.383 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price2_2_0_] : [INTEGER]) - [10900]
+2023-08-04 02:16:19.383 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([quantity3_2_0_] : [INTEGER]) - [1]
+2023-08-04 02:16:19.383 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_n2_3_2_] : [VARCHAR]) - [02. 슬라이딩 지퍼백 플라워에디션 5종]
+2023-08-04 02:16:19.383 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price3_3_2_] : [INTEGER]) - [10900]
+2023-08-04 02:16:19.383 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_4_3_2_] : [INTEGER]) - [1]
+2023-08-04 02:16:19.383 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_2_0_] : [INTEGER]) - [3]
+2023-08-04 02:16:19.383 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_4_1_] : [INTEGER]) - [1]
+2023-08-04 02:16:19.383 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_3_2_] : [INTEGER]) - [16]
+2023-08-04 02:16:19.383 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_5_3_] : [INTEGER]) - [4]
+2023-08-04 02:16:19.383 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_i4_2_0_] : [INTEGER]) - [16]
+2023-08-04 02:16:19.384 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([order_id5_2_0_] : [INTEGER]) - [1]
+2023-08-04 02:16:19.384 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price2_2_0_] : [INTEGER]) - [250000]
+2023-08-04 02:16:19.384 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([quantity3_2_0_] : [INTEGER]) - [5]
+2023-08-04 02:16:19.384 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_n2_3_2_] : [VARCHAR]) - [선택02_바른곡물효소누룽지맛 6박스]
+2023-08-04 02:16:19.384 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price3_3_2_] : [INTEGER]) - [50000]
+2023-08-04 02:16:19.384 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_4_3_2_] : [INTEGER]) - [4]
+2023-08-04 02:16:19.384 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([descript2_5_3_] : [VARCHAR]) - []
+2023-08-04 02:16:19.384 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([image3_5_3_] : [VARCHAR]) - [/images/4.jpg]
+2023-08-04 02:16:19.384 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price4_5_3_] : [INTEGER]) - [4000]
+2023-08-04 02:16:19.384 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_5_5_3_] : [VARCHAR]) - [바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종]
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /orders/1
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.example.kakao.order.OrderRestController
+           Method = com.example.kakao.order.OrderRestController#findById(CustomUserDetails, int)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json;charset=UTF-8", X-Content-Type-Options:"nosniff", X-XSS-Protection:"1; mode=block", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"SAMEORIGIN"]
+     Content type = application/json;charset=UTF-8
+             Body = {"success":true,"response":{"id":1,"products":[{"id":1,"productName":"기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전","items":[{"id":1,"optionName":"01. 슬라이딩 지퍼백 크리스마스에디션 4종","quantity":5,"price":50000},{"id":2,"optionName":"02. 슬라이딩 지퍼백 플라워에디션 5종","quantity":1,"price":10900}]},{"id":4,"productName":"바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종","items":[{"id":3,"optionName":"선택02_바른곡물효소누룽지맛 6박스","quantity":5,"price":250000}]}],"totalPrice":310900,"carts":null},"error":null}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+Hibernate: 
+    select
+        user0_.id as id1_6_,
+        user0_.email as email2_6_,
+        user0_.password as password3_6_,
+        user0_.roles as roles4_6_,
+        user0_.username as username5_6_ 
+    from
+        user_tb user0_ 
+    where
+        user0_.email=?
+2023-08-04 02:16:19.612 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [ssarmango@nate.com]
+2023-08-04 02:16:19.614 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_6_] : [INTEGER]) - [1]
+2023-08-04 02:16:19.616 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([email2_6_] : [VARCHAR]) - [ssarmango@nate.com]
+2023-08-04 02:16:19.616 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([password3_6_] : [VARCHAR]) - [{bcrypt}$2a$10$8H0OT8wgtALJkig6fmypi.Y7jzI5Y7W9PGgRKqnVeS2cLWGifwHF2]
+2023-08-04 02:16:19.616 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([roles4_6_] : [VARCHAR]) - [ROLE_USER]
+2023-08-04 02:16:19.617 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([username5_6_] : [VARCHAR]) - [ssarmango]
+2023-08-04 02:16:19.624  INFO 19532 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-04 02:16:19.624  INFO 19532 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-04 02:16:19.642  INFO 19532 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 18 ms
+Hibernate: 
+    select
+        cart0_.id as id1_0_,
+        cart0_.option_id as option_i4_0_,
+        cart0_.price as price2_0_,
+        cart0_.quantity as quantity3_0_,
+        cart0_.user_id as user_id5_0_ 
+    from
+        cart_tb cart0_ 
+    where
+        cart0_.user_id=?
+2023-08-04 02:16:19.654 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [1]
+2023-08-04 02:16:19.655 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_0_] : [INTEGER]) - [1]
+2023-08-04 02:16:19.655 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_i4_0_] : [INTEGER]) - [1]
+2023-08-04 02:16:19.655 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price2_0_] : [INTEGER]) - [50000]
+2023-08-04 02:16:19.656 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([quantity3_0_] : [INTEGER]) - [5]
+2023-08-04 02:16:19.656 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([user_id5_0_] : [INTEGER]) - [1]
+2023-08-04 02:16:19.657 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_0_] : [INTEGER]) - [2]
+2023-08-04 02:16:19.657 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_i4_0_] : [INTEGER]) - [2]
+2023-08-04 02:16:19.657 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price2_0_] : [INTEGER]) - [10900]
+2023-08-04 02:16:19.658 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([quantity3_0_] : [INTEGER]) - [1]
+2023-08-04 02:16:19.658 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([user_id5_0_] : [INTEGER]) - [1]
+2023-08-04 02:16:19.658 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_0_] : [INTEGER]) - [3]
+2023-08-04 02:16:19.658 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_i4_0_] : [INTEGER]) - [16]
+2023-08-04 02:16:19.658 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price2_0_] : [INTEGER]) - [250000]
+2023-08-04 02:16:19.658 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([quantity3_0_] : [INTEGER]) - [5]
+2023-08-04 02:16:19.658 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([user_id5_0_] : [INTEGER]) - [1]
+Hibernate: 
+    insert 
+    into
+        order_tb
+        (id, user_id) 
+    values
+        (default, ?)
+2023-08-04 02:16:19.666 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        item_tb
+        (id, option_id, order_id, price, quantity) 
+    values
+        (default, ?, ?, ?, ?)
+2023-08-04 02:16:19.673 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [1]
+2023-08-04 02:16:19.673 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [2]
+2023-08-04 02:16:19.674 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [50000]
+2023-08-04 02:16:19.674 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [5]
+Hibernate: 
+    insert 
+    into
+        item_tb
+        (id, option_id, order_id, price, quantity) 
+    values
+        (default, ?, ?, ?, ?)
+2023-08-04 02:16:19.676 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [2]
+2023-08-04 02:16:19.676 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [2]
+2023-08-04 02:16:19.676 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [10900]
+2023-08-04 02:16:19.676 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        item_tb
+        (id, option_id, order_id, price, quantity) 
+    values
+        (default, ?, ?, ?, ?)
+2023-08-04 02:16:19.677 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [16]
+2023-08-04 02:16:19.677 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [2]
+2023-08-04 02:16:19.677 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [250000]
+2023-08-04 02:16:19.677 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [5]
+Hibernate: 
+    delete 
+    from
+        cart_tb 
+    where
+        user_id=?
+2023-08-04 02:16:19.694 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [1]
+Hibernate: 
+    select
+        option0_.id as id1_3_0_,
+        option0_.option_name as option_n2_3_0_,
+        option0_.price as price3_3_0_,
+        option0_.product_id as product_4_3_0_,
+        product1_.id as id1_5_1_,
+        product1_.description as descript2_5_1_,
+        product1_.image as image3_5_1_,
+        product1_.price as price4_5_1_,
+        product1_.product_name as product_5_5_1_ 
+    from
+        option_tb option0_ 
+    left outer join
+        product_tb product1_ 
+            on option0_.product_id=product1_.id 
+    where
+        option0_.id=?
+2023-08-04 02:16:19.706 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [1]
+2023-08-04 02:16:19.707 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_5_1_] : [INTEGER]) - [1]
+2023-08-04 02:16:19.708 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_n2_3_0_] : [VARCHAR]) - [01. 슬라이딩 지퍼백 크리스마스에디션 4종]
+2023-08-04 02:16:19.708 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price3_3_0_] : [INTEGER]) - [10000]
+2023-08-04 02:16:19.708 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_4_3_0_] : [INTEGER]) - [1]
+2023-08-04 02:16:19.709 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([descript2_5_1_] : [VARCHAR]) - []
+2023-08-04 02:16:19.709 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([image3_5_1_] : [VARCHAR]) - [/images/1.jpg]
+2023-08-04 02:16:19.709 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price4_5_1_] : [INTEGER]) - [1000]
+2023-08-04 02:16:19.709 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_5_5_1_] : [VARCHAR]) - [기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전]
+Hibernate: 
+    select
+        option0_.id as id1_3_0_,
+        option0_.option_name as option_n2_3_0_,
+        option0_.price as price3_3_0_,
+        option0_.product_id as product_4_3_0_,
+        product1_.id as id1_5_1_,
+        product1_.description as descript2_5_1_,
+        product1_.image as image3_5_1_,
+        product1_.price as price4_5_1_,
+        product1_.product_name as product_5_5_1_ 
+    from
+        option_tb option0_ 
+    left outer join
+        product_tb product1_ 
+            on option0_.product_id=product1_.id 
+    where
+        option0_.id=?
+2023-08-04 02:16:19.717 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [2]
+2023-08-04 02:16:19.718 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_5_1_] : [INTEGER]) - [1]
+2023-08-04 02:16:19.718 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_n2_3_0_] : [VARCHAR]) - [02. 슬라이딩 지퍼백 플라워에디션 5종]
+2023-08-04 02:16:19.718 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price3_3_0_] : [INTEGER]) - [10900]
+2023-08-04 02:16:19.718 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_4_3_0_] : [INTEGER]) - [1]
+Hibernate: 
+    select
+        option0_.id as id1_3_0_,
+        option0_.option_name as option_n2_3_0_,
+        option0_.price as price3_3_0_,
+        option0_.product_id as product_4_3_0_,
+        product1_.id as id1_5_1_,
+        product1_.description as descript2_5_1_,
+        product1_.image as image3_5_1_,
+        product1_.price as price4_5_1_,
+        product1_.product_name as product_5_5_1_ 
+    from
+        option_tb option0_ 
+    left outer join
+        product_tb product1_ 
+            on option0_.product_id=product1_.id 
+    where
+        option0_.id=?
+2023-08-04 02:16:19.720 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [16]
+2023-08-04 02:16:19.721 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_5_1_] : [INTEGER]) - [4]
+2023-08-04 02:16:19.721 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_n2_3_0_] : [VARCHAR]) - [선택02_바른곡물효소누룽지맛 6박스]
+2023-08-04 02:16:19.722 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price3_3_0_] : [INTEGER]) - [50000]
+2023-08-04 02:16:19.723 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_4_3_0_] : [INTEGER]) - [4]
+2023-08-04 02:16:19.723 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([descript2_5_1_] : [VARCHAR]) - []
+2023-08-04 02:16:19.723 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([image3_5_1_] : [VARCHAR]) - [/images/4.jpg]
+2023-08-04 02:16:19.723 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price4_5_1_] : [INTEGER]) - [4000]
+2023-08-04 02:16:19.723 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_5_5_1_] : [VARCHAR]) - [바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종]
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /orders/save
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8"]
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.example.kakao.order.OrderRestController
+           Method = com.example.kakao.order.OrderRestController#save(CustomUserDetails)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json;charset=UTF-8", X-Content-Type-Options:"nosniff", X-XSS-Protection:"1; mode=block", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"SAMEORIGIN"]
+     Content type = application/json;charset=UTF-8
+             Body = {"success":true,"response":{"id":2,"products":[{"id":1,"productName":"기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전","items":[{"id":4,"optionName":"01. 슬라이딩 지퍼백 크리스마스에디션 4종","quantity":5,"price":50000},{"id":5,"optionName":"02. 슬라이딩 지퍼백 플라워에디션 5종","quantity":1,"price":10900}]},{"id":4,"productName":"바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종","items":[{"id":6,"optionName":"선택02_바른곡물효소누룽지맛 6박스","quantity":5,"price":250000}]}],"totalPrice":310900,"carts":null},"error":null}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+Hibernate: 
+    select
+        user0_.id as id1_6_,
+        user0_.email as email2_6_,
+        user0_.password as password3_6_,
+        user0_.roles as roles4_6_,
+        user0_.username as username5_6_ 
+    from
+        user_tb user0_ 
+    where
+        user0_.email=?
+2023-08-04 02:16:19.807 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [error@nate.com]
+2023-08-04 02:16:19.807 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_6_] : [INTEGER]) - [2]
+2023-08-04 02:16:19.808 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([email2_6_] : [VARCHAR]) - [error@nate.com]
+2023-08-04 02:16:19.808 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([password3_6_] : [VARCHAR]) - [{bcrypt}$2a$10$8H0OT8wgtALJkig6fmypi.Y7jzI5Y7W9PGgRKqnVeS2cLWGifwHF2]
+2023-08-04 02:16:19.809 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([roles4_6_] : [VARCHAR]) - [ROLE_USER]
+2023-08-04 02:16:19.812 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([username5_6_] : [VARCHAR]) - [error]
+2023-08-04 02:16:19.819  INFO 19532 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-04 02:16:19.819  INFO 19532 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-04 02:16:19.820  INFO 19532 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+Hibernate: 
+    select
+        order0_.id as id1_4_0_,
+        order0_.user_id as user_id2_4_0_ 
+    from
+        order_tb order0_ 
+    where
+        order0_.id=?
+2023-08-04 02:16:19.826 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [1]
+2023-08-04 02:16:19.827 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([user_id2_4_0_] : [INTEGER]) - [1]
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /orders/1
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.example.kakao.order.OrderRestController
+           Method = com.example.kakao.order.OrderRestController#findById(CustomUserDetails, int)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = com.example.kakao._core.errors.exception.Exception403
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 403
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json;charset=UTF-8", X-Content-Type-Options:"nosniff", X-XSS-Protection:"1; mode=block", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"SAMEORIGIN"]
+     Content type = application/json;charset=UTF-8
+             Body = {"success":false,"response":null,"error":{"message":"해당 주문을 조회할 권한이 없습니다.","status":403}}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+Hibernate: 
+    select
+        user0_.id as id1_6_,
+        user0_.email as email2_6_,
+        user0_.password as password3_6_,
+        user0_.roles as roles4_6_,
+        user0_.username as username5_6_ 
+    from
+        user_tb user0_ 
+    where
+        user0_.email=?
+2023-08-04 02:16:19.926 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [ssarmango@nate.com]
+2023-08-04 02:16:19.929 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_6_] : [INTEGER]) - [1]
+2023-08-04 02:16:19.930 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([email2_6_] : [VARCHAR]) - [ssarmango@nate.com]
+2023-08-04 02:16:19.931 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([password3_6_] : [VARCHAR]) - [{bcrypt}$2a$10$8H0OT8wgtALJkig6fmypi.Y7jzI5Y7W9PGgRKqnVeS2cLWGifwHF2]
+2023-08-04 02:16:19.932 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([roles4_6_] : [VARCHAR]) - [ROLE_USER]
+2023-08-04 02:16:19.932 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([username5_6_] : [VARCHAR]) - [ssarmango]
+2023-08-04 02:16:19.940  INFO 19532 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-04 02:16:19.941  INFO 19532 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-04 02:16:19.945  INFO 19532 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 4 ms
+Hibernate: 
+    select
+        order0_.id as id1_4_0_,
+        order0_.user_id as user_id2_4_0_ 
+    from
+        order_tb order0_ 
+    where
+        order0_.id=?
+2023-08-04 02:16:19.958 TRACE 19532 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [5]
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /orders/5
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.example.kakao.order.OrderRestController
+           Method = com.example.kakao.order.OrderRestController#findById(CustomUserDetails, int)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = com.example.kakao._core.errors.exception.Exception404
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 404
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json;charset=UTF-8", X-Content-Type-Options:"nosniff", X-XSS-Protection:"1; mode=block", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"SAMEORIGIN"]
+     Content type = application/json;charset=UTF-8
+             Body = {"success":false,"response":null,"error":{"message":"해당 주문 정보가 존재하지 않습니다 : 5","status":404}}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2023-08-04 02:16:20.054  INFO 19532 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-04 02:16:20.055  INFO 19532 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-04 02:16:20.058  INFO 19532 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /orders/save
+       Parameters = {}
+          Headers = [Content-Type:"application/json;charset=UTF-8"]
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = null
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 401
+    Error message = null
+          Headers = [Vary:"Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers", Content-Type:"application/json; charset=utf-8", X-Content-Type-Options:"nosniff", X-XSS-Protection:"1; mode=block", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0", X-Frame-Options:"SAMEORIGIN"]
+     Content type = application/json; charset=utf-8
+             Body = {"success":false,"response":null,"error":{"message":"인증되지 않았습니다","status":401}}
+
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
