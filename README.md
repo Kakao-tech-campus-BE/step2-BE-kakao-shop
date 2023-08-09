@@ -1,6 +1,8 @@
 # step2-BE-kakao-shop
 카카오 테크 캠퍼스 2단계 카카오 쇼핑하기 백엔드 클론 프로젝트 레포지토리입니다.
 
+> [최종 백엔드 클론 레포 바로가기](https://github.com/jagaldol/kakao-shop-clone)
+
 <details>
     <summary><h2>1주차</h2></summary>
 
@@ -394,7 +396,7 @@ Repository를 사용하지 않는, FakeStore로 구현된 가짜 서비스 로�
 
 </details>
 
-<details open>
+<details>
     <summary><h2>5주차</h2></summary>
 
 카카오 테크 캠퍼스 2단계 - BE - 5주차 클론 과제
