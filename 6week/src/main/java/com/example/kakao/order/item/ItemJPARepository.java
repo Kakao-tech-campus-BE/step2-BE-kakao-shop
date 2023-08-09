@@ -1,5 +1,6 @@
 package com.example.kakao.order.item;
 
+import com.example.kakao.order.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
