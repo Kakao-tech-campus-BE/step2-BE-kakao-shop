@@ -42,14 +42,6 @@ public class CartService {
                     .orElseThrow(() -> new Exception404("해당 옵션을 찾을 수 없습니다 : " + optionId));
             int price = requestDTO.getPrice();
 
-            if (price <= 0 ||price >= Math.pow(2,32)){
-                throw new Exception400("잘못된 가격 요청입니다. : " + price);
-            }
-
-            if (quantity <= 0 || quantity >= 1000){
-                throw new Exception400("잘못된 수량 요청입니다. : " + quantity);
-            }
-
             // 1. 동일한 옵션이 들어오면 예외처리
             // [ { optionId:1, quantity:5, price:50000 }, { optionId:1, quantity:10, price:10000 } ]
             if (optionIdSet.contains(optionId)){
@@ -127,14 +119,6 @@ public class CartService {
 
                     int cartQuantity = updateDTO.getQuantity();
                     int cartPrice = updateDTO.getPrice();
-
-                    if (cartQuantity <= 0 || cartQuantity >= 1000 ){
-                        throw new Exception400("잘못된 수량 요청입니다. : " + cartQuantity);
-                    }
-
-                    if(cartPrice <= 0 || cartPrice >= Math.pow(2,32)) {
-                        throw new Exception400("잘못된 가격 요청입니다. : " + cartPrice);
-                    }
 
                     int cartPriceCheck = cart.getOption().getPrice() * cartQuantity;
 

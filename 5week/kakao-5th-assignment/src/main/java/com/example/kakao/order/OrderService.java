@@ -1,6 +1,7 @@
 package com.example.kakao.order;
 
 import com.example.kakao._core.errors.exception.Exception400;
+import com.example.kakao._core.errors.exception.Exception401;
 import com.example.kakao.cart.Cart;
 import com.example.kakao.cart.CartJPARepository;
 import com.example.kakao.cart.CartRequest;
@@ -9,6 +10,7 @@ import com.example.kakao.order.item.Item;
 import com.example.kakao.order.item.ItemJPARepository;
 import com.example.kakao.product.option.Option;
 import com.example.kakao.user.User;
+import com.example.kakao.user.UserJPARepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-@Transactional(readOnly = true)
+
 @RequiredArgsConstructor
 @Service
 public class OrderService {
@@ -25,6 +27,8 @@ public class OrderService {
     private final CartJPARepository cartJPARepository;
     private final ItemJPARepository itemJPARepository;
 
+
+    @Transactional
     public OrderResponse.SaveDTO save(User user) {
         List<Cart> orderItemList = cartJPARepository.findAllByUserId(user.getId());
 
@@ -40,16 +44,21 @@ public class OrderService {
             itemJPARepository.save(item);
         }
 
+        cartJPARepository.deleteByUserId(user.getId());
+
         return new OrderResponse.SaveDTO(order, orderItemList);
     }
 
-    public OrderResponse.FindByIdDTO findById(int orderItemId) {
+    @Transactional(readOnly = true)
+    public OrderResponse.FindByIdDTO findById(int orderItemId, User user) {
 
         if (orderItemId <= 0) {
             throw new Exception400("존재하지 않는 주문 아이디입니다. : " + orderItemId);
         }
 
-        Order order = orderJPARepository.findById(orderItemId);
+        List<Order> orderList = orderJPARepository.findAllUserId(user.getId());
+
+        Order order = orderList.get(orderItemId-1);
 
         if (order == null) {
             throw new Exception400("존재하지 않는 주문 결과입니다. : " + order);
