@@ -20,6 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 public class ProductRestControllerTest extends MyRestDoc {
 
+    // 전체 상품 목록 조회
     @Test
     public void findAll_test() throws Exception {
         // given teardown.sql
@@ -43,6 +44,7 @@ public class ProductRestControllerTest extends MyRestDoc {
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
+    // 개별 상품 상세 조회
     @Test
     public void findById_test() throws Exception {
         // given teardown.sql
@@ -64,6 +66,28 @@ public class ProductRestControllerTest extends MyRestDoc {
         resultActions.andExpect(jsonPath("$.response.description").value(""));
         resultActions.andExpect(jsonPath("$.response.image").value("/images/1.jpg"));
         resultActions.andExpect(jsonPath("$.response.price").value(1000));
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
+    }
+
+    // 찾을 수 없는 상품 조회
+    @Test
+    public void notFoundItem_test() throws Exception {
+        // given teardown.sql
+        Integer id = 100;
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                get("/products/{id}", id)
+        );
+
+        // console
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : "+responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("false"));
+        resultActions.andExpect(jsonPath("$.error.message").value("해당 상품을 찾을 수 없습니다 : " + id));
+        resultActions.andExpect(jsonPath("$.error.status").value(404));
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 }

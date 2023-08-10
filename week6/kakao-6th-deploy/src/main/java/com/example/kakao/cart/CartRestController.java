@@ -18,7 +18,7 @@ import java.util.List;
 @RestController
 public class CartRestController {
 
-    private final CartService cartListService;
+    private final CartService cartService;
 
     /**
      * [
@@ -36,27 +36,17 @@ public class CartRestController {
     // /carts/add
     @PostMapping("/carts/add")
     public ResponseEntity<?> addCartList(@RequestBody @Valid List<CartRequest.SaveDTO> requestDTOs, Errors errors, @AuthenticationPrincipal CustomUserDetails userDetails) {
-        cartListService.addCartList(requestDTOs, userDetails.getUser());
-        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(null);
-        return ResponseEntity.ok(apiResult);
+        cartService.addCartList(requestDTOs, userDetails.getUser());
+        return ResponseEntity.ok(ApiUtils.success(null));
     }
 
     // (기능7) 장바구니 조회 - (주문화면) GET
     // /carts
     @GetMapping("/carts")
     public ResponseEntity<?> findAll(@AuthenticationPrincipal CustomUserDetails userDetails) {
-        CartResponse.FindAllDTO responseDTO = cartListService.findAll(userDetails.getUser());
-        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(responseDTO);
-        return ResponseEntity.ok(apiResult);
+        CartResponse.FindAllDTO responseDTO = cartService.findAll(userDetails.getUser());
+        return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
-
-    @GetMapping("/carts/v2")
-    public ResponseEntity<?> findAllv2(@AuthenticationPrincipal CustomUserDetails userDetails) {
-        CartResponse.FindAllDTOv2 responseDTO = cartListService.findAllv2(userDetails.getUser());
-        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(responseDTO);
-        return ResponseEntity.ok(apiResult);
-    }
-
 
     /**
      * [
@@ -74,8 +64,7 @@ public class CartRestController {
     // /carts/update
     @PostMapping("/carts/update")
     public ResponseEntity<?> update(@RequestBody @Valid List<CartRequest.UpdateDTO> requestDTOs, Errors errors, @AuthenticationPrincipal CustomUserDetails userDetails) {
-        CartResponse.UpdateDTO responseDTO = cartListService.update(requestDTOs, userDetails.getUser());
-        ApiUtils.ApiResult<?> apiResult = ApiUtils.success(responseDTO);
-        return ResponseEntity.ok(apiResult);
+        CartResponse.UpdateDTO responseDTO = cartService.update(requestDTOs,userDetails.getUser());
+        return ResponseEntity.ok(ApiUtils.success(responseDTO));
     }
 }

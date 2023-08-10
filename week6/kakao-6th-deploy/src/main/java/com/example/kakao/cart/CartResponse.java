@@ -10,38 +10,7 @@ import java.util.stream.Collectors;
 
 public class CartResponse {
 
-    @Getter
-    @Setter
-    public static class FindAllDTOv2 {
-        private List<ProductDTO> products;
-
-        public FindAllDTOv2(List<Cart> cartList) {
-            this.products = cartList.stream().map(cart -> new ProductDTO(cart)).collect(Collectors.toList());
-        }
-
-        @Getter
-        @Setter
-        public class ProductDTO {
-            private int productId;
-            private String productName;
-            private int cartId;
-            private String optionName;
-            private int quantity;
-            private int price;
-
-            public ProductDTO(Cart cart) {
-                this.productId = cart.getOption().getProduct().getId();
-                this.productName = cart.getOption().getProduct().getProductName();
-                this.cartId = cart.getId();
-                this.optionName = cart.getOption().getOptionName();
-                this.quantity = cart.getQuantity();
-                this.price = cart.getPrice();
-            }
-        }
-    }
-
-    @Getter
-    @Setter
+    @Getter @Setter
     public static class FindAllDTO {
         private List<ProductDTO> products;
         private int totalPrice;
@@ -55,8 +24,7 @@ public class CartResponse {
         }
 
 
-        @Getter
-        @Setter
+        @Getter @Setter
         public class ProductDTO {
             private int id;
             private String productName;
@@ -72,8 +40,7 @@ public class CartResponse {
                         .collect(Collectors.toList());
             }
 
-            @Getter
-            @Setter
+            @Getter @Setter
             public class CartDTO {
                 private int id;
                 private OptionDTO option;
@@ -87,8 +54,7 @@ public class CartResponse {
                     this.price = cart.getOption().getPrice() * cart.getQuantity();
                 }
 
-                @Getter
-                @Setter
+                @Getter @Setter
                 public class OptionDTO {
                     private int id;
                     private String optionName;
@@ -104,8 +70,7 @@ public class CartResponse {
         }
     }
 
-    @Getter
-    @Setter
+    @Getter @Setter
     public static class UpdateDTO {
         private List<CartDTO> carts;
         private int totalPrice;
@@ -115,9 +80,7 @@ public class CartResponse {
             this.totalPrice = cartList.stream().mapToInt(cart -> cart.getPrice()).sum();
         }
 
-
-        @Getter
-        @Setter
+        @Getter @Setter
         public class CartDTO {
             private int cartId;
             private int optionId;
@@ -134,5 +97,4 @@ public class CartResponse {
             }
         }
     }
-
 }

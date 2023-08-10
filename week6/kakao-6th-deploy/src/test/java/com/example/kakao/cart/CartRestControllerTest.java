@@ -30,6 +30,7 @@ public class CartRestControllerTest extends MyRestDoc {
     @Autowired
     private ObjectMapper om;
 
+    // 장바구니 담기
     @WithUserDetails(value = "ssarmango@nate.com")
     @Test
     public void addCartList_test() throws Exception {
@@ -57,6 +58,7 @@ public class CartRestControllerTest extends MyRestDoc {
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
+    // 장바구니 조회
     @WithUserDetails(value = "ssarmango@nate.com")
     @Test
     public void findAll_test() throws Exception {
@@ -85,6 +87,7 @@ public class CartRestControllerTest extends MyRestDoc {
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
+    // 장바구니 업데이트 (주문하기)
     @WithUserDetails(value = "ssarmango@nate.com")
     @Test
     public void update_test() throws Exception {
@@ -118,4 +121,134 @@ public class CartRestControllerTest extends MyRestDoc {
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
 
+    // 동일한 옵션을 담을 경우
+    // [ { optionId:1, quantity:5 }, { optionId:1, quantity:10 } ]
+    @WithUserDetails(value = "ssarmango@nate.com")
+    @Test
+    public void addCartSameItem_test() throws Exception {
+        // given
+        List<CartRequest.SaveDTO> requestDTOs = new ArrayList<>();
+        CartRequest.SaveDTO item1 = new CartRequest.SaveDTO();
+        item1.setOptionId(1);
+        item1.setQuantity(5);
+        requestDTOs.add(item1);
+
+        CartRequest.SaveDTO item2 = new CartRequest.SaveDTO();
+        item2.setOptionId(1);
+        item2.setQuantity(10);
+        requestDTOs.add(item2);
+
+        String requestBody = om.writeValueAsString(requestDTOs);
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/carts/add")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("false"));
+        resultActions.andExpect(jsonPath("$.error.message").value("동일한 옵션을 선택할 수 없습니다."));
+        resultActions.andExpect(jsonPath("$.error.status").value(400));
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
+    }
+
+    // 찾을 수 없는 옵션인 경우
+    @WithUserDetails(value = "ssarmango@nate.com")
+    @Test
+    public void addCartNotFoundOption_test() throws Exception {
+        // given
+        List<CartRequest.SaveDTO> requestDTOs = new ArrayList<>();
+        CartRequest.SaveDTO item = new CartRequest.SaveDTO();
+        item.setOptionId(100);
+        item.setQuantity(5);
+        requestDTOs.add(item);
+
+        String requestBody = om.writeValueAsString(requestDTOs);
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/carts/add")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("false"));
+        resultActions.andExpect(jsonPath("$.error.message").value("해당 옵션을 찾을 수 없습니다 : " + 100));
+        resultActions.andExpect(jsonPath("$.error.status").value(404));
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
+    }
+
+    // 동일한 장바구니 아이디가 들어올 경우
+    @WithUserDetails(value = "ssarmango@nate.com")
+    @Test
+    public void updateSameCartId_test() throws Exception {
+        // given
+        List<CartRequest.UpdateDTO> requestDTOs = new ArrayList<>();
+        CartRequest.UpdateDTO item1 = new CartRequest.UpdateDTO();
+        item1.setCartId(1);
+        item1.setQuantity(5);
+        requestDTOs.add(item1);
+
+        CartRequest.UpdateDTO item2 = new CartRequest.UpdateDTO();
+        item2.setCartId(1);
+        item2.setQuantity(10);
+        requestDTOs.add(item2);
+
+        String requestBody = om.writeValueAsString(requestDTOs);
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/carts/update")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("false"));
+        resultActions.andExpect(jsonPath("$.error.message").value("동일한 장바구니 요청입니다."));
+        resultActions.andExpect(jsonPath("$.error.status").value(400));
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
+    }
+
+    // 유저 장바구니에 없는 cartId가 들어올 경우
+    @WithUserDetails(value = "ssarmango@nate.com")
+    @Test
+    public void updateNotFoundCartId_test() throws Exception {
+        // given
+        List<CartRequest.UpdateDTO> requestDTOs = new ArrayList<>();
+        CartRequest.UpdateDTO item = new CartRequest.UpdateDTO();
+        item.setCartId(100);
+        item.setQuantity(5);
+        requestDTOs.add(item);
+
+        String requestBody = om.writeValueAsString(requestDTOs);
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/carts/update")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        );
+
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // verify
+        resultActions.andExpect(jsonPath("$.success").value("false"));
+        resultActions.andExpect(jsonPath("$.error.message").value("유효하지 않은 장바구니입니다."));
+        resultActions.andExpect(jsonPath("$.error.status").value(404));
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
+    }
 }
