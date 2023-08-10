@@ -1,0 +1,254 @@
+= 카카오 쇼핑하기 RestAPI
+Metacoding <getinthere@naver.com>
+
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+:product: product-rest-controller-test
+:cart: cart-rest-controller-test
+
+:toc: left
+:toclevels: 2
+:source-highlighter: highlightjs
+
+
+
+== 상품 Products
+
+=== 전체 상품 목록 조회
+* param : page={number}
+* param의 디폴트 값은 0이다.
+
+==== 요청 예시
+include::{snippets}/{product}/find-all_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{product}/find-all_test/response-body.adoc[]
+
+=== 개별 상품 상세 조회
+
+==== 요청 예시
+include::{snippets}/{product}/find-by-id_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{product}/find-by-id_test/response-body.adoc[]
+
+=== 개별 상품 상세 조회 실패 예시
+* 없는 상품을 조회함.
+
+==== 요청 예시
+include::{snippets}/{product}/find-by-id_fail_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{product}/find-by-id_fail_test/http-response.adoc[]
+
+
+== 사용자 User
+
+=== 이메일 중복 체크
+
+==== 요청 예시
+include::{snippets}/user-rest-controller-test/check_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/user-rest-controller-test/check_test/http-response.adoc[]
+
+
+=== 이메일 중복 체크 실패 예시 1
+* 동일한 이메일이 존재함.
+
+==== 요청 예시
+include::{snippets}/user-rest-controller-test/check_fail_test1/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/user-rest-controller-test/check_fail_test1/http-response.adoc[]
+
+
+=== 이메일 중복 체크 실패 예시 2
+* 이메일 형식이 올바르지 않음.
+
+==== 요청 예시
+include::{snippets}/user-rest-controller-test/check_fail_test2/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/user-rest-controller-test/check_fail_test2/http-response.adoc[]
+
+
+=== 회원가입
+
+==== 요청 예시
+include::{snippets}/user-rest-controller-test/join_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/user-rest-controller-test/join_test/http-response.adoc[]
+
+
+=== 회원가입 실패 예시 1
+* 비밀번호 형식이 올바르지 않음.
+
+==== 요청 예시
+include::{snippets}/user-rest-controller-test/join_fail_test1/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/user-rest-controller-test/join_fail_test1/http-response.adoc[]
+
+
+=== 회원가입 실패 예시 2
+* 동일한 이메일이 이미 존재함.
+
+==== 요청 예시
+include::{snippets}/user-rest-controller-test/join_fail_test2/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/user-rest-controller-test/join_fail_test2/http-response.adoc[]
+
+=== 회원가입 실패 예시 3
+* 이메일 형식으로 작성하지 않음.
+
+==== 요청 예시
+include::{snippets}/user-rest-controller-test/join_fail_test3/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/user-rest-controller-test/join_fail_test3/http-response.adoc[]
+
+
+=== 회원가입 실패 예시 4
+* 비밀번호 형식이 잘못됨.
+
+==== 요청 예시
+include::{snippets}/user-rest-controller-test/join_fail_test4/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/user-rest-controller-test/join_fail_test4/http-response.adoc[]
+
+
+=== 로그인
+
+==== 요청 예시
+include::{snippets}/user-rest-controller-test/login_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/user-rest-controller-test/login_test/http-response.adoc[]
+
+
+=== 로그인 실패 예시 1
+* 없는 이메일로 로그인을 시도함.
+
+==== 요청 예시
+include::{snippets}/user-rest-controller-test/login_fail_test1/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/user-rest-controller-test/login_fail_test1/http-response.adoc[]
+
+
+=== 로그인 실패 예시 2
+* 이메일 형식으로 작성하지않음.
+
+==== 요청 예시
+include::{snippets}/user-rest-controller-test/login_fail_test2/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/user-rest-controller-test/login_fail_test2/http-response.adoc[]
+
+
+=== 로그인 실패 예시 3
+* 패스워드 형식이 잘못됨.
+
+==== 요청 예시
+include::{snippets}/user-rest-controller-test/login_fail_test3/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/user-rest-controller-test/login_fail_test3/http-response.adoc[]
+
+
+=== 로그인 실패 예시 4
+* 잘못된 패스워드를 입력함.
+
+==== 요청 예시
+include::{snippets}/user-rest-controller-test/login_fail_test4/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/user-rest-controller-test/login_fail_test4/http-response.adoc[]
+
+
+
+== 장바구니 Carts
+
+=== 장바구니 담기
+
+==== 요청 예시
+include::{snippets}/{cart}/add-cart-list_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/add-cart-list_test/response-body.adoc[]
+
+=== 장바구니 담기 실패 예시
+* 없는 옵션 번호를 카트에 담음.
+
+==== 요청 예시
+include::{snippets}/{cart}/add_no_option_fail_test/http-request.adoc[]
+==== 응답 예시
+include::{snippets}/{cart}/add_no_option_fail_test/http-response.adoc[]
+
+
+=== 장바구니 조회
+
+==== 요청 예시
+include::{snippets}/{cart}/find-all_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/find-all_test/response-body.adoc[]
+
+
+=== 장바구니 수정
+* 주문하기를 할 때 장바구니 데이터를 update하고 그 결과를 응답받는다.
+* 결재페이지에서 이 응답을 사용해도 되고, 다시 장바구니 조회 API를 사용해도 된다.
+
+==== 요청 예시
+include::{snippets}/{cart}/update_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/update_test/response-body.adoc[]
+
+
+
+== 주문 Orders
+
+=== 결재하기
+
+==== 요청 예시
+include::{snippets}/order-rest-controller-test/save-order_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/order-rest-controller-test/save-order_test/http-response.adoc[]
+
+
+=== 결재하기 실패 예시
+* 장바구니가 비어있음.
+
+==== 요청 예시
+include::{snippets}/order-rest-controller-test/save-order_fail_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/order-rest-controller-test/save-order_fail_test/http-response.adoc[]
+
+
+=== 주문 결과 확인
+
+==== 요청 예시
+include::{snippets}/order-rest-controller-test/find-by-id_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/order-rest-controller-test/find-by-id_test/http-response.adoc[]
+
+
+=== 주문 결과 확인 실패 예시
+* 없는 주문번호를 조회함.
+
+==== 요청 예시
+include::{snippets}/order-rest-controller-test/find-by-id_fail_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/order-rest-controller-test/find-by-id_fail_test/http-response.adoc[]
+
