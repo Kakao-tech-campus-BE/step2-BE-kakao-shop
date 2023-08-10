@@ -1,0 +1,287 @@
+= 카카오 쇼핑하기 RestAPI
+Metacoding <getinthere@naver.com>
+:toc: left
+:toclevels: 2
+:source-highlighter: highlightjs
+
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+:product: product-rest-controller-test
+:cart: cart-rest-controller-test
+:order: order-rest-controller-test
+
+:user-check: check
+:user-login: login
+:user-join: join
+
+:user-fail-cases: fail-cases
+
+
+
+== 상품
+
+=== 전체 상품 목록 조회
+* param : page={number}
+* param의 디폴트 값은 0이다.
+
+==== 요청 예시
+include::{snippets}/{product}/find-all_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{product}/find-all_test/response-body.adoc[]
+
+=== 개별 상품 상세 조회
+
+==== 요청 예시
+include::{snippets}/{product}/find-by-id_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{product}/find-by-id_test/response-body.adoc[]
+
+== 상품 실패 예시
+
+=== 개별 상품 상세 조회 실패 예시 1
+
+==== 요청 예시
+include::{snippets}/{product}/find-by-id_product-id-not-found_fail_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{product}/find-by-id_product-id-not-found_fail_test/response-body.adoc[]
+
+== 장바구니
+
+=== 장바구니 담기
+
+==== 요청 예시
+include::{snippets}/{cart}/add-cart-list_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/add-cart-list_test/response-body.adoc[]
+
+=== 장바구니 수정
+* 주문하기를 할 때 장바구니 데이터를 update하고 그 결과를 응답받는다.
+* 결제페이지에서 이 응답을 사용해도 되고, 다시 장바구니 조회 API를 사용해도 된다.
+
+==== 요청 예시
+include::{snippets}/{cart}/update_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/update_test/response-body.adoc[]
+
+=== 장바구니 조회
+
+==== 요청 예시
+include::{snippets}/{cart}/find-all_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/find-all_test/response-body.adoc[]
+
+== 장바구니 실패 예시
+
+=== 장바구니 담기 실패 예시 1
+
+==== 요청 예시
+include::{snippets}/{cart}/add-cart-list_same-option_fail_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/add-cart-list_same-option_fail_test/response-body.adoc[]
+
+
+=== 장바구니 수정 실패 예시 1
+* 장바구니에 상품을 담지 않고 수정을 시도하는 경우이다.
+
+==== 요청 예시
+include::{snippets}/{cart}/update_empty-cart_fail_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/update_empty-cart_fail_test/response-body.adoc[]
+
+=== 장바구니 수정 실패 예시 2
+* 이 사용자가 가지고 있지 않은 cart 주문번호의 수정 요청이 들어온 경우이다.
+
+==== 요청 예시
+include::{snippets}/{cart}/update_not-valid-cart-id-inputs_fail_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/update_not-valid-cart-id-inputs_fail_test/response-body.adoc[]
+
+=== 장바구니 수정 실패 예시 3
+
+==== 요청 예시
+include::{snippets}/{cart}/update_same-cart-id-inputs_fail_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/update_same-cart-id-inputs_fail_test/response-body.adoc[]
+
+== 주문
+
+=== 주문 인서트
+
+==== 요청 예시
+include::{snippets}/{order}/save_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{order}/save_test/response-body.adoc[]
+
+=== 주문 결과 확인
+
+==== 요청 예시
+include::{snippets}/{order}/find-by-order-id_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{order}/find-by-order-id_test/response-body.adoc[]
+
+== 주문 실패 예시
+
+=== 주문 인서트 실패 예시 1
+* 장바구니가 비어있을 때 주문 요청을 한 경우이다.
+
+==== 요청 예시
+include::{snippets}/{order}/save_empty-cart_fail_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{order}/save_empty-cart_fail_test/response-body.adoc[]
+
+
+=== 주문 결과 확인 실패 예시 1
+
+==== 요청 예시
+include::{snippets}/{order}/find-by-order-id_order-id-not-found_fail_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{order}/find-by-order-id_order-id-not-found_fail_test/response-body.adoc[]
+
+=== 주문 결과 확인 실패 예시 2
+* 한 사용자가 다른 사용자의 주문 번호를 요청하는 경우이다.
+
+==== 요청 예시
+include::{snippets}/{order}/find-by-order-id_not-authorized-access-to-order-history_fail_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{order}/find-by-order-id_not-authorized-access-to-order-history_fail_test/response-body.adoc[]
+
+== 사용자
+
+=== 이메일 중복 체크
+
+==== 요청 예시
+include::{snippets}/{user-check}/check_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user-check}/check_test/response-body.adoc[]
+
+=== 회원가입
+
+==== 요청 예시
+include::{snippets}/{user-join}/join_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user-join}/join_test/response-body.adoc[]
+
+=== 로그인
+
+==== 요청 예시
+include::{snippets}/{user-login}/login_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user-login}/login_test/response-body.adoc[]
+
+== 사용자 실패 예시
+
+=== 이메일 중복 체크 실패 예시 1
+
+==== 요청 예시
+include::{snippets}/{user-fail-cases}/check_already-exists_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user-fail-cases}/check_already-exists_test/response-body.adoc[]
+
+=== 이메일 중복 체크 실패 예시 2
+
+==== 요청 예시
+include::{snippets}/{user-fail-cases}/check_invalid-email-form_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user-fail-cases}/check_invalid-email-form_test/response-body.adoc[]
+
+=== 회원가입 실패 예시 1
+
+==== 요청 예시
+include::{snippets}/{user-fail-cases}/join_already-exists-email_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user-fail-cases}/join_already-exists-email_test/response-body.adoc[]
+
+=== 회원가입 실패 예시 2
+
+==== 요청 예시
+include::{snippets}/{user-fail-cases}/join_invalid-email-form_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user-fail-cases}/join_invalid-email-form_test/response-body.adoc[]
+
+=== 회원가입 실패 예시 3
+
+==== 요청 예시
+include::{snippets}/{user-fail-cases}/join_invalid-password-form_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user-fail-cases}/join_invalid-password-form_test/response-body.adoc[]
+
+=== 회원가입 실패 예시 4
+
+==== 요청 예시
+include::{snippets}/{user-fail-cases}/join_invalid-password-length_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user-fail-cases}/join_invalid-password-length_test/response-body.adoc[]
+
+=== 회원가입 실패 예시 5
+
+==== 요청 예시
+include::{snippets}/{user-fail-cases}/join_invalid-username-length_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user-fail-cases}/join_invalid-username-length_test/response-body.adoc[]
+
+=== 로그인 실패 예시 1
+
+==== 요청 예시
+include::{snippets}/{user-fail-cases}/login_invalid-email-form_fail_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user-fail-cases}/login_invalid-email-form_fail_test/response-body.adoc[]
+
+=== 로그인 실패 예시 2
+
+==== 요청 예시
+include::{snippets}/{user-fail-cases}/login_invalid-password-form_fail_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user-fail-cases}/login_invalid-password-form_fail_test/response-body.adoc[]
+
+==== 로그인 실패 예시 3
+
+==== 요청 예시
+include::{snippets}/{user-fail-cases}/login_invalid-password-length_fail_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user-fail-cases}/login_invalid-password-length_fail_test/response-body.adoc[]
+
+=== 로그인 실패 예시 4
+
+==== 요청 예시
+include::{snippets}/{user-fail-cases}/login_not-user-email_fail_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user-fail-cases}/login_not-user-email_fail_test/response-body.adoc[]
+
+=== 로그인 실패 예시 5
+
+==== 요청 예시
+include::{snippets}/{user-fail-cases}/login_wrong-password_fail_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user-fail-cases}/login_wrong-password_fail_test/response-body.adoc[]
