@@ -1,0 +1,15 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+Content-Length: 152
+
+{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "동일한 상품이 이미 담겨있습니다. : 1",
+    "status" : 400
+  }
+}
+----
