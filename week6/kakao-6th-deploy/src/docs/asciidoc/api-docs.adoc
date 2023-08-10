@@ -1,0 +1,122 @@
+= 카카오 쇼핑하기 RestAPI
+Metacoding <getinthere@naver.com>
+
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+:product: product-rest-controller-test
+:cart: cart-rest-controller-test
+:order: order-rest-controller-test
+
+:toc: left
+:toclevels: 2
+:source-highlighter: highlightjs
+
+== 상품
+
+=== 전체 상품 목록 조회
+* param : page={number}
+* param의 디폴트 값은 0이다.
+
+==== 요청 예시
+include::{snippets}/{product}/find_products/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{product}/find_products/response-body.adoc[]
+
+=== 개별 상품 상세 조회
+
+==== 요청 예시
+include::{snippets}/{product}/find_product_detail_success/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{product}/find_product_detail_success/response-body.adoc[]
+
+=== 개별 상품 상세 조회 실패
+* 존재하지 않는 상품 id로 조회 요청 시 에러 응답을 받는다.
+
+==== 요청 예시
+include::{snippets}/{product}/find_product_detail_fail/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{product}/find_product_detail_fail/response-body.adoc[]
+
+== 장바구니
+
+=== 장바구니 담기
+
+==== 요청 예시
+include::{snippets}/{cart}/save_cart/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/save_cart/response-body.adoc[]
+
+=== 장바구니 실패
+* 존재하지 않는 옵션으로 장바구니 담기에 요청하여 에러 응답을 받는다.
+
+==== 요청 예시
+include::{snippets}/{cart}/save_cart_fail_not_found_option/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/save_cart_fail_not_found_option/response-body.adoc[]
+
+=== 장바구니 조회
+
+==== 요청 예시
+include::{snippets}/{cart}/find_cart/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/find_cart/response-body.adoc[]
+
+=== 장바구니 수정
+* 주문하기를 할 때 장바구니 데이터를 update하고 그 결과를 응답받는다.
+* 결재페이지에서 이 응답을 사용해도 되고, 다시 장바구니 조회 API를 사용해도 된다.
+
+==== 요청 예시
+include::{snippets}/{cart}/update_cart_success/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/update_cart_success/response-body.adoc[]
+
+=== 장바구니 수정 실패 1
+* 존재하지 않는 장바구니 id를 넘겨주면 에러 응답을 받는다.
+
+==== 요청 예시
+include::{snippets}/{cart}/update_cart_fail_not_found_cart/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/update_cart_fail_not_found_cart/response-body.adoc[]
+
+=== 장바구니 수정 실패 2
+* 한 요청에 중복된 cartId를 보내주어 에러 응답을 받는다.
+
+==== 요청 예시
+include::{snippets}/{cart}/update_cart_fail_duplicated_option/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/update_cart_fail_duplicated_option/response-body.adoc[]
+
+== 결제
+==== 요청 예시
+include::{snippets}/{order}/order_save/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{order}/order_save/response-body.adoc[]
+
+=== 결제 요청 성공
+
+==== 요청 예시
+include::{snippets}/{order}/order_find-by-id_success/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{order}/order_find-by-id_success/response-body.adoc[]
+
+=== 결제 요청 실패
+* 존재하지 않는 주문 id로 주문 조회 요청 시 에러 응답을 받는다.
+
+==== 요청 예시
+include::{snippets}/{order}/order_find-by-id_fail/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{order}/order_find-by-id_fail/response-body.adoc[]
