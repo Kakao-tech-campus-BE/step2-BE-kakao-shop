@@ -1,0 +1,33 @@
+[source,options="nowrap"]
+----
+{
+  "success" : true,
+  "response" : {
+    "id" : 1,
+    "products" : [ {
+      "productName" : "기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전",
+      "items" : [ {
+        "id" : 1,
+        "quantity" : 5,
+        "price" : 50000,
+        "optionName" : "01. 슬라이딩 지퍼백 크리스마스에디션 4종"
+      }, {
+        "id" : 2,
+        "quantity" : 1,
+        "price" : 10900,
+        "optionName" : "02. 슬라이딩 지퍼백 플라워에디션 5종"
+      } ]
+    }, {
+      "productName" : "바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종",
+      "items" : [ {
+        "id" : 3,
+        "quantity" : 5,
+        "price" : 250000,
+        "optionName" : "선택02_바른곡물효소누룽지맛 6박스"
+      } ]
+    } ],
+    "totalPrice" : 310900
+  },
+  "error" : null
+}
+----

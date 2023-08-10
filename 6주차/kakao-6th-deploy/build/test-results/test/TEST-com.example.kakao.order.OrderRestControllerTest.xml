@@ -1,0 +1,576 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.kakao.order.OrderRestControllerTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2023-08-03T03:08:24" hostname="gim-yuseon-ui-MacBookPro-2.local" time="0.385">
+  <properties/>
+  <testcase name="saveOrderCartEmpty_test()" classname="com.example.kakao.order.OrderRestControllerTest" time="0.122"/>
+  <testcase name="saveOrder_test()" classname="com.example.kakao.order.OrderRestControllerTest" time="0.142"/>
+  <testcase name="findOrderById_test()" classname="com.example.kakao.order.OrderRestControllerTest" time="0.117"/>
+  <system-out><![CDATA[2023-08-03 12:08:24.357  INFO 8406 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.example.kakao.order.OrderRestControllerTest], using SpringBootContextLoader
+2023-08-03 12:08:24.358  INFO 8406 --- [    Test worker] o.s.t.c.support.AbstractContextLoader    : Could not detect default resource locations for test class [com.example.kakao.order.OrderRestControllerTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+2023-08-03 12:08:24.358  INFO 8406 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.kakao.order.OrderRestControllerTest]: OrderRestControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2023-08-03 12:08:24.378  INFO 8406 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.kakao.KakaoApplication for test class com.example.kakao.order.OrderRestControllerTest
+2023-08-03 12:08:24.380  INFO 8406 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener, org.springframework.security.test.context.support.ReactorContextTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+2023-08-03 12:08:24.381  INFO 8406 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@58fa8762, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@8cd00bc, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@5035c23c, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@4149067d, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@4d8458a1, org.springframework.test.context.support.DirtiesContextTestExecutionListener@2d2c794d, org.springframework.test.context.transaction.TransactionalTestExecutionListener@53f67af6, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@5a85f41b, org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener@35abfeba, org.springframework.test.context.event.EventPublishingTestExecutionListener@7b031f53, org.springframework.security.test.context.support.ReactorContextTestExecutionListener@1b42eb0f, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@6e92f150, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@4268c16, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@673ce246, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@6baa673d, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@124b1369, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@22bd6b0a]
+Hibernate: 
+    select
+        user0_.id as id1_6_,
+        user0_.email as email2_6_,
+        user0_.password as password3_6_,
+        user0_.roles as roles4_6_,
+        user0_.username as username5_6_ 
+    from
+        user_tb user0_ 
+    where
+        user0_.email=?
+2023-08-03 12:08:24.433 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [ssar@nate.com]
+2023-08-03 12:08:24.434 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_6_] : [INTEGER]) - [1]
+2023-08-03 12:08:24.434 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([email2_6_] : [VARCHAR]) - [ssar@nate.com]
+2023-08-03 12:08:24.434 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([password3_6_] : [VARCHAR]) - [{bcrypt}$2a$10$8H0OT8wgtALJkig6fmypi.Y7jzI5Y7W9PGgRKqnVeS2cLWGifwHF2]
+2023-08-03 12:08:24.434 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([roles4_6_] : [VARCHAR]) - [ROLE_USER]
+2023-08-03 12:08:24.435 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([username5_6_] : [VARCHAR]) - [ssarmango]
+2023-08-03 12:08:24.437  INFO 8406 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-03 12:08:24.437  INFO 8406 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-03 12:08:24.440  INFO 8406 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 3 ms
+Hibernate: 
+    select
+        cart0_.id as id1_0_,
+        cart0_.option_id as option_i4_0_,
+        cart0_.price as price2_0_,
+        cart0_.quantity as quantity3_0_,
+        cart0_.user_id as user_id5_0_ 
+    from
+        cart_tb cart0_ 
+    left outer join
+        user_tb user1_ 
+            on cart0_.user_id=user1_.id 
+    where
+        user1_.id=?
+2023-08-03 12:08:24.444 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [1]
+2023-08-03 12:08:24.444 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_0_] : [INTEGER]) - [1]
+2023-08-03 12:08:24.445 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_i4_0_] : [INTEGER]) - [1]
+2023-08-03 12:08:24.445 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price2_0_] : [INTEGER]) - [50000]
+2023-08-03 12:08:24.446 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([quantity3_0_] : [INTEGER]) - [5]
+2023-08-03 12:08:24.448 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([user_id5_0_] : [INTEGER]) - [1]
+2023-08-03 12:08:24.450 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_0_] : [INTEGER]) - [2]
+2023-08-03 12:08:24.451 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_i4_0_] : [INTEGER]) - [2]
+2023-08-03 12:08:24.451 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price2_0_] : [INTEGER]) - [10900]
+2023-08-03 12:08:24.451 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([quantity3_0_] : [INTEGER]) - [1]
+2023-08-03 12:08:24.452 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([user_id5_0_] : [INTEGER]) - [1]
+2023-08-03 12:08:24.452 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_0_] : [INTEGER]) - [3]
+2023-08-03 12:08:24.452 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_i4_0_] : [INTEGER]) - [16]
+2023-08-03 12:08:24.452 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price2_0_] : [INTEGER]) - [250000]
+2023-08-03 12:08:24.453 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([quantity3_0_] : [INTEGER]) - [5]
+2023-08-03 12:08:24.453 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([user_id5_0_] : [INTEGER]) - [1]
+Hibernate: 
+    select
+        cart0_.id as id1_0_,
+        cart0_.option_id as option_i4_0_,
+        cart0_.price as price2_0_,
+        cart0_.quantity as quantity3_0_,
+        cart0_.user_id as user_id5_0_ 
+    from
+        cart_tb cart0_ 
+    left outer join
+        user_tb user1_ 
+            on cart0_.user_id=user1_.id 
+    where
+        user1_.id=?
+2023-08-03 12:08:24.456 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [1]
+2023-08-03 12:08:24.457 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_0_] : [INTEGER]) - [1]
+2023-08-03 12:08:24.457 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_0_] : [INTEGER]) - [2]
+2023-08-03 12:08:24.457 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_0_] : [INTEGER]) - [3]
+Hibernate: 
+    delete 
+    from
+        cart_tb 
+    where
+        id=?
+2023-08-03 12:08:24.458 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [1]
+Hibernate: 
+    delete 
+    from
+        cart_tb 
+    where
+        id=?
+2023-08-03 12:08:24.459 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [2]
+Hibernate: 
+    delete 
+    from
+        cart_tb 
+    where
+        id=?
+2023-08-03 12:08:24.461 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [3]
+Hibernate: 
+    select
+        cart0_.id as id1_0_,
+        cart0_.option_id as option_i4_0_,
+        cart0_.price as price2_0_,
+        cart0_.quantity as quantity3_0_,
+        cart0_.user_id as user_id5_0_ 
+    from
+        cart_tb cart0_ 
+    left outer join
+        user_tb user1_ 
+            on cart0_.user_id=user1_.id 
+    where
+        user1_.id=?
+2023-08-03 12:08:24.493 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [1]
+테스트 : {"success":false,"response":null,"error":{"message":"장바구니가 비어있습니다","status":400}}
+Hibernate: 
+    select
+        user0_.id as id1_6_,
+        user0_.email as email2_6_,
+        user0_.password as password3_6_,
+        user0_.roles as roles4_6_,
+        user0_.username as username5_6_ 
+    from
+        user_tb user0_ 
+    where
+        user0_.email=?
+2023-08-03 12:08:24.555 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [ssar@nate.com]
+2023-08-03 12:08:24.555 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_6_] : [INTEGER]) - [1]
+2023-08-03 12:08:24.556 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([email2_6_] : [VARCHAR]) - [ssar@nate.com]
+2023-08-03 12:08:24.556 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([password3_6_] : [VARCHAR]) - [{bcrypt}$2a$10$8H0OT8wgtALJkig6fmypi.Y7jzI5Y7W9PGgRKqnVeS2cLWGifwHF2]
+2023-08-03 12:08:24.556 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([roles4_6_] : [VARCHAR]) - [ROLE_USER]
+2023-08-03 12:08:24.556 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([username5_6_] : [VARCHAR]) - [ssarmango]
+2023-08-03 12:08:24.558  INFO 8406 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-03 12:08:24.559  INFO 8406 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-03 12:08:24.561  INFO 8406 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+Hibernate: 
+    select
+        cart0_.id as id1_0_,
+        cart0_.option_id as option_i4_0_,
+        cart0_.price as price2_0_,
+        cart0_.quantity as quantity3_0_,
+        cart0_.user_id as user_id5_0_ 
+    from
+        cart_tb cart0_ 
+    left outer join
+        user_tb user1_ 
+            on cart0_.user_id=user1_.id 
+    where
+        user1_.id=?
+2023-08-03 12:08:24.564 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [1]
+2023-08-03 12:08:24.565 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_0_] : [INTEGER]) - [1]
+2023-08-03 12:08:24.565 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_i4_0_] : [INTEGER]) - [1]
+2023-08-03 12:08:24.565 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price2_0_] : [INTEGER]) - [50000]
+2023-08-03 12:08:24.565 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([quantity3_0_] : [INTEGER]) - [5]
+2023-08-03 12:08:24.565 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([user_id5_0_] : [INTEGER]) - [1]
+2023-08-03 12:08:24.566 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_0_] : [INTEGER]) - [2]
+2023-08-03 12:08:24.566 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_i4_0_] : [INTEGER]) - [2]
+2023-08-03 12:08:24.566 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price2_0_] : [INTEGER]) - [10900]
+2023-08-03 12:08:24.566 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([quantity3_0_] : [INTEGER]) - [1]
+2023-08-03 12:08:24.566 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([user_id5_0_] : [INTEGER]) - [1]
+2023-08-03 12:08:24.566 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_0_] : [INTEGER]) - [3]
+2023-08-03 12:08:24.567 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_i4_0_] : [INTEGER]) - [16]
+2023-08-03 12:08:24.568 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price2_0_] : [INTEGER]) - [250000]
+2023-08-03 12:08:24.568 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([quantity3_0_] : [INTEGER]) - [5]
+2023-08-03 12:08:24.568 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([user_id5_0_] : [INTEGER]) - [1]
+Hibernate: 
+    insert 
+    into
+        order_tb
+        (id, user_id) 
+    values
+        (default, ?)
+2023-08-03 12:08:24.571 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [1]
+Hibernate: 
+    select
+        cart0_.id as id1_0_,
+        cart0_.option_id as option_i4_0_,
+        cart0_.price as price2_0_,
+        cart0_.quantity as quantity3_0_,
+        cart0_.user_id as user_id5_0_ 
+    from
+        cart_tb cart0_ 
+    left outer join
+        user_tb user1_ 
+            on cart0_.user_id=user1_.id 
+    where
+        user1_.id=?
+2023-08-03 12:08:24.574 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [1]
+2023-08-03 12:08:24.574 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_0_] : [INTEGER]) - [1]
+2023-08-03 12:08:24.574 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_0_] : [INTEGER]) - [2]
+2023-08-03 12:08:24.574 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_0_] : [INTEGER]) - [3]
+Hibernate: 
+    insert 
+    into
+        item_tb
+        (id, option_id, order_id, price, quantity) 
+    values
+        (default, ?, ?, ?, ?)
+2023-08-03 12:08:24.578 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [1]
+2023-08-03 12:08:24.578 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [2]
+2023-08-03 12:08:24.578 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [50000]
+2023-08-03 12:08:24.578 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [5]
+Hibernate: 
+    insert 
+    into
+        item_tb
+        (id, option_id, order_id, price, quantity) 
+    values
+        (default, ?, ?, ?, ?)
+2023-08-03 12:08:24.580 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [2]
+2023-08-03 12:08:24.580 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [2]
+2023-08-03 12:08:24.580 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [10900]
+2023-08-03 12:08:24.580 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [1]
+Hibernate: 
+    insert 
+    into
+        item_tb
+        (id, option_id, order_id, price, quantity) 
+    values
+        (default, ?, ?, ?, ?)
+2023-08-03 12:08:24.582 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [16]
+2023-08-03 12:08:24.582 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [2] as [INTEGER] - [2]
+2023-08-03 12:08:24.582 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [3] as [INTEGER] - [250000]
+2023-08-03 12:08:24.583 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [4] as [INTEGER] - [5]
+Hibernate: 
+    select
+        cart0_.id as id1_0_,
+        cart0_.option_id as option_i4_0_,
+        cart0_.price as price2_0_,
+        cart0_.quantity as quantity3_0_,
+        cart0_.user_id as user_id5_0_ 
+    from
+        cart_tb cart0_ 
+    left outer join
+        user_tb user1_ 
+            on cart0_.user_id=user1_.id 
+    where
+        user1_.id=?
+2023-08-03 12:08:24.586 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [1]
+2023-08-03 12:08:24.586 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_0_] : [INTEGER]) - [1]
+2023-08-03 12:08:24.587 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_0_] : [INTEGER]) - [2]
+2023-08-03 12:08:24.587 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_0_] : [INTEGER]) - [3]
+Hibernate: 
+    select
+        item0_.id as id1_2_,
+        item0_.option_id as option_i4_2_,
+        item0_.order_id as order_id5_2_,
+        item0_.price as price2_2_,
+        item0_.quantity as quantity3_2_ 
+    from
+        item_tb item0_ 
+    left outer join
+        order_tb order1_ 
+            on item0_.order_id=order1_.id 
+    where
+        order1_.id=?
+2023-08-03 12:08:24.595 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [2]
+2023-08-03 12:08:24.595 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_2_] : [INTEGER]) - [4]
+2023-08-03 12:08:24.595 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_2_] : [INTEGER]) - [5]
+2023-08-03 12:08:24.596 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_2_] : [INTEGER]) - [6]
+Hibernate: 
+    select
+        option0_.id as id1_3_0_,
+        option0_.option_name as option_n2_3_0_,
+        option0_.price as price3_3_0_,
+        option0_.product_id as product_4_3_0_,
+        product1_.id as id1_5_1_,
+        product1_.description as descript2_5_1_,
+        product1_.image as image3_5_1_,
+        product1_.price as price4_5_1_,
+        product1_.product_name as product_5_5_1_ 
+    from
+        option_tb option0_ 
+    left outer join
+        product_tb product1_ 
+            on option0_.product_id=product1_.id 
+    where
+        option0_.id=?
+2023-08-03 12:08:24.599 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [1]
+2023-08-03 12:08:24.600 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_5_1_] : [INTEGER]) - [1]
+2023-08-03 12:08:24.600 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_n2_3_0_] : [VARCHAR]) - [01. 슬라이딩 지퍼백 크리스마스에디션 4종]
+2023-08-03 12:08:24.600 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price3_3_0_] : [INTEGER]) - [10000]
+2023-08-03 12:08:24.600 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_4_3_0_] : [INTEGER]) - [1]
+2023-08-03 12:08:24.601 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([descript2_5_1_] : [VARCHAR]) - []
+2023-08-03 12:08:24.601 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([image3_5_1_] : [VARCHAR]) - [/images/1.jpg]
+2023-08-03 12:08:24.602 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price4_5_1_] : [INTEGER]) - [1000]
+2023-08-03 12:08:24.602 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_5_5_1_] : [VARCHAR]) - [기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전]
+Hibernate: 
+    select
+        option0_.id as id1_3_0_,
+        option0_.option_name as option_n2_3_0_,
+        option0_.price as price3_3_0_,
+        option0_.product_id as product_4_3_0_,
+        product1_.id as id1_5_1_,
+        product1_.description as descript2_5_1_,
+        product1_.image as image3_5_1_,
+        product1_.price as price4_5_1_,
+        product1_.product_name as product_5_5_1_ 
+    from
+        option_tb option0_ 
+    left outer join
+        product_tb product1_ 
+            on option0_.product_id=product1_.id 
+    where
+        option0_.id=?
+2023-08-03 12:08:24.604 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [2]
+2023-08-03 12:08:24.605 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_5_1_] : [INTEGER]) - [1]
+2023-08-03 12:08:24.605 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_n2_3_0_] : [VARCHAR]) - [02. 슬라이딩 지퍼백 플라워에디션 5종]
+2023-08-03 12:08:24.605 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price3_3_0_] : [INTEGER]) - [10900]
+2023-08-03 12:08:24.605 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_4_3_0_] : [INTEGER]) - [1]
+Hibernate: 
+    select
+        option0_.id as id1_3_0_,
+        option0_.option_name as option_n2_3_0_,
+        option0_.price as price3_3_0_,
+        option0_.product_id as product_4_3_0_,
+        product1_.id as id1_5_1_,
+        product1_.description as descript2_5_1_,
+        product1_.image as image3_5_1_,
+        product1_.price as price4_5_1_,
+        product1_.product_name as product_5_5_1_ 
+    from
+        option_tb option0_ 
+    left outer join
+        product_tb product1_ 
+            on option0_.product_id=product1_.id 
+    where
+        option0_.id=?
+2023-08-03 12:08:24.606 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [16]
+2023-08-03 12:08:24.608 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_5_1_] : [INTEGER]) - [4]
+2023-08-03 12:08:24.608 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_n2_3_0_] : [VARCHAR]) - [선택02_바른곡물효소누룽지맛 6박스]
+2023-08-03 12:08:24.608 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price3_3_0_] : [INTEGER]) - [50000]
+2023-08-03 12:08:24.608 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_4_3_0_] : [INTEGER]) - [4]
+2023-08-03 12:08:24.609 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([descript2_5_1_] : [VARCHAR]) - []
+2023-08-03 12:08:24.609 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([image3_5_1_] : [VARCHAR]) - [/images/4.jpg]
+2023-08-03 12:08:24.609 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price4_5_1_] : [INTEGER]) - [4000]
+2023-08-03 12:08:24.609 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_5_5_1_] : [VARCHAR]) - [바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종]
+Hibernate: 
+    delete 
+    from
+        cart_tb 
+    where
+        id=?
+2023-08-03 12:08:24.614 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [1]
+Hibernate: 
+    delete 
+    from
+        cart_tb 
+    where
+        id=?
+2023-08-03 12:08:24.615 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [2]
+Hibernate: 
+    delete 
+    from
+        cart_tb 
+    where
+        id=?
+2023-08-03 12:08:24.616 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [3]
+테스트 : {"success":true,"response":{"id":2,"products":[{"productName":"기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전","items":[{"id":4,"quantity":5,"price":50000,"optionName":"01. 슬라이딩 지퍼백 크리스마스에디션 4종"},{"id":5,"quantity":1,"price":10900,"optionName":"02. 슬라이딩 지퍼백 플라워에디션 5종"}]},{"productName":"바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종","items":[{"id":6,"quantity":5,"price":250000,"optionName":"선택02_바른곡물효소누룽지맛 6박스"}]}],"totalPrice":310900},"error":null}
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /orders/save
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.example.kakao.order.OrderRestController
+           Method = com.example.kakao.order.OrderRestController#save(CustomUserDetails)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json;charset=UTF-8"]
+     Content type = application/json;charset=UTF-8
+             Body = {"success":true,"response":{"id":2,"products":[{"productName":"기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전","items":[{"id":4,"quantity":5,"price":50000,"optionName":"01. 슬라이딩 지퍼백 크리스마스에디션 4종"},{"id":5,"quantity":1,"price":10900,"optionName":"02. 슬라이딩 지퍼백 플라워에디션 5종"}]},{"productName":"바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종","items":[{"id":6,"quantity":5,"price":250000,"optionName":"선택02_바른곡물효소누룽지맛 6박스"}]}],"totalPrice":310900},"error":null}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+Hibernate: 
+    select
+        user0_.id as id1_6_,
+        user0_.email as email2_6_,
+        user0_.password as password3_6_,
+        user0_.roles as roles4_6_,
+        user0_.username as username5_6_ 
+    from
+        user_tb user0_ 
+    where
+        user0_.email=?
+2023-08-03 12:08:24.699 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [VARCHAR] - [ssar@nate.com]
+2023-08-03 12:08:24.700 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_6_] : [INTEGER]) - [1]
+2023-08-03 12:08:24.701 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([email2_6_] : [VARCHAR]) - [ssar@nate.com]
+2023-08-03 12:08:24.701 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([password3_6_] : [VARCHAR]) - [{bcrypt}$2a$10$8H0OT8wgtALJkig6fmypi.Y7jzI5Y7W9PGgRKqnVeS2cLWGifwHF2]
+2023-08-03 12:08:24.701 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([roles4_6_] : [VARCHAR]) - [ROLE_USER]
+2023-08-03 12:08:24.701 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([username5_6_] : [VARCHAR]) - [ssarmango]
+2023-08-03 12:08:24.703  INFO 8406 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-03 12:08:24.704  INFO 8406 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-03 12:08:24.705  INFO 8406 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+Hibernate: 
+    select
+        order0_.id as id1_4_0_,
+        order0_.user_id as user_id2_4_0_ 
+    from
+        order_tb order0_ 
+    where
+        order0_.id=?
+2023-08-03 12:08:24.718 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [1]
+2023-08-03 12:08:24.719 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([user_id2_4_0_] : [INTEGER]) - [1]
+Hibernate: 
+    select
+        item0_.id as id1_2_,
+        item0_.option_id as option_i4_2_,
+        item0_.order_id as order_id5_2_,
+        item0_.price as price2_2_,
+        item0_.quantity as quantity3_2_ 
+    from
+        item_tb item0_ 
+    left outer join
+        order_tb order1_ 
+            on item0_.order_id=order1_.id 
+    where
+        order1_.id=?
+2023-08-03 12:08:24.722 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [1]
+2023-08-03 12:08:24.723 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_2_] : [INTEGER]) - [1]
+2023-08-03 12:08:24.724 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_i4_2_] : [INTEGER]) - [1]
+2023-08-03 12:08:24.724 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([order_id5_2_] : [INTEGER]) - [1]
+2023-08-03 12:08:24.724 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price2_2_] : [INTEGER]) - [50000]
+2023-08-03 12:08:24.724 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([quantity3_2_] : [INTEGER]) - [5]
+2023-08-03 12:08:24.724 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_2_] : [INTEGER]) - [2]
+2023-08-03 12:08:24.724 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_i4_2_] : [INTEGER]) - [2]
+2023-08-03 12:08:24.725 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([order_id5_2_] : [INTEGER]) - [1]
+2023-08-03 12:08:24.725 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price2_2_] : [INTEGER]) - [10900]
+2023-08-03 12:08:24.725 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([quantity3_2_] : [INTEGER]) - [1]
+2023-08-03 12:08:24.725 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_2_] : [INTEGER]) - [3]
+2023-08-03 12:08:24.725 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_i4_2_] : [INTEGER]) - [16]
+2023-08-03 12:08:24.725 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([order_id5_2_] : [INTEGER]) - [1]
+2023-08-03 12:08:24.726 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price2_2_] : [INTEGER]) - [250000]
+2023-08-03 12:08:24.726 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([quantity3_2_] : [INTEGER]) - [5]
+Hibernate: 
+    select
+        option0_.id as id1_3_0_,
+        option0_.option_name as option_n2_3_0_,
+        option0_.price as price3_3_0_,
+        option0_.product_id as product_4_3_0_,
+        product1_.id as id1_5_1_,
+        product1_.description as descript2_5_1_,
+        product1_.image as image3_5_1_,
+        product1_.price as price4_5_1_,
+        product1_.product_name as product_5_5_1_ 
+    from
+        option_tb option0_ 
+    left outer join
+        product_tb product1_ 
+            on option0_.product_id=product1_.id 
+    where
+        option0_.id=?
+2023-08-03 12:08:24.731 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [1]
+2023-08-03 12:08:24.732 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_5_1_] : [INTEGER]) - [1]
+2023-08-03 12:08:24.732 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_n2_3_0_] : [VARCHAR]) - [01. 슬라이딩 지퍼백 크리스마스에디션 4종]
+2023-08-03 12:08:24.732 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price3_3_0_] : [INTEGER]) - [10000]
+2023-08-03 12:08:24.732 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_4_3_0_] : [INTEGER]) - [1]
+2023-08-03 12:08:24.733 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([descript2_5_1_] : [VARCHAR]) - []
+2023-08-03 12:08:24.733 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([image3_5_1_] : [VARCHAR]) - [/images/1.jpg]
+2023-08-03 12:08:24.733 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price4_5_1_] : [INTEGER]) - [1000]
+2023-08-03 12:08:24.733 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_5_5_1_] : [VARCHAR]) - [기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전]
+Hibernate: 
+    select
+        option0_.id as id1_3_0_,
+        option0_.option_name as option_n2_3_0_,
+        option0_.price as price3_3_0_,
+        option0_.product_id as product_4_3_0_,
+        product1_.id as id1_5_1_,
+        product1_.description as descript2_5_1_,
+        product1_.image as image3_5_1_,
+        product1_.price as price4_5_1_,
+        product1_.product_name as product_5_5_1_ 
+    from
+        option_tb option0_ 
+    left outer join
+        product_tb product1_ 
+            on option0_.product_id=product1_.id 
+    where
+        option0_.id=?
+2023-08-03 12:08:24.736 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [2]
+2023-08-03 12:08:24.737 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_5_1_] : [INTEGER]) - [1]
+2023-08-03 12:08:24.737 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_n2_3_0_] : [VARCHAR]) - [02. 슬라이딩 지퍼백 플라워에디션 5종]
+2023-08-03 12:08:24.738 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price3_3_0_] : [INTEGER]) - [10900]
+2023-08-03 12:08:24.738 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_4_3_0_] : [INTEGER]) - [1]
+Hibernate: 
+    select
+        option0_.id as id1_3_0_,
+        option0_.option_name as option_n2_3_0_,
+        option0_.price as price3_3_0_,
+        option0_.product_id as product_4_3_0_,
+        product1_.id as id1_5_1_,
+        product1_.description as descript2_5_1_,
+        product1_.image as image3_5_1_,
+        product1_.price as price4_5_1_,
+        product1_.product_name as product_5_5_1_ 
+    from
+        option_tb option0_ 
+    left outer join
+        product_tb product1_ 
+            on option0_.product_id=product1_.id 
+    where
+        option0_.id=?
+2023-08-03 12:08:24.739 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [16]
+2023-08-03 12:08:24.740 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_5_1_] : [INTEGER]) - [4]
+2023-08-03 12:08:24.740 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_n2_3_0_] : [VARCHAR]) - [선택02_바른곡물효소누룽지맛 6박스]
+2023-08-03 12:08:24.740 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price3_3_0_] : [INTEGER]) - [50000]
+2023-08-03 12:08:24.740 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_4_3_0_] : [INTEGER]) - [4]
+2023-08-03 12:08:24.740 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([descript2_5_1_] : [VARCHAR]) - []
+2023-08-03 12:08:24.741 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([image3_5_1_] : [VARCHAR]) - [/images/4.jpg]
+2023-08-03 12:08:24.741 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price4_5_1_] : [INTEGER]) - [4000]
+2023-08-03 12:08:24.741 TRACE 8406 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_5_5_1_] : [VARCHAR]) - [바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종]
+테스트 : {"success":true,"response":{"id":1,"products":[{"productName":"기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전","items":[{"id":1,"quantity":5,"price":50000,"optionName":"01. 슬라이딩 지퍼백 크리스마스에디션 4종"},{"id":2,"quantity":1,"price":10900,"optionName":"02. 슬라이딩 지퍼백 플라워에디션 5종"}]},{"productName":"바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종","items":[{"id":3,"quantity":5,"price":250000,"optionName":"선택02_바른곡물효소누룽지맛 6박스"}]}],"totalPrice":310900},"error":null}
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /orders/1
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.example.kakao.order.OrderRestController
+           Method = com.example.kakao.order.OrderRestController#findById(CustomUserDetails, int)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:"application/json;charset=UTF-8"]
+     Content type = application/json;charset=UTF-8
+             Body = {"success":true,"response":{"id":1,"products":[{"productName":"기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전","items":[{"id":1,"quantity":5,"price":50000,"optionName":"01. 슬라이딩 지퍼백 크리스마스에디션 4종"},{"id":2,"quantity":1,"price":10900,"optionName":"02. 슬라이딩 지퍼백 플라워에디션 5종"}]},{"productName":"바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종","items":[{"id":3,"quantity":5,"price":250000,"optionName":"선택02_바른곡물효소누룽지맛 6박스"}]}],"totalPrice":310900},"error":null}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

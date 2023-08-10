@@ -1,0 +1,15 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 400 Bad Request
+Content-Type: application/json;charset=UTF-8
+Content-Length: 128
+
+{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "must not be empty:username",
+    "status" : 400
+  }
+}
+----

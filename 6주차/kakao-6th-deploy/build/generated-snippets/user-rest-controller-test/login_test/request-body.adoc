@@ -1,0 +1,7 @@
+[source,options="nowrap"]
+----
+{
+  "email" : "ssarmango@nate.com",
+  "password" : "{bcrypt}$2a$10$8H0OT8wgtALJkig6fmypi.Y7jzI5Y7W9PGgRKqnVeS2cLWGifwHF2"
+}
+----

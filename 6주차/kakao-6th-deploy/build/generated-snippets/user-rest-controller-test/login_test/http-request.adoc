@@ -1,0 +1,12 @@
+[source,http,options="nowrap"]
+----
+POST /login HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 123
+Host: localhost:8080
+
+{
+  "email" : "ssarmango@nate.com",
+  "password" : "{bcrypt}$2a$10$8H0OT8wgtALJkig6fmypi.Y7jzI5Y7W9PGgRKqnVeS2cLWGifwHF2"
+}
+----
