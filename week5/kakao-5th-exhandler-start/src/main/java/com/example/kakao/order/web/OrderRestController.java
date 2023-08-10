@@ -1,0 +1,22 @@
+package com.example.kakao.order.web;
+
+import com.example.kakao._core.security.CustomUserDetails;
+import com.example.kakao._core.utils.ApiResult;
+import com.example.kakao.order.domain.service.SaveOrderUseCase;
+import com.example.kakao.order.web.response.OrderResponse;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/orders")
+public class OrderRestController {
+        private final SaveOrderUseCase saveOrderUseCase;
+
+        @PostMapping
+        public ApiResult<OrderResponse> createOrder(@AuthenticationPrincipal CustomUserDetails user) {
+            return ApiResult.success(saveOrderUseCase.execute(user.getUser()));
+        }
+}
