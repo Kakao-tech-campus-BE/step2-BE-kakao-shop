@@ -1,0 +1,227 @@
+= 카카오 쇼핑하기 RestAPI
+Metacoding <getinthere@naver.com>
+
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+:user: user-rest-controller-test
+:product: product-rest-controller-test
+:cart: cart-rest-controller-test
+:order: order-rest-controller-test
+
+:toc: left
+:toclevels: 2
+:source-highlighter: highlightjs
+
+== 회원
+
+=== 회원 가입
+* 회원의 이메일, 닉네임, 비밀번호를 입력받는다.
+* 비밀번호 입력 시, 영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없다.
+* 회원의 닉네임은 8에서 45자 이내여야 한다.
+
+==== 요청 예시
+include::{snippets}/{user}/join_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/join_test/response-body.adoc[]
+
+=== 회원 가입 - 실패1
+* 비밀번호 입력 시, 영문, 숫자, 특수문자가 포함되어야하고 공백이 포함될 수 없다.
+
+==== 요청 예시
+include::{snippets}/{user}/join_fail1_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/join_fail1_test/response-body.adoc[]
+
+=== 회원 가입 - 실패2
+* 회원의 닉네임은 8에서 45자 이내여야 한다.
+
+==== 요청 예시
+include::{snippets}/{user}/join_fail2_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/join_fail2_test/response-body.adoc[]
+
+=== 이메일 중복 체크
+* 동일한 이메일이 존재하는지 확인한다.
+
+==== 요청 예시
+include::{snippets}/{user}/check_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/check_test/response-body.adoc[]
+
+
+=== 이메일 중복 체크 - 실패1
+* 동일한 이메일이 존재할 시 예외가 발생한다.
+
+==== 요청 예시
+include::{snippets}/{user}/check_fail1_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/check_fail1_test/response-body.adoc[]
+
+=== 이메일 중복 체크 - 실패2
+* 이메일 형식이 아닐 시 예외가 발생한다.
+
+==== 요청 예시
+include::{snippets}/{user}/check_fail2_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/check_fail2_test/response-body.adoc[]
+
+=== 로그인
+
+==== 요청 예시
+include::{snippets}/{user}/login_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/login_test/response-body.adoc[]
+
+=== 로그인 - 실패1
+* 회원가입이 되지 않은 회원 정보로 로그인할 시 예외가 발생한다.
+
+==== 요청 예시
+include::{snippets}/{user}/login_fail_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/login_fail_test/response-body.adoc[]
+
+
+== 상품
+
+=== 전체 상품 목록 조회
+* param : page={number}
+* param의 디폴트 값은 0이다.
+
+==== 요청 예시
+include::{snippets}/{product}/find-all_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{product}/find-all_test/response-body.adoc[]
+
+=== 개별 상품 상세 조회
+* 특정 상품을 조회한다.
+
+==== 요청 예시
+include::{snippets}/{product}/find-by-id_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{product}/find-by-id_test/response-body.adoc[]
+
+=== 개별 상품 상세 조회 - 실패
+* 해당하는 상품이 없을 경우 예외가 발생한다.
+
+==== 요청 예시
+include::{snippets}/{product}/find-by-id_fail_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{product}/find-by-id_fail_test/response-body.adoc[]
+
+== 장바구니
+
+=== 장바구니 담기
+* 옵션을 장바구니에 담는다.
+
+==== 요청 예시
+include::{snippets}/{cart}/add-cart-list_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/add-cart-list_test/response-body.adoc[]
+
+=== 장바구니 담기 - 실패 1
+* 같은 옵션이 2개로 분리되어 요청이 올 때 예외가 발생한다.
+
+==== 요청 예시
+include::{snippets}/{cart}/add-cart-list_fail1_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/add-cart-list_fail1_test/response-body.adoc[]
+
+=== 장바구니 담기 - 실패 2
+* 장바구니에 추가하려는 옵션의 수량이 0일 경우 예외가 발생한다.
+
+==== 요청 예시
+include::{snippets}/{cart}/add-cart-list_fail2_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/add-cart-list_fail2_test/response-body.adoc[]
+
+=== 장바구니 조회
+* 회원의 장바구니를 조회한다.
+
+==== 요청 예시
+include::{snippets}/{cart}/find-all_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/find-all_test/response-body.adoc[]
+
+=== 장바구니 수정
+* 주문하기를 할 때 장바구니 데이터를 update하고 그 결과를 응답받는다.
+* 결재페이지에서 이 응답을 사용해도 되고, 다시 장바구니 조회 API를 사용해도 된다.
+
+==== 요청 예시
+include::{snippets}/{cart}/update_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/update_test/response-body.adoc[]
+
+=== 장바구니 수정 - 실패
+* 장바구니에 없는 옵션을 수정하려는 경우 예외가 발생한다.
+
+==== 요청 예시
+include::{snippets}/{cart}/update_fail_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/update_fail_test/response-body.adoc[]
+
+== 주문
+
+=== 주문하기
+* 장바구니에 담긴 내용들을 주문한다.
+
+==== 요청 예시
+include::{snippets}/{order}/save1_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{order}/save1_test/response-body.adoc[]
+
+=== 주문하기2
+* 장바구니를 저장한 후 장바구니는 초기화된다.
+
+==== 요청 예시
+include::{snippets}/{order}/save2_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{order}/save2_test/response-body.adoc[]
+
+=== 주문하기 - 실패
+* 장바구니가 비어있을 때 주문을 하려는 경우 예외가 발생한다.
+
+==== 요청 예시
+include::{snippets}/{order}/save_fail_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{order}/save_fail_test/response-body.adoc[]
+
+=== 주문 조회하기
+
+==== 요청 예시
+include::{snippets}/{order}/find-by-id_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{order}/find-by-id_test/response-body.adoc[]
+
+
+=== 주문 조회하기 - 실패
+* 존재하지 않는 주문을 조회 시 예외가 발생한다.
+
+==== 요청 예시
+include::{snippets}/{order}/find-by-id_fail_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{order}/find-by-id_fail_test/response-body.adoc[]
+
