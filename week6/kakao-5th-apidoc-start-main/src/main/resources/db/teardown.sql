@@ -10,6 +10,7 @@ SET REFERENTIAL_INTEGRITY TRUE;
 -- 모든 제약 조건 활성화
 
 INSERT INTO user_tb (`id`,`email`,`password`,`username`, `roles`) VALUES ('1', 'ssarmango@nate.com', '{bcrypt}$2a$10$8H0OT8wgtALJkig6fmypi.Y7jzI5Y7W9PGgRKqnVeS2cLWGifwHF2', 'ssarmango', 'ROLE_USER');
+INSERT INTO user_tb (`id`,`email`,`password`,`username`, `roles`) VALUES ('2', 'elastickibana@nate.com', '{bcrypt}$2a$10$8H0OT8wgtALJkig6fmypi.Y7jzI5Y7W9PGgRKqnVeS2cLWGifwHF2', 'elastickibana', 'ROLE_USER');
 
 INSERT INTO product_tb (`id`,`product_name`,`description`,`image`, `price`) VALUES ('1', '기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전', '', '/images/1.jpg', '1000');
 INSERT INTO product_tb (`id`,`product_name`,`description`,`image`, `price`) VALUES ('2', '[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율', '', '/images/2.jpg', '2000');

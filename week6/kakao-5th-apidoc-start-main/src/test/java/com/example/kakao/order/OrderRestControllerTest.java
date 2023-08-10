@@ -77,4 +77,23 @@ class OrderRestControllerTest extends MyRestDoc {
         resultActions.andExpect(jsonPath("$.response.totalPrice").value(310900));
         resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
     }
+
+    @WithUserDetails(value = "elastickibana@nate.com")
+    @Test
+    public void empty_test() throws Exception {
+        // given
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                post("/orders/save")
+        );
+
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+        resultActions.andExpect(jsonPath("$.success").value("false"));
+        resultActions.andExpect(jsonPath("$.response").isEmpty());
+        resultActions.andExpect(jsonPath("$.error.message").value("잘못된 요청입니다."));
+        resultActions.andExpect(jsonPath("$.error.status").value("400"));
+        resultActions.andDo(MockMvcResultHandlers.print()).andDo(document);
+    }
 }
