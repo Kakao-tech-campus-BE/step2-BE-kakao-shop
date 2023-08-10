@@ -4,6 +4,7 @@ ifndef::snippets[]
 :snippets: ./build/generated-snippets
 endif::[]
 
+
 :user: user-rest-controller-test
 :product: product-rest-controller-test
 :cart: cart-rest-controller-test
