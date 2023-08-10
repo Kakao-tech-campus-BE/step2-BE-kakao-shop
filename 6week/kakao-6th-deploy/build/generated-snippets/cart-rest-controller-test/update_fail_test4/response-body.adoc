@@ -1,0 +1,11 @@
+[source,options="nowrap"]
+----
+{
+  "success" : false,
+  "response" : null,
+  "error" : {
+    "message" : "0개의 상품을 주문할 수 없습니다",
+    "status" : 404
+  }
+}
+----
