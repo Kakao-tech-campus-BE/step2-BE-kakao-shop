@@ -18,18 +18,7 @@ import java.util.List;
 @RestController
 public class CartRestController {
     private final CartService cartService;
-    /**
-     * [
-     *     {
-     *         "optionId":1,
-     *         "quantity":5
-     *     },
-     *     {
-     *         "optionId":2,
-     *         "quantity":5
-     *     }
-     * ]
-     */
+
     @PostMapping("/carts/add")
     public ResponseEntity<?> addCartList(@RequestBody @Valid List<CartRequest.SaveDTO> requestDTOs, Errors errors, @AuthenticationPrincipal CustomUserDetails userDetails) {
         cartService.addCartList(requestDTOs, userDetails.getUser());
@@ -46,7 +35,7 @@ public class CartRestController {
         return ResponseEntity.ok(apiResult);
     }
 
-// (기능8) 주문하기 - (주문화면에서 장바구니 수정하기)
+    // (기능8) 주문하기 - (주문화면에서 장바구니 수정하기)
 // /carts/update
     @PostMapping("/carts/update")
     public ResponseEntity<?> update(@RequestBody @Valid List<CartRequest.UpdateDTO> requestDTOs, Errors errors, @AuthenticationPrincipal CustomUserDetails userDetails) {

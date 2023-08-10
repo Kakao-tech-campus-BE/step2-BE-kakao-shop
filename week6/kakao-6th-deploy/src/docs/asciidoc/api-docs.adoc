@@ -1,0 +1,180 @@
+= 카카오 쇼핑하기 RestAPI
+진우석 <jinus7949@naver.com>
+
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+:user: user-rest-controller-test
+:product: product-rest-controller-test
+:cart: cart-rest-controller-test
+:order: order-rest-controller-test
+
+:toc: left
+:toclevels: 2
+:source-highlighter: highlightjs
+
+== 유저
+
+=== 회원가입
+
+==== 요청 예시
+include::{snippets}/{user}/join_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/join_test/response-body.adoc[]
+
+=== 회원가입 실패 1 (동일한 이메일로 회원가입하는 경우)
+
+==== 요청 예시
+include::{snippets}/{user}/join_fail1_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/join_fail1_test/response-body.adoc[]
+
+=== 회원가입 실패 2 (회원가입 형식을 지키지 않는 경우)
+
+==== 요청 예시
+include::{snippets}/{user}/join_fail2_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/join_fail2_test/response-body.adoc[]
+
+=== 로그인
+
+==== 요청 예시
+include::{snippets}/{user}/login_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/login_test/response-body.adoc[]
+
+=== 로그인 실패 (존재하지 않는 유저id로 로그인하는 경우)
+
+==== 요청 예시
+include::{snippets}/{user}/login_fail_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{user}/login_fail_test/response-body.adoc[]
+
+
+== 상품
+
+=== 전체 상품 목록 조회
+* param : page={number}
+* param의 디폴트 값은 0이다.
+
+==== 요청 예시
+include::{snippets}/{product}/find-all_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{product}/find-all_test/response-body.adoc[]
+
+=== 개별 상품 상세 조회
+
+==== 요청 예시
+include::{snippets}/{product}/find-by-id_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{product}/find-by-id_test/response-body.adoc[]
+
+== 장바구니
+
+=== 장바구니 담기
+
+==== 요청 예시
+include::{snippets}/{cart}/add-cart-list_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/add-cart-list_test/response-body.adoc[]
+
+=== 장바구니 담기 실패 1 (같은 옵션id를 두번이상 추가 요청하는 경우)
+
+==== 요청 예시
+include::{snippets}/{cart}/add-cart-list_fail1_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/add-cart-list_fail1_test/response-body.adoc[]
+
+=== 장바구니 담기 실패 2 (존재하지않는 옵션id를 요청하는 경우)
+
+==== 요청 예시
+include::{snippets}/{cart}/add-cart-list_fail2_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/add-cart-list_fail2_test/response-body.adoc[]
+
+=== 장바구니 조회
+
+==== 요청 예시
+include::{snippets}/{cart}/find-all_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/find-all_test/response-body.adoc[]
+
+=== 장바구니 수정
+* 주문하기를 할 때 장바구니 데이터를 update하고 그 결과를 응답받는다.
+* 결재페이지에서 이 응답을 사용해도 되고, 다시 장바구니 조회 API를 사용해도 된다.
+
+==== 요청 예시
+include::{snippets}/{cart}/update_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/update_test/response-body.adoc[]
+
+=== 장바구니 수정 실패 1 (동일한 장바구니 id의 업데이트를 2번 요청하는 경우)
+
+==== 요청 예시
+include::{snippets}/{cart}/update_fail1_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/update_fail1_test/response-body.adoc[]
+
+=== 장바구니 수정 실패 2 (장바구니에 일치하는 카트가 존재하지 않는 경우)
+
+==== 요청 예시
+include::{snippets}/{cart}/update_fail2_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/update_fail2_test/response-body.adoc[]
+
+=== 장바구니 수정 실패 3 (장바구니에 카트가 아예 존재하지 않는 경우)
+
+==== 요청 예시
+include::{snippets}/{cart}/update_fail3_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{cart}/update_fail3_test/response-body.adoc[]
+
+== 주문
+
+=== 주문하기
+
+==== 요청 예시
+include::{snippets}/{order}/order_save_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{order}/order_save_test/response-body.adoc[]
+
+=== 주문하기 실패 (장바구니가 비어있는 경우)
+
+==== 요청 예시
+include::{snippets}/{order}/order_save_fail_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{order}/order_save_fail_test/response-body.adoc[]
+
+=== 주문내역확인
+
+==== 요청 예시
+include::{snippets}/{order}/order_find-by-id_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{order}/order_find-by-id_test/response-body.adoc[]
+
+=== 주문내역확인 실패 (요청한 페이지가 자신의 주문내역중에 존재하지않는 경우)
+
+==== 요청 예시
+include::{snippets}/{order}/order_find-by-id_fail_test/http-request.adoc[]
+
+==== 응답 예시
+include::{snippets}/{order}/order_find-by-id_fail_test/response-body.adoc[]
