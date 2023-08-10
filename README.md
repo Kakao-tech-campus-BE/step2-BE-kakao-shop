@@ -295,6 +295,22 @@ Link : [Week4 폴더] (week4/src/test/java/com/example/kakao/order/OrderRestCont
 
 <br>
 
+---
+
+<br>
+
+## 5주차 과제  
+
+Link : [Week5 폴더]
+ 
+<br>
+
+### ~ Week5_Assignment_END
+
+---
+
+<br>
+
 # 5주차
 
 카카오 테크 캠퍼스 2단계 - BE - 5주차 클론 과제
@@ -332,6 +348,22 @@ Link : [Week4 폴더] (week4/src/test/java/com/example/kakao/order/OrderRestCont
 >- 코드 작성하면서 어려웠던 점
 >- 코드 리뷰 시, 멘토님이 중점적으로 리뷰해줬으면 하는 부분
 
+<br>
+
+---
+
+<br>
+
+## 6주차 과제  
+
+Link : [카카오 클라우드 배포 인스턴스 주소](https://user-app.krampoline.com/kec90286ea3aaa)
+ 
+<br>
+
+### ~ Week6_Assignment_END
+
+---
+<br>
 # 6주차
 
 카카오 테크 캠퍼스 2단계 - BE - 6주차 클론 과제
