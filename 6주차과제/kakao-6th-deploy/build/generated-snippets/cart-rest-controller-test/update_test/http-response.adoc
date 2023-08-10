@@ -1,0 +1,33 @@
+[source,http,options="nowrap"]
+----
+HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 623
+
+{
+  "success" : true,
+  "response" : {
+    "carts" : [ {
+      "cartId" : 1,
+      "optionId" : 1,
+      "optionName" : "01. 슬라이딩 지퍼백 크리스마스에디션 4종",
+      "quantity" : 10,
+      "price" : 100000
+    }, {
+      "cartId" : 2,
+      "optionId" : 2,
+      "optionName" : "02. 슬라이딩 지퍼백 플라워에디션 5종",
+      "quantity" : 1,
+      "price" : 10900
+    }, {
+      "cartId" : 3,
+      "optionId" : 16,
+      "optionName" : "선택02_바른곡물효소누룽지맛 6박스",
+      "quantity" : 5,
+      "price" : 250000
+    } ],
+    "totalPrice" : 360900
+  },
+  "error" : null
+}
+----

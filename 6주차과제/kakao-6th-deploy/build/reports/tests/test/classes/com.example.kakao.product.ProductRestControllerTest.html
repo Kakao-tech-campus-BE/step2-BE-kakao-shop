@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - ProductRestControllerTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>ProductRestControllerTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.example.kakao.product.html">com.example.kakao.product</a> &gt; ProductRestControllerTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">3</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.067s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">findAll_test()</td>
+<td class="success">0.029s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">findById_error_test()</td>
+<td class="success">0.015s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">findById_test()</td>
+<td class="success">0.023s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>2023-08-03 16:43:48.657  INFO 76018 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.example.kakao.product.ProductRestControllerTest], using SpringBootContextLoader
+2023-08-03 16:43:48.658  INFO 76018 --- [    Test worker] o.s.t.c.support.AbstractContextLoader    : Could not detect default resource locations for test class [com.example.kakao.product.ProductRestControllerTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+2023-08-03 16:43:48.658  INFO 76018 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.example.kakao.product.ProductRestControllerTest]: ProductRestControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2023-08-03 16:43:48.661  INFO 76018 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.example.kakao.KakaoApplication for test class com.example.kakao.product.ProductRestControllerTest
+2023-08-03 16:43:48.662  INFO 76018 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener, org.springframework.security.test.context.support.ReactorContextTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+2023-08-03 16:43:48.662  INFO 76018 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@16a83016, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@592efd6, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@33903444, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@6149adee, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@36361951, org.springframework.test.context.support.DirtiesContextTestExecutionListener@24c8bc1e, org.springframework.test.context.transaction.TransactionalTestExecutionListener@16488ed7, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@3ac2772d, org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener@3c380db5, org.springframework.test.context.event.EventPublishingTestExecutionListener@5df17e60, org.springframework.security.test.context.support.ReactorContextTestExecutionListener@f9d7d3f, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@264f18fe, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@5a66fc27, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@cb29b75, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@68226b59, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@3674164b, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@5b1e5366]
+2023-08-03 16:43:48.668  INFO 76018 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-03 16:43:48.668  INFO 76018 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-03 16:43:48.668  INFO 76018 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+Hibernate: 
+    select
+        product0_.id as id1_5_0_,
+        product0_.description as descript2_5_0_,
+        product0_.image as image3_5_0_,
+        product0_.price as price4_5_0_,
+        product0_.product_name as product_5_5_0_ 
+    from
+        product_tb product0_ 
+    where
+        product0_.id=?
+2023-08-03 16:43:48.672 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [1]
+2023-08-03 16:43:48.672 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([descript2_5_0_] : [VARCHAR]) - []
+2023-08-03 16:43:48.672 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([image3_5_0_] : [VARCHAR]) - [/images/1.jpg]
+2023-08-03 16:43:48.672 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price4_5_0_] : [INTEGER]) - [1000]
+2023-08-03 16:43:48.672 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_5_5_0_] : [VARCHAR]) - [기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전]
+Hibernate: 
+    select
+        option0_.id as id1_3_,
+        option0_.option_name as option_n2_3_,
+        option0_.price as price3_3_,
+        option0_.product_id as product_4_3_ 
+    from
+        option_tb option0_ 
+    where
+        option0_.product_id=?
+2023-08-03 16:43:48.674 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [1]
+2023-08-03 16:43:48.674 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_3_] : [INTEGER]) - [1]
+2023-08-03 16:43:48.674 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_n2_3_] : [VARCHAR]) - [01. 슬라이딩 지퍼백 크리스마스에디션 4종]
+2023-08-03 16:43:48.674 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price3_3_] : [INTEGER]) - [10000]
+2023-08-03 16:43:48.674 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_4_3_] : [INTEGER]) - [1]
+2023-08-03 16:43:48.674 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_3_] : [INTEGER]) - [2]
+2023-08-03 16:43:48.674 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_n2_3_] : [VARCHAR]) - [02. 슬라이딩 지퍼백 플라워에디션 5종]
+2023-08-03 16:43:48.674 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price3_3_] : [INTEGER]) - [10900]
+2023-08-03 16:43:48.674 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_4_3_] : [INTEGER]) - [1]
+2023-08-03 16:43:48.674 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_3_] : [INTEGER]) - [3]
+2023-08-03 16:43:48.674 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_n2_3_] : [VARCHAR]) - [고무장갑 베이지 S(소형) 6팩]
+2023-08-03 16:43:48.674 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price3_3_] : [INTEGER]) - [9900]
+2023-08-03 16:43:48.674 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_4_3_] : [INTEGER]) - [1]
+2023-08-03 16:43:48.674 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_3_] : [INTEGER]) - [4]
+2023-08-03 16:43:48.674 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_n2_3_] : [VARCHAR]) - [뽑아쓰는 키친타올 130매 12팩]
+2023-08-03 16:43:48.674 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price3_3_] : [INTEGER]) - [16900]
+2023-08-03 16:43:48.674 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_4_3_] : [INTEGER]) - [1]
+2023-08-03 16:43:48.674 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_3_] : [INTEGER]) - [5]
+2023-08-03 16:43:48.674 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([option_n2_3_] : [VARCHAR]) - [2겹 식빵수세미 6매]
+2023-08-03 16:43:48.674 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price3_3_] : [INTEGER]) - [8900]
+2023-08-03 16:43:48.674 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_4_3_] : [INTEGER]) - [1]
+테스트 : {&quot;success&quot;:true,&quot;response&quot;:{&quot;id&quot;:1,&quot;productName&quot;:&quot;기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/1.jpg&quot;,&quot;price&quot;:1000,&quot;starCount&quot;:5,&quot;options&quot;:[{&quot;id&quot;:1,&quot;optionName&quot;:&quot;01. 슬라이딩 지퍼백 크리스마스에디션 4종&quot;,&quot;price&quot;:10000},{&quot;id&quot;:2,&quot;optionName&quot;:&quot;02. 슬라이딩 지퍼백 플라워에디션 5종&quot;,&quot;price&quot;:10900},{&quot;id&quot;:3,&quot;optionName&quot;:&quot;고무장갑 베이지 S(소형) 6팩&quot;,&quot;price&quot;:9900},{&quot;id&quot;:4,&quot;optionName&quot;:&quot;뽑아쓰는 키친타올 130매 12팩&quot;,&quot;price&quot;:16900},{&quot;id&quot;:5,&quot;optionName&quot;:&quot;2겹 식빵수세미 6매&quot;,&quot;price&quot;:8900}]},&quot;error&quot;:null}
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /products/1
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.example.kakao.product.ProductRestController
+           Method = com.example.kakao.product.ProductRestController#findById(int)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;]
+     Content type = application/json;charset=UTF-8
+             Body = {&quot;success&quot;:true,&quot;response&quot;:{&quot;id&quot;:1,&quot;productName&quot;:&quot;기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/1.jpg&quot;,&quot;price&quot;:1000,&quot;starCount&quot;:5,&quot;options&quot;:[{&quot;id&quot;:1,&quot;optionName&quot;:&quot;01. 슬라이딩 지퍼백 크리스마스에디션 4종&quot;,&quot;price&quot;:10000},{&quot;id&quot;:2,&quot;optionName&quot;:&quot;02. 슬라이딩 지퍼백 플라워에디션 5종&quot;,&quot;price&quot;:10900},{&quot;id&quot;:3,&quot;optionName&quot;:&quot;고무장갑 베이지 S(소형) 6팩&quot;,&quot;price&quot;:9900},{&quot;id&quot;:4,&quot;optionName&quot;:&quot;뽑아쓰는 키친타올 130매 12팩&quot;,&quot;price&quot;:16900},{&quot;id&quot;:5,&quot;optionName&quot;:&quot;2겹 식빵수세미 6매&quot;,&quot;price&quot;:8900}]},&quot;error&quot;:null}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2023-08-03 16:43:48.692  INFO 76018 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-03 16:43:48.692  INFO 76018 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-03 16:43:48.693  INFO 76018 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+Hibernate: 
+    select
+        product0_.id as id1_5_0_,
+        product0_.description as descript2_5_0_,
+        product0_.image as image3_5_0_,
+        product0_.price as price4_5_0_,
+        product0_.product_name as product_5_5_0_ 
+    from
+        product_tb product0_ 
+    where
+        product0_.id=?
+2023-08-03 16:43:48.694 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicBinder      : binding parameter [1] as [INTEGER] - [0]
+테스트 : {&quot;success&quot;:false,&quot;response&quot;:null,&quot;error&quot;:{&quot;message&quot;:&quot;해당 상품을 찾을 수 없습니다 : 0&quot;,&quot;status&quot;:404}}
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /products/0
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.example.kakao.product.ProductRestController
+           Method = com.example.kakao.product.ProductRestController#findById(int)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = com.example.kakao._core.errors.exception.Exception404
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 404
+    Error message = null
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;]
+     Content type = application/json;charset=UTF-8
+             Body = {&quot;success&quot;:false,&quot;response&quot;:null,&quot;error&quot;:{&quot;message&quot;:&quot;해당 상품을 찾을 수 없습니다 : 0&quot;,&quot;status&quot;:404}}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2023-08-03 16:43:48.706  INFO 76018 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-08-03 16:43:48.706  INFO 76018 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-08-03 16:43:48.706  INFO 76018 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+Hibernate: 
+    select
+        product0_.id as id1_5_,
+        product0_.description as descript2_5_,
+        product0_.image as image3_5_,
+        product0_.price as price4_5_,
+        product0_.product_name as product_5_5_ 
+    from
+        product_tb product0_ limit ?
+2023-08-03 16:43:48.710 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_5_] : [INTEGER]) - [1]
+2023-08-03 16:43:48.715 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([descript2_5_] : [VARCHAR]) - []
+2023-08-03 16:43:48.715 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([image3_5_] : [VARCHAR]) - [/images/1.jpg]
+2023-08-03 16:43:48.715 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price4_5_] : [INTEGER]) - [1000]
+2023-08-03 16:43:48.715 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_5_5_] : [VARCHAR]) - [기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전]
+2023-08-03 16:43:48.715 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_5_] : [INTEGER]) - [2]
+2023-08-03 16:43:48.715 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([descript2_5_] : [VARCHAR]) - []
+2023-08-03 16:43:48.715 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([image3_5_] : [VARCHAR]) - [/images/2.jpg]
+2023-08-03 16:43:48.715 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price4_5_] : [INTEGER]) - [2000]
+2023-08-03 16:43:48.715 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_5_5_] : [VARCHAR]) - [[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율]
+2023-08-03 16:43:48.715 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_5_] : [INTEGER]) - [3]
+2023-08-03 16:43:48.715 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([descript2_5_] : [VARCHAR]) - []
+2023-08-03 16:43:48.716 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([image3_5_] : [VARCHAR]) - [/images/3.jpg]
+2023-08-03 16:43:48.716 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price4_5_] : [INTEGER]) - [30000]
+2023-08-03 16:43:48.716 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_5_5_] : [VARCHAR]) - [삼성전자 JBL JR310 외 어린이용/성인용 헤드셋 3종!]
+2023-08-03 16:43:48.716 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_5_] : [INTEGER]) - [4]
+2023-08-03 16:43:48.716 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([descript2_5_] : [VARCHAR]) - []
+2023-08-03 16:43:48.716 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([image3_5_] : [VARCHAR]) - [/images/4.jpg]
+2023-08-03 16:43:48.716 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price4_5_] : [INTEGER]) - [4000]
+2023-08-03 16:43:48.716 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_5_5_] : [VARCHAR]) - [바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종]
+2023-08-03 16:43:48.716 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_5_] : [INTEGER]) - [5]
+2023-08-03 16:43:48.716 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([descript2_5_] : [VARCHAR]) - []
+2023-08-03 16:43:48.716 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([image3_5_] : [VARCHAR]) - [/images/5.jpg]
+2023-08-03 16:43:48.716 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price4_5_] : [INTEGER]) - [5000]
+2023-08-03 16:43:48.716 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_5_5_] : [VARCHAR]) - [[더주] 컷팅말랑장족, 숏다리 100g/300g 외 주전부리 모음 /중독성 최고/마른안주]
+2023-08-03 16:43:48.716 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_5_] : [INTEGER]) - [6]
+2023-08-03 16:43:48.716 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([descript2_5_] : [VARCHAR]) - []
+2023-08-03 16:43:48.716 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([image3_5_] : [VARCHAR]) - [/images/6.jpg]
+2023-08-03 16:43:48.716 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price4_5_] : [INTEGER]) - [15900]
+2023-08-03 16:43:48.716 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_5_5_] : [VARCHAR]) - [굳지않는 앙금절편 1,050g 2팩 외 우리쌀떡 모음전]
+2023-08-03 16:43:48.716 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_5_] : [INTEGER]) - [7]
+2023-08-03 16:43:48.716 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([descript2_5_] : [VARCHAR]) - []
+2023-08-03 16:43:48.716 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([image3_5_] : [VARCHAR]) - [/images/7.jpg]
+2023-08-03 16:43:48.716 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price4_5_] : [INTEGER]) - [26800]
+2023-08-03 16:43:48.716 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_5_5_] : [VARCHAR]) - [eoe 이너딜리티 30포, 오렌지맛 고 식이섬유 보충제]
+2023-08-03 16:43:48.716 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_5_] : [INTEGER]) - [8]
+2023-08-03 16:43:48.716 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([descript2_5_] : [VARCHAR]) - []
+2023-08-03 16:43:48.716 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([image3_5_] : [VARCHAR]) - [/images/8.jpg]
+2023-08-03 16:43:48.716 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price4_5_] : [INTEGER]) - [25900]
+2023-08-03 16:43:48.716 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_5_5_] : [VARCHAR]) - [제나벨 PDRN 크림 2개. 피부보습/진정 케어]
+2023-08-03 16:43:48.716 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([id1_5_] : [INTEGER]) - [9]
+2023-08-03 16:43:48.716 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([descript2_5_] : [VARCHAR]) - []
+2023-08-03 16:43:48.716 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([image3_5_] : [VARCHAR]) - [/images/9.jpg]
+2023-08-03 16:43:48.716 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([price4_5_] : [INTEGER]) - [797000]
+2023-08-03 16:43:48.716 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([product_5_5_] : [VARCHAR]) - [플레이스테이션 VR2 호라이즌 번들. 생생한 몰입감]
+Hibernate: 
+    select
+        count(product0_.id) as col_0_0_ 
+    from
+        product_tb product0_
+2023-08-03 16:43:48.721 TRACE 76018 --- [    Test worker] o.h.type.descriptor.sql.BasicExtractor   : extracted value ([col_0_0_] : [BIGINT]) - [15]
+테스트 : {&quot;success&quot;:true,&quot;response&quot;:[{&quot;id&quot;:1,&quot;productName&quot;:&quot;기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/1.jpg&quot;,&quot;price&quot;:1000},{&quot;id&quot;:2,&quot;productName&quot;:&quot;[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/2.jpg&quot;,&quot;price&quot;:2000},{&quot;id&quot;:3,&quot;productName&quot;:&quot;삼성전자 JBL JR310 외 어린이용/성인용 헤드셋 3종!&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/3.jpg&quot;,&quot;price&quot;:30000},{&quot;id&quot;:4,&quot;productName&quot;:&quot;바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/4.jpg&quot;,&quot;price&quot;:4000},{&quot;id&quot;:5,&quot;productName&quot;:&quot;[더주] 컷팅말랑장족, 숏다리 100g/300g 외 주전부리 모음 /중독성 최고/마른안주&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/5.jpg&quot;,&quot;price&quot;:5000},{&quot;id&quot;:6,&quot;productName&quot;:&quot;굳지않는 앙금절편 1,050g 2팩 외 우리쌀떡 모음전&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/6.jpg&quot;,&quot;price&quot;:15900},{&quot;id&quot;:7,&quot;productName&quot;:&quot;eoe 이너딜리티 30포, 오렌지맛 고 식이섬유 보충제&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/7.jpg&quot;,&quot;price&quot;:26800},{&quot;id&quot;:8,&quot;productName&quot;:&quot;제나벨 PDRN 크림 2개. 피부보습/진정 케어&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/8.jpg&quot;,&quot;price&quot;:25900},{&quot;id&quot;:9,&quot;productName&quot;:&quot;플레이스테이션 VR2 호라이즌 번들. 생생한 몰입감&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/9.jpg&quot;,&quot;price&quot;:797000}],&quot;error&quot;:null}
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /products
+       Parameters = {}
+          Headers = []
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.example.kakao.product.ProductRestController
+           Method = com.example.kakao.product.ProductRestController#findAll(Integer)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;]
+     Content type = application/json;charset=UTF-8
+             Body = {&quot;success&quot;:true,&quot;response&quot;:[{&quot;id&quot;:1,&quot;productName&quot;:&quot;기본에 슬라이딩 지퍼백 크리스마스/플라워에디션 에디션 외 주방용품 특가전&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/1.jpg&quot;,&quot;price&quot;:1000},{&quot;id&quot;:2,&quot;productName&quot;:&quot;[황금약단밤 골드]2022년산 햇밤 칼집밤700g외/군밤용/생율&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/2.jpg&quot;,&quot;price&quot;:2000},{&quot;id&quot;:3,&quot;productName&quot;:&quot;삼성전자 JBL JR310 외 어린이용/성인용 헤드셋 3종!&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/3.jpg&quot;,&quot;price&quot;:30000},{&quot;id&quot;:4,&quot;productName&quot;:&quot;바른 누룽지맛 발효효소 2박스 역가수치보장 / 외 7종&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/4.jpg&quot;,&quot;price&quot;:4000},{&quot;id&quot;:5,&quot;productName&quot;:&quot;[더주] 컷팅말랑장족, 숏다리 100g/300g 외 주전부리 모음 /중독성 최고/마른안주&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/5.jpg&quot;,&quot;price&quot;:5000},{&quot;id&quot;:6,&quot;productName&quot;:&quot;굳지않는 앙금절편 1,050g 2팩 외 우리쌀떡 모음전&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/6.jpg&quot;,&quot;price&quot;:15900},{&quot;id&quot;:7,&quot;productName&quot;:&quot;eoe 이너딜리티 30포, 오렌지맛 고 식이섬유 보충제&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/7.jpg&quot;,&quot;price&quot;:26800},{&quot;id&quot;:8,&quot;productName&quot;:&quot;제나벨 PDRN 크림 2개. 피부보습/진정 케어&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/8.jpg&quot;,&quot;price&quot;:25900},{&quot;id&quot;:9,&quot;productName&quot;:&quot;플레이스테이션 VR2 호라이즌 번들. 생생한 몰입감&quot;,&quot;description&quot;:&quot;&quot;,&quot;image&quot;:&quot;/images/9.jpg&quot;,&quot;price&quot;:797000}],&quot;error&quot;:null}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 7.4</a> at 2023. 8. 3. 오후 4:43:48</p>
+</div>
+</div>
+</body>
+</html>

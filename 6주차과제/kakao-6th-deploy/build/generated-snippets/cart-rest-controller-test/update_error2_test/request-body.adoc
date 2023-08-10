@@ -1,0 +1,10 @@
+[source,options="nowrap"]
+----
+[ {
+  "cartId" : 1,
+  "quantity" : 10
+}, {
+  "cartId" : 1,
+  "quantity" : 10
+} ]
+----
